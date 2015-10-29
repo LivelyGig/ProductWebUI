@@ -1,0 +1,26 @@
+{
+  "children": [ // Pass an array of nodes.
+            /*    {title: "Item 1"},*/
+                {"title": "Marketing",
+                    "children" : [
+                        {"title": "Sub-item 1"},
+                        {"title": "Sub-item 2"}
+                    ]
+                },
+                {"title": "Programming", 
+                    "children": [
+                        {"title": "Assembly"},
+                        {"title": "High Level language",
+                         "children": [
+                                    {"title": "Swift"},
+                                    {"title": "Javascript"}
+                                   ]
+                        }
+                    ]
+                }
+              /*  {title: "Item 3"}*/
+            ]
+
+}
+
+
