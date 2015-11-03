@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.JSExport
 object RecatApp extends JSApp {
   @JSExport
   override def main(): Unit = {
-    
+
   }
 
 }

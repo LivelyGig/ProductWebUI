@@ -1,1 +1,3 @@
 run
+sbt
+run
