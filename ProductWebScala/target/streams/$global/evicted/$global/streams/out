@@ -1,0 +1,1276 @@
+[0m[[0minfo[0m] [0mUpdating {file:/D:/projects/livelygig/livelyGigScalaReact/livelyGigSR_1.0/}livelygigsr_1-0...[0m
+[0m[[0mdebug[0m] [0m:: resolving dependencies :: default#livelygigsr_1-0_sjs0.6_2.11;1.0[0m
+[0m[[0mdebug[0m] [0m	confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool, phantom-js-jetty][0m
+[0m[[0mdebug[0m] [0m	validate = true[0m
+[0m[[0mdebug[0m] [0m	refresh = false[0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'compile'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.11.7 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: sbt.ivyint.MergedDescriptors@8b8a26b[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang#scala-library;2.11.7[0m
+[0m[[0mdebug[0m] [0m	found org.scala-lang#scala-library;2.11.7 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[2.11.7] org.scala-lang#scala-library;2.11.7[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#react;0.14.1 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#react;0.14.1 {compile=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.webjars.npm#react;0.14.1[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#react;0.14.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#envify;[3.0.0,4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#envify;[3.0.0,4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#envify;[3.0.0,4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#envify;[3.0.0,4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\envify\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/envify/[revision]/envify-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/envify/3.4.0/envify-3.4.0.pom (3.4.0)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#envify;3.4.0[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#envify;3.4.0 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[3.4.0] org.webjars.npm#envify;[3.0.0,4)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#through;[2.3.4,2.4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#through;[2.3.4,2.4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#through;[2.3.4,2.4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#through;[2.3.4,2.4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\through\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/through/[revision]/through-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/through/2.3.7/through-2.3.7.pom (2.3.7)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#through;2.3.7[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#through;2.3.7 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[2.3.7] org.webjars.npm#through;[2.3.4,2.4)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#jstransform;[10.0.1,11) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#jstransform;[10.0.1,11) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#jstransform;[10.0.1,11) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#jstransform;[10.0.1,11) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\jstransform\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/jstransform/[revision]/jstransform-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/jstransform/10.1.0/jstransform-10.1.0.pom (10.1.0)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#jstransform;10.1.0[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#jstransform;10.1.0 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[10.1.0] org.webjars.npm#jstransform;[10.0.1,11)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#base62;0.1.1 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#base62;0.1.1 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.webjars.npm#base62;0.1.1[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#base62;0.1.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#source-map;0.1.31 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#source-map;0.1.31 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.webjars.npm#source-map;0.1.31[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#source-map;0.1.31 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#amdefine;[0.0.4,) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#amdefine;[0.0.4,) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#amdefine;[0.0.4,) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#amdefine;[0.0.4,) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\amdefine\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/amdefine/[revision]/amdefine-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/amdefine/0.1.0/amdefine-0.1.0.pom (0.1.0)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#amdefine;0.1.0[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#amdefine;0.1.0 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[0.1.0] org.webjars.npm#amdefine;[0.0.4,)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#fbjs;[0.3.1,0.4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#fbjs;[0.3.1,0.4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#fbjs;[0.3.1,0.4) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#fbjs;[0.3.1,0.4) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\fbjs\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/fbjs/[revision]/fbjs-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/fbjs/0.3.1/fbjs-0.3.1.pom (0.3.1)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#fbjs;0.3.1[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#fbjs;0.3.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[0.3.1] org.webjars.npm#fbjs;[0.3.1,0.4)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#core-js;[1.0.0,2) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#core-js;[1.0.0,2) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#core-js;[1.0.0,2) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#core-js;[1.0.0,2) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\core-js\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/core-js/[revision]/core-js-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/core-js/1.2.4/core-js-1.2.4.pom (1.2.4)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#core-js;1.2.4[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#core-js;1.2.4 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[1.2.4] org.webjars.npm#core-js;[1.0.0,2)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#promise;[7.0.3,8) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#promise;[7.0.3,8) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#promise;[7.0.3,8) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#promise;[7.0.3,8) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\promise\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/promise/[revision]/promise-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/promise/7.0.4/promise-7.0.4.pom (7.0.4)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#promise;7.0.4[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#promise;7.0.4 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[7.0.4] org.webjars.npm#promise;[7.0.3,8)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#asap;[2.0.3,2.1) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#asap;[2.0.3,2.1) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#asap;[2.0.3,2.1) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#asap;[2.0.3,2.1) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\asap\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/asap/[revision]/asap-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/asap/2.0.3/asap-2.0.3.pom (2.0.3)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#asap;2.0.3[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#asap;2.0.3 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[2.0.3] org.webjars.npm#asap;[2.0.3,2.1)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#ua-parser-js;[0.7.9,0.8) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#ua-parser-js;[0.7.9,0.8) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#ua-parser-js;[0.7.9,0.8) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#ua-parser-js;[0.7.9,0.8) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\ua-parser-js\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/ua-parser-js/[revision]/ua-parser-js-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/ua-parser-js/0.7.9/ua-parser-js-0.7.9.pom (0.7.9)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#ua-parser-js;0.7.9[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#ua-parser-js;0.7.9 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[0.7.9] org.webjars.npm#ua-parser-js;[0.7.9,0.8)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#whatwg-fetch;[0.9.0,0.10) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#whatwg-fetch;[0.9.0,0.10) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#whatwg-fetch;[0.9.0,0.10) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#whatwg-fetch;[0.9.0,0.10) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\whatwg-fetch\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/whatwg-fetch/[revision]/whatwg-fetch-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/whatwg-fetch/0.9.0/whatwg-fetch-0.9.0.pom (0.9.0)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#whatwg-fetch;0.9.0[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#whatwg-fetch;0.9.0 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[0.9.0] org.webjars.npm#whatwg-fetch;[0.9.0,0.10)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#react-dom;0.14.1 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#react-dom;0.14.1 {compile=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.webjars.npm#react-dom;0.14.1[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#react-dom;0.14.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#react;[0.14.1,0.15) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.webjars.npm#react;[0.14.1,0.15) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0minfo[0m] [0mResolving org.webjars.npm#react;[0.14.1,0.15) ...[0m
+[0m[[0mdebug[0m] [0msbt-chain-delegate: Checking cache for: dependency: org.webjars.npm#react;[0.14.1,0.15) {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0m		tried C:\Users\tanveer.a\.ivy2\local\org.webjars.npm\react\[revision]\ivys\ivy.xml[0m
+[0m[[0mdebug[0m] [0m	local: no ivy file found for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0mdefault-cache: cached resolved revision expired for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0m		tried https://repo1.maven.org/maven2/org/webjars/npm/react/[revision]/react-[revision].pom[0m
+[0m[[0mdebug[0m] [0m	public: found md file for org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0m		=> https://repo1.maven.org/maven2/org/webjars/npm/react/0.14.2/react-0.14.2.pom (0.14.2)[0m
+[0m[[0mdebug[0m] [0m	default-cache: revision in cache: org.webjars.npm#react;0.14.2[0m
+[0m[[0mdebug[0m] [0m	found org.webjars.npm#react;0.14.2 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[0.14.2] org.webjars.npm#react;[0.14.1,0.15)[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-js#scalajs-library_2.11;0.6.5 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-js#scalajs-library_2.11;0.6.5 {compile=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-js#scalajs-library_2.11;0.6.5[0m
+[0m[[0mdebug[0m] [0m	found org.scala-js#scalajs-library_2.11;0.6.5 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 {compile=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1[0m
+[0m[[0mdebug[0m] [0m	found com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-reflect;2.11.7 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-lang#scala-reflect;2.11.7 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang#scala-reflect;2.11.7[0m
+[0m[[0mdebug[0m] [0m	found org.scala-lang#scala-reflect;2.11.7 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m	[2.11.7] org.scala-lang#scala-reflect;2.11.7[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2[0m
+[0m[[0mdebug[0m] [0m	found org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'runtime'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'test'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [test][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'provided'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [provided][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'optional'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [optional][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'compile-internal'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile-internal][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [optional][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [provided][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'runtime-internal'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [runtime-internal][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [optional][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'test-internal'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [test-internal][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [test][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#through;[2.3.4,2.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#envify;[3.0.0,4)->org.webjars.npm#jstransform;[10.0.1,11) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#base62;0.1.1 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#jstransform;[10.0.1,11)->org.webjars.npm#source-map;0.1.31 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#source-map;0.1.31->org.webjars.npm#amdefine;[0.0.4,) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;0.14.1->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#core-js;[1.0.0,2) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#promise;[7.0.3,8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#promise;[7.0.3,8)->org.webjars.npm#asap;[2.0.3,2.1) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#ua-parser-js;[0.7.9,0.8) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#fbjs;[0.3.1,0.4)->org.webjars.npm#whatwg-fetch;[0.9.0,0.10) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react-dom;0.14.1->org.webjars.npm#react;[0.14.1,0.15) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#envify;[3.0.0,4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.webjars.npm#react;[0.14.1,0.15)->org.webjars.npm#fbjs;[0.3.1,0.4) [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.webjars.npm#react-dom;0.14.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-library_2.11;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->default(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1->org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.2 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2->org.scala-js#scalajs-library_2.11;0.6.5 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [optional][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [provided][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'plugin'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [plugin][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-compiler_2.11.7;0.6.5 [plugin->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-js#scalajs-compiler_2.11.7;0.6.5 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-js#scalajs-compiler_2.11.7;0.6.5 {plugin=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-js#scalajs-compiler_2.11.7;0.6.5[0m
+[0m[[0mdebug[0m] [0m	found org.scala-js#scalajs-compiler_2.11.7;0.6.5 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-compiler_2.11.7;0.6.5 [plugin->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-compiler_2.11.7;0.6.5 [plugin->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.11.7 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-lang#scala-compiler;2.11.7 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang#scala-compiler;2.11.7[0m
+[0m[[0mdebug[0m] [0m	found org.scala-lang#scala-compiler;2.11.7 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-xml_2.11;1.0.4 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-lang.modules#scala-xml_2.11;1.0.4 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang.modules#scala-xml_2.11;1.0.4[0m
+[0m[[0mdebug[0m] [0m	found org.scala-lang.modules#scala-xml_2.11;1.0.4 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4[0m
+[0m[[0mdebug[0m] [0m	found org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-compiler;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-js#scalajs-compiler_2.11.7;0.6.5->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-js#scalajs-compiler_2.11.7;0.6.5 [plugin->master][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'sources'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [sources][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'docs'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [docs][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'pom'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [pom][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'scala-tool'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [scala-tool][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-compiler;2.11.7 [scala-tool->default][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-compiler;2.11.7 [scala-tool->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-compiler;2.11.7 [scala-tool->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->default][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->optional(default)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang#scala-reflect;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-reflect;2.11.7->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-xml_2.11;1.0.4 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-xml_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.6 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4->org.scala-lang#scala-library;2.11.7 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-compiler;2.11.7 [scala-tool->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-compiler;2.11.7 [scala-tool->optional(default)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->jline#jline;2.12.1 [optional->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving jline#jline;2.12.1 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: jline#jline;2.12.1 {optional=[compile(*), master(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: jline#jline;2.12.1[0m
+[0m[[0mdebug[0m] [0m	found jline#jline;2.12.1 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.scala-lang#scala-compiler;2.11.7->jline#jline;2.12.1 [optional->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [scala-tool->default][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [scala-tool->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [scala-tool->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [scala-tool->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.scala-lang#scala-library;2.11.7 [scala-tool->optional(default)][0m
+[0m[[0mdebug[0m] [0mresolving dependencies for configuration 'phantom-js-jetty'[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies for default#livelygigsr_1-0_sjs0.6_2.11;1.0 [phantom-js-jetty][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 [phantom-js-jetty->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 {phantom-js-jetty=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-websocket;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 [phantom-js-jetty->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 [phantom-js-jetty->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-util;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-util;8.1.16.v20140903 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-util;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-util;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-io;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-io;8.1.16.v20140903 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-io;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-io;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-io;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-io;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-io;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-io;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-http;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-http;8.1.16.v20140903 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-http;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-http;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-http;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-http;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-http;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-http;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-util;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-io;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-websocket;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-websocket;8.1.16.v20140903 [phantom-js-jetty->master][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-server;8.1.16.v20140903 [phantom-js-jetty->default(compile)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-server;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-server;8.1.16.v20140903 {phantom-js-jetty=[default(compile)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-server;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-server;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-server;8.1.16.v20140903 [phantom-js-jetty->runtime][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-server;8.1.16.v20140903 [phantom-js-jetty->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0minfo[0m] [0mResolving org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 ...[0m
+[0m[[0mdebug[0m] [0msbt-chain: Checking cache for: dependency: org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 {compile=[compile(*), master(compile)], runtime=[runtime(*)]}[0m
+[0m[[0mdebug[0m] [0msbt-chain: module revision found in cache: org.eclipse.jetty#jetty-continuation;8.1.16.v20140903[0m
+[0m[[0mdebug[0m] [0m	found org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 in sbt-chain[0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [compile->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [compile->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->compile(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [compile->master(compile)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-continuation;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [runtime->runtime(*)][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies org.eclipse.jetty#jetty-server;8.1.16.v20140903->org.eclipse.jetty#jetty-http;8.1.16.v20140903 [runtime->compile][0m
+[0m[[0mdebug[0m] [0m== resolving dependencies default#livelygigsr_1-0_sjs0.6_2.11;1.0->org.eclipse.jetty#jetty-server;8.1.16.v20140903 [phantom-js-jetty->master][0m
+[0m[[0mdebug[0m] [0m	resolved ivy file produced in cache[0m
+[0m[[0mdebug[0m] [0m:: downloading artifacts ::[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#scala-library;2.11.7!scala-library.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#react-dom;0.14.1!react-dom.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-js#scalajs-library_2.11;0.6.5!scalajs-library_2.11.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] com.github.japgolly.scalajs-react#core_sjs0.6_2.11;0.10.1!core_sjs0.6_2.11.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#envify;3.4.0!envify.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#fbjs;0.3.1!fbjs.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#through;2.3.7!through.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#jstransform;10.1.0!jstransform.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#base62;0.1.1!base62.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#esprima-fb;13001.1001.0-dev-harmony-fb!esprima-fb.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#source-map;0.1.31!source-map.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#amdefine;0.1.0!amdefine.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#core-js;1.2.4!core-js.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#promise;7.0.4!promise.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#ua-parser-js;0.7.9!ua-parser-js.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#whatwg-fetch;0.9.0!whatwg-fetch.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#asap;2.0.3!asap.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.webjars.npm#react;0.14.2!react.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#scala-reflect;2.11.7!scala-reflect.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-js#scalajs-dom_sjs0.6_2.11;0.8.2!scalajs-dom_sjs0.6_2.11.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-js#scalajs-compiler_2.11.7;0.6.5!scalajs-compiler_2.11.7.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang#scala-compiler;2.11.7!scala-compiler.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang.modules#scala-xml_2.11;1.0.4!scala-xml_2.11.jar(bundle)[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.scala-lang.modules#scala-parser-combinators_2.11;1.0.4!scala-parser-combinators_2.11.jar(bundle)[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] jline#jline;2.12.1!jline.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-websocket;8.1.16.v20140903!jetty-websocket.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-server;8.1.16.v20140903!jetty-server.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-util;8.1.16.v20140903!jetty-util.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-io;8.1.16.v20140903!jetty-io.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-http;8.1.16.v20140903!jetty-http.jar[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty.orbit#javax.servlet;3.0.0.v201112011016!javax.servlet.jar(orbit)[0m
+[0m[[0mdebug[0m] [0m	[NOT REQUIRED] org.eclipse.jetty#jetty-continuation;8.1.16.v20140903!jetty-continuation.jar[0m
+[0m[[0mdebug[0m] [0m:: resolution report :: resolve 11400ms :: artifacts dl 42ms[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 compile produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-compile.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 runtime produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-runtime.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 test produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-test.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 provided produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-provided.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 optional produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-optional.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 compile-internal produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-compile-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 runtime-internal produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-runtime-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 test-internal produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-test-internal.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 plugin produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-plugin.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 sources produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-sources.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 docs produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-docs.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 pom produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-pom.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 scala-tool produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-scala-tool.xml[0m
+[0m[[0mdebug[0m] [0m	report for default#livelygigsr_1-0_sjs0.6_2.11;1.0 phantom-js-jetty produced in D:\projects\livelygig\livelyGigScalaReact\livelyGigSR_1.0\target\resolution-cache\reports\default-livelygigsr_1-0_sjs0.6_2.11-phantom-js-jetty.xml[0m
+[0m[[0mdebug[0m] [0m	resolve done (11400ms resolve - 42ms download)[0m
+[0m[[0minfo[0m] [0mDone updating.[0m
+[0m[[33mwarn[0m] [0mThere may be incompatibilities among your library dependencies.[0m
+[0m[[33mwarn[0m] [0mHere are some of the libraries that were evicted:[0m
+[0m[[33mwarn[0m] [0m	* org.webjars.npm:react:0.14.1 -> 0.14.2 (caller: default:livelygigsr_1-0_sjs0.6_2.11:1.0, org.webjars.npm:react-dom:0.14.1)[0m
+[0m[[0minfo[0m] [0mHere are other libraries that were evicted:[0m
+[0m[[0minfo[0m] [0m	* org.scala-js:scalajs-library_2.11:0.6.2 -> 0.6.5 (caller: org.scala-js:scalajs-dom_sjs0.6_2.11:0.8.2, default:livelygigsr_1-0_sjs0.6_2.11:1.0, com.github.japgolly.scalajs-react:core_sjs0.6_2.11:0.10.1)[0m
+[0m[[0minfo[0m] [0m	* org.scala-lang:scala-library:2.11.6 -> 2.11.7 (caller: org.scala-js:scalajs-dom_sjs0.6_2.11:0.8.2, org.scala-js:scalajs-library_2.11:0.6.5, org.scala-lang:scala-reflect:2.11.7 (), default:livelygigsr_1-0_sjs0.6_2.11:1.0, com.github.japgolly.scalajs-react:core_sjs0.6_2.11:0.10.1)[0m

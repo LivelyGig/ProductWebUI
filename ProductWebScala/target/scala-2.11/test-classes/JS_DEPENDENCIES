@@ -1,0 +1,1 @@
+{"libDeps":[{"commonJSName":"React","minifiedResourceName":"react-with-addons.min.js","resourceName":"react-with-addons.js"},{"commonJSName":"ReactDOM","minifiedResourceName":"react-dom.min.js","resourceName":"react-dom.js","dependencies":["react-with-addons.js"]}],"origin":{"configuration":"test","moduleName":"livelygigsr_1-0"}}
