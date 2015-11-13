@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="SBT: org.webjars.npm:jstransform:10.1.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.webjars.npm/jstransform/jars/jstransform-10.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.webjars.npm/jstransform/docs/jstransform-10.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.webjars.npm/jstransform/srcs/jstransform-10.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

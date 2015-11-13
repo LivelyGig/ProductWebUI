@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="livelygigsr_1-0_sjs0.6_2.11"
+		revision="1.0"
+		conf="runtime-internal"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool, phantom-js-jetty"
+		date="20151113184551"/>
+	<dependencies>
+		<module organisation="com.github.japgolly.scalajs-react" name="extra_sjs0.6_2.11">
+			<revision name="0.10.1" status="release" pubdate="20151102044112" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/japgolly/scalajs-react" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="19">
+				<license name="Apache-2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+				<metadata-artifact status="no" details="" size="3208" time="0" location="C:\Users\tanveer.a\.ivy2\cache\com.github.japgolly.scalajs-react\extra_sjs0.6_2.11\ivy-0.10.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/japgolly/scalajs-react/extra_sjs0.6_2.11/0.10.1/extra_sjs0.6_2.11-0.10.1.pom"/>
+				<caller organisation="default" name="livelygigsr_1-0_sjs0.6_2.11" conf="optional, compile, runtime, runtime-internal" rev="0.10.1" rev-constraint-default="0.10.1" rev-constraint-dynamic="0.10.1" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="extra_sjs0.6_2.11" type="jar" ext="jar" status="no" details="" size="2002649" time="0" location="C:\Users\tanveer.a\.ivy2\cache\com.github.japgolly.scalajs-react\extra_sjs0.6_2.11\jars\extra_sjs0.6_2.11-0.10.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/github/japgolly/scalajs-react/extra_sjs0.6_2.11/0.10.1/extra_sjs0.6_2.11-0.10.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.github.japgolly.scalajs-react" name="core_sjs0.6_2.11">
+			<revision name="0.10.1" status="release" pubdate="20151102044044" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/japgolly/scalajs-react" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, compile(*), runtime, runtime(*), master(compile), master" position="16">
+				<license name="Apache-2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+				<metadata-artifact status="no" details="" size="3190" time="0" location="C:\Users\tanveer.a\.ivy2\cache\com.github.japgolly.scalajs-react\core_sjs0.6_2.11\ivy-0.10.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/japgolly/scalajs-react/core_sjs0.6_2.11/0.10.1/core_sjs0.6_2.11-0.10.1.pom"/>
+				<caller organisation="default" name="livelygigsr_1-0_sjs0.6_2.11" conf="optional, compile, runtime, runtime-internal" rev="0.10.1" rev-constraint-default="0.10.1" rev-constraint-dynamic="0.10.1" callerrev="1.0"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="extra_sjs0.6_2.11" conf="default, compile, runtime, master" rev="0.10.1" rev-constraint-default="0.10.1" rev-constraint-dynamic="0.10.1" callerrev="0.10.1"/>
+				<artifacts>
+					<artifact name="core_sjs0.6_2.11" type="jar" ext="jar" status="no" details="" size="1954773" time="0" location="C:\Users\tanveer.a\.ivy2\cache\com.github.japgolly.scalajs-react\core_sjs0.6_2.11\jars\core_sjs0.6_2.11-0.10.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/github/japgolly/scalajs-react/core_sjs0.6_2.11/0.10.1/core_sjs0.6_2.11-0.10.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-js" name="scalajs-dom_sjs0.6_2.11">
+			<revision name="0.8.2" status="release" pubdate="20150927152602" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://scala-js.org/" downloaded="false" searched="false" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="18">
+				<license name="MIT" url="http://opensource.org/licenses/mit-license.php"/>
+				<metadata-artifact status="no" details="" size="2711" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-js\scalajs-dom_sjs0.6_2.11\ivy-0.8.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-js/scalajs-dom_sjs0.6_2.11/0.8.2/scalajs-dom_sjs0.6_2.11-0.8.2.pom"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="core_sjs0.6_2.11" conf="default, compile, runtime, master" rev="0.8.2" rev-constraint-default="0.8.2" rev-constraint-dynamic="0.8.2" callerrev="0.10.1"/>
+				<artifacts>
+					<artifact name="scalajs-dom_sjs0.6_2.11" type="jar" ext="jar" status="no" details="" size="1388155" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-js\scalajs-dom_sjs0.6_2.11\jars\scalajs-dom_sjs0.6_2.11-0.8.2.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-js/scalajs-dom_sjs0.6_2.11/0.8.2/scalajs-dom_sjs0.6_2.11-0.8.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-js" name="scalajs-library_2.11">
+			<revision name="0.6.5" status="release" pubdate="20150829221604" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://scala-js.org/" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, compile(*), runtime, runtime(*), master(compile), master" position="15">
+				<license name="BSD New" url="https://github.com/scala-js/scala-js/blob/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="2723" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-js\scalajs-library_2.11\ivy-0.6.5.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-js/scalajs-library_2.11/0.6.5/scalajs-library_2.11-0.6.5.pom"/>
+				<caller organisation="org.scala-js" name="scalajs-dom_sjs0.6_2.11" conf="compile, runtime" rev="0.6.2" rev-constraint-default="0.6.2" rev-constraint-dynamic="0.6.2" callerrev="0.8.2"/>
+				<caller organisation="default" name="livelygigsr_1-0_sjs0.6_2.11" conf="optional, compile, runtime, runtime-internal" rev="0.6.5" rev-constraint-default="0.6.5" rev-constraint-dynamic="0.6.5" callerrev="1.0"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="core_sjs0.6_2.11" conf="default, compile, runtime, master" rev="0.6.5" rev-constraint-default="0.6.5" rev-constraint-dynamic="0.6.5" callerrev="0.10.1"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="extra_sjs0.6_2.11" conf="default, compile, runtime, master" rev="0.6.5" rev-constraint-default="0.6.5" rev-constraint-dynamic="0.6.5" callerrev="0.10.1"/>
+				<artifacts>
+					<artifact name="scalajs-library_2.11" type="jar" ext="jar" status="no" details="" size="7842290" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-js\scalajs-library_2.11\jars\scalajs-library_2.11-0.6.5.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-js/scalajs-library_2.11/0.6.5/scalajs-library_2.11-0.6.5.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="0.6.2" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="-1">
+				<evicted-by rev="0.6.5"/>
+				<caller organisation="org.scala-js" name="scalajs-dom_sjs0.6_2.11" conf="compile, runtime" rev="0.6.2" rev-constraint-default="0.6.2" rev-constraint-dynamic="0.6.2" callerrev="0.8.2"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-reflect">
+			<revision name="2.11.7" status="release" pubdate="20150623014746" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.11.7/" downloaded="false" searched="false" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="17">
+				<license name="BSD 3-Clause" url="http://www.scala-lang.org/license.html"/>
+				<metadata-artifact status="no" details="" size="2860" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-lang\scala-reflect\ivy-2.11.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.7/scala-reflect-2.11.7.pom"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="core_sjs0.6_2.11" conf="default, compile, runtime, master" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="0.10.1"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="extra_sjs0.6_2.11" conf="default, compile, runtime, master" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="0.10.1"/>
+				<artifacts>
+					<artifact name="scala-reflect" type="jar" ext="jar" status="no" details="" size="4576443" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-lang\scala-reflect\jars\scala-reflect-2.11.7.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.11.7/scala-reflect-2.11.7.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="react">
+			<revision name="0.14.2" status="release" pubdate="20151103151750" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, runtime, master" position="1">
+				<license name="BSD-3-Clause" url="https://spdx.org/licenses/BSD-3-Clause#licenseText"/>
+				<metadata-artifact status="no" details="" size="2782" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\react\ivy-0.14.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/react/0.14.2/react-0.14.2.pom"/>
+				<caller organisation="default" name="livelygigsr_1-0_sjs0.6_2.11" conf="optional, compile, runtime, runtime-internal" rev="0.14.2" rev-constraint-default="0.14.2" rev-constraint-dynamic="0.14.2" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="react" type="jar" ext="jar" status="no" details="" size="702544" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\react\jars\react-0.14.2.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/react/0.14.2/react-0.14.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="fbjs">
+			<revision name="0.3.1" status="release" pubdate="20151007201833" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="9">
+				<license name="BSD-3-Clause" url="https://spdx.org/licenses/BSD-3-Clause#licenseText"/>
+				<metadata-artifact status="no" details="" size="3087" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\fbjs\ivy-0.3.1.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/fbjs/0.3.1/fbjs-0.3.1.pom"/>
+				<caller organisation="org.webjars.npm" name="react" conf="default, compile, runtime, master" rev="[0.3.1,0.4)" rev-constraint-default="[0.3.1,0.4)" rev-constraint-dynamic="[0.3.1,0.4)" callerrev="0.14.2"/>
+				<artifacts>
+					<artifact name="fbjs" type="jar" ext="jar" status="no" details="" size="114672" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\fbjs\jars\fbjs-0.3.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/fbjs/0.3.1/fbjs-0.3.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="whatwg-fetch">
+			<revision name="0.9.0" status="release" pubdate="20150610084141" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="14">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2459" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\whatwg-fetch\ivy-0.9.0.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/whatwg-fetch/0.9.0/whatwg-fetch-0.9.0.pom"/>
+				<caller organisation="org.webjars.npm" name="fbjs" conf="compile, runtime" rev="[0.9.0,0.10)" rev-constraint-default="[0.9.0,0.10)" rev-constraint-dynamic="[0.9.0,0.10)" callerrev="0.3.1"/>
+				<artifacts>
+					<artifact name="whatwg-fetch" type="jar" ext="jar" status="no" details="" size="7819" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\whatwg-fetch\jars\whatwg-fetch-0.9.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/whatwg-fetch/0.9.0/whatwg-fetch-0.9.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="ua-parser-js">
+			<revision name="0.7.9" status="release" pubdate="20151008123630" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="13">
+				<license name="GPLv2" url="https://spdx.org/licenses/GPLv2#licenseText"/>
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2537" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\ua-parser-js\ivy-0.7.9.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/ua-parser-js/0.7.9/ua-parser-js-0.7.9.pom"/>
+				<caller organisation="org.webjars.npm" name="fbjs" conf="compile, runtime" rev="[0.7.9,0.8)" rev-constraint-default="[0.7.9,0.8)" rev-constraint-dynamic="[0.7.9,0.8)" callerrev="0.3.1"/>
+				<artifacts>
+					<artifact name="ua-parser-js" type="jar" ext="jar" status="no" details="" size="45823" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\ua-parser-js\jars\ua-parser-js-0.7.9.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/ua-parser-js/0.7.9/ua-parser-js-0.7.9.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="promise">
+			<revision name="7.0.4" status="release" pubdate="20150819031327" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="11">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2624" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\promise\ivy-7.0.4.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/promise/7.0.4/promise-7.0.4.pom"/>
+				<caller organisation="org.webjars.npm" name="fbjs" conf="compile, runtime" rev="[7.0.3,8)" rev-constraint-default="[7.0.3,8)" rev-constraint-dynamic="[7.0.3,8)" callerrev="0.3.1"/>
+				<artifacts>
+					<artifact name="promise" type="jar" ext="jar" status="no" details="" size="28042" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\promise\jars\promise-7.0.4.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/promise/7.0.4/promise-7.0.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="asap">
+			<revision name="2.0.3" status="release" pubdate="20150819032906" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="12">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2435" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\asap\ivy-2.0.3.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/asap/2.0.3/asap-2.0.3.pom"/>
+				<caller organisation="org.webjars.npm" name="promise" conf="compile, runtime" rev="[2.0.3,2.1)" rev-constraint-default="[2.0.3,2.1)" rev-constraint-dynamic="[2.0.3,2.1)" callerrev="7.0.4"/>
+				<artifacts>
+					<artifact name="asap" type="jar" ext="jar" status="no" details="" size="17659" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\asap\jars\asap-2.0.3.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/asap/2.0.3/asap-2.0.3.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="core-js">
+			<revision name="1.2.4" status="release" pubdate="20151102132856" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="10">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2444" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\core-js\ivy-1.2.4.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/core-js/1.2.4/core-js-1.2.4.pom"/>
+				<caller organisation="org.webjars.npm" name="fbjs" conf="compile, runtime" rev="[1.0.0,2)" rev-constraint-default="[1.0.0,2)" rev-constraint-dynamic="[1.0.0,2)" callerrev="0.3.1"/>
+				<artifacts>
+					<artifact name="core-js" type="jar" ext="jar" status="no" details="" size="623253" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\core-js\jars\core-js-1.2.4.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/core-js/1.2.4/core-js-1.2.4.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="envify">
+			<revision name="3.4.0" status="release" pubdate="20150602095207" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="2">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2776" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\envify\ivy-3.4.0.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/envify/3.4.0/envify-3.4.0.pom"/>
+				<caller organisation="org.webjars.npm" name="react" conf="default, compile, runtime, master" rev="[3.0.0,4)" rev-constraint-default="[3.0.0,4)" rev-constraint-dynamic="[3.0.0,4)" callerrev="0.14.2"/>
+				<artifacts>
+					<artifact name="envify" type="jar" ext="jar" status="no" details="" size="6757" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\envify\jars\envify-3.4.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/envify/3.4.0/envify-3.4.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="jstransform">
+			<revision name="10.1.0" status="release" pubdate="20150830045651" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="4">
+				<license name="Apache-2.0" url="https://spdx.org/licenses/Apache-2.0#licenseText"/>
+				<metadata-artifact status="no" details="" size="2960" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\jstransform\ivy-10.1.0.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/jstransform/10.1.0/jstransform-10.1.0.pom"/>
+				<caller organisation="org.webjars.npm" name="envify" conf="compile, runtime" rev="[10.0.1,11)" rev-constraint-default="[10.0.1,11)" rev-constraint-dynamic="[10.0.1,11)" callerrev="3.4.0"/>
+				<artifacts>
+					<artifact name="jstransform" type="jar" ext="jar" status="no" details="" size="85866" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\jstransform\jars\jstransform-10.1.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/jstransform/10.1.0/jstransform-10.1.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="source-map">
+			<revision name="0.1.31" status="release" pubdate="20150602114845" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="false" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="7">
+				<license name="BSD" url="https://spdx.org/licenses/BSD#licenseText"/>
+				<metadata-artifact status="no" details="" size="2635" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\source-map\ivy-0.1.31.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/source-map/0.1.31/source-map-0.1.31.pom"/>
+				<caller organisation="org.webjars.npm" name="jstransform" conf="compile, runtime" rev="0.1.31" rev-constraint-default="0.1.31" rev-constraint-dynamic="0.1.31" callerrev="10.1.0"/>
+				<artifacts>
+					<artifact name="source-map" type="jar" ext="jar" status="no" details="" size="51444" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\source-map\jars\source-map-0.1.31.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/source-map/0.1.31/source-map-0.1.31.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="amdefine">
+			<revision name="0.1.0" status="release" pubdate="20150521090618" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="8">
+				<license name="NAUMEN" url="https://spdx.org/licenses/NAUMEN#licenseText"/>
+				<metadata-artifact status="no" details="" size="2453" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\amdefine\ivy-0.1.0.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/amdefine/0.1.0/amdefine-0.1.0.pom"/>
+				<caller organisation="org.webjars.npm" name="source-map" conf="compile, runtime" rev="[0.0.4,)" rev-constraint-default="[0.0.4,)" rev-constraint-dynamic="[0.0.4,)" callerrev="0.1.31"/>
+				<artifacts>
+					<artifact name="amdefine" type="jar" ext="jar" status="no" details="" size="10956" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\amdefine\jars\amdefine-0.1.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/amdefine/0.1.0/amdefine-0.1.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="esprima-fb">
+			<revision name="13001.1001.0-dev-harmony-fb" status="release" pubdate="20150830081030" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="false" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="6">
+				<license name="BSD" url="https://spdx.org/licenses/BSD#licenseText"/>
+				<metadata-artifact status="no" details="" size="2475" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\esprima-fb\ivy-13001.1001.0-dev-harmony-fb.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/esprima-fb/13001.1001.0-dev-harmony-fb/esprima-fb-13001.1001.0-dev-harmony-fb.pom"/>
+				<caller organisation="org.webjars.npm" name="jstransform" conf="compile, runtime" rev="13001.1001.0-dev-harmony-fb" rev-constraint-default="13001.1001.0-dev-harmony-fb" rev-constraint-dynamic="13001.1001.0-dev-harmony-fb" callerrev="10.1.0"/>
+				<artifacts>
+					<artifact name="esprima-fb" type="jar" ext="jar" status="no" details="" size="102486" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\esprima-fb\jars\esprima-fb-13001.1001.0-dev-harmony-fb.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/esprima-fb/13001.1001.0-dev-harmony-fb/esprima-fb-13001.1001.0-dev-harmony-fb.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="base62">
+			<revision name="0.1.1" status="release" pubdate="20150602113427" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="false" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="5">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2441" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\base62\ivy-0.1.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/base62/0.1.1/base62-0.1.1.pom"/>
+				<caller organisation="org.webjars.npm" name="jstransform" conf="compile, runtime" rev="0.1.1" rev-constraint-default="0.1.1" rev-constraint-dynamic="0.1.1" callerrev="10.1.0"/>
+				<artifacts>
+					<artifact name="base62" type="jar" ext="jar" status="no" details="" size="5303" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\base62\jars\base62-0.1.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/base62/0.1.1/base62-0.1.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.webjars.npm" name="through">
+			<revision name="2.3.7" status="release" pubdate="20150524221016" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://webjars.org" downloaded="false" searched="true" default="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="3">
+				<license name="MIT" url="https://spdx.org/licenses/MIT#licenseText"/>
+				<metadata-artifact status="no" details="" size="2444" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\through\ivy-2.3.7.xml" searched="true" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/webjars/npm/through/2.3.7/through-2.3.7.pom"/>
+				<caller organisation="org.webjars.npm" name="envify" conf="compile, runtime" rev="[2.3.4,2.4)" rev-constraint-default="[2.3.4,2.4)" rev-constraint-dynamic="[2.3.4,2.4)" callerrev="3.4.0"/>
+				<artifacts>
+					<artifact name="through" type="jar" ext="jar" status="no" details="" size="9402" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.webjars.npm\through\jars\through-2.3.7.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/webjars/npm/through/2.3.7/through-2.3.7.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-library">
+			<revision name="2.11.7" status="release" pubdate="20150623014702" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.11.7/" downloaded="false" searched="false" default="false" conf="default(compile), default, compile, compile(*), runtime, runtime(*), master(compile), master" position="0">
+				<license name="BSD 3-Clause" url="http://www.scala-lang.org/license.html"/>
+				<metadata-artifact status="no" details="" size="2685" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-lang\scala-library\ivy-2.11.7.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7.pom"/>
+				<caller organisation="org.scala-js" name="scalajs-dom_sjs0.6_2.11" conf="compile, runtime" rev="2.11.6" rev-constraint-default="2.11.6" rev-constraint-dynamic="2.11.6" callerrev="0.8.2"/>
+				<caller organisation="org.scala-js" name="scalajs-library_2.11" conf="default, compile, runtime, master" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="0.6.5"/>
+				<caller organisation="org.scala-lang" name="scala-reflect" conf="compile, runtime" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="2.11.7"/>
+				<caller organisation="default" name="livelygigsr_1-0_sjs0.6_2.11" conf="optional, compile, runtime, runtime-internal" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="1.0"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="core_sjs0.6_2.11" conf="default, compile, runtime, master" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="0.10.1"/>
+				<caller organisation="com.github.japgolly.scalajs-react" name="extra_sjs0.6_2.11" conf="default, compile, runtime, master" rev="2.11.7" rev-constraint-default="2.11.7" rev-constraint-dynamic="2.11.7" callerrev="0.10.1"/>
+				<artifacts>
+					<artifact name="scala-library" type="jar" ext="jar" status="no" details="" size="5745606" time="0" location="C:\Users\tanveer.a\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.11.7.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.11.7/scala-library-2.11.7.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="2.11.6" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime, compile(*), runtime(*), master(compile), master" position="-1">
+				<evicted-by rev="2.11.7"/>
+				<caller organisation="org.scala-js" name="scalajs-dom_sjs0.6_2.11" conf="compile, runtime" rev="2.11.6" rev-constraint-default="2.11.6" rev-constraint-dynamic="2.11.6" callerrev="0.8.2"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>
