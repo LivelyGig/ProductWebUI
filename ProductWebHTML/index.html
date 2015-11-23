@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LivelyGig</title>
+    <!--resizable-->
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel='stylesheet' href='bower_components/perfect-scrollbar/css/perfect-scrollbar.css' />
+    <link href="assets/Fg-Functional/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/Livelygig-glyphs/style.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src='bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js'></script> 
+    <!--spiltter-->
+    <link href="bower_components/touch-splitter-jquery/src/touchsplitter.css" rel="stylesheet">
+    <script src='bower_components/touch-splitter-jquery/src/jquery.touchsplitter.js'></script>  
+    <script src='assets/scripts/script.js'></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script> 
+    <!-- perfect scrollbar -->
+    <link rel="stylesheet" type="text/css" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.css" />
+    <script type="text/javascript" src="bower_components/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <!--tokanizer-->
+    <script type="text/javascript" src="assets/Tokenize-master/jquery.tokenize.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/Tokenize-master/jquery.tokenize.css" />
+    <!-- dynatree -->
+    <script src='assets/scripts/jquery.cookie.js' type="text/javascript"></script>
+    <link rel='stylesheet' type='text/css' href='assets/css/skin-vista/ui.dynatree.css'>
+    <script src='assets/scripts/jquery.dynatree.js' type="text/javascript"></script>
+    <script src='assets/scripts/dynatree.js' type="text/javascript"></script>
+
+     <link href="assets/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-fixed-top navi-background" role="navigation">
+      <div class="container-fluid navi-container-div">
+        <div class="navbar-header">
+          <button type="submit" class="navbar-toggle glyphicon glyphicon-th-list" data-toggle="collapse" data-target="#navi-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#"><img src="images/logo-symbol.png" class="img-responsive navi-logo img-circle" alt="LivelyGig logo"/></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navi-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Messages</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Talent</a></li>
+            <li><a href="#">Offerings</a></li>
+            <li><a href="#">Contracts</a></li>
+            <li><a href="#">Connections</a></li>
+            <li><a href="#">Wallets</a></li>
+          </ul>
+          <div class="navbar-right user-profile-div">
+            <ul class="nav navbar-nav navi-user-profile-list">
+              <li><a href="#"><span class="glyphicon glyphicon-bell navi-bell-notify"></span></a></li>
+              <li class="dropdown">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle profile-name padding-0">
+                  <span class="profile-name">Dale Steyn </span>
+                  <img src="images/profile.jpg" class="img-responsive navi-user-profile-pic img-circle" alt="Profile"/>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Available for Chat</a></li>
+                  <li><a href="#">Invisible</a></li>
+                   <li class="divider"></li>
+                  <li><a href="#">Account</a></li>
+                  <li><a href="#">Profiles</a></li>
+                  <li><a href="#">Notifications</a></li>
+                  <li><a href="#">Payments</a></li>
+                  <li><a href="#">UI Preferences</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Sign Out</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div> 
+          <!-- <div class="visible-xs hidden-md hidden-sm">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Sign Up</a></li>
+            </ul>
+          </div>
+          <div class="navi-login-link visible-xs hidden-md hidden-sm">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Login</a></li>
+              <li><a class="disable hidden-xs">|</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      -->
+    </nav>
+    <div class="container-fluid middel-navi-container">
+      <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12 middle-navi-btn-container">
+          <div class="btn-group">
+            <button type="button" class="btn project-create-btn dropdown-toggle" data-toggle="dropdown">Recommended Matches <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-width">
+              <li><a href="#">Suggested Matches</a></li>
+              <li><a href="#">Available</a></li>
+              <li><a href="#">Active Unavailable</a></li>
+              <li><a href="#">Inactive</a></li>
+              <li><a href="#">Suppressed</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Customized View 1</a></li>
+              <li><a href="#">Customize...</a></li>
+            </ul>
+          </div>
+          <button class="btn create-new-project-btn">Create New Project</button>
+        </div>
+    </div>
+    </div>
+    <!-- Main Container -->
+    <div id="main-container" class="container-fluid main-container-div">
+      <div class="split-container">
+        <div class="split">
+          <div  id="slct-scroll-container"> 
+              <div class="font-size-1-2em slct-search-pane-label-position">Skills</div>
+                <div id="resizablecontainerskills" class="slct-left-content-div resizable">
+                  <select id="tokenize" multiple="multiple" class="tokenize-sample">
+                    <option value="1">Dave</option>
+                    <option value="2">Paul</option>
+                    <option value="3">Michel</option>
+                    <option value="4">Anna</option>
+                    <option value="5">Eleanor</option>
+                  </select>
+                </div>
+                <div class="font-size-1-2em slct-search-pane-label-position">Categories</div>
+                <div  id="resizablecontainercategories" class="slct-left-content-div resizable categories-container-height always-visible">
+                  <div id="sclt-dynatree"></div>
+                </div>
+                <div class="font-size-1-2em slct-search-pane-label-position">Price Range</div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 slct-input-width">
+                    <input type="checkbox">
+                    <span class="checkbox-lbl"></span>
+                  </div>
+                  <div class="slct-input-left-container-margin" >
+                    <input type="text" class="form-control slct-input-height-width">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 slct-input-width">
+                    <input type="checkbox">
+                    <span class="checkbox-lbl"></span>
+                  </div>
+                  <div class="slct-input-left-container-margin" >
+                    <input type="text" class="form-control slct-input-height-width">
+                  </div>
+                </div>     
+                <div class="font-size-1-2em slct-search-pane-label-position">Posted Date</div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 slct-input-width">
+                    <input type="checkbox">
+                    <span class="checkbox-lbl"></span>
+                  </div>
+                  <div class="slct-input-left-container-margin" >
+                    <input type="text" class="form-control slct-input-height-width">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 slct-input-width">
+                    <input type="checkbox">
+                    <span class="checkbox-lbl"></span>
+                  </div>
+                  <div class="slct-input-left-container-margin" >
+                    <input type="text" class="form-control slct-input-height-width">
+                  </div>
+                </div>
+                <div class="font-size-1-2em slct-search-pane-label-position">Channels</div>
+                  <div id="resizablecontainerchannel" class="slct-left-content-div resizable">
+                    <select id="tokenizechannel" multiple="multiple" class="tokenize-sample">
+                      <option value="1">@Tom</option>
+                      <option value="2">@Reza</option>
+                      <option value="3">@Michel</option>
+                      <option value="4">@Anna</option>
+                      <option value="5">@Eleanor</option>
+                    </select>
+                  </div>
+          </div> <!-- split first child close div -->
+      <div id="rslt-scroll-container">
+       <div class="col-md-12 col-sm-12 col-xs-12 rslt-gig-actions-container">
+            <div class="col-md-5 col-sm-7 col-xs-8 padding-right-0">
+              <div class="dropdown rslt-gig-actions-dropdown">
+                <button class="btn dropdown-toggle rslt-match-gig-btn" type="button" data-toggle="dropdown">LivelyGig Match
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">By Bid Amount</a></li>
+                    <li><a href="#">(More Sorting)</a></li>
+                    <li><a href="#">profile3</a></li>
+                  </ul>
+                </div>
+                <div class="rslt-count-holder-div">34,321 results</div>
+              </div>
+              <div class="col-md-4 col-sm-5 col-xs-4 pull-right padding-left-0">
+                <div class="pull-right rslt-gig-conv-action-btn-container">
+                  <button type="button" id="rslt-view-names"class="btn"  data-toggle="tooltip" title="View Summary">
+                    <span class="icon-List1"></span>
+                  </button>
+                  <button type="button" id="rslt-view-details" class="btn" data-toggle="tooltip" title="View Brief">
+                    <span class="icon-List2"></span>
+                  </button>
+                  <button type="button" id="rslt-view-description" class="btn" data-toggle="tooltip" title="View Full Posts">
+                    <span class="icon-List3"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+           <div class="container-fluid rslt-gig-conversation">
+            <div id="rslt-section-container" class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+              <ul class="media-list">
+                <li class="media rslt-profile-description">
+                  <div class="col-md-12 rslt-profile-name-holder">Name : &nbsp;job-title</div>
+                  <div class="col-md-12">
+                    <div class="rslt-profile-details-holder">Experience: 8 years</div>
+                    <div class="rslt-profile-details-holder">Projects Completed: 24</div>
+                    <div class="rslt-profile-details-holder">Availability: Negotiable</div>
+                    </div>
+                  <div class="media-left">
+                    <a href="#"><img class="media-object rslt-profile-pic" src="images/profile-img.png" alt="i"/></a>
+                  </div>
+                  <div class="media-body">
+                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+                      <div class=" pull-right rslt-profile-action-buttons padding-left-right-0">
+                        <button class="btn">Button1</button>
+                        <button class="btn">Button2</button>
+                        <button class="btn">Button3</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="media rslt-profile-description">
+                  <div class="col-md-12 rslt-profile-name-holder">Name : &nbsp;job-title</div>
+                  <div class="col-md-12">
+                    <div class="rslt-profile-details-holder">Experience: 2 years</div>
+                    <div class="rslt-profile-details-holder">Projects Completed: 8</div>
+                    <div class="rslt-profile-details-holder">Availability: Negotiable</div>
+                    </div>
+                  <div class="media-left">
+                    <a href="#"><img class="media-object rslt-profile-pic" src="images/profile-img.png" alt="i"/></a>
+                  </div>
+                  <div class="media-body">
+                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+                      <div class=" pull-right rslt-profile-action-buttons padding-left-right-0">
+                        <button class="btn">Button1</button>
+                        <button class="btn">Button2</button>
+                        <button class="btn">Button3</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="media rslt-profile-description">
+                  <div class="col-md-12 rslt-profile-name-holder">Name : &nbsp;job-title</div>
+                  <div class="col-md-12">
+                    <div class="rslt-profile-details-holder">Experience: 8 years</div>
+                    <div class="rslt-profile-details-holder">Projects Completed: 24</div>
+                    <div class="rslt-profile-details-holder">Availability: Negotiable</div>
+                    </div>
+                  <div class="media-left">
+                    <a href="#"><img class="media-object rslt-profile-pic" src="images/profile-img.png" alt="i"/></a>
+                  </div>
+                  <div class="media-body">
+                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+                      <div class=" pull-right rslt-profile-action-buttons padding-left-right-0">
+                        <button class="btn">Button1</button>
+                        <button class="btn">Button2</button>
+                        <button class="btn">Button3</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="media rslt-profile-description">
+                  <div class="col-md-12 rslt-profile-name-holder">Name : &nbsp;job-title</div>
+                  <div class="col-md-12">
+                    <div class="rslt-profile-details-holder">Experience: 8 years</div>
+                    <div class="rslt-profile-details-holder">Projects Completed: 24</div>
+                    <div class="rslt-profile-details-holder">Availability: Negotiable</div>
+                    </div>
+                  <div class="media-left">
+                    <a href="#"><img class="media-object rslt-profile-pic" src="images/profile-img.png" alt="i"/></a>
+                  </div>
+                  <div class="media-body">
+                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+                      <div class=" pull-right rslt-profile-action-buttons padding-left-right-0">
+                        <button class="btn">Button1</button>
+                        <button class="btn">Button2</button>
+                        <button class="btn">Button3</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="media rslt-profile-description">
+                  <div class="col-md-12 rslt-profile-name-holder">Name : &nbsp;job-title</div>
+                  <div class="col-md-12">
+                    <div class="rslt-profile-details-holder">Experience: 8 years</div>
+                    <div class="rslt-profile-details-holder">Projects Completed: 24</div>
+                    <div class="rslt-profile-details-holder">Availability: Negotiable</div>
+                    </div>
+                  <div class="media-left">
+                    <a href="#"><img class="media-object rslt-profile-pic" src="images/profile-img.png" alt="i"/></a>
+                  </div>
+                  <div class="media-body">
+                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-right-0">
+                      <div class=" pull-right rslt-profile-action-buttons padding-left-right-0">
+                        <button class="btn">Button1</button>
+                        <button class="btn">Button2</button>
+                        <button class="btn">Button3</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div> 
+      </div> <!-- split second child close div -->
+    </div>
+  </div>
+  </div>
+    <!-- /.main-container -->
+    <!-- Footer section -->
+    <footer class="footer">
+      <div class="container-fluid foot-container">
+        <div class="row">
+          <div class="col-md-4 col-sm-4 col-xs-3 text-center padding-left-right-0">
+           <ul class="foot-items foot-items-left">
+             <li><a href="https://github.com/LivelyGig" data-toggle="tooltip" title="View our GitHub repositories "><i class="fa fa-github"></i></a></li>
+             <li><a href="https://twitter.com/livelygig" data-toggle="tooltip" title="Follow LivelyGig on Twitter"><i class="fa fa-twitter"></i></a></li>
+             <li><a href="#" data-toggle="tooltip" title="Follow LivelyGig on Facebook"><i class="fa fa-facebook"></i></a></li>
+             <li>
+               <a href="https://plus.google.com/+LivelygigCommunity/about" data-toggle="tooltip" title="Add LivelyGig on Google+ ">
+                 <i class="fa fa-google-plus"></i>
+               </a>
+             </li>
+             <li><a href="https://www.youtube.com/channel/UCBM73EEC5disDCDnvUXMe4w" data-toggle="tooltip" title="View the LivelyGig YouTube Channel "><i class="fa fa-youtube"></i></a></li>
+             <li><a href="https://www.linkedin.com/company/livelygig" data-toggle="tooltip" title="View LivelyGig on LinkedIn"><i class="fa fa-linkedin"></i>
+              </a></li>
+             <li><a href="https://livelygig.slack.com/" data-toggle="tooltip" title=" Join the LivelyGig Slack Community "><i class="fa fa-slack"></i></a></li>
+           </ul>
+         </div>
+         <div class="col-md-8 col-sm-8 col-xs-9 foot-items-right-container">
+          <ul class="foot-items foot-items-right">
+            <li><a href="#"> About</a></li>
+            <li><a href="#"> Privacy</a></li>
+            <li><a href="#">Terms Of Use</a></li>
+            <li><a href="#">Trademarks</a></li>
+            <li><a href="#"> &copy 2015 <span class="foot-text-logo-red">Lively</span> <span class="foot-text-logo-blue">Gig</span> </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>  <!-- /.footer section -->
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<html style="background:#dbdbdb">
+<head>
+	<title>TouchSplitter Demo</title>
+	<link href="src/touchsplitter.css" rel="stylesheet"/>
+	<style>
+		
+		.split>div{
+			background: #444;
+		}
+		.split>div:first-child{
+			background: #ffffff;
+		}
+		.split>div:last-child{
+			background: #ffffff;
+		}
+
+		.split-container {
+			position: relative;
+			top: 3em;
+			left: 1em;
+			right: 1em;
+			bottom: 1em;
+			overflow: hidden;
+		}
+
+		.splitter-bar {
+			background: #333;
+		}
+	</style>
+</head>
+<body>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="src/jquery.touchsplitter.js"></script>
+	<h1>Basic Demo</h1>
+	<div class="split-container">
+
+		<div class="split">
+			<div> Left Side </div>
+			<div> Right Side </div>
+		</div>
+	</div>
+	<script>
+		splitter = $('.split').touchSplit({leftMin:"0%", rightMin:"100%", thickness: "10px", dock:"left"})
+		splitter.getFirst().touchSplit({thickness: "20px", orientation:"vertical"})
+	</script>
+
+</body>
+</html>
