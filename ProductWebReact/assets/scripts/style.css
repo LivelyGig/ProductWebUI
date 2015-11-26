@@ -1,9 +1,0 @@
-.resizable { 
-	width: auto; 
-	padding: 0.5em; 
-	margin: 1%;
-	min-height: 80px;
-	overflow-y:auto; 
-}
-
-.resizable h3 { text-align: center; margin: 0; }

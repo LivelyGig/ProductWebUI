@@ -1,4 +1,0 @@
-[0m[[0mdebug[0m] [0mLinker: Read info: 495493 us[0m
-[0m[[0mdebug[0m] [0mLinker: Compute reachability: 318596 us[0m
-[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 608479 us[0m
-[0m[[0mdebug[0m] [0mLinker: cache stats: reused: 0 -- invalidated: 3726 -- trees read: 399[0m
