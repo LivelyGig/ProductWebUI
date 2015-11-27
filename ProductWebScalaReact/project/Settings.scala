@@ -2,9 +2,9 @@ import sbt._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
 /**
- * Application settings. Configure the build for your application here.
- * You normally don't have to touch the actual build definition after this.
- */
+  * Application settings. Configure the build for your application here.
+  * You normally don't have to touch the actual build definition after this.
+  */
 object Settings {
   /** The name of your application */
   val name = "scalajs-livelygig"
@@ -28,16 +28,16 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.7"
-    val scalaDom = "0.8.1"
-    val scalajsReact = "0.9.1"
-    val scalaCSS = "0.3.0"
+    val scalaDom = "0.8.2"
+    val scalajsReact = "0.10.0"
+    val scalaCSS = "0.3.1"
     val scalaRx = "0.2.8"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
     val booPickle = "1.1.0"
     val uTest = "0.3.1"
 
-    val react = "0.12.2"
+    val react = "0.14.3"
     val jQuery = "2.1.4"
     val bootstrap = "3.3.4"
     val chartjs = "1.0.1"
@@ -46,9 +46,9 @@ object Settings {
   }
 
   /**
-   * These dependencies are shared between JS and JVM projects
-   * the special %%% function selects the correct version for each project
-   */
+    * These dependencies are shared between JS and JVM projects
+    * the special %%% function selects the correct version for each project
+    */
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % versions.autowire,
     "me.chrons" %%% "boopickle" % versions.booPickle,
@@ -73,7 +73,8 @@ object Settings {
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
   val jsDependencies = Def.setting(Seq(
-    "org.webjars" % "react" % versions.react / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
+    "org.webjars.npm" % "react" % versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
+    "org.webjars.npm" % "react-dom" % versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
     "org.webjars" % "jquery" % versions.jQuery / "jquery.js" minified "jquery.min.js",
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",

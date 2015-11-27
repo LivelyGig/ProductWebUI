@@ -1,6 +1,6 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router2.RouterCtl
+import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{TodoLoc, DashboardLoc, Loc}
 
 import scalacss.ScalaCssReact._
@@ -34,7 +34,7 @@ object MainMenu {
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .stateless
-    .render((P, _, B) => {
+    .render_P((P) => {
     <.ul(bss.navbar, ^.id := "headerNavUl")(
       // build a list of menu items
       for (item <- menuItems) yield {

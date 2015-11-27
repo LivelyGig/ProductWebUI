@@ -1,7 +1,7 @@
 package livelygig.client
 
-import japgolly.scalajs.react.React
-import japgolly.scalajs.react.extra.router2._
+import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import livelygig.client.components.GlobalStyles
@@ -66,6 +66,23 @@ object LGMain extends js.JSApp {
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
     // tell React to render the router in the document body
-    React.render(router(), dom.document.getElementById("root"))
+    //ReactDOM.render(router(), dom.document.getElementById("root"))
+    ReactDOM.render(router(), dom.document.getElementById("root"))
   }
+//  @JSExport
+//  def main(): Unit = {
+//    log.warn("Application starting")
+//    // send log messages also to the server
+//    log.enableServerLogging("/logging")
+//    log.info("This message goes to server as well")
+//
+//    // create stylesheet
+//    GlobalStyles.addToDocument()
+//    AppCSS.load
+//    GlobalRegistry.addToDocumentOnRegistration()
+//    // create the router
+//    val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
+//    // tell React to render the router in the document body
+//    ReactDOM.render(router(), dom.document.getElementById("root"))
+//  }
 }
