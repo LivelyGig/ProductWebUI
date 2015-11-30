@@ -41,10 +41,11 @@ object MainMenu {
         <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
           P.ctl.link(item.location)(HeaderCSS.Style.headerNavA ," ", item.label(P))
         )
-      },
-      <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))
+      }
+   /*   <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))*/
     )
-  })
+
+    })
     .build
 
   def apply(props: Props) = MainMenu(props)

@@ -8,7 +8,8 @@ import scalacss.mutable.GlobalRegistry
 object AppCSS {
   def load () {
     GlobalRegistry.register(
-      HeaderCSS.Style
+      HeaderCSS.Style,
+      FooterCSS.Style
     )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
 
