@@ -1,6 +1,6 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router2.RouterCtl
+import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{TodoLoc, DashboardLoc, Loc}
 
 import scalacss.ScalaCssReact._
@@ -36,7 +36,7 @@ object Footer {
 
   private val Footer = ReactComponentB[Props]("Footer")
     .stateless
-    .render((P, _, B) => {
+    .render_P((P) => {
 
         <.ul(bss.navbar,FooterCSS.Style.footRight)(
           // build a list of menu items
