@@ -10,7 +10,8 @@ object AppCSS {
     GlobalRegistry.register(
       HeaderCSS.Style,
       LftcontainerCSS.Style,
-      FooterCSS.Style
+      FooterCSS.Style,
+      DashBoardCSS.Style
     )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
 

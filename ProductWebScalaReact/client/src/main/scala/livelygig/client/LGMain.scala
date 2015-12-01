@@ -84,7 +84,8 @@ object LGMain extends js.JSApp {
           )
         )
       ),   //recommended matches
-      <.div(HeaderCSS.Style.ContainerHeight, ^.className := "container-fluid")(r.render()),
+      <.div()(r.render()),
+
       <.nav(FooterCSS.Style.footerContainer)(
         <.div(^.className:="row")(
         <.div(^.className:="col-md-4 col-sm-4 col-xs-3")(

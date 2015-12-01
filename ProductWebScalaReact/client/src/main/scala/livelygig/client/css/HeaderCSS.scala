@@ -6,6 +6,7 @@ import scalacss.LengthUnit.px
 import livelygig.client.components.CanIUse
 
 
+
 /**
   * Created by shubham.k on 11/25/2015.
   */
@@ -95,8 +96,9 @@ object HeaderCSS {
     )
 
     val ContainerHeight=style(
-        height(800.px)
+        height(800.px),
       /*height( components.CanIUse.calc(100.vh - 170.px))*/
+        marginTop(75.px)
     )
   }
 }
