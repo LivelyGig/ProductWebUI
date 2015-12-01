@@ -9,8 +9,8 @@ object AppCSS {
   def load () {
     GlobalRegistry.register(
       HeaderCSS.Style,
-      FooterCSS.Style,
-      DashBoardCSS.Style
+      LftcontainerCSS.Style,
+      FooterCSS.Style
     )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
 
