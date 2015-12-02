@@ -34,8 +34,29 @@ object LftcontainerCSS {
       minHeight(100.px)
 
     )
+    val main_container_div= style(
+    backgroundColor(c"#EAEAEA"), 
+    marginTop(122.px),
+    paddingLeft(7.%%),
+    paddingRight(7.%%),
+    overflowY.auto
+    )
+    
+    val split_container= style(
+    position.relative,
+    height(100.%%),
+    overflow.hidden
+    )
+
+<<<<<<< .mine
 
 
+
+=======
+   
+
+
+>>>>>>> .theirs
   }
 
 }
