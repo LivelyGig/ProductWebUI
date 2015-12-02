@@ -14,7 +14,9 @@ object Dashboard {
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl => {
-
+    <.div (^.id:="main-container" class="container-fluid main-container-div")(
+      <.div ^class:="split_container">(	
+        <.div class="split">(
     <.div(^.id:="slct-scroll-container")(
       <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
       	<.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
@@ -24,5 +26,8 @@ object Dashboard {
       		)
       	)
     )
+    )
+	)
+  )
   }).build
 }
