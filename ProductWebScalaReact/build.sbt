@@ -28,6 +28,7 @@ lazy val client: Project = (project in file("client"))
     // by default we do development build, no eliding
     elideOptions := Seq(),
     scalacOptions ++= elideOptions.value,
+    scalacOptions ++= Seq("-language:reflectiveCalls"),
     jsDependencies ++= Settings.jsDependencies.value,
     // RuntimeDOM is needed for tests
     jsDependencies += RuntimeDOM % "test",
