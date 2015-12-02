@@ -1,6 +1,8 @@
 package livelygig.client.css
 
 import scalacss.Defaults._
+import livelygig.client.components.CanIUse.Agent._
+import livelygig.client.components.CanIUse.Support._
 
 
 /**
@@ -73,6 +75,11 @@ object DashBoardCSS {
     width(100.px)
     )
 
+   val btn=style(
+       addClassName("btn"),
+       border(2.px , solid , c"#005256"),
+      marginRight(5.px)
+   )
   }
 
 }

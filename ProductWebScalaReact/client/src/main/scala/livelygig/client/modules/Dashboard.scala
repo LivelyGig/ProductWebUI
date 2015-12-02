@@ -15,7 +15,6 @@ object Dashboard {
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl => {
-
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div(DashBoardCSS.Style.splitContainer)(
           <.div(^.className:="split")(
@@ -49,9 +48,9 @@ object Dashboard {
                  <.div(DashBoardCSS.Style.listIconPadding , ^.className:="col-md-4 col-sm-5 col-xs-4")(
 
                  <.div(/*DashBoardCSS.Style.gigConvActionBtnContainer ,*/^.className:="pull-right" )(
-                   <.button(^.className:="btn","data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
-                   <.button(^.className:="btn","data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
-                   <.button(^.className:="btn","data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list))
+                   <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
+                   <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Brief")(<.span(Icon.list)),
+                   <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Full Posts")(<.span(Icon.list))
                  )
 
                  )

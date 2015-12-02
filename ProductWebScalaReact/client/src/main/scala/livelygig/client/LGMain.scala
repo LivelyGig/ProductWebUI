@@ -42,8 +42,27 @@ object LGMain extends js.JSApp {
       // here we use plain Bootstrap class names as these are specific to the top level layout defined here
       <.nav(HeaderCSS.Style.naviContainer ,^.className := "navbar navbar-fixed-top")(
         <.div()(
-          c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,^.className := "navbar-header",<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png")),
-          <.div(^.className := "collapse navbar-collapse")(
+
+//          <div class="navbar-header">
+//            <button type="submit" class="navbar-toggle glyphicon glyphicon-th-list" data-toggle="collapse" data-target="#navi-collapse">
+//              <span class="icon-bar"></span>
+//              <span class="icon-bar"></span>
+//              <span class="icon-bar"></span>
+//            </button>
+//            <a class="navbar-brand" href="#"><img src="images/logo-symbol.png" class="img-responsive navi-logo img-circle" alt="LivelyGig logo"/></a>
+//            <!-- <button type="submit" class="btn visible-xs my-mobile-list-btn">
+//            <span class="glyphicon glyphicon-th-list my-mobile-list-span" aria-hidden="true"></span>
+//            </button> -->
+//          </div>
+
+            <.div (^.className:="navbar-header")(
+            <.button(^.className:="navbar-toggle","data-toggle".reactAttr := "collapse" , "data-target".reactAttr:="#navi-collapse")(
+              <.span(Icon.thList)
+          ),
+
+            c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,^.className := "navbar-header",<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
+           ),
+          <.div(^.id:="navi-collapse", ^.className := "collapse navbar-collapse")(
             MainMenu(MainMenu.Props(c, r.page)),
            <.div(HeaderCSS.Style.LoginInMenuItem)(
             <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
@@ -110,7 +129,6 @@ object LGMain extends js.JSApp {
             <.div(FooterCSS.Style.displayInline)(
               <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://slack.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
               <.span()(Icon.slack)))
-
           )
         ),
         <.div(^.className:="col-md-8 col-sm-8 col-xs-9")(

@@ -44,7 +44,6 @@ object MainMenu {
       }
    /*   <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))*/
     )
-
     })
     .build
 

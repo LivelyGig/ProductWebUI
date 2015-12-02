@@ -27,14 +27,14 @@ object LftcontainerCSS {
       backgroundColor(c"#ffffff"),
       color(c"#222222")
     )
-    
+
     val resizable= style(
-      width(200.px),  
+      width(200.px),
       margin(0.%%),
       minHeight(100.px)
-    
+
     )
-    
+
 
   }
 

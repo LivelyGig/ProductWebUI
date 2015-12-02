@@ -2,6 +2,7 @@ package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{TodoLoc, DashboardLoc, Loc}
+import livelygig.client.components
 
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -38,11 +39,15 @@ object Footer {
     .stateless
     .render_P((P) => {
 
-        <.ul(bss.navbar,FooterCSS.Style.footRight)(
+        <.ul(bss.navbar,FooterCSS.Style.footRight,^.id:="footMenu")(
           // build a list of menu items
           for (item <- footerItems) yield {
             <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (FooterCSS.Style.footerNavLi),
-              P.ctl.link(item.location)(FooterCSS.Style.footerNavA ," ", item.label(P))
+            if(item == 4 ) {
+              P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
+            }else {
+              P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
+            }
             )
           }
         )
