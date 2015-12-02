@@ -17,7 +17,7 @@ object FooterCSS {
       paddingRight(7.%%)
     )
     val footerNavA = style (
-      borderBottom(3.px, solid, transparent),
+    /*  borderBottom(3.px, solid, transparent),*/
       color(c"#fff"),
       fontSize(1.em),
       letterSpacing(0.5.px),
@@ -57,7 +57,7 @@ object FooterCSS {
     val navbar=style(
       backgroundColor(c"#005256"),
       &.hover(
-      backgroundColor(c"#000")
+      backgroundColor(c"#005256")
       )
     )
     val displayInline=style(

@@ -39,8 +39,22 @@ object HeaderCSS {
       backgroundColor(inherit),
       color(c"#67EAF2"),
       outline(none)
+    ),
+          /*media queries*/
+      media.maxWidth(1130 px) -(
+      fontSize(1.em),
+      padding(10.px , 10.px)
+      )
     )
+
+    val nav = style(
+//      addClassNames("btn", "btn-default"), // Bootstrap classes
+//      textAlign.center   , // Optional customisation
+      addClassName("nav > li > a"),
+      padding(10.px , 10.px)
     )
+
+
     val headerNavLi = style (
       backgroundColor(c"#005256")
     )
@@ -92,7 +106,10 @@ object HeaderCSS {
     paddingLeft(10.px),
     display.inline,
     fontSize(1.2.em),
-    color(c"#fff")
+    color(c"#fff"),
+    media.maxWidth(1130 px) -
+        fontSize(1.em)
+
     )
 
     val ContainerHeight=style(
