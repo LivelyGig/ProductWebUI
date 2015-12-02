@@ -46,9 +46,6 @@ object Footer {
             )
           }
         )
-
-
-
     })
     .build
 

@@ -1,5 +1,12 @@
 package livelygig.client.css
+
+import livelygig.client.components
 import scalacss.Defaults._
+import scalacss.LengthUnit.px
+import livelygig.client.components.CanIUse
+
+
+
 /**
   * Created by shubham.k on 11/25/2015.
   */
@@ -48,12 +55,12 @@ object HeaderCSS {
 
     /* css*/
     val middelNaviContainer =style(
-        marginTop(13.px),
+        marginTop(65.px),
         height(62.px),
         paddingLeft(7.%%),
         paddingRight(7.%%),
         backgroundColor(c"#00767C"),
-
+        position.fixed,
         top(-2.px),
         zIndex(1),
         width(100.%%),
@@ -89,9 +96,9 @@ object HeaderCSS {
     )
 
     val ContainerHeight=style(
-    height(800.px)
+        height(800.px),
+      /*height( components.CanIUse.calc(100.vh - 170.px))*/
+        marginTop(75.px)
     )
-
   }
-
 }

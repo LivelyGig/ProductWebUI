@@ -81,5 +81,6 @@ object Settings {
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
     "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js"
 
+
   ))
 }
