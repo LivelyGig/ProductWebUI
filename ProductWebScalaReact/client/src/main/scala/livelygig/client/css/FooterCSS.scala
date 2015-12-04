@@ -1,14 +1,11 @@
 package livelygig.client.css
 import scalacss.Defaults._
-
 /**
   * Created by bhagyashree.b on 11/30/2015.
   */
 object FooterCSS {
-
   object Style extends StyleSheet.Inline {
     import dsl._
-
     val footerContainer = style (
       borderTop(3.px, solid, c"#67EAF2"),
       backgroundColor(c"#005256"),
@@ -17,7 +14,6 @@ object FooterCSS {
       paddingRight(7.%%)
     )
     val footerNavA = style (
-    /*  borderBottom(3.px, solid, transparent),*/
       color(c"#fff"),
       fontSize(1.em),
       letterSpacing(0.5.px),
@@ -57,7 +53,7 @@ object FooterCSS {
     val navbar=style(
       backgroundColor(c"#005256"),
       &.hover(
-      backgroundColor(c"#005256")
+        backgroundColor(c"#005256")
       )
     )
     val displayInline=style(
@@ -70,9 +66,11 @@ object FooterCSS {
       paddingTop(8.px)
     )
     val displayInlineGlyph=style(
-    paddingLeft(2.%%),
-    fontSize(1.em),
-    color(c"#fff")
+      paddingLeft(2.%%),
+      fontSize(1.em),
+      color(c"#fff"),
+      media.maxWidth(1300.px)-
+        fontSize(12.px)
     )
   }
 }

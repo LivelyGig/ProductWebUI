@@ -1,20 +1,14 @@
 package livelygig.client.css
-
 import livelygig.client.components
 import scalacss.Defaults._
 import scalacss.LengthUnit.px
 import livelygig.client.components.CanIUse
-
-
-
 /**
   * Created by shubham.k on 11/25/2015.
   */
 object HeaderCSS {
-
   object Style extends StyleSheet.Inline {
     import dsl._
-
     val naviContainer = style (
       backgroundColor(c"#005256"),
       minHeight(63.px),
@@ -35,26 +29,21 @@ object HeaderCSS {
         outline(none)
       ),
       &.focus(
-      borderBottom(3.px, solid, c"#67EAF2"),
-      backgroundColor(inherit),
-      color(c"#67EAF2"),
-      outline(none)
-    ),
-          /*media queries*/
-      media.maxWidth(1130 px) -(
-      fontSize(1.em),
-      padding(10.px , 10.px)
-      )
+        borderBottom(3.px, solid, c"#67EAF2"),
+        backgroundColor(inherit),
+        color(c"#67EAF2"),
+        outline(none)
+      ),
+      /*media queries*/
+      media.maxWidth(1130.px) -(
+        fontSize(1.em),
+        padding(10.px , 10.px)
+        )
     )
-
     val nav = style(
-//      addClassNames("btn", "btn-default"), // Bootstrap classes
-//      textAlign.center   , // Optional customisation
       addClassName("nav > li > a"),
       padding(10.px , 10.px)
     )
-
-
     val headerNavLi = style (
       backgroundColor(c"#005256")
     )
@@ -64,31 +53,28 @@ object HeaderCSS {
       height(40.px)
     )
     val logoContainer = style(
-      paddingRight(10.px)
     )
-
     /* css*/
     val middelNaviContainer =style(
-        marginTop(65.px),
-        height(62.px),
-        paddingLeft(7.%%),
-        paddingRight(7.%%),
-        backgroundColor(c"#00767C"),
-        position.fixed,
-        top(-2.px),
-        zIndex(1),
-        width(100.%%),
-        paddingTop(4.px)
+      marginTop(65.px),
+      height(62.px),
+      paddingLeft(7.%%),
+      paddingRight(7.%%),
+      backgroundColor(c"#00767C"),
+      position.fixed,
+      top(-2.px),
+      zIndex(1),
+      width(100.%%),
+      paddingTop(4.px)
     )
-
     val projectCreateBtn= style(
-    backgroundColor(rgba(0,0,0,0.38)),
-    color(c"#13EEDD"),
-    fontSize(1.2.em),
+      backgroundColor(rgba(0,0,0,0.38)),
+      color(c"#13EEDD"),
+      fontSize(1.2.em),
       marginTop(6.px)
     )
     val dropdownMenuWidth=style(
-     width(100.%%)
+      width(100.%%)
     )
     val createNewProjectBtn=style(
       backgroundColor(c"#FFA500"),
@@ -98,24 +84,20 @@ object HeaderCSS {
       marginTop(6.px)
     )
     val LoginInMenuItem=style(
-     float.right,
-     paddingTop(6.px)
+      float.right,
+      paddingTop(6.px)
     )
-
     val displayInline=style(
-    paddingLeft(10.px),
-    display.inline,
-    fontSize(1.2.em),
-    color(c"#fff"),
-    media.maxWidth(1130 px) -
+      paddingLeft(10.px),
+      display.inline,
+      fontSize(1.2.em),
+      color(c"#fff"),
+      media.maxWidth(1130 px) -
         fontSize(1.em)
-
     )
-
     val ContainerHeight=style(
-        height(800.px),
-      /*height( components.CanIUse.calc(100.vh - 170.px))*/
-        marginTop(75.px)
+      height(800.px),
+      marginTop(75.px)
     )
   }
 }

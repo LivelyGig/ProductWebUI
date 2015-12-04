@@ -12,9 +12,7 @@ object AppCSS {
       LftcontainerCSS.Style,
       FooterCSS.Style,
       DashBoardCSS.Style
-
     )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
-
   }
 }
