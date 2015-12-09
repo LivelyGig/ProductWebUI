@@ -1,8 +1,7 @@
 package livelygig.client.css
 import scalacss.Defaults._
 import livelygig.client.components
-import livelygig.client.components.CanIUse.Agent._
-import livelygig.client.components.CanIUse.Support._
+
 /**
   * Created by bhagyashree.b on 12/2/2015.
   */

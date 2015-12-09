@@ -1,5 +1,5 @@
 package livelygig.client.modules
-import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.{TodoLoc, Loc}
@@ -20,9 +20,9 @@ object Dashboard {
                   <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
                     <.div(DashBoardCSS.Style.slctHeaders)("Skills"),
                     <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-                      <.select (^.id:="tokenize")(
-                      )
-                    ),
+                      //<input type="text" value="Amsterdam,Washington" data-role="tagsinput"
+                      <.input (^.`type`:="text" , "data-role".reactAttr:="tagsinput")
+                        ),
                     <.div(DashBoardCSS.Style.slctHeaders)("Categories"),
                     <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
                     ),
@@ -140,5 +140,56 @@ object Dashboard {
           )//split class
         )
       ) //mainContainer
-    }).build
+    })
+   .componentDidMount( scope => Callback {
+     //val P = scope.props
+     // instruct Bootstrap to show the modal
+//     jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))})
+//
+//     var citynames = new Bloodhound({
+//           datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
+//           queryTokenizer: Bloodhound.tokenizers.whitespace//,
+//           prefetch: {
+//             url: 'assets/citynames.json',
+//             filter: function(list) {
+//             return $.map(list, function(cityname) {
+//             return { name: cityname }; });
+//           }
+  //         })
+
+//         citynames.initialize();
+//         jQuery(scope.getDOMNode()).input().tagsinput({
+//
+//       typeaheadjs: {
+//         name : 'citynames ',
+//         displayKey : 'name ',
+//         valueKey : 'name ',
+//         source : citynames.ttAdapter()
+//       }
+//
+//     })
+     //
+     //  var citynames = new Bloodhound({
+     //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+     //    queryTokenizer: Bloodhound.tokenizers.whitespace,
+     //    prefetch: {
+     //      url: 'assets/citynames.json',
+     //      filter: function(list) {
+     //      return $.map(list, function(cityname) {
+     //      return { name: cityname }; });
+     //    }
+     //    }
+     //  });
+     //  citynames.initialize();
+     //
+     //  $('input').tagsinput({
+     //    typeaheadjs: {
+     //      name: 'citynames',
+     //      displayKey: 'name',
+     //      valueKey: 'name',
+     //      source: citynames.ttAdapter()
+     //    }
+     //  });
+   })
+    .build
 }

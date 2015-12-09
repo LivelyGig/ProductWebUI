@@ -2,7 +2,6 @@ package livelygig.client.css
 import livelygig.client.components
 import scalacss.Defaults._
 import scalacss.LengthUnit.px
-import livelygig.client.components.CanIUse
 /**
   * Created by shubham.k on 11/25/2015.
   */

@@ -1,7 +1,11 @@
 package livelygig.client
+
+
+import livelygig.client.services.TodoStore
 import japgolly.scalajs.react.{ReactDOM, React}
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+
 import org.scalajs.dom
 import livelygig.client.components.{Icon, GlobalStyles}
 import livelygig.client.css.AppCSS
@@ -20,12 +24,23 @@ object LGMain extends js.JSApp {
   sealed trait Loc
   case object DashboardLoc extends Loc
   case object TodoLoc extends Loc
+  case object CreateNewAgentLoc extends  Loc
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
+//      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
+      | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
+    //  |staticRoute("#CreateAgent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
+
+//
+//  (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
+//    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
+//    ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+//}.renderWith(layout)
+
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div(
@@ -72,7 +87,9 @@ object LGMain extends js.JSApp {
           )
         )
       ),   //recommended matches
+
       <.div()(r.render()),
+
       <.nav(^.id:="footerContainer", FooterCSS.Style.footerContainer)(
         <.div(^.className:="row")(
           <.div(^.className:="col-md-4 col-sm-4 col-xs-3")(
@@ -103,7 +120,12 @@ object LGMain extends js.JSApp {
             Footer(Footer.Props(c, r.page))
           )
         )
-      )
+      ),
+
+        <.div(^.className:="col-md-8 col-sm-8 col-xs-9")(
+//      CreateNewAgent(CreateNewAgent.Props(c, r.page))
+    )
+
     )
   }
   @JSExport

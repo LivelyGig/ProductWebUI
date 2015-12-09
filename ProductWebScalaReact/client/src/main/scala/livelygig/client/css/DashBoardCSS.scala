@@ -1,7 +1,6 @@
 package livelygig.client.css
 import scalacss.Defaults._
-import livelygig.client.components.CanIUse.Agent._
-import livelygig.client.components.CanIUse.Support._
+
 /**
   * Created by bhagyashree.b on 12/1/2015.
   */
@@ -104,5 +103,64 @@ object DashBoardCSS {
         marginTop(-3.px),
         marginLeft(-15.px)
       ))
+
+
+    /*CreateNewAgent Css Styles*/
+    val borderColorStyle = style (
+      height(400.px),
+      width(600.px),
+      border(1.px , solid, c"#4AB8E6"),
+      padding(3.px)
+    )
+
+    val btnStyle = style(
+      width(100.%%),
+      height(55.px),
+     backgroundColor(c"#4AB8E6"),
+    /* border-color: #4AB8E6; */
+     borderRadius(12.px)
+    /* margin: 3px; */
+    /* padding: 3px; */
+
+    )
+
+    val btnContainerDiv = style(
+    margin(3.px)
+    )
+
+    val headerBtnFont = style(
+      fontSize(22.px),
+      color(c"#fff"),
+      fontWeight.bold,
+      display.inlineBlock
+    )
+    val closeBtnFont = style(
+     color(c"#4AB8E6"),
+     fontSize(20.px),
+     paddingLeft(6.px),
+     paddingRight(6.px),
+     fontWeight.bold
+    )
+
+    val btnClose= style(
+     display.inlineBlock,
+     backgroundColor(c"#D6EEF8"),
+     float.right,
+     borderRadius(5.px),
+     marginTop(3.px)
+    )
+
+    val inputContainer = style (
+      marginTop(3.%%),
+      marginLeft(10.%%),
+      marginRight(10.%%)
+    )
+
+    val inputStyle = style (
+    height(37.px),
+    color(c"#F38430"),
+    fontWeight.bold,
+    fontSize(1.3.em)
+    )
   }
 }

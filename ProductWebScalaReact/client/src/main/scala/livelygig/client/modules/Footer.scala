@@ -44,5 +44,6 @@ object Footer {
       )
     })
     .build
+
   def apply(props: Props) = Footer(props)
 }

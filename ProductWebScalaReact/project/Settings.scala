@@ -37,11 +37,11 @@ object Settings {
     val booPickle = "1.1.0"
     val uTest = "0.3.1"
 
-    val react = "0.14.3"
+    val react = "0.14.0"
     val jQuery = "2.1.4"
     val bootstrap = "3.3.4"
     val chartjs = "1.0.1"
-
+    val bootstrapTagsinput="0.6.1"
     val playScripts = "0.3.0"
   }
 
@@ -77,10 +77,11 @@ object Settings {
     "org.webjars.npm" % "react-dom" % versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
     "org.webjars" % "jquery" % versions.jQuery / "jquery.js" minified "jquery.min.js",
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
+    //  "org.webjars.bower" % "split-pane" % "0.5.1",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
     "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js"
-
-
+//    "org.webjars" % "typeahead.js" % "0.9.3",
+//    "org.webjars" % "bootstrap-tagsinput" % "0.6.1"/ "bootstrap-tagsinput.js" dependsOn "typeahead.js"
   ))
 }
