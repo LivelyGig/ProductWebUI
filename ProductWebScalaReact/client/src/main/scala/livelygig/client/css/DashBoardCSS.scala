@@ -75,9 +75,21 @@ object DashBoardCSS {
     val slctInputWidth = style(
       width(20.px)
     )
+    val slctInputWidthLabel =style(
+     width(170.px),
+    paddingLeft(7.%%)
+    )
+    val slctInputWidthValidateLabel =style(
+      width(170.px),
+      marginLeft(36.%%)
+    )
     val slctInputLeftContainerMargin = style(
       marginLeft(45.px),
       marginRight(19.px)
+    )
+    val scltInputModalLeftContainerMargin = style(
+      marginLeft(180.px),
+      marginRight(60.px)
     )
     val slctHeaders=style(
       paddingTop(15.px),
@@ -161,6 +173,24 @@ object DashBoardCSS {
     color(c"#F38430"),
     fontWeight.bold,
     fontSize(1.3.em)
+    )
+    val backgroundTransperant = style(
+    backgroundColor(transparent),
+    border.none,
+    &.hover(
+      backgroundColor(transparent),
+      border.none
+    )
+    )
+    val modalHeaderText = style(
+        fontSize(1.3.em)
+    )
+
+    val inputModalMargin = style (
+      marginBottom(5.%%)
+    )
+    val marginLeftchk = style (
+    marginLeft(2.%%)
     )
   }
 }

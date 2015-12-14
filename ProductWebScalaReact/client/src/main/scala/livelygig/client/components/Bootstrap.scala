@@ -2,6 +2,7 @@ package livelygig.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom.html.Image
 
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -30,11 +31,13 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq())
+
+
+    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), id: String=null)
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>
-        <.button(bss.buttonOpt(P.style), P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
+        <.button(^.className:="btn btn-default", ^.id:= P.id, P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
@@ -80,7 +83,7 @@ object Bootstrap {
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
           <.div(modalStyle.dialog,
             <.div(modalStyle.content,
-              <.div(modalStyle.header, P.header(hide)),
+              <.div(^.id:= "modalheader" , modalStyle.header, P.header(hide)),
               <.div(modalStyle.body, C),
               <.div(modalStyle.footer, P.footer(hide))
             )
