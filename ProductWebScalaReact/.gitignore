@@ -3,7 +3,7 @@
 
 # sbt specific
 .cache/
-.history/
+.history
 .lib/
 dist/*
 target/
@@ -29,3 +29,4 @@ out
 
 # GitBook
 doc/_book
+

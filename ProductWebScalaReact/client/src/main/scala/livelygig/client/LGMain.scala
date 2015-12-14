@@ -1,6 +1,5 @@
 package livelygig.client
 
-
 import livelygig.client.services.TodoStore
 import japgolly.scalajs.react.{ReactDOM, React}
 import japgolly.scalajs.react.extra.router._
@@ -30,7 +29,7 @@ object LGMain extends js.JSApp {
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
-      | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
+    //  | staticRoute("#addnewagent", TodoLoc) ~> renderR(ctl => AddNewAgent(TodoStore)(ctl))
     //  |staticRoute("#CreateAgent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -58,7 +57,11 @@ object LGMain extends js.JSApp {
             <.div(HeaderCSS.Style.LoginInMenuItem)(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-              <.div(HeaderCSS.Style.displayInline)( c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg")))
+            // <.div(HeaderCSS.Style.displayInline)( c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
+            // Todo(Todo.Props(r.page,))
+
+               AddNewAgent(AddNewAgent.Props(c, r.page))
+
             )
           )
         )
