@@ -6,6 +6,8 @@ package livelygig.client.dtos
 /**
 * Represents content within a request to API endpoints.
  */
-trait RequestContent {
+sealed trait RequestContent {
 
 }
+case class CreateUserRequest (email: String, password: String, jsonBlob: Map[String, String], createBTCWallet: Boolean)
+  extends RequestContent

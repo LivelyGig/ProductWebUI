@@ -1,6 +1,6 @@
 package livelygig.client.services
 
-import org.scalajs.dom
+import org.scalajs.dom.ext.Ajax
 import upickle.default._
 import livelygig.client.dtos._
 import scala.concurrent.Future
@@ -12,10 +12,10 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 object ApiService {
   var BASE_URL = "http://52.35.10.219:9876/api"
   var CREATE_USER_REQUEST_MSG = "createUserRequest"
-  def ajaxPost(msgTyoe: String, data: RequestContent): Future[String] = {
-    dom.ext.Ajax.post(
+  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
+    Ajax.post(
       url = BASE_URL,
-      data = write(ApiRequest(msgTyoe, data)),
+      data = write(ApiRequest(msgType, data)),
       headers = Map("Content-Type" -> "application/json;charset=UTF-8")
     ).map(_.responseText)
   }
@@ -24,8 +24,11 @@ object ApiService {
                  password: String,
                  jsonBlob: Map[String, String],
                  createBTCWallet: Boolean): Unit = {
-    println(ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(email, password, jsonBlob, createBTCWallet)))
-//    ajaxPost(CREATE_USER_REQUEST, CREATE_USER_REQUEST())
+    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(email, password, jsonBlob, createBTCWallet)).onSuccess {
+      case s =>
+        println(s)
+      // now you need to refresh the UI
+    }
   }
 
 }
