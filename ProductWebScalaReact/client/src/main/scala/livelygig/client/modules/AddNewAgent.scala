@@ -2,8 +2,8 @@ package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{DashboardLoc, Loc}
-import livelygig.client.modules.AddLoginForm.NewLogin
-import livelygig.client.modules.AddNewAgent.{RxObserver, State}
+import livelygig.client.modules.AddNewAgent.State
+import livelygig.client.services.ApiService
 
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -26,11 +26,11 @@ object AddNewAgent {
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-    protected def observe[T](): Unit = {
-      //val obs = rx.foreach(_ => scope.forceUpdate.runNow())
-      // stop observing when unmounted
-     // onUnmount(Callback(obs.kill()))
-    }
+//    protected def observe[T](): Unit = {
+//      val obs = rx.foreach(_ => scope.forceUpdate.runNow())
+//      // stop observing when unmounted
+//      onUnmount(Callback(obs.kill()))
+//    }
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
@@ -61,18 +61,23 @@ object AddNewAgent {
   // create the React component for ToDo management
   val component = ReactComponentB[Props]("AddNewAgent")
     .initialState(State()) // initial state from TodoStore
-    .backend(new AddNewAgent.Backend(_))
+    .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
+
          Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant)),<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"),
            if (S.showNewAgentForm) AddNewAgentForm(AddNewAgentForm.Props(B.addNewAgent))
-         else
+         else // otherwise add an empty placeholder
            Seq.empty[ReactElement])
+
 //           Button(Button.Props(B.addNewLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant)),<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"),
 //           if (S.showLoginForm) AddLoginForm(AddLoginForm.Props(B.addNewLogin))
 //           else // otherwise add an empty placeholder
 //             Seq.empty[ReactElement])
+
+
     })
+  //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 
@@ -82,6 +87,8 @@ object AddNewAgent {
   def apply(props: Props) = component(props)
   }
 
+
+
 object AddNewAgentForm {   //TodoForm
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -89,106 +96,81 @@ object AddNewAgentForm {   //TodoForm
   case class Props(submitHandler: (String, String, String) => Callback)
 
   case class NewAgent(/*name: String, email: String, pw: String ,*/showNewAgentForm: Boolean = false)
-//
-//
-//  class BackendLogin(t1:BackendScope[AddNewAgent.Props,AddNewAgent.State]) extends RxObserver(t1){
-//
-//    def addNewLoginForm() : Callback = {   //editTodo
-//      // activate the todo dialog
-//      t1.modState(s => s.copy(showLoginForm = true))   //showTOdoForm
-//    }
-//  }
 
-  class BackendAgent(t: BackendScope[Props, State]) extends RxObserver(t) {
+  class Backend(t: BackendScope[Props, NewAgent])/* extends RxObserver(t)*/ {
 
-   // class Backend(t1: BackendScope[Props, State]) extends RxObserver(t) {
-      def addNewLoginForm(): Callback = {
-        //editTodo
-        // activate the todo dialog
-        t.modState(s => s.copy(showLoginForm = true)) //showTOdoForm
-      }
+    def mounted(props: Props): Callback = Callback {
+      // hook up to TodoStore changes
+      // observe(props.todos)
+      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
+      MainDispatcher.dispatch(RefreshTodos)
+    }
+    def submitForm(): Callback = {
+      // mark it as NOT cancelled (which is the default)
+      println("form submitted")
+      ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
+      t.modState(s => s.copy())
+    }
 
-      def addNewLogin(name: String): Callback = {
-        //todoEdited
-        // activate the todo dialog
-        t.modState(s => s.copy(showLoginForm = false))
-      }
+    def formClosed(newAgent: NewAgent, props: Props): Callback = {
+      // call parent handler with the new item and whether form was OK or cancelled
+      //println("form closed")
+      props.submitHandler("test", "test", "test")
+    }
 
 
-      def submitForm(): Callback = {
-        // mark it as NOT cancelled (which is the default)
-        println("form submitted")
-        AddLoginForm(AddLoginForm.Props(addNewLogin))
-        t.modState(s => s.copy())
-      }
 
-      def formClosed(state: State, props: Props): Callback = {
-        // call parent handler with the new item and whether form was OK or cancelled
-        //println("form closed")
-        props.submitHandler("test", "test", "test")
-      }
+    def render(s: NewAgent, p: Props) = {
+      // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
+      val headerText = "Create New Agent"
+      Modal(Modal.Props(
+        // header contains a cancel button (X)
+        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        // footer has the OK button that submits the form before hiding it
+        footer = hide => <.span(Button(Button.Props((submitForm() >> hide)), "Create My Agent"), Button(Button.Props(submitForm() >> hide), "Cancel")),
+        // this is called after the modal has been hidden (animation is completed)
+        closed = () => formClosed(s, p)),
 
-//     def addLogin() : Callback = {
-//
-//
-//     }
-
-      def render(s: State, p: Props) = {
-        // val back = new Backend(_)
-        // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-        val headerText = "Create New Agent"
-        Modal(Modal.Props(
-          // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-          // footer has the OK button that submits the form before hiding it
-          footer = hide => <.span(Button(Button.Props(
-            submitForm() >> hide
-
-          ), "Create My Agent"
-          ), Button(Button.Props(submitForm() >> hide), "Cancel")),
-
-          // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p)),
-
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-              <.label(^.`for` := "Name", "Name")
-            ),
-            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name")
-            )
+        <.div(^.className:="row")(
+          <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+            <.label(^.`for` := "Name", "Name")
           ),
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-              <.label(^.`for` := "Email", "Email")
-            ),
-            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email")
-            )
+          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "Name")
+          )
+        ),
+        <.div(^.className:="row")(
+          <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+            <.label(^.`for` := "Email", "Email")
           ),
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-              <.label(^.`for` := "Password", "Password")
-            ),
-            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password")
-            )
+          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,^.id := "Email")
+          )
+        ),
+        <.div(^.className:="row")(
+          <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+            <.label(^.`for` := "Password", "Password")
           ),
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-              //<.input(^.`type` := "checkbox")
-            ),
-            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.`type` := "checkbox"),
-              <.label(^.`for` := "Create BTC Wallet", "Create BTC Wallet", DashBoardCSS.Style.marginLeftchk)
-            )
+          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+            <.input(^.tpe := "text", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Password")
+          )
+        ),
+        <.div(^.className:="row")(
+          <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+            //<.input(^.`type` := "checkbox")
+          ),
+          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+            <.input(^.`type` := "checkbox"),
+            <.label(^.`for` := "Create BTC Wallet", "Create BTC Wallet", DashBoardCSS.Style.marginLeftchk)
           )
         )
-      }
+      )
     }
+  }
+
  private val component = ReactComponentB[Props]("AddNewAgentForm")
-    .initialState_P(p => State(/*name = "test",email = "test",pw="test"*/))
-    .renderBackend[BackendAgent]
+    .initialState_P(p => NewAgent(/*name = "test",email = "test",pw="test"*/))
+    .renderBackend[Backend]
     .build
 
   def apply(props: Props) = component(props)
@@ -236,6 +218,7 @@ object AddLoginForm {   //TodoForm
       )
     }
   }
+
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => NewLogin(name = "test"))
     .renderBackend[Backend]
