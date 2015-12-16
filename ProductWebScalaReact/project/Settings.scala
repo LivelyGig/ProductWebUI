@@ -68,7 +68,8 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
-    "com.lihaoyi" %%% "scalarx" % versions.scalaRx
+    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
+  "org.querki" %%% "jquery-facade" % "0.10"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -81,6 +82,7 @@ object Settings {
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
     "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js"
+
 //    "org.webjars" % "typeahead.js" % "0.9.3",
 //    "org.webjars" % "bootstrap-tagsinput" % "0.6.1"/ "bootstrap-tagsinput.js" dependsOn "typeahead.js"
   ))

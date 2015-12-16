@@ -12,7 +12,6 @@ import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.services._
 import livelygig.client.css.HeaderCSS
-import livelygig.client.css.tryCSS
 object MainMenu {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles

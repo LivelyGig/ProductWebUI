@@ -23,14 +23,17 @@ object LGMain extends js.JSApp {
   sealed trait Loc
   case object DashboardLoc extends Loc
   case object TodoLoc extends Loc
-  case object CreateNewAgentLoc extends  Loc
+  case object CreateAgentLoc extends  Loc
+  case object EmailValidationLoc extends Loc
+  case object AgentLoginLoc extends Loc
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
-    //  | staticRoute("#addnewagent", TodoLoc) ~> renderR(ctl => AddNewAgent(TodoStore)(ctl))
-    //  |staticRoute("#CreateAgent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
+      | staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
+      |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
+      |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
@@ -57,11 +60,9 @@ object LGMain extends js.JSApp {
             <.div(HeaderCSS.Style.LoginInMenuItem)(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-            // <.div(HeaderCSS.Style.displayInline)( c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
-            // Todo(Todo.Props(r.page,))
-
-               AddNewAgent(AddNewAgent.Props(c, r.page))
-
+              c.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)( c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg")))
+              // Todo(Todo.Props(r.page,))
+               //AddNewAgent(AddNewAgent.Props(c, r.page))
             )
           )
         )

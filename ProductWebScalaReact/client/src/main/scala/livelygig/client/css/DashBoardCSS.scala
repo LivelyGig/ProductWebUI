@@ -116,8 +116,13 @@ object DashBoardCSS {
         marginLeft(-15.px)
       ))
 
-
     /*CreateNewAgent Css Styles*/
+
+     val modalContainer = style (
+      height(500.px),
+      width(400.px),
+      backgroundColor(yellow)
+    )
     val borderColorStyle = style (
       height(400.px),
       width(600.px),
@@ -128,12 +133,8 @@ object DashBoardCSS {
     val btnStyle = style(
       width(100.%%),
       height(55.px),
-     backgroundColor(c"#4AB8E6"),
-    /* border-color: #4AB8E6; */
-     borderRadius(12.px)
-    /* margin: 3px; */
-    /* padding: 3px; */
-
+      backgroundColor(c"#4AB8E6"),
+       borderRadius(12.px)
     )
 
     val btnContainerDiv = style(

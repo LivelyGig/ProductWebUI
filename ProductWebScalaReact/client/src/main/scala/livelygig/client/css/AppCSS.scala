@@ -11,8 +11,10 @@ object AppCSS {
       HeaderCSS.Style,
       LftcontainerCSS.Style,
       FooterCSS.Style,
-      DashBoardCSS.Style
-    )
+      DashBoardCSS.Style,
+      CreateAgentCSS.Style
+
+      )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }
 }
