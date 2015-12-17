@@ -31,17 +31,12 @@ object LGMain extends js.JSApp {
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
-      | staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
+      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
+
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
-
-//
-//  (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-//    | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
-//    ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
-//}.renderWith(layout)
 
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {

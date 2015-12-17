@@ -3,7 +3,7 @@ package livelygig.client.modules
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{DashboardLoc, Loc}
 import livelygig.client.modules.AddNewAgent.State
-import livelygig.client.services.ApiService
+//import livelygig.client.services.ApiService
 
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -108,7 +108,7 @@ object AddNewAgentForm {   //TodoForm
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
       println("form submitted")
-      ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
+   //   ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
       t.modState(s => s.copy())
     }
 
@@ -204,7 +204,7 @@ object AddLoginForm {   //TodoForm
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"), Button(Button.Props(submitForm() >> hide), "Cancel")),
+        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"), Button(Button.Props(submitForm() >> hide ), "Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
 

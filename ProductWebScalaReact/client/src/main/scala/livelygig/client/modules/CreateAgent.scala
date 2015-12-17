@@ -7,18 +7,19 @@ import livelygig.client.components._
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.CreateAgentCSS
+import org.scalajs.dom._
 import scalacss.ScalaCssReact._
 object CreateAgent {
-  // create the React component for Dashboard
+  // create the React component for CreateAgent
+  def redirectTOEmailValidate() : Callback = Callback{
+    window.location.href = "#emailvalidation"
+  }
   val component = ReactComponentB[RouterCtl[Loc]]("CreateAgent")
     .render_P(ctl => {
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-          <.div(CreateAgentCSS.Style.modalContainer)(
+          <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4" , CreateAgentCSS.Style.modalContainer)(
              <.div(CreateAgentCSS.Style.ModalHeader, /*CreateAgentCSS.Style.paddinglefttitle ,*/ ^.className:="row")(
-               <.div(^.className:="col-md-3 col-sm-3 col-xs-3")(
-
-               ),
-                <.div(^.className:="col-md-7 col-sm-7 col-xs-7")(
+                <.div(^.className:="col-md-7 col-sm-7 col-xs-7 col-md-offset-3 col-sm-offset-3 col-xs-offset-3")(
                    <.h3("Create New Agent")
                 ),
                <.div(CreateAgentCSS.Style.marginTopClosebtn , ^.className:="col-md-1 col-sm-1 col-xs-1")(
@@ -55,10 +56,8 @@ object CreateAgent {
                 )
               ),
                   <.div(^.className:="row")(
-                    <.div(^.className:="col-md-4 col-sm-4 col-xs-4")(
 
-                    ),
-                    <.div(^.className:="col-md-8 col-sm-8 col-xs-8")(
+                    <.div(^.className:="col-md-8 col-sm-8 col-xs-8 col-md-offset-4 col-sm-offset-4 col-xs-offset-4")(
                       <.input(^.`type` := "checkbox"),
                       <.h5(CreateAgentCSS.Style.displayInline)("creat BTC wallet")
                     )
@@ -67,13 +66,9 @@ object CreateAgent {
               )
             ),
             <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
-              <.div(^.className:="col-md-5 col-sm-5 col-xs ")(
-
-
-              ),
-              <.div(^.className:="col-md-4 col-sm-4 col-xs 4")(
-                ctl.link(EmailValidationLoc)(^.className:="btn btn-default")("Create New Agent")
-                //<.button(^.className:="btn btn-default", ^.tpe := "button")("Create New Agent")
+              <.div(^.className:="col-md-4 col-sm-4 col-xs 4 col-md-offset-5 col-sm-offset-5 col-xs-offset-5")(
+                //ctl.link(EmailValidationLoc)(^.className:="btn btn-default")("Create New Agent")
+                <.button(^.className:="btn btn-default", ^.tpe := "button", ^.onClick --> redirectTOEmailValidate())("Create New Agent")
               ),
               <.div(^.className:="col-md-3 col-sm-3 col-xs 3")(
                 <.button(CreateAgentCSS.Style.marginLeftbtn, ^.className:="btn btn-default", ^.tpe := "button")("Cancel")

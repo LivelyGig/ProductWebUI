@@ -1,27 +1,28 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{HeaderCSS, CreateAgentCSS, DashBoardCSS}
+import org.scalajs.dom._
 import scalacss.ScalaCssReact._
 
 /**
   * Created by bhagyashree.b on 12/16/2015.
   */
 object AgentLogin {
-  // create the React component for Dashboard
+  // create the React component for AgentLogin
+
   val component = ReactComponentB[RouterCtl[Loc]]("AgentLogin")
     .render_P(ctl => {
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        <.div(CreateAgentCSS.Style.modalContainer)(
+      <.div(^.className:="row")(
+        <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4",CreateAgentCSS.Style.modalContainer)(
           <.div(CreateAgentCSS.Style.ModalHeader, /*CreateAgentCSS.Style.paddinglefttitle ,*/ ^.className:="row")(
-            <.div(^.className:="col-md-5 col-sm-5 col-xs-5")(
 
-            ),
-            <.div(^.className:="col-md-5 col-sm-5 col-xs-5")(
+            <.div(^.className:="col-md-5 col-sm-5 col-xs-5 col-md-offset-5 col-sm-offset-5 col-xs-offset-5")(
               <.h3("Login")
             ),
             <.div(CreateAgentCSS.Style.marginTopClosebtn , ^.className:="col-md-1 col-sm-1 col-xs-1")(
@@ -32,10 +33,7 @@ object AgentLogin {
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
 
               <.div(^.className:="row")(
-                <.div(^.className:="col-md-5 col-sm-5 col-xs-5")(
-
-                ),
-                <.div(^.className:="col-md-7 col-sm-7 col-xs-7")(
+                  <.div(^.className:="col-md-7 col-sm-7 col-xs-7 col-md-offset-5 col-sm-offset-5 col-xs-offset-5")(
                   <.div(HeaderCSS.Style.logoContainer,^.className := "navbar-header",<.img(CreateAgentCSS.Style.imgLogoLogin, ^.src := "./assets/images/logo-symbol.png"))
                 )
               ),
@@ -60,10 +58,8 @@ object AgentLogin {
             )
           ),
           <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
-            <.div(^.className:="col-md-4 col-sm-4 col-xs-4 ")(
 
-            ),
-            <.div(^.className:="col-md-2 col-sm-2 col-xs-2 ")(
+            <.div(^.className:="col-md-2 col-sm-2 col-xs-2 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 ")(
               <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button")("Login")
             ),
             <.div(^.className:="col-md-3 col-sm-3 col-xs-3")(
@@ -74,6 +70,8 @@ object AgentLogin {
             )
           )
         )
+
+      )//row
       ) //mainContainer
     })
     .build

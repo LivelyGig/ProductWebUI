@@ -7,9 +7,9 @@ object CreateAgentCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
     val modalContainer = style (
-      height(700.px),
+      height(100.%%),
       width(500.px),
-      marginLeft(38.%%),
+    //  marginLeft(38.%%),
       marginTop(13.%%)
     )
 
