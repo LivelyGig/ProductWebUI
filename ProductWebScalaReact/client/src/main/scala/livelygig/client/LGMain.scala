@@ -10,6 +10,7 @@ import livelygig.client.components.{Icon, GlobalStyles}
 import livelygig.client.css.AppCSS
 import livelygig.client.logger._
 import livelygig.client.modules._
+import livelygig.client.modules.CreateAgent.CreateAgentProps
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css.FooterCSS
 import scala.scalajs.js
@@ -17,6 +18,7 @@ import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
+import livelygig.client.models.UserModel
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
   // Define the locations (pages) used in this application
@@ -31,7 +33,8 @@ object LGMain extends js.JSApp {
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
-      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent.component(ctl))
+//      renderR(ctl => Todo(TodoStore)(ctl))
+      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent(new UserModel("","","",true))(ctl))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
 

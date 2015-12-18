@@ -9,7 +9,6 @@ import livelygig.client.css.DashBoardCSS
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.implicitConversions
-import org.querki.jquery._
 import org.scalajs.dom._
 
 
@@ -18,7 +17,7 @@ import org.scalajs.dom._
   */
 object EmailValidation {
 
-  def redirectTOLogin() : Callback = Callback{
+  def redirectToLogin() : Callback = Callback{
     window.location.href = "#agentlogin"
   }
 
@@ -64,7 +63,7 @@ object EmailValidation {
 
             <.div(^.className:="col-md-3 col-sm-3 col-xs-3 col-md-offset-6 col-sm-offset-4 col-xs-offset-4")(
                    //ctl.link(AgentLoginLoc) (CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default")("Validate")
-                <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.onClick --> redirectTOLogin())("Validate")
+                <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.onClick --> redirectToLogin())("Validate")
             ),
             <.div(^.className:="col-md-3 col-sm-3 col-xs 3")(
               <.button(CreateAgentCSS.Style.marginLeftbtn, ^.className:="btn btn-default", ^.tpe := "button")("Cancel")

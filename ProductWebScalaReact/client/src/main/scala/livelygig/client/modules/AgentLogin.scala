@@ -13,6 +13,9 @@ import scalacss.ScalaCssReact._
   * Created by bhagyashree.b on 12/16/2015.
   */
 object AgentLogin {
+  def redirectToDashboard() : Callback = Callback{
+    window.location.href = "/"
+  }
   // create the React component for AgentLogin
 
   val component = ReactComponentB[RouterCtl[Loc]]("AgentLogin")
@@ -60,7 +63,7 @@ object AgentLogin {
           <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
 
             <.div(^.className:="col-md-2 col-sm-2 col-xs-2 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 ")(
-              <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button")("Login")
+              <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button", ^.onClick --> redirectToDashboard())("Login")
             ),
             <.div(^.className:="col-md-3 col-sm-3 col-xs-3")(
               <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button")("I'm new")
