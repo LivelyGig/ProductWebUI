@@ -1,10 +1,23 @@
 package services
 
 import java.util.{Date, UUID}
-
+//import upickle.default._
 import livelygig.shared._
+import livelygig.shared.dtos._
+import play.api.libs.ws._
+import scala.concurrent.Future
+import play.api.Play.current
+import scala.concurrent.ExecutionContext.Implicits.global
+//import play.libs.Json
+
+import org.json4s.jackson.Serialization.write
+
 
 class ApiService extends Api {
+  implicit val formats = org.json4s.DefaultFormats
+  var BASE_URL = "http://54.201.214.48:9876/api"
+  var CREATE_USER_REQUEST_MSG = "createUserRequest"
+  val wsRequest : WSRequest = WS.url(BASE_URL)
   var todos = Seq(
     TodoItem("41424344-4546-4748-494a-4b4c4d4e4f50", 0x61626364, "Wear shirt that says “Life”. Hand out lemons on street corner.", TodoLow, false),
     TodoItem("2", 0x61626364, "Make vanilla pudding. Put in mayo jar. Eat in public.", TodoNormal, false),
@@ -43,5 +56,10 @@ class ApiService extends Api {
     println(s"Deleting item with id = $itemId")
     todos = todos.filterNot(_.id == itemId)
     todos
+  }
+
+  override def createAgent(userRequest: CreateUserRequest): Future[String] = {
+    println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(_.body.toString)
   }
 }

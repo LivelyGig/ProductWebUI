@@ -34,7 +34,7 @@ object LGMain extends js.JSApp {
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
 //      renderR(ctl => Todo(TodoStore)(ctl))
-      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent(new UserModel("","","",true))(ctl))
+      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent(new UserModel("nirvanic1@mailinator.com","1","Nirvanic1",true))(ctl))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
 

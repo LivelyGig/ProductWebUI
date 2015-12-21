@@ -1,4 +1,4 @@
-package livelygig.client.dtos
+package livelygig.shared.dtos
 
 /**
   * Created by shubham.k on 12/14/2015.

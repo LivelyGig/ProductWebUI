@@ -16,8 +16,8 @@ object CreateAgent {
   // create the React component for CreateAgent
   def redirectToEmailValidate(userModel: UserModel) : Callback = Callback{
     println(userModel)
-    // createUser(userModel)
-    window.location.href = "#emailvalidation"
+    createUser(userModel)
+//    window.location.href = "#emailvalidation"
   }
 
   case class CreateAgentProps(userModel: UserModel, router: RouterCtl[Loc])
