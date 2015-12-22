@@ -3,9 +3,10 @@ package controllers
 import java.nio.ByteBuffer
 
 import boopickle.Default._
+import livelygig.shared.Api
 import play.api.mvc._
 import services.ApiService
-import livelygig.shared.Api
+
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

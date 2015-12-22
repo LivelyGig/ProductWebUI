@@ -1,13 +1,13 @@
 package livelygig.client.services
 
 import livelygig.shared.Api
+import livelygig.shared.dtos._
+import livelygig.client.models._
 import org.scalajs.dom._
 import org.scalajs.dom.ext.Ajax
 import upickle.default._
-import livelygig.shared.dtos._
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import livelygig.client.models._
 import autowire._
 import boopickle.Default._
 

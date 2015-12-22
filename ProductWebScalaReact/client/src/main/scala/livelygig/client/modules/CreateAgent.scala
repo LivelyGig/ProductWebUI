@@ -3,15 +3,15 @@ package livelygig.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.{EmailValidationLoc, TodoLoc, Loc}
+import livelygig.client.LGMain.Loc
 import livelygig.client.components._
-import scala.concurrent.ExecutionContext.Implicits.global
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.CreateAgentCSS
+import livelygig.client.css.{CreateAgentCSS, DashBoardCSS}
 import livelygig.client.models.UserModel
-import org.scalajs.dom._
-import scalacss.ScalaCssReact._
 import livelygig.client.services.CoreApi.createUser
+import org.scalajs.dom._
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scalacss.ScalaCssReact._
 
 object CreateAgent {
   case class Props(router: RouterCtl[Loc])

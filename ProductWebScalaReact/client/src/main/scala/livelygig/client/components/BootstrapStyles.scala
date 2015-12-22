@@ -1,8 +1,9 @@
 package livelygig.client.components
 
+import livelygig.client.components.Bootstrap.CommonStyle._
+
 import scalacss.Defaults._
 import scalacss.mutable
-import livelygig.client.components.Bootstrap.CommonStyle._
 
 class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(r) {
 

@@ -5,8 +5,9 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
-import livelygig.client.css.{HeaderCSS, CreateAgentCSS, DashBoardCSS}
+import livelygig.client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import org.scalajs.dom._
+
 import scalacss.ScalaCssReact._
 
 /**

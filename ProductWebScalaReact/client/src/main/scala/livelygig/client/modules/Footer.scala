@@ -1,18 +1,12 @@
 package livelygig.client.modules
-import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{TodoLoc, DashboardLoc, Loc}
-import livelygig.client.components
-import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import rx._
-import rx.ops._
-import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.components.Icon._
+import livelygig.client.LGMain.{DashboardLoc, Loc}
 import livelygig.client.components._
-import livelygig.client.services._
 import livelygig.client.css.FooterCSS
+
+import scalacss.ScalaCssReact._
 /**
   * Created by bhagyashree.b on 11/30/2015.
   */

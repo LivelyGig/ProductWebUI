@@ -1,24 +1,19 @@
 package livelygig.client
 
-import livelygig.client.services.TodoStore
-import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
-import org.scalajs.dom
-import livelygig.client.components.{Icon, GlobalStyles}
-import livelygig.client.css.AppCSS
+import livelygig.client.components.{GlobalStyles, Icon}
+import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS}
 import livelygig.client.logger._
 import livelygig.client.modules._
-import livelygig.client.modules.CreateAgent.Props
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.FooterCSS
+import org.scalajs.dom
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import livelygig.client.models.UserModel
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
   // Define the locations (pages) used in this application

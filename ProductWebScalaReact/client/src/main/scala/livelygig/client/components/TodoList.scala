@@ -2,8 +2,9 @@ package livelygig.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.components.Bootstrap.{CommonStyle, Button}
+import livelygig.client.components.Bootstrap.{Button, CommonStyle}
 import livelygig.shared._
+
 import scalacss.ScalaCssReact._
 
 object TodoList {

@@ -1,6 +1,5 @@
 package livelygig.client.css
 
-import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
 /**
   * Created by shubham.k on 11/24/2015.

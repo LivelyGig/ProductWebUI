@@ -2,14 +2,13 @@ package livelygig.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.{AgentLoginLoc, Loc}
+import livelygig.client.LGMain.Loc
 import livelygig.client.components._
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS}
-import livelygig.client.css.DashBoardCSS
-import scala.scalajs.js
-import scalacss.ScalaCssReact._
-import scala.language.implicitConversions
 import org.scalajs.dom._
+
+import scala.language.implicitConversions
+import scalacss.ScalaCssReact._
 
 
 /**

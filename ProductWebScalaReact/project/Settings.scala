@@ -1,5 +1,5 @@
-import sbt._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import sbt._
 
 /**
   * Application settings. Configure the build for your application here.

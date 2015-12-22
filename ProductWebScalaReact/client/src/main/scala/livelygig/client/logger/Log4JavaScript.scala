@@ -1,6 +1,5 @@
 package livelygig.client.logger
 
-import scala.annotation.elidable
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 
