@@ -20,7 +20,11 @@ object EmailValidation {
   def redirectToLogin() : Callback = Callback{
     window.location.href = "#agentlogin"
   }
-
+//  def validateEmail(userModel: UserModel) : Callback = Callback{
+//    println(userModel)
+//    createUser(userModel)
+//    //    window.location.href = "#emailvalidation"
+//  }
 
   // create the React component for Email Validation
   val component = ReactComponentB[RouterCtl[Loc]]("EmailValidation")
@@ -42,7 +46,7 @@ object EmailValidation {
 
               <.div(^.className:="row")(
                 <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-                 <.h4("Your request for a Splicious Agent has been submitted. Upon reciving your conformation email, you may click the link it containes or paste the token below to valdate your email address.")
+                 <.h4("Your request for a Splicious Agent has been submitted. Upon reciving your confirmation email, you may click the link it containes or paste the token below to valdate your email address.")
                 )
               ),
               <.div(^.className:="row")(

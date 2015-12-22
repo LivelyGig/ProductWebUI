@@ -14,7 +14,7 @@ import boopickle.Default._
 /**
   * Created by shubham.k on 12/14/2015.
   */
-object ApiService {
+object CoreApi {
 //  var BASE_URL = "http://52.35.10.219:9876/api"
 //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
 //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
@@ -25,15 +25,10 @@ object ApiService {
 //    ).map(_.responseText)
 //  }
 
-  def createUser(userModel: UserModel): Unit = {
+  def createUser(userModel: UserModel): Future[String] = {
     AjaxClient[Api].createAgent(CreateUserRequest(userModel.email, userModel.password,
       Map("name" -> userModel.name), userModel.createBTCWallet)).call()
-    .onSuccess {
-      case s =>
-        println(s)
-        window.location.href = "#emailvalidation"
-      // now you need to refresh the UI
-    }
+
 //    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(userModel.email, userModel.password,
 //      Map("name" -> userModel.name), userModel.createBTCWallet)).onSuccess {
 //      case s =>

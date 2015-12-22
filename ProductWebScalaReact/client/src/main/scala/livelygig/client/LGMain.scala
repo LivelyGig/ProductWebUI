@@ -10,7 +10,7 @@ import livelygig.client.components.{Icon, GlobalStyles}
 import livelygig.client.css.AppCSS
 import livelygig.client.logger._
 import livelygig.client.modules._
-import livelygig.client.modules.CreateAgent.CreateAgentProps
+import livelygig.client.modules.CreateAgent.Props
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css.FooterCSS
 import scala.scalajs.js
@@ -34,7 +34,7 @@ object LGMain extends js.JSApp {
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
 //      renderR(ctl => Todo(TodoStore)(ctl))
-      |staticRoute("#addnewagent", CreateAgentLoc) ~> renderR(ctl => CreateAgent(new UserModel("nirvanic1@mailinator.com","1","Nirvanic1",true))(ctl))
+      |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
 
