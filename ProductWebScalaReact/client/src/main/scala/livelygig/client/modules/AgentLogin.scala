@@ -6,14 +6,45 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
+import livelygig.client.models.AgentLoginModel
+import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scalacss.ScalaCssReact._
 
 /**
   * Created by bhagyashree.b on 12/16/2015.
   */
 object AgentLogin {
+
+
+  case class Props(router: RouterCtl[Loc])
+  case class State(agentLoginModel: AgentLoginModel)
+  class Backend(t : BackendScope[Unit, State]) {
+
+    def updateEmail(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(agentLoginModel = s.agentLoginModel.copy(email = e.target.value)))
+    }
+    def updatePassword(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(agentLoginModel = s.agentLoginModel.copy(password = e.target.value)))
+    }
+
+
+  }
+  // create the React component for CreateAgent
+  def agentLogin(agentLoginModel: AgentLoginModel) : Callback = Callback{
+    println(agentLoginModel)
+    createAgentLogin(agentLoginModel).onSuccess {
+      case s =>
+        println(s)
+        window.location.href = "#emailvalidation"
+      // now you need to refresh the UI
+    }
+    //    window.location.href = "#emailvalidation"
+  }
+
   def redirectToDashboard() : Callback = Callback{
     window.location.href = "/"
   }

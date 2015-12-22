@@ -10,4 +10,5 @@ trait Api {
   def confirmEmail(confirmEmailRequest: ConfirmEmailRequest): Future[String]
 
   def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[String]
+
 }

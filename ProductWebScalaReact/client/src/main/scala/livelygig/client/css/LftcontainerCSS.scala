@@ -21,7 +21,7 @@ object LftcontainerCSS {
       color(c"#222222"),
       &.hover -
         border(1.px ,solid ,c"#aaaaaa"),
-      backgroundColor(c"#ffffff"),
+//      backgroundColor(c"#ffffff"),
       color(c"#222222")
     )
     val resizable= style(

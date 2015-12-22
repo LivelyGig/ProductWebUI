@@ -37,4 +37,26 @@ object CoreApi {
 //    }
   }
 
+  def emailUserValidation(emailValidationModel: EmailValidationModel): Future[String] = {
+    AjaxClient[Api].confirmEmail(ConfirmEmailRequest(emailValidationModel.token)).call()
+
+    //    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(userModel.email, userModel.password,
+    //      Map("name" -> userModel.name), userModel.createBTCWallet)).onSuccess {
+    //      case s =>
+    //        println(s)
+    //      // now you need to refresh the UI
+    //    }
+  }
+
+  def createAgentLogin(agentLoginModel: AgentLoginModel): Future[String] = {
+    AjaxClient[Api].agentLogin(InitializeSessionRequest(agentLoginModel.email)).call()
+
+    //    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(userModel.email, userModel.password,
+    //      Map("name" -> userModel.name), userModel.createBTCWallet)).onSuccess {
+    //      case s =>
+    //        println(s)
+    //      // now you need to refresh the UI
+    //    }
+  }
+
 }
