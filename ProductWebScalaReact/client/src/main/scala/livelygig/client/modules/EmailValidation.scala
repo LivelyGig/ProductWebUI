@@ -30,7 +30,7 @@ object EmailValidation {
 
   def confirmEmail(emailValidationModel: EmailValidationModel) : Callback = Callback{
     println(emailValidationModel)
-    emailUserValidation(emailValidationModel).onSuccess {
+    emailValidation(emailValidationModel).onSuccess {
       case s =>
         println(s)
         window.location.href = "#agentlogin"
@@ -46,7 +46,7 @@ object EmailValidation {
 
   // create the React component for Email Validation
   val component = ReactComponentB[Unit]("EmailValidation")
-    .initialState(State(new EmailValidationModel(""))) // initial state from TodoStore
+    .initialState(State(new EmailValidationModel("")))
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
@@ -67,7 +67,8 @@ object EmailValidation {
 
               <.div(^.className:="row")(
                 <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-                 <.h4("Your request for a Splicious Agent has been submitted. Upon reciving your confirmation email, you may click the link it containes or paste the token below to valdate your email address.")
+                 <.h4("Your request for a Splicious Agent has been submitted. Upon receiving your confirmation email, " +
+                   "you may click the link it contains or paste the token below to validate your email address.")
                 )
               ),
               <.div(^.className:="row")(
@@ -79,7 +80,7 @@ object EmailValidation {
               <.div(^.className:="row")(
 
                 <.div(^.className:="col-md-8 col-sm-8 col-xs-8 col-md-offset-2 col-sm-offset-2 col-xs-offset-4")(
-                  <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth, S.emailValidationModel.token,
+                  <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth,^.value:=S.emailValidationModel.token,
                     ^.onChange==>B.updateToken)
                 )
               )

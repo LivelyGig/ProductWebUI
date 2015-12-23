@@ -30,8 +30,8 @@ object LGMain extends js.JSApp {
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
 //      renderR(ctl => Todo(TodoStore)(ctl))
       |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
-      |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(ctl))
-      |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(ctl))
+      |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
+      |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)

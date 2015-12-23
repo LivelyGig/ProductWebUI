@@ -7,6 +7,7 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import livelygig.client.models.AgentLoginModel
+import livelygig.client.services.CoreApi
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -36,22 +37,25 @@ object AgentLogin {
   // create the React component for CreateAgent
   def agentLogin(agentLoginModel: AgentLoginModel) : Callback = Callback{
     println(agentLoginModel)
-    createAgentLogin(agentLoginModel).onSuccess {
+    CoreApi.agentLogin(agentLoginModel).onSuccess {
       case s =>
         println(s)
-        window.location.href = "#emailvalidation"
+        //window.location.href = "/"
       // now you need to refresh the UI
     }
     //    window.location.href = "#emailvalidation"
   }
 
-  def redirectToDashboard() : Callback = Callback{
-    window.location.href = "/"
-  }
+//  def redirectToDashboard() : Callback = Callback{
+//    window.location.href = "/"
+//  }
   // create the React component for AgentLogin
 
-  val component = ReactComponentB[RouterCtl[Loc]]("AgentLogin")
-    .render_P(ctl => {
+  val component = ReactComponentB[Unit]("AgentLogin")
+    .initialState(State(new AgentLoginModel("","")))
+    .backend(new Backend(_))
+    .renderPS(($, P, S) => {
+      val B = $.backend
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
       <.div(^.className:="row")(
         <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4",CreateAgentCSS.Style.modalContainer)(
@@ -78,7 +82,7 @@ object AgentLogin {
                   <.h4("Email")
                 ),
                 <.div(^.className:="col-md-8 col-sm-8 col-xs-8")(
-                <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth)
+                <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth,^.onChange==>B.updateEmail)
                 )
               ),
 
@@ -87,7 +91,7 @@ object AgentLogin {
                   <.h4("Password")
                 ),
                 <.div(^.className:="col-md-8 col-sm-8 col-xs-8")(
-                  <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth)
+                  <.input(^.className:="form-control", CreateAgentCSS.Style.inputHeightWidth, ^.onChange==>B.updatePassword)
                 )
               )
             )
@@ -95,7 +99,8 @@ object AgentLogin {
           <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
 
             <.div(^.className:="col-md-2 col-sm-2 col-xs-2 col-md-offset-4 col-sm-offset-4 col-xs-offset-4 ")(
-              <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button", ^.onClick --> redirectToDashboard())("Login")
+              <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button",
+                ^.onClick --> agentLogin(S.agentLoginModel))("Login")
             ),
             <.div(^.className:="col-md-3 col-sm-3 col-xs-3")(
               <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.tpe := "button")("I'm new")

@@ -65,10 +65,12 @@ class ApiService extends Api {
   }
 
   override def confirmEmail(confirmEmailRequest: ConfirmEmailRequest): Future[String] = {
+    println(write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest)))
+//    println(WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,confirmEmailRequest))).map(_.json.toString()))
     WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,confirmEmailRequest))).map(_.body.toString)
   }
 
   override def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[String] = {
-    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,initializeSessionRequest))).map(_.body.toString)
+    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(_.body.toString)
   }
 }

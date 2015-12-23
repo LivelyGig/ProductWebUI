@@ -37,7 +37,7 @@ object CoreApi {
 //    }
   }
 
-  def emailUserValidation(emailValidationModel: EmailValidationModel): Future[String] = {
+  def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
     AjaxClient[Api].confirmEmail(ConfirmEmailRequest(emailValidationModel.token)).call()
 
     //    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(userModel.email, userModel.password,
@@ -48,7 +48,7 @@ object CoreApi {
     //    }
   }
 
-  def createAgentLogin(agentLoginModel: AgentLoginModel): Future[String] = {
+  def agentLogin(agentLoginModel: AgentLoginModel): Future[String] = {
     AjaxClient[Api].agentLogin(InitializeSessionRequest(agentLoginModel.email)).call()
 
     //    ajaxPost(CREATE_USER_REQUEST_MSG,CreateUserRequest(userModel.email, userModel.password,
