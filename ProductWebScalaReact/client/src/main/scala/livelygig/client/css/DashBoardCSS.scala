@@ -1,9 +1,6 @@
 package livelygig.client.css
 import scalacss.Defaults._
 
-/**
-  * Created by bhagyashree.b on 12/1/2015.
-  */
 object DashBoardCSS {
   object Style extends StyleSheet.Inline {
     import dsl._

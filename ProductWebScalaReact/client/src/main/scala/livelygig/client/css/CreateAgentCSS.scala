@@ -1,8 +1,5 @@
 package livelygig.client.css
 import scalacss.Defaults._
-/**
-  * Created by bhagyashree.b on 12/15/2015.
-  */
 object CreateAgentCSS {
   object Style extends StyleSheet.Inline {
     import dsl._

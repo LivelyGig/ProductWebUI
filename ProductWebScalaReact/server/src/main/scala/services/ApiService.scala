@@ -8,7 +8,7 @@ import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 //import play.libs.Json
-
+import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
 
@@ -21,18 +21,21 @@ class ApiService extends Api {
   val wsRequest : WSRequest = WS.url(BASE_URL)
 
 
-  override def createAgent(userRequest: CreateUserRequest): Future[String] = {
-    // println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(_.body.toString)
+  override def createAgent(userRequest: CreateUserRequest): Future[ApiResponse[CreateUserResponse]] = {
+    println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(
+      response=>parse(response.body.toString).extract[ApiResponse[CreateUserResponse]]
+    )
   }
 
-  override def confirmEmail(confirmEmailRequest: ConfirmEmailRequest): Future[String] = {
-    println(write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest)))
-//    println(WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,confirmEmailRequest))).map(_.json.toString()))
-    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,confirmEmailRequest))).map(_.body.toString)
+  override def confirmEmail(confirmEmailRequest: ConfirmEmailRequest): Future[ApiResponse[ConfirmEmailResponse]] = {
+    WS.url(BASE_URL).post(write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))).map(
+      response=>parse(response.body.toString).extract[ApiResponse[ConfirmEmailResponse]])
   }
 
-  override def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[String] = {
-    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(_.body.toString)
+  override def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[ApiResponse[InitializeSessionResponse]] = {
+    println(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(
+      response=>parse(response.body.toString).extract[ApiResponse[InitializeSessionResponse]])
   }
 }
