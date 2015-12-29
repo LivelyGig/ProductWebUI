@@ -88,6 +88,10 @@ object DashBoardCSS {
       marginLeft(180.px),
       marginRight(60.px)
     )
+    val scltInputModalContainerMargin = style(
+      marginLeft(150.px),
+      marginRight(150.px)
+    )
     val slctHeaders=style(
       paddingTop(15.px),
       paddingBottom(2.px),
@@ -183,12 +187,20 @@ object DashBoardCSS {
     val modalHeaderText = style(
         fontSize(1.3.em)
     )
-
     val inputModalMargin = style (
       marginBottom(5.%%)
     )
     val marginLeftchk = style (
     marginLeft(2.%%)
+    )
+    val MarginLeftchkproduct = style (
+     marginLeft(-33.5.%%)
+    )
+    val MarginLeftchknotification = style (
+      marginLeft(-52.%%)
+    )
+    val MarginLeftchkagree = style (
+      marginLeft(-10.%%)
     )
   }
 }

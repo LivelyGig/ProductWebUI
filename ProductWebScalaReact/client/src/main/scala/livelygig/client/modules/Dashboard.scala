@@ -12,6 +12,7 @@ object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl => {
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
+        AddNewAgent(AddNewAgent.Props(ctl)),
         <.div(DashBoardCSS.Style.splitContainer)(
           <.div(^.className:="split")(
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(

@@ -62,7 +62,7 @@ object Bootstrap {
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: Boolean = true,
+    case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
@@ -96,7 +96,7 @@ object Bootstrap {
       .renderBackend[Backend]
       .componentDidMount(scope => Callback {
         val P = scope.props
-        // instruct Bootstrap to show the modal
+        // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
         jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
