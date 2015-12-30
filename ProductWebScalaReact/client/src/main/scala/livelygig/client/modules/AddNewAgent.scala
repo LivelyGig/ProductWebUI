@@ -3,6 +3,8 @@ package livelygig.client.modules
 import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.Panel
 import livelygig.client.components.Icon
+import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+
 //import livelygig.client.components.TodoList
 //import livelygig.client.components.TodoList.TodoListProps
 //import livelygig.client.services.TodoActions
@@ -42,38 +44,44 @@ object AddNewAgent {
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback = Callback {
-      // hook up to TodoStore changes
-      // observe(props.todos)
-      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      //  MainDispatcher.dispatch(RefreshTodos)
+
     }
-    def addNewAgentForm() : Callback = {   //editTodo
-      // activate the todo dialog
-      t.modState(s => s.copy(showNewAgentForm = true))   //showTOdoForm
+    def addNewAgentForm() : Callback = {
+
+      t.modState(s => s.copy(showNewAgentForm = true))
     }
-    def addNewLoginForm() : Callback = {   //editTodo
+    def addNewLoginForm() : Callback = {
       // activate the todo dialog
-      t.modState(s => s.copy(showLoginForm = true))   //showTOdoForm
+      t.modState(s => s.copy(showLoginForm = true))
     }
-    def addNewValidateForm() : Callback = {   //editTodo
-      // activate the todo dialog
-      t.modState(s => s.copy(showValidateForm = true))   //showTOdoForm
+
+    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false): Callback = {
+     // println("in addNewAgent")
+      if(addNewAgent){
+        t.modState(s => s.copy(showNewAgentForm = false,showValidateForm = true))
+      } else {
+        t.modState(s => s.copy(showNewAgentForm = false))
+      }
+
     }
-    def addNewAgent(name: String, email: String, pw: String) : Callback = {  //todoEdited
-      // activate the todo dialog
-      t.modState(s => s.copy(showNewAgentForm = false,showLoginForm = true))
+    def Login(agentLoginModel: AgentLoginModel, login: Boolean = false) : Callback = {
+      if (login){
+        t.modState(s => s.copy(showLoginForm = false))
+      } else {
+        t.modState(s => s.copy(showLoginForm = false))
+      }
+
     }
-    def addNewLogin(name: String) : Callback = {  //todoEdited
-      // activate the todo dialog
-      t.modState(s => s.copy(showLoginForm = false, showValidateForm = true))
-    }
-    def addNewValidate(name: String) : Callback = {  //todoEdited
-      // activate the todo dialog
-      t.modState(s => s.copy(showValidateForm = false))
+    def validateAccount(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false) : Callback = {
+      if (validateAccount) {
+        t.modState(s => s.copy(showValidateForm = false, showLoginForm = true))
+      } else {
+        t.modState(s => s.copy(showValidateForm = false))
+      }
+
     }
   }
 
-  // create the React component for ToDo management
   val component = ReactComponentB[Props]("AddNewAgent")
     .initialState(State()) // initial state from TodoStore
     .backend(new Backend(_))
@@ -81,20 +89,14 @@ object AddNewAgent {
       val B = $.backend
 
       <.div()(
-        Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant)),<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"),
-          if (S.showNewAgentForm) AddNewAgentForm(AddNewAgentForm.Props(B.addNewAgent))
-          else // otherwise add an empty placeholder
-            Seq.empty[ReactElement]),
+        Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Sign Up"),
+        if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
 
-        Button(Button.Props(B.addNewLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant,DashBoardCSS.Style.headerbtnstyle)),
-          if (S.showLoginForm) AddLoginForm(AddLoginForm.Props(B.addNewLogin))
-          else // otherwise add an empty placeholder
-            Seq.empty[ReactElement]),
+        else if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
+        else if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.validateAccount))
+        else
+          Seq.empty[ReactElement]
 
-        Button(Button.Props(B.addNewValidateForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant, DashBoardCSS.Style.headerbtnstyle)),
-          if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.addNewValidate))
-          else // otherwise add an empty placeholder
-            Seq.empty[ReactElement])
       )
 
     })
@@ -108,16 +110,16 @@ object AddNewAgent {
   def apply(props: Props) = component(props)
 }
 
-object AddNewAgentForm {   //TodoForm
+object NewAgentForm {
 
 // shorthand for styles
 @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (String, String, String) => Callback)
+  case class Props(submitHandler: (UserModel, Boolean) => Callback)
 
-  case class NewAgent(/*name: String, email: String, pw: String ,*/showNewAgentForm: Boolean = false)
+  case class State(userModel: UserModel, addNewAgent: Boolean = false)
 
-  case class Backend(t: BackendScope[Props, NewAgent])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
 
     def mounted(props: Props): Callback = Callback {
       // hook up to TodoStore changes
@@ -128,25 +130,26 @@ object AddNewAgentForm {   //TodoForm
 
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
-      println("form submitted")
+      // println("in AddNewAgentForm submitForm")
       //   ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
-      t.modState(s => s.copy())
+      t.modState(s => s.copy(addNewAgent = true))
     }
 
-    def formClosed(newAgent: NewAgent, props: Props): Callback = {
+    def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler("test", "test", "test")
+      // println("in AddNewAgetn form closed")
+      props.submitHandler(state.userModel, state.addNewAgent)
     }
 
-    def render(s: NewAgent, p: Props) = {
+    def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Create New Agent"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Create My Agent"), Button(Button.Props(submitForm() >> hide), "Cancel")),
+        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Submit"),
+          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.div(^.className:="row")(
@@ -228,35 +231,35 @@ object AddNewAgentForm {   //TodoForm
       )
     }
   }
-  private val component = ReactComponentB[Props]("AddNewAgentForm")
-    .initialState_P(p => NewAgent(/*name = "test",email = "test",pw="test"*/))
+  private val component = ReactComponentB[Props]("NewAgentForm")
+    .initialState_P(p => State(new UserModel("","","",false), false))
     .renderBackend[Backend]
     .build
   def apply(props: Props) = component(props)
 }
 
-object AddLoginForm {   //TodoForm
+object LoginForm {   //TodoForm
 // shorthand fo
 @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (String) => Callback)
+  case class Props(submitHandler: (AgentLoginModel, Boolean) => Callback)
 
-  case class NewLogin(name: String)
+  case class State(agentloginModel: AgentLoginModel, login: Boolean= false)
 
-  class Backend(t: BackendScope[Props, NewLogin]) {
+  class Backend(t: BackendScope[Props, State]) {
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
       // println("form submitted")
-      t.modState(s => s.copy())
+      t.modState(s => s.copy(login = true))
     }
 
-    def formClosed(newAgent: NewLogin, props: Props): Callback = {
+    def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
-      props.submitHandler("test")
+      props.submitHandler(state.agentloginModel, state.login)
     }
 
-    def render(s: NewLogin, p: Props) = {
+    def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Email Validation"
       Modal(Modal.Props(
@@ -295,41 +298,42 @@ object AddLoginForm {   //TodoForm
   }
 
   private val component = ReactComponentB[Props]("AddLoginForm")
-    .initialState_P(p => NewLogin(name = "test"))
+    .initialState_P(p => State(new AgentLoginModel("","")))
     .renderBackend[Backend]
     .build
   def apply(props: Props) = component(props)
 }
 
-object ValidateAccount {   //TodoForm
+object ValidateAccount {
 // shorthand fo
 @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (String) => Callback)
+  case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
 
-  case class NewLogin(name: String)
+  case class State(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false)
 
-  class Backend(t: BackendScope[Props, NewLogin]) {
+  class Backend(t: BackendScope[Props, State]) {
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
       // println("form submitted")
-      t.modState(s => s.copy())
+      t.modState(s => s.copy(validateAccount = true))
     }
 
-    def formClosed(newAgent: NewLogin, props: Props): Callback = {
+    def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
-      props.submitHandler("test")
+      props.submitHandler(state.emailValidationModel, state.validateAccount)
     }
 
-    def render(s: NewLogin, p: Props) = {
+    def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Validate Account"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate")),
+        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
+          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
 
@@ -352,7 +356,7 @@ object ValidateAccount {   //TodoForm
     }
   }
   private val component = ReactComponentB[Props]("ValidateAccount")
-    .initialState_P(p => NewLogin(name = "test"))
+    .initialState_P(p => State(new EmailValidationModel("")))
     .renderBackend[Backend]
     .build
 
