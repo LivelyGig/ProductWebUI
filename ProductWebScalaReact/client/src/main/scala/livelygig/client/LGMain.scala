@@ -1,5 +1,6 @@
 package livelygig.client
 
+
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -14,6 +15,8 @@ import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
+import japgolly.scalajs.react.{ReactDOM, React}
+
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
   // Define the locations (pages) used in this application
@@ -23,15 +26,19 @@ object LGMain extends js.JSApp {
   case object CreateAgentLoc extends  Loc
   case object EmailValidationLoc extends Loc
   case object AgentLoginLoc extends Loc
+
+
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
 //      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
 //      renderR(ctl => Todo(TodoStore)(ctl))
+
       |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
+
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -53,9 +60,9 @@ object LGMain extends js.JSApp {
             <.div(HeaderCSS.Style.LoginInMenuItem)(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-              c.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)( c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg")))
+          //    c.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg")))
               // Todo(Todo.Props(r.page,))
-               //AddNewAgent(AddNewAgent.Props(c, r.page))
+               AddNewAgent(AddNewAgent.Props(c))
             )
           )
         )
@@ -86,6 +93,7 @@ object LGMain extends js.JSApp {
       ),   //recommended matches
 
       <.div()(r.render()),
+
 
       <.nav(^.id:="footerContainer", FooterCSS.Style.footerContainer)(
         <.div(^.className:="row")(

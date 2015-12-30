@@ -1,5 +1,11 @@
 package livelygig.client.modules
 
+import livelygig.client.components.Bootstrap.Button
+import livelygig.client.components.Bootstrap.Panel
+import livelygig.client.components.Icon
+//import livelygig.client.components.TodoList
+//import livelygig.client.components.TodoList.TodoListProps
+//import livelygig.client.services.TodoActions
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{DashboardLoc, Loc}
 import livelygig.client.modules.AddNewAgent.State
@@ -80,16 +86,17 @@ object AddNewAgent {
           else // otherwise add an empty placeholder
             Seq.empty[ReactElement]),
 
-        Button(Button.Props(B.addNewLoginForm()),
+        Button(Button.Props(B.addNewLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant,DashBoardCSS.Style.headerbtnstyle)),
           if (S.showLoginForm) AddLoginForm(AddLoginForm.Props(B.addNewLogin))
           else // otherwise add an empty placeholder
             Seq.empty[ReactElement]),
 
-        Button(Button.Props(B.addNewValidateForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant)),
+        Button(Button.Props(B.addNewValidateForm(), CommonStyle.default, Seq(DashBoardCSS.Style.backgroundTransperant, DashBoardCSS.Style.headerbtnstyle)),
           if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.addNewValidate))
           else // otherwise add an empty placeholder
             Seq.empty[ReactElement])
       )
+
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)

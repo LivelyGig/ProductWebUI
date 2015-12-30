@@ -55,14 +55,14 @@ object HeaderCSS {
     )
     /* css*/
     val middelNaviContainer =style(
-      marginTop(65.px),
+      marginTop(-20.px),
       height(62.px),
       paddingLeft(7.%%),
       paddingRight(7.%%),
       backgroundColor(c"#00767C"),
-      position.fixed,
+
       top(-2.px),
-      zIndex(1),
+
       width(100.%%),
       paddingTop(4.px)
     )

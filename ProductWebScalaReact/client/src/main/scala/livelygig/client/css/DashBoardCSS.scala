@@ -6,7 +6,6 @@ object DashBoardCSS {
     import dsl._
     val mainContainerDiv = style(
       backgroundColor(c"#EAEAEA"),
-      marginTop(75.px),
       paddingLeft(7.%%),
       paddingRight(7.%%),
       overflowX.auto,
@@ -202,5 +201,12 @@ object DashBoardCSS {
     val MarginLeftchkagree = style (
       marginLeft(-10.%%)
     )
+
+    val headerbtnstyle =  style (
+      height(0.px),
+      width(0.px),
+      padding(0.px)
+    )
+
   }
 }
