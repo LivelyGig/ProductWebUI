@@ -8,6 +8,11 @@ import scalacss.LengthUnit.px
 object HeaderCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
+//    val SignUpBtn = style(
+//      backgroundColor(red),
+//      border(1.px, solid),
+//      fontSize(1.2.em)
+//    )
     val naviContainer = style (
       backgroundColor(c"#005256"),
       minHeight(63.px),
@@ -97,6 +102,16 @@ object HeaderCSS {
     val ContainerHeight=style(
       height(800.px),
       marginTop(75.px)
+    )
+    val SignUpBtn = style(
+      color(white),
+        backgroundColor(transparent),
+      border.none,
+      &.hover(
+        backgroundColor(transparent),
+        border.none,
+        color(white)
+      )
     )
   }
 }

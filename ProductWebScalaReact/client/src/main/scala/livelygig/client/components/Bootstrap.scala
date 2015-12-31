@@ -62,7 +62,7 @@ object Bootstrap {
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: String = "static",
+    case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
@@ -83,8 +83,8 @@ object Bootstrap {
           <.div(modalStyle.dialog,
             <.div(modalStyle.content,
               <.div(^.id:= "modalheader" , modalStyle.header, P.header(hide)),
-              <.div(modalStyle.body, C),
-              <.div(modalStyle.footer, P.footer(hide))
+              <.div(modalStyle.body, C)
+//              <.div(modalStyle.footer, P.footer(hide))
             )
           )
         )

@@ -193,13 +193,13 @@ object DashBoardCSS {
     marginLeft(2.%%)
     )
     val MarginLeftchkproduct = style (
-     marginLeft(-33.5.%%)
+     //marginLeft(-33.5.%%)
     )
     val MarginLeftchknotification = style (
-      marginLeft(-52.%%)
+      //marginLeft(-52.%%)
     )
     val MarginLeftchkagree = style (
-      marginLeft(-10.%%)
+      // marginLeft(-10.%%)
     )
 
     val headerbtnstyle =  style (

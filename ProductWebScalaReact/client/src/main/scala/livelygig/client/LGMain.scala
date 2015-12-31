@@ -58,11 +58,7 @@ object LGMain extends js.JSApp {
           <.div(^.id:="navi-collapse", ^.className := "collapse navbar-collapse")(
             MainMenu(MainMenu.Props(c, r.page)),
             <.div(HeaderCSS.Style.LoginInMenuItem)(
-              <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-              <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-          //    c.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg")))
-              // Todo(Todo.Props(r.page,))
-               AddNewAgent(AddNewAgent.Props(c))
+              AddNewAgent(AddNewAgent.Props(c))
             )
           )
         )
