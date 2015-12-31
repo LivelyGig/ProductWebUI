@@ -120,12 +120,31 @@ object NewAgentForm {
   case class State(userModel: UserModel, addNewAgent: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
-
+    def hide = Callback {
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
     def mounted(props: Props): Callback = Callback {
       // hook up to TodoStore changes
       // observe(props.todos)
       // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
       //MainDispatcher.dispatch(RefreshTodos)
+    }
+    def updateName(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
+    }
+    def updateEmail(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
+    }
+    def updatePassword(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
+    }
+    def toggleBTCWallet(e: ReactEventI) = {
+      // update TodoItem content
+      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
     }
 
     def submitForm(): Callback = {
@@ -134,6 +153,7 @@ object NewAgentForm {
       //   ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
       t.modState(s => s.copy(addNewAgent = true))
     }
+
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
@@ -147,11 +167,9 @@ object NewAgentForm {
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Submit"),
-          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
+        <.form(^.onSubmit--> submitForm())(
         <.div(^.className:="row")(
           <.div(^.className:="col-md-6 col-sm-6 col-xs-6")(
             <.div(^.className:="row")(
@@ -159,7 +177,8 @@ object NewAgentForm {
                 <.label(^.`for` := "First name *", "First name *")
               ),
               <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "First name")
+                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "First name",^.value:= s.userModel.name,
+                  ^.onChange==>updateName,^.required:=true)
               )
             ),
             <.div(^.className:="row")(
@@ -175,7 +194,8 @@ object NewAgentForm {
                 <.label(^.`for` := "Email *", "Email *")
               ),
               <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                <.input(^.tpe := "text", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email")
+                <.input(^.tpe := "text", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value:= s.userModel.email,
+                  ^.onChange==>updateEmail,^.required:=true)
               )
             ),
             <.div(^.className:="row")(
@@ -227,7 +247,10 @@ object NewAgentForm {
             <.input(^.`type` := "checkbox"),
             <.label(^.`for` := "Yes, Send me notifications related to projects", "Yes, Send me notifications related to projects", DashBoardCSS.Style.marginLeftchk)
           )
-        )
+        ),
+          <.div(bss.modal.footer)(<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
+          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel"))
+      )
       )
     }
   }
@@ -266,7 +289,7 @@ object LoginForm {   //TodoForm
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"), Button(Button.Props(submitForm() >> hide ), "Cancel")),
+//        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"), Button(Button.Props(submitForm() >> hide ), "Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
 
@@ -332,8 +355,8 @@ object ValidateAccount {
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // footer has the OK button that submits the form before hiding it
-        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
+//        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
+//          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
 
