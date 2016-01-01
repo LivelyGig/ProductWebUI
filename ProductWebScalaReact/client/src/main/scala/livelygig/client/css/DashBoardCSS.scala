@@ -31,8 +31,8 @@ object DashBoardCSS {
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
-      border(1.px, solid),
-      fontSize(1.2.em)
+      border(1.px, solid)
+
     )
     val rsltCountHolderDiv = style(
       display.inlineBlock,
@@ -186,14 +186,21 @@ object DashBoardCSS {
     val modalHeaderText = style(
         fontSize(1.3.em)
     )
+
+    val modalBodyText = style (
+        fontSize(2.5.em),
+//        height(150.px),
+        textAlign.center,
+        verticalAlign.middle
+    )
     val inputModalMargin = style (
-      marginBottom(5.%%)
+      marginBottom(2.%%)
     )
     val marginLeftchk = style (
     marginLeft(2.%%)
     )
     val MarginLeftchkproduct = style (
-     //marginLeft(-33.5.%%)
+      marginLeft(15.px)
     )
     val MarginLeftchknotification = style (
       //marginLeft(-52.%%)
@@ -206,6 +213,74 @@ object DashBoardCSS {
       height(0.px),
       width(0.px),
       padding(0.px)
+    )
+
+      val verticalAlignmentHelper = style (
+      display.table,
+      height(100.%%),
+      width(100.%%)
+    )
+      val verticalAlignCenter = style (
+      /* To center vertically */
+      display.tableCell,
+      verticalAlign.middle,
+      paddingRight(25.%%),
+      paddingLeft(25.%%)
+      )
+      val modalContent = style (
+      /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+      width.inherit ,
+      height.inherit ,
+      /* To center horizontally */
+      margin(0.px , auto)
+
+    )
+    val marginTop10px =style (
+     marginTop(10.px)
+    )
+     val modalContentFont = style (
+      fontSize(15.px)
+     )
+   val modalHeaderPadding = style (
+     padding(10.px)
+   )
+    val modalHeaderFont = style (
+     fontSize(2.em),
+     paddingBottom(15.px)
+    )
+    val marginLeftCloseBtn = style (
+      marginLeft(20.px)
+    )
+    val imgLogoLogin = style(
+      height(65.px),
+      width(65.px)
+    )
+    val footTextAlign = style(
+      textAlign.center
+    )
+    val modalBorderRadius = style (
+    borderRadius(0.px)
+    )
+    val marginLeftRight = style (
+      marginRight(-15.px),
+      marginLeft(-15.px),
+      padding(22.px) ,
+      backgroundColor(c"#00767c")
+    )
+    val btnWidth = style (
+    width(100.%%)
+    )
+
+     val marginTop5p = style(
+     marginTop(5.%%)
+     )
+
+     val modalBodyPadding = style(
+       paddingLeft(15.px),
+     paddingBottom(0.px),
+     paddingTop(15.px),
+     paddingRight(15.px)
+
     )
 
   }

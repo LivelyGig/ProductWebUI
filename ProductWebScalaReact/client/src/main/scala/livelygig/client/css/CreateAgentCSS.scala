@@ -75,7 +75,9 @@ object CreateAgentCSS {
       height(65.px),
       width(65.px)
     )
-
+   val footTextAlign = style(
+      textAlign.center
+   )
 
   }
 
