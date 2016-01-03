@@ -101,7 +101,7 @@ object Dashboard {
                           <.div(^.className:="media-body")(
                             "Beautiful videos to capture your most memorable moments."
                           ),//media-body
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Abed A. -- Videographer"),
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-3")("Abed A. -- Videographer"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 3 years"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 8"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
@@ -113,7 +113,7 @@ object Dashboard {
                           <.div(^.className:="media-body")(
                             "Front-end developer."
                           ),//media-body
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Britta B. -- Developer"),
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-3")("Britta B. -- Developer"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
@@ -125,7 +125,7 @@ object Dashboard {
                           <.div(^.className:="media-body")(
                             "Beautiful ads and marketing products."
                           ),//media-body
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Tom C. -- Designer"),
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-3")("Tom C. -- Designer"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
                           <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
