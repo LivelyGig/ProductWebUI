@@ -79,7 +79,7 @@ object Dashboard {
                         ),
                         <.ul(^.className:="dropdown-menu")(
                           <.li()(<.a(^.href:="#")("By Bid Amount")),
-                          <.li()(<.a(^.href:="#")("(More Sorting)")),
+                          <.li()(<.a(^.href:="#")("( More Sorting )")),
                           <.li()(<.a(^.href:="#")("profile3"))
                         )
                       ),//dropdown class
@@ -87,8 +87,6 @@ object Dashboard {
                     ),
                     <.div(DashBoardCSS.Style.listIconPadding , ^.className:="col-md-4 col-sm-5 col-xs-4")(
                       <.div(^.className:="pull-right" )(
-                        <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
-                        <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Brief")(<.span(Icon.list)),
                         <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Full Posts")(<.span(Icon.list))
                       )
                     )
@@ -97,40 +95,40 @@ object Dashboard {
                     <.div (^.id:="rsltSectionContainer", ^.className:="col-md-12 col-sm-12 col-xs-12")(
                       <.ul(^.className:="media-list")(
                         <.li(^.className:="media")(
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-12")("Name : job-title"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable"),
                           <.div(^.className:="media-left")(
                             <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                           ), //media-left
                           <.div(^.className:="media-body")(
-                            "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-                          )//media-body
+                            "Beautiful videos to capture your most memorable moments."
+                          ),//media-body
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Abed A. -- Videographer"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 3 years"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 8"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
                         ),//li
                         <.li(^.className:="media")(
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-12")("Name : job-title"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable"),
                           <.div(^.className:="media-left")(
                             <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                           ), //media-left
                           <.div(^.className:="media-body")(
-                            "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-                          )//media-body
+                            "Front-end developer."
+                          ),//media-body
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Britta B. -- Developer"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
                         ),//li
                         <.li(^.className:="media")(
-                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-12")("Name : job-title"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable"),
                           <.div(^.className:="media-left")(
                             <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                           ), //media-left
                           <.div(^.className:="media-body")(
-                            "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-                          )//media-body
+                            "Beautiful ads and marketing products."
+                          ),//media-body
+                          <.div (DashBoardCSS.Style.profileNameHolder , ^.className:="col-md-4")("Tom C. -- Designer"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
+                          <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
                         )
                       )//ul
                     )
