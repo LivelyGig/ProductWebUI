@@ -2,9 +2,11 @@ package livelygig.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.{DashboardLoc, Loc}
+import livelygig.client.LGMain
+import livelygig.client.LGMain._
 import livelygig.client.components._
 import livelygig.client.css.HeaderCSS
+import livelygig.client.modules.AddNewAgent
 
 import scalacss.ScalaCssReact._
 object MainMenu {
@@ -20,18 +22,33 @@ object MainMenu {
     MenuItem(5, _ => "Contracts", DashboardLoc ),
     MenuItem(6, _ => "Connections", DashboardLoc ),
     MenuItem(7, _ => "Wallets", DashboardLoc )
+ //   MenuItem(8, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .stateless
-    .render_P((P) => {
+    .render_P((ctl) => {
       <.ul(^.id := "headerNavUl", ^.className:="nav navbar-nav")(
         // build a list of menu items
         for (item <- menuItems) yield {
-          <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
-            P.ctl.link(item.location)(HeaderCSS.Style.headerNavA ," ", item.label(P))
+          <.li(^.key := item.idx, (ctl.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
+            ctl.ctl.link(item.location)(HeaderCSS.Style.headerNavA ," ", item.label(ctl))
           )
         }
-        /*   <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))*/
+    //     <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))
+
+
+//        <.div(HeaderCSS.Style.LoginInMenuItem)(
+//          <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
+//          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
+//         // ctl.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(ctl.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
+//          // Todo(Todo.Props(r.page,))
+//         //    AddNewAgent(AddNewAgent.Props(ctl))
+//          AddNewAgent(AddNewAgent.Props()))
+
+
+
+
+
       )
     })
     .build

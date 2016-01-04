@@ -31,7 +31,6 @@ object AgentLogin {
       t.modState(s => s.copy(agentLoginModel = s.agentLoginModel.copy(password = e.target.value)))
     }
 
-
   }
   // create the React component for CreateAgent
   def agentLogin(agentLoginModel: AgentLoginModel) : Callback = Callback{
@@ -122,5 +121,7 @@ object AgentLogin {
       ) //mainContainer
     })
     .build
+
+  def apply(props: Props) = component(props)
 
 }

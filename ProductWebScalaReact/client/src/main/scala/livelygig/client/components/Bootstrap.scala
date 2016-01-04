@@ -2,6 +2,7 @@ package livelygig.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.css.DashBoardCSS
 
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -29,8 +30,6 @@ object Bootstrap {
   }
 
   object Button {
-
-
 
     case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), id: String=null)
 
@@ -62,7 +61,7 @@ object Bootstrap {
   object Modal {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
-    case class Props(header: (Callback) => ReactNode, footer: (Callback) => ReactNode, closed: () => Callback, backdrop: String = "static",
+    case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
 
     class Backend(t: BackendScope[Props, Unit]) {
@@ -80,13 +79,15 @@ object Bootstrap {
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
-          <.div(modalStyle.dialog,
-            <.div(modalStyle.content,
-              <.div(^.id:= "modalheader" , modalStyle.header, P.header(hide)),
-              <.div(modalStyle.body, C),
-              <.div(modalStyle.footer, P.footer(hide))
+        <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
+          <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
+            <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius,
+              <.div(^.id:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
+              <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
+//              <.div(modalStyle.footer, P.footer(hide))
             )
           )
+         )
         )
       }
     }
