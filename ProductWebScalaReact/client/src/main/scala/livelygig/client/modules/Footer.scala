@@ -28,7 +28,7 @@ object Footer {
         // build a list of menu items
         for (item <- footerItems) yield {
           <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (FooterCSS.Style.footerNavLi),
-            if(item == 4 ) {
+            if(item.idx == 5 ) {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
             }else {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
