@@ -17,7 +17,7 @@ object Footer {
   private val footerItems = Seq(
     FooterItem(1, _ => "About", DashboardLoc),
     FooterItem(2, _ => "Privacy", DashboardLoc),
-    FooterItem(3, _ => "Terms Of Use", DashboardLoc ),
+    FooterItem(3, _ => "Terms of Use", DashboardLoc ),
     FooterItem(4, _ => "Trademarks", DashboardLoc ),
     FooterItem(5, _ => "LivelyGig", DashboardLoc)
   )
@@ -27,7 +27,7 @@ object Footer {
       <.ul(bss.navbar,FooterCSS.Style.footRight,^.id:="footMenu")(
         // build a list of menu items
         for (item <- footerItems) yield {
-          <.li(^.key := item.idx, (P.currentLoc == item.location) ?= (FooterCSS.Style.footerNavLi),
+          <.li(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,
             if(item.idx == 5 ) {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
             }else {
