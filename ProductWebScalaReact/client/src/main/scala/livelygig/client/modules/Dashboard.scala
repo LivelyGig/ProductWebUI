@@ -6,6 +6,7 @@ import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.LGMain.{DashboardLoc, Loc}
 import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modules.DashboardPresets
 
 import scalacss.ScalaCssReact._
 
@@ -23,6 +24,9 @@ object Dashboard {
       "talent" match {
         case "talent" =>
           <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
+            <.div()(
+              DashboardPresets.component(ctl)
+            ),
             // AddNewAgent(AddNewAgent.Props(ctl)),
             <.div(DashBoardCSS.Style.splitContainer)(
               <.div(^.className := "split")(
@@ -35,7 +39,8 @@ object Dashboard {
                     // todo: Results will be parameterized depending on EntityType, preset
                     DashboardResults.component(ctl)
                   )
-                ))
+                )
+              )
             )//row
           ) //mainContainer
       }

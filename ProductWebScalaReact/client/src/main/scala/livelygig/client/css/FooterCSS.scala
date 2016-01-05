@@ -5,7 +5,7 @@ object FooterCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
     val footerContainer = style (
-      borderTop(3.px, solid, c"#67EAF2"),
+      borderTop(2.px, solid, c"#67EAF2"),
       backgroundColor(c"#005256"),
       minHeight(52.px),
       paddingLeft(7.%%),
@@ -15,7 +15,7 @@ object FooterCSS {
       color(c"#fff"),
       fontSize(1.em),
       letterSpacing(0.5.px),
-      marginTop(-3.px),
+      marginTop(3.px),
       &.hover(
         height(42.px),
         backgroundColor(c"#005256"),

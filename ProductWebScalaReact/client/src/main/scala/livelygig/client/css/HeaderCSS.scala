@@ -19,7 +19,8 @@ object HeaderCSS {
       borderBottom(2.px, solid, c"#67EAF2"),
       paddingTop(8.px),
       paddingLeft(7.%%),
-      paddingRight(7.%%)
+      paddingRight(7.%%),
+      marginBottom(0.px)
     )
     val headerNavA = style (
       borderBottom(3.px, solid, transparent),
@@ -60,7 +61,7 @@ object HeaderCSS {
     )
     /* css*/
     val middelNaviContainer =style(
-      marginTop(-20.px),
+      marginTop(0.px),
       height(62.px),
       paddingLeft(7.%%),
       paddingRight(7.%%),

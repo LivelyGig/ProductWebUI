@@ -25,9 +25,9 @@ object DashBoardCSS {
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
       height(60.px),
-      marginTop(10.px),
+      marginTop(0.px),
       marginLeft(25.px),
-      marginRight(15.px),
+      marginRight(0.px),
       fontSize(1.1.em),
       paddingTop(10.px),
       marginBottom(15.px)

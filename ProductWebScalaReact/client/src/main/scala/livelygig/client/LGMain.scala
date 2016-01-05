@@ -63,34 +63,9 @@ object LGMain extends js.JSApp {
           )
         )
       ),
-      // currently active module is shown in this container
-      //added
-      <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
-        <.div(^.className :="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className:="btn-group")(
-              <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
-                <.span(^.className:="caret")
-              ),
-              <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("Recommended Matches")),
-                <.li()(<.a(^.href:="#")("Favorited")),
-                <.li()(<.a(^.href:="#")("Available")),
-                <.li()(<.a(^.href:="#")("Active Unavailable")),
-                <.li()(<.a(^.href:="#")("Inactive")),
-                <.li()(<.a(^.href:="#")("Hidden")),
-                <.li(^.className:="divider")(),
-                <.li()(<.a(^.href:="#")("Videographers w/5+ yrs experience")),
-                <.li()(<.a(^.href:="#")("Customize..."))
-              )
-            ),
-            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("Create New Project")()
-          )
-        )
-      ),   //recommended matches
 
-      <.div()(r.render()),
-
+      // the following div wraps the dashboard
+      <.div(^.id:="ed-tmp")(r.render()),
 
       <.nav(^.id:="footerContainer", FooterCSS.Style.footerContainer)(
         <.div(^.className:="row")(
@@ -122,11 +97,11 @@ object LGMain extends js.JSApp {
             Footer(Footer.Props(c, r.page))
           )
         )
-      ),
+      )
 
-        <.div(^.className:="col-md-8 col-sm-8 col-xs-9")(
+        //<.div(^.className:="col-md-8 col-sm-8 col-xs-9")(
 //      CreateNewAgent(CreateNewAgent.Props(c, r.page))
-    )
+    //)
 
     )
   }
