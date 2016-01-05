@@ -24,9 +24,10 @@ object DashboardResults {
                 <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("By Bid Amount")),
-                <.li()(<.a(^.href:="#")("(More Sorting)")),
-                <.li()(<.a(^.href:="#")("profile3"))
+                <.li()(<.a(^.href:="#")("Hide")),
+                <.li()(<.a(^.href:="#")("Favorite")),
+                <.li()(<.a(^.href:="#")("Unhide")),
+                <.li()(<.a(^.href:="#")("Unfavorite"))
               )
             )//dropdown class
           ),
@@ -39,9 +40,11 @@ object DashboardResults {
                 <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("By Bid Amount")),
-                <.li()(<.a(^.href:="#")("(More Sorting)")),
-                <.li()(<.a(^.href:="#")("profile3"))
+                <.li()(<.a(^.href:="#")("By Date")),
+                <.li()(<.a(^.href:="#")("By Experience")),
+                <.li()(<.a(^.href:="#")("By Reputation")),
+                <.li()(<.a(^.href:="#")("By Rate")),
+                <.li()(<.a(^.href:="#")("By Projects Completed"))
               )
             ),
             <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Newest ")(
@@ -50,6 +53,7 @@ object DashboardResults {
           ),
           <.div(/*DashBoardCSS.Style.listIconPadding ,*/ ^.className:="col-md-3 col-sm-3 col-xs-3")(
             <.div(^.className:="pull-right" )(
+              // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
               <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
               <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Brief")(<.span(Icon.list)),
               <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Full Posts")(<.span(Icon.list))
