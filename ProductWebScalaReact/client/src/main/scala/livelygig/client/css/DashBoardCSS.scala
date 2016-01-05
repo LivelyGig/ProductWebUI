@@ -23,31 +23,58 @@ object DashBoardCSS {
       display.inlineBlock
     )
     val gigActionsContainer = style(
-      backgroundColor(c"#DFDFDF"),
-      height(60.px)
+      backgroundColor(c"#CCCCFF"),
+      height(60.px),
+      marginTop(10.px),
+      marginLeft(15.px),
+      marginRight(15.px),
+      fontSize(1.1.em),
+      paddingTop(10.px),
+      marginBottom(15.px)
+    )
+    val rsltCheckboxStyle = style (
+      height(22.px),
+      width(22.px),
+      verticalAlign.middle,
+      marginTop(-3.px)
+    )
+    val rsltContentBackground = style (
+     backgroundColor(c"#D3E7E7")
     )
     val rsltGigActionsDropdown = style(
       display.inlineBlock
     )
+    val rsltCaretStyle = style(
+    width(10.px),
+    height(15.px),
+    borderTop(9.px , dashed),
+    borderRight(6.px , solid, transparent),
+    borderLeft(6.px , solid, transparent),
+    marginTop(3.px)
+    )
     val gigMatchButton = style(
       backgroundColor(transparent),
-      border(1.px, solid)
-
+      fontSize(1.1.em),
+      fontWeight.bold,
+      media.maxWidth(1130.px) -(
+        fontSize(1.em))
     )
     val rsltCountHolderDiv = style(
       display.inlineBlock,
       fontSize(1.2.em),
-      margin(2.%%)
+      margin(3.%%),
+     fontWeight.bold,
+      media.maxWidth(1130.px) -(
+        fontSize(1.em))
     )
     val listIconPadding = style(
       padding(14.px, 0.px, 14.px, 0.px)
     )
-    val gigConversation = style(
-    )
     val profileNameHolder = style(
       height(40.px),
       padding(0.7.%%),
-      fontSize(1.2.em)
+      fontSize(1.2.em),
+      display.inline
     )
     val rsltProfileDetailsHolder = style(
       margin(1.%%),
@@ -59,7 +86,7 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-      border(2.px, solid, c"#005256"),
+//      border(2.px, solid, c"#005256"),
       marginRight(5.px)
     )
     val inputHeightWidth = style(
@@ -73,19 +100,28 @@ object DashBoardCSS {
     )
     val slctInputWidthLabel =style(
      width(170.px),
-    paddingLeft(7.%%)
+    paddingLeft(5.%%),
+      media.maxWidth(1130.px) -(
+        fontSize(1.em),
+        width(135.px),
+        paddingLeft(9.%%)
+        )
     )
     val slctInputWidthValidateLabel =style(
-      width(170.px),
+      width(179.px),
       marginLeft(36.%%)
     )
     val slctInputLeftContainerMargin = style(
-      marginLeft(45.px),
+      marginLeft(60.px),
       marginRight(19.px)
     )
     val scltInputModalLeftContainerMargin = style(
       marginLeft(180.px),
-      marginRight(60.px)
+      marginRight(60.px),
+      media.maxWidth(1130.px) -(
+        marginLeft(135.px),
+        marginRight(38.px)
+        )
     )
     val scltInputModalContainerMargin = style(
       marginLeft(150.px),
@@ -97,27 +133,8 @@ object DashBoardCSS {
       fontSize(1.em),
       fontWeight.bold
     )
-    val checkboxLbl = style(
-      &.before(
-        fontWeight.normal,
-        fontSize(8.px),
-        color(green),
-        backgroundColor(c"#FAFAFA"),
-        border(1.px, solid, rgb(51, 51, 51)),
-        borderRadius(0.px),
-        display.inlineBlock,
-        textAlign.center,
-        verticalAlign.middle,
-        height(13.px),
-        lineHeight(13.px),
-        minWidth(13.px),
-        marginRight(11.px),
-        marginTop(-3.px),
-        marginLeft(-15.px)
-      ))
 
     /*CreateNewAgent Css Styles*/
-
      val modalContainer = style (
       height(500.px),
       width(400.px),
@@ -129,18 +146,15 @@ object DashBoardCSS {
       border(1.px , solid, c"#4AB8E6"),
       padding(3.px)
     )
-
     val btnStyle = style(
       width(100.%%),
       height(55.px),
       backgroundColor(c"#4AB8E6"),
        borderRadius(12.px)
     )
-
     val btnContainerDiv = style(
     margin(3.px)
     )
-
     val headerBtnFont = style(
       fontSize(22.px),
       color(c"#fff"),
@@ -154,7 +168,6 @@ object DashBoardCSS {
      paddingRight(6.px),
      fontWeight.bold
     )
-
     val btnClose= style(
      display.inlineBlock,
      backgroundColor(c"#D6EEF8"),
@@ -162,13 +175,11 @@ object DashBoardCSS {
      borderRadius(5.px),
      marginTop(3.px)
     )
-
     val inputContainer = style (
       marginTop(3.%%),
       marginLeft(10.%%),
       marginRight(10.%%)
     )
-
     val inputStyle = style (
     height(37.px),
     color(c"#F38430"),
@@ -186,10 +197,8 @@ object DashBoardCSS {
     val modalHeaderText = style(
         fontSize(1.3.em)
     )
-
     val modalBodyText = style (
         fontSize(2.5.em),
-//        height(150.px),
         textAlign.center,
         verticalAlign.middle
     )
@@ -202,19 +211,11 @@ object DashBoardCSS {
     val MarginLeftchkproduct = style (
       marginLeft(15.px)
     )
-    val MarginLeftchknotification = style (
-      //marginLeft(-52.%%)
-    )
-    val MarginLeftchkagree = style (
-      // marginLeft(-10.%%)
-    )
-
     val headerbtnstyle =  style (
       height(0.px),
       width(0.px),
       padding(0.px)
     )
-
       val verticalAlignmentHelper = style (
       display.table,
       height(100.%%),
@@ -224,8 +225,8 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      paddingRight(25.%%),
-      paddingLeft(25.%%)
+      paddingRight(18.%%),
+      paddingLeft(18.%%)
       )
       val modalContent = style (
       /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
@@ -239,7 +240,9 @@ object DashBoardCSS {
      marginTop(10.px)
     )
      val modalContentFont = style (
-      fontSize(15.px)
+      fontSize(15.px),
+       marginTop(15.px)
+
      )
    val modalHeaderPadding = style (
      padding(10.px)
@@ -270,17 +273,17 @@ object DashBoardCSS {
     val btnWidth = style (
     width(100.%%)
     )
-
      val marginTop5p = style(
      marginTop(5.%%)
      )
-
      val modalBodyPadding = style(
        paddingLeft(15.px),
      paddingBottom(0.px),
      paddingTop(15.px),
      paddingRight(15.px)
-
+    )
+    val rsltpaddingTop10p = style(
+     paddingTop(10.px)
     )
 
   }

@@ -113,5 +113,15 @@ object HeaderCSS {
         color(white)
       )
     )
+    val rsltContainerBtn = style(
+      backgroundColor(c"#ffa500"),
+      color.rgba(51,51,51,1),
+      fontSize(16.px),
+    /*  marginLeft(8.px),*/
+      marginTop(10.px),
+      marginBottom(8.px),
+      marginRight(10.px),
+      float.right
+    )
   }
 }
