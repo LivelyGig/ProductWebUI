@@ -74,8 +74,10 @@ object LGMain extends js.JSApp {
               ),
               <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
                 <.li()(<.a(^.href:="#")("Suggested Matches")),
+                <.li()(<.a(^.href:="#")("Favorited")),
                 <.li()(<.a(^.href:="#")("Available")),
                 <.li()(<.a(^.href:="#")("Active Unavailable")),
+                <.li()(<.a(^.href:="#")("Inactive")),
                 <.li()(<.a(^.href:="#")("Inactive")),
                 <.li()(<.a(^.href:="#")("Suppressed")),
                 <.li(^.className:="divider")(),
@@ -96,24 +98,24 @@ object LGMain extends js.JSApp {
           <.div(^.className:="col-md-4 col-sm-4 col-xs-3")(
             <.div(FooterCSS.Style.footGlyphContainer)(
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://github.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(<.span()(Icon.github))),
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://github.com/LivelyGig", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="GitHub" )(<.span()(Icon.github))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://twitter.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://twitter.com/LivelyGig", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Twitter" )(
                   <.span()(Icon.twitter))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://facebook.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.facebook.com/LivelyGig-835593343168571/", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Facebook" )(
                   <.span()(Icon.facebook))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://google.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://plus.google.com/+LivelygigCommunity", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Google Plus" )(
                   <.span()(Icon.googlePlus))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://youtube.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.youtube.com/channel/UCBM73EEC5disDCDnvUXMe4w", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="YouTube Channel" )(
                   <.span()(Icon.youtube))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://linkedin.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.linkedin.com/company/10280853", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="LinkedIn" )(
                   <.span()(Icon.linkedin))),
               <.div(FooterCSS.Style.displayInline)(
-                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://slack.com/LivelyGig", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="View our GitHub repositories" )(
+                <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://livelygig.slack.com", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Slack" )(
                   <.span()(Icon.slack)))
             )
           ),

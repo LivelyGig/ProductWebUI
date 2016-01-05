@@ -68,8 +68,8 @@ object EmailValidation {
 
                   <.div(^.className:="row")(
                     <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-                      <.h4("Your request for a Splicious Agent has been submitted. Upon receiving your confirmation email, " +
-                        "you may click the link it contains or paste the token below to validate your email address.")
+                      <.h4("Request for LivelyGig account submitted. After receiving confirmation email, " +
+                        "click the link it contains or paste the token below to validate your email address.")
                     )
                   ),
                   <.div(^.className:="row")(
