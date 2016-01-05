@@ -74,8 +74,10 @@ object LGMain extends js.JSApp {
               ),
               <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
                 <.li()(<.a(^.href:="#")("Suggested Matches")),
+                <.li()(<.a(^.href:="#")("Favorited")),
                 <.li()(<.a(^.href:="#")("Available")),
                 <.li()(<.a(^.href:="#")("Active Unavailable")),
+                <.li()(<.a(^.href:="#")("Inactive")),
                 <.li()(<.a(^.href:="#")("Inactive")),
                 <.li()(<.a(^.href:="#")("Suppressed")),
                 <.li(^.className:="divider")(),
