@@ -26,7 +26,7 @@ object DashBoardCSS {
       backgroundColor(c"#CCCCFF"),
       height(60.px),
       marginTop(10.px),
-      marginLeft(15.px),
+      marginLeft(25.px),
       marginRight(15.px),
       fontSize(1.1.em),
       paddingTop(10.px),
@@ -36,7 +36,11 @@ object DashBoardCSS {
       height(22.px),
       width(22.px),
       verticalAlign.middle,
-      marginTop(-3.px)
+      marginTop(-3.px),
+      media.maxWidth(1365.px) -(
+        height(18.px),
+        width(18.px)
+        )
     )
     val rsltContentBackground = style (
      backgroundColor(c"#D3E7E7")
@@ -50,22 +54,43 @@ object DashBoardCSS {
     borderTop(9.px , dashed),
     borderRight(6.px , solid, transparent),
     borderLeft(6.px , solid, transparent),
-    marginTop(3.px)
+    marginTop(3.px),
+
+      media.maxWidth(1367.px) -(
+        width(9.px),
+        height(9.px),
+        borderTop(5.px , dashed)
+        )
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
-      fontSize(1.1.em),
+//      fontSize(1.1.em),
       fontWeight.bold,
       media.maxWidth(1130.px) -(
-        fontSize(1.em))
+        fontSize(11.px)),
+      media.minWidth(1131.px) -(
+        fontSize(15.px)
+        ),
+      media.minWidth(1367.px) -(
+        fontSize(1.1.em)
+        )
     )
+
     val rsltCountHolderDiv = style(
       display.inlineBlock,
       fontSize(1.2.em),
       margin(3.%%),
      fontWeight.bold,
       media.maxWidth(1130.px) -(
-        fontSize(1.em))
+        fontSize(11.px)),
+      media.minWidth(1131.px) -(
+        fontSize(15.px),
+        margin(5.%%)
+        ),
+      media.minWidth(1367.px) -(
+        fontSize(18.px),
+        margin(5.%%)
+        )
     )
     val listIconPadding = style(
       padding(14.px, 0.px, 14.px, 0.px)

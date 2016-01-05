@@ -21,7 +21,7 @@ object DashboardSearch {
               <.div(DashBoardCSS.Style.slctHeaders)("Skills"),
               <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
                 //<input type="text" value="Amsterdam,Washington" data-role="tagsinput"
-                <.input (^.`type`:="text" , "data-role".reactAttr:="tagsinput")
+//                <.input (^.`type`:="text" , "data-role".reactAttr:="tagsinput")
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Categories"),
               <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(

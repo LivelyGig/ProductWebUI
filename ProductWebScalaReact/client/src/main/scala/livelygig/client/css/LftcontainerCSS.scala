@@ -13,7 +13,9 @@ object LftcontainerCSS {
     val slctsearchpanelabelposition = style(
       paddingTop(15.px),
       paddingBottom(2.px),
-      fontWeight.bold
+      fontWeight.bold,
+      media.maxWidth(1250.px) -(
+        width(200.px))
     )
     val slctleftcontentdiv = style(
       border(1.px,solid ,transparent),

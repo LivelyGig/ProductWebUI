@@ -36,7 +36,6 @@ object Dashboard {
                     DashboardResults.component(ctl)
                   )
                 ))
-
             )//row
           ) //mainContainer
       }
