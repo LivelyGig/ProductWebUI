@@ -16,57 +16,58 @@ object DashboardSearch {
       // todo: Need to parameterize on type (e.g. Talent, Project) and preset (e.g. Recommended Mathces)
       "talentPreset1" match {
         case "talentPreset1" =>
-          <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
-            <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition)(
+          <.div(^.id:="slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+            <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
               <.div(DashBoardCSS.Style.slctHeaders)("Skills"),
-              <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
+              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
                 //<input type="text" value="Amsterdam,Washington" data-role="tagsinput"
-                <.input(^.`type` := "text", "data-role".reactAttr := "tagsinput")
+                <.input (^.`type`:="text" , "data-role".reactAttr:="tagsinput")
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Categories"),
-              <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
+              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Price Range"),
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidth)(
+              <.div(^.className:="row")(
+                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidth)(
                   <.input(^.`type` := "checkbox")
+                  //                        <.span(^.className:="checkbox-lbl")
                 ),
                 <.div(DashBoardCSS.Style.slctInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                 )
               ),
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidth)(
+              <.div(^.className:="row")(
+                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidth)(
                   <.input(^.`type` := "checkbox")
+                  //                        <.span(^.className:="checkbox-lbl")
                 ),
                 <.div(DashBoardCSS.Style.slctInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                 )
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Posted Date"),
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidth)(
+              <.div(^.className:="row")(
+                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidth)(
                   <.input(^.`type` := "checkbox"),
+                  <.span(^.className:="checkbox-lbl")
                   //                  <span class="checkbox-lbl"></span>
-                  <.span(DashBoardCSS.Style.checkboxLbl)()
                 ),
                 <.div(DashBoardCSS.Style.slctInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                 )
               ),
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidth)(
+              <.div(^.className:="row")(
+                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidth)(
                   <.input(^.`type` := "checkbox")
+                  //                          <.span(^.className:="checkbox-lbl")
                 ),
                 <.div(DashBoardCSS.Style.slctInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                 )
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Channels"),
-              <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
-              )
-            )
-          )
+              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
+              )))
       })
     .componentDidMount(scope => Callback {
       //val P = scope.props

@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
-import livelygig.client.css.{DashBoardCSS, LftcontainerCSS}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 
 import scalacss.ScalaCssReact._
 
@@ -14,71 +14,112 @@ object DashboardResults {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
       // todo: Need to parameterize.  This example is for Talent
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
-        <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "col-md-12 col-sm-12 col-xs-12")(
-          <.div(^.className := "col-md-8 col-sm-7 col-xs-8")(
-            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-              <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("LivelyGig Match ")(
-                <.span(^.className := "caret")
+      <.div(^.id:="rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
+        <.div(DashBoardCSS.Style.gigActionsContainer , ^.className:="row")(
+          <.div(^.className:="col-md-3 col-sm-3 col-xs-3")(
+            <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
+            //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
+            <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
+              <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
+                <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
-              <.ul(^.className := "dropdown-menu")(
-                <.li()(<.a(^.href := "#")("By Bid Amount")),
-                <.li()(<.a(^.href := "#")("By LivelyGig Match")),
-                <.li()(<.a(^.href := "#")("By Experience"))
+              <.ul(^.className:="dropdown-menu")(
+                <.li()(<.a(^.href:="#")("By Bid Amount")),
+                <.li()(<.a(^.href:="#")("(More Sorting)")),
+                <.li()(<.a(^.href:="#")("profile3"))
               )
-            ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv)("34,321 results")
+            )//dropdown class
           ),
-          <.div(DashBoardCSS.Style.listIconPadding, ^.className := "col-md-4 col-sm-5 col-xs-4")(
-            <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.list))
+          <.div(^.className:="col-md-2 col-sm-2 col-xs-2")(
+            <.div (DashBoardCSS.Style.rsltCountHolderDiv)("2,352 Results")
+          ),
+          <.div(^.className:="col-md-4 col-sm-4 col-xs-4")(
+            <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
+              <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("By Date ")(
+                <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
+              ),
+              <.ul(^.className:="dropdown-menu")(
+                <.li()(<.a(^.href:="#")("By Bid Amount")),
+                <.li()(<.a(^.href:="#")("(More Sorting)")),
+                <.li()(<.a(^.href:="#")("profile3"))
+              )
+            ),
+            <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Newest ")(
+              <.span(Icon.longArrowDown)
+            )
+          ),
+          <.div(/*DashBoardCSS.Style.listIconPadding ,*/ ^.className:="col-md-3 col-sm-3 col-xs-3")(
+            <.div(^.className:="pull-right" )(
+              <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Summery")(<.span(Icon.list)),
+              <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Brief")(<.span(Icon.list)),
+              <.button(DashBoardCSS.Style.btn,"data-toggle".reactAttr := "tooltip" , "title".reactAttr := "View Full Posts")(<.span(Icon.list))
             )
           )
-        ), //col-12
-        <.div(DashBoardCSS.Style.gigConversation, ^.className := "container-fluid")(
-          <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.ul(^.className := "media-list")(
-              <.li(^.className := "media")(
-                <.div(^.className := "media-left")(
+        ),//col-12
+        <.div(^.className:="container-fluid" )(
+          <.div (^.id:="rsltSectionContainer", ^.className:="col-md-12 col-sm-12 col-xs-12")(
+            <.ul(^.className:="media-list")(
+              <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
+                <.span(^.className:="checkbox-lbl"),
+                <.div (DashBoardCSS.Style.profileNameHolder )("Name : job-title"),
+                <.div(^.className:="col-md-12")(
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")),
+                <.div(^.className:="media-left")(
                   <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                 ), //media-left
-                <.div(^.className := "media-body")(
-                  "Beautiful videos to capture your most memorable moments."
-                ), //media-body
-                <.div(DashBoardCSS.Style.profileNameHolder, ^.className := "col-md-3")("Abed A. -- Videographer"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 3 years"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 8"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
-              ), //li
-              <.li(^.className := "media")(
-                <.div(^.className := "media-left")(
+                <.div(^.className:="media-body")(
+                  "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                  <.div(^.className:="col-md-12 col-sm-12")(
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button3")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button2")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button1")())
+                )//media-body
+              ),//li
+              <.li(^.className:="media", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
+                <.span(^.className:="checkbox-lbl"),
+                <.div (DashBoardCSS.Style.profileNameHolder )("Name : job-title"),
+                <.div(^.className:="col-md-12")(
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")),
+                <.div(^.className:="media-left")(
                   <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                 ), //media-left
-                <.div(^.className := "media-body")(
-                  "Front-end developer."
-                ), //media-body
-                <.div(DashBoardCSS.Style.profileNameHolder, ^.className := "col-md-3")("Britta B. -- Developer"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
-              ), //li
-              <.li(^.className := "media")(
-                <.div(^.className := "media-left")(
+                <.div(^.className:="media-body")(
+                  "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                  <.div(^.className:="col-md-12 col-sm-12")(
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button3")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button2")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button1")())
+                )//media-body
+              ),//li
+              <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
+                <.span(^.className:="checkbox-lbl"),
+                <.div (DashBoardCSS.Style.profileNameHolder )("Name : job-title"),
+                <.div(^.className:="col-md-12")(
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")),
+                <.div(^.className:="media-left")(
                   <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                 ), //media-left
-                <.div(^.className := "media-body")(
-                  "Beautiful ads and marketing products."
-                ), //media-body
-                <.div(DashBoardCSS.Style.profileNameHolder, ^.className := "col-md-3")("Tom C. -- Designer"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
+                <.div(^.className:="media-body")(
+                  "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                  <.div(^.className:="col-md-12 col-sm-12")(
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button3")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button2")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Button1")())
+                )//media-body
               )
-            ) //ul
+            )//ul
           )
-        ) //gigConversation
+        )//gigConversation
       )
-
     )
     .componentDidMount(scope => Callback {
       //val P = scope.props
