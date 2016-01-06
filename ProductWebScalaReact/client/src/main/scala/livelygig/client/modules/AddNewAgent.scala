@@ -1,33 +1,21 @@
 package livelygig.client.modules
 
-import livelygig.client.components.Bootstrap.Button
-import livelygig.client.components.Bootstrap.Panel
-import livelygig.client.components.Icon
 import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
-
 import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{DashboardLoc, Loc}
-import livelygig.client.modules.AddNewAgent.State
+import livelygig.client.LGMain.{Loc}
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
-
 import scala.util.{Failure, Success}
-
-//import livelygig.client.services.ApiService
-
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import rx._
-import rx.ops._
 import livelygig.client.components.Bootstrap._
-//import livelygig.client.components.TodoList.TodoListProps
+
 import livelygig.client.components._
 import livelygig.client.logger._
 import livelygig.client.services._
-import livelygig.shared._
-import org.querki.jquery._
+
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -39,11 +27,7 @@ object AddNewAgent {
                    ,showLoginFailed: Boolean = false,showRegistrationFailed: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-    //    protected def observe[T](): Unit = {
-    //      val obs = rx.foreach(_ => scope.forceUpdate.runNow())
-    //      // stop observing when unmounted
-    //      onUnmount(Callback(obs.kill()))
-    //    }
+
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
@@ -60,18 +44,18 @@ object AddNewAgent {
     }
 
     def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false): Callback = {
-      println(addNewAgent)
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
         createUser(userModel).onComplete {
           case Success(s) =>
-            println(s.msgType)
+            log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
-            println(s)
+            log.debug(s"createUserFailure: ${s}")
             t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
           // now you need to refresh the UI
         }
@@ -84,15 +68,18 @@ object AddNewAgent {
 
     def Login(agentLoginModel: AgentLoginModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
               showNewAgentForm: Boolean = false) : Callback = {
-      println(login+","+showConfirmAccountCreation+","+showNewAgentForm)
+      log.debug(s"Login agentLoginModel: ${agentLoginModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
         CoreApi.agentLogin(agentLoginModel).onComplete {
           case Success(s) =>
-            println(s.msgType)
+            log.debug(s"loginAPISuccessMsg: ${s.msgType}")
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
+              // todo add functionality after login may involve dispatching of certain events
+              log.debug("login successful")
               window.location.href = "/"
             } else {
-              println("login error")
+              log.debug("login failed")
+              t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
             println("internal server error")
@@ -110,27 +97,31 @@ object AddNewAgent {
       }
 
     }
-    def validateAccount(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false) : Callback = {
-      if (validateAccount) {
-        t.modState(s => s.copy(showValidateForm = false, showLoginForm = true))
-      } else {
-        t.modState(s => s.copy(showValidateForm = false))
-      }
-
-    }
+//    def validateAccount(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false) : Callback = {
+//      if (validateAccount) {
+//        t.modState(s => s.copy(showValidateForm = false, showLoginForm = true))
+//      } else {
+//        t.modState(s => s.copy(showValidateForm = false))
+//      }
+//
+//    }
     def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
       if (confirmAccountCreation) {
-        emailValidation(emailValidationModel).onSuccess {
-          case s =>
+        emailValidation(emailValidationModel).onComplete {
+          case Success(s) =>
+
             if (s.msgType == ApiResponseMsg.CreateUserError) {
               println(ApiResponseMsg.CreateUserError)
-              t.modState(s => s.copy(showRegistrationFailed = true))
+              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
             else {
-              t.modState(s => s.copy(showLoginForm = true))
+              t.modState(s => s.copy(showaccountValidationSuccess = true)).runNow()
             }
+          case Failure(s) =>
+            log.debug(s"ConfirmAccontCreationAPI failure: ${s.getMessage}")
+            t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
         }
-        t.modState(s => s.copy(showConfirmAccountCreation = false, showLoginForm = true))
+        t.modState(s => s.copy(showConfirmAccountCreation = false))
       } else {
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       }
@@ -170,7 +161,7 @@ object AddNewAgent {
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
         else  if (S.showLoginForm  ) LoginForm(LoginForm.Props(B.Login))
-        else  if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.validateAccount))
+//        else  if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.validateAccount))
         else   if (S.showConfirmAccountCreation  ) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
         else
         if (S.showaccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
@@ -205,36 +196,24 @@ object NewAgentForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
-      // hook up to TodoStore changes
-      // observe(props.todos)
-      // dispatch a message to refresh the todos, which will cause TodoStore to fetch todos from the server
-      //MainDispatcher.dispatch(RefreshTodos)
+
     }
     def updateName(e: ReactEventI) = {
-      // update TodoItem content
       t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
     }
     def updateEmail(e: ReactEventI) = {
-      // update TodoItem content
       t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
     }
     def updatePassword(e: ReactEventI) = {
-      // update TodoItem content
       t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
     }
     def toggleBTCWallet(e: ReactEventI) = {
-      // update TodoItem content
       t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
     }
 
     def submitForm(e: ReactEventI) = {
-      // mark it as NOT cancelled (which is the default)
-      // println("in AddNewAgentForm submitForm")
-      //   ApiService.createUser("testemail@testemail.com", "pw", Map("name" -> "test"), true)
       e.preventDefault()
       t.modState(s => s.copy(addNewAgent = true))
-      //      this.hide
-      //      jQuery(t.getDOMNode()).modal("hide")
     }
 
 
@@ -245,7 +224,6 @@ object NewAgentForm {
     }
 
     def render(s: State, p: Props) = {
-      // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       if (s.addNewAgent){
         jQuery(t.getDOMNode()).modal("hide")
       }
@@ -383,8 +361,6 @@ object LoginForm {   //TodoForm
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e:ReactEventI) = {
-      // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
       e.preventDefault()
       t.modState(s => s.copy(login = true))
     }

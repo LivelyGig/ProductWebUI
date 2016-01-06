@@ -21,7 +21,8 @@ case class ConfirmEmailResponse(reason: Option[String]) extends RequestContent
 
 case class InitializeSessionRequest(agentURI: String) extends RequestContent
 
-case class InitializeSessionResponse(sessionURI: String, defaultAlias: String, jsonBlob: Map[String, String])
+case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: Option[String], jsonBlob: Option[Map[String, String]],
+                                     reason : Option[String])
   extends RequestContent
 
 object RequestContent {
