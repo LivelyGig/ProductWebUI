@@ -30,7 +30,7 @@ object DashBoardCSS {
       marginRight(0.px),
       fontSize(1.1.em),
       paddingTop(10.px),
-      marginBottom(15.px)
+      marginBottom(0.px)
     )
     val rsltCheckboxStyle = style (
       height(22.px),
@@ -92,6 +92,7 @@ object DashBoardCSS {
         margin(5.%%)
         )
     )
+
     val listIconPadding = style(
       padding(14.px, 0.px, 14.px, 0.px)
     )
