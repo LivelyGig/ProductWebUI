@@ -61,7 +61,7 @@ object DashboardResults {
           )
         ),//col-12
         <.div(^.className:="container-fluid", ^.id:="resultsContainer" )(
-          <.div (^.id:="rsltSectionContainer", ^.className:="col-md-12 col-sm-12 col-xs-12")(
+          <.div (^.id:="rsltSectionContainer", ^.className:="col-md-12 col-sm-12 col-xs-12", ^.paddingLeft:="0px", ^.paddingRight:="0px")(
             <.ul(^.className:="media-list")(
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
                 <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),

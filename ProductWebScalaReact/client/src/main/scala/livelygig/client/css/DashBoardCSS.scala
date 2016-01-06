@@ -22,11 +22,15 @@ object DashBoardCSS {
     val slctContainer = style(
       display.inlineBlock
     )
+    val dashboardResults2 = style (
+      borderLeft(2.px, solid, c"#005256"),
+      paddingLeft(0.px)
+    )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
       height(60.px),
       marginTop(0.px),
-      marginLeft(25.px),
+      marginLeft(0.px),
       marginRight(0.px),
       fontSize(1.1.em),
       paddingTop(10.px),
@@ -43,7 +47,10 @@ object DashBoardCSS {
         )
     )
     val rsltContentBackground = style (
-     backgroundColor(c"#D3E7E7")
+     backgroundColor(c"#D3E7E7"),
+    paddingLeft(15.px),
+    paddingRight(15.px)
+
     )
     val rsltGigActionsDropdown = style(
       display.inlineBlock
@@ -309,7 +316,9 @@ object DashBoardCSS {
      paddingRight(15.px)
     )
     val rsltpaddingTop10p = style(
-     paddingTop(10.px)
+     paddingTop(10.px),
+       paddingLeft(15.px),
+      paddingRight(15.px)
     )
 
     val paddingLeftLoginbtn = style(
