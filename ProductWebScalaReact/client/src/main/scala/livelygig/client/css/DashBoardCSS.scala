@@ -312,5 +312,12 @@ object DashBoardCSS {
      paddingTop(10.px)
     )
 
+    val paddingLeftLoginbtn = style(
+     paddingLeft(0.px)
+    )
+
+    val paddingRightLoginbtn = style (
+     paddingRight(0.px)
+    )
   }
 }

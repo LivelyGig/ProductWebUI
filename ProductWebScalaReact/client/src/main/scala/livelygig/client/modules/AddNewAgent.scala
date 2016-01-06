@@ -23,8 +23,8 @@ object AddNewAgent {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false, showConfirmAccountCreation: Boolean= false, showaccountValidationSuccess : Boolean =false
-                   ,showLoginFailed: Boolean = false,showRegistrationFailed: Boolean = false)
+  case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false, showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false
+                   , showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false, showErrorModal: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
 
@@ -35,11 +35,9 @@ object AddNewAgent {
       t.modState(s => s.copy(showLoginForm = true))
     }
     def addLoginForm() : Callback = {
-
       t.modState(s => s.copy(showLoginForm = true))
     }
     def addNewLoginForm() : Callback = {
-      // activate the todo dialog
       t.modState(s => s.copy(showLoginForm = true))
     }
 
@@ -56,7 +54,7 @@ object AddNewAgent {
             }
           case Failure(s) =>
             log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewAgentForm = false))
@@ -115,11 +113,11 @@ object AddNewAgent {
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
             else {
-              t.modState(s => s.copy(showaccountValidationSuccess = true)).runNow()
+              t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             }
           case Failure(s) =>
             log.debug(s"ConfirmAccontCreationAPI failure: ${s.getMessage}")
-            t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       } else {
@@ -129,9 +127,9 @@ object AddNewAgent {
 
     def accountValidationSuccess(emailValidationModel: EmailValidationModel, accountValidationSuccess: Boolean = false) : Callback = {
       if (accountValidationSuccess) {
-        t.modState(s => s.copy(showaccountValidationSuccess = false, showLoginForm = true))
+        t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
       } else {
-        t.modState(s => s.copy(showaccountValidationSuccess = false))
+        t.modState(s => s.copy(showAccountValidationSuccess = false))
       }
     }
 
@@ -143,12 +141,11 @@ object AddNewAgent {
       }
     }
 
-    def registrationFailed(emailValidationModel: EmailValidationModel, registrationFailed: Boolean = false) : Callback = {
-      if (registrationFailed) {
-        t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
-      } else {
-        t.modState(s => s.copy(showRegistrationFailed = false))
-      }
+    def registrationFailed() : Callback = {
+      t.modState(s => s.copy(showRegistrationFailed = false, showNewAgentForm = true))
+    }
+    def serverError() : Callback = {
+      t.modState(s => s.copy(showErrorModal = false))
     }
   }
 
@@ -164,9 +161,10 @@ object AddNewAgent {
 //        else  if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.validateAccount))
         else   if (S.showConfirmAccountCreation  ) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
         else
-        if (S.showaccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
+        if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
         else   if (S.showLoginFailed ) LoginFailed(LoginFailed.Props(B.loginFailed))
         else if (S.showRegistrationFailed ) RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
+        else if (S.showErrorModal ) ErrorModal(ErrorModal.Props(B.serverError))
         else
           Seq.empty[ReactElement]
       )
@@ -279,7 +277,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Confirm Password *", "Confirm Password *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password")
+                  <.input(^.tpe := "password", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password",^.required:=true)
                 )
               )
             ),//col-md-8
@@ -407,13 +405,13 @@ object LoginForm {   //TodoForm
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Login"),
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "Name",
                   ^.placeholder:="username", ^.value:= s.agentloginModel.email, ^.onChange==>updateEmail, ^.required:=true),
-                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin , ^.placeholder:="password"
+                <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin , ^.placeholder:="password"
                   , ^.value:= s.agentloginModel.password, ^.onChange==>updatePassword, ^.required:=true) ,
                 <.button(^.tpe := "submit",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Login")),
 
-              <.div(^.className:="row",DashBoardCSS.Style.scltInputModalContainerMargin,DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.marginTop10px)(
+              <.div(^.className:="row",DashBoardCSS.Style.scltInputModalContainerMargin,DashBoardCSS.Style.marginTop10px)(
 
-                <.div(^.className:="col-md-4")(
+                <.div(^.className:="col-md-4",DashBoardCSS.Style.paddingLeftLoginbtn)(
                   <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Validate Account",
                     ^.onClick==>showValidate)
                 ),
@@ -421,7 +419,7 @@ object LoginForm {   //TodoForm
                   <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Sign Up",
                     ^.onClick==>showAddNewAgent)
                 ),
-                <.div(^.className:="col-md-4")(
+                <.div(^.className:="col-md-4",DashBoardCSS.Style.paddingRightLoginbtn)(
                   <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Forgot My Password",
                     ^.onClick==>showValidate)
                 )
@@ -441,70 +439,8 @@ object LoginForm {   //TodoForm
   def apply(props: Props) = component(props)
 }
 
-object ValidateAccount {
-  // shorthand fo
-  @inline private def bss = GlobalStyles.bootstrapStyles
-
-  case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
-
-  case class State(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false)
-
-  class Backend(t: BackendScope[Props, State]) {
-    def submitForm(): Callback = {
-      // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
-      t.modState(s => s.copy(validateAccount = true))
-    }
-
-    def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler(state.emailValidationModel, state.validateAccount)
-    }
-
-    def render(s: State, p: Props) = {
-
-      val headerText = "Validate Account"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-        //          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
-
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            //            <.div()("Your request for a Splicious Agent has been submitted. Upon reciving your conformation email, you may click the link it containes or paste the token below to valdate your email address. "),
-            //            <.div()("Your Token"),
-            //            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.slctInputWidthValidateLabel,^.id := "Name"),
-            <.div(^.className:="row")(
-              //              <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
-              //                <.label(^.`for` := "Client Name", "Client Name")
-              //              ),
-              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "Name", ^.placeholder:="Enter validation code")
-              )
-            )
-          )
-        )
-      )
-    }
-  }
-  private val component = ReactComponentB[Props]("ValidateAccount")
-    .initialState_P(p => State(new EmailValidationModel("")))
-    .renderBackend[Backend]
-    .build
-
-  def apply(props: Props) = component(props)
-}
-
-
-
 object ConfirmAccountCreation {
-  // shorthand fo
-  @inline private def bss = GlobalStyles.bootstrapStyles
+   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
 
@@ -513,8 +449,7 @@ object ConfirmAccountCreation {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
-      t.modState(s => s.copy(validateAccount = true))
+         t.modState(s => s.copy(validateAccount = true))
     }
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
@@ -523,8 +458,7 @@ object ConfirmAccountCreation {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler(state.emailValidationModel, state.validateAccount)
+         props.submitHandler(state.emailValidationModel, state.validateAccount)
     }
 
     def render(s: State, p: Props) = {
@@ -536,11 +470,7 @@ object ConfirmAccountCreation {
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-        //          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+            closed = () => formClosed(s, p)),
 
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
@@ -593,27 +523,16 @@ object AccountValidationSuccess {
       val headerText = "Account Validation Success"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-        //          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
+        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),*/ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         closed = () => formClosed(s, p)),
 
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            //            <.div()("Your request for a Splicious Agent has been submitted. Upon reciving your conformation email, you may click the link it containes or paste the token below to valdate your email address. "),
-            //            <.div()("Your Token"),
-            //            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.slctInputWidthValidateLabel,^.id := "Name"),
-            <.div(^.className:="row")(
-              //              <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
-              //                <.label(^.`for` := "Client Name", "Client Name")
-              //              ),
-              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+             <.div(^.className:="row")(
+                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Account Validation Successful!")
               )
             )
-
           )
         ),
         <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
@@ -633,47 +552,34 @@ object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
+  case class Props(submitHandler: () => Callback)
 
-  case class State(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false)
+  case class State()
 
   class Backend(t: BackendScope[Props, State]) {
-    def submitForm(): Callback = {
-      // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
-      t.modState(s => s.copy(validateAccount = true))
+
+    def hide = Callback{
+      jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler(state.emailValidationModel, state.validateAccount)
+    def modalClosed(state: State, props: Props): Callback = {
+      props.submitHandler()
     }
 
     def render(s: State, p: Props) = {
-      // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Registration Failed"
+      val headerText = "Error"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-        //          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+
+        closed = () => modalClosed(s, p)),
 
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            //            <.div()("Your request for a Splicious Agent has been submitted. Upon reciving your conformation email, you may click the link it containes or paste the token below to valdate your email address. "),
-            //            <.div()("Your Token"),
-            //            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.slctInputWidthValidateLabel,^.id := "Name"),
-            <.div(^.className:="row")(
-              //              <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
-              //                <.label(^.`for` := "Client Name", "Client Name")
-              //              ),
-              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("Registration failed !",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.a("Go Back"))
+             <.div(^.className:="row")(
+                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+                <.div(DashBoardCSS.Style.modalBodyText)("This user already exists. Please try logging in!",
+                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->hide )("Go Back"))
                 )
               )
             )
@@ -684,7 +590,56 @@ object RegistrationFailed {
     }
   }
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
-    .initialState_P(p => State(new EmailValidationModel("")))
+    .initialState_P(p => State())
+    .renderBackend[Backend]
+    .build
+
+  def apply(props: Props) = component(props)
+}
+
+object ErrorModal {
+  // shorthand fo
+  @inline private def bss = GlobalStyles.bootstrapStyles
+
+  case class Props(submitHandler: () => Callback)
+
+  case class State()
+
+  class Backend(t: BackendScope[Props, State]) {
+
+    def closeForm = Callback{
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def modalClosed(state: State, props: Props): Callback = {
+      props.submitHandler()
+    }
+
+    def render(s: State, p: Props) = {
+      val headerText = "Error"
+      Modal(Modal.Props(
+        // header contains a cancel button (X)
+        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+
+        closed = () => modalClosed(s, p)),
+
+        <.div(^.className:="row")(
+          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
+             <.div(^.className:="row")(
+                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+                <.div(DashBoardCSS.Style.modalBodyText)("Encountering problems in serving request. Please try after sometime!",
+                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->closeForm )("Close"))
+                )
+              )
+            )
+          )
+        ),
+        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+      )
+    }
+  }
+  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+    .initialState_P(p => State())
     .renderBackend[Backend]
     .build
 
@@ -703,14 +658,12 @@ object LoginFailed {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(): Callback = {
       // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
-      t.modState(s => s.copy(validateAccount = true))
+          t.modState(s => s.copy(validateAccount = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler(state.emailValidationModel, state.validateAccount)
+        props.submitHandler(state.emailValidationModel, state.validateAccount)
     }
 
     def render(s: State, p: Props) = {
@@ -718,25 +671,15 @@ object LoginFailed {
       val headerText = "Login Failed"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"),
-        //          <.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide,"Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),*/ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+             closed = () => formClosed(s, p)),
 
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            //            <.div()("Your request for a Splicious Agent has been submitted. Upon reciving your conformation email, you may click the link it containes or paste the token below to valdate your email address. "),
-            //            <.div()("Your Token"),
-            //            <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.slctInputWidthValidateLabel,^.id := "Name"),
-            <.div(^.className:="row")(
-              //              <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
-              //                <.label(^.`for` := "Client Name", "Client Name")
-              //              ),
-              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+             <.div(^.className:="row")(
+                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Login failed !",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.a("Go Back") )
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn btn-default")("Go Back"))
                 )
               )
             )
