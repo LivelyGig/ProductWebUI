@@ -107,5 +107,4 @@ object Bootstrap {
     def apply(props: Props, children: ReactElement*) = component(props, children: _*)
     def apply() = component
   }
-
 }

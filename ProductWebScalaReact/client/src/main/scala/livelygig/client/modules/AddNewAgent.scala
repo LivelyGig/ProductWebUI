@@ -11,11 +11,9 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
-
 import livelygig.client.components._
 import livelygig.client.logger._
 import livelygig.client.services._
-
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -27,7 +25,6 @@ object AddNewAgent {
                    , showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false, showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
@@ -62,7 +59,6 @@ object AddNewAgent {
       } else {
         t.modState(s => s.copy(showNewAgentForm = false))
       }
-
     }
 
     def Login(agentLoginModel: AgentLoginModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
@@ -94,21 +90,11 @@ object AddNewAgent {
       else {
         t.modState(s => s.copy(showLoginForm = false))
       }
-
     }
-//    def validateAccount(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false) : Callback = {
-//      if (validateAccount) {
-//        t.modState(s => s.copy(showValidateForm = false, showLoginForm = true))
-//      } else {
-//        t.modState(s => s.copy(showValidateForm = false))
-//      }
-//
-//    }
     def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
       if (confirmAccountCreation) {
         emailValidation(emailValidationModel).onComplete {
           case Success(s) =>
-
             if (s.msgType == ApiResponseMsg.CreateUserError) {
               println(ApiResponseMsg.CreateUserError)
               t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
@@ -125,26 +111,18 @@ object AddNewAgent {
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       }
     }
-
-    def accountValidationSuccess(emailValidationModel: EmailValidationModel, accountValidationSuccess: Boolean = false) : Callback = {
-      if (accountValidationSuccess) {
-        t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
-      } else {
-        t.modState(s => s.copy(showAccountValidationSuccess = false))
-      }
-    }
-
+    def accountValidationSuccess(/*emailValidationModel: EmailValidationModel, accountValidationSuccess: Boolean = false*/) : Callback = {
+             t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
+     }
     def loginFailed() : Callback = {
         t.modState(s => s.copy(showLoginFailed = false, showLoginForm = true))
     }
-
     def registrationFailed(login : Boolean = false) : Callback = {
       if (login){
         t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
       } else {
         t.modState(s => s.copy(showRegistrationFailed = false, showNewAgentForm = true))
       }
-
     }
     def serverError() : Callback = {
       t.modState(s => s.copy(showErrorModal = false))
@@ -163,7 +141,6 @@ object AddNewAgent {
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
         else  if (S.showLoginForm  ) LoginForm(LoginForm.Props(B.Login))
-//        else  if (S.showValidateForm) ValidateAccount(ValidateAccount.Props(B.validateAccount))
         else   if (S.showConfirmAccountCreation  ) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
         else
         if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
@@ -178,20 +155,13 @@ object AddNewAgent {
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
-
-  /** Returns a function compatible with router location system while using our own props */
-  // def apply(store: TodoStore) = (router: RouterCtl[Loc]) => {
-  //  component(Props())
   def apply(props: Props) = component(props)
 }
 
 object NewAgentForm {
-
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
-
   case class State(userModel: UserModel, addNewAgent: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
@@ -507,21 +477,19 @@ object AccountValidationSuccess {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
+  case class Props(submitHandler: () => Callback)
 
-  case class State(emailValidationModel: EmailValidationModel, validateAccount: Boolean = false)
+  case class State(/*emailValidationModel: EmailValidationModel, validateAccount: Boolean = false*/)
 
   class Backend(t: BackendScope[Props, State]) {
-    def submitForm(): Callback = {
-      // mark it as NOT cancelled (which is the default)
-      // println("form submitted")
-      t.modState(s => s.copy(validateAccount = true))
+    def hide = Callback{
+      jQuery(t.getDOMNode()).modal("hide")
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
-      props.submitHandler(state.emailValidationModel, state.validateAccount)
+      props.submitHandler(/*state.emailValidationModel, state.validateAccount*/)
     }
 
     def render(s: State, p: Props) = {
@@ -536,7 +504,8 @@ object AccountValidationSuccess {
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("Account Validation Successful!")
+                <.div(DashBoardCSS.Style.modalBodyText)("Account Validation Successful!",
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide)("Login")))
               )
             )
           )
@@ -546,7 +515,7 @@ object AccountValidationSuccess {
     }
   }
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
-    .initialState_P(p => State(new EmailValidationModel("")))
+    .initialState_P(p => State())
     .renderBackend[Backend]
     .build
 
@@ -591,8 +560,8 @@ object RegistrationFailed {
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("This user already exists. Please try logging in!",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->hide )("Try again")),
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->login )("Login"))
+                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->hide )("Try again"), <.button(^.tpe := "button",DashBoardCSS.Style.MarginLeftchkproduct,^.className:="btn btn-default",  ^.onClick-->login )("Login"))
+
                 )
               )
             )
