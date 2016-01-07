@@ -35,7 +35,7 @@ object Dashboard {
                     // todo: Need to parameterize the Search area depending on EntityType (e.g. Talent, Project) and preset
                     DashboardSearch.component(ctl)
                   ),
-                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                     // todo: Results will be parameterized depending on EntityType, preset
                     DashboardResults.component(ctl)
                   )
