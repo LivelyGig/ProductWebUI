@@ -50,6 +50,7 @@ object AddNewAgent {
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
+              log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>

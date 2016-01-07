@@ -27,7 +27,7 @@ object CoreApi {
 
   def createUser(userModel: UserModel): Future[ApiResponse[CreateUserResponse]] = {
     AjaxClient[Api].createAgent(CreateUserRequest(userModel.email, userModel.password,
-      Map("name" -> userModel.name), userModel.createBTCWallet)).call()
+      Map("name" -> userModel.name), true)).call()
   }
 
   def emailValidation(emailValidationModel: EmailValidationModel): Future[ApiResponse[ConfirmEmailResponse]] = {
