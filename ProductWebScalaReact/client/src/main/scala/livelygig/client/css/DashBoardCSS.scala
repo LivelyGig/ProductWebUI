@@ -16,6 +16,7 @@ object DashBoardCSS {
       height(100.%%),
       overflow.hidden
     )
+
     val rsltContainer = style(
       display.inlineBlock
     )
