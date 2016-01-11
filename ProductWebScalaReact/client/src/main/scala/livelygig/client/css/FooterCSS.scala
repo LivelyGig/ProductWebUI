@@ -70,5 +70,7 @@ object FooterCSS {
       media.maxWidth(1300.px)-
         fontSize(12.px)
     )
+
+
   }
 }
