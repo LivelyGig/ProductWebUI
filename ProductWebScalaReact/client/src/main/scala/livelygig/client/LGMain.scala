@@ -29,6 +29,7 @@ object LGMain extends js.JSApp {
   case object MessagesLoc extends Loc
   case object ProjectsLoc extends Loc
   case object TalentLoc extends Loc
+  case object ConnectionsLoc extends Loc
 
 
   // configure the router
@@ -44,6 +45,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#messages", MessagesLoc) ~> renderR(ctl => Messages.component(ctl))
       |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
+      |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => Connections.component(ctl))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)

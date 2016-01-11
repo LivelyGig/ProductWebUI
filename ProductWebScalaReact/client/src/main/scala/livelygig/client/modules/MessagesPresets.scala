@@ -7,6 +7,7 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css._
+import livelygig.client.modules.NewMessage
 
 import scalacss.ScalaCssReact._
 
@@ -35,7 +36,10 @@ object MessagesPresets {
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
             ),
-            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()),
+            /*<.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()*/
+              NewMessage(NewMessage.Props(ctl))
+          ),
+
             <.div(^.className:="col-md-4 col-sm-8 col-xs-4")(
               <.div(FooterCSS.Style.footGlyphContainer)(
                 <.div(MessagesCSS.Style.displayInline)(
