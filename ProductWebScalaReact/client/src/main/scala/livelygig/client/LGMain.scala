@@ -26,6 +26,9 @@ object LGMain extends js.JSApp {
   case object CreateAgentLoc extends  Loc
   case object EmailValidationLoc extends Loc
   case object AgentLoginLoc extends Loc
+  case object MessagesLoc extends Loc
+  case object ProjectsLoc extends Loc
+  case object TalentLoc extends Loc
 
 
   // configure the router
@@ -38,7 +41,9 @@ object LGMain extends js.JSApp {
       |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
-
+      |staticRoute("#messages", MessagesLoc) ~> renderR(ctl => Messages.component(ctl))
+      |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
+      |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)

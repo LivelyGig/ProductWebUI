@@ -5,6 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{Loc}
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -140,14 +141,14 @@ object AddNewAgent {
       <.div()(
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
-        else  if (S.showLoginForm  ) LoginForm(LoginForm.Props(B.Login))
-        else   if (S.showConfirmAccountCreation  ) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
+        else  if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
+        else   if (S.showConfirmAccountCreation) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
         else
         if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
-        else   if (S.showLoginFailed ) LoginFailed(LoginFailed.Props(B.loginFailed))
-        else if (S.showRegistrationFailed ) RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
-        else if (S.showErrorModal ) ErrorModal(ErrorModal.Props(B.serverError))
-        else if (S.showAccountValidationFailed ) AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
+        else   if (S.showLoginFailed) LoginFailed(LoginFailed.Props(B.loginFailed))
+        else if (S.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
+        else if (S.showErrorModal) ErrorModal(ErrorModal.Props(B.serverError))
+        else if (S.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
         else
           Seq.empty[ReactElement]
       )
@@ -163,6 +164,7 @@ object NewAgentForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
   case class State(userModel: UserModel, addNewAgent: Boolean = false)
+
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
     def hide = Callback {
@@ -183,6 +185,7 @@ object NewAgentForm {
     }
     def toggleBTCWallet(e: ReactEventI) = {
       t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+
     }
 
     def submitForm(e: ReactEventI) = {
@@ -195,19 +198,20 @@ object NewAgentForm {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewAgent)
       props.submitHandler(state.userModel, state.addNewAgent)
+
     }
 
     def render(s: State, p: Props) = {
-      if (s.addNewAgent){
-        jQuery(t.getDOMNode()).modal("hide")
-      }
+//      if (s.addNewAgent){
+//        jQuery(t.getDOMNode()).modal("hide")
+//      }
       val headerText = "Create New Agent"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
-        <.form(^.onSubmit==> submitForm)(
+        <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Create New Agent"))
           ),
@@ -302,7 +306,6 @@ object NewAgentForm {
             ),
             <.div(DashBoardCSS.Style.marginTop10px)(
               <.input(^.`type` := "checkbox")(" Yes, Send me notifications related to projects")
-
             )
           ),
           <.div()(
@@ -320,6 +323,22 @@ object NewAgentForm {
   private val component = ReactComponentB[Props]("NewAgentForm")
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
+    .componentDidMount(scope => Callback {
+      val P = scope.props
+      val S=scope.state
+      val B=scope.backend
+
+      def hideModal = Callback {
+        if (S.addNewAgent) {
+          def hide = Callback {
+            jQuery(scope.getDOMNode()).modal("hide")
+          }
+        }
+      }
+  })
+    .componentDidUpdate(scope=> Callback{
+
+    })
     .build
   def apply(props: Props) = component(props)
 }

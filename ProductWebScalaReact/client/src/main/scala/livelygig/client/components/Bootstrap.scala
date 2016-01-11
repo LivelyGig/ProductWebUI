@@ -59,7 +59,6 @@ object Bootstrap {
   }
 
   object Modal {
-
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
@@ -91,7 +90,6 @@ object Bootstrap {
         )
       }
     }
-
     val component = ReactComponentB[Props]("Modal")
       .stateless
       .renderBackend[Backend]

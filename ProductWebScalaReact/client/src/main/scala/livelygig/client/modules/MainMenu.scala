@@ -15,9 +15,9 @@ object MainMenu {
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc)
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
   private val menuItems = Seq(
-    MenuItem(1, _ => "Messages", DashboardLoc),
-    MenuItem(2, _ => "Projects", DashboardLoc),
-    MenuItem(3, _ => "Talent", DashboardLoc ),
+    MenuItem(1, _ => "Messages",MessagesLoc),
+    MenuItem(2, _ => "Projects", ProjectsLoc),
+    MenuItem(3, _ => "Talent", TalentLoc),
     MenuItem(4, _ => "Offerings", DashboardLoc ),
     MenuItem(5, _ => "Contracts", DashboardLoc ),
     MenuItem(6, _ => "Connections", DashboardLoc ),
@@ -44,9 +44,6 @@ object MainMenu {
 //          // Todo(Todo.Props(r.page,))
 //         //    AddNewAgent(AddNewAgent.Props(ctl))
 //          AddNewAgent(AddNewAgent.Props()))
-
-
-
 
 
       )

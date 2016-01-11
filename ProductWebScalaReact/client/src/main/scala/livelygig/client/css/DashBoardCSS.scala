@@ -243,7 +243,8 @@ object DashBoardCSS {
     marginLeft(2.%%)
     )
     val MarginLeftchkproduct = style (
-      marginLeft(15.px)
+      marginLeft(15.px),
+      marginRight(15.px)
     )
     val headerbtnstyle =  style (
       height(0.px),
