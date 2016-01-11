@@ -22,8 +22,10 @@ object AddNewAgent {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false, showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false
-                   , showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false, showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false)
+  case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
+                   showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false,
+                   showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
+                   showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }

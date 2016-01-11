@@ -11,4 +11,6 @@ trait Api {
 
   def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[ApiResponse[InitializeSessionResponse]]
 
+  def sessionPing (sessionPingRequest: SessionPingRequest) : Future[Seq[ApiResponse[ConnectionProfileResponse]]]
+
 }

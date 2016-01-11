@@ -25,6 +25,13 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
                                      reason : Option[String])
   extends RequestContent
 
+case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: Map[String, String])
+  extends RequestContent
+
+case class Connection (source: String, label: String, target: String)
+
+case class SessionPingRequest (sessionURI: String) extends RequestContent
+
 object RequestContent {
   implicit val requestContentPickler: Pickler[RequestContent] = generatePickler[RequestContent]
 }

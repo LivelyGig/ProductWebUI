@@ -18,6 +18,7 @@ class ApiService extends Api {
   var CREATE_USER_REQUEST_MSG = "createUserRequest"
   var CONFIRM_EMAIL_MSG = "confirmEmailToken"
   var INITIALIZE_SESSION_MSG = "initializeSessionRequest"
+  var SESSION_PING = "sessionPing"
   val wsRequest : WSRequest = WS.url(BASE_URL)
 
 
@@ -37,5 +38,11 @@ class ApiService extends Api {
     println(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest)))
     WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(
       response=>parse(response.body.toString).extract[ApiResponse[InitializeSessionResponse]])
+  }
+
+  override def sessionPing(sessionPingRequest: SessionPingRequest): Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
+    println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map(
+      response=>parse(response.body.toString).extract[Seq[ApiResponse[ConnectionProfileResponse]]])
   }
 }
