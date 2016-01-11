@@ -16,10 +16,8 @@ object Footer {
   case class FooterItem(idx: Int, label: (Props) => ReactNode, location: Loc)
   private val footerItems = Seq(
     FooterItem(1, _ => "About", DashboardLoc),
-    FooterItem(2, _ => "Privacy", DashboardLoc),
-    FooterItem(3, _ => "Terms of Use", DashboardLoc ),
-    FooterItem(4, _ => "Trademarks", DashboardLoc ),
-    FooterItem(5, _ => "LivelyGig", DashboardLoc)
+    FooterItem(2, _ => "Legal", DashboardLoc),
+    FooterItem(3, _ => "LivelyGig", DashboardLoc)
   )
   private val Footer = ReactComponentB[Props]("Footer")
     .stateless
@@ -28,9 +26,10 @@ object Footer {
         // build a list of menu items
         for (item <- footerItems) yield {
           <.li(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,
-            if(item.idx == 5 ) {
+            if(item.idx == 3 ) {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
-            }else {
+            }
+            else {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
             }
           )

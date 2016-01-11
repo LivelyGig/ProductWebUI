@@ -73,19 +73,27 @@ object DashboardResults {
                 <.div(^.className:="col-md-12")(
                   <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
                   <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
-                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable"),
-                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Recommended By: @Britta")),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable")
+                ),
+                <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)(
+                  ("Recommended By: "),
+                  <.a(^.href:="#")("@Britta"),
+                  (" for Project: "),
+                  <.a(^.href:="#")("9347383"),
+                  (" Need Videographer...")
+                ),
                 <.div(^.className:="media-left")(
                   <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
-                ), //media-left
+                ),
                 <.div(^.className:="media-body")(
                   "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
                   <.div(^.className:="col-md-12 col-sm-12")(
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())
-                )//media-body
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")()
+                  )
+                )
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
                 <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
