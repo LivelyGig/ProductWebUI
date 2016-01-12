@@ -39,4 +39,8 @@ object CoreApi {
       s"?password=${agentLoginModel.password}")).call()
   }
 
+  def sessionPing () : Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
+    AjaxClient[Api].sessionPing(SessionPingRequest(window.localStorage.getItem("sessionURI"))).call()
+  }
+
 }

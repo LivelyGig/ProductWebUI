@@ -73,8 +73,9 @@ object AddNewAgent {
             log.debug(s"loginAPISuccessMsg: ${s.msgType}")
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
               // todo add functionality after login may involve dispatching of certain events
+              window.localStorage.setItem("sessionURI",s.content.sessionURI.getOrElse(""))
               log.debug("login successful")
-              window.location.href = "/"
+              window.location.href = "/#connections"
             } else {
               log.debug("login failed")
               t.modState(s => s.copy(showLoginFailed = true)).runNow()

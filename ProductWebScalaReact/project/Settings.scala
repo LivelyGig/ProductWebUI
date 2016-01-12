@@ -36,7 +36,7 @@ object Settings {
     val autowire = "0.2.5"
     val booPickle = "1.1.0"
     val uTest = "0.3.1"
-
+    val diode = "0.3.0"
     val react = "0.14.0"
     val jQuery = "2.1.4"
     val bootstrap = "3.3.4"
@@ -73,6 +73,8 @@ object Settings {
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
     "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
+    "me.chrons" %%% "diode" % versions.diode,
+    "me.chrons" %%% "diode-react" % versions.diode,
   "org.querki" %%% "jquery-facade" % "0.10"
   ))
 

@@ -39,6 +39,7 @@ object AgentLogin {
       case Success(s) =>
         println(s.msgType)
         if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
+          println(s.content.sessionURI)
           window.location.href = "/"
         } else {
           println("login error")
