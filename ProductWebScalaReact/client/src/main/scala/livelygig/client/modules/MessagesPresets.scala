@@ -7,6 +7,7 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css._
+import livelygig.client.modules.NewMessage
 
 import scalacss.ScalaCssReact._
 
@@ -18,7 +19,7 @@ object MessagesPresets {
       // This example is for Talent
       <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
         <.div(^.className :="row")(
-          <.div(^.className:="col-md-10 col-sm-10 col-xs-10")(
+          <.div(^.className:="col-md-8 col-sm-8 col-xs-8")(
             <.div(^.className:="btn-group")(
               <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Unread Messages ")(
                 <.span(^.className:="caret")
@@ -35,27 +36,30 @@ object MessagesPresets {
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
             ),
-            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()),
-            <.div(^.className:="col-md-2 col-sm-2 col-xs-3")(
+            /*<.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()*/
+              NewMessage(NewMessage.Props(ctl))
+          ),
+
+            <.div(^.className:="col-md-4 col-sm-8 col-xs-4")(
               <.div(FooterCSS.Style.footGlyphContainer)(
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://github.com/LivelyGig", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="GitHub" )(<.span()(Icon.github))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://twitter.com/LivelyGig", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Twitter" )(
                     <.span()(Icon.twitter))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.facebook.com/LivelyGig-835593343168571/", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Facebook" )(
                     <.span()(Icon.facebook))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://plus.google.com/+LivelygigCommunity", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Google Plus" )(
                     <.span()(Icon.googlePlus))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.youtube.com/channel/UCBM73EEC5disDCDnvUXMe4w", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="YouTube Channel" )(
                     <.span()(Icon.youtube))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://www.linkedin.com/company/10280853", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="LinkedIn" )(
                     <.span()(Icon.linkedin))),
-                <.div(FooterCSS.Style.displayInline)(
+                <.div(MessagesCSS.Style.displayInline)(
                   <.a(FooterCSS.Style.displayInlineGlyph)(^.href:="https://livelygig.slack.com", ^.target:="_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr :="Slack" )(
                     <.span()(Icon.slack)))
               )

@@ -20,6 +20,13 @@ object MessagesCSS {
       fontSize(12.px)
     )
 
+    val displayInline=style(
+      paddingLeft(4.%%),
+      display.inline,
+      fontSize(1.2.em),
+      color(c"#fff"),
+      float.right
+    )
 
   }
 }

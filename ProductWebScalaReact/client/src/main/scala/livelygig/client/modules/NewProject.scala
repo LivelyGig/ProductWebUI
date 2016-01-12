@@ -1,4 +1,3 @@
-
 package livelygig.client.modules
 
 import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
@@ -26,7 +25,7 @@ object NewProject {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewAgentForm: Boolean = false, showPostProject: Boolean = false, showValidateForm: Boolean = false, showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false
+  case class State(showPostProject: Boolean = false
                    )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
@@ -50,7 +49,7 @@ object NewProject {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showPostProject = false)).runNow()
+              t.modState(s => s.copy(showPostProject = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -60,12 +59,11 @@ object NewProject {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showNewAgentForm = false))
+        t.modState(s => s.copy(showPostProject = true))
       } else {
-        t.modState(s => s.copy(showNewAgentForm = false))
+        t.modState(s => s.copy(showPostProject = true))
       }
     }
-
       }
 
   val component = ReactComponentB[Props]("AddNewAgent")
@@ -123,7 +121,6 @@ object PostAProjectForm {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postProject)
       props.submitHandler(state.userModel, state.postProject)
-
     }
 
     def render(s: State, p: Props) = {
