@@ -7,8 +7,11 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.{GlobalStyles, Icon}
 import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS}
 import livelygig.client.logger._
+import livelygig.client.models.ConnectionsModel
 import livelygig.client.modules._
 import org.scalajs.dom
+import livelygig.client.services.{LGCircuit}
+import livelygig.client.models.ConnectionsModel
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
@@ -46,7 +49,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#messages", MessagesLoc) ~> renderR(ctl => Messages.component(ctl))
       |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
-      |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => Connections.component(ctl))
+      |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(ConnectionsResults(_)))
       |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))

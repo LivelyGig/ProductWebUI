@@ -25,7 +25,7 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
                                      reason : Option[String])
   extends RequestContent
 
-case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: Map[String, String])
+case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String)
   extends RequestContent
 
 case class Connection (source: String, label: String, target: String)
