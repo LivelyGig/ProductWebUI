@@ -70,7 +70,9 @@ object ProjectSearch {
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Posted By"),
               <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-              )))
+              ),
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.floatRightbtn,"Search")
+            ))
       })
     .componentDidMount(scope => Callback {
 

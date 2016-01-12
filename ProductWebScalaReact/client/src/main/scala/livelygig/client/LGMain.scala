@@ -34,6 +34,7 @@ object LGMain extends js.JSApp {
   case object TalentLoc extends Loc
   case object ConnectionsLoc extends Loc
   case object LegalLoc extends Loc
+  case object BiddingScreenLoc extends Loc
 
 
   // configure the router
@@ -50,6 +51,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
       |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(ConnectionsResults(_)))
+      |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
       |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))

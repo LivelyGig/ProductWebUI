@@ -29,9 +29,15 @@ object Footer {
             if(item.idx == 3 ) {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
             }
-            else {
+            else if (item.idx==2){
+              LegalModal(LegalModal.Props(P.ctl))
+            }
+            else
+            {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
             }
+
+
           )
         }
       )

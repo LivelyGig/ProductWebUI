@@ -14,12 +14,6 @@ object Dashboard {
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl => {
-      //      <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-      //       // AddNewAgent(AddNewAgent.Props(ctl)),
-      //        <.div(DashBoardCSS.Style.splitContainer)(
-      //          <.div(^.className:="split")(
-      //            <.div(^.className:="row")(
-
       // the contents will vary depending on EntityType, e.g. Messages, Projects, Talent...
       "talent" match {
         case "talent" =>

@@ -26,7 +26,9 @@ object ConnectionsResults {
     def mounted(props: Props) =
       Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections))
     def render (p:Props, s: State) =
-      Panel(Panel.Props("What needs to be done"), <.div(
+      Panel(Panel.Props("Connections"), <.div(
+        p.proxy().renderFailed(ex => "Error loading"),
+        p.proxy().renderPending(_ > 500, _ => "Loading..."),
         p.proxy().render(connectionsModel =>
           ConnectionList(connectionsModel.connectionsResponse)
         )

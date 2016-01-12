@@ -18,7 +18,9 @@ object DashBoardCSS {
     )
 
     val rsltContainer = style(
-      display.inlineBlock
+      display.inlineBlock,
+      width(100.%%),
+      fontSize(1.2.em)
     )
     val slctContainer = style(
       display.inlineBlock
@@ -35,7 +37,8 @@ object DashBoardCSS {
       marginRight(0.px),
       fontSize(1.1.em),
       paddingTop(10.px),
-      marginBottom(0.px)
+      marginBottom(0.px),
+      width(100.%%)
     )
     val rsltCheckboxStyle = style (
       height(22.px),
@@ -329,6 +332,34 @@ object DashBoardCSS {
 
     val paddingRightLoginbtn = style (
      paddingRight(0.px)
+    )
+
+    val marginTop20px = style (
+     marginTop(20.px)
+    )
+    val floatRightbtn = style (
+     float.right
+    )
+    val footLegalStyle = style (
+      color(c"#fff"),
+      backgroundColor(transparent),
+      paddingTop(17.px),
+      fontSize(15.px),
+      borderColor(transparent),
+      &.active(
+        color(c"#fff"),
+        backgroundColor(transparent),
+        paddingTop(17.px),
+        fontSize(15.px),
+        borderColor(transparent)
+      ),
+    &.hover(
+      color(c"#fff"),
+      backgroundColor(transparent),
+      paddingTop(17.px),
+      fontSize(15.px),
+      borderColor(transparent)
+    )
     )
   }
 }

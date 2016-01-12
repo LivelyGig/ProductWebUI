@@ -67,7 +67,9 @@ object DashboardSearch {
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Channels"),
               <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-              )))
+              ),
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.floatRightbtn,"Search")
+            ))
       })
     .componentDidMount(scope => Callback {
       //val P = scope.props
