@@ -23,7 +23,7 @@ object BiddingScreenCSS {
      padding(15.px)
     )
     val biddingScreenData = style (
-      height(400.px),
+      height(250.px),
       overflowX.auto
     )
     val displayInlineText = style(
@@ -44,6 +44,9 @@ object BiddingScreenCSS {
     val biddingPreset = style (
       padding(10.px),
       fontSize(1.1.em)
+    )
+    val BiddingScreenResults = style (
+      paddingLeft(15.px)
     )
   }
 }

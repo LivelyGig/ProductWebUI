@@ -21,7 +21,7 @@ object BiddingScreenPresets {
       <.div(^.id:="middelNaviContainer" , BiddingScreenCSS.Style.biddingPreset)(
         <.div(^.className :="row")(
           <.div(^.className:="col-md-1 col-sm-1 col-xs-1")(
-           <.div()("Stage :")
+           <.div()("Stage:")
           ),
           <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
             <.div()(<.a()("Initial proposal"), ">>" , <.a()("Negotiating") , ">>" , <.a()("Funding") )
@@ -29,14 +29,14 @@ object BiddingScreenPresets {
         ),
         <.div(^.className :="row")(
           <.div(^.className:="col-md-1 col-sm-1 col-xs-1")(
-            <.div()("Project : ")
+            <.div()("Project:")
           ),
           <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
             <.div()("ID 256...8 Videographer Needed ... >")
           )
         ),    <.div(^.className :="row")(
           <.div(^.className:="col-md-1 col-sm-1 col-xs-1")(
-            <.div()("Employer : ")
+            <.div()("Employer:")
           ),
           <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
             <.div()("Pam")
@@ -44,7 +44,7 @@ object BiddingScreenPresets {
         ),
         <.div(^.className :="row")(
           <.div(^.className:="col-md-1 col-sm-1 col-xs-1")(
-            <.div()("Talent : ")
+            <.div()("Talent:")
           ),
           <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
             <.div()("Abed")

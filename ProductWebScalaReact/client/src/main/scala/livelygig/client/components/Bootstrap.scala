@@ -9,6 +9,7 @@ import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
+
 /**
   * Common Bootstrap components for scalajs-react
   */
@@ -75,9 +76,10 @@ object Bootstrap {
         t.props.runNow().closed().runNow()
       }
 
+
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
+        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, /*^.onKeyPress := modalClose ,*/
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
           <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
             <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius,
@@ -100,6 +102,10 @@ object Bootstrap {
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })
+      .configure(
+
+
+      )
       .build
 
     def apply(props: Props, children: ReactElement*) = component(props, children: _*)

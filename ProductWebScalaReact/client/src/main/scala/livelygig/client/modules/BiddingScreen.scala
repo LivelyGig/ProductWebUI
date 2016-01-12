@@ -10,7 +10,7 @@ import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS, BiddingScreenCSS}
 import livelygig.client.modules.DashboardPresets
 
 import scalacss.ScalaCssReact._
@@ -34,7 +34,7 @@ object BiddingScreen {
                     // todo: Need to parameterize the Search area depending on EntityType (e.g. Talent, Project) and preset
                     BiddingScreenSearch.component(ctl)
                   ),
-                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", BiddingScreenCSS.Style.BiddingScreenResults)(
                     // todo: Results will be parameterized depending on EntityType, preset
                     BiddingScreenResults.component(ctl)
                   )

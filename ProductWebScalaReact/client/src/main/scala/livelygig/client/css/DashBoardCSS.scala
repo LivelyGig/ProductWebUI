@@ -359,7 +359,11 @@ object DashBoardCSS {
       paddingTop(17.px),
       fontSize(15.px),
       borderColor(transparent)
-    )
+    ),
+      media.maxWidth(1299.px) -(
+        paddingTop(12.px)
+        )
+
     )
   }
 }
