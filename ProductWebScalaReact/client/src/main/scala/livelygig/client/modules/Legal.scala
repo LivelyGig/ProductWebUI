@@ -21,13 +21,13 @@ object Legal {
   val component = ReactComponentB[Unit]("Legal")
     .renderPS(($, P, S) => {
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        (<.ul()(
+        <.ul()(
           <.li()(<.a(^.href:="#")("Privacy Policy")),
           <.li()(<.a(^.href:="#")("End User Agreement")),
           <.li()(<.a(^.href:="#")("Terms of Service")),
           <.li()(<.a(^.href:="#")("Trademarks")),
           <.li()(<.a(^.href:="#")("Copyright"))
-        ))
+        )
       ) //mainContainer
     })
     .build

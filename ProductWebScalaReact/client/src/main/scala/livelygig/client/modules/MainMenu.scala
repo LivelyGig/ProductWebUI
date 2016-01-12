@@ -18,11 +18,11 @@ object MainMenu {
     MenuItem(1, _ => "Messages",MessagesLoc),
     MenuItem(2, _ => "Projects", ProjectsLoc),
     MenuItem(3, _ => "Talent", TalentLoc),
-   /* MenuItem(4, _ => "Offerings", DashboardLoc ),*/
-    MenuItem(4, _ => "Offerings", BiddingScreenLoc ),
+    MenuItem(4, _ => "Offerings", DashboardLoc ),
     MenuItem(5, _ => "Contracts", DashboardLoc ),
     MenuItem(6, _ => "Connections", ConnectionsLoc ),
-    MenuItem(7, _ => "Wallets", DashboardLoc )
+    MenuItem(7, _ => "Wallets", DashboardLoc ),
+    MenuItem(8, _ => "Bidding", BiddingScreenLoc)
  //   MenuItem(8, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")

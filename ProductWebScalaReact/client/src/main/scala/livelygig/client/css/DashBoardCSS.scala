@@ -340,5 +340,26 @@ object DashBoardCSS {
     val floatRightbtn = style (
      float.right
     )
+    val footLegalStyle = style (
+      color(c"#fff"),
+      backgroundColor(transparent),
+      paddingTop(17.px),
+      fontSize(15.px),
+      borderColor(transparent),
+      &.active(
+        color(c"#fff"),
+        backgroundColor(transparent),
+        paddingTop(17.px),
+        fontSize(15.px),
+        borderColor(transparent)
+      ),
+    &.hover(
+      color(c"#fff"),
+      backgroundColor(transparent),
+      paddingTop(17.px),
+      fontSize(15.px),
+      borderColor(transparent)
+    )
+    )
   }
 }

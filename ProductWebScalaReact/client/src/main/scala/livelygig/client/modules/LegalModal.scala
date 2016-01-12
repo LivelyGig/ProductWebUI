@@ -1,11 +1,26 @@
 package livelygig.client.modules
 
+import livelygig.client.LGMain.Loc
+import livelygig.client.components.Bootstrap.Button
+import livelygig.client.components.Bootstrap.CommonStyle
+import livelygig.client.components.Bootstrap.Modal
+import livelygig.client.components.GlobalStyles
+import livelygig.client.components.Icon
+import livelygig.client.components._
+import livelygig.client.css.DashBoardCSS
+import livelygig.client.css.HeaderCSS
+import livelygig.client.css.MessagesCSS
+import livelygig.client.css.ProjectCSS
+import livelygig.client.logger._
+import livelygig.client.models.UserModel
 import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{Loc}
 import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.ApiResponseMsg
+import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.CoreApi
+import livelygig.client.services.CoreApi._
 import livelygig.client.services.CoreApi._
 import livelygig.client.services.CoreApi._
 import livelygig.client.services.CoreApi._
@@ -23,12 +38,12 @@ import livelygig.client.services._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object NewMessage {
+object LegalModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showPostProject: Boolean = false
-                  )
+  case class State(showPostProject: Boolean = false)
+
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -74,8 +89,9 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
-        if (S.showPostProject) PostNewMessage(PostNewMessage.Props(B.addNewAgent))
+
+        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle)),"Legal"),
+        if (S.showPostProject) LegalModalForm(LegalModalForm.Props(B.addNewAgent))
         else
           Seq.empty[ReactElement]
       )
@@ -86,7 +102,7 @@ object NewMessage {
   def apply(props: Props) = component(props)
 }
 
-object PostNewMessage {
+object LegalModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
@@ -129,7 +145,7 @@ object PostNewMessage {
       if (s.postProject){
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "Messages"
+      val headerText = "Legal"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -137,25 +153,21 @@ object PostNewMessage {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Message"))
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Legal"))
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-            <.div(DashBoardCSS.Style.marginTop10px)(
-            ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
-            ),
-            <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
-            ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            <.ul()(
+              <.li()(<.a(^.href:="#")("Privacy Policy")),
+              <.li()(<.a(^.href:="#")("End User Agreement")),
+              <.li()(<.a(^.href:="#")("Terms of Service")),
+              <.li()(<.a(^.href:="#")("Trademarks")),
+              <.li()(<.a(^.href:="#")("Copyright"))
             )
           ),
           <.div()(
-              <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+//              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+//              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
@@ -185,3 +197,4 @@ object PostNewMessage {
     .build
   def apply(props: Props) = component(props)
 }
+

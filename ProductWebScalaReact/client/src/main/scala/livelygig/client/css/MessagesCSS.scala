@@ -28,7 +28,8 @@ object MessagesCSS {
       float.right
     )
     val paddingLeftModalHeaderbtn = style(
-      paddingLeft(15.px)
+      paddingLeft(15.px),
+      color(c"#000")
     )
 
   }
