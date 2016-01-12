@@ -6,9 +6,7 @@ import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.{DashBoardCSS, LftcontainerCSS,MessagesCSS}
+import livelygig.client.css._
 
 
 import scalacss.ScalaCssReact._
@@ -57,12 +55,15 @@ object MessagesSearch {
                   //                        <.span(^.className:="checkbox-lbl")
                 ),
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+                  <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.lineHeight:= 4, DashBoardCSS.Style.marginTop10px)
                 )
               ),
               <.div(DashBoardCSS.Style.slctHeaders)("Posted By"),
               <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-              )))
+              ),
+
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.floatRightbtn,"Search")
+            ))
       })
     .componentDidMount(scope => Callback {
 

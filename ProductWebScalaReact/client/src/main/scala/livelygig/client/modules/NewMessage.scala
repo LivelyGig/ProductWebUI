@@ -20,7 +20,7 @@ import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.logger._
 import livelygig.client.services._
-import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object NewMessage {
@@ -137,7 +137,7 @@ object PostNewMessage {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("New Message"))
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Message"))
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
