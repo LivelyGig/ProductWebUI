@@ -31,7 +31,7 @@ object LGMain extends js.JSApp {
   case object TalentLoc extends Loc
   case object ConnectionsLoc extends Loc
   case object BiddingScreenLoc extends  Loc
-
+  case object LegalLoc extends Loc
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
@@ -48,7 +48,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
       |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => Connections.component(ctl))
       |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
-
+      |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
