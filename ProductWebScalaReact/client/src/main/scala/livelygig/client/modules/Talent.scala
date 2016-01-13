@@ -42,6 +42,7 @@ object Talent {
                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                     // todo: Results will be parameterized depending on EntityType, preset
                     TalentResults.component(ctl)
+
                   )
                 )
               )

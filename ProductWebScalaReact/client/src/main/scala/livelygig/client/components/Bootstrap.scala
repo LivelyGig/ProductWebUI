@@ -90,14 +90,12 @@ object Bootstrap {
          plainKey >>   e.preventDefaultCB
    }
 
-
-
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.onKeyDown ==> modalClose ,  ^.ref:= OuterRef,
+        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1  ,
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
           <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
-            <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius,
+            <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
               <.div(^.id:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
               <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
 //              <.div(modalStyle.footer, P.footer(hide))
@@ -117,13 +115,8 @@ object Bootstrap {
         jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
-
       })
-
-      .configure(
-
-
-      )
+      .configure(      )
       .build
 
     def apply(props: Props, children: ReactElement*) = component(props, children: _*)
