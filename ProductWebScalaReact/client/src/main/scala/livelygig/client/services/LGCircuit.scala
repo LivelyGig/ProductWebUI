@@ -29,6 +29,7 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsModel]]) extends A
       effectOnly(Effect(CoreApi.sessionPing().map(UpdateAllConnections)))
     case UpdateAllConnections(connections) =>
       // got new todos, update model
+      //println(connections)
       updated(Ready(ConnectionsModel(connections)))
   }
 }
