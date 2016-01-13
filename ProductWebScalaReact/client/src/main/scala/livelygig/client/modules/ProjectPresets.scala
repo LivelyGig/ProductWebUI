@@ -40,7 +40,9 @@ object ProjectPresets {
               )
             ),
           //  <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Project")(),
-            NewProject(NewProject.Props(ctl))
+            NewProject(NewProject.Props(ctl)),
+            BiddingScreenModal(BiddingScreenModal.Props(ctl))
+
 
           )
         )

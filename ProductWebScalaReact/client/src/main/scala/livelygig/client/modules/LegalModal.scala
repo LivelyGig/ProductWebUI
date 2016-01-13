@@ -1,28 +1,10 @@
 package livelygig.client.modules
 
-import livelygig.client.LGMain.Loc
-import livelygig.client.components.Bootstrap.Button
-import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.components.Bootstrap.Modal
-import livelygig.client.components.GlobalStyles
-import livelygig.client.components.Icon
-import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.MessagesCSS
-import livelygig.client.css.ProjectCSS
-import livelygig.client.logger._
-import livelygig.client.models.UserModel
 import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{Loc}
 import livelygig.client.services.ApiResponseMsg
-import livelygig.client.services.ApiResponseMsg
-import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.CoreApi
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
 import scala.scalajs.js
@@ -42,31 +24,30 @@ object LegalModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showPostProject: Boolean = false)
-
+  case class State(showLegalFlag: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showPostProject = true))
+      t.modState(s => s.copy(showLegalFlag = true))
     }
-    def addLoginForm() : Callback = {
-      t.modState(s => s.copy(showPostProject = true))
+    def addLegalForm() : Callback = {
+      t.modState(s => s.copy(showLegalFlag = true))
     }
     def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showPostProject = true))
+      t.modState(s => s.copy(showLegalFlag = true))
     }
 
-    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
-      if(addNewAgent){
+    def addLegal(userModel: UserModel, showLegalFlag: Boolean = false): Callback = {
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showLegalFlag}")
+      if(showLegalFlag){
         createUser(userModel).onComplete {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showPostProject = true)).runNow()
+              t.modState(s => s.copy(showLegalFlag = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -76,9 +57,9 @@ object LegalModal {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showPostProject = true))
+        t.modState(s => s.copy(showLegalFlag = true))
       } else {
-        t.modState(s => s.copy(showPostProject = true))
+        t.modState(s => s.copy(showLegalFlag = false))
       }
     }
   }
@@ -90,8 +71,8 @@ object LegalModal {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
 
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle)),"Legal"),
-        if (S.showPostProject) LegalModalForm(LegalModalForm.Props(B.addNewAgent))
+        Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle)),"Legal"),
+        if (S.showLegalFlag) LegalModalForm(LegalModalForm.Props(B.addLegal))
         else
           Seq.empty[ReactElement]
       )
