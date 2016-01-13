@@ -39,7 +39,7 @@ object ConnectionsResults {
 
   // create the React component for Dashboard
   val component = ReactComponentB[Props]("Connection")
-    .initialState(State()) // initial state from TodoStore
+    .initialState(State()) 
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
