@@ -8,7 +8,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-
+import org.scalajs.dom.ext.KeyCode
 
 /**
   * Common Bootstrap components for scalajs-react
@@ -64,7 +64,12 @@ object Bootstrap {
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
 
+    val OuterRef = Ref("o")
+
     class Backend(t: BackendScope[Props, Unit]) {
+      def init: Callback =
+        OuterRef(t).tryFocus
+
       def hide = Callback {
         // instruct Bootstrap to hide the modal
         jQuery(t.getDOMNode()).modal("hide")
@@ -76,10 +81,20 @@ object Bootstrap {
         t.props.runNow().closed().runNow()
       }
 
+   def modalClose(e:ReactKeyboardEvent) : Callback = {
+
+     def plainKey: CallbackOption[Unit] =             // CallbackOption will stop if a key isn't matched
+       CallbackOption.keyCodeSwitch(e) {
+         case  KeyCode.Escape => hide
+       }
+         plainKey >>   e.preventDefaultCB
+   }
+
+
 
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, /*^.onKeyPress := modalClose ,*/
+        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.onKeyDown ==> modalClose ,  ^.ref:= OuterRef,
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
           <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
             <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius,
@@ -95,13 +110,16 @@ object Bootstrap {
     val component = ReactComponentB[Props]("Modal")
       .stateless
       .renderBackend[Backend]
+      .componentDidMount(_.backend.init)
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
         jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+
       })
+
       .configure(
 
 

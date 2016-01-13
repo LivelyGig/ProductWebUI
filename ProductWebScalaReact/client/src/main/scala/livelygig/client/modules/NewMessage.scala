@@ -27,31 +27,30 @@ object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showPostProject: Boolean = false
+  case class State(showNewMessageFlag: Boolean = false
                   )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
-
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showPostProject = true))
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
-    def addLoginForm() : Callback = {
-      t.modState(s => s.copy(showPostProject = true))
+    def addNewMessageForm() : Callback = {
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
     def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showPostProject = true))
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
 
-    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
-      if(addNewAgent){
+    def addNewAgent(userModel: UserModel, showNewMessageFlag: Boolean = false): Callback = {
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageFlag}")
+      if(showNewMessageFlag){
         createUser(userModel).onComplete {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showPostProject = true)).runNow()
+              t.modState(s => s.copy(showNewMessageFlag = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -61,9 +60,9 @@ object NewMessage {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showPostProject = true))
+        t.modState(s => s.copy(showNewMessageFlag = true))
       } else {
-        t.modState(s => s.copy(showPostProject = true))
+        t.modState(s => s.copy(showNewMessageFlag = false))
       }
     }
   }
@@ -74,8 +73,8 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
-        if (S.showPostProject) PostNewMessage(PostNewMessage.Props(B.addNewAgent))
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
+        if (S.showNewMessageFlag) PostNewMessage(PostNewMessage.Props(B.addNewAgent))
         else
           Seq.empty[ReactElement]
       )
