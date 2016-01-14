@@ -24,8 +24,8 @@ object BiddingScreenCSS {
     )
     val biddingScreenData = style (
       height(250.px),
-      overflowX.auto,
-      marginRight(40.px)
+      overflowX.auto/*,
+      marginRight(10.px)*/
     )
     val displayInlineText = style(
         color(c"#000"),
@@ -55,6 +55,19 @@ object BiddingScreenCSS {
       width(100.%%),
       fontSize(1.2.em),
       marginLeft(55.px)
+    )
+    val slctBiddingInputWidth = style (
+      width(100.px)
+    )
+   val slctBiddingInputLeftContainerMargin = style (
+     marginLeft(165.px)
+   )
+    val createBiddingBtn=style(
+      backgroundColor(c"#FFA500"),
+      color(rgba(51,51,51,1)),
+//      fontSize(16.px),
+      marginLeft(10.px),
+      marginTop(6.px)
     )
   }
 }
