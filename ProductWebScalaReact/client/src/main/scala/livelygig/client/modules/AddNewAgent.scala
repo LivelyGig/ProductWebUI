@@ -168,9 +168,12 @@ object NewAgentForm {
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
   case class State(userModel: UserModel, addNewAgent: Boolean = false)
 
-
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
     def hide = Callback {
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+    def hidecomponent /*= Callback */{
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -188,15 +191,12 @@ object NewAgentForm {
     }
     def toggleBTCWallet(e: ReactEventI) = {
       t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
-
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(addNewAgent = true))
     }
-
-
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewAgent)
@@ -270,8 +270,9 @@ object NewAgentForm {
                   <.label(^.`for` := "Account type *", "Account type *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  //                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "Name")
-                  <.input(^.`type` := "radio")(" client")
+                <.div()(
+                  <.input(^.`type` := "radio")," client"
+                )
                 )
               ),
               <.div(^.className:="row")(
@@ -280,16 +281,17 @@ object NewAgentForm {
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "clientName" , ^.placeholder :="Client Name"),
-                  <.div()(<.input(^.`type` := "radio")(" freelancer")),
-                  <.div()(<.input(^.`type` := "radio")(" both")),
-                  <.div()(<.input(^.`type` := "radio")(" moderator"))
+                  <.div()(<.input(^.`type` := "radio")," freelancer"),
+                  <.div()(<.input(^.`type` := "radio")," both"),
+                  <.div()(<.input(^.`type` := "radio")," moderator")
                 )
               )
             )//col-md-4
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.input(^.`type` := "checkbox")(" Yes, I understand and agree to the LivelyGig"),
+            <.div()(
+              <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
               <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
                 <.label(^.`for` := "", DashBoardCSS.Style.marginLeftchk,
                   <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Terms of Service ")(
@@ -302,13 +304,16 @@ object NewAgentForm {
                   )
                 )
               )
+            )
             ),
             <.div()(
-              <.input(^.`type` := "checkbox")(" Yes, Send me product updates and other related emails from LivelyGig")
+              <.input(^.`type` := "checkbox")," Yes, Send me product updates and other related emails from LivelyGig"
 
             ),
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.input(^.`type` := "checkbox")(" Yes, Send me notifications related to projects")
+            <.div()(
+              <.input(^.tpe := "checkbox") ," Yes, Send me notifications related to projects"
+            )
             )
           ),
           <.div()(
@@ -326,22 +331,12 @@ object NewAgentForm {
   private val component = ReactComponentB[Props]("NewAgentForm")
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      val P = scope.props
-      val S=scope.state
-      val B=scope.backend
-
-      def hideModal = Callback {
-        if (S.addNewAgent) {
-          def hide = Callback {
-            jQuery(scope.getDOMNode()).modal("hide")
-          }
-        }
+    .componentDidUpdate(scope => Callback{
+      if (scope.currentState.addNewAgent) {
+        scope.$.backend.hidecomponent
       }
-  })
-    .componentDidUpdate(scope=> Callback{
-
     })
+
     .build
   def apply(props: Props) = component(props)
 }
@@ -358,9 +353,12 @@ object LoginForm {   //TodoForm
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e:ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(login = true))
+     t.modState(s => s.copy(login = true))
+    //  jQuery(t.getDOMNode()).modal("hide")
     }
-    def hide = Callback {
+
+    def hide /*= Callback*/ {
+      console.log("hide")
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -383,20 +381,20 @@ object LoginForm {   //TodoForm
       props.submitHandler(state.agentloginModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
     }
 
+
     def render(s: State, p: Props) = {
-      if (s.login || s.showConfirmAccountCreation || s.showNewAgentForm) {
-        jQuery(t.getDOMNode()).modal("hide")
-      }
+
+//      if (s.login || s.showConfirmAccountCreation || s.showNewAgentForm) {
+//        jQuery(t.getDOMNode()).modal("hide")
+//      }
+
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Login"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // footer has the OK button that submits the form before hiding it
-        //        footer = hide => <.span(Button(Button.Props(submitForm() >> hide), "Validate"), Button(Button.Props(submitForm() >> hide ), "Cancel")),
-        // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
-        <.form(^.onSubmit==>submitForm)(
+        <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
@@ -408,7 +406,6 @@ object LoginForm {   //TodoForm
                 <.button(^.tpe := "submit",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Login")),
 
               <.div(^.className:="row",DashBoardCSS.Style.scltInputModalContainerMargin,DashBoardCSS.Style.marginTop10px)(
-
                 <.div(^.className:="col-md-4",DashBoardCSS.Style.paddingLeftLoginbtn)(
                   <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth,"Validate Account",
                     ^.onClick==>showValidate)
@@ -423,7 +420,6 @@ object LoginForm {   //TodoForm
                 )
               ),
               <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
-
             )
           )
         )
@@ -433,6 +429,21 @@ object LoginForm {   //TodoForm
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => State(new AgentLoginModel("","")))
     .renderBackend[Backend]
+    .componentDidMount(scope => Callback {
+      console.log("componentDidMount called")
+     // jQuery(scope.getDOMNode()).modal("hide")
+      console.log("mountLogin : " + scope.state.login )
+
+      if (scope.state.login || scope.state.showConfirmAccountCreation || scope.state.showNewAgentForm) {
+        // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
+           scope.modState(s => s.copy(login = true))
+      }
+    })
+    .componentDidUpdate(scope => Callback{
+     if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {
+                scope.$.backend.hide
+      }
+    })
     .build
   def apply(props: Props) = component(props)
 }
@@ -449,6 +460,11 @@ object ConfirmAccountCreation {
       // mark it as NOT cancelled (which is the default)
          t.modState(s => s.copy(accountValidationFailed = true))
     }
+    def hide /*= Callback*/ {
+      console.log("hide")
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
       t.modState(s => s.copy(emailValidationModel = s.emailValidationModel.copy(token = e.target.value)))
@@ -461,9 +477,9 @@ object ConfirmAccountCreation {
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      if (s.accountValidationFailed) {
-        jQuery(t.getDOMNode()).modal("hide")
-      }
+//      if (s.accountValidationFailed) {
+//        jQuery(t.getDOMNode()).modal("hide")
+//      }
       val headerText = "Confirm Account Creation"
       Modal(Modal.Props(
         // header contains a cancel button (X)
@@ -489,6 +505,11 @@ object ConfirmAccountCreation {
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
     .initialState_P(p => State(new EmailValidationModel("")))
     .renderBackend[Backend]
+    .componentDidUpdate(scope => Callback{
+      if (scope.currentState.accountValidationFailed) {
+        scope.$.backend.hide
+      }
+    })
     .build
 
   def apply(props: Props) = component(props)
@@ -568,9 +589,9 @@ object RegistrationFailed {
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-      if (s.login) {
-        jQuery(t.getDOMNode()).modal("hide")
-      }
+//      if (s.login) {
+//        jQuery(t.getDOMNode()).modal("hide")
+//      }
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -596,6 +617,11 @@ object RegistrationFailed {
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    .componentDidUpdate(scope => Callback{
+      if (scope.currentState.login) {
+        scope.$.backend.hide
+      }
+    })
     .build
 
   def apply(props: Props) = component(props)
