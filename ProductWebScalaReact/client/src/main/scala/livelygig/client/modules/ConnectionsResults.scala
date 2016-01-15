@@ -15,12 +15,12 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import livelygig.client.models.ConnectionsModel
-import livelygig.client.services.{UpdateConnection, RefreshConnections}
+import livelygig.client.services.{ConnectionsRootModel, UpdateConnection, RefreshConnections}
 
 import scalacss.ScalaCssReact._
 
 object ConnectionsResults {
-  case class Props(proxy: ModelProxy[Pot[ConnectionsModel]])
+  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
   case class State(selectedItem: Option[ConnectionsModel] = None)
   class Backend($: BackendScope[Props, State]){
     def mounted(props: Props) =
@@ -29,8 +29,8 @@ object ConnectionsResults {
       Panel(Panel.Props("Connections"), <.div(
         p.proxy().renderFailed(ex => "Error loading"),
         p.proxy().renderPending(_ > 500, _ => "Loading..."),
-        p.proxy().render(connectionsModel =>
-          ConnectionList(connectionsModel.connectionsResponse)
+        p.proxy().render(connectionsRootModel =>
+          ConnectionList(connectionsRootModel.connectionsResponse)
         )
       ))
 
@@ -45,5 +45,5 @@ object ConnectionsResults {
     .build
 
   /** Returns a function compatible with router location system while using our own props */
-  def apply(proxy: ModelProxy[Pot[ConnectionsModel]]) = component(Props(proxy))
+  def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
 }

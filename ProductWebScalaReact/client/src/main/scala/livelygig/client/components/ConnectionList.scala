@@ -3,9 +3,10 @@ package livelygig.client.components
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
-import livelygig.client.models.JsonBlobModel
-import livelygig.shared.dtos.{ConnectionProfileResponse, ApiResponse}
+import livelygig.shared.dtos.{JsonBlobModel, ConnectionProfileResponse, ApiResponse}
 import upickle.default._
+
+import scala.scalajs.js.JSON
 
 /**
   * Created by shubham.k on 1/12/2016.
@@ -18,9 +19,9 @@ object ConnectionList {
   private val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ApiResponse[ConnectionProfileResponse]) = {
-        //println(read[JsonBlobModel](connection.content.jsonBlob).name )
         <.li(
-         <.span(/*read[JsonBlobModel](*/connection.content.jsonBlob/*).name*/ )
+//         <.span( connection.content.jsonBlobModel.get.name)
+          <.span( connection.content.jsonBlob)
         )
       }
             <.ul(^.className:="media-list")(p.connections map renderConnections)
