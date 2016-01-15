@@ -273,8 +273,6 @@ object BiddingScreenModalForm {
                               <.div(^.className:="col-md-4 col-sm-5 col-xs-5")("Original")
                             ),
                             <.div(^.className:="row",BiddingScreenCSS.Style.marginLeftRight)(
-
-
                               <.div(^.className:="col-md-4 col-sm-5 col-xs-5")(
                                 <.div()("Statement of work"),
                                 <.div(^.className:="row")(

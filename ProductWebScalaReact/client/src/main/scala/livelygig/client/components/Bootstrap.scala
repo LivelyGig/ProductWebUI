@@ -3,6 +3,7 @@ package livelygig.client.components
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.css.DashBoardCSS
+import org.scalajs.dom._
 
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -74,7 +75,6 @@ object Bootstrap {
         // instruct Bootstrap to hide the modal
         jQuery(t.getDOMNode()).modal("hide")
       }
-
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
@@ -106,7 +106,7 @@ object Bootstrap {
       }
     }
     val component = ReactComponentB[Props]("Modal")
-      .stateless
+    /*  .stateless*/
       .renderBackend[Backend]
       .componentDidMount(_.backend.init)
       .componentDidMount(scope => Callback {
@@ -116,7 +116,7 @@ object Bootstrap {
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })
-      .configure(      )
+      .configure()
       .build
 
     def apply(props: Props, children: ReactElement*) = component(props, children: _*)
