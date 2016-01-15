@@ -143,7 +143,7 @@ object BiddingScreenModalForm {
                 <.div()("Stage:")
               ),
               <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
-                <.div()(<.a()("Initial "), " >> " , <.a()("*Negotiating ") , " >> " , <.a()("Funding "),<.a()("In Progress "), " >> " , <.a()("Acceptance ") , " >> " , <.a()("Review ")  , " >> " , <.a()("Ccompleted "))
+                <.div()(<.a()("Initial "), " > " , <.a()("*Negotiating ") , " > " , <.a()("Funding "),<.a()("In Progress "), " > " , <.a()("Acceptance ") , " > " , <.a()("Review ")  , " > " , <.a()("Completed "))
               )
             ),
             <.div(^.className :="row")(
