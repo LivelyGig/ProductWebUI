@@ -87,7 +87,14 @@ object TalentResults {
                   <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
                   <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
                   <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Availability: Negotiable"),
-                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)("Recommended By: @Britta")),
+                  <.div (DashBoardCSS.Style.rsltProfileDetailsHolder)(
+                    ("Recommended By: "),
+                    <.a(^.href:="#")("@Britta"),
+                    (" for Project: "),
+                    <.a(^.href:="#")("9347383"),
+                    (" Need Videographer...")
+                  )
+                ),
                 <.div(^.className:="media-left")(
                   <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
                 ), //media-left

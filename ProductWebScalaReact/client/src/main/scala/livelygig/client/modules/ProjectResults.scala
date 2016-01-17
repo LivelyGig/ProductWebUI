@@ -31,14 +31,14 @@ object ProjectResults {
             <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
             //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
             <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
-              <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select All ")(
+              <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                 <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("Hide")),
-                <.li()(<.a(^.href:="#")("Favorite")),
-                <.li()(<.a(^.href:="#")("Unhide")),
-                <.li()(<.a(^.href:="#")("Unfavorite"))
+                <.li()(<.a(^.href:="")("Hide")),
+                <.li()(<.a(^.href:="")("Favorite")),
+                <.li()(<.a(^.href:="")("Unhide")),
+                <.li()(<.a(^.href:="")("Unfavorite"))
               )
             )//dropdown class
           ),
@@ -51,11 +51,11 @@ object ProjectResults {
                 <.span(^.className:="caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("By Date")),
-                <.li()(<.a(^.href:="#")("By Experience")),
-                <.li()(<.a(^.href:="#")("By Reputation")),
-                <.li()(<.a(^.href:="#")("By Rate")),
-                <.li()(<.a(^.href:="#")("By Projects Completed"))
+                <.li()(<.a(^.href:="")("By Date")),
+                <.li()(<.a(^.href:="")("By Experience")),
+                <.li()(<.a(^.href:="")("By Reputation")),
+                <.li()(<.a(^.href:="")("By Rate")),
+                <.li()(<.a(^.href:="")("By Projects Completed"))
               )
             ),
             <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
@@ -88,9 +88,10 @@ object ProjectResults {
                   <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                 ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(

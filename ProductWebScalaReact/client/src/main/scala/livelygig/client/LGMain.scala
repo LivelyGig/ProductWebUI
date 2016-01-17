@@ -31,6 +31,10 @@ object LGMain extends js.JSApp {
   case object AgentLoginLoc extends Loc
   case object MessagesLoc extends Loc
   case object ProjectsLoc extends Loc
+  case object ContractsLoc extends Loc
+  case object ContestsLoc extends Loc
+  case object EmployersLoc extends Loc
+  case object OfferingsLoc extends Loc
   case object TalentLoc extends Loc
   case object ConnectionsLoc extends Loc
   case object LegalLoc extends Loc
@@ -49,10 +53,14 @@ object LGMain extends js.JSApp {
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
       |staticRoute("#messages", MessagesLoc) ~> renderR(ctl => Messages.component(ctl))
       |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
+      |staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
+      |staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
+      |staticRoute("#contracts", ContractsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
+      |staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(ConnectionsResults(_)))
-      |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
-      |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
+     // |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
+
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)

@@ -17,12 +17,13 @@ object MainMenu {
   private val menuItems = Seq(
     MenuItem(1, _ => "Messages",MessagesLoc),
     MenuItem(2, _ => "Projects", ProjectsLoc),
-    MenuItem(3, _ => "Contests", ProjectsLoc),
-    MenuItem(4, _ => "Offerings", DashboardLoc ),
-    MenuItem(5, _ => "Talent", TalentLoc),
-    MenuItem(6, _ => "Contracts", DashboardLoc ),
-    MenuItem(7, _ => "Connections", ConnectionsLoc ),
-    MenuItem(8, _ => "Wallets", DashboardLoc )
+    MenuItem(3, _ => "Contests", ContestsLoc),
+    MenuItem(4, _ => "Offerings", OfferingsLoc ),
+    MenuItem(5, _ => "Employers", EmployersLoc ),
+    MenuItem(6, _ => "Talent", TalentLoc),
+    MenuItem(7, _ => "Contracts", ContractsLoc ),
+    MenuItem(8, _ => "Connections", ConnectionsLoc )
+    // MenuItem(8, _ => "Wallets", DashboardLoc )
     // MenuItem(9, _ => "Bidding", BiddingScreenLoc)
  //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
