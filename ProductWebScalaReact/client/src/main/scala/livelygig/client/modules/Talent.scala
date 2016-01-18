@@ -16,7 +16,6 @@ import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import livelygig.client.modules.DashboardPresets
 
 import scalacss.ScalaCssReact._
 

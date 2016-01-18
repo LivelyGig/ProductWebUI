@@ -1,6 +1,7 @@
 package livelygig.client.services
 
 import autowire._
+import upickle.default._
 import diode._
 import diode.data._
 import diode.util._
@@ -9,6 +10,8 @@ import boopickle.Default._
 import livelygig.client.models.ConnectionsModel
 import livelygig.shared.dtos.{ConnectionProfileResponse, ApiResponse}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.js
+import scala.scalajs.js.JSON
 
 /**
   * Created by shubham.k on 1/11/2016.
@@ -21,16 +24,51 @@ case class UpdateAllConnections( connectionsResponse: Seq[ApiResponse[Connection
 
 case class UpdateConnection( connection: ConnectionProfileResponse)
 
-case class RootModel(connections: Pot[ConnectionsModel])
+case class RootModel(connections: Pot[ConnectionsRootModel])
 
-class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsModel]]) extends ActionHandler(modelRW) {
+case class ConnectionsRootModel(connectionsResponse: Seq[ConnectionsModel]) {
+  def updated (newConnectionResponse: ConnectionsModel) = {
+    println(newConnectionResponse)
+    connectionsResponse.indexWhere(_.connection.target == newConnectionResponse.connection.target)
+    match {
+      case -1 =>
+        ConnectionsRootModel(connectionsResponse:+newConnectionResponse)
+      case target =>
+        ConnectionsRootModel(connectionsResponse.updated(target, newConnectionResponse))
+    }
+  }
+}
+
+class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case RefreshConnections =>
       effectOnly(Effect(CoreApi.sessionPing().map(UpdateAllConnections)))
     case UpdateAllConnections(connections) =>
-      // got new todos, update model
-      //println(connections)
-      updated(Ready(ConnectionsModel(connections)))
+      var model = Seq[ConnectionsModel]()
+      connections.map(connection=>
+        connection.content.name->Option(
+          JSON.parse(connection.content.jsonBlob).name))
+      /*connections.foreach{connection=>
+        val json = JSON.parse(connection.content.jsonBlob)
+        println(json.name)
+      }*/
+//      println(connections)
+//      connections.foreach {
+//        connection => println {
+//          JSON.parse(connection.content.jsonBlob).name
+//        }
+//      }
+      connections.foreach {
+        connection =>
+          val json = JSON.parse(connection.content.jsonBlob)
+          val name = json.name.asInstanceOf[String]
+          val imgSrc = if(connection.content.jsonBlob.contains("imgSrc"))json.imgSrc.asInstanceOf[String] else ""
+          model :+= new ConnectionsModel(connection.content.sessionURI,connection.content.connection,
+            name, imgSrc)
+
+      }
+      model.foreach(temp=>println(temp.name))
+      updated(Ready(ConnectionsRootModel(model)))
   }
 }
 

@@ -1,19 +1,16 @@
 package livelygig.client.models
 
-import livelygig.shared.dtos.{ApiResponse, ConnectionProfileResponse}
+import livelygig.shared.dtos.{Connection}
 
 /**
   * Created by shubham.k on 1/12/2016.
   */
-case class ConnectionsModel(connectionsResponse: Seq[ApiResponse[ConnectionProfileResponse]]) {
-      def updated (newConnectionResponse: ApiResponse[ConnectionProfileResponse]) = {
-        println(newConnectionResponse)
-        connectionsResponse.indexWhere(_.content.connection.target == newConnectionResponse.content.connection.target)
-        match {
-          case -1 =>
-            ConnectionsModel(connectionsResponse:+newConnectionResponse)
-          case target =>
-            ConnectionsModel(connectionsResponse.updated(target, newConnectionResponse))
-        }
-      }
-}
+case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
+/*
+case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String ,
+                                     jsonBlobModel: Option[JsonBlobModel])
+  extends RequestContent
+
+case class JsonBlobModel(name: String, imgSrc: String)
+
+case class Connection (source: String, label: String, target: String)*/
