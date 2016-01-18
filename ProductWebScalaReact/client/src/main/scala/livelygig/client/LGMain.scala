@@ -4,10 +4,12 @@ package livelygig.client
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+//import livelygig.client.modals.AddNewAgent
 import livelygig.client.components.{GlobalStyles, Icon}
 import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS}
 import livelygig.client.logger._
 import livelygig.client.models.ConnectionsModel
+import livelygig.client.modals._
 import livelygig.client.modules._
 import org.scalajs.dom
 import livelygig.client.services.{LGCircuit}
@@ -52,7 +54,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
       |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(ConnectionsResults(_)))
       |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
-      |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
+     // |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
 
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)

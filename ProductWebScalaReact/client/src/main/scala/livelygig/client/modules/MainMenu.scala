@@ -4,9 +4,9 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain
 import livelygig.client.LGMain._
+import livelygig.client.modals.AddNewAgent
 import livelygig.client.components._
 import livelygig.client.css.HeaderCSS
-import livelygig.client.modules.AddNewAgent
 
 import scalacss.ScalaCssReact._
 object MainMenu {

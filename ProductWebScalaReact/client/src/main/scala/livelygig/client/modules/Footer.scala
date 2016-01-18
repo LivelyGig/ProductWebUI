@@ -5,6 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.{DashboardLoc, Loc}
 import livelygig.client.components._
 import livelygig.client.css.FooterCSS
+import livelygig.client.modals._
 
 import scalacss.ScalaCssReact._
 /**
@@ -30,7 +31,8 @@ object Footer {
               P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
             }
             else if (item.idx==2){
-              LegalModal(LegalModal.Props(P.ctl))
+            //  LegalModal(LegalModal.Props(P.ctl)),
+              Legal(Legal.Props(P.ctl))
             }
             else
             {
