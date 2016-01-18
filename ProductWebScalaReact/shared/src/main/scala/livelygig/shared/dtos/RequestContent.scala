@@ -26,10 +26,10 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
   extends RequestContent
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String ,
-                                     jsonBlobModel: Option[JsonBlobModel])
+                                     name: Option[String])
   extends RequestContent
 
-case class JsonBlobModel(name: String, imgSrc: String)
+//case class JsonBlobModel(name: String, imgSrc: String)
 
 case class Connection (source: String, label: String, target: String)
 
