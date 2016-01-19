@@ -39,10 +39,10 @@ object TalentPresets {
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
             ),
-            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Project")(),
+            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Profile")(),
             //Invoice(Invoice.Props(ctl)),
-            UserPreferences(UserPreferences.Props(ctl)),
-           PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
+            UserPreferences(UserPreferences.Props(ctl))
+           // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
           )
         )
       )

@@ -96,7 +96,7 @@ object TalentResults {
                   )
                 ),
                 <.div(^.className:="media-left")(
-                  <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img.png")
+                  <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img2.jpg")
                 ), //media-left
                 <.div(^.className:="media-body")(
                   "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
@@ -106,6 +106,9 @@ object TalentResults {
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())
                 )//media-body
+
+
+
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
                 <.input(^.`type` := "checkbox",DashBoardCSS.Style.rsltCheckboxStyle),
