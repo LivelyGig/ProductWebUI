@@ -12,7 +12,7 @@ import scalacss.ScalaCssReact._
 
 object ConnectionsSearch {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Connections")
+  val component = ReactComponentB[Unit]("Connections")
     .render_P(ctl =>
       // todo: Need to parameterize on type (e.g. Talent, Project) and preset (e.g. Recommended Mathces)
       "talentPreset1" match {

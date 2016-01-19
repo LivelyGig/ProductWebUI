@@ -1,25 +1,14 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.css.FooterCSS
 import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css._
-
 import scalacss.ScalaCssReact._
 
 object ConnectionsPresets {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Connections")
-    .render_P(ctl =>
+  val component = ReactComponentB[Unit]("Connections")
+    .render(ctl =>
       // todo: Need to parameterize.
       // This example is for Talent
       <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
@@ -40,9 +29,9 @@ object ConnectionsPresets {
                 <.li()(<.a(^.href:="#")("Videographers w/5+ yrs experience")),
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
-            ),
+            )
             //  <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Project")(),
-            NewProject(NewProject.Props(ctl))
+            //NewProject(NewProject.Props(ctl))
 
           )
         )

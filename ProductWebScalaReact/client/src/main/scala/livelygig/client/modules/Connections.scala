@@ -1,3 +1,4 @@
+/*
 package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -36,11 +37,11 @@ object Connections {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     // todo: Need to parameterize the Search area depending on EntityType (e.g. Talent, Project) and preset
-            //        ConnectionsSearch.component(ctl)
+                    ConnectionsSearch.component(ctl)
                   ),
                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                     // todo: Results will be parameterized depending on EntityType, preset
-                 //   ConnectionsResults.component(ctl)
+                    ConnectionsResults.component(_)
                   )
                 )
               )
@@ -53,3 +54,4 @@ object Connections {
     })
     .build
 }
+*/
