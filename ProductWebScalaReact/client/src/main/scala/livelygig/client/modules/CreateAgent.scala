@@ -64,6 +64,7 @@ object CreateAgent {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
+
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4" , CreateAgentCSS.Style.modalContainer)(
           <.div(CreateAgentCSS.Style.ModalHeader, /*CreateAgentCSS.Style.paddinglefttitle ,*/ ^.className:="row")(
