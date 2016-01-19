@@ -60,7 +60,7 @@ object LGMain extends js.JSApp {
       |staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#contracts", ContractsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
-      |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(ConnectionsResults(_)))
+      |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))
 //      |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
      // |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
      // |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))

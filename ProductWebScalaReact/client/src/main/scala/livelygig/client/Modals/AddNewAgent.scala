@@ -25,7 +25,7 @@ object AddNewAgent {
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false)
+                   showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false , showTermsOfServicesForm : Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -41,7 +41,7 @@ object AddNewAgent {
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false): Callback = {
+    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
       log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
         createUser(userModel).onComplete {
@@ -59,6 +59,8 @@ object AddNewAgent {
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewAgentForm = false))
+      }  else if (showTermsOfServicesForm) {
+        t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true ))
       } else {
         t.modState(s => s.copy(showNewAgentForm = false))
       }
@@ -134,6 +136,9 @@ object AddNewAgent {
     def accountValidationFailed() : Callback = {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
+    def termsOfServices() : Callback = {
+      t.modState(s => s.copy(showTermsOfServicesForm = false))
+    }
   }
 
   val component = ReactComponentB[Props]("AddNewAgent")
@@ -144,6 +149,7 @@ object AddNewAgent {
       <.div()(
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
+        else if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
         else if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
         else if (S.showConfirmAccountCreation) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
         else

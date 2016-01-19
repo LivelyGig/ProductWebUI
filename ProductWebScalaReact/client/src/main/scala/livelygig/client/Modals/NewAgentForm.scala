@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{DashBoardCSS, HeaderCSS}
+import livelygig.client.css.{FooterCSS, DashBoardCSS, HeaderCSS}
 import livelygig.client.logger._
 import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
 import livelygig.client.services.CoreApi._
@@ -30,8 +30,8 @@ object NewAgentForm {
 object NewAgentForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (UserModel, Boolean) => Callback)
-  case class State(userModel: UserModel, addNewAgent: Boolean = false)
+  case class Props(submitHandler: (UserModel, Boolean,Boolean) => Callback)
+  case class State(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false)
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
     def hide = Callback {
@@ -57,7 +57,9 @@ object NewAgentForm {
     def toggleBTCWallet(e: ReactEventI) = {
       t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
     }
-
+    def showTermsOfServices(e:ReactEventI) = {
+      t.modState(s => s.copy(showTermsOfServicesForm = true))
+    }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(addNewAgent = true))
@@ -65,7 +67,7 @@ object NewAgentForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewAgent)
-      props.submitHandler(state.userModel, state.addNewAgent)
+      props.submitHandler(state.userModel, state.addNewAgent ,state.showTermsOfServicesForm)
 
     }
 
@@ -155,21 +157,23 @@ object NewAgentForm {
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.div()(
-                <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
-                <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
-                  <.label(^.`for` := "", DashBoardCSS.Style.marginLeftchk,
-                    <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Terms of Service ")(
-                      <.span(^.className:="caret")
-                    ),
-                    <.ul(^.className:="dropdown-menu")(
-                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement")),
-                      <.li()(<.a(^.href:="#")("Yes, I understand and agree to the LivelyGig Terms of Service")),
-                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement"))
-                    )
-                  )
-                )
-              )
+//              <.div()(
+//                <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
+//                <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
+//                  <.label(^.`for` := "", DashBoardCSS.Style.marginLeftchk,
+//                    <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Terms of Service ")(
+//                      <.span(^.className:="caret")
+//                    ),
+//                    <.ul(^.className:="dropdown-menu")(
+//                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement")),
+//                      <.li()(<.a(^.href:="#")("Yes, I understand and agree to the LivelyGig Terms of Service")),
+//                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement"))
+//                    )
+//                  )
+//                )
+//              )
+            <.div()(  <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
+                      <.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Terms of Service ",^.onClick==>showTermsOfServices))
             ),
             <.div()(
               <.input(^.`type` := "checkbox")," Yes, Send me product updates and other related emails from LivelyGig"
@@ -197,7 +201,7 @@ object NewAgentForm {
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback{
-      if (scope.currentState.addNewAgent) {
+      if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm) {
         scope.$.backend.hidecomponent
       }
     })
