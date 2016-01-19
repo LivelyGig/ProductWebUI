@@ -11,6 +11,7 @@ import livelygig.client.components.Icon
 import livelygig.client.css.FooterCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css._
+import livelygig.client.modals.{UserSkills, NewRecommendation, NewProject, BiddingScreenModal}
 
 import scalacss.ScalaCssReact._
 
@@ -42,7 +43,8 @@ object ProjectPresets {
           //  <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Project")(),
             NewProject(NewProject.Props(ctl)),
             BiddingScreenModal(BiddingScreenModal.Props(ctl)),
-            UserSkills(UserSkills.Props(ctl))
+            UserSkills(UserSkills.Props(ctl)),
+            NewRecommendation(NewRecommendation.Props(ctl))
           )
         )
       )

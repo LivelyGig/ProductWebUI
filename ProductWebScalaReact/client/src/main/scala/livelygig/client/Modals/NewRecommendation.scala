@@ -1,53 +1,50 @@
-package livelygig.client.modules
+package livelygig.client.modals
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{Loc}
-
-import livelygig.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import livelygig.client.logger._
+import livelygig.client.models.UserModel
+import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS}
-import scala.concurrent.ExecutionContext.Implicits.global
 
-object UserPreferences {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
+
+object NewRecommendation {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewProjectFlag: Boolean = false
+  case class State(showNewRecommendationFlag: Boolean = false
                   )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
-
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showNewProjectFlag = true))
+      t.modState(s => s.copy(showNewRecommendationFlag = true))
     }
-    def addProjectForm() : Callback = {
-      t.modState(s => s.copy(showNewProjectFlag = true))
+    def addNewMessageForm() : Callback = {
+      t.modState(s => s.copy(showNewRecommendationFlag = true))
     }
     def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showNewProjectFlag = true))
+      t.modState(s => s.copy(showNewRecommendationFlag = true))
     }
 
-    def addNewProject(userModel: UserModel, showNewProjectFlag: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewProjectFlag}")
-      if(showNewProjectFlag){
+    def addNewRecommendation(userModel: UserModel, showNewRecommendationFlag: Boolean = false): Callback = {
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewRecommendationFlag}")
+      if(showNewRecommendationFlag){
         createUser(userModel).onComplete {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showNewProjectFlag = true)).runNow()
+              t.modState(s => s.copy(showNewRecommendationFlag = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -57,9 +54,9 @@ object UserPreferences {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showNewProjectFlag = true))
+        t.modState(s => s.copy(showNewRecommendationFlag = true))
       } else {
-        t.modState(s => s.copy(showNewProjectFlag = false))
+        t.modState(s => s.copy(showNewRecommendationFlag = false))
       }
     }
   }
@@ -70,8 +67,8 @@ object UserPreferences {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Preferences"),
-        if (S.showNewProjectFlag) UserPreferencesForm(UserPreferencesForm.Props(B.addNewProject))
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Recommendation"),
+        if (S.showNewRecommendationFlag) NewRecommendationForm(NewRecommendationForm.Props(B.addNewRecommendation))
         else
           Seq.empty[ReactElement]
       )
@@ -82,7 +79,7 @@ object UserPreferences {
   def apply(props: Props) = component(props)
 }
 
-object UserPreferencesForm {
+object NewRecommendationForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
@@ -125,7 +122,7 @@ object UserPreferencesForm {
       if (s.postProject){
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "User Preferences"
+      val headerText = "New Recommendation"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -133,15 +130,33 @@ object UserPreferencesForm {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Preferences"))
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Recommendation"))
+          ),//main row
+          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
+            <.div(DashBoardCSS.Style.marginTop10px)(
+            ),
+            <.div()(
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            ),
+            <.div(^.className:="row")(
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
+            ),
+            <.div()(
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            )
           ),
-
+          <.div()(
+            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+            )
+          ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
   }
-  private val component = ReactComponentB[Props]("PostAProjectForm")
+  private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
@@ -163,3 +178,4 @@ object UserPreferencesForm {
     .build
   def apply(props: Props) = component(props)
 }
+

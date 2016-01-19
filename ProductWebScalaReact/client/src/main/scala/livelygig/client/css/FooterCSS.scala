@@ -71,6 +71,16 @@ object FooterCSS {
         fontSize(12.px)
     )
 
+    val legalModalBtn = style (
+      border.none,
+      &.hover (
+        backgroundColor.transparent
+      ),
+      &.active(
+      backgroundColor.transparent
+     )
+    )
+
 
   }
 }
