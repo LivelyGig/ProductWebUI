@@ -14,7 +14,7 @@ import org.json4s.jackson.Serialization.write
 
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
-  var BASE_URL = "http://54.200.246.77:9876/api"
+  var BASE_URL = "http://54.200.246.77/api"
   var CREATE_USER_REQUEST_MSG = "createUserRequest"
   var CONFIRM_EMAIL_MSG = "confirmEmailToken"
   var INITIALIZE_SESSION_MSG = "initializeSessionRequest"

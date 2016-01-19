@@ -1,55 +1,50 @@
-package livelygig.client.modules
+package livelygig.client.modals
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{Loc}
-import livelygig.client.services.ApiResponseMsg
-
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import livelygig.client.logger._
+import livelygig.client.models.UserModel
+import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS, ProjectCSS}
-import scala.concurrent.ExecutionContext.Implicits.global
 
-object TermsAndConditions {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
+
+object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showTermsofServiceFlag: Boolean = false
+  case class State(showNewMessageFlag: Boolean = false
                   )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
-
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showTermsofServiceFlag = true))
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
-    def addTermsofServiceForm() : Callback = {
-      t.modState(s => s.copy(showTermsofServiceFlag = true))
+    def addNewMessageForm() : Callback = {
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
     def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showTermsofServiceFlag = true))
+      t.modState(s => s.copy(showNewMessageFlag = true))
     }
 
-    def addTermsofService(userModel: UserModel, showTermsofServiceFlag: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showTermsofServiceFlag}")
-      if(showTermsofServiceFlag){
+    def addNewAgent(userModel: UserModel, showNewMessageFlag: Boolean = false): Callback = {
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageFlag}")
+      if(showNewMessageFlag){
         createUser(userModel).onComplete {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showTermsofServiceFlag = true)).runNow()
+              t.modState(s => s.copy(showNewMessageFlag = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -59,9 +54,9 @@ object TermsAndConditions {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showTermsofServiceFlag = true))
+        t.modState(s => s.copy(showNewMessageFlag = true))
       } else {
-        t.modState(s => s.copy(showTermsofServiceFlag = false))
+        t.modState(s => s.copy(showNewMessageFlag = false))
       }
     }
   }
@@ -72,8 +67,8 @@ object TermsAndConditions {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addTermsofServiceForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"Terms of Service"),
-        if (S.showTermsofServiceFlag) TermsAndConditionsForm(TermsAndConditionsForm.Props(B.addTermsofService))
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
+        if (S.showNewMessageFlag) PostNewMessage(PostNewMessage.Props(B.addNewAgent))
         else
           Seq.empty[ReactElement]
       )
@@ -84,7 +79,7 @@ object TermsAndConditions {
   def apply(props: Props) = component(props)
 }
 
-object TermsAndConditionsForm {
+object PostNewMessage {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
@@ -127,7 +122,7 @@ object TermsAndConditionsForm {
       if (s.postProject){
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "Terms of Service"
+      val headerText = "Messages"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -135,19 +130,25 @@ object TermsAndConditionsForm {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Terms of Service"))
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Message"))
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),
             <.div()(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            ),
+            <.div(^.className:="row")(
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
+            ),
+            <.div()(
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
             )
           ),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+              <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
@@ -155,7 +156,7 @@ object TermsAndConditionsForm {
       )
     }
   }
-  private val component = ReactComponentB[Props]("TermsofService")
+  private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
@@ -177,4 +178,3 @@ object TermsAndConditionsForm {
     .build
   def apply(props: Props) = component(props)
 }
-

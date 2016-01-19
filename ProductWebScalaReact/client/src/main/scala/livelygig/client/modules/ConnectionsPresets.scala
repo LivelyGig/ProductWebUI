@@ -13,6 +13,7 @@ import livelygig.client.css.FooterCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css._
+import livelygig.client.modals.NewProject
 
 import scalacss.ScalaCssReact._
 

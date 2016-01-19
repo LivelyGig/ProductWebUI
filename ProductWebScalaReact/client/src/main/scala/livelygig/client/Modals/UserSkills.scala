@@ -1,56 +1,51 @@
-package livelygig.client.modules
+package livelygig.client.modals
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{Loc}
-import livelygig.client.services.ApiResponseMsg
-import livelygig.client.services.ApiResponseMsg
-import livelygig.client.services.CoreApi
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import livelygig.client.logger._
+import livelygig.client.models.UserModel
+import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
-import scala.concurrent.ExecutionContext.Implicits.global
 
-object NewMessage {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
+
+object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewMessageFlag: Boolean = false
+  case class State(showUserSkillsFlag: Boolean = false
                   )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
+
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showNewMessageFlag = true))
+      t.modState(s => s.copy(showUserSkillsFlag = true))
     }
-    def addNewMessageForm() : Callback = {
-      t.modState(s => s.copy(showNewMessageFlag = true))
+    def addUserSkillsForm() : Callback = {
+      t.modState(s => s.copy(showUserSkillsFlag = true))
     }
     def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showNewMessageFlag = true))
+      t.modState(s => s.copy(showUserSkillsFlag = true))
     }
 
-    def addNewAgent(userModel: UserModel, showNewMessageFlag: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageFlag}")
-      if(showNewMessageFlag){
+    def addUserSkills(userModel: UserModel, showUserSkillsFlag: Boolean = false): Callback = {
+      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserSkillsFlag}")
+      if(showUserSkillsFlag){
         createUser(userModel).onComplete {
           case Success(s) =>
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showNewMessageFlag = true)).runNow()
+              t.modState(s => s.copy(showUserSkillsFlag = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
@@ -60,21 +55,21 @@ object NewMessage {
             t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
           // now you need to refresh the UI
         }
-        t.modState(s => s.copy(showNewMessageFlag = true))
+        t.modState(s => s.copy(showUserSkillsFlag = true))
       } else {
-        t.modState(s => s.copy(showNewMessageFlag = false))
+        t.modState(s => s.copy(showUserSkillsFlag = false))
       }
     }
   }
 
-  val component = ReactComponentB[Props]("AddNewAgent")
+  val component = ReactComponentB[Props]("UserSkills")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
-        if (S.showNewMessageFlag) PostNewMessage(PostNewMessage.Props(B.addNewAgent))
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Skills"),
+        if (S.showUserSkillsFlag) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]
       )
@@ -85,7 +80,7 @@ object NewMessage {
   def apply(props: Props) = component(props)
 }
 
-object PostNewMessage {
+object UserSkillsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (UserModel, Boolean) => Callback)
@@ -128,7 +123,7 @@ object PostNewMessage {
       if (s.postProject){
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "Messages"
+      val headerText = "User Skills"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -136,33 +131,47 @@ object PostNewMessage {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Message"))
-          ),//main row
-          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-            <.div(DashBoardCSS.Style.marginTop10px)(
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
+          ),
+
+
+          <.div(^.className:="row")(
+            <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+              <.label(^.`for` := "Name *", "Name *")
             ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
-            ),
+            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "First name",^.value:= s.userModel.name,
+                ^.onChange==>updateName,^.required:=true)
+            )
+          ),
             <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
+            <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+              <.label(^.`for` := "Email *", "Email *")
             ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value:= s.userModel.email,
+                ^.onChange==>updateEmail,^.required:=true)
             )
           ),
-          <.div()(
-              <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+          <.div(^.className:="row")(
+            <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
+              <.label(^.`for` := "Password *", "Password *")
+            ),
+            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value:= s.userModel.email,
+                ^.onChange==>updateEmail,^.required:=true)
+            )
+          ),
+            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+              <.button(^.tpe := "submit",^.className:="btn btn-default",^.onClick --> hide, "Submit"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ),
+            ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
   }
-  private val component = ReactComponentB[Props]("PostNewMessage")
+  private val component = ReactComponentB[Props]("UserSkills")
     .initialState_P(p => State(new UserModel("","","",false)))
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
@@ -184,3 +193,4 @@ object PostNewMessage {
     .build
   def apply(props: Props) = component(props)
 }
+

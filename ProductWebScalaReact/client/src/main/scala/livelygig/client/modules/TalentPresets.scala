@@ -11,6 +11,7 @@ import livelygig.client.components.Icon
 import livelygig.client.css.FooterCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css._
+import livelygig.client.modals.UserPreferences
 
 import scalacss.ScalaCssReact._
 

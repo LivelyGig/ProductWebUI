@@ -1,25 +1,21 @@
-package livelygig.client.modules
+package livelygig.client.modals
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
-import livelygig.client.LGMain.{Loc}
-import livelygig.client.services.ApiResponseMsg
-import livelygig.client.services.CoreApi
-import livelygig.client.services.CoreApi._
-import livelygig.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import livelygig.client.logger._
+import livelygig.client.models.UserModel
+import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS}
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
 
 object NewProject {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -260,7 +256,11 @@ object PostAProjectForm {
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign,DashBoardCSS.Style.marginTop10px)(
-              <.input(^.`type`:="checkbox")("Allow forwarding")
+              <.div(
+                <.input(^.`type`:="checkbox"),
+                "Allow forwarding"
+              )
+
               ),
             <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),

@@ -69,5 +69,6 @@ object BiddingScreenCSS {
       marginLeft(10.px),
       marginTop(6.px)
     )
+
   }
 }
