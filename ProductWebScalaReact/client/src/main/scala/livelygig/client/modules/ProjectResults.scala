@@ -91,7 +91,9 @@ object ProjectResults {
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Apply")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")()
+                  )
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(

@@ -122,7 +122,7 @@ object PostNewMessage {
       if (s.postProject){
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "Messages"
+      val headerText = "Message - New"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -130,10 +130,13 @@ object PostNewMessage {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Message"))
+            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)(""))
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
+            ),
+            <.div()(
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Subject:",^.lineHeight:= 1)
             ),
             <.div()(
               <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
@@ -147,7 +150,7 @@ object PostNewMessage {
           ),
           <.div()(
               <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Send"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),

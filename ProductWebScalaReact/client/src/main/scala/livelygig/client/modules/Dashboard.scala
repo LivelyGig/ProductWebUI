@@ -14,6 +14,7 @@ object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
           <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
+            <.div()("overview here of counts of messages, projects, proposed matches, etc.")
           )
     )
     .componentDidMount(scope => Callback {
@@ -65,6 +66,7 @@ object Dashboard {
       //      source: citynames.ttAdapter()
       //    }
       //  });
+
     })
     .build
 }

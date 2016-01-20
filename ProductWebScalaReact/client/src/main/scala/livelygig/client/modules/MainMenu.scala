@@ -15,16 +15,15 @@ object MainMenu {
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc)
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
   private val menuItems = Seq(
-    MenuItem(1, _ => "Messages",MessagesLoc),
-    MenuItem(2, _ => "Projects", ProjectsLoc),
-    MenuItem(3, _ => "Contests", ContestsLoc),
-    MenuItem(4, _ => "Offerings", OfferingsLoc ),
-    MenuItem(5, _ => "Employers", EmployersLoc ),
-    MenuItem(6, _ => "Talent", TalentLoc),
-    MenuItem(7, _ => "Contracts", ContractsLoc ),
-    MenuItem(8, _ => "Connections", ConnectionsLoc )
-    // MenuItem(8, _ => "Wallets", DashboardLoc )
-    // MenuItem(9, _ => "Bidding", BiddingScreenLoc)
+    MenuItem(1, _ => "Dashboard",DashboardLoc),
+    MenuItem(2, _ => "Messages",MessagesLoc),
+    MenuItem(3, _ => "Projects", ProjectsLoc),
+    MenuItem(4, _ => "Contests", ContestsLoc),
+    MenuItem(5, _ => "Offerings", OfferingsLoc ),
+    MenuItem(6, _ => "Employers", EmployersLoc ),
+    MenuItem(7, _ => "Talent", TalentLoc),
+    MenuItem(8, _ => "Contracts", ContractsLoc ),
+    MenuItem(9, _ => "Connections", ConnectionsLoc )
  //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
