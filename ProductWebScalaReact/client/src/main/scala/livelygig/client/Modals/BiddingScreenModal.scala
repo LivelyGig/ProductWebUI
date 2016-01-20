@@ -180,40 +180,6 @@ object BiddingScreenModalForm {
             <.div(DashBoardCSS.Style.splitContainer)(
               <.div(^.className := "split")(
                 <.div(^.className := "row")(
-                  //                  <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
-                  //                    // todo: Need to parameterize the Search area depending on EntityType (e.g. Talent, Project) and preset
-                  //                      <.div(^.id:="slctScrollContainer", DashBoardCSS.Style.slctContainer)(
-                  //                    <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
-                  //                      <.div(DashBoardCSS.Style.slctHeaders)("Contract Template"),
-                  //                      <.div(^.className:="row")(
-                  //                        <.div(^.className:="col-md-12 col-sm-12 col-xs-12",ProjectCSS.Style.slctProjectInputWidth)(
-                  //                          <.div(DashBoardCSS.Style.marginTop20px)("SOW")
-                  //                        ),
-                  //                        <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin , DashBoardCSS.Style.marginTop10px)(
-                  //                          //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
-                  //                          <.div(^.className:="btn-group")(
-                  //                            <.button(ProjectCSS.Style.projectdropdownbtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select One")(
-                  //                              <.span(^.className:="caret")
-                  //                            ),
-                  //                            <.ul(^.className:="dropdown-menu")(
-                  //                              <.li()(<.a(^.href:="#")("Item 1")),
-                  //                              <.li()(<.a(^.href:="#")("Item 2")),
-                  //                              <.li()(<.a(^.href:="#")("Item 3"))
-                  //                            )
-                  //                          )
-                  //                        )
-                  //                      ),
-                  //                      <.div(^.className:="row")(
-                  //                        <.div(^.className:="col-md-12 col-sm-12 col-xs-12",ProjectCSS.Style.slctProjectInputWidth)(
-                  //                          <.div("Rate")
-                  //                        ),
-                  //                        <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  //                          <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth, ^.placeholder:="input")
-                  //                        )
-                  //                      ),
-                  //                      <.div(DashBoardCSS.Style.slctHeaders)("Complete Agreement")
-                  //                    ))
-                  //                  ),
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ^.id := "dashboardResults2", BiddingScreenCSS.Style.BiddingScreenResults)(
                     <.div(^.id := "rsltScrollContainer")(
                       <.div(^.className := "container-fluid")(

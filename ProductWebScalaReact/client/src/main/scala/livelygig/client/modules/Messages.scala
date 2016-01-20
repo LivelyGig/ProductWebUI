@@ -11,6 +11,7 @@ import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modules.MessagesResults.Props
 
 import scalacss.ScalaCssReact._
 
@@ -35,7 +36,7 @@ object Messages {
                   ),
                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                     // todo: Results will be parameterized depending on EntityType, preset
-                    MessagesResults.component(ctl)
+                    MessagesResults.component(MessagesResults.Props(ctl))
                   )
                 )
               )

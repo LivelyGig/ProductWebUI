@@ -23,7 +23,7 @@ object ProjectPresets {
       // This example is for Talent
       <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
         <.div(^.className :="row")(
-          <.div(^.className:="col-md-10 col-sm-10 col-xs-10")(
+          <.div(^.className:="col-md-11 col-sm-11 col-xs-11")(
             <.div(^.className:="btn-group")(
               <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                 <.span(^.className:="caret")

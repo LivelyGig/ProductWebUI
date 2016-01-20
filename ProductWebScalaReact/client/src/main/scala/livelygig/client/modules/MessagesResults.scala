@@ -1,30 +1,64 @@
 package livelygig.client.modules
 
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modals.PostNewMessage
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-
+import livelygig.client.components.Bootstrap._
+import livelygig.client.components._
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object MessagesResults {
-  // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Messages")
-    .render_P(ctl =>
 
+object MessagesResults {
+  case class Props(ctl: RouterCtl[Loc])
+  case class State(showReplyMessageForm: Boolean = false, showForwardMessageForm: Boolean = false)
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  }
+  // create the React component for Dashboard
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+    def mounted(props: Props): Callback =  {
+      t.modState(s => s.copy(showReplyMessageForm = true))
+    }
+    def addReplyMessageForm() : Callback = {
+      t.modState(s => s.copy(showReplyMessageForm = true))
+    }
+    def addForwardMessageForm() : Callback = {
+      t.modState(s => s.copy(showForwardMessageForm = true))
+    }
+    def addMessage(postMessage: Boolean = false): Callback = {
+      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
+      if(!postMessage){
+        t.modState(s => s.copy(showReplyMessageForm = false))
+      } else {
+        t.modState(s => s.copy(showReplyMessageForm = true))
+      }
+    }
+    def forwardMessage(postMessage: Boolean = false): Callback = {
+      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
+      if(!postMessage){
+        t.modState(s => s.copy(showForwardMessageForm = false))
+      } else {
+        t.modState(s => s.copy(showForwardMessageForm = true))
+      }
+    }
+
+  }
+  val component = ReactComponentB[Props]("Messages")
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS( ($, P, S) =>  {
+          val B = $.backend
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-3 col-sm-3 col-xs-3")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
-            //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
-            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
@@ -69,8 +103,6 @@ object MessagesResults {
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
-
-
               <.li(^.className := "media", DashBoardCSS.Style.rsltpaddingTop10p)(
                 // if even row  DashBoardCSS.Style.rsltContentBackground
                 <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
@@ -81,8 +113,13 @@ object MessagesResults {
                   <.div(^.className := "col-md-12 col-sm-12")(
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Favorite")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Reply")()
+                   /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
+                    Button(Button.Props(B.addForwardMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),"Forward"),
+                    Button(Button.Props(B.addReplyMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),"Reply"),
+                    if (S.showForwardMessageForm) PostNewMessage(PostNewMessage.Props(B.forwardMessage,"Forward"))
+                      else if (S.showReplyMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "Reply"))
+                      else
+                        Seq.empty[ReactElement]
                   )
                 ) //media-body
               ), //li
@@ -193,11 +230,8 @@ object MessagesResults {
         )
       ) //gigConversation
 
-    )
-
-
-    .componentDidMount(scope => Callback {
-
-    })
+})
+    .configure(OnUnmount.install)
     .build
-}
+  def apply(props: Props) = component(props)
+  }

@@ -40,9 +40,6 @@ object ConfirmAccountCreation {
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-//      if (s.accountValidationFailed) {
-//        jQuery(t.getDOMNode()).modal("hide")
-//      }
       val headerText = "Confirm Account Creation"
       Modal(Modal.Props(
         // header contains a cancel button (X)

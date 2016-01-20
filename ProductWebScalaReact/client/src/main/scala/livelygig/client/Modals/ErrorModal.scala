@@ -13,7 +13,6 @@ object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback)
-
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
@@ -30,7 +29,7 @@ object ErrorModal {
       val headerText = "Error"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
 
         closed = () => modalClosed(s, p)),
 

@@ -19,14 +19,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-/*
-*
-  * Created by bhagyashree.b on 1/18/2016.
-object NewAgentForm {
-
-}
-*/
-
 object NewAgentForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -72,10 +64,7 @@ object NewAgentForm {
     }
 
     def render(s: State, p: Props) = {
-      //      if (s.addNewAgent){
-      //        jQuery(t.getDOMNode()).modal("hide")
-      //      }
-      val headerText = "Create New Agent"
+         val headerText = "Create New Agent"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -157,21 +146,6 @@ object NewAgentForm {
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-//              <.div()(
-//                <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
-//                <.div (DashBoardCSS.Style.rsltGigActionsDropdown, ^.className:="dropdown")(
-//                  <.label(^.`for` := "", DashBoardCSS.Style.marginLeftchk,
-//                    <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Terms of Service ")(
-//                      <.span(^.className:="caret")
-//                    ),
-//                    <.ul(^.className:="dropdown-menu")(
-//                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement")),
-//                      <.li()(<.a(^.href:="#")("Yes, I understand and agree to the LivelyGig Terms of Service")),
-//                      <.li()(<.a(^.href:="#")("Privacy Policy and End User Agreement"))
-//                    )
-//                  )
-//                )
-//              )
             <.div()(  <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
                       <.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Terms of Service ",^.onClick==>showTermsOfServices))
             ),

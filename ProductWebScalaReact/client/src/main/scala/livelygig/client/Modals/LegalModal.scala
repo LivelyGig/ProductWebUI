@@ -16,7 +16,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * Created by bhagyashree.b on 1/18/2016.
   */
 
-
 object LegalModal {   //TodoForm
 // shorthand fo
 @inline private def bss = GlobalStyles.bootstrapStyles
@@ -30,17 +29,16 @@ object LegalModal {   //TodoForm
     def submitForm(e:ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(login = true))
-      //  jQuery(t.getDOMNode()).modal("hide")
-    }
+      }
 
     def hide /*= Callback*/ {
       console.log("hide")
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
-    def updateEmail(e:ReactEventI) = {
-      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(email = e.target.value)))
-    }
+//    def updateEmail(e:ReactEventI) = {
+//      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(email = e.target.value)))
+//    }
     def showPrivacyPolicy(e:ReactEventI) = {
       console.log("in showPrivacyPolicy ")
       t.modState(s => s.copy(showPrivacyPolicyModal = true))
@@ -59,9 +57,9 @@ object LegalModal {   //TodoForm
     def showTermsOfServices(e:ReactEventI) = {
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
-    def updatePassword(e:ReactEventI) = {
-      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(password = e.target.value)))
-    }
+//    def updatePassword(e:ReactEventI) = {
+//      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(password = e.target.value)))
+//    }
 
 
     def formClosed(state: State, props: Props): Callback = {

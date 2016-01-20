@@ -1,8 +1,5 @@
 package livelygig.client.modals
 
-/**
-  * Created by bhagyashree.b on 1/19/2016.
-  */
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.GlobalStyles

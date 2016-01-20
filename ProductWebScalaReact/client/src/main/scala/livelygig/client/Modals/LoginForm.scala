@@ -52,11 +52,6 @@ object LoginForm {   //TodoForm
 
 
     def render(s: State, p: Props) = {
-
-//      if (s.login || s.showConfirmAccountCreation || s.showNewAgentForm) {
-//        jQuery(t.getDOMNode()).modal("hide")
-//      }
-
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Login"
       Modal(Modal.Props(
@@ -98,16 +93,16 @@ object LoginForm {   //TodoForm
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => State(new AgentLoginModel("","")))
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      console.log("componentDidMount called")
-     // jQuery(scope.getDOMNode()).modal("hide")
-      console.log("mountLogin : " + scope.state.login )
-
-      if (scope.state.login || scope.state.showConfirmAccountCreation || scope.state.showNewAgentForm) {
-        // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-           scope.modState(s => s.copy(login = true))
-      }
-    })
+//    .componentDidMount(scope => Callback {
+//      console.log("componentDidMount called")
+//     // jQuery(scope.getDOMNode()).modal("hide")
+//      console.log("mountLogin : " + scope.state.login )
+//
+//      if (scope.state.login || scope.state.showConfirmAccountCreation || scope.state.showNewAgentForm) {
+//        // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
+//           scope.modState(s => s.copy(login = true))
+//      }
+//    })
     .componentDidUpdate(scope => Callback{
      if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {
                 scope.$.backend.hide

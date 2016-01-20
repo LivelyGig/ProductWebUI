@@ -18,7 +18,6 @@ object LoginFailed {
 
   class Backend(t: BackendScope[Props, State]) {
 
-
     def hide = Callback{
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -33,7 +32,7 @@ object LoginFailed {
       val headerText = "Login Failed"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),*/ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
              closed = () => formClosed(s, p)),
 
         <.div(^.className:="row")(

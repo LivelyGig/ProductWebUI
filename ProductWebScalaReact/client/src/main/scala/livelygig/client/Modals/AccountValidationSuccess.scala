@@ -15,7 +15,7 @@ object AccountValidationSuccess {
 
   case class Props(submitHandler: () => Callback)
 
-  case class State(/*emailValidationModel: EmailValidationModel, validateAccount: Boolean = false*/)
+  case class State()
 
   class Backend(t: BackendScope[Props, State]) {
     def hide = Callback{
@@ -24,8 +24,7 @@ object AccountValidationSuccess {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      //println("form closed")
-      props.submitHandler(/*state.emailValidationModel, state.validateAccount*/)
+       props.submitHandler(/*state.emailValidationModel, state.validateAccount*/)
     }
 
     def render(s: State, p: Props) = {
@@ -33,7 +32,7 @@ object AccountValidationSuccess {
       val headerText = "Account Validation Success"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),*/ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span( <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         closed = () => formClosed(s, p)),
 
         <.div(^.className:="row")(
