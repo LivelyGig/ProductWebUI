@@ -94,7 +94,7 @@ object MessagesResults {
           <.div(/*DashBoardCSS.Style.listIconPadding ,*/ ^.className := "col-md-3 col-sm-3 col-xs-3")(
             <.div(^.className := "pull-right")(
               // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summery")(<.span(Icon.list)),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.list)),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(Icon.list)),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.list))
             )

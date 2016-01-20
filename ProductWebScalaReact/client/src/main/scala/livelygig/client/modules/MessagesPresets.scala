@@ -7,7 +7,7 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css._
-import livelygig.client.modals.{TermsAndConditions, NewMessage}
+import livelygig.client.modals.{NewMessage}
 
 import scalacss.ScalaCssReact._
 
@@ -37,9 +37,9 @@ object MessagesPresets {
               )
             ),
             /*<.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()*/
-            NewMessage(NewMessage.Props(ctl)),
-            TermsAndConditions(TermsAndConditions.Props(ctl)),
-            EndUserAgreement(EndUserAgreement.Props(ctl))
+            NewMessage(NewMessage.Props(ctl))
+            // TermsAndConditions(TermsAndConditions.Props(ctl)),
+            // EndUserAgreement(EndUserAgreement.Props(ctl))
           )
           )
         )

@@ -135,7 +135,7 @@ object BiddingScreenModalForm {
       if (s.postProject) {
         jQuery(t.getDOMNode()).modal("hide")
       }
-      val headerText = "BiddingScreen"
+      val headerText = "Contract - ID: 25688  Title: Videographer Needed... "
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -147,34 +147,45 @@ object BiddingScreenModalForm {
           //          ),//main row
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(^.className := "row")(
-              <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(
+              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                 <.div()("Stage:")
               ),
-              <.div(^.className := "col-md-11 col-sm-11 col-xs-11")(
-                <.div()(<.a()("Applying "), " > ", <.a()("*Negotiating "), " > ", <.a()("Funding "), " > ", <.a()("Work In Progress "), " > ", <.a()("Work Completed / Pending Acceptance "), " > ", <.a()("Feedback "), " > ", <.a()("Closed "))
+              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                // ToDo: the current status, e.g. Negotiating, should be in bold and come from the underlying model for the Contract.
+                <.div()(<.a(^.fontWeight.bold)("Initiating "), " > ", <.a()("Ecrow "), " > ", <.a()("In Progress "), " > ", <.a()("Acceptance "), " > ", <.a()("Feedback "))
               )
+
             ),
             <.div(^.className := "row")(
-              <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(
+              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                 <.div()("Project:")
               ),
-              <.div(^.className := "col-md-11 col-sm-11 col-xs-11")(
+              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
                 <.div()(<.a()("25688"), " Videographer Needed ...")
-              )
-            ), <.div(^.className := "row")(
-              <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(
-                <.div()("Employer:")
-              ),
-              <.div(^.className := "col-md-11 col-sm-11 col-xs-11")(
-                <.div()(<.a()("Pam"))
               )
             ),
             <.div(^.className := "row")(
-              <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(
+              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
+                <.div()("Employer:")
+              ),
+              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                <.div()(<.a()("Pam")), "snapshot"
+              )
+            ),
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                 <.div()("Talent:")
               ),
-              <.div(^.className := "col-md-11 col-sm-11 col-xs-11")(
-                <.div()(<.a()("Abed"))
+              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                <.div()(<.a()("Abed")), "Choose your profile:", "picklist... ", "snapshot"
+              )
+            ),
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
+                <.div()("Referred By:")
+              ),
+              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                <.div()(<.a()("Britta"))
               )
             ),
             <.div(DashBoardCSS.Style.splitContainer)(
@@ -237,11 +248,11 @@ object BiddingScreenModalForm {
                             ),
                             <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
                               <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                <.div()("Statement of work"),
+                                <.div()("Statement of Work"),
                                 <.div(^.className := "row")(
                                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                                     <.div()(
-                                      <.a()("View Modify "),
+                                      <.a()("View / Modify "),
                                       "Updated: 2016-01-12 SHA256:d14a sf"
                                     )
                                   )
@@ -254,21 +265,19 @@ object BiddingScreenModalForm {
                             <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
 
                               <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
+                                <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
                                 <.div(^.className := "row")(
-                                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
-                                    <.div(DashBoardCSS.Style.marginTop20px)("SOW")
-                                  ),
+
                                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
                                     //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                                     <.div(^.className := "btn-group")(
-                                      <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select One")(
+                                      <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
                                         <.span(^.className := "caret")
                                       ),
                                       <.ul(^.className := "dropdown-menu")(
-                                        <.li()(<.a(^.href := "#")("Item 1")),
-                                        <.li()(<.a(^.href := "#")("Item 2")),
-                                        <.li()(<.a(^.href := "#")("Item 3"))
+                                        <.li()(<.a(^.href := "#")("Jim P. Blesho")),
+                                        <.li()(<.a(^.href := "#")("Remi Fastaou")),
+                                        <.li()(<.a(^.href := "#")("Jami Corporation"))
                                       )
                                     )
                                   )
@@ -281,35 +290,18 @@ object BiddingScreenModalForm {
 
                             <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
                               <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
+                                <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
                                 <.div(^.className := "row")(
                                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                    <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
+                                    <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
                                   )
                                 )
                               ),
                               <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                               <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                               <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
-                            ),
-                            <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-
-
-                              <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                <.div()("Statement of work"),
-                                <.div(^.className := "row")(
-                                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                    <.div()(
-                                      <.a()("View Modify "),
-                                      "Updated: 2016-01-12 SHA256:d14a sf"
-                                    )
-                                  )
-                                )
-                              ),
-                              <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                              <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                              <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
                             )
+
                           )
                         ), //container
 
@@ -336,7 +328,7 @@ object BiddingScreenModalForm {
                               )
                             )
                           )
-                      )
+                        )
                       ) //gigConversation
                     )
                   )
