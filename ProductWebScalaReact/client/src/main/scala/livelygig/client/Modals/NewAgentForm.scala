@@ -30,7 +30,7 @@ object NewAgentForm {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
-    def hidecomponent /*= Callback */{
+    def hidecomponent ={
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }

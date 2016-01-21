@@ -48,16 +48,6 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) exten
       connections.map(connection=>
         connection.content.name->Option(
           JSON.parse(connection.content.jsonBlob).name))
-      /*connections.foreach{connection=>
-        val json = JSON.parse(connection.content.jsonBlob)
-        println(json.name)
-      }*/
-//      println(connections)
-//      connections.foreach {
-//        connection => println {
-//          JSON.parse(connection.content.jsonBlob).name
-//        }
-//      }
       connections.foreach {
         connection =>
           val json = JSON.parse(connection.content.jsonBlob)

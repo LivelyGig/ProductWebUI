@@ -48,7 +48,7 @@ object ErrorModal {
       )
     }
   }
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+  private val component = ReactComponentB[Props]("ErrorModal")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .build

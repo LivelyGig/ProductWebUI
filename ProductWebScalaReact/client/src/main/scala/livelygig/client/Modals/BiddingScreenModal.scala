@@ -17,81 +17,55 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object BiddingScreenModal {
-  @inline private def bss = GlobalStyles.bootstrapStyles
-
-  case class Props(ctl: RouterCtl[Loc])
-
-  case class State(showBiddingScreen: Boolean = false)
-
-
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-  }
-
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback = {
-      t.modState(s => s.copy(showBiddingScreen = true))
-    }
-
-    def addBiddingScreenForm(): Callback = {
-      t.modState(s => s.copy(showBiddingScreen = true))
-    }
-
-    def addNewLoginForm(): Callback = {
-      t.modState(s => s.copy(showBiddingScreen = true))
-    }
-
-    def addBiddingScreen(userModel: UserModel, showBiddingScreen: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showBiddingScreen}")
-      if (showBiddingScreen) {
-        createUser(userModel).onComplete {
-          case Success(s) =>
-            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
-              t.modState(s => s.copy(showBiddingScreen = true)).runNow()
-            } else {
-              log.debug(s"createUser msg : ${s.content}")
-              t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
-            }
-          case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
-          // now you need to refresh the UI
-        }
-        t.modState(s => s.copy(showBiddingScreen = true))
-      } else {
-        t.modState(s => s.copy(showBiddingScreen = false))
-      }
-    }
-  }
-
-  val component = ReactComponentB[Props]("AddNewAgent")
-    .initialState(State())
-    .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-
-        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), "View/Edit Contract"),
-        if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
-        else
-          Seq.empty[ReactElement]
-      )
-    })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .configure(OnUnmount.install)
-    .build
-
-  def apply(props: Props) = component(props)
-}
+//object BiddingScreenModal {
+//  @inline private def bss = GlobalStyles.bootstrapStyles
+//
+//  case class Props(ctl: RouterCtl[Loc])
+//  case class State(showBiddingScreen: Boolean = false)
+//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+//  }
+//
+//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+//    def mounted(props: Props): Callback = {
+//      t.modState(s => s.copy(showBiddingScreen = true))
+//    }
+//    def addBiddingScreenForm(): Callback = {
+//      t.modState(s => s.copy(showBiddingScreen = true))
+//    }
+//    def addBiddingScreen(postBiddingScreen: Boolean = false): Callback = {
+////      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showBiddingScreen}")
+//      if (postBiddingScreen) {
+//        t.modState(s => s.copy(showBiddingScreen = true))
+//      } else {
+//        t.modState(s => s.copy(showBiddingScreen = false))
+//      }
+//    }
+//  }
+//
+//  val component = ReactComponentB[Props]("AddNewAgent")
+//    .initialState(State())
+//    .backend(new Backend(_))
+//    .renderPS(($, P, S) => {
+//      val B = $.backend
+//      <.div(ProjectCSS.Style.displayInitialbtn)(
+//        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), "View/Edit Contract"),
+//        if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
+//        else
+//          Seq.empty[ReactElement]
+//      )
+//    })
+//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+//    .configure(OnUnmount.install)
+//    .build
+//
+//  def apply(props: Props) = component(props)
+//}
 
 object BiddingScreenModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-
-  case class Props(submitHandler: (UserModel, Boolean) => Callback)
-
-  case class State(userModel: UserModel, postProject: Boolean = false)
+  case class Props(submitHandler: (Boolean) => Callback)
+  case class State(postBiddingScreen: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
@@ -99,42 +73,26 @@ object BiddingScreenModalForm {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
+    def hidemodal =  {
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
 
     def mounted(props: Props): Callback = Callback {
 
     }
-
-    def updateName(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
-    }
-
-    def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
-    }
-
-    def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
-    }
-
-    def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
-    }
-
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postProject = false))
+      t.modState(s => s.copy(postBiddingScreen = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postProject)
-      props.submitHandler(state.userModel, state.postProject)
+      println(state.postBiddingScreen)
+      props.submitHandler(state.postBiddingScreen)
     }
 
     def render(s: State, p: Props) = {
-      if (s.postProject) {
-        jQuery(t.getDOMNode()).modal("hide")
-      }
       val headerText = "Contract - ID: 25688  Title: Videographer Needed... "
       Modal(Modal.Props(
         // header contains a cancel button (X)
@@ -142,9 +100,6 @@ object BiddingScreenModalForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          //          <.div(^.className:="row")(
-          //            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("BiddingScreen"))
-          //          ),//main row
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
@@ -449,24 +404,13 @@ object BiddingScreenModalForm {
     }
   }
 
-  private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State(new UserModel("", "", "", false)))
+  private val component = ReactComponentB[Props]("BiddingScreenModal")
+    .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      val P = scope.props
-      val S = scope.state
-      val B = scope.backend
-
-      def hideModal = Callback {
-        if (S.postProject) {
-          def hide = Callback {
-            jQuery(scope.getDOMNode()).modal("hide")
-          }
-        }
-      }
-    })
-    .componentDidUpdate(scope => Callback {
-
+      .componentDidUpdate(scope => Callback {
+         if(scope.currentState.postBiddingScreen){
+           scope.$.backend.hidemodal
+         }
     })
     .build
 

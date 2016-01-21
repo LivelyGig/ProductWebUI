@@ -12,10 +12,8 @@ import scalacss.ScalaCssReact._
 object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: (Boolean) => Callback)
-
-  case class State(login : Boolean = false)
+  case class State(registrationFailed : Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -23,18 +21,16 @@ object RegistrationFailed {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def login(): Callback  = {
-      t.modState(s=>s.copy(login = true))
+      t.modState(s=>s.copy(registrationFailed = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
-      props.submitHandler(state.login)
+      props.submitHandler(state.registrationFailed)
     }
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-//      if (s.login) {
-//        jQuery(t.getDOMNode()).modal("hide")
-//      }
+
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -57,11 +53,11 @@ object RegistrationFailed {
       )
     }
   }
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+  private val component = ReactComponentB[Props]("RegistrationFailed")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback{
-      if (scope.currentState.login) {
+      if (scope.currentState.registrationFailed) {
         scope.$.backend.hide
       }
     })

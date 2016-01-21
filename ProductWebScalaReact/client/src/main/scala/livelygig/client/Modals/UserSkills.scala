@@ -17,74 +17,54 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object UserSkills {
-  @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
-
-  case class State(showUserSkillsFlag: Boolean = false
-                  )
-
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-  }
-
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showUserSkillsFlag = true))
-    }
-    def addUserSkillsForm() : Callback = {
-      t.modState(s => s.copy(showUserSkillsFlag = true))
-    }
-    def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showUserSkillsFlag = true))
-    }
-
-    def addUserSkills(userModel: UserModel, showUserSkillsFlag: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserSkillsFlag}")
-      if(showUserSkillsFlag){
-        createUser(userModel).onComplete {
-          case Success(s) =>
-            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showUserSkillsFlag = true)).runNow()
-            } else {
-              log.debug(s"createUser msg : ${s.content}")
-              t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
-            }
-          case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
-          // now you need to refresh the UI
-        }
-        t.modState(s => s.copy(showUserSkillsFlag = true))
-      } else {
-        t.modState(s => s.copy(showUserSkillsFlag = false))
-      }
-    }
-  }
-
-  val component = ReactComponentB[Props]("UserSkills")
-    .initialState(State())
-    .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Skills"),
-        if (S.showUserSkillsFlag) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
-        else
-          Seq.empty[ReactElement]
-      )
-    })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .configure(OnUnmount.install)
-    .build
-  def apply(props: Props) = component(props)
-}
+//object UserSkills {
+//  @inline private def bss = GlobalStyles.bootstrapStyles
+//  case class Props(ctl: RouterCtl[Loc])
+//  case class State(showUserSkillsForm: Boolean = false )
+//
+//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+//  }
+//
+//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+//    def mounted(props: Props): Callback =  {
+//      t.modState(s => s.copy(showUserSkillsForm = true))
+//    }
+//    def addUserSkillsForm() : Callback = {
+//      t.modState(s => s.copy(showUserSkillsForm = true))
+//    }
+//     def addUserSkills(postUserSkills: Boolean = false): Callback = {
+//    //  log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserSkillsForm}")
+//      if(postUserSkills){
+//        t.modState(s => s.copy(showUserSkillsForm = true))
+//      } else {
+//        t.modState(s => s.copy(showUserSkillsForm = false))
+//      }
+//    }
+//  }
+//
+//  val component = ReactComponentB[Props]("UserSkills")
+//    .initialState(State())
+//    .backend(new Backend(_))
+//    .renderPS(($, P, S) => {
+//      val B = $.backend
+//      <.div(ProjectCSS.Style.displayInitialbtn)(
+//        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Skills"),
+//        if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
+//        else
+//          Seq.empty[ReactElement]
+//      )
+//    })
+//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+//    .configure(OnUnmount.install)
+//    .build
+//  def apply(props: Props) = component(props)
+//}
 
 object UserSkillsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (UserModel, Boolean) => Callback)
-  case class State(userModel: UserModel, postProject: Boolean = false)
+  case class Props(submitHandler: ( Boolean) => Callback)
+  case class State(postUserSkills: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
@@ -92,37 +72,26 @@ object UserSkillsForm {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
+    def hidemodal ={
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
     def mounted(props: Props): Callback = Callback {
 
-    }
-    def updateName(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
-    }
-    def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
-    }
-    def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
-    }
-    def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postProject = false))
+      t.modState(s => s.copy(postUserSkills = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postProject)
-      props.submitHandler(state.userModel, state.postProject)
+      println(state.postUserSkills)
+      props.submitHandler(state.postUserSkills)
     }
 
     def render(s: State, p: Props) = {
-      if (s.postProject){
-        jQuery(t.getDOMNode()).modal("hide")
-      }
       val headerText = "User Skills"
       Modal(Modal.Props(
         // header contains a cancel button (X)
@@ -133,15 +102,13 @@ object UserSkillsForm {
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
           ),
-
-
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
               <.label(^.`for` := "Name *", "Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "First name",^.value:= s.userModel.name,
-                ^.onChange==>updateName,^.required:=true)
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "First name",
+               ^.required:=true)
             )
           ),
             <.div(^.className:="row")(
@@ -149,8 +116,8 @@ object UserSkillsForm {
               <.label(^.`for` := "Email *", "Email *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value:= s.userModel.email,
-                ^.onChange==>updateEmail,^.required:=true)
+              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email",
+             ^.required:=true)
             )
           ),
           <.div(^.className:="row")(
@@ -158,8 +125,8 @@ object UserSkillsForm {
               <.label(^.`for` := "Password *", "Password *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value:= s.userModel.email,
-                ^.onChange==>updateEmail,^.required:=true)
+              <.input(^.tpe := "email", bss.formControl,DashBoardCSS.Style.inputModalMargin, ^.id := "Email",
+              ^.required:=true)
             )
           ),
             <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
@@ -172,23 +139,12 @@ object UserSkillsForm {
     }
   }
   private val component = ReactComponentB[Props]("UserSkills")
-    .initialState_P(p => State(new UserModel("","","",false)))
+    .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      val P = scope.props
-      val S=scope.state
-      val B=scope.backend
-
-      def hideModal = Callback {
-        if (S.postProject) {
-          def hide = Callback {
-            jQuery(scope.getDOMNode()).modal("hide")
-          }
-        }
+    .componentDidUpdate(scope => Callback {
+      if(scope.currentState.postUserSkills){
+        scope.$.backend.hidemodal
       }
-    })
-    .componentDidUpdate(scope=> Callback{
-
     })
     .build
   def apply(props: Props) = component(props)

@@ -20,25 +20,23 @@ object LegalModal {   //TodoForm
 // shorthand fo
 @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (AgentLoginModel, Boolean, Boolean, Boolean , Boolean , Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (Boolean, Boolean, Boolean , Boolean , Boolean, Boolean) => Callback)
 
-  case class State(agentloginModel: AgentLoginModel, login: Boolean= false, showPrivacyPolicyModal: Boolean = false,
+  case class State(legal: Boolean= false, showPrivacyPolicyModal: Boolean = false,
                    showTermsOfServicesForm: Boolean = false , showEndUserAgreementModal: Boolean = false,showTrademarksModal : Boolean = false,showCopyrightModal : Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e:ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(login = true))
+      t.modState(s => s.copy(legal = true))
       }
 
-    def hide /*= Callback*/ {
+    def hide = {
       console.log("hide")
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
-//    def updateEmail(e:ReactEventI) = {
-//      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(email = e.target.value)))
-//    }
+
     def showPrivacyPolicy(e:ReactEventI) = {
       console.log("in showPrivacyPolicy ")
       t.modState(s => s.copy(showPrivacyPolicyModal = true))
@@ -57,16 +55,12 @@ object LegalModal {   //TodoForm
     def showTermsOfServices(e:ReactEventI) = {
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
-//    def updatePassword(e:ReactEventI) = {
-//      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(password = e.target.value)))
-//    }
-
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
       println("state.showTrademarksModal : " + state.showTrademarksModal)
-      props.submitHandler(state.agentloginModel, state.login, state.showPrivacyPolicyModal, state.showTermsOfServicesForm , state.showEndUserAgreementModal ,state.showTrademarksModal,state.showCopyrightModal)
+      props.submitHandler(state.legal, state.showPrivacyPolicyModal, state.showTermsOfServicesForm , state.showEndUserAgreementModal ,state.showTrademarksModal,state.showCopyrightModal)
     }
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
@@ -100,10 +94,10 @@ object LegalModal {   //TodoForm
     }
   }
   private val component = ReactComponentB[Props]("LegalModal")
-    .initialState_P(p => State(new AgentLoginModel("","")))
+    .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback{
-      if (scope.currentState.login || scope.currentState.showPrivacyPolicyModal || scope.currentState.showTermsOfServicesForm || scope.currentState.showEndUserAgreementModal
+      if (scope.currentState.legal || scope.currentState.showPrivacyPolicyModal || scope.currentState.showTermsOfServicesForm || scope.currentState.showEndUserAgreementModal
         || scope.currentState.showTrademarksModal || scope.currentState.showCopyrightModal) {
         scope.$.backend.hide
       }

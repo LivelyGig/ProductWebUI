@@ -25,7 +25,7 @@ object CopyrightModal {
   case class Props(submitHandler: () => Callback)
   case class State()
 
-  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State]){
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")

@@ -117,14 +117,14 @@ object AddNewAgent {
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       }
     }
-    def accountValidationSuccess(/*emailValidationModel: EmailValidationModel, accountValidationSuccess: Boolean = false*/) : Callback = {
+    def accountValidationSuccess() : Callback = {
              t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
      }
     def loginFailed() : Callback = {
         t.modState(s => s.copy(showLoginFailed = false, showLoginForm = true))
     }
-    def registrationFailed(login : Boolean = false) : Callback = {
-      if (login){
+    def registrationFailed(registrationFailed : Boolean = false) : Callback = {
+      if (registrationFailed){
         t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
       } else {
         t.modState(s => s.copy(showRegistrationFailed = false, showNewAgentForm = true))

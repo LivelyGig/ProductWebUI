@@ -21,55 +21,37 @@ object UserPreferences {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc])
 
-  case class State(showNewProjectFlag: Boolean = false
-                  )
+  case class State(showUserPreferencesForm: Boolean = false )
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showNewProjectFlag = true))
+      t.modState(s => s.copy(showUserPreferencesForm = true))
     }
-    def addProjectForm() : Callback = {
-      t.modState(s => s.copy(showNewProjectFlag = true))
-    }
-    def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showNewProjectFlag = true))
+    def addUserPreferencesForm() : Callback = {
+      t.modState(s => s.copy(showUserPreferencesForm = true))
     }
 
-    def addNewProject(userModel: UserModel, showNewProjectFlag: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewProjectFlag}")
-      if(showNewProjectFlag){
-        createUser(userModel).onComplete {
-          case Success(s) =>
-            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              t.modState(s => s.copy(showNewProjectFlag = true)).runNow()
-            } else {
-              log.debug(s"createUser msg : ${s.content}")
-              t.modState(s => s.copy(/*showRegistrationFailed = true*/)).runNow()
-            }
-          case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(/*showErrorModal = true*/)).runNow()
-          // now you need to refresh the UI
-        }
-        t.modState(s => s.copy(showNewProjectFlag = true))
+    def addUserPreferences(postUserPreferences: Boolean = false): Callback = {
+      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserPreferencesForm}")
+      if(postUserPreferences){
+        t.modState(s => s.copy(showUserPreferencesForm = true))
       } else {
-        t.modState(s => s.copy(showNewProjectFlag = false))
+        t.modState(s => s.copy(showUserPreferencesForm = false))
       }
     }
   }
 
-  val component = ReactComponentB[Props]("AddNewAgent")
+  val component = ReactComponentB[Props]("UserPreferences")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Preferences"),
-        if (S.showNewProjectFlag) UserPreferencesForm(UserPreferencesForm.Props(B.addNewProject))
+        Button(Button.Props(B.addUserPreferencesForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Preferences"),
+        if (S.showUserPreferencesForm) UserPreferencesForm(UserPreferencesForm.Props(B.addUserPreferences))
         else
           Seq.empty[ReactElement]
       )
@@ -83,8 +65,8 @@ object UserPreferences {
 object UserPreferencesForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (UserModel, Boolean) => Callback)
-  case class State(userModel: UserModel, postProject: Boolean = false)
+  case class Props(submitHandler: (Boolean) => Callback)
+  case class State(postUserPreferences: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
@@ -92,37 +74,26 @@ object UserPreferencesForm {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
+    def hidemodal ={
+      // instruct Bootstrap to hide the modal
+      jQuery(t.getDOMNode()).modal("hide")
+    }
     def mounted(props: Props): Callback = Callback {
 
-    }
-    def updateName(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
-    }
-    def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
-    }
-    def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
-    }
-    def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postProject = false))
+      t.modState(s => s.copy(postUserPreferences = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postProject)
-      props.submitHandler(state.userModel, state.postProject)
+      println(state.postUserPreferences)
+      props.submitHandler(state.postUserPreferences)
     }
 
     def render(s: State, p: Props) = {
-      if (s.postProject){
-        jQuery(t.getDOMNode()).modal("hide")
-      }
       val headerText = "User Preferences"
       Modal(Modal.Props(
         // header contains a cancel button (X)
@@ -133,30 +104,18 @@ object UserPreferencesForm {
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Preferences"))
           ),
-
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
   }
   private val component = ReactComponentB[Props]("PostAProjectForm")
-    .initialState_P(p => State(new UserModel("","","",false)))
+    .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      val P = scope.props
-      val S=scope.state
-      val B=scope.backend
-
-      def hideModal = Callback {
-        if (S.postProject) {
-          def hide = Callback {
-            jQuery(scope.getDOMNode()).modal("hide")
-          }
-        }
+    .componentDidUpdate(scope => Callback {
+      if(scope.currentState.postUserPreferences){
+        scope.$.backend.hidemodal
       }
-    })
-    .componentDidUpdate(scope=> Callback{
-
     })
     .build
   def apply(props: Props) = component(props)

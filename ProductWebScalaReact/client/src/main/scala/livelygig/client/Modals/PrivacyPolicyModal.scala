@@ -31,8 +31,7 @@ object PrivacyPolicyModal {
 
   case class State( )
 
-
-  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
@@ -43,29 +42,16 @@ object PrivacyPolicyModal {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
-
     }
-//    def updateName(e: ReactEventI) = {
-//      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
-//    }
-//    def updateEmail(e: ReactEventI) = {
-//      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
-//    }
-//    def updatePassword(e: ReactEventI) = {
-//      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
-//    }
-//    def toggleBTCWallet(e: ReactEventI) = {
-//      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
-//    }
+
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-    //  t.modState(s => s.copy(showPrivacyPolicyModal = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-    //  println(state.showPrivacyPolicyModal)
+
       props.submitHandler()
     }
 

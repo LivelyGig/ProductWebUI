@@ -26,7 +26,7 @@ object LoginForm {   //TodoForm
     //  jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def hide /*= Callback*/ {
+    def hide = {
       console.log("hide")
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
@@ -93,16 +93,6 @@ object LoginForm {   //TodoForm
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => State(new AgentLoginModel("","")))
     .renderBackend[Backend]
-//    .componentDidMount(scope => Callback {
-//      console.log("componentDidMount called")
-//     // jQuery(scope.getDOMNode()).modal("hide")
-//      console.log("mountLogin : " + scope.state.login )
-//
-//      if (scope.state.login || scope.state.showConfirmAccountCreation || scope.state.showNewAgentForm) {
-//        // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-//           scope.modState(s => s.copy(login = true))
-//      }
-//    })
     .componentDidUpdate(scope => Callback{
      if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {
                 scope.$.backend.hide

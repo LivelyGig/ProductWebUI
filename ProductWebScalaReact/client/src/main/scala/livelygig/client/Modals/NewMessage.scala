@@ -59,7 +59,6 @@ object PostNewMessage {
   case class Props(submitHandler: (Boolean) => Callback, header: String)
   case class State(postMessage: Boolean = false)
 
-
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")

@@ -44,33 +44,15 @@ object Legal {
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showLegalForm = true))
     }
-    def addLoginForm() : Callback = {
-      t.modState(s => s.copy(showLegalForm = true))
-    }
-    def addNewLoginForm() : Callback = {
+    def addLegalForm() : Callback = {
       t.modState(s => s.copy(showLegalForm = true))
     }
 
-    def Login(agentLoginModel: AgentLoginModel, login: Boolean = false, showPrivacyPolicyModal: Boolean = false,
+    def Login(legal: Boolean = false, showPrivacyPolicyModal: Boolean = false,
               showTermsOfServicesForm: Boolean = false ,showEndUserAgreementModal: Boolean = false ,showTrademarksModal : Boolean = false,
               showCopyrightModal : Boolean = false) : Callback = {
-      log.debug(s"Login agentLoginModel: ${agentLoginModel}, login: ${login}, showPrivacyPolicyModal: ${showPrivacyPolicyModal}")
-      if (login){
-        CoreApi.agentLogin(agentLoginModel).onComplete {
-          case Success(s) =>
-            log.debug(s"loginAPISuccessMsg: ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
-              // todo add functionality after login may involve dispatching of certain events
-              window.localStorage.setItem("sessionURI",s.content.sessionURI.getOrElse(""))
-              log.debug("login successful")
-              window.location.href = "/#connections"
-            }/* else {
-              log.debug("login failed")
-              t.modState(s => s.copy(showLoginFailed = true)).runNow()
-            }*/
-          case Failure(s) =>
-            println("internal server error")
-        }
+    //log.debug(s"Login agentLoginModel: ${agentLoginModel}, login: ${login}, showPrivacyPolicyModal: ${showPrivacyPolicyModal}")
+      if (legal){
         t.modState(s => s.copy(showLegalForm = false))
       }
       else if (showTrademarksModal) {
@@ -96,9 +78,6 @@ object Legal {
       }
     }
 
-     def serverError() : Callback = {
-      t.modState(s => s.copy(showErrorModal = false))
-    }
     def privacyPolicyModal() : Callback = {
       t.modState(s => s.copy(showPrivacyPolicyModal = false, showLegalForm = false))
     }
@@ -122,15 +101,14 @@ object Legal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle)),"Legal"),
+        Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle)),"Legal"),
         if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
         else if (S.showTrademarksModal) TrademarksModal(TrademarksModal.Props(B.tradeMarks))
         else if (S.showEndUserAgreementModal) EndUserAgreement(EndUserAgreement.Props(B.endUserAgreement))
         else if (S.showCopyrightModal) CopyrightModal(CopyrightModal.Props(B.copyrights))
         else if (S.showLegalForm) LegalModal(LegalModal.Props(B.Login))
         else if (S.showPrivacyPolicyModal) PrivacyPolicyModal(PrivacyPolicyModal.Props(B.privacyPolicyModal))
-        else if (S.showErrorModal) ErrorModal(ErrorModal.Props(B.serverError))
-        else
+           else
           Seq.empty[ReactElement]
       )
     })
