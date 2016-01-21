@@ -3,7 +3,7 @@ package livelygig.client.modules
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import livelygig.client.LGMain.{DashboardLoc, Loc}
+import livelygig.client.LGMain.{ContractsLoc, DashboardLoc, Loc}
 import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 
@@ -14,7 +14,26 @@ object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
           <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-            <.div()("overview here of counts of messages, projects, proposed matches, etc.")
+            <.div()(
+              <.span(^.fontWeight.bold)("For you attention"), <.br(),
+              <.a(^.href:="")("18"), " Unread messages", <.br(),
+              <.a(^.href:="")("2"), " Active Contracts", <.br(),
+              <.span(^.fontWeight.bold)("Opportunities"), <.br(),
+              <.a(^.href:="")("2"), " Introduction Requests", <.br(),
+              <.a(^.href:="")("Grow"), " your network", <.br(),
+              <.a(^.href:="")("Search"), " for gigs", <.br(),
+              <.span(^.fontWeight.bold)("Suggestions"), <.br(),
+              "Complete your Talent profile by adding a video introduciton. ", <.a(^.href:="")("(Hide)"), ".", <.br(),
+              "Create a standard offering, i.e., promise you can complete a typically requested service with a fixed price and predictable response time. ", <.a(^.href:="")("(Hide)"), ".",  <.br(),
+              <.span(^.fontWeight.bold)("Introduce Colleagues"), <.br(),
+              "Recommend a friend's profile to an employer's project. (15) with some matching skills.", <.br(),
+              "Recommend a friend's project (3) to a talent contact.", <.br(),
+              <.span(^.fontWeight.bold)("Browse for..."), <.br(),
+              "New projects", <.br(),
+              "New contensts", <.br(),
+              "New talent", <.br(),
+              ""
+            )
           )
     )
     .componentDidMount(scope => Callback {
