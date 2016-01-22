@@ -19,7 +19,7 @@ object MainMenu {
     MenuItem(2, _ => "Messages",MessagesLoc),
     MenuItem(3, _ => "Jobs", ProjectsLoc),
     MenuItem(4, _ => "Offerings", OfferingsLoc),
-    MenuItem(5, _ => "Pofiles", TalentLoc),
+    MenuItem(5, _ => "Profiles", TalentLoc),
     MenuItem(6, _ => "Contracts", ContractsLoc ),
     MenuItem(7, _ => "Connections", ConnectionsLoc )
  //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
