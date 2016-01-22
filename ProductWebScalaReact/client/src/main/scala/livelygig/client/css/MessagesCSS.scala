@@ -32,5 +32,12 @@ object MessagesCSS {
       color(c"#000")
     )
 
+    val newProjectbtn = style (
+      float.left,
+ /*   position.absolute,*/
+    marginLeft(10.px),
+    marginTop(-4.px)
+    )
+
   }
 }

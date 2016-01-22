@@ -13,7 +13,7 @@ import scalacss.ScalaCssReact._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
   case class State(showNewMessageForm: Boolean = false)
 
@@ -35,13 +35,13 @@ object NewMessage {
       }
     }
   }
-  val component = ReactComponentB[Props]("AddNewAgent")
+  val component = ReactComponentB[Props]("NewMessage")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),P.buttonName),
         if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
@@ -95,18 +95,17 @@ object PostNewMessage {
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),
-
-            <.div()(
-              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth,  ^.placeholder:="Subject")
-            ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop , ^.placeholder:="Enter your message here:",^.lineHeight:= 6)
-            ),
             <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
             ),
             <.div()(
               <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
+            ),
+            <.div()(
+              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.placeholder:="Subject")
+            ),
+            <.div()(
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop , ^.placeholder:="Enter your message here:",^.lineHeight:= 6)
             )
           ),
           <.div()(

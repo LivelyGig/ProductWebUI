@@ -12,48 +12,14 @@ import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import scala.util.{Failure, Success}
+import livelygig.client.modals.NewMessage
 import scalacss.ScalaCssReact._
 
 
 object MessagesResults {
-  case class Props(ctl: RouterCtl[Loc])
-  case class State(showReplyMessageForm: Boolean = false, showForwardMessageForm: Boolean = false)
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-  }
-  // create the React component for Dashboard
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showReplyMessageForm = true))
-    }
-    def addReplyMessageForm() : Callback = {
-      t.modState(s => s.copy(showReplyMessageForm = true))
-    }
-    def addForwardMessageForm() : Callback = {
-      t.modState(s => s.copy(showForwardMessageForm = true))
-    }
-    def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postMessage){
-        t.modState(s => s.copy(showReplyMessageForm = false))
-      } else {
-        t.modState(s => s.copy(showReplyMessageForm = true))
-      }
-    }
-    def forwardMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postMessage){
-        t.modState(s => s.copy(showForwardMessageForm = false))
-      } else {
-        t.modState(s => s.copy(showForwardMessageForm = true))
-      }
-    }
 
-  }
-  val component = ReactComponentB[Props]("Messages")
-    .initialState(State())
-    .backend(new Backend(_))
-    .renderPS( ($, P, S) =>  {
-          val B = $.backend
+  val component = ReactComponentB[RouterCtl[Loc]]("Messages")
+    .render_P( ctl =>  {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-3 col-sm-3 col-xs-3")(
@@ -113,13 +79,10 @@ object MessagesResults {
                   <.div(^.className := "col-md-12 col-sm-12")(
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Favorite")(),
+                    NewMessage(NewMessage.Props(ctl, "Forward")),
+                    NewMessage(NewMessage.Props(ctl, "Reply"))
                    /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
-                    Button(Button.Props(B.addForwardMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),"Forward"),
-                    Button(Button.Props(B.addReplyMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),"Reply"),
-                    if (S.showForwardMessageForm) PostNewMessage(PostNewMessage.Props(B.forwardMessage,"Forward"))
-                      else if (S.showReplyMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "Reply"))
-                      else
-                        Seq.empty[ReactElement]
+
                   )
                 ) //media-body
               ), //li
@@ -231,7 +194,5 @@ object MessagesResults {
       ) //gigConversation
 
 })
-    .configure(OnUnmount.install)
     .build
-  def apply(props: Props) = component(props)
   }

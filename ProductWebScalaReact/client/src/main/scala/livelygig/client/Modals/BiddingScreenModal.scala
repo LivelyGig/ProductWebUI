@@ -17,49 +17,49 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-//object BiddingScreenModal {
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//
-//  case class Props(ctl: RouterCtl[Loc])
-//  case class State(showBiddingScreen: Boolean = false)
-//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-//  }
-//
-//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-//    def mounted(props: Props): Callback = {
-//      t.modState(s => s.copy(showBiddingScreen = true))
-//    }
-//    def addBiddingScreenForm(): Callback = {
-//      t.modState(s => s.copy(showBiddingScreen = true))
-//    }
-//    def addBiddingScreen(postBiddingScreen: Boolean = false): Callback = {
-////      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showBiddingScreen}")
-//      if (postBiddingScreen) {
-//        t.modState(s => s.copy(showBiddingScreen = true))
-//      } else {
-//        t.modState(s => s.copy(showBiddingScreen = false))
-//      }
-//    }
-//  }
-//
-//  val component = ReactComponentB[Props]("AddNewAgent")
-//    .initialState(State())
-//    .backend(new Backend(_))
-//    .renderPS(($, P, S) => {
-//      val B = $.backend
-//      <.div(ProjectCSS.Style.displayInitialbtn)(
-//        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), "View/Edit Contract"),
-//        if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
-//        else
-//          Seq.empty[ReactElement]
-//      )
-//    })
-//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .configure(OnUnmount.install)
-//    .build
-//
-//  def apply(props: Props) = component(props)
-//}
+object BiddingScreenModal {
+  @inline private def bss = GlobalStyles.bootstrapStyles
+
+  case class Props(ctl: RouterCtl[Loc] , buttonName:String)
+  case class State(showBiddingScreen: Boolean = false)
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  }
+
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+    def mounted(props: Props): Callback = {
+      t.modState(s => s.copy(showBiddingScreen = true))
+    }
+    def addBiddingScreenForm(): Callback = {
+      t.modState(s => s.copy(showBiddingScreen = true))
+    }
+    def addBiddingScreen(postBiddingScreen: Boolean = false): Callback = {
+//      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showBiddingScreen}")
+      if (postBiddingScreen) {
+        t.modState(s => s.copy(showBiddingScreen = true))
+      } else {
+        t.modState(s => s.copy(showBiddingScreen = false))
+      }
+    }
+  }
+
+  val component = ReactComponentB[Props]("AddNewAgent")
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS(($, P, S) => {
+      val B = $.backend
+      <.div(ProjectCSS.Style.displayInitialbtn)(
+        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)), P.buttonName),
+        if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
+        else
+          Seq.empty[ReactElement]
+      )
+    })
+    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .configure(OnUnmount.install)
+    .build
+
+  def apply(props: Props) = component(props)
+}
 
 object BiddingScreenModalForm {
   // shorthand for styles
@@ -103,7 +103,7 @@ object BiddingScreenModalForm {
 
           <.ul(^.className:="nav nav-tabs")(
             <.li(^.className:="active")(<.a(^.href:="#home", "data-toggle".reactAttr := "tab" , "Initiating")),
-            <.li()(<.a(^.href:="#menu1", "data-toggle".reactAttr := "tab" , "Ecrow")),
+            <.li()(<.a(^.href:="#menu1", "data-toggle".reactAttr := "tab" , "Escrow")),
             <.li()(<.a(^.href:="#menu2", "data-toggle".reactAttr := "tab" , "In Progress")),
             <.li()(<.a(^.href:="#menu3", "data-toggle".reactAttr := "tab" , "Acceptance")),
             <.li()(<.a(^.href:="#menu4", "data-toggle".reactAttr := "tab" , "Feedback"))
@@ -270,15 +270,16 @@ object BiddingScreenModalForm {
                                           <.div(^.className := "row")(
                                             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                                               <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
-                                              <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(),
-                                              <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
+                                              <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
                                                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Apply")(),
 
                                                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept")(),
                                                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter")(),
-                                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject")()
-
-                                              )
+                                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject")(),
+                                               <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Message")(),
+                                                // NewMessage(NewMessage.Props(RouterCtl[Loc],"Message")),
+                                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                                                   )
                                             )
                                           )
                                         )
@@ -308,25 +309,34 @@ object BiddingScreenModalForm {
                                   "342ftSRCvFHfCeFFBuz4xwbeqnDw6BGUey",
                                   "From Talent, Abed:  0.02 XBT  requested.",
                                   <.br(),
-                                  "Escrow deposit, payment, and refund details <link>..."
-                                )
-                              )
-                            )
-                          ),
-              <.div(^.id := "escrowDepositDetails"/*, ^.borderStyle.solid*/)(
-                              <.span(^.fontWeight.bold)("Escrow Deposit and Payout Details"),
-                              <.div(^.className := "row")(
+                                  <.button(^.className:="btn dropdown-toggle","data-target".reactAttr:="#demo", "data-toggle".reactAttr := "collapse")(" Escrow deposit, payment, and refund details..."),
 
-                                <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                  "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
-                                  <.a(^.href := "#")("details"),
-                                  ".",
-                                  // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
-                                  <.div()(<.img()(^.src := "./assets/images/escrow_payout_example.png")
+                                  <.div(^.id := "escrowDepositDetails",^.id:="demo",^.className:="collapse")(
+                                    <.span(^.fontWeight.bold)("Escrow Deposit and Payout Details"),
+                                    <.div(^.className := "row")(
+
+                                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                                        "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
+                                        <.a(^.href := "#")("details"),
+                                        ".",
+                                        // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
+                                        <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
+                                        )
+                                      )
+                                    )
                                   )
                                 )
                               )
+                            ),
+                            <.div()(
+                              <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Message")(),
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                              )
                             )
+                          )
+
+
             ),
             <.div(^.id:="menu2", ^.className:="tab-pane fade")(
 
@@ -344,6 +354,12 @@ object BiddingScreenModalForm {
                                   <.br(),
                                   "Links to deliverables: date added, name, hyperlink"
                                 )
+                              )
+                            ),
+                            <.div()(
+                              <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Message")(),
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                               )
                             )
                           )
@@ -364,6 +380,12 @@ object BiddingScreenModalForm {
                                   <.br(),
                                   "Final payout information and transaction."
                                 )
+                              )
+                            ),
+                            <.div()(
+                              <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Message")(),
+                                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                               )
                             )
                           )
@@ -395,7 +417,7 @@ object BiddingScreenModalForm {
                                 <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(),
                                 <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
                                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Message")(),
-                                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Close")()
+                                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                                 )
                               )
                             )

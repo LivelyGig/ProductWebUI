@@ -17,6 +17,8 @@ import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modals.NewMessage
+import livelygig.client.modals.BiddingScreenModal
 
 import scalacss.ScalaCssReact._
 
@@ -91,7 +93,8 @@ object ProjectResults {
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Apply")(),
+                    //<.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Apply")(),
+                    BiddingScreenModal(BiddingScreenModal.Props(ctl,"Apply")),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")()
                   )
                 )//media-body
@@ -109,7 +112,8 @@ object ProjectResults {
                   <.div(^.className:="col-md-6 col-sm-6")(
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    NewMessage(NewMessage.Props(ctl,"Send Message")))
+
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(

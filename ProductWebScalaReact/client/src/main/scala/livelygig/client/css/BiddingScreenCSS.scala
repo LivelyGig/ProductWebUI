@@ -70,5 +70,10 @@ object BiddingScreenCSS {
       marginTop(6.px)
     )
 
+    val biddingscreenImgWidth = style (
+      width(700.px)
+    )
+
+
   }
 }

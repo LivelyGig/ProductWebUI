@@ -49,7 +49,7 @@ object ConfirmAccountCreation {
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
             <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-              <.div(DashBoardCSS.Style.modalHeaderFont)("Confirm Account Creation"),
+             // <.div(DashBoardCSS.Style.modalHeaderFont)("Confirm Account Creation"),
               <.h5("After registration, you were emailed a confirmation code. Please enter the code below"),
               <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.marginTop10px ,
                 ^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),

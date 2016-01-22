@@ -62,7 +62,7 @@ object LoginForm {   //TodoForm
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalHeaderFont)("Login"),
+             //   <.div(DashBoardCSS.Style.modalHeaderFont)("Login"),
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin ,^.id := "Name",
                   ^.placeholder:="username", ^.value:= s.agentloginModel.email, ^.onChange==>updateEmail, ^.required:=true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin , ^.placeholder:="password"

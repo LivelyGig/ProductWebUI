@@ -99,9 +99,9 @@ object UserSkillsForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
-          ),
+//          <.div(^.className:="row")(
+//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
+//          ),
           <.div(^.className:="row")(
             <.div(^.className:="col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.slctInputWidthLabel)(
               <.label(^.`for` := "Name *", "Name *")

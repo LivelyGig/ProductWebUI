@@ -9,43 +9,16 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap.{CommonStyle, Button}
 import livelygig.client.components.Icon
 import livelygig.client.css._
-import livelygig.client.modals.PostNewMessage
+import livelygig.client.modals.NewMessage
 
 
 import scalacss.ScalaCssReact._
 
 object MessagesPresets {
 
-  case class Props(ctl: RouterCtl[Loc])
-
-  case class State(showNewMessageForm: Boolean = false)
-
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-  }
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showNewMessageForm = true))
-    }
-    def addNewMessageForm() : Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
-    }
-    def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postMessage){
-        t.modState(s => s.copy(showNewMessageForm = false))
-      } else {
-        t.modState(s => s.copy(showNewMessageForm = true))
-      }
-    }
-  }
-
   // create the React component for Dashboard
-  val component = ReactComponentB[Props]("Messages")
-    .initialState(State())
-    .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
-
+  val component = ReactComponentB[RouterCtl[Loc]]("Messages")
+    .render_P( ctl => {
       // todo: Need to parameterize.
       // This example is for Talent
       <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
@@ -68,19 +41,18 @@ object MessagesPresets {
               )
             ),
             /*<.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()*/
-//            NewMessage(NewMessage.Props(ctl))
-            Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Message"),
-            if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
-            else
-              Seq.empty[ReactElement]
+            <.div(MessagesCSS.Style.newProjectbtn)(
+            NewMessage(NewMessage.Props(ctl,"New Messages"))
+            )
+
             // TermsAndConditions(TermsAndConditions.Props(ctl)),
             // EndUserAgreement(EndUserAgreement.Props(ctl))
           )
           )
         ) }
     )
-    .configure(OnUnmount.install)
+
     .build
-  def apply(props: Props) = component(props)
+
 
 }

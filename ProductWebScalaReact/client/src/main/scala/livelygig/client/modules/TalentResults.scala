@@ -21,6 +21,7 @@ import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modals.NewMessage
 
 import scalacss.ScalaCssReact._
 
@@ -104,7 +105,8 @@ object TalentResults {
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())
+                    /*<.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")())*/
+                    NewMessage(NewMessage.Props(ctl,"Message")))
                 )//media-body
 
 

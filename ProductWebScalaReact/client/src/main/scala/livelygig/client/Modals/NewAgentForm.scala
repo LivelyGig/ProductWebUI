@@ -71,9 +71,9 @@ object NewAgentForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Create New Agent"))
-          ),
+//          <.div(^.className:="row")(
+//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Create New Agent"))
+//          ),
           <.div(^.className:="row")(
             <.div(^.className:="col-md-6 col-sm-6 col-xs-6")(
               <.div(^.className:="row")(

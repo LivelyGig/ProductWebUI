@@ -70,9 +70,9 @@ object LegalModal {   //TodoForm
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Legal"))
-          ),//main row
+//          <.div(^.className:="row")(
+//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Legal"))
+//          ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.ul()(
               <.li()(<.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Privacy Policy",^.onClick==>showPrivacyPolicy)),
