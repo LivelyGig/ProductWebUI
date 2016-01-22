@@ -17,14 +17,11 @@ object MainMenu {
   private val menuItems = Seq(
     MenuItem(1, _ => "Dashboard",DashboardLoc),
     MenuItem(2, _ => "Messages",MessagesLoc),
-    MenuItem(3, _ => "Projects", ProjectsLoc),
-    MenuItem(4, _ => "Contests", ContestsLoc),
-    MenuItem(5, _ => "Offerings", OfferingsLoc ),
-    MenuItem(6, _ => "Employers", EmployersLoc ),
-    MenuItem(7, _ => "Talent", TalentLoc),
-    MenuItem(8, _ => "Moderators", DashboardLoc ),
-    MenuItem(9, _ => "Contracts", ContractsLoc ),
-    MenuItem(10, _ => "Connections", ConnectionsLoc )
+    MenuItem(3, _ => "Jobs", ProjectsLoc),
+    MenuItem(4, _ => "Offerings", OfferingsLoc),
+    MenuItem(5, _ => "Pofiles", TalentLoc),
+    MenuItem(6, _ => "Contracts", ContractsLoc ),
+    MenuItem(7, _ => "Connections", ConnectionsLoc )
  //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
