@@ -95,17 +95,18 @@ object PostNewMessage {
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),
+
             <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Subject:",^.lineHeight:= 1)
+              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth,  ^.placeholder:="Subject")
             ),
             <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop , ^.placeholder:="Enter your message here:",^.lineHeight:= 6)
             ),
             <.div(^.className:="row")(
               <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Recipients"))
             ),
             <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
             )
           ),
           <.div()(

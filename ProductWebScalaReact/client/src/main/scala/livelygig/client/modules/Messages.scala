@@ -24,7 +24,7 @@ object Messages {
         case "talent" =>
           <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
             <.div()(
-                      MessagesPresets.component(ctl)
+                      MessagesPresets.component(MessagesPresets.Props(ctl))
             ),
             // AddNewAgent(AddNewAgent.Props(ctl)),
             <.div(DashBoardCSS.Style.splitContainer)(

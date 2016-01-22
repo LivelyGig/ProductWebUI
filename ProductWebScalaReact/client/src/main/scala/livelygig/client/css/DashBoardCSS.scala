@@ -286,7 +286,7 @@ object DashBoardCSS {
      padding(10.px)
    )
     val modalHeaderFont = style (
-     fontSize(2.em),
+     fontSize(1.em),
      paddingBottom(15.px)
     )
     val marginLeftCloseBtn = style (
@@ -364,6 +364,9 @@ object DashBoardCSS {
         paddingTop(12.px)
         )
 
+    )
+    val replyMarginTop = style (
+     marginTop(20.px)
     )
   }
 }

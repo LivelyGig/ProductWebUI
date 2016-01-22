@@ -7,7 +7,8 @@ import japgolly.scalajs.react.{ReactElement, BackendScope, Callback, ReactCompon
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap.{CommonStyle, Button}
 import livelygig.client.css.HeaderCSS
-import livelygig.client.modals.{UserPreferencesForm, UserPreferences}
+import livelygig.client.css._
+import livelygig.client.modals.{UserPreferencesForm}
 
 import scalacss.ScalaCssReact._
 
@@ -75,7 +76,8 @@ object TalentPresets {
            // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
           )
         )
-       )})
+
+    )})
       .configure(OnUnmount.install)
       .build
       def apply(props: Props) = component(props)

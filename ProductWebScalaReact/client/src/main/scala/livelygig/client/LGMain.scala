@@ -47,9 +47,6 @@ object LGMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-//      |staticRoute("#CreateNewAgent", CreateNewAgentLoc) ~> renderR(ctl => CreateNewAgent.component(ctl))
-//      renderR(ctl => Todo(TodoStore)(ctl))
-
       |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
@@ -61,11 +58,6 @@ object LGMain extends js.JSApp {
       |staticRoute("#contracts", ContractsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))
-//      |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
-     // |staticRoute("#legal", LegalLoc) ~> renderR(ctl => Legal.component(ctl))
-     // |staticRoute("#biddingscreen", BiddingScreenLoc) ~> renderR(ctl => BiddingScreen.component(ctl))
-
-
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
