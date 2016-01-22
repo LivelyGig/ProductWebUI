@@ -22,9 +22,12 @@ object ProjectSearch {
               <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
               <.div(DashBoardCSS.Style.slctHeaders)("Job Type:"),
               // ToDo: these checkboxes should have the equivalent of <label for="checkbox_id">, so the lable is clickable
-              <.input(^.`type` := "checkbox", ^.checked:=true), " Project",
+              <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxProject"),
+
+              <.label(^.`for`:="jobTypeCheckboxProject"), "Project",
               <.div(^.marginLeft := "20px")(
-                <.input(^.`type` := "checkbox", ^.checked:=true), " Hourly",
+                <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxHourly"),
+                <.label(^.`for`:="jobTypeCheckboxHourly"), "Hourly",
                 <.br(),
                 <.input(^.`type` := "checkbox", ^.checked:=true), " Fixed Time and/or Scope"
               ),
