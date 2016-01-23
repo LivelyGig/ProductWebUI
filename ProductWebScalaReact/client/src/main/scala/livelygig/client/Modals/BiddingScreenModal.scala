@@ -400,17 +400,13 @@ object BiddingScreenModalForm {
 
               // feedbackDetail
               <.div(^.id := "feedbackDetail" /*, ^.borderStyle.solid*/)(
-                //  <.span(^.fontWeight.bold)("Feedback"),
+
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
-                      "From Employer to Talent, From Employer to Moderator, From Talent to Employer, From Talent to Moderator, From Moderator to Talent, From Moderator to Employer",
+                      <.span(^.fontWeight.bold)("Employer's Feedback to Talent:"),
                       <.br(),
-                      "Details of feedback (e.g. for Talent)",
-                      <.br(),
-                      "- communication   (1-10), - meeting schedule (1-10), - quality of deliverables (1-10), - competencies: -- skill 1, --- skill 2",
-                      <.br(),
-                      "For moderator: impartiality, domain competency"
+                      <.img()(^.src := "./assets/images/sampleContractFeedback.png")
                     )
                   )
                 )
