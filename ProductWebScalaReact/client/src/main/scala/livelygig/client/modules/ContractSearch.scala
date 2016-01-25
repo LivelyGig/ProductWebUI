@@ -1,3 +1,4 @@
+
 package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -7,24 +8,29 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
+import livelygig.client.LGMain.Loc
 import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.DashBoardCSS
+import livelygig.client.css.DashBoardCSS
+import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.MessagesCSS
 import livelygig.client.css.MessagesCSS
+import livelygig.client.css.MessagesCSS
+import livelygig.client.css.ProjectCSS
 import livelygig.client.css.ProjectCSS
 import livelygig.client.css.{DashBoardCSS, LftcontainerCSS,ProjectCSS}
 
 
 import scalacss.ScalaCssReact._
 
-object TalentSearch {
+object ContractSearch {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Talent")
+  val component = ReactComponentB[RouterCtl[Loc]]("ContractSearch")
     .render_P(ctl =>
       // todo: Need to parameterize on type (e.g. Talent, Project) and preset (e.g. Recommended Mathces)
       "talentPreset1" match {
@@ -87,3 +93,4 @@ object TalentSearch {
     })
     .build
 }
+

@@ -8,11 +8,7 @@ import scalacss.LengthUnit.px
 object HeaderCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
-//    val SignUpBtn = style(
-//      backgroundColor(red),
-//      border(1.px, solid),
-//      fontSize(1.2.em)
-//    )
+
     val naviContainer = style (
       backgroundColor(c"#005256"),
       minHeight(63.px),
@@ -121,8 +117,20 @@ object HeaderCSS {
     /*  marginLeft(8.px),*/
       marginTop(10.px),
       marginBottom(8.px),
-      marginRight(10.px),
+      marginRight(10.px)
+//      float.right
+    )
+    val  floatBtn = style (
       float.right
+    )
+    val rsltbtn = style (
+       marginLeft( 30.px),
+       marginTop( 10.px),
+       marginRight(10.px),
+       float.right,
+      backgroundColor (c"#ffa500"),
+    color.rgba(51,51,51,1),
+    fontSize(16.px)
     )
   }
 }

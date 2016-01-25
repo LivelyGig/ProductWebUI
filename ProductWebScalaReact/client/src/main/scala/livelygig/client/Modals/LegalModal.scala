@@ -17,11 +17,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
   */
 
 object LegalModal {   //TodoForm
-// shorthand fo
 @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (Boolean, Boolean, Boolean , Boolean , Boolean, Boolean) => Callback)
-
   case class State(legal: Boolean= false, showPrivacyPolicyModal: Boolean = false,
                    showTermsOfServicesForm: Boolean = false , showEndUserAgreementModal: Boolean = false,showTrademarksModal : Boolean = false,showCopyrightModal : Boolean = false)
 
@@ -70,9 +68,6 @@ object LegalModal {   //TodoForm
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className:="row")(
-//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Legal"))
-//          ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.ul()(
               <.li()(<.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Privacy Policy",^.onClick==>showPrivacyPolicy)),
@@ -82,12 +77,7 @@ object LegalModal {   //TodoForm
               <.li()(<.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Copyright",^.onClick==>showCopyright))
             )
           ),
-          <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ), <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+         <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
         ) //submitform
       )
 

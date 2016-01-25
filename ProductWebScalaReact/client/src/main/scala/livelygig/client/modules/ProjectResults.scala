@@ -17,8 +17,7 @@ import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import livelygig.client.modals.NewMessage
-import livelygig.client.modals.BiddingScreenModal
+import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 
 import scalacss.ScalaCssReact._
 
@@ -64,8 +63,6 @@ object ProjectResults {
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Sort ")(
                 <.span(Icon.longArrowDown))
             )
-
-
           ),
           <.div(/*DashBoardCSS.Style.listIconPadding ,*/ ^.className:="col-md-3 col-sm-3 col-xs-3")(
             <.div(^.className:="pull-right" )(
@@ -90,13 +87,13 @@ object ProjectResults {
                   <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                 ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    //<.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Apply")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Hide")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Favorite")(),
+//                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn ,^.className:="btn")("Recommend")(),
+                    NewRecommendation(NewRecommendation.Props(ctl,"Recommend")),
                     BiddingScreenModal(BiddingScreenModal.Props(ctl,"Apply")),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")()
-                  )
+                    NewMessage(NewMessage.Props(ctl,"Message")))
+
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -110,8 +107,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,  ^.className:="btn")("Save")(),
+//                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Recommend")(),
+                    NewRecommendation(NewRecommendation.Props(ctl,"Recommend")),
                     NewMessage(NewMessage.Props(ctl,"Send Message")))
 
                 )//media-body
@@ -127,9 +125,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -143,9 +141,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -159,9 +157,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -175,9 +173,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -191,9 +189,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               )
             )//ul
@@ -201,9 +199,7 @@ object ProjectResults {
         )//gigConversation
       )
     )
-    .componentDidMount(scope => Callback {
 
-    })
     .build
 }
 

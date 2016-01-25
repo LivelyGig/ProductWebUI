@@ -42,8 +42,7 @@ object MessagesPresets {
             ),
             /*<.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Message")()*/
             <.div(MessagesCSS.Style.newProjectbtn)(
-            NewMessage(NewMessage.Props(ctl,"New Messages"))
-            )
+             NewMessage(NewMessage.Props(ctl,"New Messages")))
 
             // TermsAndConditions(TermsAndConditions.Props(ctl)),
             // EndUserAgreement(EndUserAgreement.Props(ctl))

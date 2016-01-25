@@ -50,10 +50,7 @@ object CopyrightModal {
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Copyright"))
-        ),//main row
-        <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
+            <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
           <.div(DashBoardCSS.Style.marginTop10px)(
           ),
           <.div()(

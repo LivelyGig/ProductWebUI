@@ -109,7 +109,7 @@ object UserPreferencesForm {
       )
     }
   }
-  private val component = ReactComponentB[Props]("PostAProjectForm")
+  private val component = ReactComponentB[Props]("UserPreferencesModal")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {

@@ -16,7 +16,6 @@ object DashBoardCSS {
       height(100.%%),
       overflow.hidden
     )
-
     val rsltContainer = style(
       display.inlineBlock,
       width(100.%%),
@@ -75,7 +74,6 @@ object DashBoardCSS {
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
-//      fontSize(1.1.em),
       fontWeight.bold,
       media.maxWidth(1130.px) -(
         fontSize(11.px)),
@@ -123,7 +121,6 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-//      border(2.px, solid, c"#005256"),
       marginRight(5.px)
     )
     val inputHeightWidth = style(
@@ -267,10 +264,8 @@ object DashBoardCSS {
       paddingLeft(18.%%)
       )
       val modalContent = style (
-      /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
-      width.inherit ,
+       width.inherit ,
       height.inherit ,
-      /* To center horizontally */
       margin(0.px , auto)
 
     )
@@ -363,7 +358,6 @@ object DashBoardCSS {
       media.maxWidth(1299.px) -(
         paddingTop(12.px)
         )
-
     )
     val replyMarginTop = style (
      marginTop(20.px)

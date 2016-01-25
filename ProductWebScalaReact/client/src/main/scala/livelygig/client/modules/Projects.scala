@@ -23,7 +23,7 @@ object Projects {
         case "talent" =>
           <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
             <.div()(
-              ProjectPresets.component(ProjectPresets.Props(ctl))
+              ProjectPresets.component(ctl)
             ),
             // AddNewAgent(AddNewAgent.Props(ctl)),
             <.div(DashBoardCSS.Style.splitContainer)(

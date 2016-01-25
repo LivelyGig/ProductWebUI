@@ -17,48 +17,48 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-//object UserSkills {
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//  case class Props(ctl: RouterCtl[Loc])
-//  case class State(showUserSkillsForm: Boolean = false )
-//
-//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-//  }
-//
-//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-//    def mounted(props: Props): Callback =  {
-//      t.modState(s => s.copy(showUserSkillsForm = true))
-//    }
-//    def addUserSkillsForm() : Callback = {
-//      t.modState(s => s.copy(showUserSkillsForm = true))
-//    }
-//     def addUserSkills(postUserSkills: Boolean = false): Callback = {
-//    //  log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserSkillsForm}")
-//      if(postUserSkills){
-//        t.modState(s => s.copy(showUserSkillsForm = true))
-//      } else {
-//        t.modState(s => s.copy(showUserSkillsForm = false))
-//      }
-//    }
-//  }
-//
-//  val component = ReactComponentB[Props]("UserSkills")
-//    .initialState(State())
-//    .backend(new Backend(_))
-//    .renderPS(($, P, S) => {
-//      val B = $.backend
-//      <.div(ProjectCSS.Style.displayInitialbtn)(
-//        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Skills"),
-//        if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
-//        else
-//          Seq.empty[ReactElement]
-//      )
-//    })
-//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .configure(OnUnmount.install)
-//    .build
-//  def apply(props: Props) = component(props)
-//}
+object UserSkills {
+  @inline private def bss = GlobalStyles.bootstrapStyles
+  case class Props(ctl: RouterCtl[Loc])
+  case class State(showUserSkillsForm: Boolean = false )
+
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  }
+
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+    def mounted(props: Props): Callback =  {
+      t.modState(s => s.copy(showUserSkillsForm = true))
+    }
+    def addUserSkillsForm() : Callback = {
+      t.modState(s => s.copy(showUserSkillsForm = true))
+    }
+     def addUserSkills(postUserSkills: Boolean = false): Callback = {
+    //  log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserSkillsForm}")
+      if(postUserSkills){
+        t.modState(s => s.copy(showUserSkillsForm = true))
+      } else {
+        t.modState(s => s.copy(showUserSkillsForm = false))
+      }
+    }
+  }
+
+  val component = ReactComponentB[Props]("UserSkills")
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS(($, P, S) => {
+      val B = $.backend
+      <.div(ProjectCSS.Style.displayInitialbtn)(
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"User Skills"),
+        if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
+        else
+          Seq.empty[ReactElement]
+      )
+    })
+    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .configure(OnUnmount.install)
+    .build
+  def apply(props: Props) = component(props)
+}
 
 object UserSkillsForm {
   // shorthand for styles
@@ -138,7 +138,7 @@ object UserSkillsForm {
       )
     }
   }
-  private val component = ReactComponentB[Props]("UserSkills")
+  private val component = ReactComponentB[Props]("UserSkillsModal")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {

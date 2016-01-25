@@ -29,12 +29,10 @@ object EndUserAgreement {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
-
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -43,7 +41,7 @@ object EndUserAgreement {
     }
 
     def render(s: State, p: Props) = {
-          val headerText = "End User Agreement"
+      val headerText = "End User Agreement"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
@@ -57,12 +55,6 @@ object EndUserAgreement {
             ),
             <.div()(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            )
-          ),
-          <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()

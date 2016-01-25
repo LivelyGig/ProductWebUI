@@ -8,23 +8,18 @@ import livelygig.client.css.DashBoardCSS
 
 import scalacss.ScalaCssReact._
 
-
 object AccountValidationSuccess {
-  // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: () => Callback)
-
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
     def hide = Callback{
       jQuery(t.getDOMNode()).modal("hide")
     }
-
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-       props.submitHandler(/*state.emailValidationModel, state.validateAccount*/)
+       props.submitHandler()
     }
 
     def render(s: State, p: Props) = {
@@ -34,7 +29,6 @@ object AccountValidationSuccess {
         // header contains a cancel button (X)
         header = hide => <.span( <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         closed = () => formClosed(s, p)),
-
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
              <.div(^.className:="row")(
@@ -49,7 +43,7 @@ object AccountValidationSuccess {
       )
     }
   }
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+  private val component = ReactComponentB[Props]("AccountValidationSuccessful")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .build

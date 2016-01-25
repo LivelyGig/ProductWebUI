@@ -17,47 +17,47 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-//object NewProject {
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//  case class Props(ctl: RouterCtl[Loc])
-//  case class State(showNewProjectForm: Boolean = false)
-//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-//  }
-//
-//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-//    def mounted(props: Props): Callback =  {
-//      t.modState(s => s.copy(showNewProjectForm = true))
-//    }
-//    def addProjectForm() : Callback = {
-//      t.modState(s => s.copy(showNewProjectForm = true))
-//    }
-//     def addNewProject( postProject: Boolean = false): Callback = {
-//     // log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewProjectForm}")
-//      if(postProject){
-//        t.modState(s => s.copy(showNewProjectForm = true))
-//      } else {
-//        t.modState(s => s.copy(showNewProjectForm = false))
-//      }
-//    }
-//      }
-//
-//  val component = ReactComponentB[Props]("AddNewAgent")
-//    .initialState(State())
-//    .backend(new Backend(_))
-//    .renderPS(($, P, S) => {
-//      val B = $.backend
-//      <.div(ProjectCSS.Style.displayInitialbtn)(
-//        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Project"),
-//        if (S.showNewProjectForm) PostAProjectForm(PostAProjectForm.Props(B.addNewProject))
-//        else
-//          Seq.empty[ReactElement]
-//      )
-//    })
-//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .configure(OnUnmount.install)
-//    .build
-//  def apply(props: Props) = component(props)
-//}
+object NewProject {
+  @inline private def bss = GlobalStyles.bootstrapStyles
+  case class Props(ctl: RouterCtl[Loc])
+  case class State(showNewProjectForm: Boolean = false)
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  }
+
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+    def mounted(props: Props): Callback =  {
+      t.modState(s => s.copy(showNewProjectForm = true))
+    }
+    def addProjectForm() : Callback = {
+      t.modState(s => s.copy(showNewProjectForm = true))
+    }
+     def addNewProject( postProject: Boolean = false): Callback = {
+     // log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewProjectForm}")
+      if(postProject){
+        t.modState(s => s.copy(showNewProjectForm = true))
+      } else {
+        t.modState(s => s.copy(showNewProjectForm = false))
+      }
+    }
+      }
+
+  val component = ReactComponentB[Props]("AddNewAgent")
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS(($, P, S) => {
+      val B = $.backend
+      <.div(ProjectCSS.Style.displayInitialbtn)(
+        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Project"),
+        if (S.showNewProjectForm) PostAProjectForm(PostAProjectForm.Props(B.addNewProject))
+        else
+          Seq.empty[ReactElement]
+      )
+    })
+    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .configure(OnUnmount.install)
+    .build
+  def apply(props: Props) = component(props)
+}
 
 object PostAProjectForm {
   // shorthand for styles

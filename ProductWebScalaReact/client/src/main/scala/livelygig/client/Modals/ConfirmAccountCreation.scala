@@ -12,10 +12,8 @@ import scalacss.ScalaCssReact._
 
 
 object ConfirmAccountCreation {
-   @inline private def bss = GlobalStyles.bootstrapStyles
-
+  @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
-
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -23,8 +21,7 @@ object ConfirmAccountCreation {
       // mark it as NOT cancelled (which is the default)
          t.modState(s => s.copy(accountValidationFailed = true))
     }
-    def hide /*= Callback*/ {
-      console.log("hide")
+    def hide = {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -45,7 +42,6 @@ object ConfirmAccountCreation {
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
             closed = () => formClosed(s, p)),
-
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
             <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(

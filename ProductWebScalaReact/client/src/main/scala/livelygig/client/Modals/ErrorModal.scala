@@ -14,9 +14,7 @@ object ErrorModal {
 
   case class Props(submitHandler: () => Callback)
   case class State()
-
   class Backend(t: BackendScope[Props, State]) {
-
     def closeForm = Callback{
       jQuery(t.getDOMNode()).modal("hide")
     }
