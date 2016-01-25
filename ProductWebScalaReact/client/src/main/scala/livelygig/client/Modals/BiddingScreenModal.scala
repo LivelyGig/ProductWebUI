@@ -134,16 +134,16 @@ object BiddingScreenModalForm {
                     <.div()("Employer:")
                   ),
                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                    <.div()(<.a()("Pam")), "snapshot"
+                    <.div()(<.a()("Pam"))
                   )
                 ),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Talent:")
-                  ),
-                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                    <.div()(<.a()("Abed")), "Choose your profile:", "picklist... ", "snapshot"
                   )
+                  // <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                  //  <.div()(<.a()("Abed")), "Choose your profile:", "picklist... "
+                  // )
                 ),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
@@ -194,7 +194,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
                                 ),
 
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight,^.backgroundColor:="lightcyan")(
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
                                     <.div(^.className := "row")(
@@ -223,7 +223,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
                                 ),
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor:="lightcyan")(
 
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
