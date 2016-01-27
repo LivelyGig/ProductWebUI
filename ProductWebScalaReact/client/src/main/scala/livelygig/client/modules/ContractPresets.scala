@@ -5,17 +5,22 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{ReactElement, BackendScope, Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
+import livelygig.client.LGMain.Loc
+import livelygig.client.components.Bootstrap.Button
+import livelygig.client.components.Bootstrap.CommonStyle
 import livelygig.client.components.Bootstrap.{CommonStyle, Button}
 import livelygig.client.css.HeaderCSS
+import livelygig.client.css.HeaderCSS
+import livelygig.client.css.MessagesCSS
 import livelygig.client.css._
-import livelygig.client.modals.{UserPreferences}
+import livelygig.client.modals.{NewProject, UserPreferences}
 
 import scalacss.ScalaCssReact._
 
-object TalentPresets {
+object ContractPresets {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("UserPreferences")
-       .render_P(ctl => {
+  val component = ReactComponentB[RouterCtl[Loc]]("ContractPresets")
+    .render_P(ctl => {
       <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
         <.div(^.className :="row")(
           <.div(^.className:="col-md-10 col-sm-10 col-xs-10")(
@@ -35,19 +40,19 @@ object TalentPresets {
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
             ),
-            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Profile")(),
+           // <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Profile")(),
             //Invoice(Invoice.Props(ctl)),
             <.div(MessagesCSS.Style.newProjectbtn)(
-            UserPreferences(UserPreferences.Props(ctl))
+              NewProject(NewProject.Props(ctl))
             )
 
-           // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
+            // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
           )
         )
 
-    )})
+      )})
 
-      .build
+    .build
 
 
 }

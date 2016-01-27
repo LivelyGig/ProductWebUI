@@ -11,11 +11,8 @@ import scalacss.ScalaCssReact._
 object LoginFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: () => Callback)
-
   case class State()
-
   class Backend(t: BackendScope[Props, State]) {
 
     def hide = Callback{
@@ -50,7 +47,7 @@ object LoginFailed {
       )
     }
   }
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+  private val component = ReactComponentB[Props]("LoginFailed")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .build

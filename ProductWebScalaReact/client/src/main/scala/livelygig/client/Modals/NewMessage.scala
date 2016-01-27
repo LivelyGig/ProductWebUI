@@ -41,7 +41,7 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.rsltContainerBtn)),P.buttonName),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
         if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]

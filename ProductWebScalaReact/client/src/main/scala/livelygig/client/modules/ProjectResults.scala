@@ -17,8 +17,7 @@ import livelygig.client.css.HeaderCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import livelygig.client.modals.NewMessage
-import livelygig.client.modals.BiddingScreenModal
+import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 
 import scalacss.ScalaCssReact._
 
@@ -64,8 +63,6 @@ object ProjectResults {
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Sort ")(
                 <.span(Icon.longArrowDown))
             )
-
-
           ),
           <.div(/*DashBoardCSS.Style.listIconPadding ,*/ ^.className:="col-md-3 col-sm-3 col-xs-3")(
             <.div(^.className:="pull-right" )(
@@ -86,17 +83,18 @@ object ProjectResults {
 
                 <.div(^.className:="media-body")(
                   "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                <.div(^.className:="col-md-6 col-sm-6", DashBoardCSS.Style.marginTop10px)(
+                <.div(^.className:="col-md-4 col-sm-4", DashBoardCSS.Style.marginTop10px)(
                   <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                 ),
-                  <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Hide")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Favorite")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    //<.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Apply")(),
+                  <.div(^.className:="col-md-8 col-sm-8")(
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Hide")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Favorite")(),
+//                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn ,^.className:="btn")("Recommend")(),
+                    NewRecommendation(NewRecommendation.Props(ctl,"Recommend")),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn ,^.className:="btn")("Find Matching Talent")(),
                     BiddingScreenModal(BiddingScreenModal.Props(ctl,"Apply")),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Message")()
-                  )
+                    NewMessage(NewMessage.Props(ctl,"Message")))
+
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -110,8 +108,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,  ^.className:="btn")("Save")(),
+//                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Recommend")(),
+                    NewRecommendation(NewRecommendation.Props(ctl,"Recommend")),
                     NewMessage(NewMessage.Props(ctl,"Send Message")))
 
                 )//media-body
@@ -127,9 +126,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -143,9 +142,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -159,9 +158,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -175,9 +174,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               ),//li
               <.li(^.className:="media", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -191,9 +190,9 @@ object ProjectResults {
                     <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                   ),
                   <.div(^.className:="col-md-6 col-sm-6")(
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Save")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Recommend")(),
-                    <.button(HeaderCSS.Style.rsltContainerBtn, ^.className:="btn")("Send Message")())
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn, ^.className:="btn")("Save")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Recommend")(),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Send Message")())
                 )//media-body
               )
             )//ul
@@ -201,9 +200,7 @@ object ProjectResults {
         )//gigConversation
       )
     )
-    .componentDidMount(scope => Callback {
 
-    })
     .build
 }
 

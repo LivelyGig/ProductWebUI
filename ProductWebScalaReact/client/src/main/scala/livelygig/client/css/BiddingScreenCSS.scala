@@ -32,16 +32,13 @@ object BiddingScreenCSS {
       media.maxWidth(1300.px)-
         fontSize(12.px)
     )
-
     val footBorder = style (
       borderStyle(none, none , none, solid)
     )
-
     val footDisplayInline = style(
       paddingLeft(4.%%),
       display.inline
     )
-
     val biddingPreset = style (
       padding(10.px),
       fontSize(1.1.em)
@@ -49,7 +46,6 @@ object BiddingScreenCSS {
     val BiddingScreenResults = style (
       paddingLeft(15.px)
     )
-
     val rsltBiddingContainer = style(
       display.inlineBlock,
       width(100.%%),
@@ -65,11 +61,9 @@ object BiddingScreenCSS {
     val createBiddingBtn=style(
       backgroundColor(c"#FFA500"),
       color(rgba(51,51,51,1)),
-//      fontSize(16.px),
       marginLeft(10.px),
       marginTop(6.px)
     )
-
     val biddingscreenImgWidth = style (
       width(700.px)
     )

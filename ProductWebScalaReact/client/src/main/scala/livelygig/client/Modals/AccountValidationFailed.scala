@@ -5,19 +5,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
-
 import scalacss.ScalaCssReact._
 
 object AccountValidationFailed {
-  // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: () => Callback)
-
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
-
     def hide = Callback{
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -40,7 +35,6 @@ object AccountValidationFailed {
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Validation code you entered is incorrect, please check your email and enter valid code",
                   <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->hide )("Try again"))
-
                 )
               )
             )
@@ -50,7 +44,7 @@ object AccountValidationFailed {
       )
     }
   }
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+  private val component = ReactComponentB[Props]("AccountValidationFailed")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .build

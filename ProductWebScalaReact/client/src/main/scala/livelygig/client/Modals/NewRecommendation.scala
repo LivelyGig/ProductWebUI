@@ -17,48 +17,61 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-//object NewRecommendation {
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//  case class Props(ctl: RouterCtl[Loc])
-//  case class State(showNewRecommendationForm: Boolean = false)
-//
-//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-//  }
-//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-//    def mounted(props: Props): Callback =  {
-//      t.modState(s => s.copy(showNewRecommendationForm = true))
-//    }
-//    def addNewRecommendationForm() : Callback = {
-//      t.modState(s => s.copy(showNewRecommendationForm = true))
-//    }
-//
-//    def addNewRecommendation(postNewRecommendation: Boolean = false): Callback = {
-//   // log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewRecommendationForm}")
-//      if(postNewRecommendation){
-//         t.modState(s => s.copy(showNewRecommendationForm = true))
-//      } else {
-//        t.modState(s => s.copy(showNewRecommendationForm = false))
+object NewRecommendation {
+  @inline private def bss = GlobalStyles.bootstrapStyles
+  case class Props(ctl: RouterCtl[Loc], buttonName :String)
+  case class State(showNewRecommendationForm: Boolean = false, newRecommendationForm: Boolean = false)
+
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  }
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+    def mounted(props: Props): Callback =  {
+      t.modState(s => s.copy(showNewRecommendationForm = true))
+    }
+
+//    def RecommendationForm(props: Props) : Callback = {
+//          if(props.buttonName == "Recommend")
+//        {
+//          log.debug(s"In Recommend")
+//          t.modState(s => s.copy(newRecommendationForm = false))
+//        }
+//      else
+//      {
+//        log.debug(s"In Recommendation")
+//        t.modState(s => s.copy(newRecommendationForm = true))
 //      }
 //    }
-//  }
-//
-//  val component = ReactComponentB[Props]("AddNewRecommendation")
-//    .initialState(State())
-//    .backend(new Backend(_))
-//    .renderPS(($, P, S) => {
-//      val B = $.backend
-//      <.div(ProjectCSS.Style.displayInitialbtn)(
-//        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Recommendation"),
-//        if (S.showNewRecommendationForm) NewRecommendationForm(NewRecommendationForm.Props(B.addNewRecommendation))
-//        else
-//          Seq.empty[ReactElement]
-//      )
-//    })
-//    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .configure(OnUnmount.install)
-//    .build
-//  def apply(props: Props) = component(props)
-//}
+    def addNewRecommendationForm() : Callback = {
+      t.modState(s => s.copy(showNewRecommendationForm = true))
+    }
+
+    def addNewRecommendation(postNewRecommendation: Boolean = false): Callback = {
+   // log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewRecommendationForm}")
+      if(postNewRecommendation){
+         t.modState(s => s.copy(showNewRecommendationForm = true))
+      } else {
+        t.modState(s => s.copy(showNewRecommendationForm = false))
+      }
+    }
+  }
+
+  val component = ReactComponentB[Props]("AddNewRecommendation")
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS(($, P, S) => {
+      val B = $.backend
+      <.div(ProjectCSS.Style.displayInitialbtn)(
+        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        if (S.showNewRecommendationForm) NewRecommendationForm(NewRecommendationForm.Props(B.addNewRecommendation))
+        else
+          Seq.empty[ReactElement]
+      )
+    })
+    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .configure(OnUnmount.install)
+    .build
+  def apply(props: Props) = component(props)
+}
 
 object NewRecommendationForm {
   // shorthand for styles

@@ -51,7 +51,7 @@ object TrademarksModal {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Trademarks"))
+          //<.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Trademarks"))
         ),//main row
         <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
           <.div(DashBoardCSS.Style.marginTop10px)(

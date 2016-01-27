@@ -24,13 +24,10 @@ object LoginForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(login = true))
-      //  jQuery(t.getDOMNode()).modal("hide")
-    }
+      }
 
     def hide = {
-      console.log("hide")
-      // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+        jQuery(t.getDOMNode()).modal("hide")
     }
 
     def updateEmail(e: ReactEventI) = {
