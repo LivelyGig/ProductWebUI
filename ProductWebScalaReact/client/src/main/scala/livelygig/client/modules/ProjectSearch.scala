@@ -21,17 +21,20 @@ object ProjectSearch {
             <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition)(
               <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
               <.div(DashBoardCSS.Style.slctHeaders)("Job Type:"),
-              // ToDo: these checkboxes should have the equivalent of <label for="checkbox_id">, so the lable is clickable
-              <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxProject"),
 
-              <.label(^.`for`:="jobTypeCheckboxProject"), "Project",
-              <.div(^.marginLeft := "20px")(
-                <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxHourly"),
-                <.label(^.`for`:="jobTypeCheckboxHourly"), "Hourly",
-                <.br(),
-                <.input(^.`type` := "checkbox", ^.checked:=true), " Fixed Time and/or Scope"
-              ),
-              <.input(^.`type` := "checkbox"), " Contest",
+                <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxProject"), " Project"),
+                <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
+                  <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
+                    <.input(^.`type` := "checkbox", ^.id:="jobTypeCheckboxHourly"), " Hourly"),
+                  <.br(),
+                  <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
+                    <.input(^.`type` := "checkbox", ^.value:=true, ^.id:="jobTypeCheckboxFixed"), " Fixed Time and/or Scope"),
+                  <.br()
+                ),
+              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.input(^.`type` := "checkbox"), " Contest"),
+
 
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
