@@ -7,7 +7,7 @@ import livelygig.client.components.Icon
 import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.MessagesCSS
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.LGMain.{Loc}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._

@@ -34,9 +34,9 @@ object CoreApi {
     AjaxClient[Api].confirmEmail(ConfirmEmailRequest(emailValidationModel.token)).call()
   }
 
-  def agentLogin(agentLoginModel: AgentLoginModel): Future[ApiResponse[InitializeSessionResponse]] = {
-    AjaxClient[Api].agentLogin(InitializeSessionRequest(s"agent://email/${agentLoginModel.email}" +
-      s"?password=${agentLoginModel.password}")).call()
+  def agentLogin(userModel: UserModel): Future[ApiResponse[InitializeSessionResponse]] = {
+    AjaxClient[Api].agentLogin(InitializeSessionRequest(s"agent://email/${userModel.email}" +
+      s"?password=${userModel.password}")).call()
   }
 
   def sessionPing () : Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {

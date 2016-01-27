@@ -9,7 +9,7 @@ import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}
 import livelygig.client.logger._
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.services.CoreApi._
 import livelygig.client.services._
 import org.scalajs.dom._
@@ -20,7 +20,7 @@ import scalacss.ScalaCssReact._
 
 object AddNewAgent {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props()
 
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false,
@@ -66,11 +66,11 @@ object AddNewAgent {
       }
     }
 
-    def Login(agentLoginModel: AgentLoginModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
+    def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
               showNewAgentForm: Boolean = false) : Callback = {
-      log.debug(s"Login agentLoginModel: ${agentLoginModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
+      log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
-        CoreApi.agentLogin(agentLoginModel).onComplete {
+        CoreApi.agentLogin(userModel).onComplete {
           case Success(s) =>
             log.debug(s"loginAPISuccessMsg: ${s.msgType}")
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){

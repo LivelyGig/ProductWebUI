@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
-import livelygig.client.models.AgentLoginModel
+import livelygig.client.models.UserModel
 import org.scalajs.dom._
 
 import scalacss.ScalaCssReact._
@@ -15,9 +15,9 @@ object LoginForm {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (AgentLoginModel, Boolean, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback)
 
-  case class State(agentloginModel: AgentLoginModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
+  case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
                    showNewAgentForm: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -34,7 +34,7 @@ object LoginForm {
     }
 
     def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(email = e.target.value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
     }
 
     def showValidate(e: ReactEventI) = {
@@ -46,13 +46,13 @@ object LoginForm {
     }
 
     def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(agentloginModel = s.agentloginModel.copy(password = e.target.value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
-      props.submitHandler(state.agentloginModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
+      props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
     }
 
 
@@ -71,9 +71,9 @@ object LoginForm {
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with LivelyGig credentials"),
                 <.input(^.tpe := "text", bss.formControl, /* DashBoardCSS.Style.inputModalMargin, */ ^.id := "Name",
-                  ^.placeholder := "username", ^.value := s.agentloginModel.email, ^.onChange ==> updateEmail, ^.required := true),
+                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
-                  , ^.value := s.agentloginModel.password, ^.onChange ==> updatePassword, ^.required := true),
+                  , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.btnWidth, "Login"),
 
                 <.div(^.paddingTop := "10px")(
@@ -110,7 +110,7 @@ object LoginForm {
   }
 
   private val component = ReactComponentB[Props]("AddLoginForm")
-    .initialState_P(p => State(new AgentLoginModel("", "")))
+    .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {

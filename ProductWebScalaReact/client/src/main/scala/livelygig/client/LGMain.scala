@@ -73,11 +73,17 @@ object LGMain extends js.JSApp {
             ),
             c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,^.className := "navbar-header",<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
+
           <.div(^.id:="navi-collapse", ^.className := "collapse navbar-collapse")(
-            MainMenu(MainMenu.Props(c, r.page)),
-            <.div(HeaderCSS.Style.LoginInMenuItem)(
-              AddNewAgent(AddNewAgent.Props(c))
-            )
+            LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+//            MainMenu(MainMenu.Props(c, r.page)),
+//            <.div(HeaderCSS.Style.LoginInMenuItem)(
+//              AddNewAgent(AddNewAgent.Props(c))
+//            )
+//         if ()
+//        <.div(HeaderCSS.Style.LoginInMenuItem)(
+//          <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
+//          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
           )
         )
       ),

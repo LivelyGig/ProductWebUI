@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
-import livelygig.client.models.AgentLoginModel
+import livelygig.client.models.UserModel
 import livelygig.client.services.{ApiResponseMsg, CoreApi}
 import upickle.default._
 import livelygig.shared.dtos.{ApiResponse, InitializeSessionResponse}
@@ -19,23 +19,23 @@ object AgentLogin {
 
 
   case class Props(router: RouterCtl[Loc])
-  case class State(agentLoginModel: AgentLoginModel)
+  case class State(userModel: UserModel)
   class Backend(t : BackendScope[Unit, State]) {
 
     def updateEmail(e: ReactEventI) = {
       // update TodoItem content
-      t.modState(s => s.copy(agentLoginModel = s.agentLoginModel.copy(email = e.target.value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
     }
     def updatePassword(e: ReactEventI) = {
       // update TodoItem content
-      t.modState(s => s.copy(agentLoginModel = s.agentLoginModel.copy(password = e.target.value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
     }
 
   }
   // create the React component for CreateAgent
-  def agentLogin(agentLoginModel: AgentLoginModel) : Callback = Callback{
-    println(agentLoginModel)
-    CoreApi.agentLogin(agentLoginModel).onComplete {
+  def agentLogin(userModel: UserModel) : Callback = Callback{
+    println(userModel)
+    CoreApi.agentLogin(userModel).onComplete {
       case Success(s) =>
         println(s.msgType)
         if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
@@ -56,13 +56,13 @@ object AgentLogin {
   // create the React component for AgentLogin
 
   val component = ReactComponentB[Unit]("AgentLogin")
-    .initialState(State(new AgentLoginModel("","")))
+    .initialState(State(new UserModel("", "","")))
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div (^.id:="mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div(^.className:="row")(
-          <.form(^.onSubmit--> agentLogin(S.agentLoginModel))(
+          <.form(^.onSubmit--> agentLogin(S.userModel))(
             <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4",CreateAgentCSS.Style.modalContainer)(
               <.div(CreateAgentCSS.Style.ModalHeader, /*CreateAgentCSS.Style.paddinglefttitle ,*/ ^.className:="row")(
 

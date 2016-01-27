@@ -1,7 +1,7 @@
 package livelygig.client.modals
 
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.LGMain.{Loc}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._

@@ -1,6 +1,6 @@
 package livelygig.client.modals
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.LGMain.{Loc}
 import org.scalajs.dom._
 import scala.util.{Failure, Success}
