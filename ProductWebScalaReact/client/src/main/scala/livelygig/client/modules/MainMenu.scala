@@ -63,19 +63,20 @@ object MainMenu {
           //          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
           //         // ctl.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(ctl.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
           //
-        //   AddNewAgent(AddNewAgent.Props(ctl))
+          //         //    AddNewAgent(AddNewAgent.Props(ctl))
           //          AddNewAgent(AddNewAgent.Props()))
 
 
         ),
         <.div(HeaderCSS.Style.LoginInMenuItem)(
           if (props.proxy.value.isLoggedIn){
+            var model = props.proxy.value
             //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
             <.div(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline) (
               <.div(^.className:="btn-group")(
-                <.button(^.className:="btn dropdown-toggle",HeaderCSS.Style.loginbtn,"data-toggle".reactAttr := "dropdown")("Dale Steyn ")(
+                <.button(^.className:="btn dropdown-toggle",HeaderCSS.Style.loginbtn,"data-toggle".reactAttr := "dropdown")(model.name)(
                 ),
                 <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
                   <.li()(<.a(^.href:="#")("Available for Chat")),
@@ -91,7 +92,7 @@ object MainMenu {
                 )
               )
               ),
-              <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))
+              <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc))
 
 
             )
