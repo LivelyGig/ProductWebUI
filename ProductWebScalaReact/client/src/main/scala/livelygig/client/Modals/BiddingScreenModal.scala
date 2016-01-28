@@ -19,8 +19,10 @@ import scalacss.ScalaCssReact._
 
 object BiddingScreenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
-  case class State(showBiddingScreen: Boolean = false, showMessage:Boolean = false)
+
+  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -35,19 +37,18 @@ object BiddingScreenModal {
     }
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false): Callback = {
-            log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
+      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
-      } else if(postMessage) {
-        t.modState(s => s.copy(showBiddingScreen = false , showMessage = true))
+      } else if (postMessage) {
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = true))
       }
-      else
-        {
-          t.modState(s => s.copy(showBiddingScreen = false))
-        }
+      else {
+        t.modState(s => s.copy(showBiddingScreen = false))
+      }
     }
 
-    def hideMessage(showMessage : Boolean = false): Callback={
+    def hideMessage(showMessage: Boolean = false): Callback = {
       t.modState(s => s.copy(showMessage = false, showBiddingScreen = true))
     }
   }
@@ -60,8 +61,8 @@ object BiddingScreenModal {
       <.div(ProjectCSS.Style.displayInitialbtn)(
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), P.buttonName),
         if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
-        else if(S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage,"Message"))
-          else
+        else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
+        else
           Seq.empty[ReactElement]
       )
     })
@@ -75,8 +76,10 @@ object BiddingScreenModal {
 object BiddingScreenModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (Boolean, Boolean) => Callback)
-  case class State(postBiddingScreen: Boolean = false , postMessage:Boolean = false)
+
+  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
@@ -122,7 +125,8 @@ object BiddingScreenModalForm {
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
             <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow")),
             <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "In Progress")),
-            <.li()(<.a(^.href := "#menu3", "data-toggle".reactAttr := "tab", "Acceptance")),
+            // 2016-01-25 -- Ed intentionally commenting out Acceptance.  We'll probably merge its contents with In Progress state.
+            // <.li()(<.a(^.href := "#menu3", "data-toggle".reactAttr := "tab", "Acceptance")),
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
           <.div(^.className := "tab-content")(
@@ -150,7 +154,7 @@ object BiddingScreenModalForm {
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Talent:")
                   )
-                  ),
+                ),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Referred By:")
@@ -200,7 +204,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
                                 ),
 
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight,^.backgroundColor:="lightcyan")(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor := "lightcyan")(
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
                                     <.div(^.className := "row")(
@@ -229,7 +233,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
                                 ),
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor:="lightcyan")(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor := "lightcyan")(
 
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
@@ -368,6 +372,8 @@ object BiddingScreenModalForm {
                 ),
                 <.div()(
                   <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept")(),
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Dispute")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                   )
@@ -422,6 +428,7 @@ object BiddingScreenModalForm {
                     <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
                     <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(),
                     <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn" )("Send Feedback")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                     )

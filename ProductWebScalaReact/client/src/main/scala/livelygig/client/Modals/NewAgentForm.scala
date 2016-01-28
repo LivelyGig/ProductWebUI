@@ -10,7 +10,7 @@ import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{FooterCSS, DashBoardCSS, HeaderCSS}
 import livelygig.client.logger._
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.services.CoreApi._
 import livelygig.client.services._
 import org.scalajs.dom._

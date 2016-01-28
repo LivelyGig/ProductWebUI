@@ -83,14 +83,15 @@ object ProjectResults {
 
                 <.div(^.className:="media-body")(
                   "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                <.div(^.className:="col-md-6 col-sm-6", DashBoardCSS.Style.marginTop10px)(
+                <.div(^.className:="col-md-4 col-sm-4", DashBoardCSS.Style.marginTop10px)(
                   <.div (DashBoardCSS.Style.profileNameHolder )("Recommended By: Tom")
                 ),
-                  <.div(^.className:="col-md-6 col-sm-6")(
+                  <.div(^.className:="col-md-8 col-sm-8")(
                     <.button(HeaderCSS.Style.rsltContainerBtn,  HeaderCSS.Style.floatBtn,^.className:="btn")("Hide")(),
                     <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className:="btn")("Favorite")(),
 //                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn ,^.className:="btn")("Recommend")(),
                     NewRecommendation(NewRecommendation.Props(ctl,"Recommend")),
+                    <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn ,^.className:="btn")("Find Matching Talent")(),
                     BiddingScreenModal(BiddingScreenModal.Props(ctl,"Apply")),
                     NewMessage(NewMessage.Props(ctl,"Message")))
 

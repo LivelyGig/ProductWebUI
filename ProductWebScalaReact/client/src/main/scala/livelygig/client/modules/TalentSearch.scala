@@ -35,11 +35,15 @@ object TalentSearch {
               <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
               <.div(DashBoardCSS.Style.slctHeaders)("Profile Type:"),
               // ToDo: these checkboxes should have the equivalent of <label for="checkbox_id">, so the lable is clickable
-              <.input(^.`type` := "checkbox", ^.checked:=true), " Talent",
+
+              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                <.input(^.`type` := "checkbox", ^.checked:=true), " Talent"),
               <.br(),
-              <.input(^.`type` := "checkbox"), " Employer",
+              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                <.input(^.`type` := "checkbox"), " Employer"),
               <.br(),
-              <.input(^.`type` := "checkbox"), " Moderator",
+              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                <.input(^.`type` := "checkbox"), " Moderator"),
               <.div(^.className:="row")(
                 <.div(^.className:="col-md-12 col-sm-12 col-xs-12",ProjectCSS.Style.slctProjectInputWidth)(
                   <.div("Available From Date")

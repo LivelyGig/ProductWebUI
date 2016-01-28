@@ -14,10 +14,9 @@ import livelygig.client.components._
 import livelygig.client.css._
 import livelygig.client.logger._
 import livelygig.client.logger._
-import livelygig.client.models.AgentLoginModel
 import livelygig.client.models.EmailValidationModel
 import livelygig.client.models.UserModel
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.CoreApi
 import livelygig.client.services.CoreApi._

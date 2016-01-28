@@ -165,7 +165,21 @@ object DashBoardCSS {
       paddingTop(15.px),
       paddingBottom(2.px),
       fontSize(1.em),
-      fontWeight.bold
+      fontWeight.normal
+    )
+    val slctCheckboxesLabel=style(
+      paddingLeft(0.px),
+      fontSize(1.em),
+      fontWeight.normal
+    )
+    val slctSubCheckboxesDiv=style(
+      paddingLeft(20.px),
+      fontSize(1.em),
+      fontWeight.normal
+    )
+    val slctSubCheckboxesLabel=style(
+      fontSize(1.em),
+      fontWeight.normal
     )
 
     /*CreateNewAgent Css Styles*/

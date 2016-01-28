@@ -1,7 +1,7 @@
 package livelygig.client.modals
 
 
-import livelygig.client.models.{AgentLoginModel, EmailValidationModel, UserModel}
+import livelygig.client.models.{EmailValidationModel, UserModel}
 import japgolly.scalajs.react.extra.router.RouterCtl
 import livelygig.client.LGMain.{Loc}
 import livelygig.client.services.CoreApi._
