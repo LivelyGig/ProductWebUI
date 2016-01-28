@@ -4,12 +4,14 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.Handlers.LoginUser
 import livelygig.client.LGMain
 import livelygig.client.LGMain._
 import livelygig.client.modals.AddNewAgent
 import livelygig.client.components._
 import livelygig.client.css.HeaderCSS
 import livelygig.client.models.UserModel
+import livelygig.client.services.LGCircuit
 
 import scalacss.ScalaCssReact._
 object MainMenu {
@@ -32,40 +34,40 @@ object MainMenu {
     .render_P((props) => {
       println(props.proxy.value.isLoggedIn)
       <.div(
-      <.ul(^.id := "headerNavUl", ^.className:="nav navbar-nav")(
-        // build a list of menu items
-        for (item <- menuItems) yield {
-          <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
-            props.ctl.link(item.location)(HeaderCSS.Style.headerNavA ," ", item.label(props))
-          )
-        }
-//        <.div(HeaderCSS.Style.LoginInMenuItem)(
-//          if (props.proxy.value.isLoggedIn){
-//            //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
-//            <.div(
-//            <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-//            <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-//            <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))
-//
-//          } else {
-//            AddNewAgent(AddNewAgent.Props())
-//          }
-//        )
-//        <.div(HeaderCSS.Style.LoginInMenuItem)(
-//          AddNewAgent(AddNewAgent.Props())
-//        )
-        //     <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))
+        <.ul(^.id := "headerNavUl", ^.className:="nav navbar-nav")(
+          // build a list of menu items
+          for (item <- menuItems) yield {
+            <.li(^.key := item.idx, (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
+              props.ctl.link(item.location)(HeaderCSS.Style.headerNavA ," ", item.label(props))
+            )
+          }
+          //        <.div(HeaderCSS.Style.LoginInMenuItem)(
+          //          if (props.proxy.value.isLoggedIn){
+          //            //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
+          //            <.div(
+          //            <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
+          //            <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
+          //            <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))
+          //
+          //          } else {
+          //            AddNewAgent(AddNewAgent.Props())
+          //          }
+          //        )
+          //        <.div(HeaderCSS.Style.LoginInMenuItem)(
+          //          AddNewAgent(AddNewAgent.Props())
+          //        )
+          //     <.div(bss.navbarRight)(<.ul(bss.navbar)(<.li(P.ctl.link(DashboardLoc)(<.span(Icon.bell)))))
 
-        //        <.div(HeaderCSS.Style.LoginInMenuItem)(
-        //          <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-        //          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-        //         // ctl.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(ctl.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
-        //
-        //         //    AddNewAgent(AddNewAgent.Props(ctl))
-        //          AddNewAgent(AddNewAgent.Props()))
+          //        <.div(HeaderCSS.Style.LoginInMenuItem)(
+          //          <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
+          //          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
+          //         // ctl.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(ctl.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
+          //
+          //         //    AddNewAgent(AddNewAgent.Props(ctl))
+          //          AddNewAgent(AddNewAgent.Props()))
 
 
-      ),
+        ),
         <.div(HeaderCSS.Style.LoginInMenuItem)(
           if (props.proxy.value.isLoggedIn){
             //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
@@ -76,7 +78,9 @@ object MainMenu {
             )
 
           } else {
-            AddNewAgent(AddNewAgent.Props())
+            LGCircuit.connect(_.user)(proxy => AddNewAgent(AddNewAgent.Props(proxy)))
+//            <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> props.proxy.dispatch(LoginUser(props.proxy.value)))("test")
+
           }
         )
       )
