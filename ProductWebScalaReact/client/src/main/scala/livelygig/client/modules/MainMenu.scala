@@ -70,11 +70,13 @@ object MainMenu {
         ),
         <.div(HeaderCSS.Style.LoginInMenuItem)(
           if (props.proxy.value.isLoggedIn){
+            var model = props.proxy.value
             //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
             <.div(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-              <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
-              <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))
+              <.div(HeaderCSS.Style.displayInline) (model.name),
+              <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo,
+                ^.src := model.imgSrc))
             )
 
           } else {

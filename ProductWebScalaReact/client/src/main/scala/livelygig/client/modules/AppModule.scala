@@ -7,9 +7,6 @@
   import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS}
   import livelygig.client.modals._
   import scalacss.ScalaCssReact._
-  /**
-    * Created by bhagyashree.b on 1/27/2016.
-    */
 
   object AppModule {
     case class Props(ctl: RouterCtl[Loc], view :String)

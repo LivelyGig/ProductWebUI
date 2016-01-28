@@ -78,8 +78,8 @@ object AddNewAgent {
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
               // todo add functionality after login may involve dispatching of certain events
               window.localStorage.setItem("sessionURI",s.content.sessionURI.getOrElse(""))
-//              $.props >>= (_.proxy.dispatch(LoginUser(userModel)))
-              $.props >>= (_.proxy.dispatch(LoginUser(userModel)))
+              LGCircuit.dispatch(LoginUser(UserModel(email = userModel.email, name = s.content.jsonBlob.get("name"),
+              imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)))
 
               log.debug("login successful")
 //              window.location.href = "/#connections"
@@ -152,9 +152,9 @@ object AddNewAgent {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-//        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
-        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
-          HeaderCSS.Style.SignUpBtn)("Login"),
+        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
+//        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
+//          HeaderCSS.Style.SignUpBtn)("Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
         else if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
         else if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
