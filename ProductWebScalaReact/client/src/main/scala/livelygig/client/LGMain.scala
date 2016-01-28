@@ -41,7 +41,7 @@ object LGMain extends js.JSApp {
   case object ConnectionsLoc extends Loc
   case object LegalLoc extends Loc
   case object BiddingScreenLoc extends Loc
-
+  case object AppModuleLoc extends Loc
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
@@ -50,11 +50,12 @@ object LGMain extends js.JSApp {
       |staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       |staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       |staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
-      |staticRoute("#messages", MessagesLoc) ~> renderR(ctl => Messages.component(ctl))
-      |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => Projects.component(ctl))
-      |staticRoute("#contract", ContractsLoc) ~> renderR(ctl => Contract.component(ctl))
+      |staticRoute("#messages", MessagesLoc) ~> renderR(ctl =>  AppModule(AppModule.Props(ctl , "messages"))   )
+      |staticRoute("#projects", ProjectsLoc) ~> renderR(ctl =>  AppModule(AppModule.Props(ctl , "projects"))   )
+      |staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "contract")) )
       |staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
-      |staticRoute("#talent", TalentLoc) ~> renderR(ctl => Talent.component(ctl))
+      |staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "talent")))
+      //|staticRoute("#apploc", AppModuleLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "")))
       |staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
     //  |staticRoute("#contracts", ContractsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
       |staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
@@ -74,7 +75,6 @@ object LGMain extends js.JSApp {
             ),
             c.link(DashboardLoc)(HeaderCSS.Style.logoContainer,^.className := "navbar-header",<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
-
           <.div(^.id:="navi-collapse", ^.className := "collapse navbar-collapse")(
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
 //            MainMenu(MainMenu.Props(c, r.page)),

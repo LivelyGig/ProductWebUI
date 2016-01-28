@@ -34,11 +34,10 @@ object MessagesCSS {
 
     val newProjectbtn = style (
       float.left,
-     display.initial,
-    marginLeft(10.px),
-    marginTop(-4.px),
-    display.inlineBlock,
-    position.absolute
+      marginLeft(10.px),
+      marginTop(-4.px),
+      display.inlineBlock,
+      position.absolute
     )
   }
 }

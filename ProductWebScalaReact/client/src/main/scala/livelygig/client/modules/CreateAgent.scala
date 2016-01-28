@@ -114,13 +114,11 @@ object CreateAgent {
                   <.div(^.className:="col-md-8 col-sm-8 col-xs-8 col-md-offset-4 col-sm-offset-4 col-xs-offset-4")(
                     <.input(^.`type` := "checkbox", ^.checked:=S.userModel.createBTCWallet,
                       ^.onChange==>B.toggleBTCWallet ),
-                    <.h5(CreateAgentCSS.Style.displayInline)("creat BTC wallet")
+                    <.h5(CreateAgentCSS.Style.displayInline)("create BTC wallet")
                   )
                 )
-
               )
-            )
-            ,
+            ),
             <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
               <.div(^.className:="col-md-4 col-sm-4 col-xs 4 col-md-offset-5 col-sm-offset-5 col-xs-offset-5")(
                 //ctl.link(EmailValidationLoc)(^.className:="btn btn-default")("Create New Agent")

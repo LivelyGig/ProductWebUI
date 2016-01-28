@@ -37,7 +37,6 @@ object TermsOfServices {
     }
 
     def render(s: State, p: Props) = {
-
       val headerText = "Terms of Service"
       Modal(Modal.Props(
         // header contains a cancel button (X)
