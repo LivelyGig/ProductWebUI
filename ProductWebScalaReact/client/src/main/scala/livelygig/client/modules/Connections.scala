@@ -10,6 +10,7 @@ import diode.react._
 import diode.data.Pot
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.models.ConnectionsModel
+
 //import livelygig.client.services.{ConnectionsRootModel, RefreshConnections}
 import scalacss.ScalaCssReact._
 
@@ -80,18 +81,7 @@ object ConnectionList {
   private val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
-        //        <.li(
-        //          //         <.span( connection.content.jsonBlobModel.get.name)
-        //          if (!connection.name.isEmpty){
-        //            <.div(^.className:="col-md-12")(connection.name)
-        //          }
-        //          else {
-        //            <.span()
-        //          }
-        //
-        //        )
-
-        <.li(^.className := "media", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
+         <.li(^.className := "media", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           if (!connection.name.isEmpty) {
@@ -104,21 +94,17 @@ object ConnectionList {
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Profiles: ",
-              <.a()(^.href:="", "title".reactAttr :="Videographer")("Videographer"),
-              "| ",
-              <.a()(^.href:="", "title".reactAttr :="Web Developer")("Web Developer"),
-              "| ",
-              <.a()(^.href:="", "title".reactAttr :="Janal, LLC")("Janal, LLC"),
-              <.br(),
-              "Connection Source:", connection.connection.source
+              <.a()(^.href := "", "title".reactAttr := "Videographer")("Videographer"),
+              " | ",
+              <.a()(^.href := "", "title".reactAttr := "Web Developer")("Web Developer"),
+              " | ",
+              <.a()(^.href := "", "title".reactAttr := "Janal, LLC")("Janal, LLC")
             )
-
           ),
           <.div(^.className := "media-left")(
-            <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px")
-          ), //media-left
+            <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.alt := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label )
+          ),
           <.div(^.className := "media-body")(
-            //*"lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",*
             <.div(^.className := "col-md-12 col-sm-12")(
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Hide")(),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Favorite")(),
@@ -126,13 +112,10 @@ object ConnectionList {
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Introduce")(),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Message")()
             )
-          ) //media-body
+          )
         )
-
-
       }
       <.ul(^.className := "media-list")(p.connections map renderConnections)
-
     })
     .build
 
