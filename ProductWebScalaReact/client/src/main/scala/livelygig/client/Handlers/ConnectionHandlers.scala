@@ -27,11 +27,16 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) exten
       var model = Seq[ConnectionsModel]()
       connections.map(connection=>
         connection.content.name->Option(
-          JSON.parse(connection.content.jsonBlob).name))
+          JSON.parse(connection.content.jsonBlob).name)
+      )
+
+
+
       connections.foreach {
         connection =>
           val json = JSON.parse(connection.content.jsonBlob)
           val name = json.name.asInstanceOf[String]
+          val source = connection.content.connection.source
           val imgSrc = if(connection.content.jsonBlob.contains("imgSrc"))json.imgSrc.asInstanceOf[String] else ""
           model :+= new ConnectionsModel(connection.content.sessionURI,connection.content.connection,
             name, imgSrc)

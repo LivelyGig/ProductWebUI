@@ -12,14 +12,15 @@ import scalacss.ScalaCssReact._
 
 object ProjectSearch {
   // create the React component for Dashboard
+
   val component = ReactComponentB[RouterCtl[Loc]]("Projects")
+
     .render_P(ctl =>
 
       <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
         <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition)(
           <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
           <.div(DashBoardCSS.Style.slctHeaders)("Job Type:"),
-
           <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
             <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
           <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
@@ -32,8 +33,6 @@ object ProjectSearch {
           ),
           <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
             <.input(^.`type` := "checkbox"), " Contest"),
-
-
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
               <.div("Start Date")
