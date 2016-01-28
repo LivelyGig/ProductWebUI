@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.Handlers.LoginUser
 import livelygig.client.LGMain
 import livelygig.client.LGMain._
-import livelygig.client.modals.AddNewAgent
+import livelygig.client.modals.{UserPreferences, AddNewAgent}
 import livelygig.client.components._
 import livelygig.client.css.HeaderCSS
 import livelygig.client.models.UserModel
@@ -63,7 +63,7 @@ object MainMenu {
           //          <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
           //         // ctl.link(CreateAgentLoc)(HeaderCSS.Style.displayInline)(ctl.link(DashboardLoc)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))),
           //
-          //         //    AddNewAgent(AddNewAgent.Props(ctl))
+        //   AddNewAgent(AddNewAgent.Props(ctl))
           //          AddNewAgent(AddNewAgent.Props()))
 
 
@@ -73,8 +73,27 @@ object MainMenu {
             //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
             <.div(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-              <.div(HeaderCSS.Style.displayInline) ("Dale Steyn"),
+              <.div(HeaderCSS.Style.displayInline) (
+              <.div(^.className:="btn-group")(
+                <.button(^.className:="btn dropdown-toggle",HeaderCSS.Style.loginbtn,"data-toggle".reactAttr := "dropdown")("Dale Steyn ")(
+                ),
+                <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
+                  <.li()(<.a(^.href:="#")("Available for Chat")),
+                  <.li()(<.a(^.href:="#")("Invisible")),
+                  <.li(^.className:="divider")(),
+                  <.li()(<.a(^.href:="#")("Account")),
+                  <.li()(<.a(^.href:="#")("Profiles")),
+                  <.li()(<.a(^.href:="#")("Notifications")),
+                  <.li()(<.a(^.href:="#")("Payments")),
+                  <.li()(<.a(^.href:="#")(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences")),
+                  <.li(^.className:="divider")(),
+                  <.li()(<.a(^.href:="#")("Sign Out"))
+                )
+              )
+              ),
               <.li(HeaderCSS.Style.displayInline)(HeaderCSS.Style.logoContainer,<.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/profile.jpg"))
+
+
             )
 
           } else {

@@ -123,6 +123,23 @@ object HeaderCSS {
     val  floatBtn = style (
       float.right
     )
+    val loginbtn = style (
+      backgroundColor.transparent,
+      paddingLeft(0.px),
+      paddingRight(0.px),
+
+      &.hover (
+        backgroundColor.transparent,
+        paddingLeft(0.px),
+        paddingRight(0.px)
+      ),
+      &.active(
+        backgroundColor.transparent,
+        paddingLeft(0.px),
+        paddingRight(0.px)
+      )
+    )
+
     val rsltbtn = style (
        marginLeft( 30.px),
        marginTop( 10.px),
@@ -131,6 +148,12 @@ object HeaderCSS {
       backgroundColor (c"#ffa500"),
     color.rgba(51,51,51,1),
     fontSize(16.px)
+    )
+
+    val userpreferences = style (
+      border.none,
+    marginRight(15.px),
+    marginTop(-8.px)
     )
   }
 }

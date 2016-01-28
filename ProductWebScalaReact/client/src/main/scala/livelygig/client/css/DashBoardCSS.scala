@@ -376,5 +376,6 @@ object DashBoardCSS {
     val replyMarginTop = style (
      marginTop(20.px)
     )
+
   }
 }

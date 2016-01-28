@@ -7,9 +7,6 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS}
 import livelygig.client.modals._
 import scalacss.ScalaCssReact._
-/**
-  * Created by bhagyashree.b on 1/28/2016.
-  */
 
 object Presets {
   case class Props(ctl: RouterCtl[Loc], view :String)
@@ -45,12 +42,14 @@ object Presets {
                     <.button(HeaderCSS.Style.createNewProjectBtn, ^.className := "btn")("New Profile")()
                     //Invoice(Invoice.Props(ctl)),
                     <.div(MessagesCSS.Style.newProjectbtn)(
-                      UserPreferences(UserPreferences.Props(p.ctl))
+                    //  UserPreferences(UserPreferences.Props(p.ctl))
                       // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
                     )
                   } //talent
                   case "projects" => {
                     <.div(MessagesCSS.Style.newProjectbtn)(
+                      // ToDo: create a NewContest form.  Not needed before ~March 2016. Discuss with Ed or Navneet when ready.
+                      NewRecommendation(NewRecommendation.Props(p.ctl, "New Contest")),
                       NewProject(NewProject.Props(p.ctl)),
                       BiddingScreenModal(BiddingScreenModal.Props(p.ctl,"View/Edit Contract")),
                       UserSkills(UserSkills.Props(p.ctl)),
