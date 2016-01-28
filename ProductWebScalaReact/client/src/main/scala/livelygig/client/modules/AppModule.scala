@@ -4,7 +4,8 @@
   import japgolly.scalajs.react._
   import japgolly.scalajs.react.vdom.prefix_<^._
   import livelygig.client.LGMain.Loc
-  import livelygig.client.css.DashBoardCSS
+  import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS}
+  import livelygig.client.modals._
   import scalacss.ScalaCssReact._
   /**
     * Created by bhagyashree.b on 1/27/2016.
@@ -17,15 +18,14 @@
     def mounted(props: Props): Callback = Callback {
 
     }
-
     def render( p: Props) = {
            <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
             <.div()(
               p.view match {
-                case "talent"=> TalentPresets.component(p.ctl)
-                case "projects"=> ProjectPresets.component(p.ctl)
-                case  "contract" =>  ContractPresets.component(p.ctl)
-                case "messages"  => MessagesPresets.component(p.ctl)
+                case "talent"=>  Presets(Presets.Props(p.ctl,"talent"))
+                case "projects"=>  Presets(Presets.Props(p.ctl,"projects"))
+                case  "contract" =>   Presets(Presets.Props(p.ctl,"contract"))
+                case "messages"  =>  Presets(Presets.Props(p.ctl,"messages"))
               }
             ),
              <.div(DashBoardCSS.Style.splitContainer)(
@@ -43,7 +43,7 @@
                     p.view match {
                       case "talent"=> TalentResults.component(p.ctl)
                       case "projects"=> ProjectResults.component(p.ctl)
-                      case  "contract" =>  ContractResults.component(p.ctl)
+                      case "contract" =>  ContractResults.component(p.ctl)
                       case "messages"  => MessagesResults.component(p.ctl)
                     }
                   )
