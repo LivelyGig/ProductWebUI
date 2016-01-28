@@ -152,8 +152,7 @@ object AddNewAgent {
         else if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
         else if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
         else if (S.showConfirmAccountCreation) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
-        else
-        if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
+        else if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
         else if (S.showLoginFailed) LoginFailed(LoginFailed.Props(B.loginFailed))
         else if (S.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
         else if (S.showErrorModal) ErrorModal(ErrorModal.Props(B.serverError))

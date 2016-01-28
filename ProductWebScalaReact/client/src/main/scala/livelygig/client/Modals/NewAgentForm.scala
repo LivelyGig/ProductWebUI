@@ -25,7 +25,7 @@ object NewAgentForm {
   case class Props(submitHandler: (UserModel, Boolean,Boolean) => Callback)
   case class State(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false)
 
-  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
@@ -179,7 +179,6 @@ object NewAgentForm {
         scope.$.backend.hidecomponent
       }
     })
-
     .build
   def apply(props: Props) = component(props)
 }

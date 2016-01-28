@@ -54,7 +54,7 @@ object LoginForm {
 
 
     def render(s: State, p: Props) = {
-      // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
+           // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Login"
       Modal(Modal.Props(
         // header contains a cancel button (X)

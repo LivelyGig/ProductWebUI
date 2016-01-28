@@ -38,9 +38,8 @@ object TalentPresets {
             <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Profile")(),
             //Invoice(Invoice.Props(ctl)),
             <.div(MessagesCSS.Style.newProjectbtn)(
-            UserPreferences(UserPreferences.Props(ctl))
+              UserPreferences(UserPreferences.Props(ctl))
             )
-
            // PrivacyPolicyModal(PrivacyPolicyModal.Props(ctl))
           )
         )
