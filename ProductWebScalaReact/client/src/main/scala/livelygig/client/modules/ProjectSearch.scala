@@ -19,8 +19,7 @@ object ProjectSearch {
 
       <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
         <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition)(
-          <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
-          <.div(DashBoardCSS.Style.slctHeaders)("Job Type:"),
+          <.div(DashBoardCSS.Style.slctHeaders)("Job Type"),
           <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
             <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
           <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(

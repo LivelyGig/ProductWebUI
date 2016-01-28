@@ -32,8 +32,7 @@ object TalentSearch {
           <.div(^.id:="slctScrollContainer", DashBoardCSS.Style.slctContainer)(
             <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
 
-              <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
-              <.div(DashBoardCSS.Style.slctHeaders)("Profile Type:"),
+              <.div(DashBoardCSS.Style.slctHeaders)("Profile Type"),
               // ToDo: these checkboxes should have the equivalent of <label for="checkbox_id">, so the lable is clickable
 
               <.label(DashBoardCSS.Style.slctCheckboxesLabel)(

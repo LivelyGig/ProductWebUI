@@ -21,7 +21,6 @@ object MessagesSearch {
           <.div(^.id:="slctScrollContainer", DashBoardCSS.Style.slctContainer)(
             <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
 
-              <.div(DashBoardCSS.Style.slctHeaders)("Search Criteria"),
               <.div(^.className:="row")(
                 <.div(^.className:="col-md-12 col-sm-12 col-xs-12",MessagesCSS.Style.slctMessagesInputWidth)(
                   <.div("From Date")
