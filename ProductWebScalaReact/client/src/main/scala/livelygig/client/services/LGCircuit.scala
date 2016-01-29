@@ -9,7 +9,7 @@ import diode.data._
 import diode.util._
 import diode.react.ReactConnector
 import boopickle.Default._
-import livelygig.client.models.{UserModel, ConnectionsModel}
+import livelygig.client.models.{MessagesModel, UserModel, ConnectionsModel}
 import livelygig.shared.dtos.{ConnectionProfileResponse, ApiResponse}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.scalajs.js
@@ -21,11 +21,11 @@ import scala.scalajs.js.JSON
 
 
 
-case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel)
+case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: MessagesModel)
 
 object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
-  override protected var model = RootModel(Empty, UserModel("","",""))
+  override protected var model = RootModel(Empty, UserModel("","",""), MessagesModel(4))
   // combine all handlers into one
   override protected val actionHandler = combineHandlers(
     new ConnectionHandler(zoomRW(_.connections)((m, v) => m.copy(connections = v))),

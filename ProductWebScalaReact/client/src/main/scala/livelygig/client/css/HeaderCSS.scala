@@ -19,7 +19,7 @@ object HeaderCSS {
       marginBottom(0.px)
     )
     val headerNavA = style (
-      borderBottom(3.px, solid, transparent),
+      /*borderBottom(3.px, solid, transparent),*/
       color(c"#fff"),
       fontSize(1.2.em),
       letterSpacing(0.5.px),
@@ -46,7 +46,14 @@ object HeaderCSS {
       padding(10.px , 10.px)
     )
     val headerNavLi = style (
-      backgroundColor(c"#005256")
+      backgroundColor(c"#005256"),
+      borderBottom(3.px, solid, c"#67EAF2"),
+      color(c"#67EAF2"),
+      fontSize(1.2.em),
+      letterSpacing(0.5.px),
+      &.hover(
+        color(c"#67EAF2")
+      )
     )
     val imgLogo = style (
       borderRadius(50.%%),

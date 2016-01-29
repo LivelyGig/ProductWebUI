@@ -22,7 +22,7 @@ import scalacss.ScalaCssReact._
 
 object AddNewAgent {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(proxy: ModelProxy[UserModel])
+  case class Props()
 
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean= false, showAccountValidationSuccess : Boolean =false,
@@ -76,7 +76,6 @@ object AddNewAgent {
           case Success(s) =>
             log.debug(s"loginAPISuccessMsg: ${s.msgType}")
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
-              // todo add functionality after login may involve dispatching of certain events
               window.localStorage.setItem("sessionURI",s.content.sessionURI.getOrElse(""))
               LGCircuit.dispatch(LoginUser(UserModel(email = userModel.email, name = s.content.jsonBlob.get("name"),
               imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)))
