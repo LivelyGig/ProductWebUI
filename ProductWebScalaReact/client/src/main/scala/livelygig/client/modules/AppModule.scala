@@ -30,10 +30,10 @@
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     p.view match {
-                      case "talent"=> TalentSearch.component(p.ctl)
-                      case "projects"=> ProjectSearch.component(p.ctl)
-                      case  "contract" =>  ContractSearch.component(p.ctl)
-                      case "messages"  => MessagesSearch.component(p.ctl)
+                      case "talent"=> Searches(Searches.Props(p.ctl,"talent"))
+                      case "projects"=> Searches(Searches.Props(p.ctl,"projects"))
+                      case  "contract" =>  Searches(Searches.Props(p.ctl,"contract"))
+                      case "messages"  => Searches(Searches.Props(p.ctl,"messages"))
                     }
                   ),
                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(

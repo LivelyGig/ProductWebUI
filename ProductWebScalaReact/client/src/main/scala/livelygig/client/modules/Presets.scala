@@ -18,7 +18,7 @@ object Presets {
     def render( p: Props) = {
           <.div(^.id:="middelNaviContainer",HeaderCSS.Style.middelNaviContainer)(
             <.div(^.className :="row")(
-              <.div(^.className:="col-md-10 col-sm-10 col-xs-10")(
+              <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
                 <.div(^.className:="btn-group")(
                   <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                     <.span(^.className:="caret")
