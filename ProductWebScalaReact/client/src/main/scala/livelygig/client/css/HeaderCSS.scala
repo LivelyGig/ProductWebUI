@@ -66,7 +66,7 @@ object HeaderCSS {
     val middelNaviContainer =style(
       marginTop(0.px),
       height(62.px),
-      paddingLeft(7.%%),
+      paddingLeft(5.px),
       paddingRight(7.%%),
       backgroundColor(c"#00767C"),
 

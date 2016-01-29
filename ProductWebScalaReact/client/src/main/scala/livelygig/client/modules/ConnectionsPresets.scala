@@ -15,22 +15,19 @@ object ConnectionsPresets {
         <.div(^.className :="row")(
           <.div(^.className:="col-md-10 col-sm-10 col-xs-10")(
             <.div(^.className:="btn-group")(
-              <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
+              <.button(HeaderCSS.Style.projectCreateBtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("All ")(
                 <.span(^.className:="caret")
               ),
               <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className:="dropdown-menu")(
-                <.li()(<.a(^.href:="#")("Recommended Matches")),
+                <.li()(<.a(^.href:="#")("All")),
+                <.li()(<.a(^.href:="#")("Online")),
                 <.li()(<.a(^.href:="#")("Favorited")),
-                <.li()(<.a(^.href:="#")("Available")),
-                <.li()(<.a(^.href:="#")("Active Unavailable")),
-                <.li()(<.a(^.href:="#")("Inactive")),
                 <.li()(<.a(^.href:="#")("Hidden")),
                 <.li(^.className:="divider")(),
-                <.li()(<.a(^.href:="#")("Videographers w/5+ yrs experience")),
                 <.li()(<.a(^.href:="#")("Customize..."))
               )
-            )
-            //  <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Project")(),
+            ),
+            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className:="btn")("New Connection")()
             //NewProject(NewProject.Props(ctl))
 
           )

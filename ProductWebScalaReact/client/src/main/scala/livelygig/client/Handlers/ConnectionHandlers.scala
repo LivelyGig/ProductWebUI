@@ -16,17 +16,18 @@ import scala.scalajs.js.JSON
 // Actions
 case object RefreshConnections
 
-case class UpdateAllConnections( connectionsResponse: Seq[ApiResponse[ConnectionProfileResponse]] )
+case class UpdateAllConnections(connectionsResponse: Seq[ApiResponse[ConnectionProfileResponse]])
 
-case class UpdateConnection( connection: ConnectionProfileResponse)
+case class UpdateConnection(connection: ConnectionProfileResponse)
+
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case RefreshConnections =>
       effectOnly(Effect(CoreApi.sessionPing().map(UpdateAllConnections)))
     case UpdateAllConnections(connections) =>
       var model = Seq[ConnectionsModel]()
-      connections.map(connection=>
-        connection.content.name->Option(
+      connections.map(connection =>
+        connection.content.name -> Option(
           JSON.parse(connection.content.jsonBlob).name)
       )
 
@@ -37,12 +38,13 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) exten
           val json = JSON.parse(connection.content.jsonBlob)
           val name = json.name.asInstanceOf[String]
           val source = connection.content.connection.source
-          val imgSrc = if(connection.content.jsonBlob.contains("imgSrc"))json.imgSrc.asInstanceOf[String] else ""
-          model :+= new ConnectionsModel(connection.content.sessionURI,connection.content.connection,
+          val target = connection.content.connection.target
+          val label = connection.content.connection.label
+          val imgSrc = if (connection.content.jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
+          model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
             name, imgSrc)
-
       }
-      model.foreach(temp=>println(temp.name))
+      model.foreach(temp => println(temp.name))
       updated(Ready(ConnectionsRootModel(model)))
   }
 }
