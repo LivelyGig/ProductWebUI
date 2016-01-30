@@ -24,21 +24,24 @@ object MainMenu {
 
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
-  private def buildMessagesMenu() : ReactElement = {
-    <.span(
-      <.span("Messages "),
-      <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, 4)
-    )
+  private def buildMessagesMenu(mItem: String, counter: Int) : ReactElement = {
+    var retRE = <.span(<.span(mItem))
+    if (counter > 0) {
+    retRE = <.span(
+      <.span(mItem),
+      <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
+    ) }
+    return retRE
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => "Dashboard", DashboardLoc),
-    MenuItem(2, _ => buildMessagesMenu(), MessagesLoc),
-    MenuItem(3, _ => "Jobs", ProjectsLoc),
-    MenuItem(4, _ => "Offerings", OfferingsLoc),
-    MenuItem(5, _ => "Profiles", TalentLoc),
-    MenuItem(6, _ => "Contracts", ContractsLoc),
-    MenuItem(7, _ => "Connections", ConnectionsLoc)
+    MenuItem(1, _ => buildMessagesMenu("Dashboard",0), DashboardLoc),
+    MenuItem(2, _ => buildMessagesMenu("Message", 6), MessagesLoc),
+    MenuItem(3, _ => buildMessagesMenu("Jobs",3), ProjectsLoc),
+    MenuItem(4, _ => buildMessagesMenu("Offerings",0), OfferingsLoc),
+    MenuItem(5, _ => buildMessagesMenu("Profiles",0), TalentLoc),
+    MenuItem(6, _ => buildMessagesMenu("Contracts",0), ContractsLoc),
+    MenuItem(7, _ => buildMessagesMenu("Connections",0), ConnectionsLoc)
     //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
