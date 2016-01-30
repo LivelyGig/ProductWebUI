@@ -26,7 +26,7 @@ import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import livelygig.client.modals.NewMessage
+import livelygig.client.modals.{BiddingScreenModal, NewMessage}
 
 import scalacss.ScalaCssReact._
 
@@ -93,7 +93,7 @@ object ContractResults {
                     <.div(^.className := "col-md-12 col-sm-12")(
                       <.div(DashBoardCSS.Style.profileNameHolder)("Status: Bidding 11:20am 12/08/2015"),
                       <.br(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Manage")(),
+                      BiddingScreenModal(BiddingScreenModal.Props(ctl, "Manage")),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Reject")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Counteroffer")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Accept")(),
