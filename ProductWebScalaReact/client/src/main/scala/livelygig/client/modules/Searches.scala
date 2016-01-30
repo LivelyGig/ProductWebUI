@@ -66,6 +66,43 @@ object Searches {
             )
           )
         } //talent
+        case "offerings" => {
+          <.div()(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+            ),
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+                <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                <.br(),
+                <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.input(^.`type` := "checkbox"), " Favorited"),
+                <.br(),
+                <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.input(^.`type` := "checkbox"), " Include Hidden"),
+                <.div(^.paddingLeft := "15px")(
+                  <.div(^.className := "row")(
+                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
+                      <.div("Added Before")
+                    ),
+                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                      <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    )
+                  ),
+                  <.div(^.className := "row")(
+                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
+                      <.div("Added After")
+                    ),
+                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                      <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    )
+                  )
+                )
+              )
+            )
+          )
+        }
         case "projects" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(

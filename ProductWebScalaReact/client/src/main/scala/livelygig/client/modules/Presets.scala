@@ -66,6 +66,25 @@ object Presets {
                     NewProject(NewProject.Props(p.ctl))
                   )
                 )
+            } //project
+              case "offerings" => {
+                <.div()(
+                  <.div(^.className := "btn-group")(
+                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                      <.span(^.className := "caret")
+                    ),
+                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                      <.li()(<.a(^.href := "#")("Recommended to Me")),
+                      <.li()(<.a(^.href := "#")("Favorited")),
+                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li(^.className := "divider")(),
+                      <.li()(<.a(^.href := "#")("Customize..."))
+                    )
+                  ),
+                  <.div(MessagesCSS.Style.newProjectbtn)(
+                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Offering"))
+                  )
+                )
               } //project
               case "contract" => {
                 <.div()(

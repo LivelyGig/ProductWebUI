@@ -59,7 +59,7 @@ object LGMain extends js.JSApp {
 
   case object BiddingScreenLoc extends Loc
 
-  case object AppModuleLoc extends Loc
+  // case object AppModuleLoc extends Loc
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
@@ -74,8 +74,7 @@ object LGMain extends js.JSApp {
       | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "talent")))
       //|staticRoute("#apploc", AppModuleLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "")))
-      | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
-      //  |staticRoute("#contracts", ContractsLoc) ~> renderR(ctl => <.div(^.id:="mainContainer", ^.className:="DashBoardCSS_Style-mainContainerDiv")(""))
+      | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "offerings")))
       | staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))

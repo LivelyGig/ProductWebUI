@@ -26,6 +26,7 @@ object AppModule {
             case "projects" => Presets(Presets.Props(p.ctl, "projects"))
             case "contract" => Presets(Presets.Props(p.ctl, "contract"))
             case "messages" => Presets(Presets.Props(p.ctl, "messages"))
+            case "offerings" => Presets(Presets.Props(p.ctl, "offerings"))
           }
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
@@ -38,6 +39,7 @@ object AppModule {
                   case "projects" => Searches(Searches.Props(p.ctl, "projects"))
                   case "contract" => Searches(Searches.Props(p.ctl, "contract"))
                   case "messages" => Searches(Searches.Props(p.ctl, "messages"))
+                  case "offerings" => Searches(Searches.Props(p.ctl, "offerings"))
                 }
               ),
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
@@ -46,6 +48,7 @@ object AppModule {
                   case "projects" => ProjectResults.component(p.ctl)
                   case "contract" => ContractResults.component(p.ctl)
                   case "messages" => MessagesResults.component(p.ctl)
+                  case "offerings" => OfferingResults.component(p.ctl)
                 }
               )
             //)
