@@ -14,48 +14,60 @@ object ConnectionsSearch {
   // create the React component for Dashboard
   val component = ReactComponentB[Unit]("Connections")
     .render_P(ctl =>
-      // todo: Need to parameterize on type (e.g. Talent, Project) and preset (e.g. Recommended Mathces)
-      "talentPreset1" match {
-        case "talentPreset1" =>
-          <.div(^.id:="slctScrollContainer", DashBoardCSS.Style.slctContainer)(
-            <.div(LftcontainerCSS.Style.fontsize12em,LftcontainerCSS.Style.slctsearchpanelabelposition)(
-              <.div(DashBoardCSS.Style.slctHeaders)("Connections"),
-              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-                //<input type="text" value="Amsterdam,Washington" data-role="tagsinput"
-                //                <.input (^.`type`:="text" , "data-role".reactAttr:="tagsinput")
-              ),
-
-              <.div(DashBoardCSS.Style.slctHeaders)("Search for Connection"),
-                <.div(^.className:="row")(
-                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",ProjectCSS.Style.slctProjectInputWidth)(
-                  <.div("Keywords")
-                  //                        <.span(^.className:="checkbox-lbl")
+      <.div()(
+        <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+          <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+        ),
+        <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+          <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(DashBoardCSS.Style.slctHeaders)("Status"),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " Online"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " Recommended by Me"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " Recommended to Me"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " with Talent Profile"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " with Employer Profile"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " with Moderator Profile"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " Favorited"),
+            <.br(),
+            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+              <.input(^.`type` := "checkbox"), " Include Hidden"),
+            <.div(^.paddingLeft:="15px")(
+              <.div(^.className := "row")(
+                <.div(ProjectCSS.Style.slctProjectInputWidth)(
+                  <.div("Added Before")
                 ),
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
-                ))
-,
-
-              <.div(^.className:="row")(
-                <.div(^.className:="col-md-12 col-sm-12 col-xs-12",ProjectCSS.Style.slctProjectInputWidth)(
-                  <.div("Job title")
-                  //                        <.span(^.className:="checkbox-lbl")
+                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                )
+              ),
+              <.div(^.className := "row")(
+                <.div(ProjectCSS.Style.slctProjectInputWidth)(
+                  <.div("Added After")
                 ),
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
-                ))
-,
+                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                )
+              )
+            )
+          )
+        )
+      )
+    )
 
-              <.div(DashBoardCSS.Style.slctHeaders)("Search by Name"),
-              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-              ),
 
-              <.div(DashBoardCSS.Style.slctHeaders)("Search by Rating"),
-              <.div (LftcontainerCSS.Style.slctleftcontentdiv ,LftcontainerCSS.Style.resizable,^.id:="resizablecontainerskills")(
-              ),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.floatRightbtn,"Search")
-              ))
-      })
     .componentDidMount(scope => Callback {
 
     })

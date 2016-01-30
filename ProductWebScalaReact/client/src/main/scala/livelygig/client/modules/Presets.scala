@@ -20,8 +20,9 @@ object Presets {
 
     def render(p: Props) = {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+        <.div(/*^.className := "row"*/)(
+          <.div(^.className := "col-lg-1")(),
+          <.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
             p.view match {
               case "talent" => {
                 <.div()(
@@ -106,9 +107,11 @@ object Presets {
                 )
               }
             } //main switch
-          )
+          ),
+          <.div(^.className := "col-lg-1")()
         )
       )
+
     }
   }
 
