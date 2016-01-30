@@ -12,6 +12,7 @@ import diode.react._
 import diode.data.Pot
 import livelygig.client.components.Icon
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
+import livelygig.client.modals.NewRecommendation
 import livelygig.client.models.ConnectionsModel
 
 //import livelygig.client.services.{ConnectionsRootModel, RefreshConnections}
@@ -155,8 +156,12 @@ object ConnectionList {
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Hide")(),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Favorite")(),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Recommend")(),
+              // ToDo: Above should use something like:
+              // NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Introduce")(),
               <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Message")()
+              // ToDo: Above should use something like:
+              // NewMessage(NewMessage.Props(ctl, "Message")
             )
           )
         )
