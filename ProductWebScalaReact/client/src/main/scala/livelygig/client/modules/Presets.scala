@@ -101,7 +101,10 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract"))
+                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract")),
+                    Accept(Accept.Props(p.ctl, "Accept")),
+                    <.button(HeaderCSS.Style.showDisputeBtn, ^.className := "btn")("Show Dispute")()
+
                   )
                 )
               }

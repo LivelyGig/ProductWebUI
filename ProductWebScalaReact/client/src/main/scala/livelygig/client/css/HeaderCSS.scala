@@ -162,5 +162,13 @@ object HeaderCSS {
     marginRight(15.px),
     marginTop(-8.px)
     )
+    val showDisputeBtn=style(
+      backgroundColor(c"#FFA500"),
+      color(rgba(51,51,51,1)),
+      fontSize(16.px),
+      marginLeft(15.px),
+      marginTop(10.px),
+      marginRight(15.px)
+    )
   }
 }

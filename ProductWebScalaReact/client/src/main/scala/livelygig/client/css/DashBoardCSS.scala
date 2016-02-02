@@ -384,6 +384,10 @@ object DashBoardCSS {
     val replyMarginTop = style(
       marginTop(20.px)
     )
+    val footPreferences = style (
+      padding(22.px) ,
+      backgroundColor(c"#00767c")
+    )
 
   }
 
