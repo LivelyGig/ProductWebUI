@@ -67,7 +67,7 @@ object LoginForm {
 
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with LivelyGig credentials"),
-                <.input(^.tpe := "text", bss.formControl, /* DashBoardCSS.Style.inputModalMargin, */ ^.id := "Name",
+                <.input(^.tpe := "text", bss.formControl,  DashBoardCSS.Style.inputModalMargin,  ^.id := "Name",
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),

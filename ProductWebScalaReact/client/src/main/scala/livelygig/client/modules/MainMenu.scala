@@ -36,8 +36,8 @@ object MainMenu {
 
   private val menuItems = Seq(
     MenuItem(1, _ => buildMessagesMenu("Dashboard",0), DashboardLoc),
-    MenuItem(2, _ => buildMessagesMenu("Message", 6), MessagesLoc),
-    MenuItem(3, _ => buildMessagesMenu("Jobs",3), ProjectsLoc),
+    MenuItem(2, _ => buildMessagesMenu("Message ", 6), MessagesLoc),
+    MenuItem(3, _ => buildMessagesMenu("Jobs ",3), ProjectsLoc),
     MenuItem(4, _ => buildMessagesMenu("Offerings",0), OfferingsLoc),
     MenuItem(5, _ => buildMessagesMenu("Profiles",0), TalentLoc),
     MenuItem(6, _ => buildMessagesMenu("Contracts",0), ContractsLoc),
@@ -91,7 +91,7 @@ object MainMenu {
                     <.div(^.className:="modal-dialog",DashBoardCSS.Style.verticalAlignCenter)(
                       <.div(^.className:="modal-content",DashBoardCSS.Style.modalBorderRadius)(
                         <.div(^.className:="modal-header",^.id:= "modalheader" , DashBoardCSS.Style.modalHeaderPadding)(
-                          <.span(<.button(^.tpe := "button", bss.close,/* ^.onClick --> hide,*/ Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
+                          <.span(<.button(^.tpe := "button", bss.close,/* ^.onClick --> hide,*/  "data-dismiss".reactAttr:="modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
                         ),
                         <.div(^.className:="modal-body",DashBoardCSS.Style.modalBodyPadding)(
                           <.h2("hello")

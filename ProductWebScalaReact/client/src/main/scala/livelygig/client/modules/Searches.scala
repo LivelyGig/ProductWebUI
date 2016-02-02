@@ -6,6 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.css._
 import scalacss.ScalaCssReact._
+//import org.querki.facades.bootstrap.datepicker._
 
 object Searches {
 
@@ -112,6 +113,10 @@ object Searches {
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                 <.div(DashBoardCSS.Style.slctHeaders)("Job Type"),
                 <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                  <.script( ^.`type` := "text/javascript",
+//
+//
+//                  ),
                   <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
                 <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                   <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
