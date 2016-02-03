@@ -20,8 +20,9 @@ object Presets {
 
     def render(p: Props) = {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+        <.div(/*^.className := "row"*/)(
+          <.div(^.className := "col-lg-1")(),
+          <.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
             p.view match {
               case "talent" => {
                 <.div()(
@@ -65,6 +66,25 @@ object Presets {
                     NewProject(NewProject.Props(p.ctl))
                   )
                 )
+            } //project
+              case "offerings" => {
+                <.div()(
+                  <.div(^.className := "btn-group")(
+                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                      <.span(^.className := "caret")
+                    ),
+                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                      <.li()(<.a(^.href := "#")("Recommended to Me")),
+                      <.li()(<.a(^.href := "#")("Favorited")),
+                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li(^.className := "divider")(),
+                      <.li()(<.a(^.href := "#")("Customize..."))
+                    )
+                  ),
+                  <.div(MessagesCSS.Style.newProjectbtn)(
+                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Offering"))
+                  )
+                )
               } //project
               case "contract" => {
                 <.div()(
@@ -81,7 +101,10 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract"))
+                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract")),
+                    Accept(Accept.Props(p.ctl, "Accept")),
+                    <.button(HeaderCSS.Style.showDisputeBtn, ^.className := "btn")("Show Dispute")()
+
                   )
                 )
               }
@@ -106,9 +129,11 @@ object Presets {
                 )
               }
             } //main switch
-          )
+          ),
+          <.div(^.className := "col-lg-1")()
         )
       )
+
     }
   }
 

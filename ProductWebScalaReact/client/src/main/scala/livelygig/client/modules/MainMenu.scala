@@ -10,7 +10,7 @@ import livelygig.client.LGMain._
 import livelygig.client.components.Bootstrap.CommonStyle
 import livelygig.client.modals.{UserPreferences, AddNewAgent}
 import livelygig.client.components._
-import livelygig.client.css.HeaderCSS
+import livelygig.client.css.{DashBoardCSS, HeaderCSS}
 import livelygig.client.models.UserModel
 import livelygig.client.services.LGCircuit
 
@@ -36,8 +36,8 @@ object MainMenu {
 
   private val menuItems = Seq(
     MenuItem(1, _ => buildMessagesMenu("Dashboard",0), DashboardLoc),
-    MenuItem(2, _ => buildMessagesMenu("Message", 6), MessagesLoc),
-    MenuItem(3, _ => buildMessagesMenu("Jobs",3), ProjectsLoc),
+    MenuItem(2, _ => buildMessagesMenu("Message ", 6), MessagesLoc),
+    MenuItem(3, _ => buildMessagesMenu("Jobs ",3), ProjectsLoc),
     MenuItem(4, _ => buildMessagesMenu("Offerings",0), OfferingsLoc),
     MenuItem(5, _ => buildMessagesMenu("Profiles",0), TalentLoc),
     MenuItem(6, _ => buildMessagesMenu("Contracts",0), ContractsLoc),
@@ -80,10 +80,25 @@ object MainMenu {
                     <.li()(<.a(^.href := "#")("Profiles")),
                     <.li()(<.a(^.href := "#")("Notifications")),
                     <.li()(<.a(^.href := "#")("Payments")),
-                    <.li()(<.a(^.href := "#")(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences")),
+                    <.li()(<.a("data-toggle".reactAttr := "modal","data-target".reactAttr:="#myModal","aria-haspopup".reactAttr :="true"/*,^.href := "#"*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
+                    )),
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.href := "#")("Sign Out"))
                   )
+                ),
+                <.div(^.className:="modal fade", ^.id:="myModal",^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1 )(
+                  <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
+                    <.div(^.className:="modal-dialog",DashBoardCSS.Style.verticalAlignCenter)(
+                      <.div(^.className:="modal-content",DashBoardCSS.Style.modalBorderRadius)(
+                        <.div(^.className:="modal-header",^.id:= "modalheader" , DashBoardCSS.Style.modalHeaderPadding)(
+                          <.span(<.button(^.tpe := "button", bss.close,/* ^.onClick --> hide,*/  "data-dismiss".reactAttr:="modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
+                        ),
+                        <.div(^.className:="modal-body",DashBoardCSS.Style.modalBodyPadding)(
+                          <.h2("hello")
+                        ),
+                        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.footPreferences)()
+                      )
+                    ))
                 )
               )
             )

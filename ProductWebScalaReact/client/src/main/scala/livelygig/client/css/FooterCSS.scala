@@ -7,9 +7,9 @@ object FooterCSS {
     val footerContainer = style (
       borderTop(2.px, solid, c"#67EAF2"),
       backgroundColor(c"#005256"),
-      minHeight(52.px),
-      paddingLeft(7.%%),
-      paddingRight(7.%%)
+      minHeight(52.px)
+      // paddingLeft(7.%%),
+      // paddingRight(7.%%)
     )
     val footerNavA = style (
       color(c"#fff"),

@@ -14,6 +14,8 @@ object LftcontainerCSS {
       paddingTop(15.px),
       paddingBottom(2.px),
       fontWeight.bold,
+      overflowY.scroll,  //EE tmp
+      overflowX.hidden,
       media.maxWidth(1250.px) -(
         width(200.px))
     )
