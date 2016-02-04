@@ -57,6 +57,16 @@ object ConnectionsSearch {
                 <.div(ProjectCSS.Style.slctProjectInputWidth)(
                   <.div("Added After")
                 ),
+                // ToDo: this should be a date picker
+                <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                )
+              ),
+              <.div(^.className := "row")(
+                <.div(ProjectCSS.Style.slctProjectInputWidth)(
+                  <.div("Groups")
+                ),
+                // ToDo: this should be a date picker
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                   <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
                 )

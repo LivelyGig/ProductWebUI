@@ -291,9 +291,9 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Apply")(),
 
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                                     // NewMessage(NewMessage.Props(RouterCtl[Loc],"Message")),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -372,7 +372,8 @@ object BiddingScreenModalForm {
                 ),
                 <.div()(
                   <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept")(),
+                    // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept Deliverables")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Dispute")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -428,7 +429,7 @@ object BiddingScreenModalForm {
                     <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
                     <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(),
                     <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn" )("Send Feedback")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                     )
