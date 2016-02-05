@@ -57,7 +57,7 @@ object Accept {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
         Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
-        if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Payout Transaction"))
+        if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]
       )
@@ -104,8 +104,8 @@ object PayoutTransaction {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          <.div()("Accept All Deliverables?", " ... details of payout transaction"),
+          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")
         )
       )
     }

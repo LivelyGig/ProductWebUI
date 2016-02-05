@@ -146,6 +146,13 @@ object ConnectionList {
               <.a()(^.href := "", "title".reactAttr := "Web Developer")("Web Developer"),
               " | ",
               <.a()(^.href := "", "title".reactAttr := "Janal, LLC")("Janal, LLC")
+            ),
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("My Groups: ",
+              <.a()(^.href := "", "title".reactAttr := "Film Industry")("Film Industry"),
+              ", ",
+              <.a()(^.href := "", "title".reactAttr := "Full Stack Developers")("Full Stack Developers"),
+              ", ",
+              <.a()(^.href := "", "title".reactAttr := "...")(",,,")
             )
           ),
           <.div(^.className := "media-left")(

@@ -16,7 +16,7 @@ object ConnectionsPresets {
           <.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
             <.div()(
               <.div(^.className := "btn-group")(
-                <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
                   <.span(^.className := "caret")
                 ),
                 <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
