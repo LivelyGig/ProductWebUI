@@ -59,6 +59,8 @@ object LGMain extends js.JSApp {
 
   case object BiddingScreenLoc extends Loc
 
+  case object EventListenerLoc extends Loc
+
   // case object AppModuleLoc extends Loc
 
   // configure the router
@@ -69,6 +71,7 @@ object LGMain extends js.JSApp {
       | staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       | staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
       | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "messages")))
+      | staticRoute("#event", EventListenerLoc) ~> renderR(ctl => EventListnerBtn(EventListnerBtn.Props(ctl)))
       | staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "projects")))
       | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "contract")))
       | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))

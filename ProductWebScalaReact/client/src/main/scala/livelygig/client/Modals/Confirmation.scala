@@ -12,41 +12,41 @@ import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object NewMessage {
+object Confirmation {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-//  @js.native
-//  trait BootstrapJQuery extends JQueryBtn {
-//    def show(action: String): BootstrapJQuery = js.native
-//    def show(options: js.Any): BootstrapJQuery = js.native
-//  }
+  //  @js.native
+  //  trait BootstrapJQuery extends JQueryBtn {
+  //    def show(action: String): BootstrapJQuery = js.native
+  //    def show(options: js.Any): BootstrapJQuery = js.native
+  //  }
 
-//  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
+  //  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
 
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
-  case class State(showNewMessageForm: Boolean = false)
+  case class State(showConfirmationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
-//    def displayBtn = Callback {
-//      jQuery(t.getDOMNode()).show("hide")
-//    }
+    //    def displayBtn = Callback {
+    //      jQuery(t.getDOMNode()).show("hide")
+    //    }
 
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showNewMessageForm = true))
+      t.modState(s => s.copy(showConfirmationForm = true))
     }
-    def addNewMessageForm() : Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
+    def addConfirmationForm() : Callback = {
+      t.modState(s => s.copy(showConfirmationForm = true))
     }
-    def addMessage(postMessage: Boolean = false): Callback = {
+    def addConfirmation(postConfirmation: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postMessage){
-        t.modState(s => s.copy(showNewMessageForm = false))
+      if(!postConfirmation){
+        t.modState(s => s.copy(showConfirmationForm = false))
       } else {
-        t.modState(s => s.copy(showNewMessageForm = true))
+        t.modState(s => s.copy(showConfirmationForm = true))
       }
     }
   }
@@ -56,8 +56,8 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
-        if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
+        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        if (S.showConfirmationForm) ConfirmationForm(ConfirmationForm.Props(B.addConfirmation, "New Message"))
         else
           Seq.empty[ReactElement]
       )
@@ -68,11 +68,11 @@ object NewMessage {
   def apply(props: Props) = component(props)
 }
 
-object PostNewMessage {
+object ConfirmationForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postMessage: Boolean = false)
+  case class State(postConfirmation: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -88,13 +88,13 @@ object PostNewMessage {
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postMessage = true))
+      t.modState(s => s.copy(postConfirmation = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postMessage)
-      props.submitHandler(state.postMessage)
+      println(state.postConfirmation)
+      props.submitHandler(state.postConfirmation)
     }
 
     def render(s: State, p: Props) = {
@@ -106,31 +106,7 @@ object PostNewMessage {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)(""))
-          ),//main row
-          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-            <.div(DashBoardCSS.Style.marginTop10px)(
-            ),
-            <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
-            ),
-            <.div()(
-              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
-            ),
-            <.div()(
-              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.placeholder:="Subject")
-            ),
-            <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop , ^.placeholder:="Enter your message here:",^.lineHeight:= 6)
-            )
-          ),
-          <.div()(
-              <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ),
+
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
         )
       )
@@ -140,9 +116,9 @@ object PostNewMessage {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
-         if(scope.currentState.postMessage){
-           scope.$.backend.hideModal
-         }
+      if(scope.currentState.postConfirmation){
+        scope.$.backend.hideModal
+      }
     })
     .build
   def apply(props: Props) = component(props)

@@ -126,6 +126,12 @@ object NewRecommendationForm {
             ),
             <.div()(
               <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+            ),
+            <.div(^.className:="row")(
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Reference to "))
+            ),
+            <.div()(
+              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth,^.placeholder:="Job/Post:")
             )
           ),
           <.div()(

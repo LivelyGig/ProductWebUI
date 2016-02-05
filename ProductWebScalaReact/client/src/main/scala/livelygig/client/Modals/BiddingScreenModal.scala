@@ -22,7 +22,7 @@ object BiddingScreenModal {
 
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
-  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false)
+  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -36,12 +36,15 @@ object BiddingScreenModal {
       t.modState(s => s.copy(showBiddingScreen = true))
     }
 
-    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false): Callback = {
+    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false,  postConfirmation: Boolean = false): Callback = {
       log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
       } else if (postMessage) {
         t.modState(s => s.copy(showBiddingScreen = false, showMessage = true))
+      }
+      else if (postConfirmation) {
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =true ))
       }
       else {
         t.modState(s => s.copy(showBiddingScreen = false))
@@ -49,7 +52,11 @@ object BiddingScreenModal {
     }
 
     def hideMessage(showMessage: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
+    }
+
+    def hideConfirmation(showConfirmation: Boolean = false): Callback = {
+      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showBiddingScreen = true))
     }
   }
 
@@ -62,6 +69,7 @@ object BiddingScreenModal {
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), P.buttonName),
         if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
+        else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))
         else
           Seq.empty[ReactElement]
       )
@@ -77,9 +85,9 @@ object BiddingScreenModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (Boolean, Boolean,Boolean) => Callback)
 
-  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false)
+  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
@@ -101,6 +109,10 @@ object BiddingScreenModalForm {
       t.modState(s => s.copy(postMessage = true))
     }
 
+    def confirmationForm(e: ReactEventI) = {
+      t.modState(s => s.copy(postConfirmation = true))
+    }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(postBiddingScreen = false))
@@ -109,7 +121,7 @@ object BiddingScreenModalForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postBiddingScreen)
-      props.submitHandler(state.postBiddingScreen, state.postMessage)
+      props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation)
     }
 
     def render(s: State, p: Props) = {
@@ -289,9 +301,9 @@ object BiddingScreenModalForm {
                                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                                   <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
                                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Apply")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn" , ^.onClick==>confirmationForm )("Apply")(),
 
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>confirmationForm )("Accept")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
@@ -449,7 +461,7 @@ object BiddingScreenModalForm {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
-      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage) {
+      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage || scope.currentState.postConfirmation) {
         scope.$.backend.hidemodal
       }
     })

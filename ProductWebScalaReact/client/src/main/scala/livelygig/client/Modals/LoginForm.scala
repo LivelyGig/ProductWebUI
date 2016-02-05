@@ -90,7 +90,6 @@ object LoginForm {
               )
             ),
             // right
-
             <.div(^.className := "col-md-5 col-sm-5 col-xs-5", ^.borderLeft := "solid")(
               <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
               // example, e.g. from https://www.import.io
@@ -98,9 +97,7 @@ object LoginForm {
             )
           )
         ),
-
-
-        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
+       <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
       )
 
     }
