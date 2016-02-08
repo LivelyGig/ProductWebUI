@@ -24,8 +24,8 @@ trait JQuery extends js.Object {
   def off(events: String): JQuery = js.native
 }
 
-@js.native
-trait JQueryBtn extends js.Object {
-  def on(events: String): JQuery = js.native
-  def off(events: String): JQuery = js.native
-}
+//@js.native
+//trait JQueryBtn extends js.Object {
+//  def on(events: String): JQuery = js.native
+//  def off(events: String): JQuery = js.native
+//}
