@@ -61,7 +61,7 @@ object NewRecommendation {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons" ),P.buttonName),
         if (S.showNewRecommendationForm) NewRecommendationForm(NewRecommendationForm.Props(B.addNewRecommendation))
         else
           Seq.empty[ReactElement]

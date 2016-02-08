@@ -128,7 +128,7 @@ object ConnectionList {
   private val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
-        <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltContentBackground, DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           if (!connection.name.isEmpty) {
@@ -159,21 +159,23 @@ object ConnectionList {
             <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.alt := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
           ),
           <.div(^.className := "media-body")(
-            <.div(^.className := "col-md-12 col-sm-12 profile-action-buttons")(
-              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Hide")(),
-              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Favorite")(),
-              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Recommend")(),
+            <.div(^.className := "col-md-12 col-sm-12 ")(
+              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
+              <.button(HeaderCSS.Style.rsltContainerBtn,^.className := "btn profile-action-buttons")("Recommend")(),
               // ToDo: Above should use something like:
               // NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Introduce")(),
-              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Message")()
+              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn profile-action-buttons")("Introduce")(),
+              <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn profile-action-buttons")("Message")()
               // ToDo: Above should use something like:
               // NewMessage(NewMessage.Props(ctl, "Message")
             )
           )
         )
       }
+      <.div(^.id := "rsltSectionContainer" )(
       <.ul(^.className := "media-list")(p.connections map renderConnections)
+      )
     })
     .build
 

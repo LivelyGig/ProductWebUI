@@ -75,11 +75,11 @@ object OfferingResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
 
-                    <.div(^.className := "profile-action-buttons")(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Favorite")(),
+                    <.div(/*^.className := "profile-action-buttons"*/)(
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
                       NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Purchase")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn,^.className := "btn profile-action-buttons")("Purchase")(),
                       // BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
                       NewMessage(NewMessage.Props(ctl, "Message")
                       )

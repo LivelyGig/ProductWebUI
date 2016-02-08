@@ -102,11 +102,11 @@ object ProjectResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
 
-                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ ^.className:="profile-action-buttons")(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Favorite")(),
+                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
                       NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Find Matching Talent")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
                       BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
                       NewMessage(NewMessage.Props(ctl, "Message")
                       )

@@ -93,7 +93,7 @@ object ContractResults {
                     <.div(^.className := "col-md-12 col-sm-12 ")(
                       <.div(DashBoardCSS.Style.profileNameHolder)("Status: Bidding 11:20am 12/08/2015"),
                       <.br(),
-                      <.div(^.className:="profile-action-buttons")(
+                      <.div(/*^.className:="profile-action-buttons"*/)(
                       BiddingScreenModal(BiddingScreenModal.Props(ctl, "Manage")),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Reject")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Counteroffer")(),

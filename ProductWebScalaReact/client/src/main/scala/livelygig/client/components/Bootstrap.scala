@@ -33,11 +33,11 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), id: String=null)
+    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), id: String=null, className: String = null)
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>
-        <.button(^.className:="btn btn-default", ^.id:= P.id, P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
+        <.button(^.className:="btn btn-default ".concat(P.className), ^.id:= P.id, P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
