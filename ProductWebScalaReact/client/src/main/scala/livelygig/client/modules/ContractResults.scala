@@ -85,20 +85,22 @@ object ContractResults {
             <.ul(^.className := "media-list")(
               //var i = 0
               for (i <- 1 to 50) yield {
-                <.li(^.className := "media", DashBoardCSS.Style.rsltpaddingTop10p /*DashBoardCSS.Style.rsltContentBackground, */)(
+                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*DashBoardCSS.Style.rsltContentBackground, */)(
                   <.div(^.className := "media-body")(
                     <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                     <.div(DashBoardCSS.Style.profileNameHolder)("Buyer : Pam Seller: Abed Project/Offering: Project One"),
                     <.div()("lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"),
-                    <.div(^.className := "col-md-12 col-sm-12")(
+                    <.div(^.className := "col-md-12 col-sm-12 ")(
                       <.div(DashBoardCSS.Style.profileNameHolder)("Status: Bidding 11:20am 12/08/2015"),
                       <.br(),
+                      <.div(^.className:="profile-action-buttons")(
                       BiddingScreenModal(BiddingScreenModal.Props(ctl, "Manage")),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Reject")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Counteroffer")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Accept")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Offer")()
                       NewMessage(NewMessage.Props(ctl, "Message"))
+                      )
                     )
                   ) //media-body
                 )

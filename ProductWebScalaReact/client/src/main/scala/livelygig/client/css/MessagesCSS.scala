@@ -39,5 +39,14 @@ object MessagesCSS {
       display.inlineBlock,
       position.absolute
     )
+
+    val hideBtns = style(
+      visibility.hidden,
+
+      &.hover(
+        visibility.visible
+      )
+
+    )
   }
 }

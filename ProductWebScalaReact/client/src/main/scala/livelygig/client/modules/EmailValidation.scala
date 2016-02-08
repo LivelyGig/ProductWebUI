@@ -5,8 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components._
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS}
-import livelygig.client.models.{UserModel, EmailValidationModel}
-import livelygig.client.modules.CreateAgent.State
+import livelygig.client.models.{EmailValidationModel}
 import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
