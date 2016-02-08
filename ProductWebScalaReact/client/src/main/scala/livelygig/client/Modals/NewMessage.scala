@@ -8,11 +8,21 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
+//  @js.native
+//  trait BootstrapJQuery extends JQueryBtn {
+//    def show(action: String): BootstrapJQuery = js.native
+//    def show(options: js.Any): BootstrapJQuery = js.native
+//  }
+
+//  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
+
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
   case class State(showNewMessageForm: Boolean = false)
@@ -20,6 +30,11 @@ object NewMessage {
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+
+//    def displayBtn = Callback {
+//      jQuery(t.getDOMNode()).show("hide")
+//    }
+
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
@@ -40,8 +55,8 @@ object NewMessage {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+      <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),className = "profile-action-buttons"),P.buttonName),
         if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
@@ -66,6 +81,8 @@ object PostNewMessage {
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
     }
+
+
     def mounted(props: Props): Callback = Callback {
 
     }

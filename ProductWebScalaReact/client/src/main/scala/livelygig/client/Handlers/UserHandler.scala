@@ -11,7 +11,7 @@ case class LoginUser(userModel: UserModel)
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   override def handle = {
     case LoginUser(userModel) =>
-      println(userModel)
+//      println(userModel)
       updated(userModel)
   }
 }

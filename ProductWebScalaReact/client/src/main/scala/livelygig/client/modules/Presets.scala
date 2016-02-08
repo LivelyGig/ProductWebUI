@@ -27,11 +27,12 @@ object Presets {
               case "talent" => {
                 <.div()(
                   <.div(^.className := "btn-group")(
-                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                       <.li()(<.a(^.href := "#")("Recommended Matches")),
+                      <.li()(<.a(^.href := "#")("My Profiles")),
                       <.li()(<.a(^.href := "#")("Favorited")),
                       <.li()(<.a(^.href := "#")("Available")),
                       <.li()(<.a(^.href := "#")("Active Unavailable")),
@@ -50,12 +51,13 @@ object Presets {
               case "projects" => {
                 <.div()(
                   <.div(^.className := "btn-group")(
-                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                       <.li()(<.a(^.href := "#")("Recommended Matches")),
                       <.li()(<.a(^.href := "#")("Direct from Connection")),
+                      <.li()(<.a(^.href := "#")("My Posted Jobs")),
                       <.li()(<.a(^.href := "#")("Favorited")),
                       <.li()(<.a(^.href := "#")("Hidden")),
                       <.li(^.className := "divider")(),
@@ -70,11 +72,12 @@ object Presets {
               case "offerings" => {
                 <.div()(
                   <.div(^.className := "btn-group")(
-                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                       <.li()(<.a(^.href := "#")("Recommended to Me")),
+                      <.li()(<.a(^.href := "#")("My Posted Offerings")),
                       <.li()(<.a(^.href := "#")("Favorited")),
                       <.li()(<.a(^.href := "#")("Hidden")),
                       <.li(^.className := "divider")(),
@@ -89,7 +92,7 @@ object Presets {
               case "contract" => {
                 <.div()(
                   <.div(^.className := "btn-group")(
-                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
@@ -102,7 +105,9 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract")),
+                    // ToDo:  Accept doesn't belong here.  Accept Deliverables belongs on the contract BiddingScreenModel form.
                     Accept(Accept.Props(p.ctl, "Accept")),
+                    // ToDo: Show Dispute doesn't belong here.  It belongs on the Dispute button on the BiddingScreenModal form.
                     <.button(HeaderCSS.Style.showDisputeBtn, ^.className := "btn")("Show Dispute")()
 
                   )
@@ -111,11 +116,12 @@ object Presets {
               case "messages" => {
                 <.div()(
                   <.div(^.className := "btn-group")(
-                    <.button(HeaderCSS.Style.projectCreateBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                       <.li()(<.a(^.href := "#")("Inbox")),
+                      <.li()(<.a(^.href := "#")("Sent")),
                       <.li()(<.a(^.href := "#")("Unread")),
                       <.li()(<.a(^.href := "#")("Favorited")),
                       <.li()(<.a(^.href := "#")("Hidden")),

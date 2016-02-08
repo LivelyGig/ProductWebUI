@@ -5,59 +5,59 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.components.Bootstrap.Button
-import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap._
-import livelygig.client.components.GlobalStyles
-import livelygig.client.components.Icon
 import livelygig.client.components._
-import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.MessagesCSS
-import livelygig.client.css.ProjectCSS
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
-import livelygig.client.modals.Accept.State
-import livelygig.client.modals.NewMessage.State
-import livelygig.client.modals.PayoutTransaction.State
-import livelygig.client.modals.PostNewMessage.State
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object Accept {
+object Confirmation {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
+  //  @js.native
+  //  trait BootstrapJQuery extends JQueryBtn {
+  //    def show(action: String): BootstrapJQuery = js.native
+  //    def show(options: js.Any): BootstrapJQuery = js.native
+  //  }
+
+  //  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
+
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
-  case class State(showPayoutTransactionForm: Boolean = false)
+  case class State(showConfirmationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+
+    //    def displayBtn = Callback {
+    //      jQuery(t.getDOMNode()).show("hide")
+    //    }
+
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showPayoutTransactionForm = true))
+      t.modState(s => s.copy(showConfirmationForm = true))
     }
-    def addPayoutTransactionForm() : Callback = {
-      t.modState(s => s.copy(showPayoutTransactionForm = true))
+    def addConfirmationForm() : Callback = {
+      t.modState(s => s.copy(showConfirmationForm = true))
     }
-    def addPayoutTransaction(postPayoutTransaction: Boolean = false): Callback = {
+    def addConfirmation(postConfirmation: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postPayoutTransaction){
-        t.modState(s => s.copy(showPayoutTransactionForm = true))
+      if(!postConfirmation){
+        t.modState(s => s.copy(showConfirmationForm = false))
       } else {
-        t.modState(s => s.copy(showPayoutTransactionForm = false))
+        t.modState(s => s.copy(showConfirmationForm = true))
       }
     }
   }
-  val component = ReactComponentB[Props]("PayoutTransaction")
+  val component = ReactComponentB[Props]("NewMessage")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
-        if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
+      <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
+        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        if (S.showConfirmationForm) ConfirmationForm(ConfirmationForm.Props(B.addConfirmation, "New Message"))
         else
           Seq.empty[ReactElement]
       )
@@ -68,11 +68,11 @@ object Accept {
   def apply(props: Props) = component(props)
 }
 
-object PayoutTransaction {
+object ConfirmationForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postPayoutTransaction: Boolean = false)
+  case class State(postConfirmation: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -81,18 +81,20 @@ object PayoutTransaction {
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
     }
+
+
     def mounted(props: Props): Callback = Callback {
 
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postPayoutTransaction = true))
+      t.modState(s => s.copy(postConfirmation = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postPayoutTransaction)
-      props.submitHandler(state.postPayoutTransaction)
+      println(state.postConfirmation)
+      props.submitHandler(state.postConfirmation)
     }
 
     def render(s: State, p: Props) = {
@@ -104,21 +106,20 @@ object PayoutTransaction {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div()("Accept All Deliverables?", " ... details of payout transaction"),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")
+
+          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
   }
-  private val component = ReactComponentB[Props]("PostpostPayoutTransaction")
+  private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postPayoutTransaction){
+      if(scope.currentState.postConfirmation){
         scope.$.backend.hideModal
       }
     })
     .build
   def apply(props: Props) = component(props)
 }
-

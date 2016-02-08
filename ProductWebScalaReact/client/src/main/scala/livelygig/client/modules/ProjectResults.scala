@@ -3,13 +3,11 @@ package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
+import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.HeaderCSS
@@ -18,10 +16,28 @@ import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.LftcontainerCSS
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
-
+import scala.scalajs.js
+import js.annotation.JSExport
+import org.scalajs.dom
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
+
+//
+//  @js.native
+//  trait BootstrapJQuery extends JQueryBtn {
+//    def show(action: String): BootstrapJQuery = js.native
+//    def show(options: js.Any): BootstrapJQuery = js.native
+//  }
+//
+//  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
+//
+//  class Backend(t: BackendScope[Unit, Unit]) {
+//    def displayBtn = Callback {
+//      jQuery(t.getDOMNode()).show("hide")
+//    }
+//  }
+
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Projects")
     .render_P(ctl =>
@@ -75,7 +91,7 @@ object ProjectResults {
           <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
-                <.li(^.className := "media", DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
                   <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                   <.span(^.className := "checkbox-lbl"),
                   <.div(DashBoardCSS.Style.profileNameHolder)("Project: Four State: Posted  11:00am 12/05/2015"),
@@ -86,11 +102,11 @@ object ProjectResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
 
-                    <.div(/*^.className := "col-md-8 col-sm-8"*/)(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Favorite")(),
+                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
                       NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Find Matching Talent")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
                       BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
                       NewMessage(NewMessage.Props(ctl, "Message")
                       )
@@ -103,7 +119,17 @@ object ProjectResults {
         ) //gigConversation
       )
     )
-
+//    .componentDidMount(scope => Callback {
+//      val P = scope.props
+//      // register event listener to be notified when the modal is closed
+//      jQuery(scope.getDOMNode()).off("hide")
+//    })
+//    .componentDidUpdate(scope=> Callback{
+////      if(scope.currentState.postMessage){
+////        scope.$.backend.hideModal
+////      }
+//    })
     .build
+
 }
 

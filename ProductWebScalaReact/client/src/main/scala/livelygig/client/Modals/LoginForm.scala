@@ -31,7 +31,9 @@ object LoginForm {
     }
 
     def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
+      println(e.target.value)
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
     def showValidate(e: ReactEventI) = {
@@ -43,7 +45,8 @@ object LoginForm {
     }
 
     def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -90,7 +93,6 @@ object LoginForm {
               )
             ),
             // right
-
             <.div(^.className := "col-md-5 col-sm-5 col-xs-5", ^.borderLeft := "solid")(
               <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
               // example, e.g. from https://www.import.io
@@ -98,9 +100,7 @@ object LoginForm {
             )
           )
         ),
-
-
-        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
+       <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
       )
 
     }

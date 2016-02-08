@@ -75,11 +75,12 @@ object HeaderCSS {
       width(100.%%),
       paddingTop(4.px)
     )
-    val projectCreateBtn= style(
-      backgroundColor(rgba(0,0,0,0.38)),
+    val presetPickBtn= style(
+      backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
       fontSize(1.2.em),
-      marginTop(6.px)
+      marginTop(6.px),
+      textAlign.left
     )
     val dropdownMenuWidth=style(
       width(100.%%)

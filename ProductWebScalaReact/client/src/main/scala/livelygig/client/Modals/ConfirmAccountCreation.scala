@@ -27,7 +27,8 @@ object ConfirmAccountCreation {
     }
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
-      t.modState(s => s.copy(emailValidationModel = s.emailValidationModel.copy(token = e.target.value)))
+      val value = e.target.value
+      t.modState(s => s.copy(emailValidationModel = s.emailValidationModel.copy(token = value)))
     }
 
     def formClosed(state: State, props: Props): Callback = {
