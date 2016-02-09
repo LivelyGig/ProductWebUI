@@ -80,8 +80,7 @@ object HeaderCSS {
       color(c"#13EEDD"),
       fontSize(1.2.em),
       marginTop(6.px),
-      textAlign.left,
-      minWidth(220.px)
+      textAlign.left
     )
     val dropdownMenuWidth=style(
       width(100.%%)

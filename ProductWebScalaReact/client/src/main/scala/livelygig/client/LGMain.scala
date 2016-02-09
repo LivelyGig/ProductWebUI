@@ -67,9 +67,7 @@ object LGMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute("#addnewagent", CreateAgentLoc) ~> render(CreateAgent.component(Unit))
       | staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
-      | staticRoute("#agentlogin", AgentLoginLoc) ~> renderR(ctl => AgentLogin.component(Unit))
       | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "messages")))
       | staticRoute("#event", EventListenerLoc) ~> renderR(ctl => EventListnerBtn(EventListnerBtn.Props(ctl)))
       | staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "projects")))

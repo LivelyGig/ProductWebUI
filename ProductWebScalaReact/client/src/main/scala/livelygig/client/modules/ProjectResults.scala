@@ -91,7 +91,7 @@ object ProjectResults {
           <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
-                <.li(^.className := "media", DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
                   <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                   <.span(^.className := "checkbox-lbl"),
                   <.div(DashBoardCSS.Style.profileNameHolder)("Project: Four State: Posted  11:00am 12/05/2015"),
@@ -102,11 +102,11 @@ object ProjectResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
 
-                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/)(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Favorite")(),
+                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
                       NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Find Matching Talent")(),
+                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
                       BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
                       NewMessage(NewMessage.Props(ctl, "Message")
                       )

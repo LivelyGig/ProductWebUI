@@ -38,13 +38,16 @@ object NewAgentForm {
 
     }
     def updateName(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = e.target.value)))
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(name = value)))
     }
     def updateEmail(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = e.target.value)))
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
     def updatePassword(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = e.target.value)))
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(password =value)))
     }
     def toggleBTCWallet(e: ReactEventI) = {
       t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
