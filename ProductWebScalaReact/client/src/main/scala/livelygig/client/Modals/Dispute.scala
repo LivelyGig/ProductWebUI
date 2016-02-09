@@ -6,47 +6,60 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
+import livelygig.client.LGMain.Loc
+import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.CommonStyle
+import livelygig.client.components.Bootstrap.CommonStyle
+import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components.GlobalStyles
+import livelygig.client.components.GlobalStyles
+import livelygig.client.components.Icon
 import livelygig.client.components.Icon
 import livelygig.client.components._
 import livelygig.client.components._
+import livelygig.client.components._
+import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.DashBoardCSS
 import livelygig.client.css.HeaderCSS
+import livelygig.client.css.HeaderCSS
 import livelygig.client.css.MessagesCSS
+import livelygig.client.css.MessagesCSS
+import livelygig.client.css.ProjectCSS
 import livelygig.client.css.ProjectCSS
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import livelygig.client.modals.Accept.State
+import livelygig.client.modals.Accept.State
 import livelygig.client.modals.NewMessage.State
+import livelygig.client.modals.PayoutTransaction.State
 import livelygig.client.modals.PayoutTransaction.State
 import livelygig.client.modals.PostNewMessage.State
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
-object Accept {
+object Dispute {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
-  case class State(showPayoutTransactionForm: Boolean = false)
+  case class State(showDispute: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(showPayoutTransactionForm = true))
+      t.modState(s => s.copy(showDispute = true))
     }
-    def addPayoutTransactionForm() : Callback = {
-      t.modState(s => s.copy(showPayoutTransactionForm = true))
+    def addDisputeForm() : Callback = {
+      t.modState(s => s.copy(showDispute = true))
     }
-    def addPayoutTransaction(postPayoutTransaction: Boolean = false): Callback = {
+    def addDispute(postDispute: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postPayoutTransaction){
-        t.modState(s => s.copy(showPayoutTransactionForm = true))
+      if(postDispute){
+        t.modState(s => s.copy(showDispute = true))
       } else {
-        t.modState(s => s.copy(showPayoutTransactionForm = false))
+        t.modState(s => s.copy(showDispute = false))
       }
     }
   }
@@ -56,8 +69,8 @@ object Accept {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
-        if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
+        Button(Button.Props(B.addDisputeForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        if (S.showDispute) DisputeForm(DisputeForm.Props(B.addDispute, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]
       )
@@ -68,11 +81,11 @@ object Accept {
   def apply(props: Props) = component(props)
 }
 
-object PayoutTransaction {
+object DisputeForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postPayoutTransaction: Boolean = false)
+  case class State(postDispute: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -86,13 +99,13 @@ object PayoutTransaction {
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postPayoutTransaction = true))
+      t.modState(s => s.copy(postDispute = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postPayoutTransaction)
-      props.submitHandler(state.postPayoutTransaction)
+      println(state.postDispute)
+      props.submitHandler(state.postDispute)
     }
 
     def render(s: State, p: Props) = {
@@ -105,12 +118,6 @@ object PayoutTransaction {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
           <.div()("Accept All Deliverables?", " ... details of payout transaction"),
-          <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Accept"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")
         )
       )
@@ -120,7 +127,7 @@ object PayoutTransaction {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postPayoutTransaction){
+      if(scope.currentState.postDispute){
         scope.$.backend.hideModal
       }
     })

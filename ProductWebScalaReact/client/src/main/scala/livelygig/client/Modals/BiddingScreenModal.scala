@@ -22,7 +22,7 @@ object BiddingScreenModal {
 
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
-  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false)
+  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false,showAcceptDependencies:Boolean=false,showDispute:Boolean=false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -36,7 +36,8 @@ object BiddingScreenModal {
       t.modState(s => s.copy(showBiddingScreen = true))
     }
 
-    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false,  postConfirmation: Boolean = false): Callback = {
+    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false,  postConfirmation: Boolean = false,postAcceptDependencies:Boolean=false,
+                         postDispute:Boolean=false): Callback = {
       log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
@@ -46,6 +47,12 @@ object BiddingScreenModal {
       else if (postConfirmation) {
         t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =true ))
       }
+      else if (postAcceptDependencies) {
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =false,showAcceptDependencies = true))
+      }
+      else if (postDispute) {
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =false,showAcceptDependencies = false,showDispute = true))
+      }
       else {
         t.modState(s => s.copy(showBiddingScreen = false))
       }
@@ -54,9 +61,14 @@ object BiddingScreenModal {
     def hideMessage(showMessage: Boolean = false): Callback = {
       t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
     }
-
     def hideConfirmation(showConfirmation: Boolean = false): Callback = {
       t.modState(s => s.copy(showMessage = false,showConfirmation = false, showBiddingScreen = true))
+    }
+    def hideAcceptDependencies(showAcceptDependencies: Boolean = false): Callback = {
+      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showAcceptDependencies=false, showBiddingScreen = true))
+    }
+    def hideDispute(showDispute: Boolean = false): Callback = {
+      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showAcceptDependencies=false,showDispute=false, showBiddingScreen = true))
     }
   }
 
@@ -70,6 +82,8 @@ object BiddingScreenModal {
         if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
         else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))
+        else if (S.showAcceptDependencies) PayoutTransaction(PayoutTransaction.Props(B.hideAcceptDependencies, "Accept All Deliverables"))
+        else if (S.showDispute) DisputeForm(DisputeForm.Props(B.hideDispute, "Dispute"))
         else
           Seq.empty[ReactElement]
       )
@@ -85,9 +99,9 @@ object BiddingScreenModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean, Boolean,Boolean) => Callback)
+  case class Props(submitHandler: (Boolean, Boolean,Boolean,Boolean,Boolean) => Callback)
 
-  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false)
+  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false,postAcceptDependencies:Boolean=false,postDispute:Boolean=false)
 
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
@@ -112,6 +126,13 @@ object BiddingScreenModalForm {
     def confirmationForm(e: ReactEventI) = {
       t.modState(s => s.copy(postConfirmation = true))
     }
+    def disputeForm(e: ReactEventI) = {
+      t.modState(s => s.copy(postDispute = true))
+    }
+
+    def acceptDependencies(e: ReactEventI) = {
+      t.modState(s => s.copy(postAcceptDependencies = true))
+    }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -121,7 +142,7 @@ object BiddingScreenModalForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postBiddingScreen)
-      props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation)
+      props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation,state.postAcceptDependencies,state.postDispute)
     }
 
     def render(s: State, p: Props) = {
@@ -287,7 +308,6 @@ object BiddingScreenModalForm {
 
                               )
                             ), //container
-
                             <.div()(
                               <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomFooter, BiddingScreenCSS.Style.marginLeftRight)(
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("All Terms"),
@@ -302,13 +322,9 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
                                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn" , ^.onClick==>confirmationForm )("Apply")(),
-
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>confirmationForm )("Accept Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
-//                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept Offer")(),
-//                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter Offer")(),
-//                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                                     // NewMessage(NewMessage.Props(RouterCtl[Loc],"Message")),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -388,8 +404,8 @@ object BiddingScreenModalForm {
                 <.div()(
                   <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
                     // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Accept Deliverables")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Dispute")(),
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>acceptDependencies)("Accept Deliverables")(),
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>disputeForm)("Dispute")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                   )
@@ -465,7 +481,7 @@ object BiddingScreenModalForm {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
-      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage || scope.currentState.postConfirmation) {
+      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage || scope.currentState.postConfirmation || scope.currentState.postAcceptDependencies||scope.currentState.postDispute) {
         scope.$.backend.hidemodal
       }
     })

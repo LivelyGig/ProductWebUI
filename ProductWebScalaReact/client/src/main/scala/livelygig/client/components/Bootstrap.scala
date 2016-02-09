@@ -74,6 +74,7 @@ object Bootstrap {
       def hide = Callback {
         // instruct Bootstrap to hide the modal
         jQuery(t.getDOMNode()).modal("hide")
+
       }
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {

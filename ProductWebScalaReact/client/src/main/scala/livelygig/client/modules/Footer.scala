@@ -29,7 +29,7 @@ object Footer {
     .stateless
     .render_P((P) => {
       <.nav(^.id := "footerContainer", FooterCSS.Style.footerContainer)(
-        <.div(^.className := "row")(
+        <.div()(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-3")(
             <.div(FooterCSS.Style.footGlyphContainer)(
@@ -58,7 +58,7 @@ object Footer {
           <.div(^.className := "col-lg-7 col-md-9 col-sm-9 col-xs-9")(
 
 
-            <.ul(bss.navbar, FooterCSS.Style.footRight, ^.id := "footMenu")(
+            <.ul(/*bss.navbar, FooterCSS.Style.footRight, ^.id := "footMenu"*/ ^.id := "headerNavUl", ^.className := "nav navbar-nav", FooterCSS.Style.footRight)(
               // build a list of menu items
               for (item <- footerItems) yield {
                 <.li(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,

@@ -26,7 +26,8 @@ object DashBoardCSS {
       fontSize(1.2.em)
     )
     val slctContainer = style(
-      display.inlineBlock
+      display.inlineBlock,
+      minWidth(200.px)
     )
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
@@ -373,7 +374,6 @@ object DashBoardCSS {
       &.hover(
         color(c"#fff"),
         backgroundColor(transparent),
-        paddingTop(17.px),
         fontSize(15.px),
         borderColor(transparent)
       ),

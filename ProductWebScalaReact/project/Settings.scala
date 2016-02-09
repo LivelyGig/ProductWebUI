@@ -75,9 +75,9 @@ object Settings {
     "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
-    "org.querki" %%% "jquery-facade" % "0.10"
-//    "org.querki" %%% "querki-jsext" % "0.6",
- //   "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"
+    "org.querki" %%% "jquery-facade" % "0.10",
+    "org.querki" %%% "querki-jsext" % "0.6",
+    "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -89,8 +89,8 @@ object Settings {
     //  "org.webjars.bower" % "split-pane" % "0.5.1",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
-    "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js"
-//    "org.webjars" % "bootstrap-datepicker" % "1.4.0" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js"
+    "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js",
+    "org.webjars" % "bootstrap-datepicker" % "1.4.0" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js"
 //    "org.webjars" % "bootstrapvalidator" % "0.5.3" / "js/validator.js"
 
 //    "org.webjars" % "typeahead.js" % "0.9.3",

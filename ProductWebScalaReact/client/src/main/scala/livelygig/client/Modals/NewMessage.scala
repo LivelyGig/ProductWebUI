@@ -15,13 +15,6 @@ import scalacss.ScalaCssReact._
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-//  @js.native
-//  trait BootstrapJQuery extends JQueryBtn {
-//    def show(action: String): BootstrapJQuery = js.native
-//    def show(options: js.Any): BootstrapJQuery = js.native
-//  }
-
-//  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
 
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
 
@@ -31,9 +24,6 @@ object NewMessage {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
-//    def displayBtn = Callback {
-//      jQuery(t.getDOMNode()).show("hide")
-//    }
 
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showNewMessageForm = true))
@@ -43,7 +33,7 @@ object NewMessage {
     }
     def addMessage(postMessage: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postMessage){
+      if(postMessage){
         t.modState(s => s.copy(showNewMessageForm = false))
       } else {
         t.modState(s => s.copy(showNewMessageForm = true))
@@ -73,7 +63,6 @@ object PostNewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback, header: String)
   case class State(postMessage: Boolean = false)
-
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
@@ -81,8 +70,6 @@ object PostNewMessage {
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
     }
-
-
     def mounted(props: Props): Callback = Callback {
 
     }
@@ -106,9 +93,9 @@ object PostNewMessage {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)(""))
-          ),//main row
+//          <.div(^.className:="row")(
+//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)(""))
+//          ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),
@@ -119,10 +106,10 @@ object PostNewMessage {
               <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
             ),
             <.div()(
-              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.placeholder:="Subject")
-            ),
+              <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop )
+             ),
             <.div()(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop , ^.placeholder:="Enter your message here:",^.lineHeight:= 6)
+              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop )
             )
           ),
           <.div()(
