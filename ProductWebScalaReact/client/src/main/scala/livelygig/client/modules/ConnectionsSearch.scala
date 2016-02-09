@@ -7,10 +7,47 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.LGMain.Loc
 import livelygig.client.components._
 import livelygig.client.css._
-
+import org.querki.facades.bootstrap.datepicker.{Orientation, BootstrapDatepickerOptions}
+import org.querki.jquery._
+import japgolly.scalajs.react.extra.router.RouterCtl
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.LGMain.Loc
+import livelygig.client.css._
+import livelygig.client.models.UserModel
+import org.querki.jquery.JQueryEventObject
+import scala.scalajs.js
+import scalacss.ScalaCssReact._
+import org.querki.facades.bootstrap.datepicker._
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import js.annotation.JSName
+import js.JSConverters._
+import org.scalajs.dom._
+import org.querki.jsext._
+import org.querki.jquery._
 import scalacss.ScalaCssReact._
 
 object ConnectionsSearch {
+
+
+  val baseOpts = BootstrapDatepickerOptions.
+    autoclose(true).
+    todayHighlight(true).
+    todayBtnLinked().
+    disableTouchKeyboard(true).
+    orientation(Orientation.Top)
+  // Iff this Date is Optional, show the Clear button:
+  val opts =
+    if (true)
+      baseOpts.clearBtn(true)
+    else
+      baseOpts
+
+  $("#addedBefore").datepicker(baseOpts)
+  $("#addedAfter").datepicker(baseOpts)
+
+
   // create the React component for Dashboard
   val component = ReactComponentB[Unit]("Connections")
     .render_P(ctl =>
@@ -50,7 +87,10 @@ object ConnectionsSearch {
                   <.div("Added Before")
                 ),
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                  //<.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    <.div(^.className := "input-group date")(
+                  <.input("data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "addedBefore")
+                )
                 )
               ),
               <.div(^.className := "row")(
@@ -59,7 +99,10 @@ object ConnectionsSearch {
                 ),
                 // ToDo: this should be a date picker
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+//                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    <.div(^.className := "input-group date")(
+                  <.input("data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "addedAfter")
+                )
                 )
               ),
               <.div(^.className := "row")(
@@ -69,6 +112,7 @@ object ConnectionsSearch {
                 // ToDo: this should be a date picker
                 <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                   <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+
                 )
               )
             )
