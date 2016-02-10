@@ -98,10 +98,14 @@ object Connections {
                     P.proxy().render(connectionsRootModel =>
                       ConnectionList(connectionsRootModel.connectionsResponse)
                     ),
-                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
+//                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
                     P.proxy().renderFailed(ex => "Error loading"),
                     if (P.proxy().isEmpty) {
-                      <.div("Loading")
+                      if (!P.proxy().isFailed) {
+                        <.div("Loading")
+                      } else {
+                        <.div()
+                      }
                     } else {
                       <.div("data loaded")
                     }
