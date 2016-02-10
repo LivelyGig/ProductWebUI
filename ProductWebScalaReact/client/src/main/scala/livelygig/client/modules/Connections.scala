@@ -99,7 +99,12 @@ object Connections {
                       ConnectionList(connectionsRootModel.connectionsResponse)
                     ),
                     P.proxy().renderPending(_ > 5, _ => "Loading..."),
-                    P.proxy().renderFailed(ex => "Error loading")
+                    P.proxy().renderFailed(ex => "Error loading"),
+                    if (P.proxy().isEmpty) {
+                      <.div("Loading")
+                    } else {
+                      <.div("data loaded")
+                    }
                   )
                   /*Panel(Panel.Props("Connections"), <.div(
                     P.proxy().renderFailed(ex => "Error loading"),
@@ -176,7 +181,7 @@ object ConnectionList {
         )
       }
       <.div(^.id := "rsltSectionContainer" )(
-      <.ul(^.className := "media-list")(p.connections map renderConnections)
+        <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })
     .build
