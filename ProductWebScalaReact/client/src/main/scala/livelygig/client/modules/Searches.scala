@@ -6,24 +6,15 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.css._
 import livelygig.client.models.UserModel
-import org.querki.jquery.JQueryEventObject
-import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import js.{Date, UndefOr}
-import js.annotation.JSName
-import js.JSConverters._
-import org.scalajs.dom._
-import org.querki.jsext._
 import org.querki.jquery._
 
-
 object Searches {
-
   case class Props(ctl: RouterCtl[Loc], view: String)
   case class State(userModel: UserModel)
-
   case class Backend(t: BackendScope[Props, State]) {
 
     def updateDate(e: ReactEventI) = {
@@ -33,8 +24,6 @@ object Searches {
     }
 
     def mounted(props: Props): Callback = Callback {
-
-
     }
 
     val baseOpts = BootstrapDatepickerOptions.
@@ -56,13 +45,9 @@ object Searches {
     $("#projectsEndDate").datepicker(baseOpts)
     $("#messagesBeforeDate").datepicker(baseOpts)
     $("#messagesFromDate").datepicker(baseOpts)
-
 //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
 //      save()
 //    })
-
-
-
 
       def render(s:State,p: Props) = {
         p.view match {
@@ -97,15 +82,7 @@ object Searches {
                       <.div("Available To Date")
                     ),
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      //                    <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth),
-
-                      //                    <div class="input-group date" data-provide="datepicker">
-                      //                      <input type="text" class="form-control">
-                      //                        <div class="input-group-addon">
-                      //                          <span class="glyphicon glyphicon-th"></span>
-                      //                        </div>
-                      //                      </div>
-                      <.div(^.className := "input-group date")(
+                     <.div(^.className := "input-group date")(
                         <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker",DashBoardCSS.Style.inputHeightWidth, ^.id := "availableToDate")
                       )
                     )
@@ -171,11 +148,7 @@ object Searches {
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(DashBoardCSS.Style.slctHeaders)("Job Type"),
                   <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
-                    //                  <.script( ^.`type` := "text/javascript",
-                    //
-                    //
-                    //                  ),
-                    <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
+                     <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
                   <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                     <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"),
@@ -196,8 +169,6 @@ object Searches {
                         <.div(^.className := "input-group date")(
                       <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "projectsStartDate")
                     )
-
-
                     )
                   ),
                   <.div(^.className := "row")(
