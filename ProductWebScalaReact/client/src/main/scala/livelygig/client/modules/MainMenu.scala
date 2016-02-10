@@ -54,7 +54,7 @@ object MainMenu {
         <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
           // build a list of menu items
           for (item <- menuItems) yield {
-            if (item.location == ConnectionsLoc){
+            if (item.location == ConnectionsLoc /*false*/){
               if (props.proxy.value.isLoggedIn) {
                 <.li(^.key := item.idx,
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA ,

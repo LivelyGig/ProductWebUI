@@ -26,7 +26,7 @@ object Connections {
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections))
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
   }
 
   // create the React component for Dashboard
@@ -97,7 +97,9 @@ object Connections {
                   <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer")(
                     P.proxy().render(connectionsRootModel =>
                       ConnectionList(connectionsRootModel.connectionsResponse)
-                    )
+                    ),
+                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
+                    P.proxy().renderFailed(ex => "Error loading")
                   )
                   /*Panel(Panel.Props("Connections"), <.div(
                     P.proxy().renderFailed(ex => "Error loading"),
