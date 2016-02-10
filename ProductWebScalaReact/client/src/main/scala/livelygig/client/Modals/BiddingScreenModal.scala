@@ -122,7 +122,6 @@ object BiddingScreenModalForm {
     def messageForm(e: ReactEventI) = {
       t.modState(s => s.copy(postMessage = true))
     }
-
     def confirmationForm(e: ReactEventI) = {
       t.modState(s => s.copy(postConfirmation = true))
     }
