@@ -5,12 +5,14 @@ import livelygig.shared.dtos._
 import scala.concurrent.Future
 
 trait Api {
-  def createAgent(userRequest: CreateUserRequest): Future[ApiResponse[CreateUserResponse]]
+  def createAgent(userRequest: CreateUser): Future[ApiResponse[CreateUserResponse]]
 
-  def confirmEmail(confirmEmailRequest: ConfirmEmailRequest): Future[ApiResponse[ConfirmEmailResponse]]
+  def confirmEmail(confirmEmailRequest: ConfirmEmail): Future[ApiResponse[ConfirmEmailResponse]]
 
-  def agentLogin(initializeSessionRequest: InitializeSessionRequest): Future[ApiResponse[InitializeSessionResponse]]
+  def agentLogin(initializeSessionRequest: InitializeSession): Future[ApiResponse[InitializeSessionResponse]]
 
-  def sessionPing (sessionPingRequest: SessionPingRequest) : Future[Seq[ApiResponse[ConnectionProfileResponse]]]
+  def sessionPing (sessionPingRequest: SessionPing) : Future[Seq[ApiResponse[ConnectionProfileResponse]]]
+
+  def getJobPosts(sessionPingRequest: SessionPing): Seq[ApiResponse[JobPostsResponse]]
 
 }

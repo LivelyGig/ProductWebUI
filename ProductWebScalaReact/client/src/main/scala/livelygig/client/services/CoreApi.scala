@@ -26,21 +26,24 @@ object CoreApi {
   //  }
 
   def createUser(userModel: UserModel): Future[ApiResponse[CreateUserResponse]] = {
-    AjaxClient[Api].createAgent(CreateUserRequest(userModel.email, userModel.password,
+    AjaxClient[Api].createAgent(CreateUser(userModel.email, userModel.password,
       Map("name" -> userModel.name), true)).call()
   }
 
   def emailValidation(emailValidationModel: EmailValidationModel): Future[ApiResponse[ConfirmEmailResponse]] = {
-    AjaxClient[Api].confirmEmail(ConfirmEmailRequest(emailValidationModel.token)).call()
+    AjaxClient[Api].confirmEmail(ConfirmEmail(emailValidationModel.token)).call()
   }
 
   def agentLogin(userModel: UserModel): Future[ApiResponse[InitializeSessionResponse]] = {
-    AjaxClient[Api].agentLogin(InitializeSessionRequest(s"agent://email/${userModel.email}" +
+    AjaxClient[Api].agentLogin(InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")).call()
   }
 
   def sessionPing () : Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
-    AjaxClient[Api].sessionPing(SessionPingRequest(window.localStorage.getItem("sessionURI"))).call()
+    AjaxClient[Api].sessionPing(SessionPing(window.localStorage.getItem("sessionURI"))).call()
+  }
+  def getJobPosts () : Future[Seq[ApiResponse[JobPostsResponse]]] = {
+    AjaxClient[Api].getJobPosts(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
 
 }

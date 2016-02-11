@@ -1,0 +1,27 @@
+[{
+  "msgType": "evalSubscribeResponse",
+  "content": {
+    "sessionURI": "agent-session://0e65bd3a974ed1d7c195f94055c93537827f/4645d94c58d5f0b0f413831689eda58d23e27fcdfefe3306ff5d3458a45eed76",
+    "pageOfPosts": ["{\"id\": \"d2b255ca-dde8-4919-9e5d-a0a62d5d7c12\", \"type\": \"PROJECT\", \"summary\": \"This is new project\", \"description\": \"Need scala developer to implement a centralized repository for a big financial institution. \", \"postedDate\": \"2002-05-30T09:30:10Z\", \"broadcastDate\": \"2002-05-30T09:30:10Z\", \"startDate\": \"2002-05-30T09:30:10Z\", \"endDate\": \"2002-05-30T09:30:10Z\", \"currency\": \"USD\", \"location\": \"United States\", \"isPayoutInPieces\": \"false\", \"skillsId\": \"[\\\"4416192b-9dec-49b0-9d13-fb0815af6c3f\\\", \\\"3c91c578-2d39-42d4-adb0-9071d9eb116a\\\", \\\"b48bfe5a-15fa-4d8e-b253-752b51c2b94b\\\"]\", \"posterId\": \"eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee\", \"canForward\": \" true\", \"referralId\": \"[\\\"40c96981-ca91-4083-9dfc-76826df0f432\\\",\\\"c6a3c02e-5724-4a35-adc7-ddc37d3c721b\\\"]\", \"contractType\": \"23940120-4943-4462-9c46-2b23ef94108c\", \"budget\": \"2350.3\"}"],
+    "connection": {
+      "source": "agent://0e65bd3a974ed1d7c195f94055c93537827f",
+      "label": "alias",
+      "target": "agent://0e65bd3a974ed1d7c195f94055c93537827f"
+    },
+    "filter": "all([])"
+  }
+},
+  {
+    "msgType": "evalSubscribeResponse",
+    "content": {
+      "sessionURI": "agent-session://0e65bd3a974ed1d7c195f94055c93537827f/4645d94c58d5f0b0f413831689eda58d23e27fcdfefe3306ff5d3458a45eed76",
+      "pageOfPosts": ["{\"id\": \"d2b255ca-dde8-4919-9e5d-a0a62d5d7c13\", \"type\": \"PROJECT\", \"summary\": \"This is really new project\", \"description\": \"Need scala developer to implement a centralized repository for a big financial institution. \", \"postedDate\": \"2002-05-30T09:30:10Z\", \"broadcastDate\": \"2002-05-30T09:30:10Z\", \"startDate\": \"2002-05-30T09:30:10Z\", \"endDate\": \"2002-05-30T09:30:10Z\", \"currency\": \"USD\", \"location\": \"United States\", \"isPayoutInPieces\": \"false\", \"skillsId\": \"[\\\"4416192b-9dec-49b0-9d13-fb0815af6c3f\\\", \\\"3c91c578-2d39-42d4-adb0-9071d9eb116a\\\", \\\"b48bfe5a-15fa-4d8e-b253-752b51c2b94b\\\"]\", \"posterId\": \"eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee\", \"canForward\": \" true\", \"referralId\": \"[\\\"40c96981-ca91-4083-9dfc-76826df0f432\\\",\\\"c6a3c02e-5724-4a35-adc7-ddc37d3c721b\\\"]\", \"contractType\": \"23940120-4943-4462-9c46-2b23ef94108c\", \"budget\": \"2350.3\"}"],
+      "connection": {
+        "source": "agent://0e65bd3a974ed1d7c195f94055c93537827f",
+        "label": "alias",
+        "target": "agent://0e65bd3a974ed1d7c195f94055c93537827f"
+      },
+      "filter": "all([])"
+    }
+  }
+]

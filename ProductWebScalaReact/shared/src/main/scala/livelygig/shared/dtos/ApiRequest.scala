@@ -8,4 +8,4 @@ package livelygig.shared.dtos
   * Wraps all API requests in a standard format.
   */
 
-case class ApiRequest(msgType: String, content: RequestContent)
+case class ApiRequest(msgType: String, content: Content)
