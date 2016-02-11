@@ -29,7 +29,8 @@ object MainMenu {
     if (counter > 0) {
       retRE = <.span(
         <.span(mItem),
-        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
+       // <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
+        <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter)
       ) }
     return retRE
   }

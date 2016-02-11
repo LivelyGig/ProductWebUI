@@ -389,6 +389,21 @@ object DashBoardCSS {
       backgroundColor(c"#00767c")
     )
 
+    val inputBtnRadius = style (
+      border.none
+    )
+
+    val horizontalImg = style(
+      display.flex,
+      justifyContent.center
+    )
+
+    val verticalImg = style(
+      display.flex,
+      justifyContent.center,
+      flexDirection.column
+    )
+
   }
 
 }
