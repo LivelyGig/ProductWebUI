@@ -18,9 +18,15 @@ import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
 
-object AddNewAgent {
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.models.UserModel
+import scala.scalajs.js
+import scala.scalajs.js.{JSON, Date, UndefOr}
+import org.querki.jquery._
+
+object AgentLogin {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props()
 
@@ -32,39 +38,45 @@ object AddNewAgent {
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
-  class Backend($: BackendScope[Props, State]) extends RxObserver($) {
+  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
-      $.modState(s => s.copy(showLoginForm = true))
+      t.modState(s => s.copy(showLoginForm = true))
     }
     def addLoginForm() : Callback = {
-      $.modState(s => s.copy(showLoginForm = true))
+      t.modState(s => s.copy(showLoginForm = true))
     }
     def addNewLoginForm() : Callback = {
-      $.modState(s => s.copy(showLoginForm = true))
+      t.modState(s => s.copy(showLoginForm = true))
     }
 
     def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
+
+      println($("#loginLoader"))
+
       log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
+
         createUser(userModel).onComplete {
           case Success(s) =>
+            $("#loginLoader").addClass("hidden")
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
-              $.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
-              $.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
+            $("#loginLoader").addClass("hidden")
             log.debug(s"createUserFailure: ${s}")
-            $.modState(s => s.copy(showErrorModal = true)).runNow()
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
         }
-        $.modState(s => s.copy(showNewAgentForm = false))
+        t.modState(s => s.copy(showNewAgentForm = false))
       }  else if (showTermsOfServicesForm) {
-        $.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true ))
+        t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true ))
       } else {
-        $.modState(s => s.copy(showNewAgentForm = false))
+        t.modState(s => s.copy(showNewAgentForm = false))
       }
     }
 
@@ -72,33 +84,47 @@ object AddNewAgent {
               showNewAgentForm: Boolean = false) : Callback = {
       log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
+        $("#loginLoader").removeClass("hidden")
+        $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
         CoreApi.agentLogin(userModel).onComplete {
           case Success(s) =>
             log.debug(s"loginAPISuccessMsg: ${s.msgType}")
             if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
+              $("#loginLoader").addClass("hidden")
+              $(".dashboard-container").removeClass("hidden")
+              $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
               window.localStorage.setItem("sessionURI",s.content.sessionURI.getOrElse(""))
-              LGCircuit.dispatch(LoginUser(UserModel(email = userModel.email, name = s.content.jsonBlob.get("name"),
-              imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)))
+              /*val user = Map("email"->userModel.email,"name"-> s.content.jsonBlob.get("name"),
+                "imgSrc"-> s.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
+              val user = UserModel(email = userModel.email, name = s.content.jsonBlob.get("name"),
+                imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)
+              window.localStorage.setItem("user", upickle.default.write(user))
+              LGCircuit.dispatch(LoginUser(user))
 
               log.debug("login successful")
-//              window.location.href = "/#connections"
+//              window.location.href = "/"
             } else {
+              $("#loginLoader").addClass("hidden")
+              $("#bodyBackground").removeClass("overlay")
               log.debug("login failed")
-              $.modState(s => s.copy(showLoginFailed = true)).runNow()
+              t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
+            $("#loginLoader").addClass("hidden")
+            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
-        $.modState(s => s.copy(showLoginForm = false))
+        t.modState(s => s.copy(showLoginForm = false))
       }
       else if (showConfirmAccountCreation) {
-        $.modState(s => s.copy(showLoginForm = false, showConfirmAccountCreation = true))
+        t.modState(s => s.copy(showLoginForm = false, showConfirmAccountCreation = true))
       }
       else if (showNewAgentForm) {
-        $.modState(s => s.copy(showLoginForm = false, showNewAgentForm = true))
+        t.modState(s => s.copy(showLoginForm = false, showNewAgentForm = true))
       }
       else {
-        $.modState(s => s.copy(showLoginForm = false))
+        t.modState(s => s.copy(showLoginForm = false))
       }
     }
     def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
@@ -107,49 +133,49 @@ object AddNewAgent {
           case Success(s) =>
             if (s.msgType == ApiResponseMsg.CreateUserError) {
               println(ApiResponseMsg.CreateUserError)
-              $.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
+              t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
             }
             else {
-              $.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
+              t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             }
           case Failure(s) =>
             log.debug(s"ConfirmAccontCreationAPI failure: ${s.getMessage}")
-            $.modState(s => s.copy(showErrorModal = true)).runNow()
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
-        $.modState(s => s.copy(showConfirmAccountCreation = false))
+        t.modState(s => s.copy(showConfirmAccountCreation = false))
       } else {
-        $.modState(s => s.copy(showConfirmAccountCreation = false))
+        t.modState(s => s.copy(showConfirmAccountCreation = false))
       }
     }
     def accountValidationSuccess() : Callback = {
-             $.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
+             t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
      }
     def loginFailed() : Callback = {
-        $.modState(s => s.copy(showLoginFailed = false, showLoginForm = true))
+        t.modState(s => s.copy(showLoginFailed = false, showLoginForm = true))
     }
     def registrationFailed(registrationFailed : Boolean = false) : Callback = {
       if (registrationFailed){
-        $.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
+        t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
       } else {
-        $.modState(s => s.copy(showRegistrationFailed = false, showNewAgentForm = true))
+        t.modState(s => s.copy(showRegistrationFailed = false, showNewAgentForm = true))
       }
     }
     def serverError() : Callback = {
-      $.modState(s => s.copy(showErrorModal = false))
+      t.modState(s => s.copy(showErrorModal = false))
     }
     def accountValidationFailed() : Callback = {
-      $.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
+      t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
     def termsOfServices() : Callback = {
-      $.modState(s => s.copy(showTermsOfServicesForm = false))
+      t.modState(s => s.copy(showTermsOfServicesForm = false))
     }
   }
 
   val component = ReactComponentB[Props]("AddNewAgent")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
+    .renderPS((t, P, S) => {
+      val B = t.backend
       <.div()(
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn)),"Login"),
 //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),

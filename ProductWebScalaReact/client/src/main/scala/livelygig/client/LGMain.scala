@@ -4,10 +4,11 @@ package livelygig.client
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.Handlers.LoginUser
 
 //import livelygig.client.modals.AddNewAgent
 import livelygig.client.components.{GlobalStyles, Icon}
-import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS}
+import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS,DashBoardCSS}
 import livelygig.client.logger._
 import livelygig.client.models.ConnectionsModel
 import livelygig.client.modals._
@@ -22,6 +23,12 @@ import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.models.UserModel
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import org.querki.jquery._
 
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
@@ -81,9 +88,12 @@ object LGMain extends js.JSApp {
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
+//  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
+      <.img(^.id:="loginLoader", DashBoardCSS.Style.loading, ^.className:="hidden", ^.src:="./assets/images/processing.gif"),
       // here we use plain Bootstrap class names as these are specific to the top level layout defined here
       <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         <.div(^.className := "col-lg-1")(),
@@ -100,10 +110,8 @@ object LGMain extends js.JSApp {
         ),
         <.div(^.className := "col-lg-1")()
       ),
-
       // the vertically center area
       r.render(),
-
       Footer(Footer.Props(c, r.page))
     )
   }

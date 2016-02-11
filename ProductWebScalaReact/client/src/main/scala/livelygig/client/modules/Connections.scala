@@ -132,7 +132,6 @@ object Connections {
   def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
 }
 
-
 object ConnectionList {
 
   case class ConnectionListProps(connections: Seq[ConnectionsModel])

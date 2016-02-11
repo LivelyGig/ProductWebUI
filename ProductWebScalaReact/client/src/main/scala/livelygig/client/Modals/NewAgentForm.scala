@@ -1,6 +1,6 @@
 package livelygig.client.modals
 
-import livelygig.client.modals.AddNewAgent
+import livelygig.client.modals.AgentLogin
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl

@@ -4,11 +4,11 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.LoginUser
+import livelygig.client.Handlers.{LogoutUser, LoginUser}
 import livelygig.client.LGMain
 import livelygig.client.LGMain._
 import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.modals.{UserPreferences, AddNewAgent}
+import livelygig.client.modals.{UserPreferences, AgentLogin}
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}
 import livelygig.client.models.UserModel
@@ -21,8 +21,15 @@ object MainMenu {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
+  case class State(isLoggedIn: Boolean = false)
 
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
+  class Backend($: BackendScope[Props, _]) {
+    def mounted(props: Props) =
+//      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+      Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
+        imgSrc = "", isLoggedIn = false))))
+  }
 
   private def buildMenuItem(mItem: String, counter: Int) : ReactElement = {
     var retRE = <.span(<.span(mItem))
@@ -46,8 +53,9 @@ object MainMenu {
     //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
-    .stateless
-    .render_P((props) => {
+    .initialState(State())
+    .backend(new Backend(_))
+    .renderPS(($, props, S) => {
       /*var test = LGCircuit.wrap(_.user)(p => Data)
 
       println(props.proxy.value.isLoggedIn)*/
@@ -55,7 +63,7 @@ object MainMenu {
         <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
           // build a list of menu items
           for (item <- menuItems) yield {
-            if (item.location == ConnectionsLoc /*false*/){
+            /*if (item.location == (ConnectionsLoc||MessagesLoc || Pro) /*false*/){*/
               if (props.proxy.value.isLoggedIn) {
                 <.li(^.key := item.idx,
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA ,
@@ -65,13 +73,13 @@ object MainMenu {
               } else {
                 <.li()
               }
-            } else {
+            /*} else {
               <.li(^.key := item.idx,
                 props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA ,
                   (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                   " ", item.label(props))
               )
-            }
+            }*/
 
           }
         ),
@@ -97,7 +105,7 @@ object MainMenu {
                   <.li()(<.a("data-toggle".reactAttr := "modal","data-target".reactAttr:="#myModal","aria-haspopup".reactAttr :="true"/*,^.href := "#"*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
                   )),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a(^.href := "#")("Sign Out"))
+                  <.li()(<.a(^.href := "#",^.onClick-->Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
                 )
               ),
               <.div(^.className:="modal fade", ^.id:="myModal",^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1 )(
@@ -119,14 +127,14 @@ object MainMenu {
 
         } else {
           //            LGCircuit.connect(_.user)(proxy => AddNewAgent(AddNewAgent.Props(proxy)))
-          AddNewAgent(AddNewAgent.Props())
+          AgentLogin(AgentLogin.Props())
           //            <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> props.proxy.dispatch(LoginUser(props.proxy.value)))("test")
 
         }
       )
       )
     })
-
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = MainMenu(props)

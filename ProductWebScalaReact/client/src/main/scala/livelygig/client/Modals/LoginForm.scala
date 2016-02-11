@@ -37,7 +37,7 @@ object LoginForm {
     }
 
     def showValidate(e: ReactEventI) = {
-      t.modState(s => s.copy(showConfirmAccountCreation = true))
+       t.modState(s => s.copy(showConfirmAccountCreation = true))
     }
 
     def showAddNewAgent(e: ReactEventI) = {
