@@ -93,16 +93,17 @@ object Connections {
                   )
                 ), //col-12
 
-                <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
-                  <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer")(
+                <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.horizontalImg)(
+                  <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer", DashBoardCSS.Style.verticalImg)(
                     P.proxy().render(connectionsRootModel =>
                       ConnectionList(connectionsRootModel.connectionsResponse)
                     ),
 //                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
-                    P.proxy().renderFailed(ex => "Error loading"),
+                    P.proxy().renderFailed(ex =>  <.div( <.span(Icon.warning)," Error loading")),
                     if (P.proxy().isEmpty) {
                       if (!P.proxy().isFailed) {
                         <.div("Loading")
+                        <.img(^.src:="./assets/images/processing.gif")
                       } else {
                         <.div()
                       }
@@ -130,7 +131,6 @@ object Connections {
   /** Returns a function compatible with router location system while using our own props */
   def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
 }
-
 
 object ConnectionList {
 

@@ -389,6 +389,48 @@ object DashBoardCSS {
       backgroundColor(c"#00767c")
     )
 
+    val inputBtnRadius = style (
+      border.none
+    )
+
+    val horizontalImg = style(
+      display.flex,
+      justifyContent.center
+    )
+
+    val verticalImg = style(
+      display.flex,
+      justifyContent.center,
+      flexDirection.column
+    )
+
+    val overlay = style (
+      position.absolute ,
+      left(0.px),
+      top(0.px),
+      bottom(0.px),
+      right(0.px),
+      //background(gray),
+      backgroundColor(c"#000"),
+      opacity(0.8)
+      //filter.alpha(opacity=80);
+    )
+
+    val loading = style (
+      width (50.px),
+      height(57.px),
+      position.absolute,
+      top(50.%%),
+      left(50.%%)
+
+    )
+    val addLoaderImg = style (
+      visibility.visible
+    )
+    val removeLoaderImg = style (
+      visibility.hidden
+    )
+
   }
 
 }
