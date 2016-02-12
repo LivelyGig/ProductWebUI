@@ -1,29 +1,16 @@
-
 package livelygig.client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
+import japgolly.scalajs.react.{ReactComponentB}
 import livelygig.client.LGMain.Loc
 import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 import scala.scalajs.js
-import js.annotation.JSExport
-import org.scalajs.dom
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
-
-
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Projects")
     .render_P(ctl =>
@@ -64,7 +51,6 @@ object ProjectResults {
                   <.span(Icon.longArrowDown))
               )
             ),
-
             <.div(^.className := "pull-right", ^.paddingTop := "10px")(
               // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.list)),
@@ -74,7 +60,7 @@ object ProjectResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -87,7 +73,6 @@ object ProjectResults {
                     <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
-
                     <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),

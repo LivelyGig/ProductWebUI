@@ -5,7 +5,6 @@ import scalacss.Defaults._
 object DashBoardCSS {
 
   object Style extends StyleSheet.Inline {
-
     import dsl._
 
     val mainContainerDiv = style(
@@ -45,7 +44,6 @@ object DashBoardCSS {
       marginBottom(0.px),
       verticalAlign.middle,
       width(100.%%)
-
     )
     val rsltCheckboxStyle = style(
       height(22.px),
@@ -61,7 +59,6 @@ object DashBoardCSS {
       backgroundColor(c"#D3E7E7"),
       paddingLeft(15.px),
       paddingRight(15.px)
-
     )
     val rsltGigActionsDropdown = style(
       display.inlineBlock
@@ -92,7 +89,6 @@ object DashBoardCSS {
         fontSize(1.1.em)
         )
     )
-
     val rsltCountHolderDiv = style(
       display.inlineBlock,
       fontSize(1.2.em),
@@ -108,9 +104,7 @@ object DashBoardCSS {
         fontSize(18.px)
         // margin(5.%%)
         )
-
     )
-
     val listIconPadding = style(
       padding(14.px, 0.px, 14.px, 0.px)
     )
@@ -190,7 +184,6 @@ object DashBoardCSS {
       fontSize(1.em),
       fontWeight.normal
     )
-
     /*CreateNewAgent Css Styles*/
     val modalContainer = style(
       height(500.px),
@@ -343,15 +336,12 @@ object DashBoardCSS {
       paddingLeft(15.px),
       paddingRight(15.px)
     )
-
     val paddingLeftLoginbtn = style(
       paddingLeft(0.px)
     )
-
     val paddingRightLoginbtn = style(
       paddingRight(0.px)
     )
-
     val marginTop20px = style(
       marginTop(20.px)
     )
@@ -388,23 +378,19 @@ object DashBoardCSS {
       padding(22.px) ,
       backgroundColor(c"#00767c")
     )
-
     val inputBtnRadius = style (
       border.none,
       padding(0.2.em, 0.6.em, 0.1.em)
     )
-
     val horizontalImg = style(
       display.flex,
       justifyContent.center
     )
-
     val verticalImg = style(
       display.flex,
       justifyContent.center,
       flexDirection.column
     )
-
     val overlay = style (
       position.absolute ,
       left(0.px),
@@ -416,14 +402,12 @@ object DashBoardCSS {
       opacity(0.8)
       //filter.alpha(opacity=80);
     )
-
     val loading = style (
       width (50.px),
       height(57.px),
       position.absolute,
       top(50.%%),
       left(50.%%)
-
     )
     val addLoaderImg = style (
       visibility.visible
@@ -431,7 +415,6 @@ object DashBoardCSS {
     val removeLoaderImg = style (
       visibility.hidden
     )
-
     val attentionContainer =style (
       padding(20.px),
       backgroundColor(c"#CCE6FF"),
@@ -439,7 +422,6 @@ object DashBoardCSS {
       height(300.px),
       margin(15.px)
     )
-
     val opportunitiesContainer =style (
       padding(20.px),
       backgroundColor(c"#E6CCFF"),
@@ -449,39 +431,32 @@ object DashBoardCSS {
       marginRight(15.px),
       marginBottom(15.px)
     )
-
     val suggestionsContainer =style (
       padding(20.px),
       backgroundColor(c"#FFD9B3"),
-    //  textAlign.center,
+      //  textAlign.center,
       height(200.px),
       margin(15.px)
     )
-
     val browseforContainer =style (
       padding(20.px),
       backgroundColor(c"#CCE6FF"),
-     // textAlign.center,
+      // textAlign.center,
       height(200.px),
       marginTop(15.px),
       marginRight(15.px),
       marginBottom(15.px)
     )
-
     val introduceColleaguesContainer = style (
-    padding(20.px),
-    backgroundColor(c"#E6CCFF"),
-   // textAlign.center,
-    height(200.px),
-    margin(15.px)
-  )
+      padding(20.px),
+      backgroundColor(c"#E6CCFF"),
+      // textAlign.center,
+      height(200.px),
+      margin(15.px)
+    )
     val headerFontDashboard = style (
       fontSize(20.px),
       fontWeight.bold
     )
-
-
-
   }
-
 }

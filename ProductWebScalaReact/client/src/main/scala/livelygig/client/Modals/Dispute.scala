@@ -5,44 +5,20 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.components.Bootstrap.CommonStyle
-import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components.GlobalStyles
-import livelygig.client.components.GlobalStyles
-import livelygig.client.components.Icon
 import livelygig.client.components.Icon
 import livelygig.client.components._
-import livelygig.client.components._
-import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.MessagesCSS
-import livelygig.client.css.MessagesCSS
-import livelygig.client.css.ProjectCSS
-import livelygig.client.css.ProjectCSS
-import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
-import livelygig.client.modals.Accept.State
-import livelygig.client.modals.Accept.State
-import livelygig.client.modals.NewMessage.State
-import livelygig.client.modals.PayoutTransaction.State
-import livelygig.client.modals.PayoutTransaction.State
-import livelygig.client.modals.PostNewMessage.State
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
 object Dispute {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
-
   case class State(showDispute: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {

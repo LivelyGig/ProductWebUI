@@ -1,23 +1,15 @@
 package livelygig.client.modals
 
 
-import livelygig.client.models.{EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
+
 import livelygig.client.LGMain.{Loc}
-import livelygig.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.logger._
-import livelygig.client.services._
-import livelygig.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
-import scala.concurrent.ExecutionContext.Implicits.global
+import livelygig.client.css.{DashBoardCSS}
 
 
 /**
@@ -36,22 +28,17 @@ object PrivacyPolicyModal {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
-
     def hideModal =  {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
     }
-
-
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
     }
-
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-
       props.submitHandler()
     }
 

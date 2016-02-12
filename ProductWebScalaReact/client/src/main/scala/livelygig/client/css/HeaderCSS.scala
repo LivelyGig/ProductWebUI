@@ -110,7 +110,7 @@ object HeaderCSS {
     )
     val SignUpBtn = style(
       color(white),
-        backgroundColor(transparent),
+      backgroundColor(transparent),
       border.none,
       &.hover(
         backgroundColor(transparent),
@@ -122,11 +122,11 @@ object HeaderCSS {
       backgroundColor(c"#ffa500"),
       color.rgba(51,51,51,1),
       fontSize(16.px),
-    /*  marginLeft(8.px),*/
+      /*  marginLeft(8.px),*/
       marginTop(10.px),
       marginBottom(8.px),
       marginRight(10.px)
-//      float.right
+      //      float.right
     )
     val  floatBtn = style (
       float.right
@@ -149,19 +149,18 @@ object HeaderCSS {
     )
 
     val rsltbtn = style (
-       marginLeft( 30.px),
-       marginTop( 10.px),
-       marginRight(10.px),
-       float.right,
+      marginLeft( 30.px),
+      marginTop( 10.px),
+      marginRight(10.px),
+      float.right,
       backgroundColor (c"#ffa500"),
-    color.rgba(51,51,51,1),
-    fontSize(16.px)
+      color.rgba(51,51,51,1),
+      fontSize(16.px)
     )
-
     val userpreferences = style (
       border.none,
-    marginRight(15.px),
-    marginTop(-8.px)
+      marginRight(15.px),
+      marginTop(-8.px)
     )
     val showDisputeBtn=style(
       backgroundColor(c"#FFA500"),

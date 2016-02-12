@@ -37,8 +37,6 @@ object EmailValidation {
         }
     }
   }
-
-
   // create the React component for Email Validation
   val component = ReactComponentB[Unit]("EmailValidation")
     .initialState(State(new EmailValidationModel("")))
@@ -50,7 +48,6 @@ object EmailValidation {
           <.form(^.onSubmit--> confirmEmail(S.emailValidationModel))(
             <.div(^.className:="col-md-4 col-md-offset-4 col-sm-offset-3 col-xs-offset-4",CreateAgentCSS.Style.modalContainer)(
               <.div(CreateAgentCSS.Style.ModalHeader, /*CreateAgentCSS.Style.paddinglefttitle ,*/ ^.className:="row")(
-
                 <.div(^.className:="col-md-7 col-sm-7 col-xs-7 col-md-offset-3 col-sm-offset-3 col-xs-offset-3")(
                   <.h3("Email Validation")
                 ),
@@ -60,7 +57,6 @@ object EmailValidation {
               ),
               <.div(CreateAgentCSS.Style.ModalBody, ^.className:="row")(
                 <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-
                   <.div(^.className:="row")(
                     <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
                       <.h4("Request for LivelyGig account submitted. After receiving confirmation email, " +
@@ -68,7 +64,6 @@ object EmailValidation {
                     )
                   ),
                   <.div(^.className:="row")(
-
                     <.div(^.className:="col-md-8 col-sm-8 col-xs-8 col-md-offset-4 col-sm-offset-4 col-xs-offset-4")(
                       <.h4("Your Token")
                     )
@@ -83,7 +78,6 @@ object EmailValidation {
                 )
               ),
               <.div(CreateAgentCSS.Style.ModalFoot , ^.className:="row")(
-
                 <.div(^.className:="col-md-3 col-sm-3 col-xs-3 col-md-offset-6 col-sm-offset-4 col-xs-offset-4")(
                   //ctl.link(AgentLoginLoc) (CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default")("Validate")
                   <.button(CreateAgentCSS.Style.marginLeftCloseBtn, ^.className:="btn btn-default", ^.`type`:="submit")("Validate")

@@ -17,7 +17,6 @@ object Footer {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc)
-
   case class FooterItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
   private val footerItems = Seq(
@@ -28,7 +27,7 @@ object Footer {
   private val Footer = ReactComponentB[Props]("Footer")
     .stateless
     .render_P((P) => {
-      <.nav(^.id := "footerContainer", FooterCSS.Style.footerContainer)(
+      <.nav(^.className := "footerContainer", FooterCSS.Style.footerContainer)(
         <.div()(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-3")(
@@ -56,8 +55,6 @@ object Footer {
             )
           ),
           <.div(^.className := "col-lg-7 col-md-9 col-sm-9 col-xs-9")(
-
-
             <.ul(/*bss.navbar, FooterCSS.Style.footRight, ^.id := "footMenu"*/ ^.id := "headerNavUl", ^.className := "nav navbar-nav", FooterCSS.Style.footRight)(
               // build a list of menu items
               for (item <- footerItems) yield {
@@ -72,8 +69,6 @@ object Footer {
                   else {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
                   }
-
-
                 )
               }
             )

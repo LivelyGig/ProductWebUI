@@ -18,35 +18,6 @@ object Dashboard {
     .render_P(ctl =>
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
 
-        // create dummy data for the chart
-        //   val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
-
-        //        <.div(^.className := "col-lg-1")(),
-        //        <.div(^.className := "col-lg-10 dashboard-container")(
-        //          Chart(cp),
-        //          <.br(),
-        //          Chart(cp1),
-        //          <.span(^.fontWeight.bold)("For your attention"), <.br(),
-        //          <.a(^.href := "")("18"), " Unread messages", <.br(),
-        //          <.a(^.href := "")("2"), " Active Contracts", <.br(),
-        //          <.span(^.fontWeight.bold)("Opportunities"), <.br(),
-        //          <.a(^.href := "")("2"), " Introduction Requests", <.br(),
-        //          <.a(^.href := "")("Grow"), " your network", <.br(),
-        //          <.a(^.href := "")("Search"), " for gigs", <.br(),
-        //          <.span(^.fontWeight.bold)("Suggestions"), <.br(),
-        //          "Complete your Talent profile by adding a video introduciton. ", <.a(^.href := "")("(Hide)"), ".", <.br(),
-        //          "Create a standard offering, i.e., promise you can complete a typically requested service with a fixed price and predictable response time. ", <.a(^.href := "")("(Hide)"), ".", <.br(),
-        //          <.span(^.fontWeight.bold)("Introduce Colleagues"), <.br(),
-        //          "Recommend a friend's profile to an employer's project. (15) with some matching skills.", <.br(),
-        //          "Recommend a friend's project (3) to a talent contact.", <.br(),
-        //          <.span(^.fontWeight.bold)("Browse for..."), <.br(),
-        //          "New projects", <.br(),
-        //          "New contensts", <.br(),
-        //          "New talent", <.br(),
-        //          ""
-        //        ),
-        //        <.div(^.className := "col-lg-1")()
-
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10 dashboard-container")(
           <.div(^.className:="dashboardContainer")(

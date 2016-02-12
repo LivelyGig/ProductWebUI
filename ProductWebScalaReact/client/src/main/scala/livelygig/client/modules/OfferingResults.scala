@@ -1,4 +1,3 @@
-
 package livelygig.client.modules
 
 import japgolly.scalajs.react.ReactComponentB
@@ -62,7 +61,7 @@ object OfferingResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -92,7 +91,6 @@ object OfferingResults {
         ) //gigConversation
       )
     )
-
     .build
 }
 

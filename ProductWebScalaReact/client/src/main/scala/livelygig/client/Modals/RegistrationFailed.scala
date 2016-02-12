@@ -8,7 +8,6 @@ import livelygig.client.css.DashBoardCSS
 
 import scalacss.ScalaCssReact._
 
-
 object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles

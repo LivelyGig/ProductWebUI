@@ -8,12 +8,6 @@ import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import livelygig.client.logger._
-import livelygig.client.models.UserModel
-import livelygig.client.services.CoreApi._
-import livelygig.client.services._
-
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
@@ -98,9 +92,6 @@ object PostAProjectForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className:="row")(
-//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Post A Project"))
-//          ),
           <.div(^.className:="row")(
             <.div(^.className:="col-md-6 col-sm-6 col-xs-6")(
               <.div(^.className:="row")(

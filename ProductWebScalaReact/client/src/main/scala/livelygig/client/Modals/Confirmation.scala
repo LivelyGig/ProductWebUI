@@ -14,26 +14,12 @@ import scalacss.ScalaCssReact._
 
 object Confirmation {
   @inline private def bss = GlobalStyles.bootstrapStyles
-
-  //  @js.native
-  //  trait BootstrapJQuery extends JQueryBtn {
-  //    def show(action: String): BootstrapJQuery = js.native
-  //    def show(options: js.Any): BootstrapJQuery = js.native
-  //  }
-
-  //  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
-
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
-
   case class State(showConfirmationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-
-    //    def displayBtn = Callback {
-    //      jQuery(t.getDOMNode()).show("hide")
-    //    }
 
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showConfirmationForm = true))
@@ -81,7 +67,6 @@ object ConfirmationForm {
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
     }
-
 
     def mounted(props: Props): Callback = Callback {
 

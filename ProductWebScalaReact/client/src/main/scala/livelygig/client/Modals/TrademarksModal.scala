@@ -1,13 +1,8 @@
 package livelygig.client.modals
 
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.GlobalStyles
 import livelygig.client.components.Icon
-import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.MessagesCSS
-import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.LGMain.{Loc}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
@@ -23,9 +18,7 @@ import livelygig.client.css.{DashBoardCSS, MessagesCSS}
 object TrademarksModal {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-
   case class Props(submitHandler: () => Callback)
-
   case class State()
 
   case class Backend(t: BackendScope[Props, State]) {

@@ -5,22 +5,21 @@ import scalacss.Defaults._
   */
 object BiddingScreenCSS {
   object Style extends StyleSheet.Inline {
-
     import dsl._
 
     val biddingheader =style (
       padding(10.px)
     )
     val borderBottomHeader = style (
-       borderBottom(2.px , solid, black)
+      borderBottom(2.px , solid, black)
     )
     val borderBottomFooter = style (
       borderTop(2.px , solid, black)
     )
     val marginLeftRight = style (
-     marginLeft(15.px),
-     marginRight(15.px),
-     padding(15.px)
+      marginLeft(15.px),
+      marginRight(15.px),
+      padding(15.px)
     )
     val biddingScreenData = style (
       height(250.px),
@@ -28,7 +27,7 @@ object BiddingScreenCSS {
       marginRight(10.px)*/
     )
     val displayInlineText = style(
-        color(c"#000"),
+      color(c"#000"),
       media.maxWidth(1300.px)-
         fontSize(12.px)
     )
@@ -55,9 +54,9 @@ object BiddingScreenCSS {
     val slctBiddingInputWidth = style (
       width(100.px)
     )
-   val slctBiddingInputLeftContainerMargin = style (
-     marginLeft(165.px)
-   )
+    val slctBiddingInputLeftContainerMargin = style (
+      marginLeft(165.px)
+    )
     val createBiddingBtn=style(
       backgroundColor(c"#FFA500"),
       color(rgba(51,51,51,1)),
@@ -67,7 +66,5 @@ object BiddingScreenCSS {
     val biddingscreenImgWidth = style (
       width(700.px)
     )
-
-
   }
 }

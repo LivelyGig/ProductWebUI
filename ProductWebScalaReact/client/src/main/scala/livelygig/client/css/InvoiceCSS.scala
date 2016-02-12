@@ -8,13 +8,12 @@ object InvoiceCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
 
-     val invoiceText = style (
+    val invoiceText = style (
       textAlign.center,
       borderStyle(none,none,none,solid)
-     )
-
-     val invoiceInputHeightWidth = style (
-        width.auto
-     )
+    )
+    val invoiceInputHeightWidth = style (
+      width.auto
+    )
   }
 }

@@ -4,20 +4,17 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
-import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS}
+import livelygig.client.css.{MessagesCSS, HeaderCSS}
 import livelygig.client.modals._
 import scalacss.ScalaCssReact._
 
 object Presets {
-
   case class Props(ctl: RouterCtl[Loc], view: String)
-
   case class Backend(t: BackendScope[Props, Unit]) {
 
     def mounted(props: Props): Callback = Callback {
 
     }
-
     def render(p: Props) = {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(
@@ -139,10 +136,8 @@ object Presets {
           <.div(^.className := "col-lg-1")()
         )
       )
-
     }
   }
-
   private val component = ReactComponentB[Props]("Presets")
     .initialState_P(p => ())
     .renderBackend[Backend]

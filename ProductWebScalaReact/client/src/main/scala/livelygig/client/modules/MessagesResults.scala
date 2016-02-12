@@ -1,30 +1,23 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import livelygig.client.modals.PostNewMessage
+import japgolly.scalajs.react.{ReactComponentB}
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
-import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import livelygig.client.css.{DashBoardCSS, HeaderCSS}
 import scala.util.{Failure, Success}
 import livelygig.client.modals.NewMessage
 import scalacss.ScalaCssReact._
 
-
 object MessagesResults {
-
   val component = ReactComponentB[RouterCtl[Loc]]("Messages")
     .render_P(ctl => {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
-            //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
             <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
@@ -67,7 +60,7 @@ object MessagesResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.id := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/)(
@@ -83,7 +76,6 @@ object MessagesResults {
                       NewMessage(NewMessage.Props(ctl, "Forward")),
                       NewMessage(NewMessage.Props(ctl, "Reply"))
                       /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
-
                     )
                   ) //media-body
                 ) //li

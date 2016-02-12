@@ -12,8 +12,6 @@ import org.querki.jquery._
 import scalacss.ScalaCssReact._
 
 object ConnectionsSearch {
-
-
   val baseOpts = BootstrapDatepickerOptions.
     autoclose(true).
     todayHighlight(true).

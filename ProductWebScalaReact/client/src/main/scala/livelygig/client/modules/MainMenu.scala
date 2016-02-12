@@ -5,7 +5,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.Handlers.{LogoutUser, LoginUser}
-import livelygig.client.LGMain
 import livelygig.client.LGMain._
 import livelygig.client.components.Bootstrap.CommonStyle
 import livelygig.client.modals.{UserPreferences, AgentLogin}
@@ -80,7 +79,6 @@ object MainMenu {
                   " ", item.label(props))
               )
             }
-
           }
         ),
       <.div(HeaderCSS.Style.LoginInMenuItem)(
@@ -124,12 +122,8 @@ object MainMenu {
               )
             )
           )
-
         } else {
-          //            LGCircuit.connect(_.user)(proxy => AddNewAgent(AddNewAgent.Props(proxy)))
           AgentLogin(AgentLogin.Props())
-          //            <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> props.proxy.dispatch(LoginUser(props.proxy.value)))("test")
-
         }
       )
       )

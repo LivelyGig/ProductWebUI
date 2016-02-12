@@ -1,21 +1,11 @@
 package livelygig.client.modals
 
-import livelygig.client.modals.AgentLogin
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{FooterCSS, DashBoardCSS, HeaderCSS}
-import livelygig.client.logger._
-import livelygig.client.models.{EmailValidationModel, UserModel}
-import livelygig.client.services.CoreApi._
-import livelygig.client.services._
-import org.scalajs.dom._
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import livelygig.client.css.{FooterCSS, DashBoardCSS}
+import livelygig.client.models.{UserModel}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
@@ -63,20 +53,16 @@ object NewAgentForm {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewAgent)
       props.submitHandler(state.userModel, state.addNewAgent ,state.showTermsOfServicesForm)
-
     }
 
     def render(s: State, p: Props) = {
-         val headerText = "Create New Agent"
+      val headerText = "Create New Agent"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className:="row")(
-//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("Create New Agent"))
-//          ),
           <.div(^.className:="row")(
             <.div(^.className:="col-md-6 col-sm-6 col-xs-6")(
               <.div(^.className:="row")(
@@ -149,8 +135,8 @@ object NewAgentForm {
           ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-            <.div()(  <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
-                      <.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Terms of Service ",^.onClick==>showTermsOfServices))
+              <.div()(  <.input(^.`type` := "checkbox")," Yes, I understand and agree to the LivelyGig",
+                <.button(^.tpe := "button",^.className:="btn btn-default",FooterCSS.Style.legalModalBtn,"Terms of Service ",^.onClick==>showTermsOfServices))
             ),
             <.div()(
               <.input(^.`type` := "checkbox")," Yes, Send me product updates and other related emails from LivelyGig"

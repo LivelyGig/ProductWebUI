@@ -184,7 +184,7 @@ object ConnectionList {
           )
         )
       }
-      <.div(^.id := "rsltSectionContainer" )(
+      <.div( ^.className:="rsltSectionContainer"  )(
         <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })

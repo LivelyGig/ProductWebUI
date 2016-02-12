@@ -70,15 +70,14 @@ object FooterCSS {
       media.maxWidth(1300.px)-
         fontSize(12.px)
     )
-
     val legalModalBtn = style (
       border.none,
       &.hover (
         backgroundColor.transparent
       ),
       &.active(
-      backgroundColor.transparent
-     )
+        backgroundColor.transparent
+      )
     )
 
 

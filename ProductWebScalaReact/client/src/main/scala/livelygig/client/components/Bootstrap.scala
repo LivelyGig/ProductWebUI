@@ -97,7 +97,7 @@ object Bootstrap {
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
           <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
             <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
-              <.div(^.id:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
+              <.div(^.className:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
               <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
 //              <.div(modalStyle.footer, P.footer(hide))
             )

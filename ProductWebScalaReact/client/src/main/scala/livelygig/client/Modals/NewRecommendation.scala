@@ -7,13 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
-import livelygig.client.logger._
-import livelygig.client.models.UserModel
-import livelygig.client.services.CoreApi._
-import livelygig.client.services._
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
@@ -29,18 +23,6 @@ object NewRecommendation {
       t.modState(s => s.copy(showNewRecommendationForm = true))
     }
 
-//    def RecommendationForm(props: Props) : Callback = {
-//          if(props.buttonName == "Recommend")
-//        {
-//          log.debug(s"In Recommend")
-//          t.modState(s => s.copy(newRecommendationForm = false))
-//        }
-//      else
-//      {
-//        log.debug(s"In Recommendation")
-//        t.modState(s => s.copy(newRecommendationForm = true))
-//      }
-//    }
     def addNewRecommendationForm() : Callback = {
       t.modState(s => s.copy(showNewRecommendationForm = true))
     }
@@ -112,9 +94,6 @@ object NewRecommendationForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className:="row")(
-//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Recommendation"))
-//          ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),

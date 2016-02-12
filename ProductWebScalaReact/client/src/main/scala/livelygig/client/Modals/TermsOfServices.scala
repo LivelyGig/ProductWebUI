@@ -1,7 +1,6 @@
 package livelygig.client.modals
 
 
-import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.LGMain.{Loc}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
@@ -9,7 +8,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{DashBoardCSS,MessagesCSS}
+import livelygig.client.css.{DashBoardCSS}
 /**
   * Created by bhagyashree.b on 1/18/2016.
   */

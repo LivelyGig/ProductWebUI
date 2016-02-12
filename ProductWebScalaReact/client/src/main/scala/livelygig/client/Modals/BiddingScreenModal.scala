@@ -12,7 +12,6 @@ import livelygig.client.logger._
 import livelygig.client.models.UserModel
 import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
@@ -21,7 +20,6 @@ object BiddingScreenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], buttonName: String)
-
   case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false,showAcceptDependencies:Boolean=false,showDispute:Boolean=false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
