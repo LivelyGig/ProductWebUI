@@ -390,7 +390,8 @@ object DashBoardCSS {
     )
 
     val inputBtnRadius = style (
-      border.none
+      border.none,
+      padding(0.2.em, 0.6.em, 0.1.em)
     )
 
     val horizontalImg = style(

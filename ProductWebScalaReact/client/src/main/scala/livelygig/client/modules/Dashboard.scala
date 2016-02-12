@@ -13,7 +13,7 @@ import scalacss.ScalaCssReact._
 
 object Dashboard {
   // create the React component for Dashboard
-  val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
+  val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C","D"), Seq(ChartDataset(Seq(1, 2, 4, 3), "Data1"))))
 
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
