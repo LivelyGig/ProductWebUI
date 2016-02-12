@@ -63,7 +63,7 @@ object MainMenu {
         <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
           // build a list of menu items
           for (item <- menuItems) yield {
-            /*if (item.location == (ConnectionsLoc||MessagesLoc || Pro) /*false*/){*/
+            if (item.location == ConnectionsLoc) {
               if (props.proxy.value.isLoggedIn) {
                 <.li(^.key := item.idx,
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA ,
@@ -73,13 +73,13 @@ object MainMenu {
               } else {
                 <.li()
               }
-            /*} else {
+            } else {
               <.li(^.key := item.idx,
                 props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA ,
                   (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                   " ", item.label(props))
               )
-            }*/
+            }
 
           }
         ),
