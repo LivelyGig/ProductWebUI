@@ -1,6 +1,6 @@
 package livelygig.client.modules
 
-import javafx.scene.chart.Chart
+
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -13,6 +13,8 @@ import scalacss.ScalaCssReact._
 
 object Dashboard {
   // create the React component for Dashboard
+  val cp = Chart.ChartProps("Test chart", Chart.BarChart, ChartData(Seq("A", "B", "C"), Seq(ChartDataset(Seq(1, 2, 3), "Data1"))))
+
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
@@ -22,6 +24,8 @@ object Dashboard {
 
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10 dashboard-container")(
+          Chart(cp),
+          <.br(),
           <.span(^.fontWeight.bold)("For your attention"), <.br(),
           <.a(^.href := "")("18"), " Unread messages", <.br(),
           <.a(^.href := "")("2"), " Active Contracts", <.br(),
