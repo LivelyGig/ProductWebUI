@@ -22,14 +22,14 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
           imgSrc = "", isLoggedIn = false)
       }*/
       val temp = window.localStorage.getItem("user")
-      println(temp)
+//      println(temp)
       if (temp!=null) {
         /*userModel->JSON.parse(temp).asInstanceOf[UserModel]*/
         modelFromStore = upickle.default.read[UserModel](temp)
         /*userModel->modelFromStore*/
       }
       //      window.localStorage.setItem("userModel",userModel.toString)
-      println(modelFromStore)
+//      println(modelFromStore)
       updated(modelFromStore)
     case LogoutUser() =>
       window.localStorage.removeItem("user")

@@ -31,7 +31,7 @@ object LoginForm {
     }
 
     def updateEmail(e: ReactEventI) = {
-      println(e.target.value)
+//      println(e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
