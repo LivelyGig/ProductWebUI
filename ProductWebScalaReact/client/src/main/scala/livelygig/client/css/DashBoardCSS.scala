@@ -432,6 +432,56 @@ object DashBoardCSS {
       visibility.hidden
     )
 
+    val attentionContainer =style (
+      padding(20.px),
+      backgroundColor(c"#CCE6FF"),
+      textAlign.center,
+      height(300.px),
+      margin(15.px)
+    )
+
+    val opportunitiesContainer =style (
+      padding(20.px),
+      backgroundColor(c"#E6CCFF"),
+      textAlign.center,
+      height(300.px),
+      marginTop(15.px),
+      marginRight(15.px),
+      marginBottom(15.px)
+    )
+
+    val suggestionsContainer =style (
+      padding(20.px),
+      backgroundColor(c"#FFD9B3"),
+    //  textAlign.center,
+      height(200.px),
+      margin(15.px)
+    )
+
+    val browseforContainer =style (
+      padding(20.px),
+      backgroundColor(c"#CCE6FF"),
+     // textAlign.center,
+      height(200.px),
+      marginTop(15.px),
+      marginRight(15.px),
+      marginBottom(15.px)
+    )
+
+    val introduceColleaguesContainer = style (
+    padding(20.px),
+    backgroundColor(c"#E6CCFF"),
+   // textAlign.center,
+    height(200.px),
+    margin(15.px)
+  )
+    val headerFontDashboard = style (
+      fontSize(20.px),
+      fontWeight.bold
+    )
+
+
+
   }
 
 }

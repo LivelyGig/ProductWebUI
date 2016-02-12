@@ -23,20 +23,6 @@ import scalacss.ScalaCssReact._
 
 object ProjectResults {
 
-//
-//  @js.native
-//  trait BootstrapJQuery extends JQueryBtn {
-//    def show(action: String): BootstrapJQuery = js.native
-//    def show(options: js.Any): BootstrapJQuery = js.native
-//  }
-//
-//  implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
-//
-//  class Backend(t: BackendScope[Unit, Unit]) {
-//    def displayBtn = Callback {
-//      jQuery(t.getDOMNode()).show("hide")
-//    }
-//  }
 
   // create the React component for Dashboard
   val component = ReactComponentB[RouterCtl[Loc]]("Projects")
@@ -119,16 +105,6 @@ object ProjectResults {
         ) //gigConversation
       )
     )
-//    .componentDidMount(scope => Callback {
-//      val P = scope.props
-//      // register event listener to be notified when the modal is closed
-//      jQuery(scope.getDOMNode()).off("hide")
-//    })
-//    .componentDidUpdate(scope=> Callback{
-////      if(scope.currentState.postMessage){
-////        scope.$.backend.hideModal
-////      }
-//    })
     .build
 
 }

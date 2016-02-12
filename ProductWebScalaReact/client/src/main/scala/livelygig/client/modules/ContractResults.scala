@@ -4,28 +4,8 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.components.Icon
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.DashBoardCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.HeaderCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.LftcontainerCSS
-import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.css.{DashBoardCSS}
 import livelygig.client.modals.{BiddingScreenModal, NewMessage}
 
 import scalacss.ScalaCssReact._

@@ -3,7 +3,6 @@ package livelygig.client.modules
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
 import livelygig.client.css.{MessagesCSS, HeaderCSS}
-import livelygig.client.modals.UserSkills
 import scalacss.ScalaCssReact._
 
 object ConnectionsPresets {

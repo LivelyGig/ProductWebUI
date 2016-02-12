@@ -1,30 +1,13 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import livelygig.client.LGMain.Loc
-import livelygig.client.LGMain.Loc
-import livelygig.client.components._
-import livelygig.client.css._
 import org.querki.facades.bootstrap.datepicker.{Orientation, BootstrapDatepickerOptions}
-import org.querki.jquery._
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.Loc
 import livelygig.client.css._
-import livelygig.client.models.UserModel
-import org.querki.jquery.JQueryEventObject
-import scala.scalajs.js
-import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import js.{Date, UndefOr}
-import js.annotation.JSName
-import js.JSConverters._
-import org.scalajs.dom._
-import org.querki.jsext._
 import org.querki.jquery._
 import scalacss.ScalaCssReact._
 

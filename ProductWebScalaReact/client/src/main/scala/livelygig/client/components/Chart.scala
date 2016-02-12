@@ -16,7 +16,7 @@ trait ChartDataset extends js.Object {
 }
 
 object ChartDataset {
-  def apply(data: Seq[Double], label: String, fillColor: String = "#8080FF", strokeColor: String = "#404080"): ChartDataset = {
+  def apply(data: Seq[Double], label: String, fillColor: String = "#005C99", strokeColor: String = "#000"): ChartDataset = {
     js.Dynamic.literal(
       data = data.toJSArray,
       label = label,
@@ -47,6 +47,7 @@ class JSChart(ctx: js.Dynamic) extends js.Object {
   // create different kinds of charts
   def Line(data: ChartData): js.Dynamic = js.native
   def Bar(data: ChartData): js.Dynamic = js.native
+  def Pie(data: ChartData): js.Dynamic = js.native
 }
 
 object Chart {
@@ -57,6 +58,8 @@ object Chart {
   case object LineChart extends ChartStyle
 
   case object BarChart extends ChartStyle
+
+  case object PieChart extends ChartStyle
 
   case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 400, height: Int = 200)
 
@@ -72,6 +75,7 @@ object Chart {
     scope.props.style match {
       case LineChart => new JSChart(ctx).Line(scope.props.data)
       case BarChart => new JSChart(ctx).Bar(scope.props.data)
+      case PieChart => new JSChart(ctx).Pie(scope.props.data)
       case _ => throw new IllegalArgumentException
     }
   }).build

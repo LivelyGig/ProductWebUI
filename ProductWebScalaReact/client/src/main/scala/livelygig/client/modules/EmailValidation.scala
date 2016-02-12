@@ -38,10 +38,6 @@ object EmailValidation {
     }
   }
 
-  //  def redirectToLogin() : Callback = Callback{
-  //    window.location.href = "#agentlogin"
-  //  }
-
 
   // create the React component for Email Validation
   val component = ReactComponentB[Unit]("EmailValidation")
