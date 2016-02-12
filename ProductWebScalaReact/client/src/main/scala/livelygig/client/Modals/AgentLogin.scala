@@ -51,7 +51,7 @@ object AgentLogin {
 
     def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
 
-      println($("#loginLoader"))
+//      println($("#loginLoader"))
 
       log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
