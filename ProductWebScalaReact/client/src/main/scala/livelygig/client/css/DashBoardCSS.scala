@@ -407,7 +407,8 @@ object DashBoardCSS {
       height(57.px),
       position.absolute,
       top(50.%%),
-      left(50.%%)
+      left(50.%%),
+      zIndex(10000)
     )
     val addLoaderImg = style (
       visibility.visible

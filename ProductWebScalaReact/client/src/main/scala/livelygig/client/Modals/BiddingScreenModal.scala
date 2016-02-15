@@ -391,11 +391,158 @@ object BiddingScreenModalForm {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
-                      <.img()(^.src := "./assets/images/sampleContractMilestonesStatus.PNG"),
-                      <.br(),
-                      <.img()(^.src := "./assets/images/sampleContractMessages.png"),
-                      <.br(),
-                      <.img()(^.src := "./assets/images/sampleContractLinks.png")
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Milestones ", <.a("New")),
+                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
+                        <.table(^.className:="table")(
+                          <.thead(
+                            <.tr(
+                              <.th("#"),
+                              <.th("Planned Finish"),
+                              <.th("Scheduled Finish"),
+                              <.th("Title"),
+                              <.th("Talent Complete"),
+                              <.th("Employer Complete"),
+                              <.th("Actions")
+                            )
+                          ),//thead
+                          <.tbody(
+                            <.tr(^.className:="info")(
+                              <.th("1"),
+                              <.th("1/22/16 11:22"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Architecture"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.a("Link Deliver"))
+                            ),
+                            <.tr(
+                              <.th("2"),
+                              <.th("1/22/16 11:22"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Detailed Design"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.a("Link Deliver"))
+                            ),
+                            <.tr(^.className:="info")(
+                              <.th("3"),
+                              <.th("1/22/16 11:22"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Prototype"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.a("Link Deliver"))
+                            ),
+                            <.tr(
+                              <.th("4"),
+                              <.th("1/22/16 11:22"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Code Complete"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.th(<.a("Link Deliver"))
+                            )
+                          )//tbody
+                        )//table
+                      ),
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
+                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
+                        <.table(^.className:="table")(
+                          <.thead(
+                            <.tr(
+                              <.th("#"),
+                              <.th("Sent"),
+                              <.th("From"),
+                              <.th("To"),
+                              <.th("Subject"),
+                              <.th("Actions")
+                            )
+                          ),//thead
+                          <.tbody(
+                            <.tr(^.className:="info")(
+                              <.th("1"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("Abed"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr()(
+                              <.th("2"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("Abed"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr(^.className:="info")(
+                              <.th("3"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("Abed"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr(
+                              <.th("4"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("Abed"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                            )
+                          )//tbody
+                        )//table
+                      ),
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
+                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
+                        <.table(^.className:="table")(
+                          <.thead(
+                            <.tr(
+                              <.th("#"),
+                              <.th("Added"),
+                              <.th("By"),
+                              <.th("Name"),
+                              <.th("Actions")
+                            )
+                          ),//thead
+                          <.tbody(
+                            <.tr(^.className:="info")(
+                              <.th("1"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr(
+                              <.th("2"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr(^.className:="info")(
+                              <.th("3"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Favorite "),<.a("Hide") )
+                            ),
+                            <.tr(
+                              <.th("4"),
+                              <.th("1/22/16 11:22"),
+                              <.th("Pam"),
+                              <.th("SOW section 3.5"),
+                              <.th(<.a("Favorite "),<.a("Hide") )
+                            )
+                          )//tbody
+                        )//table
+                      )
+                      // <.img()(^.src := "./assets/images/sampleContractMilestonesStatus.PNG"),
+                    //  <.br(),
+                     // <.img()(^.src := "./assets/images/sampleContractMessages.png"),
+                  //    <.br(),
+                     // <.img()(^.src := "./assets/images/sampleContractLinks.png")
                     )
                   )
                 ),
@@ -411,7 +558,6 @@ object BiddingScreenModalForm {
               )
             ),
             <.div(^.id := "menu3", ^.className := "tab-pane fade")(
-
               // acceptanceDetail
               <.div(^.id := "acceptanceDetail" /*, ^.borderStyle.solid*/)(
                 //  <.span(^.fontWeight.bold)("Acceptance"),
@@ -446,7 +592,191 @@ object BiddingScreenModalForm {
                     <.div()(
                       <.span(^.fontWeight.bold)("Employer's Feedback to Talent:"),
                       <.br(),
-                      <.img()(^.src := "./assets/images/sampleContractFeedback.png")
+                      <.div()(
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                           <.div(^.className:="col-md-5 col-sm-5")("Communication"),
+                             <.div(^.className:="col-md-7 col-sm-7")(
+                               <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                               <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                               <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                               <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                               <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                               <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                               <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                               <.div(^.className:="col-md-5 col-sm-5")()
+
+                            )
+                        ),//row1
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Managed Expectations"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Met Schedule"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Delivered value for price"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Completeness of deliverables"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Likely to contract in future(if and when similar talent is needed)"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Likely"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Likely to recommend to friend or colleague"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
+                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Likely"),
+                            <.div(^.className:="col-md-5 col-sm-5")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Capabilities"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.table(^.className:="table table-bordered", BiddingScreenCSS.Style.tableFont)(
+                              <.thead(
+                                <.tr(
+                                  <.td(^.rowSpan:=3)("Not applicable"),
+                                  <.td(^.className:="text-center",^.colSpan:=5)("Demonstrated")
+                                 )
+                              ),//thead
+                              <.tbody(
+                                <.tr()(
+                                  <.td("No Understanding"),
+                                  <.td("Awareness"),
+                                  <.td("Fundamental Understanding: Can work under supervision"),
+                                  <.td("Skilled Understanding: Can work alone and can delegate"),
+                                  <.td("Expert Understanding")
+                                )
+                              )//tbody
+                            )//table
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("HTML, JavaScript, CSS"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-2 col-sm-2")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("User Experience Design"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-2 col-sm-2")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("SQL Anywhere"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-2 col-sm-2")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Decentralized Architectures"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-2 col-sm-2")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")()
+                          )
+                        ),
+                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className:="col-md-5 col-sm-5")("Financial Markets"),
+                          <.div(^.className:="col-md-7 col-sm-7")(
+                            <.div(^.className:="col-md-2 col-sm-2")(  <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")(<.input(^.`type`:="radio") ),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")( <.input(^.`type`:="radio")),
+                            <.div(^.className:="col-md-2 col-sm-2")()
+                          )
+                        ),
+                          <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
+                        <.div(^.className:="col-md-5 col-sm-5")("Testimonial (will be made public if Talent agrees)"),
+                        <.div(^.className:="col-md-7 col-sm-7")(
+                          <.textarea(^.rows:=5,ProjectCSS.Style.textareaWidth)
+                        )
+                      )
+
+                      )//main Div
+
+
+                      //<.img()(^.src := "./assets/images/sampleContractFeedback.png")
+
+
+
+
                     )
                   )
                 )

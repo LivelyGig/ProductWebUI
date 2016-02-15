@@ -17,7 +17,6 @@ object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P(ctl =>
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10 dashboard-container")(
           <.div(^.className:="dashboardContainer")(

@@ -66,5 +66,29 @@ object BiddingScreenCSS {
     val biddingscreenImgWidth = style (
       width(700.px)
     )
+    val inProgerssTable = style (
+      height(150.px),
+      margin(15.px),
+      overflow.auto
+    )
+    val marginHeader = style (
+      margin(8.px)
+    )
+
+    val marginTableItems = style (
+      marginLeft(5.px),
+      marginRight(5.px)
+    )
+    val tableFont = style(
+      media.maxWidth(1370.px).minWidth(1201.px)   - (
+        fontSize(10.px)
+        ),
+      media.maxWidth(1200.px).minWidth(1025.px)   - (
+        fontSize(9.px)
+        ),
+      media.maxWidth(1024.px)   - (
+        fontSize(8.px)
+        )
+    )
   }
 }
