@@ -86,7 +86,7 @@ object ProjectResults {
                 <.div()
               }
             } else {
-              <.div("data loaded")
+              <.div()
             }
           )
         ) //gigConversation

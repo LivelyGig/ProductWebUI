@@ -30,7 +30,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         /*userModel->modelFromStore*/
       }
       //      window.localStorage.setItem("userModel",userModel.toString)
-//      println(modelFromStore)
+      println(modelFromStore)
       updated(modelFromStore)
     case LogoutUser() =>
       window.localStorage.removeItem("user")
