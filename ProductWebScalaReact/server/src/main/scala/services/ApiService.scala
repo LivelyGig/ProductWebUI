@@ -49,6 +49,7 @@ class ApiService extends Api {
 
   override def getJobPosts(sessionPingRequest: SessionPing): Seq[ApiResponse[JobPostsResponse]] = {
     val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
+    /*println(json)*/
     parse(json).extract[Seq[ApiResponse[JobPostsResponse]]]
   }
 }

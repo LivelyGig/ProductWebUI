@@ -1,7 +1,8 @@
 package livelygig.client.modules
 
+import diode.react.ReactPot._
+import diode.react._
 import diode.data.Pot
-import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
 import livelygig.client.Handlers.RefreshJobPosts
@@ -10,7 +11,7 @@ import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 import livelygig.client.models.{AppModel, ModelType}
-import livelygig.shared.dtos.JobPostsResponse
+import livelygig.shared.dtos.{ApiResponse, JobPostsResponse}
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
@@ -73,39 +74,64 @@ object ProjectResults {
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
-            <.ul(^.className := "media-list")(
-              for (i <- 1 to 50) yield {
-                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
-                  <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
-                  <.span(^.className := "checkbox-lbl"),
-                  <.div(DashBoardCSS.Style.profileNameHolder)("Project: Four State: Posted  11:00am 12/05/2015"),
-
-                  <.div(^.className := "media-body")(
-                    "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                    <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
-                      <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
-                    ),
-                    <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props("Recommend")),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
-                      BiddingScreenModal(BiddingScreenModal.Props("Apply")),
-                      NewMessage(NewMessage.Props("Message")
-                      )
-                    )
-                  ) //media-body
-                ) //li
+            P.proxy().render(jobPostsRootModel =>
+              ProjectsList(jobPostsRootModel.jobPostsResponse)
+            ),
+            P.proxy().renderFailed(ex =>  <.div( <.span(Icon.warning)," Error loading")),
+            if (P.proxy().isEmpty) {
+              if (!P.proxy().isFailed) {
+                <.div("Loading")
+                <.img(^.src:="./assets/images/processing.gif")
+              } else {
+                <.div()
               }
-            ) //ul
+            } else {
+              <.div("data loaded")
+            }
           )
         ) //gigConversation
       )
     )
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
-  /*def apply(jobPosts: Seq[JobPostsResponse]) =
-    ResultsList(ResultsList.Props(AppModel(modelType = ModelType.jobPostsModel, jobPostsModel = jobPosts)))*/
   def apply(proxy: ModelProxy[Pot[JobPostsRootModel]]) = component(Props(proxy))
 }
 
+object ProjectsList {
+
+  case class Props(projects: Seq[ApiResponse[JobPostsResponse]])
+
+  private val ProjectsList = ReactComponentB[Props]("ProjectList")
+    .render_P(p => {
+      def renderJobPosts(projects: ApiResponse[JobPostsResponse]) = {
+        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+          <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
+          <.span(^.className := "checkbox-lbl"),
+          <.div(DashBoardCSS.Style.profileNameHolder)("Project: Four State: Posted  11:00am 12/05/2015"),
+
+          <.div(^.className := "media-body")(
+            "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+            <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
+              <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
+            ),
+            <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
+              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
+              NewRecommendation(NewRecommendation.Props("Recommend")),
+              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
+              BiddingScreenModal(BiddingScreenModal.Props("Apply")),
+              NewMessage(NewMessage.Props("Message")
+              )
+            )
+          ) //media-body
+        ) //li
+      }
+      <.div( ^.className:="rsltSectionContainer"  )(
+        <.ul(^.className := "media-list")(p.projects map renderJobPosts)
+      )
+    })
+    .build
+
+  def apply(jobPosts: Seq[ApiResponse[JobPostsResponse]]) =
+    ProjectsList(Props(jobPosts))
+}

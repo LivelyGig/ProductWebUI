@@ -29,7 +29,7 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String ,
                                      name: Option[String])  extends Content
-case class JobPostsResponse(sessionURI: String, defaultAlias: String, pageOfPosts: Seq[Connection], connection: Connection,
+case class JobPostsResponse(sessionURI: String, pageOfPosts: Seq[String], connection: Connection,
                             filter : String) extends Content
 
 //case class JsonBlobModel(name: String, imgSrc: String)
