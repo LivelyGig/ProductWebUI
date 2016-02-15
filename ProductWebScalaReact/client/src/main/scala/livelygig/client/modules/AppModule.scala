@@ -4,8 +4,8 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
-import livelygig.client.css.{MessagesCSS, HeaderCSS, DashBoardCSS}
-import livelygig.client.modals._
+import livelygig.client.css.{DashBoardCSS}
+import livelygig.client.services.LGCircuit
 import scalacss.ScalaCssReact._
 
 object AppModule {
@@ -45,9 +45,10 @@ object AppModule {
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
                   case "talent" => TalentResults.component(p.ctl)
-                  case "projects" => ProjectResults.component(p.ctl)
+                  case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
                   case "contract" => ContractResults.component(p.ctl)
-                  case "messages" => MessagesResults.component(p.ctl)
+                  case "messages" => MessagesResults(MessagesResults.Props())/*(zoomRW(_.connections)((m, v) => m.copy(connections = v)))*/
+                    /*staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))*/
                   case "offerings" => OfferingResults.component(p.ctl)
                 }
               )

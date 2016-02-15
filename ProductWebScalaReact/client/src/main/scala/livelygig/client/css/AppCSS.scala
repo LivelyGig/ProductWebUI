@@ -1,7 +1,5 @@
 package livelygig.client.css
 
-import livelygig.client.css.MessagesCSS
-
 import scalacss.mutable.GlobalRegistry
 /**
   * Created by shubham.k on 11/24/2015.

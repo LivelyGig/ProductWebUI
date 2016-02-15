@@ -44,7 +44,7 @@ object MainMenu {
   private val menuItems = Seq(
     MenuItem(1, _ => buildMenuItem("Dashboard",0), DashboardLoc),
     MenuItem(2, _ => buildMenuItem("Message ", 6), MessagesLoc),
-    MenuItem(3, _ => buildMenuItem("Jobs ",3), ProjectsLoc),
+    MenuItem(3, _ => buildMenuItem("Jobs ",3), JobPostsLoc),
     MenuItem(4, _ => buildMenuItem("Offerings",0), OfferingsLoc),
     MenuItem(5, _ => buildMenuItem("Profiles",0), TalentLoc),
     MenuItem(6, _ => buildMenuItem("Contracts",0), ContractsLoc),

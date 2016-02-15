@@ -19,7 +19,8 @@ import scalacss.ScalaCssReact._
 object BiddingScreenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(ctl: RouterCtl[Loc], buttonName: String)
+  case class Props(buttonName: String)
+
   case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false,showAcceptDependencies:Boolean=false,showDispute:Boolean=false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {

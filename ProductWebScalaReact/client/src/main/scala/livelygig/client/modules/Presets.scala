@@ -82,7 +82,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Offering"))
+                    BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
                   )
                 )
               } //project
@@ -101,7 +101,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props(p.ctl, "New Contract"))
+                    BiddingScreenModal(BiddingScreenModal.Props("New Contract"))
                     // ToDo:  Accept doesn't belong here.  Accept Deliverables belongs on the contract BiddingScreenModel form.
                    // Accept(Accept.Props(p.ctl, "Accept")),
                     // ToDo: Show Dispute doesn't belong here.  It belongs on the Dispute button on the BiddingScreenModal form.
@@ -127,7 +127,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewMessage(NewMessage.Props(p.ctl, "New Message"))
+                    NewMessage(NewMessage.Props("New Message"))
                   )
                 )
               }

@@ -26,6 +26,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       if (temp!=null) {
         /*userModel->JSON.parse(temp).asInstanceOf[UserModel]*/
         modelFromStore = upickle.default.read[UserModel](temp)
+//        println(modelFromStore)
         /*userModel->modelFromStore*/
       }
       //      window.localStorage.setItem("userModel",userModel.toString)

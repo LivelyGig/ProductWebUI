@@ -15,7 +15,7 @@ object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
 
-  case class Props(ctl: RouterCtl[Loc], buttonName: String)
+  case class Props(buttonName: String)
 
   case class State(showNewMessageForm: Boolean = false)
 

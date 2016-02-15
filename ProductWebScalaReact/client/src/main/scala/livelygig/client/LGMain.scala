@@ -48,7 +48,7 @@ object LGMain extends js.JSApp {
 
   case object MessagesLoc extends Loc
 
-  case object ProjectsLoc extends Loc
+  case object JobPostsLoc extends Loc
 
   case object ContractsLoc extends Loc
 
@@ -77,7 +77,7 @@ object LGMain extends js.JSApp {
       | staticRoute("#emailvalidation", EmailValidationLoc) ~> renderR(ctl => EmailValidation.component(Unit))
       | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "messages")))
       | staticRoute("#event", EventListenerLoc) ~> renderR(ctl => EventListnerBtn(EventListnerBtn.Props(ctl)))
-      | staticRoute("#projects", ProjectsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "projects")))
+      | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "projects")))
       | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "contract")))
       | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "talent")))

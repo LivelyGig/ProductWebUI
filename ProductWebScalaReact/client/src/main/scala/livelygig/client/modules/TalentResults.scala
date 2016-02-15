@@ -90,8 +90,8 @@ object TalentResults {
                     <.div(^.className := "col-md-12 col-sm-12 ")(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
-                      NewMessage(NewMessage.Props(ctl, "Message")))
+                      NewRecommendation(NewRecommendation.Props("Recommend")),
+                      NewMessage(NewMessage.Props("Message")))
                   ) //media-body
                 )
               }

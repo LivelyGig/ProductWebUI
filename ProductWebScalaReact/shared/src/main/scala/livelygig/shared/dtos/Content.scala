@@ -29,7 +29,7 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String ,
                                      name: Option[String])  extends Content
-case class JobPostsResponse(sessionURI: String, defaultAlias: String, pageOfPosts: String, connection: Connection,
+case class JobPostsResponse(sessionURI: String, defaultAlias: String, pageOfPosts: Seq[Connection], connection: Connection,
                             filter : String) extends Content
 
 //case class JsonBlobModel(name: String, imgSrc: String)
@@ -37,7 +37,7 @@ case class JobPostsResponse(sessionURI: String, defaultAlias: String, pageOfPost
 case class Connection (source: String, label: String, target: String)
 
 case class PageOfPosts(id : String, `type` : String,description : String,summary : String,
-                       postedDate: Date, broadcastDate: Date, startDate: Date, endDate: Date, currency: String,
+                       postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
                        location: String, skillsId: Seq[String], posterId: String, canForward: Boolean, referralId: Seq[String],
                        contractType: String, budget: Float)
 //["{\"id\": \"d2b255ca-dde8-4919-9e5d-a0a62d5d7c13\", \"type\": \"PROJECT\", \"summary\": \"This is really new project\",

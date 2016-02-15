@@ -1,19 +1,39 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.{ReactComponentB}
+import diode.data.Pot
+import diode.react.ModelProxy
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import livelygig.client.Handlers.RefreshJobPosts
+import livelygig.client.RootModels.JobPostsRootModel
+import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import livelygig.client.modals.PostNewMessage
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
+import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.{DashBoardCSS, HeaderCSS}
+import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import livelygig.client.models.MessagesModel
+import livelygig.client.modules.ConnectionList.ConnectionListProps
 import scala.util.{Failure, Success}
 import livelygig.client.modals.NewMessage
 import scalacss.ScalaCssReact._
 
+
 object MessagesResults {
-  val component = ReactComponentB[RouterCtl[Loc]]("Messages")
-    .render_P(ctl => {
+
+  case class Props (proxy : ModelProxy[Pot[JobPostsRootModel]] = null)
+  case class State(selectedItem: Option[MessagesModel] = None)
+  class Backend($: BackendScope[Props, _]) {
+    def mounted(props: Props) =
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshJobPosts()))
+  }
+
+  val component = ReactComponentB[Props]("Messages")
+    .backend(new Backend(_))
+    .renderPS((b, P, S ) => {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
@@ -73,8 +93,8 @@ object MessagesResults {
                     <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/")(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewMessage(NewMessage.Props(ctl, "Forward")),
-                      NewMessage(NewMessage.Props(ctl, "Reply"))
+                      NewMessage(NewMessage.Props("Forward")),
+                      NewMessage(NewMessage.Props("Reply"))
                       /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
                     )
                   ) //media-body
@@ -87,4 +107,5 @@ object MessagesResults {
 
     })
     .build
+  def apply(props: Props) = component(props)
 }

@@ -13,7 +13,7 @@ import scalacss.ScalaCssReact._
 
 object NewRecommendation {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc], buttonName :String)
+  case class Props(buttonName :String)
   case class State(showNewRecommendationForm: Boolean = false, newRecommendationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
@@ -22,7 +22,6 @@ object NewRecommendation {
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showNewRecommendationForm = true))
     }
-
     def addNewRecommendationForm() : Callback = {
       t.modState(s => s.copy(showNewRecommendationForm = true))
     }
@@ -94,6 +93,9 @@ object NewRecommendationForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
+//          <.div(^.className:="row")(
+//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("New Recommendation"))
+//          ),//main row
           <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
             ),

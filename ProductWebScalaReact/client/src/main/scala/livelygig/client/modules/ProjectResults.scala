@@ -1,19 +1,31 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
+import diode.data.Pot
+import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ReactComponentB}
-import livelygig.client.LGMain.Loc
+import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
+import livelygig.client.Handlers.RefreshJobPosts
+import livelygig.client.RootModels.JobPostsRootModel
 import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
-import scala.scalajs.js
+import livelygig.client.models.{AppModel, ModelType}
+import livelygig.shared.dtos.JobPostsResponse
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
+
+  case class Props (proxy : ModelProxy[Pot[JobPostsRootModel]])
+  case class State(selectedItem: Option[JobPostsResponse] = None)
+  class Backend($: BackendScope[Props, _]) {
+    def mounted(props: Props) =
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshJobPosts()))
+  }
+
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Projects")
-    .render_P(ctl =>
+  val component = ReactComponentB[Props]("Projects")
+    .backend(new Backend(_))
+    .renderPS((B,P,S) =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
@@ -76,10 +88,10 @@ object ProjectResults {
                     <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
+                      NewRecommendation(NewRecommendation.Props("Recommend")),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
-                      BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
-                      NewMessage(NewMessage.Props(ctl, "Message")
+                      BiddingScreenModal(BiddingScreenModal.Props("Apply")),
+                      NewMessage(NewMessage.Props("Message")
                       )
                     )
                   ) //media-body
@@ -90,7 +102,10 @@ object ProjectResults {
         ) //gigConversation
       )
     )
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
-
+  /*def apply(jobPosts: Seq[JobPostsResponse]) =
+    ResultsList(ResultsList.Props(AppModel(modelType = ModelType.jobPostsModel, jobPostsModel = jobPosts)))*/
+  def apply(proxy: ModelProxy[Pot[JobPostsRootModel]]) = component(Props(proxy))
 }
 

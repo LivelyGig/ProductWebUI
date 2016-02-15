@@ -74,12 +74,12 @@ object ContractResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Status: Bidding 11:20am 12/08/2015"),
                       <.br(),
                       <.div(/*^.className:="profile-action-buttons"*/)(
-                      BiddingScreenModal(BiddingScreenModal.Props(ctl, "Manage")),
+                      BiddingScreenModal(BiddingScreenModal.Props("Manage")),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Reject")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Counteroffer")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Accept")(),
                       // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Offer")()
-                      NewMessage(NewMessage.Props(ctl, "Message"))
+                      NewMessage(NewMessage.Props("Message"))
                       )
                     )
                   ) //media-body

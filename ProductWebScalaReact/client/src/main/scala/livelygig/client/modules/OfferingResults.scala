@@ -77,10 +77,10 @@ object OfferingResults {
                     <.div(/*^.className := "profile-action-buttons"*/)(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props(ctl, "Recommend")),
+                      NewRecommendation(NewRecommendation.Props("Recommend")),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn,^.className := "btn profile-action-buttons")("Purchase")(),
                       // BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
-                      NewMessage(NewMessage.Props(ctl, "Message")
+                      NewMessage(NewMessage.Props("Message")
                       )
                     )
                   ) //media-body
