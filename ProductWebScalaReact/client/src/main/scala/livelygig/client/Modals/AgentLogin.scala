@@ -50,15 +50,10 @@ object AgentLogin {
     }
 
     def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
-
-//      println($("#loginLoader"))
-
       log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
-
         createUser(userModel).onComplete {
           case Success(s) =>
-            $("#loginLoader").addClass("hidden")
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting){
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
@@ -67,7 +62,6 @@ object AgentLogin {
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
-            $("#loginLoader").addClass("hidden")
             log.debug(s"createUserFailure: ${s}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
@@ -85,7 +79,7 @@ object AgentLogin {
       log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
         $("#loginLoader").removeClass("hidden")
-        $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
+       // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
         CoreApi.agentLogin(userModel).onComplete {
           case Success(s) =>
             log.debug(s"loginAPISuccessMsg: ${s.msgType}")
@@ -105,13 +99,13 @@ object AgentLogin {
 //              window.location.href = "/"
             } else {
               $("#loginLoader").addClass("hidden")
-              $("#bodyBackground").removeClass("overlay")
+            //  $("#bodyBackground").removeClass("overlay")
               log.debug("login failed")
               t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
             $("#loginLoader").addClass("hidden")
-            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+         //   $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
