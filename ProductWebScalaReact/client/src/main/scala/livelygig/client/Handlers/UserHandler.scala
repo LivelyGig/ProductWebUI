@@ -21,7 +21,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         modelFromStore = UserModel(email = "", name = "",
           imgSrc = "", isLoggedIn = false)
       }*/
-      val temp = window.localStorage.getItem("user")
+      val temp = window.sessionStorage.getItem("user")
 //      println(temp)
       if (temp!=null) {
         /*userModel->JSON.parse(temp).asInstanceOf[UserModel]*/
@@ -30,10 +30,10 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         /*userModel->modelFromStore*/
       }
       //      window.localStorage.setItem("userModel",userModel.toString)
-      println(modelFromStore)
+//      println(modelFromStore)
       updated(modelFromStore)
     case LogoutUser() =>
-      window.localStorage.removeItem("user")
+      window.sessionStorage.removeItem("user")
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))
   }
 }

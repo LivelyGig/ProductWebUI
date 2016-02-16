@@ -92,7 +92,7 @@ object AgentLogin {
                 "imgSrc"-> s.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
               val user = UserModel(email = userModel.email, name = s.content.jsonBlob.get("name"),
                 imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)
-              window.localStorage.setItem("user", upickle.default.write(user))
+              window.sessionStorage.setItem("user", upickle.default.write(user))
               LGCircuit.dispatch(LoginUser(user))
 
               log.debug("login successful")
