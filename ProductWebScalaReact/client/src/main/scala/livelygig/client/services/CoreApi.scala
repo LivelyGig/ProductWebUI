@@ -42,8 +42,13 @@ object CoreApi {
   def sessionPing () : Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
     AjaxClient[Api].sessionPing(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
-  def getJobPosts () : Future[Seq[ApiResponse[JobPostsResponse]]] = {
+
+  def getJobPosts () : Future[Seq[ApiResponse[ProjectsResponse]]] = {
     AjaxClient[Api].getJobPosts(SessionPing(window.localStorage.getItem("sessionURI"))).call()
+  }
+
+  def getProjects () : Future[String] = {
+    AjaxClient[Api].getProjects(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
 
 }

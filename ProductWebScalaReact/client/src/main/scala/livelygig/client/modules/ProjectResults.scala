@@ -5,22 +5,22 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
-import livelygig.client.Handlers.RefreshJobPosts
-import livelygig.client.RootModels.JobPostsRootModel
+import livelygig.client.Handlers.RefreshProjects
+import livelygig.client.RootModels.ProjectsRootModel
 import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
-import livelygig.client.models.{AppModel, ModelType}
-import livelygig.shared.dtos.{ApiResponse, JobPostsResponse}
+import livelygig.client.models.{ProjectsModel, AppModel, ModelType}
+import livelygig.shared.dtos.{ApiResponse, ProjectsResponse}
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
 
-  case class Props (proxy : ModelProxy[Pot[JobPostsRootModel]])
-  case class State(selectedItem: Option[JobPostsResponse] = None)
+  case class Props (proxy : ModelProxy[Pot[ProjectsRootModel]])
+  case class State(selectedItem: Option[ProjectsResponse] = None)
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshJobPosts()))
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
   }
 
   // create the React component for Dashboard
@@ -75,7 +75,7 @@ object ProjectResults {
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             P.proxy().render(jobPostsRootModel =>
-              ProjectsList(jobPostsRootModel.jobPostsResponse)
+              ProjectsList(jobPostsRootModel.projectsModelList)
             ),
             P.proxy().renderFailed(ex =>  <.div( <.span(Icon.warning)," Error loading")),
             if (P.proxy().isEmpty) {
@@ -94,23 +94,23 @@ object ProjectResults {
     )
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
-  def apply(proxy: ModelProxy[Pot[JobPostsRootModel]]) = component(Props(proxy))
+  def apply(proxy: ModelProxy[Pot[ProjectsRootModel]]) = component(Props(proxy))
 }
 
 object ProjectsList {
 
-  case class Props(projects: Seq[ApiResponse[JobPostsResponse]])
+  case class Props(projects: Seq[ProjectsModel])
 
   private val ProjectsList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
-      def renderJobPosts(projects: ApiResponse[JobPostsResponse]) = {
+      def renderJobPosts(project: ProjectsModel) = {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)("Project: Four State: Posted  11:00am 12/05/2015"),
+          <.div(DashBoardCSS.Style.profileNameHolder)("Project: "+project.pageOfPosts.summary+" Posted: "+project.pageOfPosts.postedDate),
 
           <.div(^.className := "media-body")(
-            projects.content.pageOfPosts(0),
+            project.pageOfPosts.description,
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
               <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
             ),
@@ -132,6 +132,6 @@ object ProjectsList {
     })
     .build
 
-  def apply(jobPosts: Seq[ApiResponse[JobPostsResponse]]) =
+  def apply(jobPosts: Seq[ProjectsModel]) =
     ProjectsList(Props(jobPosts))
 }

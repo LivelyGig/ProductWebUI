@@ -3,8 +3,8 @@ package livelygig.client.modules
 import diode.data.Pot
 import diode.react.ModelProxy
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.Handlers.RefreshJobPosts
-import livelygig.client.RootModels.JobPostsRootModel
+import livelygig.client.Handlers.RefreshProjects
+import livelygig.client.RootModels.ProjectsRootModel
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import livelygig.client.modals.PostNewMessage
 import japgolly.scalajs.react._
@@ -24,11 +24,11 @@ import scalacss.ScalaCssReact._
 
 object MessagesResults {
 
-  case class Props (proxy : ModelProxy[Pot[JobPostsRootModel]] = null)
+  case class Props (proxy : ModelProxy[Pot[ProjectsRootModel]] = null)
   case class State(selectedItem: Option[MessagesModel] = None)
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshJobPosts()))
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
   }
 
   val component = ReactComponentB[Props]("Messages")

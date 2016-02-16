@@ -29,8 +29,8 @@ case class InitializeSessionResponse(sessionURI: Option[String], defaultAlias: O
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String ,
                                      name: Option[String])  extends Content
-case class JobPostsResponse(sessionURI: String, pageOfPosts: Seq[String], connection: Connection,
-                            filter : String) extends Content
+case class ProjectsResponse(sessionURI: String, pageOfPosts: Seq[String], connection: Connection,
+                            filter : String)
 
 //case class JsonBlobModel(name: String, imgSrc: String)
 
@@ -38,7 +38,7 @@ case class Connection (source: String, label: String, target: String)
 
 case class PageOfPosts(id : String, `type` : String,description : String,summary : String,
                        postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
-                       location: String, skillsId: Seq[String], posterId: String, canForward: Boolean, referralId: Seq[String],
+                       location: String, isPayoutInPieces: String, skillsId: String, posterId: String, canForward: String, referralId: String,
                        contractType: String, budget: Float)
 //["{\"id\": \"d2b255ca-dde8-4919-9e5d-a0a62d5d7c13\", \"type\": \"PROJECT\", \"summary\": \"This is really new project\",
 // \"description\": \"Need scala developer to implement a centralized repository for a big financial institution. \",
