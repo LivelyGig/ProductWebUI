@@ -68,7 +68,7 @@ object BiddingScreenCSS {
     )
     val inProgerssTable = style (
       height(150.px),
-      margin(15.px),
+//      margin(15.px),
       overflow.auto
     )
     val marginHeader = style (
@@ -80,6 +80,18 @@ object BiddingScreenCSS {
       marginRight(5.px)
     )
     val tableFont = style(
+      media.minWidth(1701.px)   - (
+        fontSize(16.px)
+        ),
+      media.maxWidth(1700.px).minWidth(1585.px)   - (
+        fontSize(15.px)
+        ),
+      media.maxWidth(1584.px).minWidth(1430.px)   - (
+        fontSize(13.px)
+        ),
+      media.maxWidth(1430.px).minWidth(1271.px)   - (
+        fontSize(11.px)
+        ),
       media.maxWidth(1370.px).minWidth(1201.px)   - (
         fontSize(10.px)
         ),
@@ -88,7 +100,32 @@ object BiddingScreenCSS {
         ),
       media.maxWidth(1024.px)   - (
         fontSize(8.px)
+        ),
+      media.maxWidth(1000.px)   - (
+        fontSize(6.px)
         )
+    )
+
+    val titleTable = style(
+      width(13.%%)
+    )
+    val indexWidth = style(
+      width(3.%%)
+    )
+    val plannedFinishWidth = style(
+      width(12.%%)
+    )
+    val scheduledFinishWidth = style(
+      width(13.%%)
+    )
+    val talentWidth = style(
+      width(20.%%)
+    )
+    val actionsWidth = style(
+      width(19.%%)
+    )
+    val biddingscreenModalHeight = style (
+      height(845.px)
     )
   }
 }

@@ -238,3 +238,39 @@ a:hover, a:focus {
   		display:block !important;
 	}
 }
+
+.inProgress tr {
+width: 100%;
+display: inline-table;
+}
+
+.inProgress table{
+ height:190px;
+}
+.inProgress tbody{
+  overflow-y: scroll;
+  height: 135px;
+  position: absolute;
+  width: 97%;
+}
+
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 190px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+a:hover {cursor: hand; cursor: pointer;}
+
+

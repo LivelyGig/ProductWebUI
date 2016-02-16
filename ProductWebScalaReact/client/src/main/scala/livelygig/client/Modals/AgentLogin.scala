@@ -97,7 +97,6 @@ object AgentLogin {
               window.sessionStorage.setItem("userName", s.content.jsonBlob.get("name"))
               window.sessionStorage.setItem("userImgSrc", s.content.jsonBlob.get("imgSrc"))
               LGCircuit.dispatch(LoginUser(user))
-
               log.debug("login successful")
 //              window.location.href = "/"
             } else {
@@ -108,7 +107,7 @@ object AgentLogin {
             }
           case Failure(s) =>
             $("#loginLoader").addClass("hidden")
-         //   $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
