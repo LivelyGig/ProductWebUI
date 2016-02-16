@@ -5,6 +5,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.css.{MessagesCSS, HeaderCSS}
+import livelygig.client.modals
 import livelygig.client.modals._
 import scalacss.ScalaCssReact._
 
@@ -82,7 +83,8 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
+                   // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
+                    Offering(Offering.Props("New Offering"))
                   )
                 )
               } //project
