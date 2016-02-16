@@ -1,7 +1,7 @@
 package livelygig.client.services
 
 import autowire._
-import livelygig.client.Handlers.{JobPostsHandler, UserHandler, ConnectionHandler}
+import livelygig.client.Handlers.{ProjectsHandler, UserHandler, ConnectionHandler}
 import livelygig.client.RootModels._
 import upickle.default._
 import diode._
@@ -22,7 +22,7 @@ import scala.scalajs.js.JSON
 
 
 case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: MessagesModel,
-                     jobPosts: Pot[JobPostsRootModel])
+                     jobPosts: Pot[ProjectsRootModel])
 
 object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
@@ -31,7 +31,7 @@ object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   override protected val actionHandler = combineHandlers(
     new ConnectionHandler(zoomRW(_.connections)((m, v) => m.copy(connections = v))),
     new UserHandler(zoomRW(_.user)((m, v) => m.copy(user = v))),
-    new JobPostsHandler(zoomRW(_.jobPosts)((m, v) => m.copy(jobPosts = v)))
+    new ProjectsHandler(zoomRW(_.jobPosts)((m, v) => m.copy(jobPosts = v)))
 
   )
 }
