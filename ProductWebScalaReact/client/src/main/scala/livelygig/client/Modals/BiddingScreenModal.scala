@@ -384,160 +384,157 @@ object BiddingScreenModalForm {
               )
             ),
             <.div(^.id := "menu2", ^.className := "tab-pane fade")(
-
               // inProgressDeatil
               <.div(^.id := "inProgressDetail" /*, ^.borderStyle.solid*/)(
                 // <.span(^.fontWeight.bold)("In Progress"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div()(
+                    <.div(^.className:="inProgress")(
                       <.div(BiddingScreenCSS.Style.marginHeader)("Milestones ", <.a("New")),
-                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
-                        <.table(^.className:="table")(
+                       <.table(^.className:="table")(
                           <.thead(
                             <.tr(
-                              <.th("#"),
-                              <.th("Planned Finish"),
-                              <.th("Scheduled Finish"),
-                              <.th("Title"),
-                              <.th("Talent Complete"),
-                              <.th("Employer Complete"),
-                              <.th("Actions")
+                              <.th(BiddingScreenCSS.Style.indexWidth)("#"),
+                              <.th(BiddingScreenCSS.Style.plannedFinishWidth)("Planned Finish"),
+                              <.th(BiddingScreenCSS.Style.scheduledFinishWidth)("Scheduled Finish"),
+                              <.th(BiddingScreenCSS.Style.scheduledFinishWidth)("Title"),
+                              <.th(BiddingScreenCSS.Style.talentWidth)("Talent Complete"),
+                              <.th(BiddingScreenCSS.Style.talentWidth)("Employer Complete"),
+                              <.th(BiddingScreenCSS.Style.actionsWidth)("Actions")
                             )
                           ),//thead
+
                           <.tbody(
                             <.tr(^.className:="info")(
-                              <.th("1"),
-                              <.th("1/22/16 11:22"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Architecture"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.a("Link Deliver"))
+                              <.td("1"),
+                              <.td("1/22/16 11:22"),
+                              <.td("1/22/16 11:22"),
+                              <.td(BiddingScreenCSS.Style.titleTable)("Architecture"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                             ),
                             <.tr(
-                              <.th("2"),
-                              <.th("1/22/16 11:22"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Detailed Design"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.a("Link Deliver"))
+                              <.td("2"),
+                              <.td("1/22/16 11:22"),
+                              <.td("1/22/16 11:22"),
+                              <.td(BiddingScreenCSS.Style.titleTable)("Detailed Design"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                             ),
                             <.tr(^.className:="info")(
-                              <.th("3"),
-                              <.th("1/22/16 11:22"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Prototype"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.a("Link Deliver"))
+                              <.td("3"),
+                              <.td("1/22/16 11:22"),
+                              <.td("1/22/16 11:22"),
+                              <.td(BiddingScreenCSS.Style.titleTable)("Prototype"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                             ),
                             <.tr(
-                              <.th("4"),
-                              <.th("1/22/16 11:22"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Code Complete"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                              <.th(<.a("Link Deliver"))
+                              <.td("4"),
+                              <.td("1/22/16 11:22"),
+                              <.td("1/22/16 11:22"),
+                              <.td(BiddingScreenCSS.Style.titleTable)("Code Complete"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                              <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                             )
                           )//tbody
-                        )//table
-                      ),
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
-                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
+                        ),//table
+                       <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
                         <.table(^.className:="table")(
                           <.thead(
                             <.tr(
-                              <.th("#"),
-                              <.th("Sent"),
-                              <.th("From"),
-                              <.th("To"),
-                              <.th("Subject"),
-                              <.th("Actions")
+                              <.th(^.className:="col-md-1")("#"),
+                              <.th(^.className:="col-md-2")("Sent"),
+                              <.th(^.className:="col-md-2")("From"),
+                              <.th(^.className:="col-md-2")("To"),
+                              <.th(^.className:="col-md-2")("Subject"),
+                              <.th(^.className:="col-md-3")("Actions")
                             )
                           ),//thead
-                          <.tbody(
+                         <.tbody()(
                             <.tr(^.className:="info")(
-                              <.th("1"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("Abed"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("1"),
+                              <.td(^.className:="col-md-2")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-2")("Abed"),
+                              <.td(^.className:="col-md-2")("SOW section 3.5"),
+                              <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
                             ),
                             <.tr()(
-                              <.th("2"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("Abed"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("2"),
+                              <.td(^.className:="col-md-2")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-2")("Abed"),
+                              <.td(^.className:="col-md-2")("SOW section 3.5"),
+                              <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
                             ),
                             <.tr(^.className:="info")(
-                              <.th("3"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("Abed"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("3"),
+                              <.td(^.className:="col-md-2")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-2")("Abed"),
+                              <.td(^.className:="col-md-2")("SOW section 3.5"),
+                              <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
                             ),
                             <.tr(
-                              <.th("4"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("Abed"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Reply "), <.a("Forward "), <.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("4"),
+                              <.td(^.className:="col-md-2")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-2")("Abed"),
+                              <.td(^.className:="col-md-2")("SOW section 3.5"),
+                              <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
+
                             )
                           )//tbody
                         )//table
-                      ),
+                      ,
                       <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
-                      <.div(BiddingScreenCSS.Style.inProgerssTable)(
                         <.table(^.className:="table")(
                           <.thead(
                             <.tr(
-                              <.th("#"),
-                              <.th("Added"),
-                              <.th("By"),
-                              <.th("Name"),
-                              <.th("Actions")
+                              <.th(^.className:="col-md-1")("#"),
+                              <.th(^.className:="col-md-3")("Added"),
+                              <.th(^.className:="col-md-2")("By"),
+                              <.th(^.className:="col-md-3")("Name"),
+                              <.th(^.className:="col-md-2")("Actions")
                             )
                           ),//thead
-                          <.tbody(
-                            <.tr(^.className:="info")(
-                              <.th("1"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Favorite "),<.a("Hide") )
+                         <.tbody(
+                             <.tr(^.className:="info")(
+                              <.td(^.className:="col-md-1")("1"),
+                              <.td(^.className:="col-md-3")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-3")("SOW section 3.5"),
+                              <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
                             ),
                             <.tr(
-                              <.th("2"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("2"),
+                              <.td(^.className:="col-md-3")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-3")("SOW section 3.5"),
+                              <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
                             ),
                             <.tr(^.className:="info")(
-                              <.th("3"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("3"),
+                              <.td(^.className:="col-md-3")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-3")("SOW section 3.5"),
+                              <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
                             ),
                             <.tr(
-                              <.th("4"),
-                              <.th("1/22/16 11:22"),
-                              <.th("Pam"),
-                              <.th("SOW section 3.5"),
-                              <.th(<.a("Favorite "),<.a("Hide") )
+                              <.td(^.className:="col-md-1")("4"),
+                              <.td(^.className:="col-md-3")("1/22/16 11:22"),
+                              <.td(^.className:="col-md-2")("Pam"),
+                              <.td(^.className:="col-md-3")("SOW section 3.5"),
+                              <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
                             )
                           )//tbody
                         )//table
-                      )
+
                       // <.img()(^.src := "./assets/images/sampleContractMilestonesStatus.PNG"),
                     //  <.br(),
                      // <.img()(^.src := "./assets/images/sampleContractMessages.png"),
@@ -596,93 +593,93 @@ object BiddingScreenModalForm {
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                            <.div(^.className:="col-md-5 col-sm-5")("Communication"),
                              <.div(^.className:="col-md-7 col-sm-7")(
-                               <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                               <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
                                <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                                <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                                <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                                <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                                <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                               <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                               <.div(^.className:="col-md-5 col-sm-5")()
+                               <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                               <.div(^.className:="col-md-3 col-sm-3")()
 
                             )
                         ),//row1
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Managed Expectations"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Met Schedule"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Delivered value for price"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Completeness of deliverables"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Poor" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Likely to contract in future(if and when similar talent is needed)"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Likely"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Likely"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className:="col-md-5 col-sm-5")("Likely to recommend to friend or colleague"),
                           <.div(^.className:="col-md-7 col-sm-7")(
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
                             <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio") ),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
                             <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio")),
-                            <.div(^.className:="col-md-1 col-sm-1",BiddingScreenCSS.Style.tableFont)( "Likely"),
-                            <.div(^.className:="col-md-5 col-sm-5")()
+                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Likely"),
+                            <.div(^.className:="col-md-3 col-sm-3")()
                           )
                         ),
                         <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
@@ -691,8 +688,8 @@ object BiddingScreenModalForm {
                             <.table(^.className:="table table-bordered", BiddingScreenCSS.Style.tableFont)(
                               <.thead(
                                 <.tr(
-                                  <.td(^.rowSpan:=3)("Not applicable"),
-                                  <.td(^.className:="text-center",^.colSpan:=5)("Demonstrated")
+                                  <.th(^.rowSpan:=3)("Not applicable"),
+                                  <.th(^.className:="text-center",^.colSpan:=5)("Demonstrated")
                                  )
                               ),//thead
                               <.tbody(
@@ -765,7 +762,7 @@ object BiddingScreenModalForm {
                           <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
                         <.div(^.className:="col-md-5 col-sm-5")("Testimonial (will be made public if Talent agrees)"),
                         <.div(^.className:="col-md-7 col-sm-7")(
-                          <.textarea(^.rows:=5,ProjectCSS.Style.textareaWidth)
+                          <.textarea(^.rows:=3,ProjectCSS.Style.textareaWidth)
                         )
                       )
 

@@ -328,7 +328,7 @@ object DashBoardCSS {
     val modalBodyPadding = style(
       paddingLeft(15.px),
       paddingBottom(0.px),
-      paddingTop(15.px),
+     // paddingTop(15.px),
       paddingRight(15.px)
     )
     val rsltpaddingTop10p = style(

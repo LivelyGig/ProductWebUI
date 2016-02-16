@@ -4,8 +4,8 @@ import diode.{ActionHandler, ModelRW}
 import livelygig.client.RootModels.UserRootModel
 import livelygig.client.models.{UserModel}
 import org.scalajs.dom.window
-
-import scala.scalajs.js.JSON
+import concurrent._
+import ExecutionContext.Implicits._
 
 /**
   * Created by shubham.k on 1/25/2016.

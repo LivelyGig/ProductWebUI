@@ -94,7 +94,6 @@ object AgentLogin {
                 imgSrc = s.content.jsonBlob.get("imgSrc"), isLoggedIn = true)
               window.sessionStorage.setItem("user", upickle.default.write(user))
               LGCircuit.dispatch(LoginUser(user))
-
               log.debug("login successful")
 //              window.location.href = "/"
             } else {
@@ -105,7 +104,7 @@ object AgentLogin {
             }
           case Failure(s) =>
             $("#loginLoader").addClass("hidden")
-         //   $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
