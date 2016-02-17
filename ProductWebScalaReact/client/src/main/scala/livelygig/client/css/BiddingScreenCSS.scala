@@ -89,20 +89,20 @@ object BiddingScreenCSS {
       media.maxWidth(1584.px).minWidth(1430.px)   - (
         fontSize(13.px)
         ),
-      media.maxWidth(1430.px).minWidth(1271.px)   - (
+      media.maxWidth(1430.px).minWidth(1371.px)   - (
+        fontSize(13.px)
+        ),
+      media.maxWidth(1370.px).minWidth(1236.px)   - (
         fontSize(11.px)
         ),
-      media.maxWidth(1370.px).minWidth(1201.px)   - (
+      media.maxWidth(1235.px).minWidth(1025.px)   - (
         fontSize(10.px)
         ),
-      media.maxWidth(1200.px).minWidth(1025.px)   - (
+      media.maxWidth(1024.px)   - (
         fontSize(9.px)
         ),
-      media.maxWidth(1024.px)   - (
-        fontSize(8.px)
-        ),
       media.maxWidth(1000.px)   - (
-        fontSize(6.px)
+        fontSize(8.px)
         )
     )
 
@@ -127,5 +127,30 @@ object BiddingScreenCSS {
     val biddingscreenModalHeight = style (
       height(845.px)
     )
+
+    val feedbackbgColor = style(
+      backgroundColor(c"#d9edf7")
+    )
+
+    val capabilitiesItems = style (
+      paddingTop(30.px)
+    )
+
+     val capabilities = style(
+       paddingTop(12.%%)
+     )
+    val notApplicable = style(
+      width(15.%%)
+    )
+    val noUnderstanding = style(
+      width(14.%%)
+    )
+    val awareness = style(
+      width(16.%%)
+    )
+    val expertUnderstanding = style(
+      width(10.%%)
+    )
+
   }
 }
