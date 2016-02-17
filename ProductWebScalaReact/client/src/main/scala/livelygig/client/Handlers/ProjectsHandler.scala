@@ -28,16 +28,17 @@ case class ProjectsResponseTest(sessionURI: String, pageOfPosts: Seq[String], co
 
 object ProjectsModelHandler{
   def GetJobPostsModel(jobPostsResponse: String): ProjectsRootModel = {
-
     val projectsFromBackend = upickle.default.read[Seq[ApiResponse[ProjectsResponse]]](jobPostsResponse)
 //      println(model(0).content.pageOfPosts(0))
 //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[ProjectsModel]()
     for(projectFromBackend <- projectsFromBackend){
+      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       model:+= ProjectsModel(projectFromBackend.content.sessionURI,
         upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)),projectFromBackend.content.connection,
         projectFromBackend.content.filter)
     }
+//    println(model)
     ProjectsRootModel(model)
   }
 

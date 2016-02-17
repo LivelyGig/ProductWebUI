@@ -12,6 +12,7 @@ import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 import livelygig.client.models.{ProjectsModel, AppModel, ModelType}
 import livelygig.shared.dtos.{ApiResponse, ProjectsResponse}
+import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
@@ -107,7 +108,7 @@ object ProjectsList {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)("Project: "+project.pageOfPosts.summary+" Posted: "+project.pageOfPosts.postedDate),
+          <.div(DashBoardCSS.Style.profileNameHolder)("Project: "+project.pageOfPosts.summary+" Posted: "+new Date(project.pageOfPosts.postedDate).toString),
 
           <.div(^.className := "media-body")(
             project.pageOfPosts.description,
