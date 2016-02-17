@@ -25,7 +25,11 @@ object LftcontainerCSS {
       fontSize(1.em),
       fontWeight.normal
     )
-
+    val checkboxlabel = style(
+      paddingLeft(0.px),
+      fontSize(1.em),
+      fontWeight.normal
+    )
     val slctleftcontentdiv = style(
       border(1.px,solid ,transparent),
       backgroundColor(transparent),

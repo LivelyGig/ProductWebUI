@@ -59,13 +59,13 @@ object Searches {
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Profile Type"),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Talent"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Employer"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Moderator"),
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
@@ -109,13 +109,13 @@ object Searches {
               ),
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Recommended to Me"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Favorited"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Include Hidden"),
                   <.div(^.paddingLeft := "15px")(
                     <.div(^.className := "row")(
@@ -147,7 +147,7 @@ object Searches {
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Job Type"),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
                   <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                     <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
@@ -157,7 +157,7 @@ object Searches {
                       <.input(^.`type` := "checkbox", ^.value := true, ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"),
                     <.br()
                   ),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Contest"),
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
@@ -224,16 +224,16 @@ object Searches {
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Initiating"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Escrow"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Feedback"),
                   <.br(),
-                  <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+                  <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Completed")
                 )
               )
@@ -302,28 +302,28 @@ object Searches {
 //                          <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
 //                            <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
 //                              <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " Online"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " Recommended by Me"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " Recommended to Me"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " with Talent Profile"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " with Employer Profile"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " with Moderator Profile"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " Favorited"),
 //                              <.br(),
-//                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+//                              <.label(LftcontainerCSS.Style.checkboxlabel)(
 //                                <.input(^.`type` := "checkbox"), " Include Hidden"),
 //                              <.div(^.paddingLeft:="15px")(
 //                                <.div(^.className := "row")(
