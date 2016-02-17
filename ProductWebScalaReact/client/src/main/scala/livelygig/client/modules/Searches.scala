@@ -96,7 +96,8 @@ object Searches {
                     )
                   ),
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
-                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
+                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizabletalentpostedby")(
+                    <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
                   )
                 )
               )
@@ -210,7 +211,8 @@ object Searches {
                     )
                   ),
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
-                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
+                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizableprojectspostedby")(
+                    <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
                   )
                 )
               )
@@ -287,7 +289,8 @@ object Searches {
                     )
                   ),
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
-                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
+                  <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablemessagespostedby")(
+                    <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
                   )
                 )
               )
