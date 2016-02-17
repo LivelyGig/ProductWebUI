@@ -133,6 +133,43 @@ object Presets {
                   )
                 )
               }
+
+
+              case "connections" =>    {
+
+               //   <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
+                   // <.div(/*^.className := "row"*/)(
+                     // <.div(^.className := "col-lg-1")(),
+                      //<.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
+                        <.div()(
+                          <.div(^.className := "btn-group")(
+                            <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
+                              <.span(^.className := "caret")
+                            ),
+                            <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                              <.li()(<.a(^.href := "#")("All")),
+                              <.li()(<.a(^.href := "#")("Online")),
+                              <.li()(<.a(^.href := "#")("Favorited")),
+                              <.li()(<.a(^.href := "#")("Hidden")),
+                              <.li(^.className := "divider")(),
+                              <.li()(<.a(^.href := "#")("Customize..."))
+                            )
+                          ),
+
+                          <.div(MessagesCSS.Style.newProjectbtn, ^.paddingTop:="5px")(
+                            // NewMessage(NewMessage.Props(p.ctl, "New Connection"))
+                            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className := "btn")("New Connection")
+                          )
+                        )
+                    //  ),
+                   //   <.div(^.className := "col-lg-1")()
+                    //)
+
+                 // )
+                }
+
+
+
             } //main switch
           ),
           <.div(^.className := "col-lg-1")()

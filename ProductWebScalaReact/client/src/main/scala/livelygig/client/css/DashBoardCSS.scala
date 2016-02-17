@@ -267,8 +267,8 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      paddingRight(18.%%),
-      paddingLeft(18.%%)
+      paddingRight(17.%%),
+      paddingLeft(17.%%)
     )
     val modalContent = style(
       width.inherit,

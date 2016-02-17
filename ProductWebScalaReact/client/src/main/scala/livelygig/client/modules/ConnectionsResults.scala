@@ -18,9 +18,10 @@ import livelygig.client.models.ConnectionsModel
 //import livelygig.client.services.{ConnectionsRootModel, RefreshConnections}
 import scalacss.ScalaCssReact._
 
-object Connections {
+object ConnectionsResults {
 
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
+
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
@@ -34,67 +35,67 @@ object Connections {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-      <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        <.div()(
-          //ToDo:  something like...   Presets(Presets.Props(ctl, "connections"))
-          ConnectionsPresets.component(Unit)
-        ),
-        <.div(DashBoardCSS.Style.splitContainer)(
-          <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
+     // <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
+//        <.div()(
+//          //ToDo:  something like...   Presets(Presets.Props(ctl, "connections"))
+//          ConnectionsPresets.component(Unit)
+//        ),
+     //   <.div(DashBoardCSS.Style.splitContainer)(
+         // <.div(^.className := "col-lg-1")(),
+      //    <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
             //<.div(^.className := "row")(
-            <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
-              ConnectionsSearch.component(Unit)
-            ),
-            <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
-              <.div()(
-                <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
-                    <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
-                    //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
-                    <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
-                      <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
-                        <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
-                      ),
-                      <.ul(^.className := "dropdown-menu")(
-                        <.li()(<.a(^.href := "#")("Hide")),
-                        <.li()(<.a(^.href := "#")("Favorite")),
-                        <.li()(<.a(^.href := "#")("Unhide")),
-                        <.li()(<.a(^.href := "#")("Unfavorite"))
-                      )
-                    ) //dropdown class
-                  ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-8", ^.paddingLeft := "0px")(
-                    <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px", ^.paddingTop := "19px")("2,352 Results"),
-                    <.div(^.display := "inline-block")(
-                      <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                        <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.borderWidth := "0px", ^.paddingTop := "0px", ^.paddingBottom := "2px")("By Date ")(
+//            <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
+//              ConnectionsSearch.component(Unit)
+//            ),
+            //<.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
+
+                <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
+                  <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
+                    <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
+                      <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
+                      //                      <.span(DashBoardCSS.Style.MarginLeftchkproduct, ^.className:="checkbox-lbl"),
+                      <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
+                        <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                           <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                         ),
                         <.ul(^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#")("By Date")),
-                          <.li()(<.a(^.href := "#")("By Experience")),
-                          <.li()(<.a(^.href := "#")("By Reputation")),
-                          <.li()(<.a(^.href := "#")("By Rate")),
-                          <.li()(<.a(^.href := "#")("By Projects Completed"))
+                          <.li()(<.a(^.href := "#")("Hide")),
+                          <.li()(<.a(^.href := "#")("Favorite")),
+                          <.li()(<.a(^.href := "#")("Unhide")),
+                          <.li()(<.a(^.href := "#")("Unfavorite"))
+                        )
+                      ) //dropdown class
+                    ),
+                    <.div(^.className := "col-md-8 col-sm-8 col-xs-8", ^.paddingLeft := "0px")(
+                      <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px", ^.paddingTop := "19px")("2,352 Results"),
+                      <.div(^.display := "inline-block")(
+                        <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+                          <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.borderWidth := "0px", ^.paddingTop := "0px", ^.paddingBottom := "2px")("By Date ")(
+                            <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
+                          ),
+                          <.ul(^.className := "dropdown-menu")(
+                            <.li()(<.a(^.href := "#")("By Date")),
+                            <.li()(<.a(^.href := "#")("By Experience")),
+                            <.li()(<.a(^.href := "#")("By Reputation")),
+                            <.li()(<.a(^.href := "#")("By Rate")),
+                            <.li()(<.a(^.href := "#")("By Projects Completed"))
+                          )
+                        ),
+                        <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+                          <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.padding := "0px", ^.paddingBottom := "2px", ^.border := "0px")("Newest ")(
+                            <.span(Icon.longArrowDown))
                         )
                       ),
-                      <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                        <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.padding := "0px", ^.paddingBottom := "2px", ^.border := "0px")("Newest ")(
-                          <.span(Icon.longArrowDown))
+                      <.div(^.className := "pull-right", ^.paddingTop := "10px")(
+                        // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.list)),
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(Icon.list)),
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.list))
                       )
-                    ),
-                    <.div(^.className := "pull-right", ^.paddingTop := "10px")(
-                      // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
-                      <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.list)),
-                      <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(Icon.list)),
-                      <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.list))
                     )
-                  )
-                ), //col-12
-
-                <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.horizontalImg)(
-                  <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer", DashBoardCSS.Style.verticalImg)(
+                  ), //col-12
+              //    <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
+                  <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer",DashBoardCSS.Style.verticalImg)(
                     P.proxy().render(connectionsRootModel =>
                       ConnectionList(connectionsRootModel.connectionsResponse)
                     ),
@@ -118,11 +119,11 @@ object Connections {
                       ConnectionList(connectionsRootModel.connectionsResponse)
                     )
                   ))*/
-                )
-              )
-            )
-          )
-        )
+
+            //  )
+           // )
+         // )
+      //  )
       ) //mainContainer
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
@@ -136,7 +137,7 @@ object ConnectionList {
 
   case class ConnectionListProps(connections: Seq[ConnectionsModel])
 
-  private val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
+   val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
         <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -184,7 +185,7 @@ object ConnectionList {
           )
         )
       }
-      <.div( ^.className:="rsltSectionContainer"  )(
+      <.div( ^.className:="rsltSectionContainer",^.className := "col-md-12 col-sm-12 col-xs-12",/*DashBoardCSS.Style.verticalImg,*/ ^.paddingLeft := "0px", ^.paddingRight := "0px")(
         <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })
