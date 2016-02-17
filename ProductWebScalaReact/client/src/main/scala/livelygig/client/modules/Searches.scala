@@ -58,7 +58,7 @@ object Searches {
               ),
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-                  <.div(DashBoardCSS.Style.slctHeaders)("Profile Type"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Profile Type"),
                   <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
                     <.input(^.`type` := "checkbox"), " Talent"),
                   <.br(),
@@ -95,7 +95,7 @@ object Searches {
                       <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
                     )
                   ),
-                  <.div(DashBoardCSS.Style.slctHeaders)("Posted By"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
                   <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
                   )
                 )
@@ -146,7 +146,7 @@ object Searches {
               ),
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-                  <.div(DashBoardCSS.Style.slctHeaders)("Job Type"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Job Type"),
                   <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
                   <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
@@ -209,7 +209,7 @@ object Searches {
                       )
                     )
                   ),
-                  <.div(DashBoardCSS.Style.slctHeaders)("Posted By"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
                   <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
                   )
                 )
@@ -223,7 +223,7 @@ object Searches {
               ),
               <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-                  <.div(DashBoardCSS.Style.slctHeaders)("Status"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
                   <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
                     <.input(^.`type` := "checkbox"), " Initiating"),
                   <.br(),
@@ -286,7 +286,7 @@ object Searches {
                       <.input(^.`type` := "textarea", ProjectCSS.Style.textareaWidth, ^.lineHeight := 4)
                     )
                   ),
-                  <.div(DashBoardCSS.Style.slctHeaders)("Posted By"),
+                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
                   <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablecontainerskills")(
                   )
                 )
@@ -301,7 +301,7 @@ object Searches {
 //                          ),
 //                          <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
 //                            <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-//                              <.div(DashBoardCSS.Style.slctHeaders)("Status"),
+//                              <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
 //                              <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
 //                                <.input(^.`type` := "checkbox"), " Online"),
 //                              <.br(),
