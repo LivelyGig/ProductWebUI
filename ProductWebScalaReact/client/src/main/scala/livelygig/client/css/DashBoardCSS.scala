@@ -175,10 +175,6 @@ object DashBoardCSS {
       fontSize(1.em),
       fontWeight.normal
     )
-    val slctSubCheckboxesLabel = style(
-      fontSize(1.em),
-      fontWeight.normal
-    )
     /*CreateNewAgent Css Styles*/
     val modalContainer = style(
       height(500.px),

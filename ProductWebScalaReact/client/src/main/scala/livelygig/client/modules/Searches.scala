@@ -150,10 +150,10 @@ object Searches {
                   <.label(LftcontainerCSS.Style.checkboxlabel)(
                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
                   <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                    <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
+                    <.label(LftcontainerCSS.Style.subcheckboxlabel)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"),
                     <.br(),
-                    <.label(DashBoardCSS.Style.slctSubCheckboxesLabel)(
+                    <.label(LftcontainerCSS.Style.subcheckboxlabel)(
                       <.input(^.`type` := "checkbox", ^.value := true, ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"),
                     <.br()
                   ),
