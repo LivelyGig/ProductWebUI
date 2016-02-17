@@ -17,23 +17,15 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
   override def handle = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
-      /*if (modelFromStore == null) {
-        modelFromStore = UserModel(email = "", name = "",
-          imgSrc = "", isLoggedIn = false)
-      }*/
-      val temp = window.sessionStorage.getItem("user")
-//      println(temp)
+      val temp = window.sessionStorage.getItem("userEmail")
       if (temp!=null) {
-        /*userModel->JSON.parse(temp).asInstanceOf[UserModel]*/
-        modelFromStore = upickle.default.read[UserModel](temp)
-//        println(modelFromStore)
-        /*userModel->modelFromStore*/
+        modelFromStore = UserModel(email = window.sessionStorage.getItem("userEmail"),
+          name = window.sessionStorage.getItem("userName"),
+        imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
       }
-      //      window.localStorage.setItem("userModel",userModel.toString)
-//      println(modelFromStore)
       updated(modelFromStore)
     case LogoutUser() =>
-      window.sessionStorage.removeItem("user")
+      window.sessionStorage.clear()
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))
   }
 }
