@@ -19,6 +19,21 @@ object LftcontainerCSS {
       media.maxWidth(1250.px) -(
         width(200.px))
     )
+    val slctsearchpaneheader = style(
+      paddingTop(15.px),
+      paddingBottom(2.px),
+      fontSize(1.em),
+      fontWeight.normal
+    )
+    val checkboxlabel = style(
+      paddingLeft(0.px),
+      fontSize(1.em),
+      fontWeight.normal
+    )
+    val subcheckboxlabel = style(
+      fontSize(1.em),
+      fontWeight.normal
+    )
     val slctleftcontentdiv = style(
       border(1.px,solid ,transparent),
       backgroundColor(transparent),

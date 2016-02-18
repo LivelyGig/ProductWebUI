@@ -39,28 +39,28 @@ object ConnectionsSearch {
         <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
           <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
             <.div(DashBoardCSS.Style.slctHeaders)("Status"),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " Online"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " Recommended by Me"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " Recommended to Me"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " with Talent Profile"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " with Employer Profile"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " with Moderator Profile"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " Favorited"),
             <.br(),
-            <.label(DashBoardCSS.Style.slctCheckboxesLabel)(
+            <.label(LftcontainerCSS.Style.checkboxlabel)(
               <.input(^.`type` := "checkbox"), " Include Hidden"),
             <.div(^.paddingLeft:="15px")(
               <.div(^.className := "row")(
