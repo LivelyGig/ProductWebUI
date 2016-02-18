@@ -286,4 +286,41 @@ a:hover {cursor: hand; cursor: pointer;}
 
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
     padding: 5px;
-   }
+}
+
+/* Resultsbar icons */
+@font-face {
+	font-family: 'Livelygig';
+	src:url('../Livelygig-glyphs/fonts/Livelygig.eot?hti28u');
+	src:url('../Livelygig-glyphs/fonts/Livelygig.eot?hti28u#iefix') format('embedded-opentype'),
+		url('../Livelygig-glyphs/fonts/Livelygig.ttf?hti28u') format('truetype'),
+		url('../Livelygig-glyphs/fonts/Livelygig.woff?hti28u') format('woff'),
+		url('../Livelygig-glyphs/fonts/Livelygig.svg?hti28u#Livelygig') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'Livelygig';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-List1:before {
+	content: "\e900";
+}
+.icon-List2:before {
+	content: "\e901";
+}
+.icon-List3:before {
+	content: "\e902";
+}
+

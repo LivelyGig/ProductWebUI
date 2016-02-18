@@ -1,0 +1,119 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M928 576h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"grid": 32,
+				"tags": [
+					"List1"
+				]
+			},
+			"attrs": [],
+			"properties": {
+				"order": 4,
+				"id": 2,
+				"prevSize": 64,
+				"code": 59648,
+				"name": "List1"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M928 416h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z",
+					"M928 736h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"grid": 32,
+				"tags": [
+					"List2"
+				]
+			},
+			"attrs": [],
+			"properties": {
+				"order": 5,
+				"id": 1,
+				"prevSize": 64,
+				"code": 59649,
+				"name": "List2"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 1
+		},
+		{
+			"icon": {
+				"paths": [
+					"M928 256h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z",
+					"M928 576h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z",
+					"M928 896h-832c-38.4 0-64-25.6-64-64s25.6-64 64-64h832c38.4 0 64 25.6 64 64s-25.6 64-64 64z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"grid": 32,
+				"tags": [
+					"List3"
+				]
+			},
+			"attrs": [],
+			"properties": {
+				"order": 2,
+				"id": 0,
+				"prevSize": 64,
+				"code": 59650,
+				"name": "List3"
+			},
+			"setIdx": 0,
+			"setId": 0,
+			"iconIdx": 2
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "Livelygig"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "Livelygig",
+				"majorVersion": 1,
+				"minorVersion": 0
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"embed": false,
+			"showSelector": false,
+			"showVersion": false,
+			"showMetrics": false
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215,
+			"classSelector": ".icon"
+		},
+		"historySize": 100,
+		"gridSize": 16,
+		"showCodes": true,
+		"showGrid": true
+	}
+}

@@ -250,7 +250,7 @@ object Searches {
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
                       <.div("From Date")
-                    ),
+                     ),
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                      // <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
                       <.div(^.className := "input-group date")(

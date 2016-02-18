@@ -35,20 +35,6 @@ object ConnectionsResults {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-     // <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-//        <.div()(
-//          //ToDo:  something like...   Presets(Presets.Props(ctl, "connections"))
-//          ConnectionsPresets.component(Unit)
-//        ),
-     //   <.div(DashBoardCSS.Style.splitContainer)(
-         // <.div(^.className := "col-lg-1")(),
-      //    <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
-            //<.div(^.className := "row")(
-//            <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
-//              ConnectionsSearch.component(Unit)
-//            ),
-            //<.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
-
                 <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
                   <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
                     <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
@@ -88,9 +74,9 @@ object ConnectionsResults {
                       ),
                       <.div(^.className := "pull-right", ^.paddingTop := "10px")(
                         // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
-                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.list)),
-                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(Icon.list)),
-                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.list))
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
+                        <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
                       )
                     )
                   ), //col-12

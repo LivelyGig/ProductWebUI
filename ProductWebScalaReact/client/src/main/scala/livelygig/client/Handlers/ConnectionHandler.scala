@@ -51,3 +51,4 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) exten
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }
+
