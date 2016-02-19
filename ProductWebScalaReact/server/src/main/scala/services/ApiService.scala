@@ -22,10 +22,10 @@ class ApiService extends Api {
   val wsRequest : WSRequest = WS.url(BASE_URL)
 
 
-  override def createAgent(userRequest: CreateUser): Future[ApiResponse[CreateUserResponse]] = {
+  override def createAgent(userRequest: CreateUser): Future[/*ApiResponse[CreateUserResponse]*/String] = {
     println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
     WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(
-      response=>parse(response.body.toString).extract[ApiResponse[CreateUserResponse]]
+      response=>response.body.toString
     )
   }
 
@@ -34,10 +34,10 @@ class ApiService extends Api {
       response=>parse(response.body.toString).extract[ApiResponse[ConfirmEmailResponse]])
   }
 
-  override def agentLogin(initializeSessionRequest: InitializeSession): Future[ApiResponse[InitializeSessionResponse]] = {
+  override def agentLogin(initializeSessionRequest: InitializeSession): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     println(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(
-      response=>parse(response.body.toString).extract[ApiResponse[InitializeSessionResponse]])
+    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map{
+      response=> response.body.toString()}
   }
 
   override def sessionPing(sessionPingRequest: SessionPing): Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
@@ -50,7 +50,7 @@ class ApiService extends Api {
     println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
     WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map{
       response=>
-//        println("response.json.toString() = "+response.json.toString())
+        //println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
   }

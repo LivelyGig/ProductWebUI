@@ -39,7 +39,7 @@ object ModelHandler{
       connection =>
 //        println(connection.content.jsonBlob)
         val json = JSON.parse(connection.content.jsonBlob)
-       val name = json.name.asInstanceOf[String]
+        val name = json.name.asInstanceOf[String]
         val source = connection.content.connection.source
         val target = connection.content.connection.target
         val label = connection.content.connection.label

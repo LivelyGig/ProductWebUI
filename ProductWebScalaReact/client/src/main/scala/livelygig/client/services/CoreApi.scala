@@ -25,7 +25,7 @@ object CoreApi {
   //    ).map(_.responseText)
   //  }
 
-  def createUser(userModel: UserModel): Future[ApiResponse[CreateUserResponse]] = {
+  def createUser(userModel: UserModel): Future[/*ApiResponse[CreateUserResponse]*/String] = {
     AjaxClient[Api].createAgent(CreateUser(userModel.email, userModel.password,
       Map("name" -> userModel.name), true)).call()
   }
@@ -34,7 +34,7 @@ object CoreApi {
     AjaxClient[Api].confirmEmail(ConfirmEmail(emailValidationModel.token)).call()
   }
 
-  def agentLogin(userModel: UserModel): Future[ApiResponse[InitializeSessionResponse]] = {
+  def agentLogin(userModel: UserModel): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     AjaxClient[Api].agentLogin(InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")).call()
   }
