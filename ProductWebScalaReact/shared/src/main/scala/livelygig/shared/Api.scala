@@ -13,9 +13,7 @@ trait Api {
 
   def sessionPing (sessionPingRequest: SessionPing) : Future[Seq[ApiResponse[ConnectionProfileResponse]]]
 
-  def getJobPosts(sessionPingRequest: SessionPing): Seq[ApiResponse[ProjectsResponse]]
+  def getConnections (sessionPingRequest: SessionPing) : Future[String]
 
-  def getProjects(sessionPingRequest: SessionPing): String
-
+  def getProjects(sessionPingRequest: SessionPing):String
 }
-

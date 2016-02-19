@@ -12,10 +12,9 @@ import scala.concurrent.Future
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
-
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
-  var BASE_URL = "http://54.201.40.176:9876/api"
+  var BASE_URL = "http://54.191.93.74:9876/api"
   var CREATE_USER_REQUEST_MSG = "createUserRequest"
   var CONFIRM_EMAIL_MSG = "confirmEmailToken"
   var INITIALIZE_SESSION_MSG = "initializeSessionRequest"
@@ -47,16 +46,18 @@ class ApiService extends Api {
       response=>parse(response.body.toString).extract[Seq[ApiResponse[ConnectionProfileResponse]]])
   }
 
-  override def getJobPosts(sessionPingRequest: SessionPing): Seq[ApiResponse[ProjectsResponse]] = {
-    val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
-    /*println(json)*/
-    parse(json).extract[Seq[ApiResponse[ProjectsResponse]]]
+  override def getConnections(sessionPingRequest: SessionPing): Future[String] = {
+    println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map{
+      response=>
+//        println("response.json.toString() = "+response.json.toString())
+        response.json.toString()
+    }
   }
+
   override def getProjects(sessionPingRequest: SessionPing): String = {
     val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
     /*println(json)*/
     json
   }
 }
-
-

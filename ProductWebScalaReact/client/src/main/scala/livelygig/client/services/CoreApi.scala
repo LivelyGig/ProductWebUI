@@ -43,8 +43,8 @@ object CoreApi {
     AjaxClient[Api].sessionPing(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
 
-  def getJobPosts () : Future[Seq[ApiResponse[ProjectsResponse]]] = {
-    AjaxClient[Api].getJobPosts(SessionPing(window.localStorage.getItem("sessionURI"))).call()
+  def getConnections () : Future[String] = {
+    AjaxClient[Api].getConnections(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
 
   def getProjects () : Future[String] = {
@@ -52,5 +52,3 @@ object CoreApi {
   }
 
 }
-
-
