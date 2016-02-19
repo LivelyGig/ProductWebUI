@@ -170,17 +170,8 @@ object DashBoardCSS {
       fontSize(1.em),
       fontWeight.normal
     )
-    val slctCheckboxesLabel = style(
-      paddingLeft(0.px),
-      fontSize(1.em),
-      fontWeight.normal
-    )
     val slctSubCheckboxesDiv = style(
       paddingLeft(20.px),
-      fontSize(1.em),
-      fontWeight.normal
-    )
-    val slctSubCheckboxesLabel = style(
       fontSize(1.em),
       fontWeight.normal
     )
@@ -276,8 +267,8 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      paddingRight(18.%%),
-      paddingLeft(18.%%)
+      paddingRight(17.%%),
+      paddingLeft(17.%%)
     )
     val modalContent = style(
       width.inherit,

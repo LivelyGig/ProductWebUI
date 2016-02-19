@@ -27,6 +27,7 @@ object AppModule {
             case "contract" => Presets(Presets.Props(p.ctl, "contract"))
             case "messages" => Presets(Presets.Props(p.ctl, "messages"))
             case "offerings" => Presets(Presets.Props(p.ctl, "offerings"))
+            case "connections" => Presets(Presets.Props(p.ctl, "connections"))
           }
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
@@ -40,6 +41,7 @@ object AppModule {
                   case "contract" => Searches(Searches.Props(p.ctl, "contract"))
                   case "messages" => Searches(Searches.Props(p.ctl, "messages"))
                   case "offerings" => Searches(Searches.Props(p.ctl, "offerings"))
+                  case "connections" => Searches(Searches.Props(p.ctl, "connections"))
                 }
               ),
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
@@ -50,6 +52,8 @@ object AppModule {
                   case "messages" => MessagesResults(MessagesResults.Props())/*(zoomRW(_.connections)((m, v) => m.copy(connections = v)))*/
                     /*staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))*/
                   case "offerings" => OfferingResults.component(p.ctl)
+                  //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
+                  case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }
               )
             //)
