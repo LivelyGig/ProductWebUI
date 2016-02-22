@@ -46,7 +46,7 @@ object BiddingScreenModal {
 
   case class Props(buttonName: String)
 
-  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false,showAcceptDependencies:Boolean=false,showDispute:Boolean=false)
+  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false, showAcceptDependencies: Boolean = false, showDispute: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback = {
@@ -57,8 +57,8 @@ object BiddingScreenModal {
       t.modState(s => s.copy(showBiddingScreen = true))
     }
 
-    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false,  postConfirmation: Boolean = false,postAcceptDependencies:Boolean=false,
-                         postDispute:Boolean=false): Callback = {
+    def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
+                         postDispute: Boolean = false): Callback = {
       log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
@@ -66,13 +66,13 @@ object BiddingScreenModal {
         t.modState(s => s.copy(showBiddingScreen = false, showMessage = true))
       }
       else if (postConfirmation) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =true ))
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = true))
       }
       else if (postAcceptDependencies) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =false,showAcceptDependencies = true))
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = false, showAcceptDependencies = true))
       }
       else if (postDispute) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation =false,showAcceptDependencies = false,showDispute = true))
+        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = true))
       }
       else {
         t.modState(s => s.copy(showBiddingScreen = false))
@@ -82,16 +82,20 @@ object BiddingScreenModal {
     def hideMessage(showMessage: Boolean = false): Callback = {
       t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
     }
+
     def hideConfirmation(showConfirmation: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
     }
+
     def hideAcceptDependencies(showAcceptDependencies: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showAcceptDependencies=false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showBiddingScreen = true))
     }
+
     def hideDispute(showDispute: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false,showConfirmation = false, showAcceptDependencies=false,showDispute=false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = false, showBiddingScreen = true))
     }
   }
+
 }
 
 object BiddingScreenModalForm {
@@ -99,7 +103,7 @@ object BiddingScreenModalForm {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
-      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage || scope.currentState.postConfirmation || scope.currentState.postAcceptDependencies||scope.currentState.postDispute) {
+      if (scope.currentState.postBiddingScreen || scope.currentState.postMessage || scope.currentState.postConfirmation || scope.currentState.postAcceptDependencies || scope.currentState.postDispute) {
         scope.$.backend.hidemodal
       }
     })
@@ -110,9 +114,9 @@ object BiddingScreenModalForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean, Boolean,Boolean,Boolean,Boolean) => Callback)
+  case class Props(submitHandler: (Boolean, Boolean, Boolean, Boolean, Boolean) => Callback)
 
-  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false,postAcceptDependencies:Boolean=false,postDispute:Boolean=false)
+  case class State(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false, postDispute: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hidemodal = {
@@ -131,7 +135,7 @@ object BiddingScreenModalForm {
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
-        <.form(^.onSubmit ==> submitForm, ^.className:="biddingscreenModalHeight")(
+        <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
 
           <.ul(^.className := "nav nav-tabs")(
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
@@ -300,8 +304,8 @@ object BiddingScreenModalForm {
                                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                                   <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
                                   <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn" , ^.onClick==>confirmationForm )("Apply")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>confirmationForm )("Accept Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
@@ -370,9 +374,9 @@ object BiddingScreenModalForm {
                 // <.span(^.fontWeight.bold)("In Progress"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div(^.className:="inProgress")(
+                    <.div(^.className := "inProgress")(
                       <.div(BiddingScreenCSS.Style.marginHeader)("Milestones ", <.a("New")),
-                      <.table(^.className:="table")(
+                      <.table(^.className := "table")(
                         <.thead(
                           <.tr(
                             <.th(BiddingScreenCSS.Style.indexWidth)("#"),
@@ -383,16 +387,16 @@ object BiddingScreenModalForm {
                             <.th(BiddingScreenCSS.Style.talentWidth)("Employer Complete"),
                             <.th(BiddingScreenCSS.Style.actionsWidth)("Actions")
                           )
-                        ),//thead
+                        ), //thead
 
                         <.tbody(
-                          <.tr(^.className:="info")(
+                          <.tr(^.className := "info")(
                             <.td("1"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
                             <.td(BiddingScreenCSS.Style.titleTable)("Architecture"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                           ),
                           <.tr(
@@ -400,17 +404,17 @@ object BiddingScreenModalForm {
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
                             <.td(BiddingScreenCSS.Style.titleTable)("Detailed Design"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                           ),
-                          <.tr(^.className:="info")(
+                          <.tr(^.className := "info")(
                             <.td("3"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
                             <.td(BiddingScreenCSS.Style.titleTable)("Prototype"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                           ),
                           <.tr(
@@ -418,111 +422,141 @@ object BiddingScreenModalForm {
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
                             <.td(BiddingScreenCSS.Style.titleTable)("Code Complete"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
-                            <.td(<.input(^.`type`:="checkbox"),"1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
+                            <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
                           )
-                        )//tbody
-                      ),//table
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
-                      <.table(^.className:="table")(
+                        ) //tbody
+                      ), //table
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Escrowed Deliverables ", <.a("New")),
+                      <.table(^.className := "table")(
                         <.thead(
                           <.tr(
-                            <.th(^.className:="col-md-1")("#"),
-                            <.th(^.className:="col-md-2")("Sent"),
-                            <.th(^.className:="col-md-2")("From"),
-                            <.th(^.className:="col-md-2")("To"),
-                            <.th(^.className:="col-md-2")("Subject"),
-                            <.th(^.className:="col-md-3")("Actions")
+                            <.th(^.className := "col-md-1")("#"),
+                            <.th(^.className := "col-md-2")("Description"),
+                            <.th(^.className := "col-md-2")("Filename"),
+                            <.th(^.className := "col-md-2")("Uploaded"),
+                            <.th(^.className := "col-md-2")("Escrow Status"),
+                            <.th(^.className := "col-md-3")("Actions")
                           )
-                        ),//thead
+                        ), //thead
                         <.tbody()(
-                          <.tr(^.className:="info")(
-                            <.td(^.className:="col-md-1")("1"),
-                            <.td(^.className:="col-md-2")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-2")("Abed"),
-                            <.td(^.className:="col-md-2")("SOW section 3.5"),
-                            <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
+                          <.tr(^.className := "info")(
+                            <.td(^.className := "col-md-1")("1"),
+                            <.td(^.className := "col-md-2")("Design Overview"),
+                            <.td(^.className := "col-md-2")("design.vdx"),
+                            <.td(^.className := "col-md-2")("2016-01-17"),
+                            <.td(^.className := "col-md-2")("Released"),
+                            <.td(^.className := "col-md-3")(<.a(" Details "), <.a("Release "))
                           ),
                           <.tr()(
-                            <.td(^.className:="col-md-1")("2"),
-                            <.td(^.className:="col-md-2")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-2")("Abed"),
-                            <.td(^.className:="col-md-2")("SOW section 3.5"),
-                            <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
-                          ),
-                          <.tr(^.className:="info")(
-                            <.td(^.className:="col-md-1")("3"),
-                            <.td(^.className:="col-md-2")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-2")("Abed"),
-                            <.td(^.className:="col-md-2")("SOW section 3.5"),
-                            <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
-                          ),
-                          <.tr(
-                            <.td(^.className:="col-md-1")("4"),
-                            <.td(^.className:="col-md-2")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-2")("Abed"),
-                            <.td(^.className:="col-md-2")("SOW section 3.5"),
-                            <.td(^.className:="col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "),<.a(" Hide"))
-
+                            <.td(^.className := "col-md-1")("2"),
+                            <.td(^.className := "col-md-2")("Prototype code"),
+                            <.td(^.className := "col-md-2")("Scala.zip"),
+                            <.td(^.className := "col-md-2")("2016-02-14"),
+                            <.td(^.className := "col-md-2")("Held pending payment"),
+                            <.td(^.className := "col-md-3")(<.a(" Details "), <.a("Release "))
                           )
-                        )//tbody
-                      )//table
-                      ,
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
-                      <.table(^.className:="table")(
+                        ) //tbody
+                      ), //table
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
+                      <.table(^.className := "table")(
                         <.thead(
                           <.tr(
-                            <.th(^.className:="col-md-1")("#"),
-                            <.th(^.className:="col-md-3")("Added"),
-                            <.th(^.className:="col-md-2")("By"),
-                            <.th(^.className:="col-md-3")("Name"),
-                            <.th(^.className:="col-md-2")("Actions")
+                            <.th(^.className := "col-md-1")("#"),
+                            <.th(^.className := "col-md-2")("Sent"),
+                            <.th(^.className := "col-md-2")("From"),
+                            <.th(^.className := "col-md-2")("To"),
+                            <.th(^.className := "col-md-2")("Subject"),
+                            <.th(^.className := "col-md-3")("Actions")
                           )
-                        ),//thead
+                        ), //thead
+                        <.tbody()(
+                          <.tr(^.className := "info")(
+                            <.td(^.className := "col-md-1")("1"),
+                            <.td(^.className := "col-md-2")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-2")("Abed"),
+                            <.td(^.className := "col-md-2")("SOW section 3.5"),
+                            <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
+                          ),
+                          <.tr()(
+                            <.td(^.className := "col-md-1")("2"),
+                            <.td(^.className := "col-md-2")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-2")("Abed"),
+                            <.td(^.className := "col-md-2")("SOW section 3.5"),
+                            <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
+                          ),
+                          <.tr(^.className := "info")(
+                            <.td(^.className := "col-md-1")("3"),
+                            <.td(^.className := "col-md-2")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-2")("Abed"),
+                            <.td(^.className := "col-md-2")("SOW section 3.5"),
+                            <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
+                          ),
+                          <.tr(
+                            <.td(^.className := "col-md-1")("4"),
+                            <.td(^.className := "col-md-2")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-2")("Abed"),
+                            <.td(^.className := "col-md-2")("SOW section 3.5"),
+                            <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
+                          )
+                        ) //tbody
+                      ) //table
+                      ,
+                      <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
+                      <.table(^.className := "table")(
+                        <.thead(
+                          <.tr(
+                            <.th(^.className := "col-md-1")("#"),
+                            <.th(^.className := "col-md-3")("Added"),
+                            <.th(^.className := "col-md-2")("By"),
+                            <.th(^.className := "col-md-3")("Name"),
+                            <.th(^.className := "col-md-2")("Actions")
+                          )
+                        ), //thead
                         <.tbody(
-                          <.tr(^.className:="info")(
-                            <.td(^.className:="col-md-1")("1"),
-                            <.td(^.className:="col-md-3")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-3")("SOW section 3.5"),
-                            <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
+                          <.tr(^.className := "info")(
+                            <.td(^.className := "col-md-1")("1"),
+                            <.td(^.className := "col-md-3")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-3")("SOW section 3.5"),
+                            <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           ),
                           <.tr(
-                            <.td(^.className:="col-md-1")("2"),
-                            <.td(^.className:="col-md-3")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-3")("SOW section 3.5"),
-                            <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
+                            <.td(^.className := "col-md-1")("2"),
+                            <.td(^.className := "col-md-3")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-3")("SOW section 3.5"),
+                            <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           ),
-                          <.tr(^.className:="info")(
-                            <.td(^.className:="col-md-1")("3"),
-                            <.td(^.className:="col-md-3")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-3")("SOW section 3.5"),
-                            <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
+                          <.tr(^.className := "info")(
+                            <.td(^.className := "col-md-1")("3"),
+                            <.td(^.className := "col-md-3")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-3")("SOW section 3.5"),
+                            <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           ),
                           <.tr(
-                            <.td(^.className:="col-md-1")("4"),
-                            <.td(^.className:="col-md-3")("1/22/16 11:22"),
-                            <.td(^.className:="col-md-2")("Pam"),
-                            <.td(^.className:="col-md-3")("SOW section 3.5"),
-                            <.td(^.className:="col-md-2")(<.a("Favorite "),<.a("Hide") )
+                            <.td(^.className := "col-md-1")("4"),
+                            <.td(^.className := "col-md-3")("1/22/16 11:22"),
+                            <.td(^.className := "col-md-2")("Pam"),
+                            <.td(^.className := "col-md-3")("SOW section 3.5"),
+                            <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           )
-                        )//tbody
-                      )//table
+                        ) //tbody
+                      ) //table
                     )
                   )
                 ),
                 <.div()(
                   <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
                     // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>acceptDependencies)("Accept Deliverables")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn",^.onClick==>disputeForm)("Dispute")(),
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                   )
@@ -565,106 +599,106 @@ object BiddingScreenModalForm {
                       <.span(^.fontWeight.bold)("Employer's Feedback to Talent:"),
                       <.br(),
                       <.div()(
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Communication"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio" ,^.name:="communication")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio", ^.name:="communication") ),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio", ^.name:="communication")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio", ^.name:="communication")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio", ^.name:="communication")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Communication"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
 
                           )
-                        ),//row1
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Managed Expectations"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="managedExpectations")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="managedExpectations") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="managedExpectations")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="managedExpectations")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="managedExpectations")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        ), //row1
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Managed Expectations"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Met Schedule"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="metSchedule")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="metSchedule") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="metSchedule")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="metSchedule")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="metSchedule")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Met Schedule"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Delivered value for price"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio",^.name:="price")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="price") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="price")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="price")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="price")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Delivered value for price"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Completeness of deliverables"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Poor" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio",^.name:="deliverables")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="deliverables") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="deliverables")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="deliverables")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="deliverables")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Excellent"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Completeness of deliverables"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Likely to contract in future(if and when similar talent is needed)"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="contract")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="contract") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="contract")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="contract")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="contract")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Likely"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Likely to contract in future(if and when similar talent is needed)"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Unlikely"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Likely"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4")("Likely to recommend to friend or colleague"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Unlikely" ),
-                            <.div(^.className:="col-md-1 col-sm-1")(  <.input(^.`type`:="radio",^.name:="recommend")),
-                            <.div(^.className:="col-md-1 col-sm-1")(<.input(^.`type`:="radio",^.name:="recommend") ),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="recommend")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="recommend")),
-                            <.div(^.className:="col-md-1 col-sm-1")( <.input(^.`type`:="radio",^.name:="recommend")),
-                            <.div(^.className:="col-md-2 col-sm-2",BiddingScreenCSS.Style.tableFont)( "Likely"),
-                            <.div(^.className:="col-md-3 col-sm-3")()
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4")("Likely to recommend to friend or colleague"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Unlikely"),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
+                            <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
+                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Likely"),
+                            <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader/*BiddingScreenCSS.Style.capabilities*/)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Capabilities"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.table(^.className:="table table-bordered", BiddingScreenCSS.Style.tableFont)(
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Capabilities"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.table(^.className := "table table-bordered", BiddingScreenCSS.Style.tableFont)(
                               <.tbody(
                                 <.tr(
-                                  <.td(BiddingScreenCSS.Style.notApplicable)(^.rowSpan:=2)("Not applicable"),
-                                  <.th(^.className:="text-center",^.colSpan:=6)("Demonstrated")
+                                  <.td(BiddingScreenCSS.Style.notApplicable)(^.rowSpan := 2)("Not applicable"),
+                                  <.th(^.className := "text-center", ^.colSpan := 6)("Demonstrated")
                                 ),
                                 <.tr(
                                   <.td(BiddingScreenCSS.Style.noUnderstanding)("No Understanding"),
@@ -673,72 +707,72 @@ object BiddingScreenModalForm {
                                   <.td(BiddingScreenCSS.Style.awareness)("Skilled Understanding: Can work alone and can delegate"),
                                   <.td(BiddingScreenCSS.Style.expertUnderstanding)("Expert Understanding")
                                 )
-                              )//tbody
-                            )//table
+                              ) //tbody
+                            ) //table
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("HTML, JavaScript, CSS"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(  <.input(^.`type`:="radio",^.name:="HJS")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="HJS") ),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="HJS")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="HJS")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="HJS")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="HJS"))
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("HTML, JavaScript, CSS"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS"))
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("User Experience Design"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(  <.input(^.`type`:="radio",^.name:="userDesign")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="userDesign") ),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="userDesign")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="userDesign")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="userDesign")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="userDesign"))
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("User Experience Design"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign"))
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("SQL Anywhere"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(  <.input(^.`type`:="radio",^.name:="sqlAnywhere")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="sqlAnywhere") ),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="sqlAnywhere")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="sqlAnywhere")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="sqlAnywhere")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="sqlAnywhere"))
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("SQL Anywhere"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere"))
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Decentralized Architectures"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="architecture")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="architecture") ),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="architecture")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="architecture")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="architecture")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="architecture"))
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Decentralized Architectures"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture"))
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Financial Markets"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="markets")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="markets")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="markets")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="markets")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")( <.input(^.`type`:="radio",^.name:="markets")),
-                            <.div(^.className:="col-md-2 col-sm-2 text-center")(<.input(^.`type`:="radio",^.name:="markets"))
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Financial Markets"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
+                            <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets"))
                           )
                         ),
-                        <.div(^.className:="row",BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className:="col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Testimonial (will be made public if Talent agrees)"),
-                          <.div(^.className:="col-md-8 col-sm-8")(
-                            <.textarea(^.rows:=3,ProjectCSS.Style.textareaWidth)
+                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Testimonial (will be made public if Talent agrees)"),
+                          <.div(^.className := "col-md-8 col-sm-8")(
+                            <.textarea(^.rows := 3, ProjectCSS.Style.textareaWidth)
                           )
                         )
-                      )//main Div
+                      ) //main Div
                     )
                   )
                 )
@@ -794,8 +828,9 @@ object BiddingScreenModalForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postBiddingScreen)
-      props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation,state.postAcceptDependencies,state.postDispute)
+      props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation, state.postAcceptDependencies, state.postDispute)
     }
   }
+
 }
 
