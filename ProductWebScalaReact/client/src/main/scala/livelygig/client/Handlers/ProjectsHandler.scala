@@ -33,7 +33,7 @@ object ProjectsModelHandler{
 //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[ProjectsModel]()
     for(projectFromBackend <- projectsFromBackend){
-      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
+//      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       model:+= ProjectsModel(projectFromBackend.content.sessionURI,
         upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)),projectFromBackend.content.connection,
         projectFromBackend.content.filter)
