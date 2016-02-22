@@ -21,14 +21,23 @@ case class RefreshConnections(value: Pot[ConnectionsRootModel] = Empty) extends 
 }
 
 object ModelHandler{
-  def GetConnectionsModel(connections: Seq[ApiResponse[ConnectionProfileResponse]]): ConnectionsRootModel = {
+  def GetConnectionsModel(response: String): ConnectionsRootModel = {
+//   println("response = "+response)
+   /* try {
+      upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
+    } catch {
+      case e: Exception  => println(e.toString)
+    }*/
+    val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
+//    println("connections = "+ connections)
     var model = Seq[ConnectionsModel]()
-    connections.map(connection =>
+    /*connections.map(connection =>
       connection.content.name -> Option(
         JSON.parse(connection.content.jsonBlob).name)
-    )
+    )*/
     connections.foreach {
       connection =>
+//        println(connection.content.jsonBlob)
         val json = JSON.parse(connection.content.jsonBlob)
         val name = json.name.asInstanceOf[String]
         val source = connection.content.connection.source
@@ -47,8 +56,7 @@ object ModelHandler{
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action : RefreshConnections =>
-      val updateF = action.effect(CoreApi.sessionPing())(connections=>ModelHandler.GetConnectionsModel(connections))
+      val updateF = action.effect(CoreApi.getConnections())(connections=>ModelHandler.GetConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }
-

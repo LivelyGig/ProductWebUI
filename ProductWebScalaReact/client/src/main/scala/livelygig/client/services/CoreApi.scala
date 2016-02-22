@@ -25,7 +25,7 @@ object CoreApi {
   //    ).map(_.responseText)
   //  }
 
-  def createUser(userModel: UserModel): Future[ApiResponse[CreateUserResponse]] = {
+  def createUser(userModel: UserModel): Future[/*ApiResponse[CreateUserResponse]*/String] = {
     AjaxClient[Api].createAgent(CreateUser(userModel.email, userModel.password,
       Map("name" -> userModel.name), true)).call()
   }
@@ -34,13 +34,17 @@ object CoreApi {
     AjaxClient[Api].confirmEmail(ConfirmEmail(emailValidationModel.token)).call()
   }
 
-  def agentLogin(userModel: UserModel): Future[ApiResponse[InitializeSessionResponse]] = {
+  def agentLogin(userModel: UserModel): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     AjaxClient[Api].agentLogin(InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")).call()
   }
 
   def sessionPing () : Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
     AjaxClient[Api].sessionPing(SessionPing(window.localStorage.getItem("sessionURI"))).call()
+  }
+
+  def getConnections () : Future[String] = {
+    AjaxClient[Api].getConnections(SessionPing(window.localStorage.getItem("sessionURI"))).call()
   }
 
   def getProjects () : Future[String] = {

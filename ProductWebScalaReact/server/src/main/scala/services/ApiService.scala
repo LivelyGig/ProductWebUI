@@ -12,7 +12,6 @@ import scala.concurrent.Future
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
-
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
   var BASE_URL = "http://54.191.93.74:9876/api"
@@ -23,10 +22,10 @@ class ApiService extends Api {
   val wsRequest : WSRequest = WS.url(BASE_URL)
 
 
-  override def createAgent(userRequest: CreateUser): Future[ApiResponse[CreateUserResponse]] = {
+  override def createAgent(userRequest: CreateUser): Future[/*ApiResponse[CreateUserResponse]*/String] = {
     println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
     WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(
-      response=>parse(response.body.toString).extract[ApiResponse[CreateUserResponse]]
+      response=>response.body.toString
     )
   }
 
@@ -35,16 +34,25 @@ class ApiService extends Api {
       response=>parse(response.body.toString).extract[ApiResponse[ConfirmEmailResponse]])
   }
 
-  override def agentLogin(initializeSessionRequest: InitializeSession): Future[ApiResponse[InitializeSessionResponse]] = {
+  override def agentLogin(initializeSessionRequest: InitializeSession): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     println(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map(
-      response=>parse(response.body.toString).extract[ApiResponse[InitializeSessionResponse]])
+    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map{
+      response=> response.body.toString()}
   }
 
   override def sessionPing(sessionPingRequest: SessionPing): Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
     println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
     WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map(
       response=>parse(response.body.toString).extract[Seq[ApiResponse[ConnectionProfileResponse]]])
+  }
+
+  override def getConnections(sessionPingRequest: SessionPing): Future[String] = {
+    println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
+    WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map{
+      response=>
+        //println("response.json.toString() = "+response.json.toString())
+        response.json.toString()
+    }
   }
 
   override def getProjects(sessionPingRequest: SessionPing): String = {
