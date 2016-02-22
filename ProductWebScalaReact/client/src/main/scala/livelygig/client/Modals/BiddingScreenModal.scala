@@ -397,7 +397,7 @@ object BiddingScreenModalForm {
                             <.td(BiddingScreenCSS.Style.titleTable)("Architecture"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
-                            <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
+                            <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           ),
                           <.tr(
                             <.td("2"),
@@ -406,7 +406,7 @@ object BiddingScreenModalForm {
                             <.td(BiddingScreenCSS.Style.titleTable)("Detailed Design"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
-                            <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
+                            <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           ),
                           <.tr(^.className := "info")(
                             <.td("3"),
@@ -415,7 +415,7 @@ object BiddingScreenModalForm {
                             <.td(BiddingScreenCSS.Style.titleTable)("Prototype"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
-                            <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
+                            <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           ),
                           <.tr(
                             <.td("4"),
@@ -424,7 +424,7 @@ object BiddingScreenModalForm {
                             <.td(BiddingScreenCSS.Style.titleTable)("Code Complete"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
-                            <.td(<.a("Link "), <.a("Deliver "), <.a(" Delete"))
+                            <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           )
                         ) //tbody
                       ), //table
@@ -447,7 +447,7 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("design.vdx"),
                             <.td(^.className := "col-md-2")("2016-01-17"),
                             <.td(^.className := "col-md-2")("Released"),
-                            <.td(^.className := "col-md-3")(<.a(" Details "), <.a("Release "))
+                            <.td(^.className := "col-md-3")(<.a("Details"), " ", <.a("Pay/Release"))
                           ),
                           <.tr()(
                             <.td(^.className := "col-md-1")("2"),
@@ -455,7 +455,7 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("Scala.zip"),
                             <.td(^.className := "col-md-2")("2016-02-14"),
                             <.td(^.className := "col-md-2")("Held pending payment"),
-                            <.td(^.className := "col-md-3")(<.a(" Details "), <.a("Release "))
+                            <.td(^.className := "col-md-3")(<.a("Details"), " ", <.a("Pay/Release"))
                           )
                         ) //tbody
                       ), //table
