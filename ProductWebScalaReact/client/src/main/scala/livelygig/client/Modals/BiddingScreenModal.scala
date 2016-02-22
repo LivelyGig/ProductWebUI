@@ -598,7 +598,9 @@ object BiddingScreenModalForm {
                     <.div()(
                       <.span(^.fontWeight.bold)("Employer's Feedback to Talent:"),
                       <.br(),
+                      <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("General"),
                       <.div()(
+                        <.br(),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
                           <.div(^.className := "col-md-4 col-sm-4")("Communication"),
                           <.div(^.className := "col-md-8 col-sm-8")(
@@ -691,6 +693,7 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
+                        <.hr(),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
                           <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Capabilities"),
                           <.div(^.className := "col-md-8 col-sm-8")(
@@ -766,8 +769,11 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets"))
                           )
                         ),
+                        <.hr(),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Testimonial (will be made public if Talent agrees)"),
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Testimonial"),
+                          <.br(),
+                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("(will be made public if Talent agrees)"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.textarea(^.rows := 3, ProjectCSS.Style.textareaWidth)
                           )
