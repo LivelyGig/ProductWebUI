@@ -450,5 +450,6 @@ object DashBoardCSS {
       fontSize(20.px),
       fontWeight.bold
     )
+
   }
 }
