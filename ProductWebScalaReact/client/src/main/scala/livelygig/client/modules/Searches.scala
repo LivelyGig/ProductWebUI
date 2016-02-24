@@ -295,8 +295,13 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablemessagespostedby")(
                     <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
                   ),
-
-                    p.proxy().nodes.map{node => <.div(node.text,node.progeny.map(leaf => leaf.text))
+                    p.proxy().nodes.map { node => {
+                        <.div()(
+                          <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),
+                          <.div()(node.progeny.map(
+                                leaf => <.div(^.fontSize := "12px")(<.input(^.`type`:="checkbox"),leaf.text)
+                      )))
+                    }
 
                     }
 
