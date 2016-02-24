@@ -1,4 +1,4 @@
-package livelygig.shared.dtos
+package livelygig.client.dtos
 
 import java.util.Date
 
@@ -21,9 +21,10 @@ case class CreateUserResponse() /*extends Content*/
 
 case class ConfirmEmail(token: String) extends Content
 
-case class ConfirmEmailResponse(reason: Option[String]) extends Content
+case class ConfirmEmailResponse(agentURI: String) /*extends Content*/
+case class ErrorResponse(reason: String)
 
-case class InitializeSession(agentURI: String) extends Content
+case class InitializeSession(agentURI: String)  extends Content
 
 case class InitializeSessionResponse(sessionURI: String,listOfAliases: Seq[String],defaultAlias: String,listOfLabels: Seq[String],listOfConnections:Seq[Connection],
                                      lastActiveLabel:String,jsonBlob:Map[String, String]

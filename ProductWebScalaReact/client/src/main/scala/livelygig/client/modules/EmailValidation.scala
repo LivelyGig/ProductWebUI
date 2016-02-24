@@ -1,3 +1,4 @@
+/*
 package livelygig.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router._
@@ -5,12 +6,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components._
 import livelygig.client.css.{CreateAgentCSS, DashBoardCSS}
+import livelygig.client.dtos.{InitializeSessionResponse, ApiResponse}
 import livelygig.client.models.{EmailValidationModel}
 import livelygig.client.services.ApiResponseMsg
 import livelygig.client.services.CoreApi._
 import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.implicitConversions
+import scala.util.Success
 import scalacss.ScalaCssReact._
 
 object EmailValidation {
@@ -26,8 +29,15 @@ object EmailValidation {
 
   def confirmEmail(emailValidationModel: EmailValidationModel) : Callback = Callback{
     println(emailValidationModel)
-    emailValidation(emailValidationModel).onSuccess {
-      case s =>
+    emailValidation(emailValidationModel).onComplete {
+      case Success(response) =>
+        try {
+          upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
+        } catch {
+          case e: Exception  => println(e.toString)
+        }
+        val s = upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
+
         if (s.msgType == ApiResponseMsg.CreateUserError) {
           println(ApiResponseMsg.CreateUserError)
         }
@@ -93,3 +103,4 @@ object EmailValidation {
     })
     .build
 }
+*/

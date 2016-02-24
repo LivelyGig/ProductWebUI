@@ -10,7 +10,7 @@ import diode.util._
 import diode.react.ReactConnector
 import boopickle.Default._
 import livelygig.client.models.{MessagesModel, UserModel, ConnectionsModel}
-import livelygig.shared.dtos.{ConnectionProfileResponse, ApiResponse}
+import livelygig.client.dtos.{ConnectionProfileResponse, ApiResponse}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.scalajs.js
 import scala.scalajs.js.JSON

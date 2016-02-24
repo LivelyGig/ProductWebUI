@@ -1,7 +1,6 @@
 package services
 //import upickle.default._
 import livelygig.shared._
-import livelygig.shared.dtos._
 import mockdata.MockFiles
 import play.api.Play.current
 import play.api.libs.ws._
@@ -22,40 +21,47 @@ class ApiService extends Api {
   val wsRequest : WSRequest = WS.url(BASE_URL)
 
 
-  override def createAgent(userRequest: CreateUser): Future[/*ApiResponse[CreateUserResponse]*/String] = {
-    println(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(CREATE_USER_REQUEST_MSG,userRequest))).map(
+  override def createAgent(requestContent: String): Future[/*ApiResponse[CreateUserResponse]*/String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(requestContent).map(
       response=>response.body.toString
     )
   }
 
-  override def confirmEmail(confirmEmailRequest: ConfirmEmail): Future[ApiResponse[ConfirmEmailResponse]] = {
-    WS.url(BASE_URL).post(write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))).map(
-      response=>parse(response.body.toString).extract[ApiResponse[ConfirmEmailResponse]])
+  override def confirmEmail(requestContent: String): Future[/*ApiResponse[ConfirmEmailResponse]*/String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(/*write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))*/requestContent).map {
+      response =>
+        println("token receiving at server response.body.tostring : " + response.body.toString)
+        response.body.toString
+    }
   }
 
-  override def agentLogin(initializeSessionRequest: InitializeSession): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
-    println(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))).map{
-      response=> response.body.toString()}
+  override def agentLogin(requestContent: String): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(/*write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))*/requestContent).map{
+      response=>
+      //  println("login receiving at server response.body.tostring : " + response.body.toString)
+        response.body.toString()}
   }
 
-  override def sessionPing(sessionPingRequest: SessionPing): Future[Seq[ApiResponse[ConnectionProfileResponse]]] = {
-    println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map(
-      response=>parse(response.body.toString).extract[Seq[ApiResponse[ConnectionProfileResponse]]])
+  override def sessionPing(requestContent: String): Future[/*Seq[ApiResponse[ConnectionProfileResponse]]*/String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/requestContent).map(
+      response=>response.body.toString
+    )
   }
 
-  override def getConnections(sessionPingRequest: SessionPing): Future[String] = {
-    println(write(ApiRequest(SESSION_PING,sessionPingRequest)))
-    WS.url(BASE_URL).post(write(ApiRequest(SESSION_PING,sessionPingRequest))).map{
+  override def getConnections(requestContent: String): Future[String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/requestContent).map{
       response=>
         //println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
   }
 
-  override def getProjects(sessionPingRequest: SessionPing): String = {
+  override def getProjects(requestContent: String): String = {
     val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
     /*println(json)*/
     json

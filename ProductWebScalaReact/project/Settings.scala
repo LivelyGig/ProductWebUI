@@ -77,7 +77,9 @@ object Settings {
     "me.chrons" %%% "diode-react" % versions.diode,
     "org.querki" %%% "jquery-facade" % "0.10",
     "org.querki" %%% "querki-jsext" % "0.6",
-    "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"
+//    "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
+    "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"/*,
+    "com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -85,6 +87,7 @@ object Settings {
     "org.webjars.npm" % "react" % versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
     "org.webjars.npm" % "react-dom" % versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
     "org.webjars" % "jquery" % versions.jQuery / "jquery.js" minified "jquery.min.js",
+   // "org.webjars" % "jquery" % "2.1.3" / "2.1.3/jquery.js",
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     //  "org.webjars.bower" % "split-pane" % "0.5.1",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
