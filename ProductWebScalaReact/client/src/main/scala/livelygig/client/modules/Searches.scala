@@ -59,7 +59,7 @@ object Searches {
               <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
               ),
-              <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(^.id := "slctScrollContainer",LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Profile Type"),
                   <.label(LftcontainerCSS.Style.checkboxlabel)(
@@ -111,7 +111,7 @@ object Searches {
               <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
               ),
-              <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(^.id := "slctScrollContainer",LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.label(LftcontainerCSS.Style.checkboxlabel)(
                     <.input(^.`type` := "checkbox"), " Recommended to Me"),
@@ -148,7 +148,7 @@ object Searches {
               <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
               ),
-              <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(^.id := "slctScrollContainer",LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Job Type"),
                   <.label(LftcontainerCSS.Style.checkboxlabel)(
@@ -226,7 +226,7 @@ object Searches {
               <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
               ),
-              <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
                   <.label(LftcontainerCSS.Style.checkboxlabel)(
@@ -249,7 +249,7 @@ object Searches {
               <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
               ),
-              <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(^.id := "slctScrollContainer",LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                 <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
 
                   <.div(^.className := "row")(
@@ -299,7 +299,7 @@ object Searches {
                         <.div()(
                           <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),
                           <.div()(node.progeny.map(
-                                leaf => <.div(^.fontSize := "12px")(<.input(^.`type`:="checkbox"),leaf.text)
+                                leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type`:="checkbox"),leaf.text)
                       )))
                     }
 
@@ -315,7 +315,7 @@ object Searches {
                            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
                              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
                            ),
-                           <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+                           <.div(^.id := "slctScrollContainer",LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
                              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
                                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
                                <.label(LftcontainerCSS.Style.checkboxlabel)(

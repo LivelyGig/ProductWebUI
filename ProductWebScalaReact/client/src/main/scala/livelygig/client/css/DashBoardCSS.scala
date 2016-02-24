@@ -130,7 +130,8 @@ object DashBoardCSS {
       height(25.px),
       marginBottom(12.px),
       display.inline,
-      color(c"#333")
+      color(c"#333"),
+      width(100.%%)
     )
     val slctInputWidth = style(
       width(20.px)

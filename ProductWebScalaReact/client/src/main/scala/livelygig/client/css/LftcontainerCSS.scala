@@ -16,6 +16,7 @@ object LftcontainerCSS {
       fontWeight.bold,
       overflowY.scroll,  //EE tmp
       overflowX.hidden,
+      width(100.%%),
       media.maxWidth(1250.px) -(
         width(200.px))
     )
@@ -58,6 +59,9 @@ object LftcontainerCSS {
       position.relative,
       height(100.%%),
       overflow.hidden
+    )
+    val marginRightsearchpane = style (
+      marginRight(10.px)
     )
   }
 }
