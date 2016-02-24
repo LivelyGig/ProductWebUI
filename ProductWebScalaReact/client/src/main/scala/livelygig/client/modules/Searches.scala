@@ -1,9 +1,12 @@
 package livelygig.client.modules
 
+import diode.data.Pot
+import diode.react.ModelProxy
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
+import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.css._
 import livelygig.client.models.UserModel
 import scalacss.ScalaCssReact._
@@ -13,7 +16,7 @@ import js.{Date, UndefOr}
 import org.querki.jquery._
 
 object Searches {
-  case class Props(ctl: RouterCtl[Loc], view: String)
+  case class Props(ctl: RouterCtl[Loc], view: String, proxy : ModelProxy[SearchesRootModel])
   case class State(userModel: UserModel)
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -291,7 +294,12 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted By"),
                   <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablemessagespostedby")(
                     <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
-                  )
+                  ),
+
+                    p.proxy().nodes.map{node => <.div(node.text,node.progeny.map(leaf => leaf.text))
+
+                    }
+
                 )
               )
             )

@@ -367,7 +367,7 @@ var prologParser = (function() {
                         var child = progeny[0];
                         l.progeny.push(child);
                         child.parentUid = l.uid;
-                        larray = larray.concat(progeny);
+//                        larray = larray.concat(progeny);
                     }
                 }
 
@@ -376,13 +376,74 @@ var prologParser = (function() {
         }
         return larray;
     }
+    var m3 = {}
+    m3.util = {}
+    m3.util.UidGenerator = function() { }
+    m3.util.UidGenerator.chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabsdefghijklmnopqrstuvwxyz0123456789";
+    m3.util.UidGenerator.__name__ = ["m3","util","UidGenerator"];
+    m3.util.UidGenerator.create = function(length) {
+    	if(length == null) length = 20;
+    	var str = new Array();
+    	var charsLength = m3.util.UidGenerator.chars.length;
+    	while(str.length == 0) {
+    		var ch = m3.util.UidGenerator.randomChar();
+    		if(m3.util.UidGenerator.isLetter(ch)) str.push(ch);
+    	}
+    	while(str.length < length) {
+    		var ch = m3.util.UidGenerator.randomChar();
+    		str.push(ch);
+    	}
+    	return str.join("");
+    }
+    m3.util.UidGenerator.isLetter = function($char) {
+    	var _g1 = 0, _g = m3.util.UidGenerator.chars.length;
+    	while(_g1 < _g) {
+    		var i = _g1++;
+    		if(m3.util.UidGenerator.chars.charAt(i) == $char) return true;
+    	}
+    	return false;
+    }
+    m3.util.UidGenerator.randomNum = function() {
+    	var max = m3.util.UidGenerator.chars.length - 1;
+    	var min = 0;
+    	return min + Math.round(Math.random() * (max - min) + 1);
+    }
+    m3.util.UidGenerator.randomIndex = function(str) {
+    	var max = str.length - 1;
+    	var min = 0;
+    	return min + Math.round(Math.random() * (max - min) + 1);
+    }
+    m3.util.UidGenerator.randomChar = function() {
+    	var i = 0;
+    	while((i = m3.util.UidGenerator.randomIndex(m3.util.UidGenerator.chars)) >= m3.util.UidGenerator.chars.length) continue;
+    	return m3.util.UidGenerator.chars.charAt(i);
+    }
+    m3.util.UidGenerator.randomNumChar = function() {
+    	var i = 0;
+    	while((i = m3.util.UidGenerator.randomIndex(m3.util.UidGenerator.nums)) >= m3.util.UidGenerator.nums.length) continue;
+    	return Std.parseInt(m3.util.UidGenerator.nums.charAt(i));
+    }
+
+    m3.util.ColorProvider = function() { }
+
+    m3.util.ColorProvider.__name__ = ["m3","util","ColorProvider"];
+    m3.util.ColorProvider.getNextColor = function() {
+    	if(m3.util.ColorProvider._INDEX >= m3.util.ColorProvider._COLORS.length) m3.util.ColorProvider._INDEX = 0;
+    	return m3.util.ColorProvider._COLORS[m3.util.ColorProvider._INDEX++];
+    }
+    m3.util.ColorProvider.getRandomColor = function() {
+    	var index;
+    	do index = Std.random(m3.util.ColorProvider._COLORS.length); while(m3.util.ColorProvider._LAST_COLORS_USED.contains(index));
+    	m3.util.ColorProvider._LAST_COLORS_USED.push(index);
+    	return m3.util.ColorProvider._COLORS[index];
+    }
 
     var Label = function(text, color, imgSrc, term) {
         // ui.model.ModelObj.call(this);
-        this.uid = "m3.util.UidGenerator.create(32);"
+        this.uid = m3.util.UidGenerator.create(32);
         if (term == null) {
             this.text = text;
-            if (color == null) this.color = "m3.util.ColorProvider.getNextColor()";
+            if (color == null) this.color = m3.util.ColorProvider.getNextColor();
             else this.color = color;
             if (imgSrc == null) this.imgSrc = "";
             else this.imgSrc = imgSrc;
