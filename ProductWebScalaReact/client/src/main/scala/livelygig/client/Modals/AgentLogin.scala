@@ -5,7 +5,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.LoginUser
+import livelygig.client.Handlers.{CreateLabels, LoginUser}
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
@@ -101,6 +101,9 @@ object AgentLogin {
                window.sessionStorage.setItem("userEmail", userModel.email)
                window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
                window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
+               window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
+//               println(JSON.stringify(response.content.listOfLabels))
+               LGCircuit.dispatch(CreateLabels())
                LGCircuit.dispatch(LoginUser(user))
 
             } catch {
