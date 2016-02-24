@@ -1,6 +1,6 @@
 package livelygig.client.models
 
-import livelygig.shared.dtos._
+import livelygig.client.dtos._
 
 /**
   * Created by shubham.k on 2/11/2016.

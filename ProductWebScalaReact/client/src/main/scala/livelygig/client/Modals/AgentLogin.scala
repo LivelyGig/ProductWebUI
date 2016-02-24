@@ -14,7 +14,7 @@ import livelygig.client.logger._
 import livelygig.client.models.{EmailValidationModel, UserModel}
 import livelygig.client.services.CoreApi._
 import livelygig.client.services._
-import livelygig.shared.dtos.{InitializeSessionResponse, ApiResponse, CreateUserResponse}
+import livelygig.client.dtos._
 import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -84,35 +84,30 @@ object AgentLogin {
        // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
         CoreApi.agentLogin(userModel).onComplete {
 //          case Success(s) =>
-          case Success(response) =>
+          case Success(responseStr) =>
+//            var msgType = ""
              try {
-              upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
+               log.debug("login successful")
+               val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+               $("#loginLoader").addClass("hidden")
+               $(".dashboard-container").removeClass("hidden")
+               $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+               window.localStorage.setItem("sessionURI",response.content.sessionURI)
+               /*val user = Map("email"->userModel.email,"name"-> response.content.jsonBlob.get("name"),
+                 "imgSrc"-> response.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
+               val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
+                 imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
+               //              window.sessionStorage.setItem("user", upickle.default.write(user))
+               window.sessionStorage.setItem("userEmail", userModel.email)
+               window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
+               window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
+               LGCircuit.dispatch(LoginUser(user))
+
             } catch {
-              case e: Exception  => println(e.toString)
-            }
-            val s = upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
-            log.debug(s"loginAPISuccessMsg: ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.InitializeSessionResponse){
-              $("#loginLoader").addClass("hidden")
-              $(".dashboard-container").removeClass("hidden")
-              $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
-              window.localStorage.setItem("sessionURI",s.content.sessionURI)
-              /*val user = Map("email"->userModel.email,"name"-> s.content.jsonBlob.get("name"),
-                "imgSrc"-> s.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
-              val user = UserModel(email = userModel.email, name = s.content.jsonBlob.getOrElse("name",""),
-                imgSrc = s.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
-//              window.sessionStorage.setItem("user", upickle.default.write(user))
-              window.sessionStorage.setItem("userEmail", userModel.email)
-              window.sessionStorage.setItem("userName", s.content.jsonBlob.getOrElse("name",""))
-              window.sessionStorage.setItem("userImgSrc", s.content.jsonBlob.getOrElse("imgSrc",""))
-              LGCircuit.dispatch(LoginUser(user))
-              log.debug("login successful")
-//              window.location.href = "/"
-            } else {
-              $("#loginLoader").addClass("hidden")
-            //  $("#bodyBackground").removeClass("overlay")
-              log.debug("login failed")
-              t.modState(s => s.copy(showLoginFailed = true)).runNow()
+              case e: Exception  =>
+                log.debug("login failed")
+                $("#loginLoader").addClass("hidden")
+                t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
             $("#loginLoader").addClass("hidden")
@@ -135,14 +130,16 @@ object AgentLogin {
     def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
       if (confirmAccountCreation) {
         emailValidation(emailValidationModel).onComplete {
-          case Success(s) =>
-            if (s.msgType == ApiResponseMsg.CreateUserError) {
+          case Success(responseStr) =>
+             try {
+              val response = upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
               println(ApiResponseMsg.CreateUserError)
-              t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
-            }
-            else {
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
-            }
+            } catch {
+              case e: Exception  =>
+                t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
+                }
+
           case Failure(s) =>
             log.debug(s"ConfirmAccontCreationAPI failure: ${s.getMessage}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()

@@ -11,7 +11,7 @@ import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
 import livelygig.client.models.{ProjectsModel, AppModel, ModelType}
-import livelygig.shared.dtos.{ApiResponse, ProjectsResponse}
+import livelygig.client.dtos.{ApiResponse, ProjectsResponse}
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
 
@@ -28,7 +28,7 @@ object ProjectResults {
   val component = ReactComponentB[Props]("Projects")
     .backend(new Backend(_))
     .renderPS((B,P,S) =>
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
@@ -74,15 +74,16 @@ object ProjectResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+         <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12",^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             P.proxy().render(jobPostsRootModel =>
               ProjectsList(jobPostsRootModel.projectsModelList)
             ),
             P.proxy().renderFailed(ex =>  <.div( <.span(Icon.warning)," Error loading")),
             if (P.proxy().isEmpty) {
               if (!P.proxy().isFailed) {
-                <.div("Loading")
-                <.img(^.src:="./assets/images/processing.gif")
+                <.div(^.height := "100%",DashBoardCSS.Style.verticalImg)(
+                   <.img(^.src:="./assets/images/processing.gif")
+                )
               } else {
                 <.div()
               }

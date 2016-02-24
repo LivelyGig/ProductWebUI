@@ -1,19 +1,18 @@
 package livelygig.shared
 
-import livelygig.shared.dtos._
 
 import scala.concurrent.Future
 
 trait Api {
-  def createAgent(userRequest: CreateUser): Future[/*ApiResponse[CreateUserResponse]*/String]
+  def createAgent(requestContent: String): Future[/*ApiResponse[CreateUserResponse]*/String]
 
-  def confirmEmail(confirmEmailRequest: ConfirmEmail): Future[ApiResponse[ConfirmEmailResponse]]
+  def confirmEmail(requestContent: String): Future[/*ApiResponse[ConfirmEmailResponse]*/String]
 
-  def agentLogin(initializeSessionRequest: InitializeSession): Future[/*ApiResponse[InitializeSessionResponse]*/String]
+  def agentLogin(requestContent: String): Future[/*ApiResponse[InitializeSessionResponse]*/String]
 
-  def sessionPing (sessionPingRequest: SessionPing) : Future[Seq[ApiResponse[ConnectionProfileResponse]]]
+  def sessionPing (requestContent: String) : Future[/*Seq[ApiResponse[ConnectionProfileResponse]]*/String]
 
-  def getConnections (sessionPingRequest: SessionPing) : Future[String]
+  def getConnections (requestContent: String) : Future[String]
 
-  def getProjects(sessionPingRequest: SessionPing):String
+  def getProjects(requestContent: String):String
 }

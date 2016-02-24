@@ -6,8 +6,8 @@ import diode.data.{Empty, PotAction, Ready, Pot}
 import livelygig.client.RootModels.ConnectionsRootModel
 import livelygig.client.models.ConnectionsModel
 import livelygig.client.services.CoreApi
-import livelygig.shared.dtos.{ConnectionProfileResponse, ApiResponse}
-import rx.ops.Timer
+import livelygig.client.dtos.{ConnectionProfileResponse, ApiResponse}
+//import rx.ops.Timer
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.scalajs.js.JSON
