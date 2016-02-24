@@ -1,7 +1,7 @@
 package livelygig.client.RootModels
 
 import livelygig.client.models.ProjectsModel
-import livelygig.shared.dtos._
+import livelygig.client.dtos._
 
 
 /**

@@ -1,6 +1,6 @@
 package livelygig.client.models
 
-import livelygig.shared.dtos._
+import livelygig.client.dtos._
 
 /**
   * Created by shubham.k on 2/11/2016.
@@ -18,3 +18,5 @@ case class ProjectsModel(sessionURI: String, pageOfPosts: PageOfPosts, connectio
 case class UserModel (email: String = "", password: String = "", name: String = "", createBTCWallet: Boolean = true,
                       isLoggedIn: Boolean = false, imgSrc: String = "")
 case class EmailValidationModel (token: String)
+case class Node(uid: String, text: String, color: String, imgSrc: String, progeny: Seq[Leaf])
+case class Leaf(uid: String, text: String, color: String, imgSrc: String, parentUid: String)

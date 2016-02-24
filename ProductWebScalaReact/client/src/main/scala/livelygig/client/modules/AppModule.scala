@@ -35,14 +35,15 @@ object AppModule {
           <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
             //<.div(^.className := "row")(
               <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
-                p.view match {
+                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.ctl, p.view, proxy)))
+                /*p.view match {
                   case "talent" => Searches(Searches.Props(p.ctl, "talent"))
                   case "projects" => Searches(Searches.Props(p.ctl, "projects"))
                   case "contract" => Searches(Searches.Props(p.ctl, "contract"))
                   case "messages" => Searches(Searches.Props(p.ctl, "messages"))
                   case "offerings" => Searches(Searches.Props(p.ctl, "offerings"))
                   case "connections" => Searches(Searches.Props(p.ctl, "connections"))
-                }
+                }*/
               ),
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
