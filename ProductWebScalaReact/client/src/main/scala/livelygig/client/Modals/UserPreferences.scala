@@ -13,7 +13,7 @@ import scalacss.ScalaCssReact._
 
 object UserPreferences {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props()
 
   case class State(showUserPreferencesForm: Boolean = false )
 

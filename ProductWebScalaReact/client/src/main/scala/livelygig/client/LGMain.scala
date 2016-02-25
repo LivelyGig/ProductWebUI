@@ -1,23 +1,13 @@
 package livelygig.client
 
 
-import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.extra.router._
-import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.LoginUser
-
-//import livelygig.client.modals.AddNewAgent
 import livelygig.client.components.{GlobalStyles, Icon}
 import livelygig.client.css.{AppCSS, FooterCSS, HeaderCSS,DashBoardCSS}
 import livelygig.client.logger._
-import livelygig.client.models.ConnectionsModel
-import livelygig.client.modals._
 import livelygig.client.modules._
 import org.scalajs.dom
 import livelygig.client.services.{LGCircuit}
-import livelygig.client.models.ConnectionsModel
-
-import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -25,10 +15,8 @@ import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.{ReactDOM, React}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.models.UserModel
 import scala.scalajs.js
 import js.{Date, UndefOr}
-import org.querki.jquery._
 
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
@@ -41,8 +29,6 @@ object LGMain extends js.JSApp {
   case object TodoLoc extends Loc
 
   case object CreateAgentLoc extends Loc
-
-  case object EmailValidationLoc extends Loc
 
   case object AgentLoginLoc extends Loc
 
@@ -66,28 +52,23 @@ object LGMain extends js.JSApp {
 
   case object BiddingScreenLoc extends Loc
 
-  case object EventListenerLoc extends Loc
 
-  // case object AppModuleLoc extends Loc
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "messages")))
-      | staticRoute("#event", EventListenerLoc) ~> renderR(ctl => EventListnerBtn(EventListnerBtn.Props(ctl)))
-      | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "projects")))
-      | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "contract")))
+      | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props("messages")))
+      | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props("projects")))
+      | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props("contract")))
       | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
-      | staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "talent")))
+      | staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props("talent")))
       //|staticRoute("#apploc", AppModuleLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "")))
-      | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "offerings")))
+      | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props("offerings")))
       | staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
-      | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl, "connections")))
+      | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props("connections")))
       ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
-
-//  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
 
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {

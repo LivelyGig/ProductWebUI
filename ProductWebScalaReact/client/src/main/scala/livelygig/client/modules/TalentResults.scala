@@ -1,40 +1,16 @@
 package livelygig.client.modules
 
-//import com.karasiq.bootstrap.BootstrapImplicits._
-//import com.karasiq.bootstrap.buttons._
-//import com.karasiq.bootstrap.form.{Form, FormInput, FormInputGroup}
-//import com.karasiq.bootstrap.grid.GridSystem
-//import com.karasiq.bootstrap.icons.FontAwesome
-//import com.karasiq.bootstrap.modal.Modal
-//import com.karasiq.bootstrap.panel.{Panel, PanelStyle}
-//import com.karasiq.bootstrap.table.{PagedTable, TableRow, TableRowStyle, TableStyle}
-//import com.karasiq.bootstrap.{Bootstrap, BootstrapHtmlComponent}
-//import scala.language.postfixOps
-//import scalatags.JsDom.all._
 
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage}
 import scalacss.ScalaCssReact._
 
 object TalentResults {
-
-//  private def todoItemDialog(): Unit = {
-//      Modal("Add/edit item")
-//      .withBody(Form(
-//        FormInputGroup(FormInputGroup.label("Title"), FormInputGroup.addon("file-text-o".fontAwesome(FontAwesome.fixedWidth)), FormInputGroup.text(placeholder := "Write description", ""))
-//
-//      ))
-//      .withButtons(Modal.closeButton("Cancel"), Modal.button("Apply", Modal.dismiss))
-//      .show(backdrop = false)
-//  }
-
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Talent")
+  val component = ReactComponentB[Unit]("Talent")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(

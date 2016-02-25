@@ -1,12 +1,7 @@
 package livelygig.client.modals
 
-import diode.react.ModelProxy
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.Handlers.{CreateLabels, LoginUser}
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}
@@ -16,14 +11,11 @@ import livelygig.client.services.CoreApi._
 import livelygig.client.services._
 import livelygig.client.dtos._
 import org.scalajs.dom._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
-
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.models.UserModel
-import scala.scalajs.js
 import scala.scalajs.js.{JSON, Date, UndefOr}
 import org.querki.jquery._
 
@@ -85,7 +77,9 @@ object AgentLogin {
         CoreApi.agentLogin(userModel).onComplete {
 //          case Success(s) =>
           case Success(responseStr) =>
-//            var msgType = ""
+
+         //   val responseError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+
              try {
                log.debug("login successful")
                val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
@@ -93,16 +87,12 @@ object AgentLogin {
                $(".dashboard-container").removeClass("hidden")
                $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
                window.localStorage.setItem("sessionURI",response.content.sessionURI)
-               /*val user = Map("email"->userModel.email,"name"-> response.content.jsonBlob.get("name"),
-                 "imgSrc"-> response.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
-               val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
+                val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
                  imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
-               //              window.sessionStorage.setItem("user", upickle.default.write(user))
                window.sessionStorage.setItem("userEmail", userModel.email)
                window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
                window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
                window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-//               println(JSON.stringify(response.content.listOfLabels))
                LGCircuit.dispatch(CreateLabels())
                LGCircuit.dispatch(LoginUser(user))
 

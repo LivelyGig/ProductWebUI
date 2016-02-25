@@ -5,12 +5,11 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.css.{MessagesCSS, HeaderCSS}
-import livelygig.client.modals
 import livelygig.client.modals._
 import scalacss.ScalaCssReact._
 
 object Presets {
-  case class Props(ctl: RouterCtl[Loc], view: String)
+  case class Props(view: String)
   case class Backend(t: BackendScope[Props, Unit]) {
 
     def mounted(props: Props): Callback = Callback {
@@ -42,7 +41,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    UserSkills(UserSkills.Props(p.ctl))
+                    UserSkills(UserSkills.Props())
                   )
                 )
               } //talent
@@ -63,7 +62,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewProject(NewProject.Props(p.ctl))
+                    NewProject(NewProject.Props())
                   )
                 )
             } //project
@@ -104,12 +103,7 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     BiddingScreenModal(BiddingScreenModal.Props("New Contract"))
-                    // ToDo:  Accept doesn't belong here.  Accept Deliverables belongs on the contract BiddingScreenModel form.
-                   // Accept(Accept.Props(p.ctl, "Accept")),
-                    // ToDo: Show Dispute doesn't belong here.  It belongs on the Dispute button on the BiddingScreenModal form.
-                   // <.button(HeaderCSS.Style.showDisputeBtn, ^.className := "btn")("Show Dispute")()
-
-                  )
+                   )
                 )
               }
               case "messages" => {
@@ -137,10 +131,6 @@ object Presets {
 
               case "connections" =>    {
 
-               //   <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
-                   // <.div(/*^.className := "row"*/)(
-                     // <.div(^.className := "col-lg-1")(),
-                      //<.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
                         <.div()(
                           <.div(^.className := "btn-group")(
                             <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
@@ -161,12 +151,7 @@ object Presets {
                             <.button(HeaderCSS.Style.createNewProjectBtn, ^.className := "btn")("New Connection")
                           )
                         )
-                    //  ),
-                   //   <.div(^.className := "col-lg-1")()
-                    //)
-
-                 // )
-                }
+                    }
 
 
 

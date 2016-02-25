@@ -12,7 +12,7 @@ import scalacss.ScalaCssReact._
 
 object OfferingResults {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Offerings")
+  val component = ReactComponentB[Unit]("Offerings")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(

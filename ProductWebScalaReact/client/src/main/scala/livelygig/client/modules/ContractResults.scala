@@ -12,7 +12,7 @@ import scalacss.ScalaCssReact._
 
 object ContractResults {
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("ContractResults")
+  val component = ReactComponentB[Unit]("ContractResults")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
@@ -75,10 +75,6 @@ object ContractResults {
                       <.br(),
                       <.div(/*^.className:="profile-action-buttons"*/)(
                       BiddingScreenModal(BiddingScreenModal.Props("Manage")),
-                      // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Reject")(),
-                      // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Counteroffer")(),
-                      // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Accept")(),
-                      // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn")("Offer")()
                       NewMessage(NewMessage.Props("Message"))
                       )
                     )

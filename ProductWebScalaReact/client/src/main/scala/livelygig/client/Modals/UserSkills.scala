@@ -14,7 +14,7 @@ import scalacss.ScalaCssReact._
 object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props()
 
   case class State(showUserSkillsForm: Boolean = false)
 
