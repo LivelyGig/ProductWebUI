@@ -92,7 +92,7 @@ object AgentLogin {
                $("#loginLoader").addClass("hidden")
                $(".dashboard-container").removeClass("hidden")
                $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
-               window.localStorage.setItem("sessionURI",response.content.sessionURI)
+               window.sessionStorage.setItem("sessionURI",response.content.sessionURI)
                /*val user = Map("email"->userModel.email,"name"-> response.content.jsonBlob.get("name"),
                  "imgSrc"-> response.content.jsonBlob.get("imgSrc"), "isLoggedIn" -> true)*/
                val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
