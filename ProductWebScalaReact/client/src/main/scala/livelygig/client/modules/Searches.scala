@@ -9,7 +9,7 @@ import livelygig.client.Handlers.CreateLabels
 import livelygig.client.LGMain.Loc
 import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.css._
-import livelygig.client.models.UserModel
+import livelygig.client.models.{Leaf, UserModel}
 import livelygig.client.services.LGCircuit
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
@@ -297,16 +297,22 @@ object Searches {
                 <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablemessagespostedby")(
                   <.textarea(ProjectCSS.Style.textareaWidth,^.rows:=4)
                 ),
-                if (p.proxy().nodes != Nil) {
-                  p.proxy().nodes.map { node => {
+                if (p.proxy().searchesModel != Nil) {
+                  p.proxy().searchesModel.map { model => {
                     <.div()(
-                      <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),
-                      <.div()(node.progeny.map(
-                        leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type`:="checkbox"),leaf.text)
-                      )))
+                      model.node match {
+                        case None =>
+                          <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), model.leaf.get.text)
+                        case Some(node) =>
+                          <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
+                            <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),
+                            <.div()(node.progeny.map(
+                              leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), leaf.text)
+                            )))
+                      })
+                  }
                   }
 
-                  }
                 } else {
                   <.div()
                 }
@@ -395,7 +401,7 @@ object Searches {
   private val component = ReactComponentB[Props]("Searches")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
-      .componentDidMount(scope => Callback{LGCircuit.dispatch(CreateLabels())})
+    .componentDidMount(scope => Callback{LGCircuit.dispatch(CreateLabels())})
     .build
 
   def apply(props: Props) = component(props)

@@ -10,6 +10,9 @@ object LftcontainerCSS {
       fontSize(1.2.em),
       fontWeight.bold
     )
+    val marginBottomSearchmodelNode = style (
+      marginBottom(15.px)
+    )
     val slctsearchpanelabelposition = style(
       paddingTop(15.px),
       paddingBottom(2.px),

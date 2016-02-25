@@ -348,15 +348,17 @@ var prologParser = (function() {
     }
 
     var termToLabel = function(term) {
-        var larray = new Array();
+        /*var larray = new Array();
         if (term.name == "and" || term.name == "all") Lambda.iter(term.partlist.list, function(term1) {
             larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
         });
-        else {
-            var l = new Label(null, null, null, term);
-            larray.push(l);
+        else {*/
+            var label = new Label(null, null, null, term);
+            label.parentUid = "self"
+//            larray.push(label);
             if (term.name == "node") {
-                l.progeny = new Array();
+                label.labelType = "node"
+                label.progeny = new Array();
                 if (term.partlist) {
                     var termParts = term.partlist.list;
                     var progenyTerm = termParts[termParts.length - 1];
@@ -364,17 +366,21 @@ var prologParser = (function() {
                     for (i = 0; i < progenyTermParts.length; i++) {
                         term1 = progenyTermParts[i];
                         var progeny = termToLabel(term1);
-                        var child = progeny[0];
-                        l.progeny.push(child);
-                        child.parentUid = l.uid;
+                        var child = progeny;
+                        label.progeny.push(child);
+                        child.parentUid = label.uid;
 //                        larray = larray.concat(progeny);
                     }
                 }
 
 
+            } else {
+                label.labelType = "leaf"
             }
-        }
-        return larray;
+
+
+//        }
+        return label;
     }
     var m3 = {}
     m3.util = {}

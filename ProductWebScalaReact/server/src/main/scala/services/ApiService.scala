@@ -32,7 +32,7 @@ class ApiService extends Api {
     println(write(requestContent))
     WS.url(BASE_URL).post(/*write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))*/requestContent).map {
       response =>
-        println("token receiving at server response.body.tostring : " + response.body.toString)
+//        println("token receiving at server response.body.tostring : " + response.body.toString)
         response.body.toString
     }
   }

@@ -18,5 +18,6 @@ case class ProjectsModel(sessionURI: String, pageOfPosts: PageOfPosts, connectio
 case class UserModel (email: String = "", password: String = "", name: String = "", createBTCWallet: Boolean = true,
                       isLoggedIn: Boolean = false, imgSrc: String = "")
 case class EmailValidationModel (token: String)
+case class SearchesModel (node: Option[Node], leaf: Option[Leaf], uid: String)
 case class Node(uid: String, text: String, color: String, imgSrc: String, progeny: Seq[Leaf])
 case class Leaf(uid: String, text: String, color: String, imgSrc: String, parentUid: String)

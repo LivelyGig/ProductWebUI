@@ -3,9 +3,8 @@ package livelygig.client.Handlers
 import diode.{ActionHandler, ModelRW}
 import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.components.PrologParser
-import livelygig.client.models.Node
+import livelygig.client.models.{Leaf, Node, SearchesModel}
 import org.scalajs.dom._
-
 import scala.scalajs.js.JSON
 
 /**
@@ -16,9 +15,19 @@ object SearchesModelHandler {
   def GetSearchesModel(listOfLabels :Seq[String]): SearchesRootModel ={
     if (listOfLabels != Nil) {
       val labelsObj = listOfLabels.map(obj => PrologParser.StringToLabel(obj))
-      val model = SearchesRootModel(upickle.default.read[Seq[Node]](JSON.stringify(labelsObj(0))))
-      println(model)
-      model
+      val model = labelsObj.map { label =>
+        val labelStr = JSON.stringify(label)
+        val labelJson = JSON.parse(labelStr)
+        val labelType = labelJson.labelType.asInstanceOf[String]
+        if (labelType == "node") {
+//          SearchesModel(upickle.default.read[Seq[SearchesModel]](JSON.stringify(labelsObj(0))))
+          SearchesModel(Some(upickle.default.read[Node](labelStr)),None,"")
+        } else {
+           SearchesModel(None,Some(upickle.default.read[Leaf](labelStr)),"")
+        }
+//        SearchesModel(None,None,"")
+      }
+      SearchesRootModel(model)
     } else {
       SearchesRootModel(Nil)
     }

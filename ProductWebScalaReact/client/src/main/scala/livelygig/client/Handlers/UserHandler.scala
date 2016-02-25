@@ -1,9 +1,7 @@
 package livelygig.client.Handlers
 
 import diode.{ActionHandler, ModelRW}
-import livelygig.client.RootModels.UserRootModel
-import livelygig.client.components.PrologParser
-import livelygig.client.models.{Node, UserModel}
+import livelygig.client.models.UserModel
 import livelygig.client.services.LGCircuit
 import org.scalajs.dom.window
 import concurrent._
