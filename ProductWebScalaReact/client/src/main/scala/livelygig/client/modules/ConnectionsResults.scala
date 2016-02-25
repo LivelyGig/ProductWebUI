@@ -21,8 +21,6 @@ import scalacss.ScalaCssReact._
 object ConnectionsResults {
 
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
-
-
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
@@ -98,18 +96,8 @@ object ConnectionsResults {
                       <.div("data loaded")
                     }
                   )
-                  /*Panel(Panel.Props("Connections"), <.div(
-                    P.proxy().renderFailed(ex => "Error loading"),
-                    P.proxy().renderPending(_ > 500, _ => "Loading..."),
-                    P.proxy().render(connectionsRootModel =>
-                      ConnectionList(connectionsRootModel.connectionsResponse)
-                    )
-                  ))*/
 
-            //  )
-           // )
-         // )
-      //  )
+
       ) //mainContainer
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))

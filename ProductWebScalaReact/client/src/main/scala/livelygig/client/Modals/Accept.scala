@@ -18,7 +18,7 @@ import scalacss.ScalaCssReact._
 
 object Accept {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc], buttonName: String)
+  case class Props(buttonName: String)
 
   case class State(showPayoutTransactionForm: Boolean = false)
 
