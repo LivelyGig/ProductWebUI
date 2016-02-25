@@ -18,7 +18,7 @@ import scalacss.ScalaCssReact._
 
 object Dispute {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc], buttonName: String)
+  case class Props(buttonName: String)
   case class State(showDispute: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {

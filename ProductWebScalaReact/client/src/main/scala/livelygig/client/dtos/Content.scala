@@ -29,7 +29,7 @@ case class InitializeSession(agentURI: String)  extends Content
 case class InitializeSessionResponse(sessionURI: String,listOfAliases: Seq[String],defaultAlias: String,listOfLabels: Seq[String],listOfConnections:Seq[Connection],
                                      lastActiveLabel:String,jsonBlob:Map[String, String]
                                      /*reason : Option[String]*/)  /*extends Content*/
-
+case class InitializeSessionErrorResponse(reason : Option[String])
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String
                                     /* ,name: Option[String]*/)  /*extends Content*/
 case class ProjectsResponse(sessionURI: String, pageOfPosts: Seq[String], connection: Connection,

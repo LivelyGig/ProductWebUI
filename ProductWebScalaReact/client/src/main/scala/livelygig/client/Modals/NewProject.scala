@@ -13,7 +13,7 @@ import scalacss.ScalaCssReact._
 
 object NewProject {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props()
   case class State(showNewProjectForm: Boolean = false)
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }

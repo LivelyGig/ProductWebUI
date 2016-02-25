@@ -22,19 +22,11 @@ case class RefreshConnections(value: Pot[ConnectionsRootModel] = Empty) extends 
 
 object ModelHandler{
   def GetConnectionsModel(response: String): ConnectionsRootModel = {
-//   println("response = "+response)
-   /* try {
-      upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
-    } catch {
-      case e: Exception  => println(e.toString)
-    }*/
+
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
 //    println("connections = "+ connections)
     var model = Seq[ConnectionsModel]()
-    /*connections.map(connection =>
-      connection.content.name -> Option(
-        JSON.parse(connection.content.jsonBlob).name)
-    )*/
+
     connections.foreach {
       connection =>
 //        println(connection.content.jsonBlob)

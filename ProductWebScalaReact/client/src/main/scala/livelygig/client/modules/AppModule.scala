@@ -1,33 +1,30 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.Loc
 import livelygig.client.css.{DashBoardCSS}
 import livelygig.client.services.LGCircuit
 import scalacss.ScalaCssReact._
 
 object AppModule {
 
-  case class Props(ctl: RouterCtl[Loc], view: String)
+  case class Props(view: String)
 
   case class Backend(t: BackendScope[Props, Unit]) {
 
     def mounted(props: Props): Callback = Callback {
 
     }
-
     def render(p: Props) = {
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
           p.view match {
-            case "talent" => Presets(Presets.Props(p.ctl, "talent"))
-            case "projects" => Presets(Presets.Props(p.ctl, "projects"))
-            case "contract" => Presets(Presets.Props(p.ctl, "contract"))
-            case "messages" => Presets(Presets.Props(p.ctl, "messages"))
-            case "offerings" => Presets(Presets.Props(p.ctl, "offerings"))
-            case "connections" => Presets(Presets.Props(p.ctl, "connections"))
+            case "talent" => Presets(Presets.Props("talent"))
+            case "projects" => Presets(Presets.Props("projects"))
+            case "contract" => Presets(Presets.Props("contract"))
+            case "messages" => Presets(Presets.Props("messages"))
+            case "offerings" => Presets(Presets.Props("offerings"))
+            case "connections" => Presets(Presets.Props("connections"))
           }
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
@@ -35,24 +32,15 @@ object AppModule {
           <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
             //<.div(^.className := "row")(
               <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
-                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.ctl, p.view, proxy)))
-                /*p.view match {
-                  case "talent" => Searches(Searches.Props(p.ctl, "talent"))
-                  case "projects" => Searches(Searches.Props(p.ctl, "projects"))
-                  case "contract" => Searches(Searches.Props(p.ctl, "contract"))
-                  case "messages" => Searches(Searches.Props(p.ctl, "messages"))
-                  case "offerings" => Searches(Searches.Props(p.ctl, "offerings"))
-                  case "connections" => Searches(Searches.Props(p.ctl, "connections"))
-                }*/
+                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
-                  case "talent" => TalentResults.component(p.ctl)
+                  case "talent" => TalentResults.component(Unit)
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
-                  case "contract" => ContractResults.component(p.ctl)
+                  case "contract" => ContractResults.component(Unit)
                   case "messages" => MessagesResults(MessagesResults.Props())/*(zoomRW(_.connections)((m, v) => m.copy(connections = v)))*/
-                    /*staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => LGCircuit.connect(_.connections)(Connections(_)))*/
-                  case "offerings" => OfferingResults.component(p.ctl)
+                  case "offerings" => OfferingResults.component(Unit)
                   //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }

@@ -30,7 +30,7 @@ import scalacss.ScalaCssReact._
 
 object Legal {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(ctl: RouterCtl[Loc])
+  case class Props()
 
   case class State(showTermsOfServicesForm: Boolean = false, showLegalForm: Boolean = false, showPrivacyPolicyForm: Boolean = false,
                    showPrivacyPolicyModal: Boolean= false,showErrorModal: Boolean = false,showEndUserAgreementModal : Boolean = false ,
