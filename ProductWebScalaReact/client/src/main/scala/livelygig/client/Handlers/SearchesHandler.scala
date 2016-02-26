@@ -25,7 +25,7 @@ object SearchesModelHandler {
             upickle.default.read[Node](labelStr)
           } catch {
             case e: Exception =>
-              println(e)
+//              println(e)
               SearchesModel(None,None,"")
           }
           val node = upickle.default.read[Node](labelStr)
