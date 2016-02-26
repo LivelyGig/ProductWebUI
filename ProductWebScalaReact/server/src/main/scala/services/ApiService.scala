@@ -13,7 +13,7 @@ import org.json4s.jackson.Serialization.write
 
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
-  var BASE_URL = "http://54.191.93.74:9876/api"
+  var BASE_URL = "http://54.191.41.235:9876/api"
   var CREATE_USER_REQUEST_MSG = "createUserRequest"
   var CONFIRM_EMAIL_MSG = "confirmEmailToken"
   var INITIALIZE_SESSION_MSG = "initializeSessionRequest"
@@ -56,7 +56,7 @@ class ApiService extends Api {
     println(write(requestContent))
     WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/requestContent).map{
       response=>
-        //println("response.json.toString() = "+response.json.toString())
+        println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
   }

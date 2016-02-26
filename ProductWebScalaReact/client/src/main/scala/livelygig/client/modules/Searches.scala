@@ -300,7 +300,13 @@ object Searches {
                     <.div()(
                       model.node match {
                         case None =>
-                          <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), model.leaf.get.text)
+                          model.leaf match {
+                            case None =>
+                              <.div()
+                            case Some(leaf) =>
+                              <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), leaf.text)
+                          }
+
                         case Some(node) =>
                           <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
                             <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),

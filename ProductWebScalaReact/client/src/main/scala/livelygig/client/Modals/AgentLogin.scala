@@ -93,8 +93,8 @@ object AgentLogin {
                window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
                window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
                window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-               LGCircuit.dispatch(CreateLabels())
                LGCircuit.dispatch(LoginUser(user))
+               LGCircuit.dispatch(CreateLabels())
 
             } catch {
               case e: Exception  =>
