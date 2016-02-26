@@ -19,5 +19,5 @@ case class UserModel (email: String = "", password: String = "", name: String = 
                       isLoggedIn: Boolean = false, imgSrc: String = "")
 case class EmailValidationModel (token: String)
 case class SearchesModel (node: Option[Node], leaf: Option[Leaf], uid: String)
-case class Node(uid: String, text: String, color: String, imgSrc: String, progeny: Seq[Leaf])
+case class Node(uid: String, text: String, color: String, imgSrc: String, progeny: Seq[Leaf], isChecked: Boolean = false)
 case class Leaf(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)

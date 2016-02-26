@@ -21,9 +21,18 @@ object SearchesModelHandler {
         val labelType = labelJson.labelType.asInstanceOf[String]
         if (labelType == "node") {
 //          SearchesModel(upickle.default.read[Seq[SearchesModel]](JSON.stringify(labelsObj(0))))
-          SearchesModel(Some(upickle.default.read[Node](labelStr)),None,"")
+          try {
+            upickle.default.read[Node](labelStr)
+          } catch {
+            case e: Exception =>
+//              println(e)
+              SearchesModel(None,None,"")
+          }
+          val node = upickle.default.read[Node](labelStr)
+          SearchesModel(Some(node),None,"")
         } else {
-           SearchesModel(None,Some(upickle.default.read[Leaf](labelStr)),"")
+          val leaf = upickle.default.read[Leaf](labelStr)
+           SearchesModel(None,Some(leaf),"")
         }
 //        SearchesModel(None,None,"")
       }
@@ -41,8 +50,10 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
   override def handle = {
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
+//      println("listOfLabelFromStore"+listOfLabelFromStore)
       if (listOfLabelFromStore != null){
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
+//        println("listOfLabels"+listOfLabels)
         updated(SearchesModelHandler.GetSearchesModel(listOfLabels))
       } else {
         updated(SearchesModelHandler.GetSearchesModel(Nil))
