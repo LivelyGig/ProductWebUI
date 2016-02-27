@@ -96,6 +96,8 @@ object MainMenu {
                   <.li()(<.a(^.href := "#")("Available for Chat")),
                   <.li()(<.a(^.href := "#")("Invisible")),
                   <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#")("Availability Schedule")),
+                  <.li(^.className := "divider")(),
                   <.li()(<.a(^.href := "#")("Account")),
                   <.li()(<.a(^.href := "#")("Profiles")),
                   <.li()(<.a(^.href := "#")("Notifications")),

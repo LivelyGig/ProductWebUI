@@ -138,7 +138,7 @@ object Presets {
                             ),
                             <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                               <.li()(<.a(^.href := "#")("All")),
-                              <.li()(<.a(^.href := "#")("Online")),
+                              <.li()(<.a(^.href := "#")("Available for Chat")),
                               <.li()(<.a(^.href := "#")("Favorited")),
                               <.li()(<.a(^.href := "#")("Hidden")),
                               <.li(^.className := "divider")(),

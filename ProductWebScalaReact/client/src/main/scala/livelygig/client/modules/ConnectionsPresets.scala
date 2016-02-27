@@ -20,15 +20,14 @@ object ConnectionsPresets {
                 ),
                 <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                   <.li()(<.a(^.href := "#")("All")),
-                  <.li()(<.a(^.href := "#")("Online")),
+                  <.li()(<.a(^.href := "#")("Available for Chat")),
                   <.li()(<.a(^.href := "#")("Favorited")),
                   <.li()(<.a(^.href := "#")("Hidden")),
                   <.li(^.className := "divider")(),
                   <.li()(<.a(^.href := "#")("Customize..."))
                 )
               ),
-
-              <.div(MessagesCSS.Style.newProjectbtn, ^.paddingTop:="5px")(
+              <.div(MessagesCSS.Style.newProjectbtn, ^.paddingTop := "5px")(
                 // NewMessage(NewMessage.Props(p.ctl, "New Connection"))
                 <.button(HeaderCSS.Style.createNewProjectBtn, ^.className := "btn")("New Connection")
               )
