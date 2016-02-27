@@ -55,12 +55,12 @@ object CoreApi {
   }*/
 
   def getConnections () : Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.localStorage.getItem("sessionURI"))))
+    val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem("sessionURI"))))
     AjaxClient[Api].getConnections(requestContent).call()
   }
 
   def getProjects () : Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG,SessionPing(window.localStorage.getItem("sessionURI"))))
+    val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG,SessionPing(window.sessionStorage.getItem("sessionURI"))))
     AjaxClient[Api].getProjects(requestContent).call()
   }
 
