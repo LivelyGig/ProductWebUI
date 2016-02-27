@@ -598,7 +598,9 @@ object BiddingScreenModalForm {
                     <.div()(
                       <.span(^.fontWeight.bold)("Employer's Feedback to Talent:"),
                       <.br(),
-                      <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("General"),
+                      <.hr(),
+                      <.span(^.fontWeight.bold)("General"),
+                      // <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("General"),
                       <.div()(
                         <.br(),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(

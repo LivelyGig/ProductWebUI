@@ -138,8 +138,7 @@ object BiddingScreenCSS {
 
      val capabilities = style(
        paddingTop(12.%%),
-       fontWeight.bold,
-       paddingTop(0.px)
+       fontWeight.bold
      )
     val notApplicable = style(
       width(15.%%)
