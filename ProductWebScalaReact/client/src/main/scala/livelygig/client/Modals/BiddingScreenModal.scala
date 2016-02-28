@@ -347,17 +347,17 @@ object BiddingScreenModalForm {
                       "c) follow the prompts to complete your multi-sig wallet configuration, including backing up and confirming your wallet seed.",
                       <.br(),
                       "d) Wait for the other party to do the same. Your CoPay wallet will indicate when completed.",
-                      <.br(),
+                      <.hr(),
                       "2. funding into escrow is required:",
                       <.br(),
                       "From Employer, Pam:  1 XBT requested.  Not yet funded.",
                       <.br(),
-                      "Deposit bitcoin in the following contract:",
+                      "Send bitcoin into the following address:",
                       <.br(),
                       <.img()(^.src := "./assets/images/example-bitcoin-qr-code.png"),
-
                       <.br(),
                       "342ftSRCvFHfCeFFBuz4xwbeqnDw6BGUey",
+                      <.br(),
                       "From Talent, Abed:  0.02 XBT  requested.",
                       <.br(),
                       <.button(^.className := "btn dropdown-toggle", "data-target".reactAttr := "#demo", "data-toggle".reactAttr := "collapse")(" Escrow deposit, payment, and refund details..."),
@@ -375,7 +375,13 @@ object BiddingScreenModalForm {
                             )
                           )
                         )
-                      )
+                      ),
+                      <.br(),
+                      "3. Funding received", <.br(),
+                      "The following deposits were made into this contract:", <.br(),
+                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target:="blank")("Tx 1"), <.br(),
+                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target:="blank")("Tx 2"), <.br(),
+                      "pending funding from buyer"
                     )
                   )
                 ),
