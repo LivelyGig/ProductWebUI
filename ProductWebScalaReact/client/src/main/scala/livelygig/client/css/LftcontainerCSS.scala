@@ -71,6 +71,9 @@ object LftcontainerCSS {
       height(100.%%),
       overflow.hidden
     )
+    val row= style(
+      marginTop(10.px)
+    )
 
   }
 }

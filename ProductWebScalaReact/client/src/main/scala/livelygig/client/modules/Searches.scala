@@ -66,17 +66,22 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Profile Type"),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Talent"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Employer"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Moderator"),
-
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Profile Type")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Talent"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Client"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Moderator")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Available from")
                   ),
@@ -86,7 +91,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Available to")
                   ),
@@ -96,17 +101,21 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Capabilities")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
                   )
                 ),
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted by"),
-                <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizabletalentpostedby")(
-                  <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Posted by")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 )
               )
             )
@@ -119,29 +128,36 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Recommended to Me"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Favorited"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Include Hidden"),
-                <.div(^.paddingLeft := "15px")(
-                  <.div(^.className := "row")(
-                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
-                      <.div("Added before")
-                    ),
-                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth, ^.placeholder := "date")
-                    )
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Flags")
                   ),
-                  <.div(^.className := "row")(
-                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
-                      <.div("Added after")
-                    ),
-                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth, ^.placeholder := "date")
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Added before")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.div(^.className := "input-group date")(
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
+                    )
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Added after")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.div(^.className := "input-group date")(
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     )
                   )
                 )
@@ -156,20 +172,26 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Job Type"),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
-                <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                  <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                    <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"),
-                  <.br(),
-                  <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                    <.input(^.`type` := "checkbox", ^.value := true, ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"),
-                  <.br()
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Job Type")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
+                    <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"),
+                      <.br(),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.value := true, ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"),
+                      <.br()
+                    ),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Contest")
+                  )
                 ),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Contest"),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Start after")
                   ),
@@ -179,7 +201,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Finish before")
                   ),
@@ -190,7 +212,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Skill Required")
                   ),
@@ -199,7 +221,7 @@ object Searches {
                     <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Project State")
                   ),
@@ -217,9 +239,13 @@ object Searches {
                     )
                   )
                 ),
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted by"),
-                <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizableprojectspostedby")(
-                  <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Posted by")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 )
               )
             )
@@ -232,28 +258,39 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Initiating"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Escrow"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " In Progress"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Feedback"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Completed"),
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Buyer"),
-                <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "contractBuyers")(
-                  <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Status")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Initiating"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Escrow"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " In Progress"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Completed")
+                  )
                 ),
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Seller"),
-                <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "contractSellers")(
-                  <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Client")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Talent")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 )
               )
             )
@@ -266,7 +303,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
                     <.div("From")
                   ),
@@ -277,7 +314,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
                     <.div("To")
                   ),
@@ -289,7 +326,7 @@ object Searches {
 
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
                     <.div("Keywords")
                   ),
@@ -297,36 +334,44 @@ object Searches {
                     <.input(^.`type` := "textarea", ProjectCSS.Style.textareaWidth, ^.lineHeight := 4)
                   )
                 ),
-                <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted by"),
-                <.div(LftcontainerCSS.Style.slctleftcontentdiv, LftcontainerCSS.Style.resizable, ^.id := "resizablemessagespostedby")(
-                  <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Posted by")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 ),
-                if (p.proxy().searchesModel != Nil) {
-                  p.proxy().searchesModel.map { model => {
-                    <.div()(
-                      model.node match {
-                        case None =>
-                          model.leaf match {
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Labels")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    if (p.proxy().searchesModel != Nil) {
+                      p.proxy().searchesModel.map { model => {
+                        <.div()(
+                          model.node match {
                             case None =>
-                              <.div()
-                            case Some(leaf) =>
-                              <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), leaf.text)
-                          }
-
-                        case Some(node) =>
-                          <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
-                            <.div(LftcontainerCSS.Style.slctsearchpaneheader)(node.text),
-                            <.div()(node.progeny.map(
-                              leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), leaf.text)
-                            )))
-                      })
-                  }
-                  }
-
-                } else {
-                  <.div()
-                }
-
+                              model.leaf match {
+                                case None =>
+                                  <.div()
+                                case Some(leaf) =>
+                                  <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), " " + leaf.text)
+                              }
+                            case Some(node) =>
+                              <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
+                                <.div(LftcontainerCSS.Style.slctsearchpaneheader)(" " + node.text),
+                                <.div()(node.progeny.map(
+                                  leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), " " + leaf.text)
+                                )))
+                          })
+                      }
+                      }
+                    } else {
+                      <.div()
+                    }
+                  )
+                )
               )
             )
           )
@@ -338,63 +383,62 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                // <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Available for Chat"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Recommended by Me"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Recommended to Me"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " with Talent Profile"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " with Employer Profile"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " with Moderator Profile"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Favorited"),
-                <.br(),
-                <.label(LftcontainerCSS.Style.checkboxlabel)(
-                  <.input(^.`type` := "checkbox"), " Include Hidden"),
-                <.div(^.paddingLeft := "15px")(
-                  <.div(^.className := "row")(
-                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
-                      <.div("Added before")
-                    ),
-                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      //<.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
-                      <.div(^.className := "input-group date")(
-                        <.input("data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "addedBefore", ^.placeholder := "date")
-                      )
-                    )
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Flags")
                   ),
-                  <.div(^.className := "row")(
-                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
-                      <.div("Added after")
-                    ),
-                    // ToDo: this should be a date picker
-                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      //                  <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
-                      <.div(^.className := "input-group date")(
-                        <.input("data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "addedAfter", ^.placeholder := "date")
-                      )
-                    )
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Available for Chat"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " with Talent Profile"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " with Employer Profile"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " with Moderator Profile"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Added before")
                   ),
-                  <.div(^.className := "row")(
-                    <.div(ProjectCSS.Style.slctProjectInputWidth)(
-                      <.div("Groups")
-                    ),
-                    // ToDo: this should be a date picker
-                    <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
-
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.div(^.className := "input-group date")(
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     )
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Added after")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.div(^.className := "input-group date")(
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
+                    )
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
+                    <.div("Groups")
+                  ),
+                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 2)
                   )
                 )
               )
