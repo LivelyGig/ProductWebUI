@@ -17,7 +17,9 @@ object ProjectCSS {
       marginRight(10.px)
     )
     val textareaWidth = style (
-      width(100.%%)
+      // width(100.%%),
+      maxWidth(100.%%),
+      minWidth(100.%%)
     )
     val projectdropdownbtn = style (
       fontSize(15.px),

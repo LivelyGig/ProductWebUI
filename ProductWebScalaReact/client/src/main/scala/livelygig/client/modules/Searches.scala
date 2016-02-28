@@ -135,8 +135,10 @@ object Searches {
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                    <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
@@ -214,7 +216,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
-                    <.div("Skill Required")
+                    <.div("Skills Required")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //                  <.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth),
@@ -324,14 +326,6 @@ object Searches {
                       <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     )
 
-                  )
-                ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
-                    <.div("Keywords")
-                  ),
-                  <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.input(^.`type` := "textarea", ProjectCSS.Style.textareaWidth, ^.lineHeight := 4)
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
