@@ -330,13 +330,32 @@ object BiddingScreenModalForm {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
-                      "All parties in the contract as of 2016-07-30 have agreed to the terms. Now, funding into escrow is required:",
+                      "1: ",
+                      "All parties in the contract have agreed to the terms as of 2016-07-30 00:34 UTC-7 (PST). ",
+                      "Those terms included Escrow. ",
+                      "In order to set up for Escrow, assure you have an CoPay wallet application installed, or install it now from ",
+                      <.a(^.href := "#")("BitPay"),
+                      ". " +
+                        "Then, from the CoPay application, perform the following steps:",
+                      <.br(),
+                      "a) Add Wallet -> Join Shared Wallet.",
+                      <.br(),
+                      "b) Either past the invitation code below, or scan it after pressing the + button.",
+                      <.br(),
+                      <.img(^.width := "263px")(^.src := "./assets/images/example-copay-invitation.png"),
+                      <.br(),
+                      "c) follow the prompts to complete your multi-sig wallet configuration, including backing up and confirming your wallet seed.",
+                      <.br(),
+                      "d) Wait for the other party to do the same. Your CoPay wallet will indicate when completed.",
+                      <.br(),
+                      "2. funding into escrow is required:",
                       <.br(),
                       "From Employer, Pam:  1 XBT requested.  Not yet funded.",
                       <.br(),
                       "Deposit bitcoin in the following contract:",
                       <.br(),
                       <.img()(^.src := "./assets/images/example-bitcoin-qr-code.png"),
+
                       <.br(),
                       "342ftSRCvFHfCeFFBuz4xwbeqnDw6BGUey",
                       "From Talent, Abed:  0.02 XBT  requested.",
