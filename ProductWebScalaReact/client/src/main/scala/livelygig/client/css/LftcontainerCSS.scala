@@ -14,20 +14,28 @@ object LftcontainerCSS {
       marginBottom(15.px)
     )
     val slctsearchpanelabelposition = style(
-      paddingTop(15.px),
+      paddingTop(0.px),
       paddingBottom(2.px),
+      paddingRight(10.px),
       fontWeight.bold,
-      overflowY.scroll,  //EE tmp
+      overflowY.auto,
       overflowX.hidden,
-      width(100.%%),
-      media.maxWidth(1250.px) -(
-        width(200.px))
+      width(100.%%)
+      // media.maxWidth(1250.px) -(
+        // width(200.px))
     )
     val slctsearchpaneheader = style(
       paddingTop(15.px),
       paddingBottom(2.px),
       fontSize(1.em),
       fontWeight.normal
+    )
+    val inputHeightWidth = style(
+      height(25.px),
+      marginBottom(12.px),
+      display.inline,
+      color(c"#333"),
+      width(100.%%)
     )
     val checkboxlabel = style(
       paddingLeft(0.px),
@@ -63,8 +71,6 @@ object LftcontainerCSS {
       height(100.%%),
       overflow.hidden
     )
-    val marginRightsearchpane = style (
-      marginRight(10.px)
-    )
+
   }
 }

@@ -31,7 +31,7 @@ object AppModule {
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
             //<.div(^.className := "row")(
-              <.div(^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
+              <.div(^.id := "searchContainer", ^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
               <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(

@@ -128,6 +128,15 @@ object HeaderCSS {
       marginRight(10.px)
       //      float.right
     )
+    val searchContainerBtn = style(
+      backgroundColor(c"#ffa500"),
+      color.rgba(51,51,51,1),
+      fontSize(16.px),
+      marginTop(10.px),
+      marginBottom(8.px),
+      marginRight(10.px)
+
+    )
     val  floatBtn = style (
       float.right
     )

@@ -26,7 +26,8 @@ object DashBoardCSS {
     )
     val slctContainer = style(
       display.inlineBlock,
-      minWidth(200.px)
+      minWidth(200.px),
+      width(100.%%)
     )
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),

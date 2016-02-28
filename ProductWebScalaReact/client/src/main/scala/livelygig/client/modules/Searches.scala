@@ -57,14 +57,15 @@ object Searches {
     //    })
 
     def render(s: State, p: Props) = {
+
       p.view match {
         case "talent" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Profile Type"),
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox"), " Talent"),
@@ -74,13 +75,14 @@ object Searches {
                 <.br(),
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox"), " Moderator"),
+
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ProjectCSS.Style.slctProjectInputWidth)(
                     <.div("Available from")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(^.className := "input-group date")(
-                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     )
                   )
                 ),
@@ -90,7 +92,7 @@ object Searches {
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(^.className := "input-group date")(
-                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -99,7 +101,7 @@ object Searches {
                     <.div("Capabilities")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                   )
                 ),
                 <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Posted by"),
@@ -113,10 +115,10 @@ object Searches {
         case "offerings" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox"), " Recommended to Me"),
                 <.br(),
@@ -131,7 +133,7 @@ object Searches {
                       <.div("Added before")
                     ),
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth, ^.placeholder := "date")
+                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth, ^.placeholder := "date")
                     )
                   ),
                   <.div(^.className := "row")(
@@ -139,7 +141,7 @@ object Searches {
                       <.div("Added after")
                     ),
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth, ^.placeholder := "date")
+                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth, ^.placeholder := "date")
                     )
                   )
                 )
@@ -150,10 +152,10 @@ object Searches {
         case "projects" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Job Type"),
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"),
@@ -173,7 +175,7 @@ object Searches {
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "projectsStartDate", ^.placeholder := "date")
+                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsStartDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -182,9 +184,9 @@ object Searches {
                     <.div("Finish before")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    // <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    // <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
+                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -193,7 +195,7 @@ object Searches {
                     <.div("Skill Required")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //                  <.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth),
+                    //                  <.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth),
                     <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
                   )
                 ),
@@ -202,7 +204,7 @@ object Searches {
                     <.div("Project State")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
-                    //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+                    //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "btn-group")(
                       <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select One")(
                         <.span(^.className := "caret")
@@ -226,10 +228,10 @@ object Searches {
         case "contract" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox"), " Initiating"),
@@ -260,19 +262,18 @@ object Searches {
         case "messages" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
-
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", MessagesCSS.Style.slctMessagesInputWidth)(
                     <.div("From")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    // <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                    // <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
+                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -283,7 +284,7 @@ object Searches {
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
 
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
+                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     )
 
                   )
@@ -330,14 +331,13 @@ object Searches {
             )
           )
         }
-
         case "connections" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-rsltContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
             ),
-            <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.marginRightsearchpane, DashBoardCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.width := "100%", ^.height := "calc(100vh - 238px)", ^.overflowY := "auto", ^.paddingTop := "0px")(
+            <.div(^.id := "slctScrollContainer", DashBoardCSS.Style.slctContainer)(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 // <.div(LftcontainerCSS.Style.slctsearchpaneheader)("Status"),
                 <.label(LftcontainerCSS.Style.checkboxlabel)(
                   <.input(^.`type` := "checkbox"), " Available for Chat"),
@@ -368,9 +368,9 @@ object Searches {
                       <.div("Added before")
                     ),
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      //<.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                      //<.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                       <.div(^.className := "input-group date")(
-                        <.input("data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "addedBefore", ^.placeholder := "date")
+                        <.input("data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "addedBefore", ^.placeholder := "date")
                       )
                     )
                   ),
@@ -380,9 +380,9 @@ object Searches {
                     ),
                     // ToDo: this should be a date picker
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      //                  <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                      //                  <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                       <.div(^.className := "input-group date")(
-                        <.input("data-provide".reactAttr := "datepicker", DashBoardCSS.Style.inputHeightWidth, ^.id := "addedAfter", ^.placeholder := "date")
+                        <.input("data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "addedAfter", ^.placeholder := "date")
                       )
                     )
                   ),
@@ -392,7 +392,7 @@ object Searches {
                     ),
                     // ToDo: this should be a date picker
                     <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                      <.input(^.className := "form-control", DashBoardCSS.Style.inputHeightWidth)
+                      <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
 
                     )
                   )

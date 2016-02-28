@@ -255,7 +255,7 @@ object BiddingScreenModalForm {
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
                                     <.div(^.className := "row")(
 
-                                      <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
+                                      <.div(DashBoardCSS.Style.marginTop10px)(
                                         //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                                         <.div(^.className := "btn-group")(
                                           <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
