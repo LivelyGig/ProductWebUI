@@ -55,13 +55,13 @@ object Presets {
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("Recommended Matches")),
-                      <.li()(<.a(^.href := "#")("Direct from Connection")),
-                      <.li()(<.a(^.href := "#")("My Posted Jobs")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#projects")("Recommended Matches")),
+                      <.li()(<.a(^.href := "#projects")("Direct from Connection")),
+                      <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
+                      <.li()(<.a(^.href := "#projects")("Favorited")),
+                      <.li()(<.a(^.href := "#projects")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#projects")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
@@ -76,12 +76,12 @@ object Presets {
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("Recommended to Me")),
-                      <.li()(<.a(^.href := "#")("My Posted Offerings")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
+                      <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
+                      <.li()(<.a(^.href := "#offerings")("Favorited")),
+                      <.li()(<.a(^.href := "#offerings")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#offerings")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
@@ -97,11 +97,11 @@ object Presets {
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("Active")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#contract")("Active")),
+                      <.li()(<.a(^.href := "#contract")("Favorited")),
+                      <.li()(<.a(^.href := "#contract")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#contract")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
@@ -116,13 +116,13 @@ object Presets {
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("Inbox")),
-                      <.li()(<.a(^.href := "#")("Sent")),
-                      <.li()(<.a(^.href := "#")("Unread")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#messages")("Inbox")),
+                      <.li()(<.a(^.href := "#messages")("Sent")),
+                      <.li()(<.a(^.href := "#messages")("Unread")),
+                      <.li()(<.a(^.href := "#messages")("Favorited")),
+                      <.li()(<.a(^.href := "#messages")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#messages")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
@@ -137,12 +137,12 @@ object Presets {
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("All")),
-                      <.li()(<.a(^.href := "#")("Available for Chat")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#connections")("All")),
+                      <.li()(<.a(^.href := "#connections")("Available for Chat")),
+                      <.li()(<.a(^.href := "#connections")("Favorited")),
+                      <.li()(<.a(^.href := "#connections")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#connections")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
