@@ -199,7 +199,7 @@ object Searches {
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsStartDate", ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsStartDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -208,9 +208,8 @@ object Searches {
                     <.div("Finish before")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    // <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -219,7 +218,6 @@ object Searches {
                     <.div("Skills Required")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //                  <.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth),
                     <.textarea(ProjectCSS.Style.textareaWidth, ^.rows := 4)
                   )
                 ),
@@ -310,9 +308,8 @@ object Searches {
                     <.div("From")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    // <.input(^.className := "form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
                     )
                   )
                 ),
@@ -321,11 +318,9 @@ object Searches {
                     <.div("To")
                   ),
                   <.div(MessagesCSS.Style.slctMessagesInputLeftContainerMargin)(
-
                     <.div(^.className := "input-group date")(
-                      <.input(/*^.className := "form-control",*/ "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
+                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     )
-
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(

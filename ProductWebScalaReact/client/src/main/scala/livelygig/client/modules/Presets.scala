@@ -9,35 +9,38 @@ import livelygig.client.modals._
 import scalacss.ScalaCssReact._
 
 object Presets {
+
   case class Props(view: String)
+
   case class Backend(t: BackendScope[Props, Unit]) {
 
     def mounted(props: Props): Callback = Callback {
 
     }
+
     def render(p: Props) = {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(
           <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-lg-10 col-sm-12 col-xs-12")(
+          <.div(^.className := "col-lg-10 col-sm-12", ^.paddingLeft := "0px")(
             p.view match {
               case "talent" => {
                 <.div()(
-                  <.div(^.className := "btn-group")(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer )(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                       <.span(^.className := "caret")
                     ),
                     <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#")("Recommended Matches")),
-                      <.li()(<.a(^.href := "#")("My Profiles")),
-                      <.li()(<.a(^.href := "#")("Favorited")),
-                      <.li()(<.a(^.href := "#")("Available")),
-                      <.li()(<.a(^.href := "#")("Active Unavailable")),
-                      <.li()(<.a(^.href := "#")("Inactive")),
-                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li()(<.a(^.href := "#talent")("Recommended Matches")),
+                      <.li()(<.a(^.href := "#talent")("My Profiles")),
+                      <.li()(<.a(^.href := "#talent")("Favorited")),
+                      <.li()(<.a(^.href := "#talent")("Available")),
+                      <.li()(<.a(^.href := "#talent")("Active Unavailable")),
+                      <.li()(<.a(^.href := "#talent")("Inactive")),
+                      <.li()(<.a(^.href := "#talent")("Hidden")),
                       <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#")("Videographers w/5+ yrs experience")),
-                      <.li()(<.a(^.href := "#")("Customize..."))
+                      <.li()(<.a(^.href := "#talent")("Videographers w/5+ yrs experience")),
+                      <.li()(<.a(^.href := "#talent")("Customize..."))
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
@@ -47,7 +50,7 @@ object Presets {
               } //talent
               case "projects" => {
                 <.div()(
-                  <.div(^.className := "btn-group")(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                       <.span(^.className := "caret")
                     ),
@@ -65,10 +68,10 @@ object Presets {
                     NewProject(NewProject.Props())
                   )
                 )
-            } //project
+              } //project
               case "offerings" => {
                 <.div()(
-                  <.div(^.className := "btn-group")(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                       <.span(^.className := "caret")
                     ),
@@ -82,14 +85,14 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                   // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
+                    // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
                     Offering(Offering.Props("New Offering"))
                   )
                 )
               } //project
               case "contract" => {
                 <.div()(
-                  <.div(^.className := "btn-group")(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
                       <.span(^.className := "caret")
                     ),
@@ -103,12 +106,12 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     BiddingScreenModal(BiddingScreenModal.Props("New Contract"))
-                   )
+                  )
                 )
               }
               case "messages" => {
                 <.div()(
-                  <.div(^.className := "btn-group")(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
                       <.span(^.className := "caret")
                     ),
@@ -127,34 +130,27 @@ object Presets {
                   )
                 )
               }
-
-
-              case "connections" =>    {
-
-                        <.div()(
-                          <.div(^.className := "btn-group")(
-                            <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
-                              <.span(^.className := "caret")
-                            ),
-                            <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                              <.li()(<.a(^.href := "#")("All")),
-                              <.li()(<.a(^.href := "#")("Available for Chat")),
-                              <.li()(<.a(^.href := "#")("Favorited")),
-                              <.li()(<.a(^.href := "#")("Hidden")),
-                              <.li(^.className := "divider")(),
-                              <.li()(<.a(^.href := "#")("Customize..."))
-                            )
-                          ),
-
-                          <.div(MessagesCSS.Style.newProjectbtn, ^.paddingTop:="5px")(
-                            // NewMessage(NewMessage.Props(p.ctl, "New Connection"))
-                            <.button(HeaderCSS.Style.createNewProjectBtn, ^.className := "btn")("New Connection")
-                          )
-                        )
-                    }
-
-
-
+              case "connections" => {
+                <.div()(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
+                      <.span(^.className := "caret")
+                    ),
+                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                      <.li()(<.a(^.href := "#")("All")),
+                      <.li()(<.a(^.href := "#")("Available for Chat")),
+                      <.li()(<.a(^.href := "#")("Favorited")),
+                      <.li()(<.a(^.href := "#")("Hidden")),
+                      <.li(^.className := "divider")(),
+                      <.li()(<.a(^.href := "#")("Customize..."))
+                    )
+                  ),
+                  <.div(MessagesCSS.Style.newProjectbtn)(
+                    // ToDo: need design and implementaiton for New Connection button.
+                    NewMessage(NewMessage.Props("New Connection"))
+                  )
+                )
+              }
             } //main switch
           ),
           <.div(^.className := "col-lg-1")()
@@ -162,6 +158,7 @@ object Presets {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("Presets")
     .initialState_P(p => ())
     .renderBackend[Backend]

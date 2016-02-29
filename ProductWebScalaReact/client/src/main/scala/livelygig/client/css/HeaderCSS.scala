@@ -75,6 +75,9 @@ object HeaderCSS {
       width(100.%%),
       paddingTop(4.px)
     )
+    val presetPickContainer= style(
+      minWidth(250.px)
+    )
     val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
