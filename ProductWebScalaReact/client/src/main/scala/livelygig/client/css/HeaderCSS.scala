@@ -131,6 +131,17 @@ object HeaderCSS {
       marginRight(10.px)
       //      float.right
     )
+    val rsltContainerIconBtn = style(
+      //      backgroundColor(c"#ffa500"),
+      //      color.rgba(51,51,51,1),
+      fontSize(16.px),
+      marginTop(10.px),
+      marginBottom(8.px),
+      marginRight(10.px),
+      color(orange),
+      backgroundColor.transparent,
+      border.none
+    )
     val searchContainerBtn = style(
 //      backgroundColor(c"#ffa500"),
 //      color.rgba(51,51,51,1),

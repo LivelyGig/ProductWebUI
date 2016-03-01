@@ -127,14 +127,17 @@ object ProjectsList {
               // project.pageOfPosts.skills.toString()
             ),
             <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons HeaderCSS_Style-rsltContainerIconBtn, HeaderCSS_Style-floatBtn", ^.title := "Message", Icon.envelope),
               <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+              Icon.star,
+              Icon.heart,
               <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
               NewRecommendation(NewRecommendation.Props("Recommend")),
               <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
               BiddingScreenModal(BiddingScreenModal.Props("Apply")),
               NewMessage(NewMessage.Props("Message")
               )
-            )
+           )
           ) //media-body
         ) //li
       }
