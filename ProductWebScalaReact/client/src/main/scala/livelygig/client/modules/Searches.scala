@@ -202,18 +202,28 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Project"),
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Project"
+                    ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Hourly"),
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Hourly"
+                      ),
                       <.br(),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Fixed Scope"),
-                      <.br()
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Fixed Scope"
+                      )
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Contest")
-
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Contest"
+                    ),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Part-Time"
+                    ),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Full-Time"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(

@@ -109,12 +109,22 @@ object ProjectsList {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)("Project: "+project.pageOfPosts.summary+" Posted: "+new Date(project.pageOfPosts.postedDate).toString),
-
-          <.div(^.className := "media-body")(
+          <.div(DashBoardCSS.Style.profileNameHolder)(
+            project.pageOfPosts.summary
+          ),
+          <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             project.pageOfPosts.description,
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
-              <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
+              "Job Type: " +project.pageOfPosts.`type`,
+              <.br(),
+              "Posted by: LivelyGig",
+              <.br(),
+              "Posted: "+new Date(project.pageOfPosts.postedDate).toUTCString(),
+              <.br(),
+              "Recommended By: Tom",
+              <.br(),
+              "Skills: Java, Financial Apps, cryptography"
+              // project.pageOfPosts.skills.toString()
             ),
             <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
               <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
