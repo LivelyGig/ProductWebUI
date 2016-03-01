@@ -1,17 +1,58 @@
 package livelygig.client.css
+
 import scalacss.Defaults._
+
 /**
   * Created by Devendu Deodhar
   */
 object LftcontainerCSS {
+
   object Style extends StyleSheet.Inline {
+
     import dsl._
-    val fontsize12em = style (
-      fontSize(1.2.em),
-      fontWeight.bold
+
+    val fontsize12em = style(
+      // fontSize(1.2.em),
+      // fontWeight.bold
     )
-    val marginBottomSearchmodelNode = style (
+    val marginBottomSearchmodelNode = style(
       marginBottom(15.px)
+    )
+    val slctMessagesInputLeftContainerMargin = style(
+      marginLeft(100.px),
+      marginRight(19.px)
+    )
+    val slctContainer = style(
+      display.inlineBlock,
+      minWidth(200.px),
+      width(100.%%)
+    )
+    val textareaWidth = style (
+      maxWidth(100.%%),
+      minWidth(100.%%),
+      fontWeight.normal,
+      backgroundColor.transparent
+    )
+    val slctInputWidth = style(
+      width(100.px),
+      paddingBottom(7.px)
+    )
+    val textArea = style(
+      minWidth(100 %%),
+      maxWidth(100 %%),
+      fontSize(0.8.em),
+      fontWeight.normal
+    )
+    val slctDate = style(
+      border.none,
+      backgroundColor.transparent,
+      paddingLeft(0.px),
+      fontWeight.normal,
+      paddingTop(3.px),
+      paddingBottom(0.px),
+      height.auto,
+      lineHeight.normal,
+      boxShadow := "none"
     )
     val slctsearchpanelabelposition = style(
       paddingTop(0.px),
@@ -22,7 +63,7 @@ object LftcontainerCSS {
       overflowX.hidden,
       width(100.%%)
       // media.maxWidth(1250.px) -(
-        // width(200.px))
+      // width(200.px))
     )
     val slctsearchpaneheader = style(
       paddingTop(15.px),
@@ -49,33 +90,34 @@ object LftcontainerCSS {
       marginLeft(18.px)
     )
     val slctleftcontentdiv = style(
-      border(1.px,solid ,transparent),
+      border(1.px, solid, transparent),
       backgroundColor(transparent),
       color(c"#222222"),
       &.hover -
-        border(1.px ,solid ,c"#aaaaaa"),
+        border(1.px, solid, c"#aaaaaa"),
       color(c"#222222")
     )
-    val resizable= style(
+    val resizable = style(
       width(100.%%),
       margin(0.%%),
       minHeight(100.px)
     )
-    val main_container_div= style(
+    val main_container_div = style(
       backgroundColor(c"#EAEAEA"),
       marginTop(122.px),
       paddingLeft(7.%%),
       paddingRight(7.%%),
       overflowY.auto
     )
-    val split_container= style(
+    val split_container = style(
       position.relative,
       height(100.%%),
       overflow.hidden
     )
-    val row= style(
+    val row = style(
       marginTop(10.px)
     )
 
   }
+
 }

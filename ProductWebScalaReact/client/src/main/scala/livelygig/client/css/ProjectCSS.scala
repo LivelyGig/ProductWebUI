@@ -5,10 +5,7 @@ object ProjectCSS {
 
   object Style extends StyleSheet.Inline {
     import dsl._
-    val slctProjectInputWidth = style(
-      width(100.px),
-      fontSize(12.px)
-    )
+
     val displayInitialbtn = style (
       display.initial,
       float.right,

@@ -24,11 +24,7 @@ object DashBoardCSS {
       width(100.%%),
       fontSize(1.2.em)
     )
-    val slctContainer = style(
-      display.inlineBlock,
-      minWidth(200.px),
-      width(100.%%)
-    )
+
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
       paddingLeft(0.px),
@@ -177,6 +173,7 @@ object DashBoardCSS {
       fontSize(1.em),
       fontWeight.normal
     )
+
     /*CreateNewAgent Css Styles*/
     val modalContainer = style(
       height(500.px),
@@ -430,7 +427,10 @@ object DashBoardCSS {
       backgroundColor(c"#FFD9B3"),
       //  textAlign.center,
       height(200.px),
-      margin(15.px)
+      marginTop(15.px),
+      marginRight(15.px),
+      marginBottom(15.px),
+      marginLeft(15.px)
     )
     val browseforContainer =style (
       padding(20.px),
@@ -446,7 +446,10 @@ object DashBoardCSS {
       backgroundColor(c"#E6CCFF"),
       // textAlign.center,
       height(200.px),
-      margin(15.px)
+      marginTop(15.px),
+      marginRight(15.px),
+      marginBottom(15.px),
+      marginLeft(15.px)
     )
     val headerFontDashboard = style (
       fontSize(20.px),
