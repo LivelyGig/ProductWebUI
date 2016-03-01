@@ -61,7 +61,8 @@ object LftcontainerCSS {
       fontWeight.bold,
       overflowY.auto,
       overflowX.hidden,
-      width(100.%%)
+      width(100.%%),
+      lineHeight.normal
       // media.maxWidth(1250.px) -(
       // width(200.px))
     )
