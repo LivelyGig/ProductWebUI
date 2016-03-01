@@ -1,5 +1,6 @@
 package livelygig.client.modals
 
+
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -24,6 +25,7 @@ object BiddingScreenModal {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"), P.buttonName),
+        // Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"),  Icon.music),
         if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
         else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))

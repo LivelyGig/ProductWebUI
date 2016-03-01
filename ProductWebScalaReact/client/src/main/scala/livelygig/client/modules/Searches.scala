@@ -1,6 +1,6 @@
 package livelygig.client.modules
 
-
+import livelygig.client.components.{Icon}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -62,12 +62,12 @@ object Searches {
         case "talent" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Profile Type")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -82,58 +82,58 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Available from")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
-                      <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
-                    LftcontainerCSS.Style.slctDate)
-                  // )
-                )
-              ),
-              <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
-                  <.div("Available to")
+                    <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
+                      LftcontainerCSS.Style.slctDate)
+                    // )
+                  )
                 ),
-                <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  // <.div(^.className := "input-group date")(
-                  // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
-                  <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
-                    LftcontainerCSS.Style.slctDate)
-                  // )
-                )
-              ),
-              <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
-                  <.div("Capabilities")
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Available to")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    // <.div(^.className := "input-group date")(
+                    // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
+                    <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
+                      LftcontainerCSS.Style.slctDate)
+                    // )
+                  )
                 ),
-                <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
-                )
-              ),
-              <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
-                  <.div("Posted by")
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Capabilities")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 ),
-                <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                  <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Posted by")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                  )
                 )
               )
             )
-          )
           )
         } //talent
         case "offerings" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -148,7 +148,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added before")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -161,7 +161,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added after")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -179,12 +179,12 @@ object Searches {
         case "projects" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Job Type")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -204,7 +204,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Start after")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -213,7 +213,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Finish before")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -225,7 +225,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Skills Required")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -233,7 +233,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Project State")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -251,7 +251,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -265,12 +265,12 @@ object Searches {
         case "contract" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Status")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -288,7 +288,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Client")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -296,7 +296,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Talent")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -310,12 +310,12 @@ object Searches {
         case "messages" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("From")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -327,7 +327,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("To")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -339,7 +339,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -347,7 +347,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Labels")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -383,12 +383,12 @@ object Searches {
         case "connections" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", "Search")
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -418,7 +418,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added before")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -430,7 +430,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added after")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -442,7 +442,7 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12",LftcontainerCSS.Style.slctInputWidth)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Groups")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
