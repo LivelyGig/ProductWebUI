@@ -324,3 +324,72 @@ a:hover {cursor: hand; cursor: pointer;}
 	content: "\e902";
 }
 
+.treeview
+	{
+		position: absolute;
+		left: 0;
+		margin-left: 0;
+		opacity: 0;
+		z-index: 2;
+		cursor: pointer;
+		height: 1em;
+		width: 1em;
+		top: 0;
+	}
+
+
+/* treeview  */
+/* Just some base styles not needed for example to function */
+/* CSS Tree menu styles */
+ol.tree
+{
+	padding: 0 0 0 0px;
+	width: 300px;
+}
+	li
+	{
+		position: relative;
+		margin-left: 0px;
+		list-style: none;
+	}
+	li.file
+	{
+		margin-left: -1px !important;
+	}
+		li.file a
+		{
+			background: url(../images/document.png) 0 0 no-repeat;
+			color: #000;
+			padding-left: 21px;
+			text-decoration: none;
+			display: block;
+		}
+		li.file a[href *= '.pdf']	{ background: url(../images/document.png) 0 0 no-repeat; }
+		li.file a[href *= '.html']	{ background: url(../images/document.png) 0 0 no-repeat; }
+		li.file a[href $= '.css']	{ background: url(../images/document.png) 0 0 no-repeat; }
+		li.file a[href $= '.js']		{ background: url(../images/document.png) 0 0 no-repeat; }
+
+		li input + ol
+		{
+			background: url(../images/toggle-small-expand.png) 40px 0 no-repeat; /*plus*/
+			margin: -1.6em 0 0 -44px; /* 15px */
+			height: 1em;
+		}
+		li input + ol > li { display: none; margin-left: -14px !important; padding-left: 1px; }
+	li label
+	{
+	 /*	background: url(../images/folder-horizontal.png) 15px 1px no-repeat; */
+		cursor: pointer;
+		display: block;
+		padding-left: 16px;
+	}
+
+	li input:checked + ol
+	{
+		background: url(../images/toggle-small.png) 40px 5px no-repeat;
+		margin: -2.00em 0 0 -44px; /* 20px */
+		padding: 1.563em 0 0 92px;
+		height: auto;
+	}
+		li input:checked + ol > li { display: block; margin: 0 0 0.125em;  /* 2px */}
+		li input:checked + ol > li:last-child { margin: 0 0 0.063em; /* 1px */ }

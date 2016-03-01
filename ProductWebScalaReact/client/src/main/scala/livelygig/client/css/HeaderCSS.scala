@@ -132,8 +132,8 @@ object HeaderCSS {
       //      float.right
     )
     val searchContainerBtn = style(
-      backgroundColor(c"#ffa500"),
-      color.rgba(51,51,51,1),
+//      backgroundColor(c"#ffa500"),
+//      color.rgba(51,51,51,1),
       fontSize(16.px),
       marginTop(10.px),
       marginBottom(8.px),

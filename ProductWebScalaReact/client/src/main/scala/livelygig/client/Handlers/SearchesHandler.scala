@@ -89,7 +89,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case UpdateLabel(searchModel) =>
       updated(value.updated(searchModel) )
     case CheckNode(node) =>
-      val progenyModified = node.progeny.map(p=>p.copy(isChecked = !p.isChecked))
+
+      val progenyModified = node.progeny.map(p=>p.copy(isChecked = node.isChecked))
       val newNode = node.copy(progeny = progenyModified)
       updated(value.updated(SearchesModel(Some(newNode),None,node.uid)))
     case CheckLeaf(leaf) =>
@@ -99,13 +100,26 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val model = value.searchesModel.find(p=>p.uid == leaf.parentUid).get
         val node = model.node.get
         val leafIndex = node.progeny.indexWhere(p=>p.uid== leaf.uid)
-        val newNode = node.copy(isChecked = !node.isChecked,progeny = node.progeny.patch(leafIndex,Seq(leaf),1))
+        val progenyModified = node.progeny.patch(leafIndex,Seq(leaf),1)
+        var isNodeChecked = false
+        progenyModified.find(p=>p.isChecked == true) match {
+          case Some(term) =>
+            isNodeChecked = true
+          case None =>
+            isNodeChecked = false
+        }
+
+        val newNode = node.copy(isChecked = isNodeChecked ,progeny = progenyModified)
         updated(value.updated(model.copy(node = Some(newNode))))
+
+
+
+
       }
     case SearchWithLabels() =>
-//      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
+      //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
       SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(Connection("","","")),"alias")))
       updated(value)
-      }
-
   }
+
+}
