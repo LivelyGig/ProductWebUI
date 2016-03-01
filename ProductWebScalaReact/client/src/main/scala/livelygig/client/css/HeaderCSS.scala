@@ -137,8 +137,10 @@ object HeaderCSS {
       fontSize(16.px),
       marginTop(10.px),
       marginBottom(8.px),
-      marginRight(15.px)
-
+      marginRight(15.px),
+        color(orange),
+    backgroundColor.transparent,
+    border.none
     )
     val  floatBtn = style (
       float.right
