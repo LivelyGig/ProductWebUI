@@ -1,5 +1,6 @@
 package livelygig.client.dtos
 
+import java.beans.Expression
 import java.util.Date
 
 import boopickle.Default._
@@ -47,6 +48,12 @@ case class Skills (skillId : String, skillName: String)
 case class Referents(referentId: String,referentName: String )
 
 case class SessionPing(sessionURI: String) extends Content
+
+case class SubscribeRequest (sessionUri: String, expression: Expression) extends Content
+
+case class Expression (msgType: String, content: ExpressionContent)
+
+case class ExpressionContent(cnxs: Seq[Connection], label: String)
 
 object Content {
   implicit val requestContentPickler: Pickler[Content] = generatePickler[Content]

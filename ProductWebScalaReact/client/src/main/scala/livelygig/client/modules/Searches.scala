@@ -4,11 +4,13 @@ package livelygig.client.modules
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.CreateLabels
+import livelygig.client.Handlers.{CheckLeaf, CheckNode, UpdateLabel, CreateLabels}
 import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.css._
+import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import livelygig.client.models.{Leaf, UserModel}
 import livelygig.client.services.LGCircuit
+import org.scalajs.dom._
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
@@ -23,6 +25,13 @@ object Searches {
 
   case class Backend(t: BackendScope[Props, State]) {
 
+    def searchClick(e: ReactEventI): Unit = {
+
+//      val label = t.props.map{root => root.proxy.value.searchesModel}
+
+        SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(Connection("","","")),"alias")))
+    }
+
     def updateDate(e: ReactEventI) = {
       println(e.target.value)
       val value = e.target.value
@@ -31,6 +40,10 @@ object Searches {
 
     def mounted(props: Props): Callback = Callback {
     }
+
+    /*def labelChecked: Leaf = Callback{
+
+    }*/
 
     val baseOpts = BootstrapDatepickerOptions.
       autoclose(true).
@@ -346,13 +359,13 @@ object Searches {
                                 case None =>
                                   <.div()
                                 case Some(leaf) =>
-                                  <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), " " + leaf.text)
+                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
                               }
                             case Some(node) =>
                               <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
-                                <.div(LftcontainerCSS.Style.slctsearchpaneheader)(" " + node.text),
+                                <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text),
                                 <.div()(node.progeny.map(
-                                  leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox"), " " + leaf.text)
+                                  leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
                                 )))
                           })
                       }

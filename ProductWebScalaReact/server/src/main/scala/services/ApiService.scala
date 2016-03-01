@@ -8,7 +8,6 @@ import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 //import play.libs.Json
-import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
 class ApiService extends Api {
@@ -18,45 +17,46 @@ class ApiService extends Api {
   var CONFIRM_EMAIL_MSG = "confirmEmailToken"
   var INITIALIZE_SESSION_MSG = "initializeSessionRequest"
   var SESSION_PING = "sessionPing"
-  val wsRequest : WSRequest = WS.url(BASE_URL)
+  val wsRequest: WSRequest = WS.url(BASE_URL)
 
 
-  override def createAgent(requestContent: String): Future[/*ApiResponse[CreateUserResponse]*/String] = {
+  override def createAgent(requestContent: String): Future[ /*ApiResponse[CreateUserResponse]*/ String] = {
     println(write(requestContent))
     WS.url(BASE_URL).post(requestContent).map(
-      response=>response.body.toString
+      response => response.body.toString
     )
   }
 
-  override def confirmEmail(requestContent: String): Future[/*ApiResponse[ConfirmEmailResponse]*/String] = {
+  override def confirmEmail(requestContent: String): Future[ /*ApiResponse[ConfirmEmailResponse]*/ String] = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))*/requestContent).map {
+    WS.url(BASE_URL).post(/*write(ApiRequest(CONFIRM_EMAIL_MSG,confirmEmailRequest))*/ requestContent).map {
       response =>
-//        println("token receiving at server response.body.tostring : " + response.body.toString)
+        //        println("token receiving at server response.body.tostring : " + response.body.toString)
         response.body.toString
     }
   }
 
-  override def agentLogin(requestContent: String): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
+  override def agentLogin(requestContent: String): Future[ /*ApiResponse[InitializeSessionResponse]*/ String] = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))*/requestContent).map{
-      response=>
-      //  println("login receiving at server response.body.tostring : " + response.body.toString)
-        response.body.toString()}
+    WS.url(BASE_URL).post(/*write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))*/ requestContent).map {
+      response =>
+        //  println("login receiving at server response.body.tostring : " + response.body.toString)
+        response.body.toString()
+    }
   }
 
-  override def sessionPing(requestContent: String): Future[/*Seq[ApiResponse[ConnectionProfileResponse]]*/String] = {
+  override def sessionPing(requestContent: String): Future[ /*Seq[ApiResponse[ConnectionProfileResponse]]*/ String] = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/requestContent).map(
-      response=>response.body.toString
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map(
+      response => response.body.toString
     )
   }
 
   override def getConnections(requestContent: String): Future[String] = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/requestContent).map{
-      response=>
-        println("response.json.toString() = "+response.json.toString())
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {
+      response =>
+        //        println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
   }
@@ -65,6 +65,15 @@ class ApiService extends Api {
     val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
     /*println(json)*/
     json
+  }
+
+  override def subscribeRequest(requestContent: String): Future[String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {
+      response =>
+        //        println("response.json.toString() = "+response.json.toString())
+        response.json.toString()
+    }
   }
 }
 

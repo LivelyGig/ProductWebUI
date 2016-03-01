@@ -20,6 +20,7 @@ object CoreApi {
   val INITIALIZE_SESSION_MSG = "initializeSessionRequest"
   val SESSION_PING = "sessionPing"
   val PROJECT_MSG = "projectsRequest"
+  val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
   //  var BASE_URL = "http://52.35.10.219:9876/api"
   //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
   //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
@@ -61,6 +62,10 @@ object CoreApi {
 
   def getProjects () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG,SessionPing(window.sessionStorage.getItem("sessionURI"))))
+    AjaxClient[Api].getProjects(requestContent).call()
+  }
+  def evalSubscribeRequest (subscribeRequest: SubscribeRequest) : Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST,subscribeRequest))
     AjaxClient[Api].getProjects(requestContent).call()
   }
 

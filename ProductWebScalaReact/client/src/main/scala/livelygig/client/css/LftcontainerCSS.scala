@@ -25,7 +25,7 @@ object LftcontainerCSS {
         // width(200.px))
     )
     val slctsearchpaneheader = style(
-      paddingTop(15.px),
+//      paddingTop(15.px),
       paddingBottom(2.px),
       fontSize(1.em),
       fontWeight.normal

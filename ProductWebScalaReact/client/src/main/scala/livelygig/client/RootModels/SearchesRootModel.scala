@@ -7,6 +7,7 @@ import livelygig.client.models.SearchesModel
   */
 case class SearchesRootModel(searchesModel: Seq[SearchesModel]) {
   def updated (newSearch: SearchesModel) = {
+    val searchu = searchesModel
     searchesModel.indexWhere(_.uid == newSearch.uid)
     match {
       case -1 =>
