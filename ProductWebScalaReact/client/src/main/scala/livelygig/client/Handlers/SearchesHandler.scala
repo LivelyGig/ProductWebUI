@@ -89,7 +89,6 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case UpdateLabel(searchModel) =>
       updated(value.updated(searchModel) )
     case CheckNode(node) =>
-
       val progenyModified = node.progeny.map(p=>p.copy(isChecked = node.isChecked))
       val newNode = node.copy(progeny = progenyModified)
       updated(value.updated(SearchesModel(Some(newNode),None,node.uid)))
@@ -108,13 +107,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
           case None =>
             isNodeChecked = false
         }
-
         val newNode = node.copy(isChecked = isNodeChecked ,progeny = progenyModified)
         updated(value.updated(model.copy(node = Some(newNode))))
-
-
-
-
       }
     case SearchWithLabels() =>
       //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
