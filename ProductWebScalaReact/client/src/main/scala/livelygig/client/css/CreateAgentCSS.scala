@@ -67,5 +67,11 @@ object CreateAgentCSS {
     val footTextAlign = style(
       textAlign.center
     )
+
+    val loginBtn = style (
+      width(100.%%),
+      backgroundColor(c"#ccccff"),
+      margin(3.px)
+    )
   }
 }
