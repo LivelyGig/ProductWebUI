@@ -106,7 +106,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props("New Contract"))
+                    BiddingScreenModal(BiddingScreenModal.Props("New Contract", Seq(HeaderCSS.Style.createNewProjectBtn),"","Apply"))
                   )
                 )
               }
@@ -127,7 +127,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewMessage(NewMessage.Props("New Message"))
+                    NewMessage(NewMessage.Props("New Message", Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages" ))
                   )
                 )
               }
@@ -148,7 +148,7 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     // ToDo: need design and implementaiton for New Connection button.
-                    NewMessage(NewMessage.Props("New Connection"))
+                    NewMessage(NewMessage.Props("New Connection",  Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages"))
                   )
                 )
               }

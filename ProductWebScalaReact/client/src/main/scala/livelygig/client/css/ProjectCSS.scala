@@ -13,6 +13,12 @@ object ProjectCSS {
       marginLeft(-30.px),
       marginRight(10.px)
     )
+    val displayModalbtn = style (
+      display.initial,
+      float.right,
+      marginTop(4.px),
+      marginRight(10.px)
+    )
     val textareaWidth = style (
       // width(100.%%),
       maxWidth(100.%%),

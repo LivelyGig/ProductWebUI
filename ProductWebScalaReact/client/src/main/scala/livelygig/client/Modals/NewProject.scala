@@ -41,7 +41,7 @@ object NewProject {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),"New Job"),
+        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),"New Job"),
         if (S.showNewProjectForm) PostAProjectForm(PostAProjectForm.Props(B.addNewProject))
         else
           Seq.empty[ReactElement]

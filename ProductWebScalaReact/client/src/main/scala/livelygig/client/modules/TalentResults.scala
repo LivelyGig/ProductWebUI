@@ -89,9 +89,11 @@ object TalentResults {
                     <.div(^.className := "col-md-12 col-sm-12 ")(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props("Recommend")),
-                      NewMessage(NewMessage.Props("Message")))
+                      NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Recommend")),
+                 //     NewMessage(NewMessage.Props("Message")))
+                      NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message"))
                   ) //media-body
+                )
                 )
               }
             ) //ul

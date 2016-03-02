@@ -45,7 +45,7 @@ object Dispute {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addDisputeForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        Button(Button.Props(B.addDisputeForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),P.buttonName),
         if (S.showDispute) DisputeForm(DisputeForm.Props(B.addDispute, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]

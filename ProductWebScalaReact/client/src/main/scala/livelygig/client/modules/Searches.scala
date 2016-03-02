@@ -383,22 +383,18 @@ object Searches {
                                 case None =>
                                   <.div()
                                 case Some(leaf) =>
-                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
+                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader,MessagesCSS.Style.marginLeftLeafs)(<.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
                                     p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))
                                   }), " " + leaf.text)
                               }
                             case Some(node) =>
                               <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
-
-
                                 <.ol(^.className := "tree")(
                                   <.li(
                                     <.label(^.`for` := "folder3")(
-
-                                      <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := node.isChecked, ^.onChange --> {
+                                    <.input(^.`type` := "checkbox", ^.checked := node.isChecked, ^.onChange --> {
                                         p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))
                                       }), " " + node.text
-                                      )
                                     ),
                                     <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder3"),
 
@@ -409,30 +405,10 @@ object Searches {
                                         }), "  " + leaf.text
                                       )
                                     )
-
-
-
-
-
-                                      //                                      <.li(^.className:="file")(<.a(^.href:="")("File")),
-                                      //                                      <.li()(
-                                      //                                        <.input(^.`type`:="checkbox"),
-                                      //                                        <.label(^.`for`:="subfolder3")("Subfolder 1"),
-                                      //                                        <.input(^.`type`:="checkbox", ^.id:="subfolder3"),
-                                      //                                        <.ol(
-                                      //                                          <.li(^.className:="file")(<.input(^.`type`:="checkbox"),<.a(^.href:="")("File")),
-                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File")),
-                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File"))
-                                      //                                        )//ol
-                                      //                                      )//label and ol
                                     ) //li li
                                   ) // label ol
                                 ) //ol main
-
-                                /* ,  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text),
-                                 <.div()(node.progeny.map(
-                                   leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
-                                 ))*/)
+                             )
                           })
                       }
                       }

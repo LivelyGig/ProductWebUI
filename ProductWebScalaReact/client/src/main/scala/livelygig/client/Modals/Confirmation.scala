@@ -42,7 +42,7 @@ object Confirmation {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),P.buttonName),
         if (S.showConfirmationForm) ConfirmationForm(ConfirmationForm.Props(B.addConfirmation, "New Message"))
         else
           Seq.empty[ReactElement]

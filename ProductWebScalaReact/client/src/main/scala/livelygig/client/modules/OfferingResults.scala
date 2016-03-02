@@ -1,12 +1,10 @@
 package livelygig.client.modules
 
 import japgolly.scalajs.react.ReactComponentB
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}
-import livelygig.client.modals.{BiddingScreenModal, NewMessage, NewRecommendation}
+import livelygig.client.modals.{ NewMessage, NewRecommendation}
 
 import scalacss.ScalaCssReact._
 
@@ -51,7 +49,6 @@ object OfferingResults {
                   <.span(Icon.longArrowDown))
               )
             ),
-
             <.div(^.className := "pull-right", ^.paddingTop := "10px")(
               // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
@@ -70,18 +67,18 @@ object OfferingResults {
                   <.div(DashBoardCSS.Style.profileNameHolder)("New company branding - icon and website... $250.  Posted  11:00am 12/05/2015"),
                   <.div(^.className := "media-body")(
                     "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                    <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
+                    <.div(DashBoardCSS.Style.marginTop10px)(
                       <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
                     ),
 
-                    <.div(/*^.className := "profile-action-buttons"*/)(
+                    <.div()(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props("Recommend")),
+                      NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Recommend")),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn,^.className := "btn profile-action-buttons")("Purchase")(),
                       // BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
-                      NewMessage(NewMessage.Props("Message")
-                      )
+                     // NewMessage(NewMessage.Props("Message")
+                      NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Messages"))
                     )
                   ) //media-body
                 ) //li

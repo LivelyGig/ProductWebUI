@@ -93,8 +93,8 @@ object MessagesResults {
                     <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/")(
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
                       <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewMessage(NewMessage.Props("Forward")),
-                      NewMessage(NewMessage.Props("Reply"))
+                      NewMessage(NewMessage.Props("Forward",Seq(HeaderCSS.Style.createNewProjectBtn),"","Forward")),
+                      NewMessage(NewMessage.Props("Reply",Seq(HeaderCSS.Style.createNewProjectBtn),"","Reply"))
                       /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
                     )
                   ) //media-body
