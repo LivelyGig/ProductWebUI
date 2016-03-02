@@ -136,7 +136,7 @@ object HeaderCSS {
     val rsltContainerIconBtn = style(
       //      backgroundColor(c"#ffa500"),
       color(c"#de9000"),
-      fontSize(16.px),
+      fontSize(20.px),
       marginTop(10.px),
       marginBottom(8.px),
       marginRight(10.px),
