@@ -27,9 +27,9 @@ object Searches {
 
     def searchClick(e: ReactEventI): Unit = {
 
-//      val label = t.props.map{root => root.proxy.value.searchesModel}
+      //      val label = t.props.map{root => root.proxy.value.searchesModel}
 
-        SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(Connection("","","")),"alias")))
+      SubscribeRequest(window.sessionStorage.getItem("sessionURI"), Expression(msgType = "feedExpr", ExpressionContent(Seq(Connection("", "", "")), "alias")))
     }
 
     def updateDate(e: ReactEventI) = {
@@ -123,7 +123,7 @@ object Searches {
                     <.div("Capabilities")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. Web Development")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
@@ -131,7 +131,7 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   )
                 )
               )
@@ -202,18 +202,28 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Project"),
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Project"
+                    ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Hourly"),
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Hourly"
+                      ),
                       <.br(),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Fixed Scope"),
-                      <.br()
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Fixed Scope"
+                      )
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Contest")
-
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Contest"
+                    ),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Part-Time"
+                    ),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Full-Time"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
@@ -242,7 +252,7 @@ object Searches {
                     <.div("Skills Required")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
@@ -268,7 +278,7 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   )
                 )
               )
@@ -305,7 +315,7 @@ object Searches {
                     <.div("Client")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Britta")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
@@ -313,7 +323,7 @@ object Searches {
                     <.div("Talent")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Abed")
                   )
                 )
               )
@@ -356,7 +366,7 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.row)(
@@ -373,24 +383,30 @@ object Searches {
                                 case None =>
                                   <.div()
                                 case Some(leaf) =>
-                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
+                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
+                                    p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))
+                                  }), " " + leaf.text)
                               }
                             case Some(node) =>
                               <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
 
 
-                                <.ol(^.className:="tree")(
+                                <.ol(^.className := "tree")(
                                   <.li(
-                                    <.label(^.`for`:="folder3")(
+                                    <.label(^.`for` := "folder3")(
 
-                                      <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text
+                                      <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := node.isChecked, ^.onChange --> {
+                                        p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))
+                                      }), " " + node.text
                                       )
                                     ),
-                                    <.input(^.`type`:="checkbox", ^.className:="treeview", ^.id:="folder3"),
+                                    <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder3"),
 
                                     <.ol()(node.progeny.map(
                                       leaf => <.li(LftcontainerCSS.Style.checkboxlabel)(
-                                        <.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}),"  " +  leaf.text
+                                        <.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
+                                          p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))
+                                        }), "  " + leaf.text
                                       )
                                     )
 
@@ -398,25 +414,25 @@ object Searches {
 
 
 
-//                                      <.li(^.className:="file")(<.a(^.href:="")("File")),
-//                                      <.li()(
-//                                        <.input(^.`type`:="checkbox"),
-//                                        <.label(^.`for`:="subfolder3")("Subfolder 1"),
-//                                        <.input(^.`type`:="checkbox", ^.id:="subfolder3"),
-//                                        <.ol(
-//                                          <.li(^.className:="file")(<.input(^.`type`:="checkbox"),<.a(^.href:="")("File")),
-//                                          <.li(^.className:="file")(<.a(^.href:="")("File")),
-//                                          <.li(^.className:="file")(<.a(^.href:="")("File"))
-//                                        )//ol
-//                                      )//label and ol
+                                      //                                      <.li(^.className:="file")(<.a(^.href:="")("File")),
+                                      //                                      <.li()(
+                                      //                                        <.input(^.`type`:="checkbox"),
+                                      //                                        <.label(^.`for`:="subfolder3")("Subfolder 1"),
+                                      //                                        <.input(^.`type`:="checkbox", ^.id:="subfolder3"),
+                                      //                                        <.ol(
+                                      //                                          <.li(^.className:="file")(<.input(^.`type`:="checkbox"),<.a(^.href:="")("File")),
+                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File")),
+                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File"))
+                                      //                                        )//ol
+                                      //                                      )//label and ol
                                     ) //li li
-                                  )// label ol
-                                )//ol main
+                                  ) // label ol
+                                ) //ol main
 
-                               /* ,  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text),
-                                <.div()(node.progeny.map(
-                                  leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
-                                ))*/)
+                                /* ,  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text),
+                                 <.div()(node.progeny.map(
+                                   leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
+                                 ))*/)
                           })
                       }
                       }
@@ -495,7 +511,7 @@ object Searches {
                     <.div("Groups")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2)
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. Brazil")
                   )
                 )
               )

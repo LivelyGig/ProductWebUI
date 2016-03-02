@@ -17,8 +17,10 @@ import scalacss.ScalaCssReact._
 
 object ProjectResults {
 
-  case class Props (proxy : ModelProxy[Pot[ProjectsRootModel]])
+  case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
+
   case class State(selectedItem: Option[ProjectsResponse] = None)
+
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
       Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
@@ -27,8 +29,8 @@ object ProjectResults {
   // create the React component for Dashboard
   val component = ReactComponentB[Props]("Projects")
     .backend(new Backend(_))
-    .renderPS((B,P,S) =>
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
+    .renderPS((B, P, S) =>
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.verticalImg)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-4 col-sm-4 col-xs-4", ^.paddingRight := "0px", ^.paddingTop := "12px")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
@@ -67,22 +69,22 @@ object ProjectResults {
             ),
             <.div(^.className := "pull-right", ^.paddingTop := "10px")(
               // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-         <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12",^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             P.proxy().render(jobPostsRootModel =>
               ProjectsList(jobPostsRootModel.projectsModelList)
             ),
-            P.proxy().renderFailed(ex =>  <.div( <.span(Icon.warning)," Error loading")),
+            P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
             if (P.proxy().isEmpty) {
               if (!P.proxy().isFailed) {
-                <.div(^.height := "100%",DashBoardCSS.Style.verticalImg)(
-                   <.img(^.src:="./assets/images/processing.gif")
+                <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
+                  <.img(^.src := "./assets/images/processing.gif")
                 )
               } else {
                 <.div()
@@ -96,6 +98,7 @@ object ProjectResults {
     )
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
+
   def apply(proxy: ModelProxy[Pot[ProjectsRootModel]]) = component(Props(proxy))
 }
 
@@ -109,26 +112,47 @@ object ProjectsList {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)("Project: "+project.pageOfPosts.summary+" Posted: "+new Date(project.pageOfPosts.postedDate).toString),
-
-          <.div(^.className := "media-body")(
+          <.div(DashBoardCSS.Style.profileNameHolder)(
+            project.pageOfPosts.summary
+          ),
+          <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             project.pageOfPosts.description,
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
-              <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
+              "Job Type: " + project.pageOfPosts.`type`,
+              <.br(),
+              "Posted by: LivelyGig",
+              <.br(),
+              "Posted: " + new Date(project.pageOfPosts.postedDate).toUTCString(),
+              <.br(),
+              "Recommended By: Tom",
+              <.br(),
+              "Skills: Java, Financial Apps, cryptography"
+              // project.pageOfPosts.skills.toString()
             ),
-            <.div(/*^.onMouseOver ==> displayBtn*/ /*^.onMouseOver --> displayBtn*/ /*^.className:="profile-action-buttons"*/)(
-              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
-              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
+            <.div(/*^.onMouseOver ==> displayBtn*/
+              /*^.onMouseOver --> displayBtn*/
+              /*^.className:="profile-action-buttons"*/)(
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.userTimes),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Recommend", Icon.heart),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Find Matching Talent", Icon.exchange),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Apply", Icon.handOUp),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Message", Icon.envelope),
+              <.br(),
+
+              // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")(Icon.weibo, " Hide")(),
+              // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")(Icon.weibo, " Favorite")(),
+              // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")(Icon.weibo, "Recommend")(),
               NewRecommendation(NewRecommendation.Props("Recommend")),
-              <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Find Matching Talent")(),
+              // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")(Icon.weibo, " Find Matching Talent")(),
               BiddingScreenModal(BiddingScreenModal.Props("Apply")),
-              NewMessage(NewMessage.Props("Message")
-              )
+              NewMessage(NewMessage.Props("Message"))
+
             )
           ) //media-body
         ) //li
       }
-      <.div( ^.className:="rsltSectionContainer"  )(
+      <.div(^.className := "rsltSectionContainer")(
         <.ul(^.className := "media-list")(p.projects map renderJobPosts)
       )
     })

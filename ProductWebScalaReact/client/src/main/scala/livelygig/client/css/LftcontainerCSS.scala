@@ -27,11 +27,16 @@ object LftcontainerCSS {
       minWidth(200.px),
       width(100.%%)
     )
-    val textareaWidth = style (
+    val textareaWidth = style(
       maxWidth(100.%%),
       minWidth(100.%%),
       fontWeight.normal,
-      backgroundColor.transparent
+      backgroundColor.transparent,
+      borderColor.transparent,
+      &.hover(
+        backgroundColor.white,
+        borderColor.gray
+      )
     )
     val slctInputWidth = style(
       width(100.px),
@@ -52,7 +57,11 @@ object LftcontainerCSS {
       paddingBottom(0.px),
       height.auto,
       lineHeight.normal,
-      boxShadow := "none"
+      boxShadow := "none",
+      marginLeft(0.px),
+      &.hover(
+        fontWeight.bold
+      )
     )
     val slctsearchpanelabelposition = style(
       paddingTop(0.px),
@@ -67,7 +76,7 @@ object LftcontainerCSS {
       // width(200.px))
     )
     val slctsearchpaneheader = style(
-//      paddingTop(15.px),
+      paddingTop(15.px),
       paddingBottom(2.px),
       fontSize(1.em),
       fontWeight.normal
@@ -83,7 +92,10 @@ object LftcontainerCSS {
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
-      marginLeft(18.px)
+      marginLeft(18.px),
+      &.hover(
+        fontWeight.bold
+      )
     )
     val subcheckboxlabel = style(
       fontSize(1.em),

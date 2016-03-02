@@ -151,7 +151,6 @@ object BiddingScreenModalForm {
             <.div(^.id := "home", ^.className := "tab-pane fade in active")(
               // Initiating details
               <.div(^.id := "initiatingDetail" /*, ^.borderStyle.solid*/)(
-                // <.span(^.fontWeight.bold)("Initiating"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Project:")
@@ -328,17 +327,15 @@ object BiddingScreenModalForm {
             <.div(^.id := "menu1", ^.className := "tab-pane fade")(
               // escrowDetail
               <.div(^.id := "escrowDetail" /*, ^.borderStyle.solid*/)(
-                //   <.span(^.fontWeight.bold)("Escrow"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
-                      "1: ",
+                      <.span(^.fontWeight := "bold")("1: Pending Funding -- Join Shared Wallet"), <.br(),
                       "All parties in the contract have agreed to the terms as of 2016-07-30 00:34 UTC-7 (PST). ",
                       "Those terms included Escrow. ",
                       "In order to set up for Escrow, assure you have an CoPay wallet application installed, or install it now from ",
                       <.a(^.href := "#")("BitPay"),
-                      ". " +
-                        "Then, from the CoPay application, perform the following steps:",
+                      ". Then, from the CoPay application, perform the following steps:",
                       <.br(),
                       "a) Add Wallet -> Join Shared Wallet.",
                       <.br(),
@@ -350,7 +347,11 @@ object BiddingScreenModalForm {
                       <.br(),
                       "d) Wait for the other party to do the same. Your CoPay wallet will indicate when completed.",
                       <.hr(),
-                      "2. funding into escrow is required:",
+
+                      <.span(^.fontWeight := "bold")("1a: Pending Funding -- Waiting for other party to joint shared wallet"), <.br(),
+
+                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on participants"), <.br(),
+                      "Funding into escrow is required:",
                       <.br(),
                       "From Employer, Pam:  1 XBT requested.  Not yet funded.",
                       <.br(),
@@ -363,11 +364,9 @@ object BiddingScreenModalForm {
                       "From Talent, Abed:  0.02 XBT  requested.",
                       <.br(),
                       <.button(^.className := "btn dropdown-toggle", "data-target".reactAttr := "#demo", "data-toggle".reactAttr := "collapse")(" Escrow deposit, payment, and refund details..."),
-
                       <.div(^.id := "escrowDepositDetails", ^.id := "demo", ^.className := "collapse")(
                         <.span(^.fontWeight.bold)("Escrow Deposit and Payout Details"),
                         <.div(^.className := "row")(
-
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
                             <.a(^.href := "#")("details"),
@@ -379,16 +378,24 @@ object BiddingScreenModalForm {
                         )
                       ),
                       <.br(),
-                      "3. Funding received", <.br(),
+
+                      <.span(^.fontWeight := "bold")("3: Funded"), <.br(),
+                      "Funding received", <.br(),
                       "The following deposits were made into this contract:", <.br(),
-                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target:="blank")("Tx 1"), <.br(),
-                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target:="blank")("Tx 2"), <.br(),
-                      "pending funding from buyer"
+                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 1"), <.br(),
+                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
+                      "pending funding from buyer",
+                      <.br(),
+
+                      <.span(^.fontWeight := "bold")("4: Pay Escrow Setup Commission"), <.br(),
+                      "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
+
                     )
                   )
                 ),
                 <.div()(
                   <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                   )
@@ -398,7 +405,6 @@ object BiddingScreenModalForm {
             <.div(^.id := "menu2", ^.className := "tab-pane fade")(
               // inProgressDeatil
               <.div(^.id := "inProgressDetail" /*, ^.borderStyle.solid*/)(
-                // <.span(^.fontWeight.bold)("In Progress"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "inProgress")(
@@ -593,7 +599,6 @@ object BiddingScreenModalForm {
             <.div(^.id := "menu3", ^.className := "tab-pane fade")(
               // acceptanceDetail
               <.div(^.id := "acceptanceDetail" /*, ^.borderStyle.solid*/)(
-                //  <.span(^.fontWeight.bold)("Acceptance"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(

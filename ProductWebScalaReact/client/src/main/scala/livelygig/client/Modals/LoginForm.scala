@@ -4,7 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
-import livelygig.client.css.DashBoardCSS
+import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.models.UserModel
 import org.scalajs.dom._
 
@@ -95,8 +95,10 @@ object LoginForm {
             // right
             <.div(^.className := "col-md-5 col-sm-5 col-xs-5", ^.borderLeft := "solid")(
               <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
-              // example, e.g. from https://www.import.io
-              <.img()(^.src := "./assets/images/sampleSocialLogin.png")
+              <.button(^.tpe := "button", ^.className := "btn", Icon.githubSquare, " GitHub"), <.br(),
+              <.button(^.tpe := "button", ^.className := "btn", Icon.googlePlusSquare, " Google+"), <.br(),
+              <.button(^.tpe := "button", ^.className := "btn", Icon.linkedinSquare, " LinkedIn"), <.br(),
+              <.button(^.tpe := "button", ^.className := "btn", Icon.facebookSquare, " Facebook"), <.br()
             )
           )
         ),
