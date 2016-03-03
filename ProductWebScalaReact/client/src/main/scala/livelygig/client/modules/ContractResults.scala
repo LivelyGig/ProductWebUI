@@ -1,11 +1,10 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
+
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import livelygig.client.LGMain.Loc
 import livelygig.client.components.Icon
-import livelygig.client.css.{DashBoardCSS}
+import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{BiddingScreenModal, NewMessage}
 
 import scalacss.ScalaCssReact._
@@ -74,8 +73,9 @@ object ContractResults {
                       <.div(DashBoardCSS.Style.profileNameHolder)("Status: Initiating   11:20am 12/08/2015"),
                       <.br(),
                       <.div(/*^.className:="profile-action-buttons"*/)(
-                        BiddingScreenModal(BiddingScreenModal.Props("Manage")),
-                        NewMessage(NewMessage.Props("Message"))
+                        BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Apply")),
+                       // NewMessage(NewMessage.Props("Message"))
+                        NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message"))
                       )
                     )
                   ) //media-body

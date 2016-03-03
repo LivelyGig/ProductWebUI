@@ -23,7 +23,7 @@ object Presets {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(
           <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-lg-10 col-sm-12", ^.paddingLeft := "0px")(
+          <.div(^.className := "col-sm-3", ^.paddingLeft := "0px")(
             p.view match {
               case "talent" => {
                 <.div()(
@@ -46,7 +46,10 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     UserSkills(UserSkills.Props())
+                    // ToDo:  above should be updated to something like the following:
+                      // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
+
                 )
               } //talent
               case "projects" => {
@@ -67,6 +70,8 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     NewProject(NewProject.Props())
+                    // ToDo:  above should be updated to something like the following:
+                    // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
                 )
               } //project
@@ -88,6 +93,8 @@ object Presets {
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
                     Offering(Offering.Props("New Offering"))
+                    // ToDo:  above should be updated to something like the following:
+                    // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
                 )
               } //project
@@ -105,9 +112,10 @@ object Presets {
                       <.li()(<.a(^.href := "#contract")("Customize..."))
                     )
                   ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    BiddingScreenModal(BiddingScreenModal.Props("New Contract"))
-                  )
+
+                    BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.rocket,"New Contract"))
+
+
                 )
               }
               case "messages" => {
@@ -127,7 +135,8 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewMessage(NewMessage.Props("New Message"))
+                    // NewMessage(NewMessage.Props("New Message", Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages" )),
+                    NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
                 )
               }
@@ -148,12 +157,13 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     // ToDo: need design and implementaiton for New Connection button.
-                    NewMessage(NewMessage.Props("New Connection"))
+                    NewMessage(NewMessage.Props("New Connection",  Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages"))
                   )
                 )
               }
             } //main switch
           ),
+          <.div(^.className := "col-sm-7", ^.paddingLeft := "0px")(),
           <.div(^.className := "col-lg-1")()
         )
       )

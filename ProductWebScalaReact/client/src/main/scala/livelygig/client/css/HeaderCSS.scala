@@ -65,15 +65,16 @@ object HeaderCSS {
     /* css*/
     val middelNaviContainer =style(
       marginTop(0.px),
-      height(62.px),
+      height(44.px),
       // paddingLeft(0.px),
       // paddingRight(0.%%),
       backgroundColor(c"#00767C"),
 
-      top(-2.px),
+      // top(-2.px),
 
       width(100.%%),
       paddingTop(4.px)
+
     )
     val presetPickContainer= style(
       minWidth(250.px)
@@ -82,7 +83,7 @@ object HeaderCSS {
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
       fontSize(1.2.em),
-      marginTop(6.px),
+      // marginTop(6.px),
       textAlign.left
     )
     val dropdownMenuWidth=style(
@@ -135,10 +136,10 @@ object HeaderCSS {
     )
     val rsltContainerIconBtn = style(
       //      backgroundColor(c"#ffa500"),
-      color(c"#de9000"),
+//      color(c"#de9000"),
       fontSize(20.px),
-      marginTop(10.px),
-      marginBottom(8.px),
+      // marginTop(10.px),
+      // marginBottom(8.px),
       marginRight(10.px),
       color(orange),
       backgroundColor.transparent,

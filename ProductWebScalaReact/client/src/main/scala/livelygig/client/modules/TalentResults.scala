@@ -87,11 +87,13 @@ object TalentResults {
                   <.div(^.className := "media-body")(
                     "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
                     <.div(^.className := "col-md-12 col-sm-12 ")(
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
-                      <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props("Recommend")),
-                      NewMessage(NewMessage.Props("Message")))
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.userTimes),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
+                      NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Recommend")),
+                 //     NewMessage(NewMessage.Props("Message")))
+                      NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message"))
                   ) //media-body
+                )
                 )
               }
             ) //ul

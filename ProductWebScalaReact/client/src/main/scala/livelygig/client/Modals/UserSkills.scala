@@ -2,9 +2,9 @@ package livelygig.client.modals
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
+
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.LGMain.Loc
+
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
@@ -46,7 +46,7 @@ object UserSkills {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)), "Update Profile"),
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""), "Update Profile"),
         if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]

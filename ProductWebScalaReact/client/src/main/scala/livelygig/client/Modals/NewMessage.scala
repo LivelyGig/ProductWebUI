@@ -6,16 +6,18 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
+import livelygig.client.components.Icon.Icon
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
 
-  case class Props(buttonName: String)
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
   case class State(showNewMessageForm: Boolean = false)
 
@@ -33,9 +35,9 @@ object NewMessage {
     def addMessage(postMessage: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
       if(postMessage){
-        t.modState(s => s.copy(showNewMessageForm = false))
-      } else {
         t.modState(s => s.copy(showNewMessageForm = true))
+      } else {
+        t.modState(s => s.copy(showNewMessageForm = false))
       }
     }
   }
@@ -45,7 +47,7 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),className = "profile-action-buttons"),P.buttonName),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title,className = "profile-action-buttons"),P.buttonName),
         if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
@@ -65,6 +67,7 @@ object PostNewMessage {
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
+
     }
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
@@ -74,13 +77,14 @@ object PostNewMessage {
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postMessage = true))
+      t.modState(s => s.copy(postMessage = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postMessage)
       props.submitHandler(state.postMessage)
+
     }
 
     def render(s: State, p: Props) = {
@@ -110,7 +114,7 @@ object PostNewMessage {
           ),
           <.div()(
               <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
+              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),

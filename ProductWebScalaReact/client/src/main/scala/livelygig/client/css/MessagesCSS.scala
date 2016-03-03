@@ -38,5 +38,8 @@ object MessagesCSS {
         visibility.visible
       )
     )
+    val marginLeftLeafs = style(
+      marginLeft(16.px)
+    )
   }
 }

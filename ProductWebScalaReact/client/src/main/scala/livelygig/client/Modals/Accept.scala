@@ -46,7 +46,7 @@ object Accept {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn)),P.buttonName),
+        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),P.buttonName),
         if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]

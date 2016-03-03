@@ -53,7 +53,7 @@ object Offering {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addNewOfferingForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),className = "profile-action-buttons"),P.buttonName),
+        Button(Button.Props(B.addNewOfferingForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"","",className = "profile-action-buttons"),P.buttonName),
         if (S.showNewOfferingForm) OfferingForm(OfferingForm.Props(B.addOffer, "New Offering"))
         else
           Seq.empty[ReactElement]

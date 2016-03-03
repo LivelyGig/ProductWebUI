@@ -2,6 +2,7 @@ package livelygig.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import livelygig.client.components.Icon._
 import livelygig.client.css.DashBoardCSS
 import org.scalajs.dom._
 
@@ -33,11 +34,11 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), id: String=null, className: String = null)
+    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), addIcons : Icon, title: String, id: String=null, className: String = null)
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>
-        <.button(^.className:="btn btn-default ".concat(P.className), ^.id:= P.id, P.addStyles, ^.tpe := "button", ^.onClick --> P.onClick)(C)
+        <.button(^.className:="btn btn-default ".concat(P.className),P.addStyles,P.addIcons,^.title:= P.title, ^.id:= P.id,  ^.tpe := "button", ^.onClick --> P.onClick)(C)
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)

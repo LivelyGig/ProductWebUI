@@ -6,14 +6,17 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
+import livelygig.client.components.Icon
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object NewRecommendation {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName :String)
+  case class Props(buttonName :String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
   case class State(showNewRecommendationForm: Boolean = false, newRecommendationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
@@ -41,8 +44,8 @@ object NewRecommendation {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons" ),P.buttonName),
+      <.div(ProjectCSS.Style.displayModalbtn)(
+        Button(Button.Props(B.addNewRecommendationForm(), CommonStyle.default,P.addStyles,P.addIcons,P.title, className = "profile-action-buttons" ),P.buttonName),
         if (S.showNewRecommendationForm) NewRecommendationForm(NewRecommendationForm.Props(B.addNewRecommendation))
         else
           Seq.empty[ReactElement]
@@ -118,7 +121,7 @@ object NewRecommendationForm {
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
