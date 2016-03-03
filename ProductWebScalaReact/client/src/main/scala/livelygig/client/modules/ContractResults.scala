@@ -28,7 +28,7 @@ object ContractResults {
                 <.li()(<.a()("Unhide")),
                 <.li()(<.a()("Unfavorite"))
               )
-            ) //dropdown class
+            )
           ),
           <.div(^.className := "col-md-8 col-sm-8 col-xs-8", ^.paddingLeft := "0px")(
             <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px", ^.paddingTop := "19px")("2,352 Results"),
@@ -50,15 +50,13 @@ object ContractResults {
                   <.span(Icon.longArrowDown))
               )
             ),
-
             <.div(^.className := "pull-right", ^.paddingTop := "10px")(
-              // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
-        ), //col-12
+        ),
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
@@ -69,21 +67,20 @@ object ContractResults {
                     <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                     <.div(DashBoardCSS.Style.profileNameHolder)("Buyer : Pam Seller: Abed Project/Offering: Project One"),
                     <.div()("lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"),
+                    <.br(),
+                    "Status: Initiating   11:20am 12/08/2015",
                     <.div(^.className := "col-md-12 col-sm-12 ")(
-                      <.div(DashBoardCSS.Style.profileNameHolder)("Status: Initiating   11:20am 12/08/2015"),
-                      <.br(),
                       <.div(/*^.className:="profile-action-buttons"*/)(
                         BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Apply")),
-                       // NewMessage(NewMessage.Props("Message"))
                         NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message"))
                       )
                     )
-                  ) //media-body
+                  )
                 )
               }
-            ) //ul
+            )
           )
-        ) //gigConversation
+        )
       )
     )
     .build

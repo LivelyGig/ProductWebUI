@@ -27,7 +27,7 @@ object Presets {
             p.view match {
               case "talent" => {
                 <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer )(
+                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
                     <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
                       <.span(^.className := "caret")
                     ),
@@ -45,11 +45,9 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    UserSkills(UserSkills.Props("",Seq(HeaderCSS.Style.createNewProjectBtn),"",""))
-                    // ToDo:  above should be updated to something like the following:
-                      // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
+                    // ToDo: "Update Profile" is hard coded in UserSkills ?
+                    UserSkills(UserSkills.Props("", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.clipboard, "New Profile"))
                   )
-
                 )
               } //talent
               case "projects" => {
@@ -69,9 +67,8 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewProject(NewProject.Props("",Seq(),"",""))
-                    // ToDo:  above should be updated to something like the following:
-                    // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
+                    // ToDo: "New Job" is hard coded in NewProject ?
+                    NewProject(NewProject.Props("", Seq(), Icon.clipboard, "New Job"))
                   )
                 )
               } //project
@@ -91,10 +88,8 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
-                    Offering(Offering.Props("New Offering",Seq(),"",""))
-                    // ToDo:  above should be updated to something like the following:
-                    // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
+                    // ToDo:  "New Offering" and button are hardcoded in Offering ?
+                    Offering(Offering.Props("New Offering", Seq(), Icon.clipboard, "New Offering"))
                   )
                 )
               } //project
@@ -112,10 +107,7 @@ object Presets {
                       <.li()(<.a(^.href := "#contract")("Customize..."))
                     )
                   ),
-
-                    BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.rocket,"New Contract"))
-
-
+                  BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.rocket, "New Contract"))
                 )
               }
               case "messages" => {
@@ -135,8 +127,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    // NewMessage(NewMessage.Props("New Message", Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages" )),
-                    NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
+                    NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "New Message"))
                   )
                 )
               }
@@ -156,8 +147,8 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    // ToDo: need design and implementaiton for New Connection button.
-                    NewConnectionModal(NewConnectionModal.Props("New Connection",  Seq(HeaderCSS.Style.createNewProjectBtn),"",""))
+                    // ToDo:  "New Connection" and button are hardcoded in NewConnectionModal?
+                    NewConnectionModal(NewConnectionModal.Props("New Connection", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.paypal, "New Connection"))
                   )
                 )
               }
