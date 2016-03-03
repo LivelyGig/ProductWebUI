@@ -64,7 +64,7 @@ object Footer {
                   }
                   else if (item.idx == 2) {
                     //  LegalModal(LegalModal.Props(P.ctl)),
-                    Legal(Legal.Props())
+                    Legal(Legal.Props("",Seq(),"",""))
                   }
                   else {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))

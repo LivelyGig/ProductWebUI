@@ -28,13 +28,13 @@ object AppModule {
           }
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
-          <.div(^.className := "col-lg-1")(),
+          <.div(^.className := "col-lg-1 col-md-1 col-xs-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
-            //<.div(^.className := "row")(
-              <.div(^.id := "searchContainer", ^.className := "col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
+           <.div(^.className := "row")(
+              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "col-md-9 col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
                   case "talent" => TalentResults.component(Unit)
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
@@ -45,9 +45,9 @@ object AppModule {
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }
               )
-            //)
+          )
           ),
-          <.div(^.className := "col-lg-1")()
+          <.div(^.className := "col-lg-1 col-md-1 col-xs-1")()
         ) //row
       ) //mainContainer
     }

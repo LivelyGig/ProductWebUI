@@ -48,6 +48,11 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
       //      println("listOfLabelFromStore"+listOfLabelFromStore)
       if (listOfLabelFromStore != null){
+        try {
+          upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
+        } catch {
+          case e: Exception =>
+        }
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         //        println("listOfLabels"+listOfLabels)
         updated(SearchesModelHandler.GetSearchesModel(listOfLabels))

@@ -45,7 +45,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    UserSkills(UserSkills.Props())
+                    UserSkills(UserSkills.Props("",Seq(HeaderCSS.Style.createNewProjectBtn),"",""))
                     // ToDo:  above should be updated to something like the following:
                       // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
@@ -69,7 +69,7 @@ object Presets {
                     )
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewProject(NewProject.Props())
+                    NewProject(NewProject.Props("",Seq(),"",""))
                     // ToDo:  above should be updated to something like the following:
                     // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
@@ -92,7 +92,7 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     // BiddingScreenModal(BiddingScreenModal.Props("New Offering"))
-                    Offering(Offering.Props("New Offering"))
+                    Offering(Offering.Props("New Offering",Seq(),"",""))
                     // ToDo:  above should be updated to something like the following:
                     // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"New Message" ))
                   )
@@ -157,7 +157,7 @@ object Presets {
                   ),
                   <.div(MessagesCSS.Style.newProjectbtn)(
                     // ToDo: need design and implementaiton for New Connection button.
-                    NewMessage(NewMessage.Props("New Connection",  Seq(HeaderCSS.Style.createNewProjectBtn),"","Messages"))
+                    NewConnectionModal(NewConnectionModal.Props("New Connection",  Seq(HeaderCSS.Style.createNewProjectBtn),"",""))
                   )
                 )
               }

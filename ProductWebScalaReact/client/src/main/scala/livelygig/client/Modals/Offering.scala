@@ -11,6 +11,8 @@ import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components.GlobalStyles
 import livelygig.client.components.Icon
+import livelygig.client.components.Icon
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.components._
 import livelygig.client.css.DashBoardCSS
@@ -20,11 +22,12 @@ import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import livelygig.client.modals.NewMessage.State
 import livelygig.client.modals.PostNewMessage.State
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object Offering {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String)
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
   case class State(showNewOfferingForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {

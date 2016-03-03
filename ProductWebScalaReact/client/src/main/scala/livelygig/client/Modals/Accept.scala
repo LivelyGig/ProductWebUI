@@ -11,14 +11,17 @@ import livelygig.client.components.Bootstrap.Modal
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components.GlobalStyles
 import livelygig.client.components.Icon
+import livelygig.client.components.Icon
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object Accept {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String)
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
   case class State(showPayoutTransactionForm: Boolean = false)
 
@@ -46,7 +49,7 @@ object Accept {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),P.buttonName),
+        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, P.addStyles,"",""),P.buttonName),
         if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]

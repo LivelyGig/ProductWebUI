@@ -6,15 +6,18 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
+import livelygig.client.components.Icon
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import scala.scalajs.js
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object Confirmation {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String)
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
   case class State(showConfirmationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
@@ -42,7 +45,7 @@ object Confirmation {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),P.buttonName),
+        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, P.addStyles,"",""),P.buttonName),
         if (S.showConfirmationForm) ConfirmationForm(ConfirmationForm.Props(B.addConfirmation, "New Message"))
         else
           Seq.empty[ReactElement]
