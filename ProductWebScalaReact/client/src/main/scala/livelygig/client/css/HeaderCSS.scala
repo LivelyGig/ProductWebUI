@@ -99,12 +99,17 @@ object HeaderCSS {
     )
     val LoginInMenuItem=style(
       float.right,
-      paddingTop(6.px)
+      paddingTop(6.px),
+      display.inlineBlock
     )
 
-    val footerstyle = FooterCSS
+
     val displayInline=style(
-      footerstyle.Style.displayInline,
+      //footerstyle.Style.displayInline,
+//      paddingLeft(4.%%),
+      display.inline,
+      fontSize(1.1.em),
+      color(c"#fff"),
       media.maxWidth(1130 px) -
         fontSize(1.em)
     )
