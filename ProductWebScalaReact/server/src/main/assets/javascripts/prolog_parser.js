@@ -342,45 +342,46 @@ var prologParser = (function() {
         return ParseTerm(new Tokeniser(s));
     }
     /* Method to get labels */
-    function StringToLabel(str) {
-        var term = StringToTerm(str)
-        return termToLabel(term);
-    }
+    function StringToLabel(json) {
+//            console.log(json)
 
-    var termToLabel = function(term) {
-        /*var larray = new Array();
+            var result = []
+            for (var j = 0; j < json.length; j ++){
+                var term = StringToTerm(json[j])
+                termToLabel(term,result);
+            }
+            return result
+
+        }
+
+    var termToLabel = function(term, result) {
+        var l = new Label(null, null, null, term);
+        l.parentUid = "self"
         if (term.name == "and" || term.name == "all") Lambda.iter(term.partlist.list, function(term1) {
             larray = larray.concat(ui.helper.PrologHelper.termToLabel(term1));
         });
-        else {*/
-            var label = new Label(null, null, null, term);
-            label.parentUid = "self"
-//            larray.push(label);
+        else {
+
             if (term.name == "node") {
-                label.labelType = "node"
-                label.progeny = new Array();
+                /*l.progeny = new Array();*/
                 if (term.partlist) {
                     var termParts = term.partlist.list;
                     var progenyTerm = termParts[termParts.length - 1];
                     var progenyTermParts = progenyTerm.partlist.list;
-                    for (i = 0; i < progenyTermParts.length; i++) {
-                        term1 = progenyTermParts[i];
-                        var progeny = termToLabel(term1);
+                    for (var i = 0; i < progenyTermParts.length; i++) {
+                        var progeny = termToLabel(progenyTermParts[i], result);
                         var child = progeny;
-                        label.progeny.push(child);
-                        child.parentUid = label.uid;
-//                        larray = larray.concat(progeny);
+                        // l.progeny.push(child);
+                        child.parentUid = l.uid;
+                        // larray = larray.concat(progeny);
                     }
                 }
 
 
-            } else {
-                label.labelType = "leaf"
             }
-
-
-//        }
-        return label;
+        }
+        result.push(l)
+        return l;
     }
     var m3 = {}
     m3.util = {}

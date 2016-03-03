@@ -1,5 +1,7 @@
 package livelygig.client.components
 
+import livelygig.client.models.Label
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 
@@ -9,6 +11,6 @@ import scala.scalajs.js.annotation.JSName
 @JSName("prologParser")
 @js.native
 object PrologParser extends js.Object {
-  def StringToLabel (string: String): js.Any = js.native
+  def StringToLabel (json: js.Array[String]): js.Array[js.Any] = js.native
 
 }

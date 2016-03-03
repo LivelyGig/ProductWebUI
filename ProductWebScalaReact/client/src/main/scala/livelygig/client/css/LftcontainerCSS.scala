@@ -69,7 +69,7 @@ object LftcontainerCSS {
       paddingRight(10.px),
       fontWeight.bold,
       overflowY.auto,
-      overflowX.hidden,
+      overflowX.auto,
       width(100.%%),
       lineHeight.normal
       // media.maxWidth(1250.px) -(
@@ -88,11 +88,16 @@ object LftcontainerCSS {
       color(c"#333"),
       width(100.%%)
     )
+    /*val checkboxlabeltree= style(
+      checkboxlabel,
+      marginLeft(0.px)
+
+    )*/
     val checkboxlabel = style(
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
-      marginLeft(18.px),
+    //  marginLeft(18.px),
       &.hover(
         fontWeight.bold
       )

@@ -4,8 +4,10 @@ import diode.{ActionHandler, ModelRW}
 import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.components.PrologParser
 import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
-import livelygig.client.models.{Leaf, Node, SearchesModel}
+import livelygig.client.models.Label
 import org.scalajs.dom._
+
+import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
 
 /**
@@ -15,30 +17,19 @@ import scala.scalajs.js.JSON
 object SearchesModelHandler {
   def GetSearchesModel(listOfLabels :Seq[String]): SearchesRootModel ={
     if (listOfLabels != Nil) {
-      val labelsObj = listOfLabels.map(obj => PrologParser.StringToLabel(obj))
-      val model = labelsObj.map { label =>
-        val labelStr = JSON.stringify(label)
-        val labelJson = JSON.parse(labelStr)
-        val labelType = labelJson.labelType.asInstanceOf[String]
-        if (labelType == "node") {
-          //          SearchesModel(upickle.default.read[Seq[SearchesModel]](JSON.stringify(labelsObj(0))))
-          try {
-            upickle.default.read[Node](labelStr)
-          } catch {
-            case e: Exception =>
-              //              println(e)
-              SearchesModel(None,None,"")
-          }
-          val node = upickle.default.read[Node](labelStr)
-          SearchesModel(Some(node),None,node.uid)
-        } else {
-          val leaf = upickle.default.read[Leaf](labelStr)
-          SearchesModel(None,Some(leaf),leaf.uid)
-        }
-        //        SearchesModel(None,None,"")
-      }
+      val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
+      val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
+//      for (labelObj <- labelsArray) {
+////        val labelStr = JSON.stringify(labelObj)
+//        /*val labelJson = JSON.parse(labelStr)*/
+////        val label = upickle.default.read[Label](labelStr)
+////        labelObj.
+//        println(JSON.stringify(labelObj))
+//
+//      }
       SearchesRootModel(model)
-    } else {
+    }
+    else {
       SearchesRootModel(Nil)
     }
 
@@ -67,10 +58,7 @@ object SearchesModelHandler {
 }
 
 case class CreateLabels()
-case class UpdateLabels(searchesRootModel: SearchesRootModel)
-case class UpdateLabel(searchesModel: SearchesModel)
-case class CheckNode (node: Node)
-case class CheckLeaf (leaf: Leaf)
+case class UpdateLabel(label: Label)
 case class SearchWithLabels()
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW){
   override def handle = {
@@ -84,7 +72,9 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       } else {
         updated(SearchesModelHandler.GetSearchesModel(Nil))
       }
-    case UpdateLabels(searchRootModel) =>
+    case UpdateLabel(label) =>
+      updated(value.updated(label))
+    /*case UpdateLabels(searchRootModel) =>
       updated(searchRootModel)
     case UpdateLabel(searchModel) =>
       updated(value.updated(searchModel) )
@@ -109,7 +99,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         }
         val newNode = node.copy(isChecked = isNodeChecked ,progeny = progenyModified)
         updated(value.updated(model.copy(node = Some(newNode))))
-      }
+      }*/
     case SearchWithLabels() =>
       //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
       SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(Connection("","","")),"alias")))

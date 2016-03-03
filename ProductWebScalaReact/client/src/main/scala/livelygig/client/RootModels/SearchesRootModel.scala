@@ -1,12 +1,12 @@
 package livelygig.client.RootModels
 
-import livelygig.client.models.SearchesModel
+import livelygig.client.models.Label
 
 /**
   * Created by shubham.k on 2/23/2016.
   */
-case class SearchesRootModel(searchesModel: Seq[SearchesModel]) {
-  def updated (newSearch: SearchesModel) = {
+case class SearchesRootModel(searchesModel: Seq[Label]) {
+  def updated (newSearch: Label) = {
     val searchu = searchesModel
     searchesModel.indexWhere(_.uid == newSearch.uid)
     match {

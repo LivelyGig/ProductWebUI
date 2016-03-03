@@ -4,13 +4,14 @@ import livelygig.client.components.{Icon}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.{CheckLeaf, CheckNode, UpdateLabel, CreateLabels}
+import livelygig.client.Handlers.{UpdateLabel, CreateLabels}
 import livelygig.client.RootModels.SearchesRootModel
 import livelygig.client.css._
 import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
-import livelygig.client.models.{Leaf, UserModel}
+import livelygig.client.models.{Label, UserModel}
 import livelygig.client.services.LGCircuit
 import org.scalajs.dom._
+import scala.annotation.tailrec
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
@@ -330,7 +331,27 @@ object Searches {
             )
           )
         }
-        case "messages" => /*MessagesPresets.component(p.ctl)*/ {
+        case "messages" =>
+        {
+//          @tailrec
+          def renderLabel(label: Label): ReactTag = {
+            val children = p.proxy().searchesModel.filter(p=>p.parentUid==label.uid)
+            if (!children.isEmpty){
+              <.li(LftcontainerCSS.Style.checkboxlabel)(
+                <.label(^.`for`:="folder1"),
+                <.input(^.`type`:="checkbox",^.marginLeft:="20px", ^.checked:=label.isChecked, ^.onChange--> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+                "  " +   label.text,
+                <.input(^.`type`:="checkbox",^.className:="treeview",^.id:="folder1"),
+              <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel))
+            } else {
+
+              <.li(LftcontainerCSS.Style.checkboxlabel)(
+
+                <.input(^.`type`:="checkbox",^.marginLeft:="20px", ^.checked:=label.isChecked, ^.onChange--> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
++                label.text)
+            }
+
+          }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
@@ -375,68 +396,10 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     if (p.proxy().searchesModel != Nil) {
-                      p.proxy().searchesModel.map { model => {
-                        <.div()(
-                          model.node match {
-                            case None =>
-                              model.leaf match {
-                                case None =>
-                                  <.div()
-                                case Some(leaf) =>
-                                  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
-                                    p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))
-                                  }), " " + leaf.text)
-                              }
-                            case Some(node) =>
-                              <.div(LftcontainerCSS.Style.marginBottomSearchmodelNode)(
 
-
-                                <.ol(^.className := "tree")(
-                                  <.li(
-                                    <.label(^.`for` := "folder3")(
-
-                                      <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked := node.isChecked, ^.onChange --> {
-                                        p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))
-                                      }), " " + node.text
-                                      )
-                                    ),
-                                    <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder3"),
-
-                                    <.ol()(node.progeny.map(
-                                      leaf => <.li(LftcontainerCSS.Style.checkboxlabel)(
-                                        <.input(^.`type` := "checkbox", ^.checked := leaf.isChecked, ^.onChange --> {
-                                          p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))
-                                        }), "  " + leaf.text
-                                      )
-                                    )
-
-
-
-
-
-                                      //                                      <.li(^.className:="file")(<.a(^.href:="")("File")),
-                                      //                                      <.li()(
-                                      //                                        <.input(^.`type`:="checkbox"),
-                                      //                                        <.label(^.`for`:="subfolder3")("Subfolder 1"),
-                                      //                                        <.input(^.`type`:="checkbox", ^.id:="subfolder3"),
-                                      //                                        <.ol(
-                                      //                                          <.li(^.className:="file")(<.input(^.`type`:="checkbox"),<.a(^.href:="")("File")),
-                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File")),
-                                      //                                          <.li(^.className:="file")(<.a(^.href:="")("File"))
-                                      //                                        )//ol
-                                      //                                      )//label and ol
-                                    ) //li li
-                                  ) // label ol
-                                ) //ol main
-
-                                /* ,  <.div(LftcontainerCSS.Style.slctsearchpaneheader)(<.input(^.`type` := "checkbox", ^.checked:= node.isChecked, ^.onChange --> {p.proxy.dispatch(CheckNode(node.copy(isChecked = !node.isChecked)))})," " + node.text),
-                                 <.div()(node.progeny.map(
-                                   leaf => <.div(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "checkbox", ^.checked:= leaf.isChecked, ^.onChange --> {p.proxy.dispatch(CheckLeaf(leaf.copy(isChecked = !leaf.isChecked)))}), " " + leaf.text)
-                                 ))*/)
-                          })
+                      <.ol(^.className:="tree",LftcontainerCSS.Style.checkboxlabel)( p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                       }
-                      }
-                    } else {
+                     else {
                       <.div("(none)")
                     }
                   )
