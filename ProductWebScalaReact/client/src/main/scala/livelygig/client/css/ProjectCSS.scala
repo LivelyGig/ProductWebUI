@@ -9,14 +9,14 @@ object ProjectCSS {
     val displayInitialbtn = style (
       display.initial,
       float.right,
-      marginTop(4.px),
+      // marginTop(4.px),
       marginLeft(-30.px),
       marginRight(10.px)
     )
     val displayModalbtn = style (
       display.initial,
       float.right,
-      marginTop(4.px),
+      // marginTop(4.px),
       marginRight(10.px)
     )
     val textareaWidth = style (

@@ -76,7 +76,7 @@ object DashBoardCSS {
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
-      fontWeight.bold,
+      // fontWeight.normal,
       media.maxWidth(1130.px) - (
         fontSize(11.px)),
       media.minWidth(1131.px) - (
@@ -90,7 +90,7 @@ object DashBoardCSS {
       display.inlineBlock,
       fontSize(1.2.em),
       margin(3.%%),
-      fontWeight.bold,
+      // fontWeight.bold,
       media.maxWidth(1130.px) - (
         fontSize(11.px)),
       media.minWidth(1131.px) -(
@@ -108,7 +108,8 @@ object DashBoardCSS {
     val profileNameHolder = style(
       height(40.px),
       padding(0.7.%%),
-      fontSize(1.2.em),
+      fontSize(1.0.em),
+      fontWeight.bold,
       display.inline
     )
     val rsltProfileDetailsHolder = style(
