@@ -134,9 +134,9 @@ object PostAProjectForm {
                   <.button(ProjectCSS.Style.projectdropdownbtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select One  ")(
                     <.span(^.className:="caret"),
                     <.ul(^.className:="dropdown-menu")(
-                      <.li()(<.a(^.href:="#")("Item 1")),
-                      <.li()(<.a(^.href:="#")("Item 2")),
-                      <.li()(<.a(^.href:="#")("Item 3"))
+                      <.li()(<.a()("Item 1")),
+                      <.li()(<.a()("Item 2")),
+                      <.li()(<.a()("Item 3"))
                     )
                   )
                   )
@@ -156,9 +156,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               ),
@@ -174,9 +174,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               ),
@@ -192,9 +192,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               )

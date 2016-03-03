@@ -222,9 +222,9 @@ object BiddingScreenModalForm {
                                               <.span(^.className := "caret")
                                             ),
                                             <.ul(^.className := "dropdown-menu")(
-                                              <.li()(<.a(^.href := "#")("Item 1")),
-                                              <.li()(<.a(^.href := "#")("Item 2")),
-                                              <.li()(<.a(^.href := "#")("Item 3"))
+                                              <.li()(<.a()("Item 1")),
+                                              <.li()(<.a()("Item 2")),
+                                              <.li()(<.a()("Item 3"))
                                             )
                                           )
                                         ),
@@ -281,9 +281,9 @@ object BiddingScreenModalForm {
                                               <.span(^.className := "caret")
                                             ),
                                             <.ul(^.className := "dropdown-menu")(
-                                              <.li()(<.a(^.href := "#")("Jim P. Blesho")),
-                                              <.li()(<.a(^.href := "#")("Remi Fastaou")),
-                                              <.li()(<.a(^.href := "#")("Jami Corporation"))
+                                              <.li()(<.a()("Jim P. Blesho")),
+                                              <.li()(<.a()("Remi Fastaou")),
+                                              <.li()(<.a()("Jami Corporation"))
                                             )
                                           )
                                         )
@@ -389,7 +389,7 @@ object BiddingScreenModalForm {
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
-                            <.a(^.href := "#")("details"),
+                            <.a()("details"),
                             ".",
                             // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
                             <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")

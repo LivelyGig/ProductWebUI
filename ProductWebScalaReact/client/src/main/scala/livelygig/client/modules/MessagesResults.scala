@@ -43,10 +43,10 @@ object MessagesResults {
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className := "dropdown-menu")(
-                <.li()(<.a(^.href := "#")("Hide")),
-                <.li()(<.a(^.href := "#")("Favorite")),
-                <.li()(<.a(^.href := "#")("Unhide")),
-                <.li()(<.a(^.href := "#")("Unfavorite"))
+                <.li()(<.a()("Hide")),
+                <.li()(<.a()("Favorite")),
+                <.li()(<.a()("Unhide")),
+                <.li()(<.a()("Unfavorite"))
               )
             ) //dropdown class
           ),
@@ -58,11 +58,11 @@ object MessagesResults {
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
                 <.ul(^.className := "dropdown-menu")(
-                  <.li()(<.a(^.href := "#")("By Date")),
-                  <.li()(<.a(^.href := "#")("By Experience")),
-                  <.li()(<.a(^.href := "#")("By Reputation")),
-                  <.li()(<.a(^.href := "#")("By Rate")),
-                  <.li()(<.a(^.href := "#")("By Projects Completed"))
+                  <.li()(<.a()("By Date")),
+                  <.li()(<.a()("By Experience")),
+                  <.li()(<.a()("By Reputation")),
+                  <.li()(<.a()("By Rate")),
+                  <.li()(<.a()("By Projects Completed"))
                 )
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(

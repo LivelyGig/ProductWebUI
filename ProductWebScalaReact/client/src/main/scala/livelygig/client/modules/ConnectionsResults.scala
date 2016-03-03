@@ -43,10 +43,10 @@ object ConnectionsResults {
                           <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                         ),
                         <.ul(^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#")("Hide")),
-                          <.li()(<.a(^.href := "#")("Favorite")),
-                          <.li()(<.a(^.href := "#")("Unhide")),
-                          <.li()(<.a(^.href := "#")("Unfavorite"))
+                          <.li()(<.a()("Hide")),
+                          <.li()(<.a()("Favorite")),
+                          <.li()(<.a()("Unhide")),
+                          <.li()(<.a()("Unfavorite"))
                         )
                       ) //dropdown class
                     ),
@@ -58,11 +58,11 @@ object ConnectionsResults {
                             <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                           ),
                           <.ul(^.className := "dropdown-menu")(
-                            <.li()(<.a(^.href := "#")("By Date")),
-                            <.li()(<.a(^.href := "#")("By Experience")),
-                            <.li()(<.a(^.href := "#")("By Reputation")),
-                            <.li()(<.a(^.href := "#")("By Rate")),
-                            <.li()(<.a(^.href := "#")("By Projects Completed"))
+                            <.li()(<.a()("By Date")),
+                            <.li()(<.a()("By Experience")),
+                            <.li()(<.a()("By Reputation")),
+                            <.li()(<.a()("By Rate")),
+                            <.li()(<.a()("By Projects Completed"))
                           )
                         ),
                         <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
@@ -127,18 +127,18 @@ object ConnectionList {
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Profiles: ",
-              <.a()(^.href := "", "title".reactAttr := "Videographer")("Videographer"),
+              <.a()("title".reactAttr := "Videographer")("Videographer"),
               " | ",
-              <.a()(^.href := "", "title".reactAttr := "Web Developer")("Web Developer"),
+              <.a()("title".reactAttr := "Web Developer")("Web Developer"),
               " | ",
-              <.a()(^.href := "", "title".reactAttr := "Janal, LLC")("Janal, LLC")
+              <.a()("title".reactAttr := "Janal, LLC")("Janal, LLC")
             ),
             <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("My Groups: ",
-              <.a()(^.href := "", "title".reactAttr := "Film Industry")("Film Industry"),
+              <.a()("title".reactAttr := "Film Industry")("Film Industry"),
               ", ",
-              <.a()(^.href := "", "title".reactAttr := "Full Stack Developers")("Full Stack Developers"),
+              <.a()("title".reactAttr := "Full Stack Developers")("Full Stack Developers"),
               ", ",
-              <.a()(^.href := "", "title".reactAttr := "...")(",,,")
+              <.a()("title".reactAttr := "...")(",,,")
             )
           ),
           <.div(^.className := "media-left")(

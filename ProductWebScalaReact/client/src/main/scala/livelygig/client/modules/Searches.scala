@@ -267,9 +267,9 @@ object Searches {
                         <.span(^.className := "caret")
                       ),
                       <.ul(^.className := "dropdown-menu")(
-                        <.li()(<.a(^.href := "#")("Item 1")),
-                        <.li()(<.a(^.href := "#")("Item 2")),
-                        <.li()(<.a(^.href := "#")("Item 3"))
+                        <.li()(<.a()("Item 1")),
+                        <.li()(<.a()("Item 2")),
+                        <.li()(<.a()("Item 3"))
                       )
                     )
                   )
