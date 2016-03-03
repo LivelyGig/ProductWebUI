@@ -23,7 +23,7 @@ object Presets {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(
           <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-sm-3", ^.paddingLeft := "0px")(
+          <.div(^.className := "col-lg-10, col-sm-12", ^.paddingLeft := "0px")(
             p.view match {
               case "talent" => {
                 <.div()(
@@ -154,7 +154,7 @@ object Presets {
               }
             } //main switch
           ),
-          <.div(^.className := "col-sm-7", ^.paddingLeft := "0px")(),
+          // <.div(^.className := "col-sm-7", ^.paddingLeft := "0px")(),
           <.div(^.className := "col-lg-1")()
         )
       )
