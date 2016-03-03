@@ -18,6 +18,12 @@ object SearchesModelHandler {
   def GetSearchesModel(listOfLabels :Seq[String]): SearchesRootModel ={
     if (listOfLabels != Nil) {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
+      try {
+        upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
+      } catch {
+        case e: Exception =>
+          SearchesRootModel(Nil)
+      }
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
       SearchesRootModel(model)
     }
