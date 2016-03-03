@@ -49,7 +49,7 @@ object TrademarksModal {
         closed = () => formClosed(s, p)),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12")(
-            <.div(DashBoardCSS.Style.modalHeaderFont, MessagesCSS.Style.paddingLeftModalHeaderbtn)("Trademarks")
+            <.div(DashBoardCSS.Style.modalHeaderFont, DashBoardCSS.Style.paddingLeftModalHeaderbtn)("Trademarks")
           )
         ), //main row
         <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(

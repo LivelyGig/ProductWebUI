@@ -6,14 +6,17 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.LGMain.Loc
 import livelygig.client.components.Bootstrap._
+import livelygig.client.components.Icon
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object UserPreferences {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props()
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
   case class State(showUserPreferencesForm: Boolean = false )
 

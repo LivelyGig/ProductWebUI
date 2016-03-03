@@ -80,7 +80,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Profile Type")
                   ),
@@ -95,7 +95,7 @@ object Searches {
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Moderator")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Available from")
                   ),
@@ -107,7 +107,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Available to")
                   ),
@@ -119,7 +119,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Capabilities")
                   ),
@@ -127,7 +127,7 @@ object Searches {
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. Web Development")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
@@ -146,7 +146,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
                   ),
@@ -161,7 +161,7 @@ object Searches {
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Include Hidden")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added before")
                   ),
@@ -174,7 +174,7 @@ object Searches {
 
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added after")
                   ),
@@ -197,7 +197,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Job Type")
                   ),
@@ -227,7 +227,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Start after")
                   ),
@@ -236,7 +236,7 @@ object Searches {
                       LftcontainerCSS.Style.slctDate)
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Finish before")
                   ),
@@ -248,7 +248,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Skills Required")
                   ),
@@ -256,7 +256,7 @@ object Searches {
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Project State")
                   ),
@@ -274,7 +274,7 @@ object Searches {
                     )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
@@ -293,7 +293,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Status")
                   ),
@@ -311,7 +311,7 @@ object Searches {
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Completed")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Client")
                   ),
@@ -319,7 +319,7 @@ object Searches {
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Britta")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Talent")
                   ),
@@ -358,7 +358,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("From")
                   ),
@@ -370,7 +370,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("To")
                   ),
@@ -382,7 +382,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
@@ -390,7 +390,7 @@ object Searches {
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Labels")
                   ),
@@ -415,7 +415,7 @@ object Searches {
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
                   ),
@@ -445,7 +445,7 @@ object Searches {
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Include Hidden")
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added before")
                   ),
@@ -457,7 +457,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Added after")
                   ),
@@ -469,7 +469,7 @@ object Searches {
                     // )
                   )
                 ),
-                <.div(^.className := "row", LftcontainerCSS.Style.row)(
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Groups")
                   ),

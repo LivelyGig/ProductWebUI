@@ -1,5 +1,6 @@
 package livelygig.client.css
 import livelygig.client.components
+import livelygig.client.css.MessagesCSS.Style._
 import scalacss.Defaults._
 import scalacss.LengthUnit.px
 /**
@@ -100,11 +101,10 @@ object HeaderCSS {
       float.right,
       paddingTop(6.px)
     )
+
+    val footerstyle = FooterCSS
     val displayInline=style(
-      paddingLeft(10.px),
-      display.inline,
-      fontSize(1.2.em),
-      color(c"#fff"),
+      footerstyle.Style.displayInline,
       media.maxWidth(1130 px) -
         fontSize(1.em)
     )

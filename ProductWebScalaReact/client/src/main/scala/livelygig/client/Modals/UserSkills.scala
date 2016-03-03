@@ -6,15 +6,17 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 import livelygig.client.components.Bootstrap._
+import livelygig.client.components.Icon.Icon
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
+import scalacss.StyleA
 
 object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props()
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
   case class State(showUserSkillsForm: Boolean = false)
 
@@ -46,7 +48,7 @@ object UserSkills {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""), "Update Profile"),
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles,"",""), "Update Profile"),
         if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]

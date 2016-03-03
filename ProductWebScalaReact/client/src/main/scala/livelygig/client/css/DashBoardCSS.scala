@@ -457,5 +457,10 @@ object DashBoardCSS {
       fontWeight.bold
     )
 
+    val paddingLeftModalHeaderbtn = style(
+      paddingLeft(15.px),
+      color(c"#000")
+    )
+
   }
 }

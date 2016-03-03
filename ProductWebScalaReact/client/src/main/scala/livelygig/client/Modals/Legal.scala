@@ -10,6 +10,7 @@ import livelygig.client.components.Bootstrap.Button
 import livelygig.client.components.Bootstrap.CommonStyle
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components.GlobalStyles
+import livelygig.client.components.Icon._
 import livelygig.client.components._
 import livelygig.client.css._
 import livelygig.client.logger._
@@ -26,11 +27,12 @@ import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 object Legal {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props()
+  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
   case class State(showTermsOfServicesForm: Boolean = false, showLegalForm: Boolean = false, showPrivacyPolicyForm: Boolean = false,
                    showPrivacyPolicyModal: Boolean= false,showErrorModal: Boolean = false,showEndUserAgreementModal : Boolean = false ,
