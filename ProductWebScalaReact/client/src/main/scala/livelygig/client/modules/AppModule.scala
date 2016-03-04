@@ -28,7 +28,7 @@ object AppModule {
           }
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
-          <.div(^.className := "col-lg-1 col-md-1 col-xs-1")(),
+          <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
            <.div(^.className := "row")(
               <.div(^.id := "searchContainer", ^.className := "col-md-3 col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
@@ -47,7 +47,7 @@ object AppModule {
               )
           )
           ),
-          <.div(^.className := "col-lg-1 col-md-1 col-xs-1")()
+          <.div(^.className := "col-lg-1")()
         ) //row
       ) //mainContainer
     }

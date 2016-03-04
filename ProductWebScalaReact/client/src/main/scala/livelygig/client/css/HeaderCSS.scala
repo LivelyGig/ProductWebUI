@@ -12,12 +12,16 @@ object HeaderCSS {
 
     val naviContainer = style (
       backgroundColor(c"#005256"),
-      minHeight(63.px),
+      height(62.px),
       borderBottom(2.px, solid, c"#67EAF2"),
-      paddingTop(8.px),
       paddingLeft(0.%%),
       paddingRight(0.%%),
-      marginBottom(0.px)
+      marginBottom(0.px),
+      media.maxWidth(820.px)-
+        paddingTop(4.px),
+      media.minWidth(821.px)-
+        paddingTop(8.px)
+
     )
     val headerNavA = style (
       /*borderBottom(3.px, solid, transparent),*/
@@ -59,7 +63,9 @@ object HeaderCSS {
     val imgLogo = style (
       borderRadius(50.%%),
       width(40.px),
-      height(40.px)
+      height(40.px),
+      media.maxWidth(820.px)-
+      marginTop(3.px)
     )
     val logoContainer = style(
     )
@@ -70,22 +76,29 @@ object HeaderCSS {
       // paddingLeft(0.px),
       // paddingRight(0.%%),
       backgroundColor(c"#00767C"),
-
       // top(-2.px),
-
       width(100.%%),
       paddingTop(4.px)
 
     )
-    val presetPickContainer= style(
+   /* val presetPickContainer= style(
       minWidth(250.px)
-    )
+    )*/
     val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
       fontSize(1.2.em),
-      // marginTop(6.px),
-      textAlign.left
+      textAlign.left,
+     media.maxWidth(1306.px).minWidth(993.px)-
+     fontSize(15.px),
+     media.maxWidth(992.px).minWidth(975.px)-
+     fontSize(14.px)
+    )
+    val recommendMatches = style (
+      media.maxWidth(974.px)-
+        fontSize(12.px),
+      media.minWidth(865.px).maxWidth(973.px)-
+        fontSize(11.px)
     )
     val dropdownMenuWidth=style(
       width(100.%%)
@@ -105,9 +118,8 @@ object HeaderCSS {
 
 
     val displayInline=style(
-      //footerstyle.Style.displayInline,
-//      paddingLeft(4.%%),
       display.inline,
+      marginLeft(5.px),
       fontSize(1.1.em),
       color(c"#fff"),
       media.maxWidth(1130 px) -
@@ -145,10 +157,16 @@ object HeaderCSS {
       fontSize(20.px),
       // marginTop(10.px),
       // marginBottom(8.px),
-      marginRight(10.px),
+     // marginRight(10.px),
       color(orange),
       backgroundColor.transparent,
-      border.none
+      border.none,
+      float.right,
+      &.hover(
+        backgroundColor.transparent,
+        color(orange),
+        border.none
+      )
     )
     val searchContainerBtn = style(
 //      backgroundColor(c"#ffa500"),
@@ -203,5 +221,6 @@ object HeaderCSS {
       marginTop(10.px),
       marginRight(15.px)
     )
+
   }
 }

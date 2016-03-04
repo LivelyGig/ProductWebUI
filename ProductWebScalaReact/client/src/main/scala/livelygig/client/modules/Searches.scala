@@ -86,13 +86,13 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Talent"),
+                      <.input(^.`type` := "checkbox"), " Talent"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Client"),
+                      <.input(^.`type` := "checkbox"), " Client"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Moderator")
+                      <.input(^.`type` := "checkbox"), " Moderator")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -152,13 +152,13 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Recommended to Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -203,27 +203,27 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Project"
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Hourly"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"
                       ),
                       <.br(),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Fixed Scope"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"
                       )
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Contest"
+                      <.input(^.`type` := "checkbox"), " Contest"
                     ),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Part-Time"
+                      <.input(^.`type` := "checkbox"), " Part-Time"
                     ),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Full-Time"
+                      <.input(^.`type` := "checkbox"), " Full-Time"
                     )
                   )
                 ),
@@ -299,16 +299,16 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Initiating"),
+                      <.input(^.`type` := "checkbox"), " Initiating"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Escrow"),
+                      <.input(^.`type` := "checkbox"), " Escrow"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " In Progress"),
+                      <.input(^.`type` := "checkbox"), " In Progress"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Completed")
+                      <.input(^.`type` := "checkbox"), " Completed")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -421,28 +421,28 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Available for Chat"),
+                      <.input(^.`type` := "checkbox"), " Available for Chat"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Recommended by Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Recommended to Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " with Talent Profile"),
+                      <.input(^.`type` := "checkbox"), " with Talent Profile"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " with Employer Profile"),
+                      <.input(^.`type` := "checkbox"), " with Employer Profile"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " with Moderator Profile"),
+                      <.input(^.`type` := "checkbox"), " with Moderator Profile"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(

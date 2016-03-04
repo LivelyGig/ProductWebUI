@@ -59,8 +59,8 @@ object NewConnectionModal {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addConnectionForm(), CommonStyle.default,P.addStyles,"",""),P.buttonName),
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
+        Button(Button.Props(B.addConnectionForm(), CommonStyle.default,P.addStyles,P.addIcons,P.title),P.buttonName),
         if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "New Connection"))
         else
           Seq.empty[ReactElement]
