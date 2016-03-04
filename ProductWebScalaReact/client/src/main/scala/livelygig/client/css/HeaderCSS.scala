@@ -80,11 +80,6 @@ object HeaderCSS {
 
       width(100.%%),
       paddingTop(4.px)
-
-      /*theirs*/
-        width(100.%%)
-      // paddingTop(4.px)
-
     )
    /* val presetPickContainer= style(
       //minWidth(250.px)
