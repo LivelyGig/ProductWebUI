@@ -141,7 +141,6 @@ object BiddingScreenModalForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
-
           <.ul(^.className := "nav nav-tabs")(
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
             <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow")),
@@ -171,178 +170,169 @@ object BiddingScreenModalForm {
                 ),
                 <.div(^.className := "row", ^.paddingTop := "10px")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
-                    <.div()("Talent who bid:")
+                    <.div()("Talent:")
                   ),
-                  <.ul(^.className := "nav nav-tabs")(
-                    <.li(^.className := "active")(<.a(^.href := "#xx1", "data-toggle".reactAttr := "tab", "Abed", <.br(), "[Offer to us]")),
-                    <.li()(<.a(^.href := "#xx2", "data-toggle".reactAttr := "tab", "Pam Frances Singh", <.br(), "[Counter-Offer to them]")),
-                    <.li()(<.a(^.href := "#xx3", "data-toggle".reactAttr := "tab", "Sheh Butler", <.br(), "[Rejected by them]")),
-                    <.li()(<.a(^.href := "#xx4", "data-toggle".reactAttr := "tab", "King Insighal", <.br(), "[Offer to us]"))
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                    <.div()(<.a()("Abed"))
                   )
                 ),
-                // ToDo:  The following styles are temporary.  Ed will fix later.
-                <.div(^.id := "talentOfferDetail", ^.backgroundColor := "lightyellow", ^.borderLeftStyle.groove, ^.borderRightStyle.groove, ^.borderBottomStyle.groove)(
-                  <.div(^.className := "row")(
-                    <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
-                      <.div()("Talent Details:")
-                    ),
-                    <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                      <.div()(<.a()("Abed <details>"))
-                    )
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
+                    <.div()("Referred By:")
                   ),
-                  <.div(^.className := "row")(
-                    <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
-                      <.div()("Referred By:")
-                    ),
-                    <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                      <.div()(<.a()("Britta"))
-                    )
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                    <.div()(<.a()("Britta"))
+                  )
+                ),
+                <.div(^.className := "row", ^.paddingTop := "10px")(
+                  <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
+                    <.div()("Status:")
                   ),
-                  <.div(DashBoardCSS.Style.splitContainer)(
-                    <.div(^.className := "split")(
-                      <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ^.id := "dashboardResults2", BiddingScreenCSS.Style.BiddingScreenResults)(
-                          <.div(^.id := "rsltScrollContainer")(
-                            <.div(^.className := "container-fluid")(
-                              <.div()(
-                                <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomHeader, BiddingScreenCSS.Style.marginLeftRight)(
-                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
-                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Employer Agreement"),
-                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Talent Agreement"),
-                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("History")
-                                  // ToDo: add actions column, e.g. for delete.
-                                ),
-                                <.div(BiddingScreenCSS.Style.biddingScreenData)(
-                                  <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                      <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
-                                      <.div(^.className := "row")(
-                                        <.div(^.className := "col-md-12 col-sm-12 col-xs-12", BiddingScreenCSS.Style.slctBiddingInputWidth)(
-                                          <.div(^.className := "btn-group")(
-                                            <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Nolo Service..-23")(
-                                              <.span(^.className := "caret")
-                                            ),
-                                            <.ul(^.className := "dropdown-menu")(
-                                              <.li()(<.a()("Item 1")),
-                                              <.li()(<.a()("Item 2")),
-                                              <.li()(<.a()("Item 3"))
-                                            )
-                                          )
-                                        ),
-                                        <.div(BiddingScreenCSS.Style.slctBiddingInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
-                                          //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
-                                          <.div()(<.a("view"))
-                                        )
-                                      )
-                                    ),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
-                                  ),
-
-                                  <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                      <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
-                                      <.div(^.className := "row")(
-                                        <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                          <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
-                                        )
-                                      )
-                                    ),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
-                                  ),
-                                  <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                      <.div()("Statement of Work"),
-                                      <.div(^.className := "row")(
-                                        <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                          <.div()(
-                                            <.a()("View / Modify "),
-                                            "Updated: 2016-01-12 SHA256:d14a sf"
-                                          )
-                                        )
-                                      )
-                                    ),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
-                                  ),
-                                  <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                      <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
-                                      <.div(^.className := "row")(
-
-                                        <.div(DashBoardCSS.Style.marginTop10px)(
-                                          //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
-                                          <.div(^.className := "btn-group")(
-                                            <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
-                                              <.span(^.className := "caret")
-                                            ),
-                                            <.ul(^.className := "dropdown-menu")(
-                                              <.li()(<.a()("Jim P. Blesho")),
-                                              <.li()(<.a()("Remi Fastaou")),
-                                              <.li()(<.a()("Jami Corporation"))
-                                            )
-                                          )
-                                        )
-                                      )
-                                    ),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
-                                  ),
-
-                                  <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
-                                      <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
-                                      <.div(^.className := "row")(
-                                        <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                          <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
-                                        )
-                                      )
-                                    ),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                    <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
-                                  )
-
-                                )
-                              ), //container
-                              <.div()(
-                                <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomFooter, BiddingScreenCSS.Style.marginLeftRight)(
-                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("All Terms"),
-                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
-                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action:Statement of work: Abed updated..")
-                                )
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                    <.div()("Offer from talent to employer")
+                  )
+                ),
+                <.div(DashBoardCSS.Style.splitContainer)(
+                  <.div(^.className := "split")(
+                    <.div(^.className := "row")(
+                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ^.id := "dashboardResults2", BiddingScreenCSS.Style.BiddingScreenResults)(
+                        <.div(^.id := "rsltScrollContainer")(
+                          <.div(^.className := "container-fluid")(
+                            <.div()(
+                              <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomHeader, BiddingScreenCSS.Style.marginLeftRight)(
+                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
+                                <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Employer Agreement"),
+                                <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Talent Agreement"),
+                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("History")
+                                // ToDo: add actions column, e.g. for delete.
                               ),
-                              <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                                <.div(^.className := "row")(
-                                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                    <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
-                                    <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
-                                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
-                                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
-                                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
-                                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")()
+                              <.div(BiddingScreenCSS.Style.biddingScreenData)(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
+                                    <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
+                                    <.div(^.className := "row")(
+                                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", BiddingScreenCSS.Style.slctBiddingInputWidth)(
+                                        <.div(^.className := "btn-group")(
+                                          <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Nolo Service..-23")(
+                                            <.span(^.className := "caret")
+                                          ),
+                                          <.ul(^.className := "dropdown-menu")(
+                                            <.li()(<.a()("Item 1")),
+                                            <.li()(<.a()("Item 2")),
+                                            <.li()(<.a()("Item 3"))
+                                          )
+                                        )
+                                      ),
+                                      <.div(BiddingScreenCSS.Style.slctBiddingInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
+                                        //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+                                        <.div()(<.a("view"))
+                                      )
                                     )
+                                  ),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+                                ),
+
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
+                                    <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
+                                    <.div(^.className := "row")(
+                                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                                        <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
+                                      )
+                                    )
+                                  ),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+                                ),
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
+                                    <.div()("Statement of Work"),
+                                    <.div(^.className := "row")(
+                                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                                        <.div()(
+                                          <.a()("View / Modify "),
+                                          "Updated: 2016-01-12 SHA256:d14a sf"
+                                        )
+                                      )
+                                    )
+                                  ),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
+                                ),
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
+                                    <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
+                                    <.div(^.className := "row")(
+
+                                      <.div(DashBoardCSS.Style.marginTop10px)(
+                                        //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+                                        <.div(^.className := "btn-group")(
+                                          <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
+                                            <.span(^.className := "caret")
+                                          ),
+                                          <.ul(^.className := "dropdown-menu")(
+                                            <.li()(<.a()("Jim P. Blesho")),
+                                            <.li()(<.a()("Remi Fastaou")),
+                                            <.li()(<.a()("Jami Corporation"))
+                                          )
+                                        )
+                                      )
+                                    )
+                                  ),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+                                ),
+
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
+                                    <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
+                                    <.div(^.className := "row")(
+                                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                                        <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
+                                      )
+                                    )
+                                  ),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+                                )
+                              )
+                            ),
+                            <.div()(
+                              <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomFooter, BiddingScreenCSS.Style.marginLeftRight)(
+                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("All Terms"),
+                                <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action:Statement of work: Abed updated..")
+                              )
+                            ),
+                            <.div(BiddingScreenCSS.Style.marginLeftRight)(
+                              <.div(^.className := "row")(
+                                <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                                  <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
+                                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                                   )
                                 )
                               )
-                            ) //gigConversation
+                            )
                           )
                         )
                       )
                     )
                   )
                 )
-              ),
-              <.div()(
-                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
               )
             ),
             <.div(^.id := "menu1", ^.className := "tab-pane fade")(
@@ -399,7 +389,6 @@ object BiddingScreenModalForm {
                         )
                       ),
                       <.br(),
-
                       <.span(^.fontWeight := "bold")("3: Funded"), <.br(),
                       "Funding received", <.br(),
                       "The following deposits were made into this contract:", <.br(),
@@ -407,10 +396,8 @@ object BiddingScreenModalForm {
                       <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
                       "pending funding from buyer",
                       <.br(),
-
                       <.span(^.fontWeight := "bold")("4: Pay Escrow Setup Commission"), <.br(),
                       "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
-
                     )
                   )
                 ),
@@ -441,8 +428,7 @@ object BiddingScreenModalForm {
                             <.th(BiddingScreenCSS.Style.talentWidth)("Employer Complete"),
                             <.th(BiddingScreenCSS.Style.actionsWidth)("Actions")
                           )
-                        ), //thead
-
+                        ),
                         <.tbody(
                           <.tr(^.className := "info")(
                             <.td("1"),
@@ -480,8 +466,8 @@ object BiddingScreenModalForm {
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           )
-                        ) //tbody
-                      ), //table
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Escrowed Deliverables ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -493,7 +479,7 @@ object BiddingScreenModalForm {
                             <.th(^.className := "col-md-2")("Escrow Status"),
                             <.th(^.className := "col-md-3")("Actions")
                           )
-                        ), //thead
+                        ),
                         <.tbody()(
                           <.tr(^.className := "info")(
                             <.td(^.className := "col-md-1")("1"),
@@ -511,8 +497,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("Held pending payment"),
                             <.td(^.className := "col-md-3")(<.a("Details"), " ", <.a("Pay/Release"))
                           )
-                        ) //tbody
-                      ), //table
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -558,9 +544,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("SOW section 3.5"),
                             <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
                           )
-                        ) //tbody
-                      ) //table
-                      ,
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -571,7 +556,7 @@ object BiddingScreenModalForm {
                             <.th(^.className := "col-md-3")("Name"),
                             <.th(^.className := "col-md-2")("Actions")
                           )
-                        ), //thead
+                        ),
                         <.tbody(
                           <.tr(^.className := "info")(
                             <.td(^.className := "col-md-1")("1"),
@@ -601,8 +586,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-3")("SOW section 3.5"),
                             <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           )
-                        ) //tbody
-                      ) //table
+                        )
+                      )
                     )
                   )
                 ),
@@ -618,10 +603,8 @@ object BiddingScreenModalForm {
               )
             ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
-
               // feedbackDetail
               <.div(^.id := "feedbackDetail" /*, ^.borderStyle.solid*/)(
-
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
@@ -643,9 +626,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
-
                           )
-                        ), //row1
+                        ),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className := "col-md-4 col-sm-4")("Managed Expectations"),
                           <.div(^.className := "col-md-8 col-sm-8")(
@@ -741,8 +723,8 @@ object BiddingScreenModalForm {
                                   <.td(BiddingScreenCSS.Style.awareness)("Skilled Understanding: Can work alone and can delegate"),
                                   <.td(BiddingScreenCSS.Style.expertUnderstanding)("Expert Understanding")
                                 )
-                              ) //tbody
-                            ) //table
+                              )
+                            )
                           )
                         ),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
@@ -809,12 +791,11 @@ object BiddingScreenModalForm {
                             <.textarea(^.rows := 3, ProjectCSS.Style.textareaWidth)
                           )
                         )
-                      ) //main Div
+                      )
                     )
                   )
                 )
               ),
-              // shared actions bellow all of the workflow sections
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
@@ -829,10 +810,9 @@ object BiddingScreenModalForm {
                 )
               )
             )
-          ) //tabcontent
-        ), //submitform
+          )
+        ),
         <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
-
       )
     }
 

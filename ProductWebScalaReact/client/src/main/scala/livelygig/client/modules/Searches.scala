@@ -299,13 +299,31 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Initiating"),
-                    <.br(),
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Initiating"
+                    ),
+                    <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer outstanding to me"
+                      ),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer outstanding to other"
+                      ),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer rejected by other"
+                      ),
+                      <.br(),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Offer rejected by me"
+                      )
+                    ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Escrow"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " In Progress"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Feedback"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox", ^.marginLeft := "-18px"), " Completed")
