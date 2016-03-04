@@ -167,6 +167,9 @@ object Searches {
                       <.input(^.`type` := "checkbox"), " Recommended to Me"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
