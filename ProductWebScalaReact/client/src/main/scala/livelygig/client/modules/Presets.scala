@@ -23,138 +23,143 @@ object Presets {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(
           <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-lg-10, col-sm-12", ^.paddingLeft := "0px")(
-            p.view match {
-              case "talent" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
-                      <.span(^.className := "caret")
+          <.div(^.className := "col-lg-10 col-md-12", ^.paddingLeft := "0px")(
+            // this next line is to help with alignment of preset action button with the search button in the pane below it.
+            <.div(^.className := "col-md-3 col-xs-3", ^.textAlign.right, ^.paddingRight := "19px")(
+              p.view match {
+                case "talent" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#talent")("Recommended Matches")),
+                        <.li()(<.a(^.href := "#talent")("My Profiles")),
+                        <.li()(<.a(^.href := "#talent")("Favorited")),
+                        <.li()(<.a(^.href := "#talent")("Available")),
+                        <.li()(<.a(^.href := "#talent")("Active Unavailable")),
+                        <.li()(<.a(^.href := "#talent")("Inactive")),
+                        <.li()(<.a(^.href := "#talent")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#talent")("Videographers w/5+ yrs experience")),
+                        <.li()(<.a(^.href := "#talent")("Customize..."))
+                      )
                     ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#talent")("Recommended Matches")),
-                      <.li()(<.a(^.href := "#talent")("My Profiles")),
-                      <.li()(<.a(^.href := "#talent")("Favorited")),
-                      <.li()(<.a(^.href := "#talent")("Available")),
-                      <.li()(<.a(^.href := "#talent")("Active Unavailable")),
-                      <.li()(<.a(^.href := "#talent")("Inactive")),
-                      <.li()(<.a(^.href := "#talent")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#talent")("Videographers w/5+ yrs experience")),
-                      <.li()(<.a(^.href := "#talent")("Customize..."))
+                    <.div(MessagesCSS.Style.newProjectbtn)(
+                      // ToDo: "Update Profile" is hard coded in UserSkills ?
+                      UserSkills(UserSkills.Props("", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.clipboard, "New Profile"))
                     )
-                  ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    // ToDo: "Update Profile" is hard coded in UserSkills ?
-                    UserSkills(UserSkills.Props("", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.clipboard, "New Profile"))
                   )
-                )
-              } //talent
-              case "projects" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
-                      <.span(^.className := "caret")
+                } //talent
+                case "projects" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended Matches ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#projects")("Recommended Matches")),
+                        <.li()(<.a(^.href := "#projects")("Direct from Connection")),
+                        <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
+                        <.li()(<.a(^.href := "#projects")("Favorited")),
+                        <.li()(<.a(^.href := "#projects")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#projects")("Customize..."))
+                      )
                     ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#projects")("Recommended Matches")),
-                      <.li()(<.a(^.href := "#projects")("Direct from Connection")),
-                      <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
-                      <.li()(<.a(^.href := "#projects")("Favorited")),
-                      <.li()(<.a(^.href := "#projects")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#projects")("Customize..."))
+                    <.div(MessagesCSS.Style.newProjectbtn)(
+                      // ToDo: "New Job" is hard coded in NewProject ?
+                      NewProject(NewProject.Props("", Seq(), Icon.clipboard, "New Job"))
                     )
-                  ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    // ToDo: "New Job" is hard coded in NewProject ?
-                    NewProject(NewProject.Props("", Seq(), Icon.clipboard, "New Job"))
                   )
-                )
-              } //project
-              case "offerings" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
-                      <.span(^.className := "caret")
+                } //project
+                case "offerings" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
+                        <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
+                        <.li()(<.a(^.href := "#offerings")("Favorited")),
+                        <.li()(<.a(^.href := "#offerings")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#offerings")("Customize..."))
+                      )
                     ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
-                      <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
-                      <.li()(<.a(^.href := "#offerings")("Favorited")),
-                      <.li()(<.a(^.href := "#offerings")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#offerings")("Customize..."))
+                    <.div(MessagesCSS.Style.newProjectbtn)(
+                      // ToDo:  "New Offering" and button are hardcoded in Offering ?
+                      Offering(Offering.Props("New Offering", Seq(), Icon.clipboard, "New Offering"))
                     )
-                  ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    // ToDo:  "New Offering" and button are hardcoded in Offering ?
-                    Offering(Offering.Props("New Offering", Seq(), Icon.clipboard, "New Offering"))
                   )
-                )
-              } //project
-              case "contract" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
-                      <.span(^.className := "caret")
+                } //project
+                case "contract" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#contract")("Active")),
+                        <.li()(<.a(^.href := "#contract")("Favorited")),
+                        <.li()(<.a(^.href := "#contract")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#contract")("Customize..."))
+                      )
                     ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#contract")("Active")),
-                      <.li()(<.a(^.href := "#contract")("Favorited")),
-                      <.li()(<.a(^.href := "#contract")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#contract")("Customize..."))
-                    )
-                  ),
-                  BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.rocket, "New Contract"))
-                )
-              }
-              case "messages" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
-                      <.span(^.className := "caret")
-                    ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#messages")("Inbox")),
-                      <.li()(<.a(^.href := "#messages")("Sent")),
-                      <.li()(<.a(^.href := "#messages")("Unread")),
-                      <.li()(<.a(^.href := "#messages")("Favorited")),
-                      <.li()(<.a(^.href := "#messages")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#messages")("Customize..."))
-                    )
-                  ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "New Message"))
+                    BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.rocket, "New Contract"))
                   )
-                )
-              }
-              case "connections" => {
-                <.div()(
-                  <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
-                    <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
-                      <.span(^.className := "caret")
+                }
+                case "messages" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#messages")("Inbox")),
+                        <.li()(<.a(^.href := "#messages")("Sent")),
+                        <.li()(<.a(^.href := "#messages")("Unread")),
+                        <.li()(<.a(^.href := "#messages")("Favorited")),
+                        <.li()(<.a(^.href := "#messages")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#messages")("Customize..."))
+                      )
                     ),
-                    <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                      <.li()(<.a(^.href := "#connections")("All")),
-                      <.li()(<.a(^.href := "#connections")("Available for Chat")),
-                      <.li()(<.a(^.href := "#connections")("Favorited")),
-                      <.li()(<.a(^.href := "#connections")("Hidden")),
-                      <.li(^.className := "divider")(),
-                      <.li()(<.a(^.href := "#connections")("Customize..."))
+                    <.div(MessagesCSS.Style.newProjectbtn)(
+                      NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "New Message"))
                     )
-                  ),
-                  <.div(MessagesCSS.Style.newProjectbtn)(
-                    // ToDo:  "New Connection" and button are hardcoded in NewConnectionModal?
-                    NewConnectionModal(NewConnectionModal.Props("New Connection", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.paypal, "New Connection"))
                   )
-                )
-              }
-            } //main switch
+                }
+                case "connections" => {
+                  <.div()(
+                    <.div(^.className := "btn-group", HeaderCSS.Style.presetPickContainer)(
+                      <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.li()(<.a(^.href := "#connections")("All")),
+                        <.li()(<.a(^.href := "#connections")("Available for Chat")),
+                        <.li()(<.a(^.href := "#connections")("Favorited")),
+                        <.li()(<.a(^.href := "#connections")("Hidden")),
+                        <.li(^.className := "divider")(),
+                        <.li()(<.a(^.href := "#connections")("Customize..."))
+                      )
+                    ),
+                    <.div(MessagesCSS.Style.newProjectbtn)(
+                      // ToDo:  "New Connection" and button are hardcoded in NewConnectionModal?
+                      NewConnectionModal(NewConnectionModal.Props("New Connection", Seq(HeaderCSS.Style.createNewProjectBtn), Icon.paypal, "New Connection"))
+                    )
+                  )
+                }
+              } //main switch
+            ),
+
+            // the following is initially empty space to the right of the search action buttons.
+            <.div(^.className := "col-md-9 col-xs-9", ^.paddingLeft := "0px")()
           ),
-          // <.div(^.className := "col-sm-7", ^.paddingLeft := "0px")(),
           <.div(^.className := "col-lg-1")()
         )
       )

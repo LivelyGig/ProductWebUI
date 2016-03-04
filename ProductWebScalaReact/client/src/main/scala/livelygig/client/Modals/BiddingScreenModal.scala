@@ -206,10 +206,11 @@ object BiddingScreenModalForm {
                             <.div(^.className := "container-fluid")(
                               <.div()(
                                 <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomHeader, BiddingScreenCSS.Style.marginLeftRight)(
-                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term"),
+                                  <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Employer Agreement"),
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Talent Agreement"),
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("History")
+                                  // ToDo: add actions column, e.g. for delete.
                                 ),
                                 <.div(BiddingScreenCSS.Style.biddingScreenData)(
                                   <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
@@ -370,7 +371,7 @@ object BiddingScreenModalForm {
 
                       <.span(^.fontWeight := "bold")("1a: Pending Funding -- Waiting for other party to joint shared wallet"), <.br(),
 
-                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on participants"), <.br(),
+                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on funding transaction"), <.br(),
                       "Funding into escrow is required:",
                       <.br(),
                       "From Employer, Pam:  1 XBT requested.  Not yet funded.",
