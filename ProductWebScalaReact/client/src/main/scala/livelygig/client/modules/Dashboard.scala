@@ -38,7 +38,7 @@ object Dashboard {
               <.div(^.className:="col-md-8 col-sm-8")(
                 <.div(DashBoardCSS.Style.suggestionsContainer)(
                   <.span(DashBoardCSS.Style.headerFontDashboard)("Suggestions"), <.br(),
-                  "Complete your Talent profile by adding a video introduciton. ", <.a(^.href := "")("(Hide)"), ".", <.br(),
+                  "Complete your Talent profile by adding a video introduciton. ", <.a()("(Hide)"), ".", <.br(),
                   "Create a standard offering, i.e., promise you can complete a typically requested service with a fixed price and predictable response time. ", <.a(^.href := "")("(Hide)"), ".", <.br()
                 )
               ),

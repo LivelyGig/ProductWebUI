@@ -27,7 +27,7 @@ object BiddingScreenModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayModalbtn)(
-        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default,P.addStyles,P.addIcons , P.title, className = "profile-action-buttons"), P.buttonName),
+        Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         // Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"),  Icon.music),
         if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
@@ -49,7 +49,7 @@ object BiddingScreenModal {
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons :Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
   case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false, showAcceptDependencies: Boolean = false, showDispute: Boolean = false)
 
@@ -141,15 +141,13 @@ object BiddingScreenModalForm {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
-
           <.ul(^.className := "nav nav-tabs")(
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
             <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow")),
             <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "In Progress")),
-            // 2016-01-25 -- Ed intentionally commenting out Acceptance.  We'll probably merge its contents with In Progress state.
-            // <.li()(<.a(^.href := "#menu3", "data-toggle".reactAttr := "tab", "Acceptance")),
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
+          // ToDo: The layout details of all these tabs will depend on role, i.e., Employer, Talent, Moderator.  Generally for the initial layout, we are showing the Employer's view
           <.div(^.className := "tab-content tab-container")(
             <.div(^.id := "home", ^.className := "tab-pane fade in active")(
               // Initiating details
@@ -170,9 +168,12 @@ object BiddingScreenModalForm {
                     <.div()(<.a()("Pam"))
                   )
                 ),
-                <.div(^.className := "row")(
+                <.div(^.className := "row", ^.paddingTop := "10px")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Talent:")
+                  ),
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                    <.div()(<.a()("Abed"))
                   )
                 ),
                 <.div(^.className := "row")(
@@ -183,6 +184,14 @@ object BiddingScreenModalForm {
                     <.div()(<.a()("Britta"))
                   )
                 ),
+                <.div(^.className := "row", ^.paddingTop := "10px")(
+                  <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
+                    <.div()("Status:")
+                  ),
+                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
+                    <.div()("Offer from talent to employer")
+                  )
+                ),
                 <.div(DashBoardCSS.Style.splitContainer)(
                   <.div(^.className := "split")(
                     <.div(^.className := "row")(
@@ -191,10 +200,11 @@ object BiddingScreenModalForm {
                           <.div(^.className := "container-fluid")(
                             <.div()(
                               <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomHeader, BiddingScreenCSS.Style.marginLeftRight)(
-                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term"),
+                                <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Employer Agreement"),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Talent Agreement"),
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("History")
+                                // ToDo: add actions column, e.g. for delete.
                               ),
                               <.div(BiddingScreenCSS.Style.biddingScreenData)(
                                 <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
@@ -207,9 +217,9 @@ object BiddingScreenModalForm {
                                             <.span(^.className := "caret")
                                           ),
                                           <.ul(^.className := "dropdown-menu")(
-                                            <.li()(<.a(^.href := "#")("Item 1")),
-                                            <.li()(<.a(^.href := "#")("Item 2")),
-                                            <.li()(<.a(^.href := "#")("Item 3"))
+                                            <.li()(<.a()("Item 1")),
+                                            <.li()(<.a()("Item 2")),
+                                            <.li()(<.a()("Item 3"))
                                           )
                                         )
                                       ),
@@ -224,7 +234,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
                                 ),
 
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor := "lightcyan")(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
                                     <.div(^.className := "row")(
@@ -253,7 +263,7 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
                                 ),
-                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight, ^.backgroundColor := "lightcyan")(
+                                <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
 
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
@@ -266,9 +276,9 @@ object BiddingScreenModalForm {
                                             <.span(^.className := "caret")
                                           ),
                                           <.ul(^.className := "dropdown-menu")(
-                                            <.li()(<.a(^.href := "#")("Jim P. Blesho")),
-                                            <.li()(<.a(^.href := "#")("Remi Fastaou")),
-                                            <.li()(<.a(^.href := "#")("Jami Corporation"))
+                                            <.li()(<.a()("Jim P. Blesho")),
+                                            <.li()(<.a()("Remi Fastaou")),
+                                            <.li()(<.a()("Jami Corporation"))
                                           )
                                         )
                                       )
@@ -292,9 +302,8 @@ object BiddingScreenModalForm {
                                   <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
                                 )
-
                               )
-                            ), //container
+                            ),
                             <.div()(
                               <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomFooter, BiddingScreenCSS.Style.marginLeftRight)(
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("All Terms"),
@@ -313,13 +322,12 @@ object BiddingScreenModalForm {
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                                    // NewMessage(NewMessage.Props(RouterCtl[Loc],"Message")),
                                     <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                                   )
                                 )
                               )
                             )
-                          ) //gigConversation
+                          )
                         )
                       )
                     )
@@ -353,7 +361,7 @@ object BiddingScreenModalForm {
 
                       <.span(^.fontWeight := "bold")("1a: Pending Funding -- Waiting for other party to joint shared wallet"), <.br(),
 
-                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on participants"), <.br(),
+                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on funding transaction"), <.br(),
                       "Funding into escrow is required:",
                       <.br(),
                       "From Employer, Pam:  1 XBT requested.  Not yet funded.",
@@ -372,7 +380,7 @@ object BiddingScreenModalForm {
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
-                            <.a(^.href := "#")("details"),
+                            <.a()("details"),
                             ".",
                             // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
                             <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
@@ -381,7 +389,6 @@ object BiddingScreenModalForm {
                         )
                       ),
                       <.br(),
-
                       <.span(^.fontWeight := "bold")("3: Funded"), <.br(),
                       "Funding received", <.br(),
                       "The following deposits were made into this contract:", <.br(),
@@ -389,10 +396,8 @@ object BiddingScreenModalForm {
                       <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
                       "pending funding from buyer",
                       <.br(),
-
                       <.span(^.fontWeight := "bold")("4: Pay Escrow Setup Commission"), <.br(),
                       "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
-
                     )
                   )
                 ),
@@ -423,8 +428,7 @@ object BiddingScreenModalForm {
                             <.th(BiddingScreenCSS.Style.talentWidth)("Employer Complete"),
                             <.th(BiddingScreenCSS.Style.actionsWidth)("Actions")
                           )
-                        ), //thead
-
+                        ),
                         <.tbody(
                           <.tr(^.className := "info")(
                             <.td("1"),
@@ -462,8 +466,8 @@ object BiddingScreenModalForm {
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           )
-                        ) //tbody
-                      ), //table
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Escrowed Deliverables ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -475,7 +479,7 @@ object BiddingScreenModalForm {
                             <.th(^.className := "col-md-2")("Escrow Status"),
                             <.th(^.className := "col-md-3")("Actions")
                           )
-                        ), //thead
+                        ),
                         <.tbody()(
                           <.tr(^.className := "info")(
                             <.td(^.className := "col-md-1")("1"),
@@ -493,8 +497,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("Held pending payment"),
                             <.td(^.className := "col-md-3")(<.a("Details"), " ", <.a("Pay/Release"))
                           )
-                        ) //tbody
-                      ), //table
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -540,9 +544,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-2")("SOW section 3.5"),
                             <.td(^.className := "col-md-3")(<.a(" Reply "), <.a("Forward "), <.a(" Favorite "), <.a(" Hide"))
                           )
-                        ) //tbody
-                      ) //table
-                      ,
+                        )
+                      ),
                       <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -553,7 +556,7 @@ object BiddingScreenModalForm {
                             <.th(^.className := "col-md-3")("Name"),
                             <.th(^.className := "col-md-2")("Actions")
                           )
-                        ), //thead
+                        ),
                         <.tbody(
                           <.tr(^.className := "info")(
                             <.td(^.className := "col-md-1")("1"),
@@ -583,8 +586,8 @@ object BiddingScreenModalForm {
                             <.td(^.className := "col-md-3")("SOW section 3.5"),
                             <.td(^.className := "col-md-2")(<.a("Favorite "), <.a("Hide"))
                           )
-                        ) //tbody
-                      ) //table
+                        )
+                      )
                     )
                   )
                 ),
@@ -599,35 +602,9 @@ object BiddingScreenModalForm {
                 )
               )
             ),
-            <.div(^.id := "menu3", ^.className := "tab-pane fade")(
-              // acceptanceDetail
-              <.div(^.id := "acceptanceDetail" /*, ^.borderStyle.solid*/)(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div()(
-                      "Final acceptance",
-                      <.br(),
-                      "Employer  --  accept, dispute (with confirmation)",
-                      <.br(),
-                      "Talent -- accept, dispute (with confirmation)",
-                      <.br(),
-                      "Final payout information and transaction."
-                    )
-                  )
-                ),
-                <.div()(
-                  <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                  )
-                )
-              )
-            ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
-
               // feedbackDetail
               <.div(^.id := "feedbackDetail" /*, ^.borderStyle.solid*/)(
-
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
@@ -649,9 +626,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
-
                           )
-                        ), //row1
+                        ),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
                           <.div(^.className := "col-md-4 col-sm-4")("Managed Expectations"),
                           <.div(^.className := "col-md-8 col-sm-8")(
@@ -747,8 +723,8 @@ object BiddingScreenModalForm {
                                   <.td(BiddingScreenCSS.Style.awareness)("Skilled Understanding: Can work alone and can delegate"),
                                   <.td(BiddingScreenCSS.Style.expertUnderstanding)("Expert Understanding")
                                 )
-                              ) //tbody
-                            ) //table
+                              )
+                            )
                           )
                         ),
                         <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
@@ -815,12 +791,11 @@ object BiddingScreenModalForm {
                             <.textarea(^.rows := 3, ProjectCSS.Style.textareaWidth)
                           )
                         )
-                      ) //main Div
+                      )
                     )
                   )
                 )
               ),
-              // shared actions bellow all of the workflow sections
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
@@ -835,10 +810,9 @@ object BiddingScreenModalForm {
                 )
               )
             )
-          ) //tabcontent
-        ), //submitform
+          )
+        ),
         <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
-
       )
     }
 

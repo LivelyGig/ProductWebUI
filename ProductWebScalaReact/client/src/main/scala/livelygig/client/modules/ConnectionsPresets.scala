@@ -19,12 +19,12 @@ object ConnectionsPresets {
                   <.span(^.className := "caret")
                 ),
                 <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                  <.li()(<.a(^.href := "#")("All")),
-                  <.li()(<.a(^.href := "#")("Available for Chat")),
-                  <.li()(<.a(^.href := "#")("Favorited")),
-                  <.li()(<.a(^.href := "#")("Hidden")),
+                  <.li()(<.a()("All")),
+                  <.li()(<.a()("Available for Chat")),
+                  <.li()(<.a()("Favorited")),
+                  <.li()(<.a()("Hidden")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a(^.href := "#")("Customize..."))
+                  <.li()(<.a()("Customize..."))
                 )
               ),
               <.div(MessagesCSS.Style.newProjectbtn, ^.paddingTop := "5px")(

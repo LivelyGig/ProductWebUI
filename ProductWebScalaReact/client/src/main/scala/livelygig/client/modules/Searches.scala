@@ -134,6 +134,18 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Flags")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                  )
                 )
               )
             )
@@ -267,9 +279,9 @@ object Searches {
                         <.span(^.className := "caret")
                       ),
                       <.ul(^.className := "dropdown-menu")(
-                        <.li()(<.a(^.href := "#")("Item 1")),
-                        <.li()(<.a(^.href := "#")("Item 2")),
-                        <.li()(<.a(^.href := "#")("Item 3"))
+                        <.li()(<.a()("Item 1")),
+                        <.li()(<.a()("Item 2")),
+                        <.li()(<.a()("Item 3"))
                       )
                     )
                   )
@@ -280,6 +292,18 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Flags")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
               )
@@ -299,8 +323,27 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Initiating"),
-                    <.br(),
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Initiating offer"
+                    ),
+                    <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to me"
+                      ),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to other"
+                      ),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Rejected by other"
+                      ),
+                      <.br(),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Rejected by me"
+                      ),
+                      <.br(),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Expired"
+                      )
+                    ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Escrow"),
                     <.br(),
@@ -308,7 +351,18 @@ object Searches {
                       <.input(^.`type` := "checkbox"), " In Progress"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Feedback"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Completed")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Job ID")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. 70a48a34-2773-4f4f-9f92-8a261ee59ad7")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -326,29 +380,40 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Abed")
                   )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Flags")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                  )
                 )
               )
             )
           )
         }
-        case "messages" =>
-        {
-//          @tailrec
+        case "messages" => {
+          //          @tailrec
           def renderLabel(label: Label): ReactTag = {
-            val children = p.proxy().searchesModel.filter(p=>p.parentUid==label.uid)
-            if (!children.isEmpty){
+            val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
+            if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for`:="folder1"),
-                <.input(^.`type`:="checkbox",^.marginLeft:="20px", ^.checked:=label.isChecked, ^.onChange--> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
-                "  " +   label.text,
-                <.input(^.`type`:="checkbox",^.className:="treeview",^.id:="folder1"),
-              <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel))
+                <.label(^.`for` := "folder1"),
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+                "  " + label.text,
+                <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
+                <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel))
             } else {
 
               <.li(LftcontainerCSS.Style.checkboxlabel)(
 
-                <.input(^.`type`:="checkbox",^.marginLeft:="20px", ^.checked:=label.isChecked, ^.onChange--> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
-+                label.text)
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+                  + label.text)
             }
 
           }
@@ -397,11 +462,23 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     if (p.proxy().searchesModel != Nil) {
 
-                      <.ol(^.className:="tree",LftcontainerCSS.Style.checkboxlabel)( p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
-                      }
-                     else {
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    }
+                    else {
                       <.div("(none)")
                     }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Flags")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Favorited"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
               )

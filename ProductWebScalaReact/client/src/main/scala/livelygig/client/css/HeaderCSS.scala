@@ -77,17 +77,25 @@ object HeaderCSS {
       // paddingRight(0.%%),
       backgroundColor(c"#00767C"),
       // top(-2.px),
+
       width(100.%%),
       paddingTop(4.px)
 
+      /*theirs*/
+        width(100.%%)
+      // paddingTop(4.px)
+
     )
    /* val presetPickContainer= style(
-      minWidth(250.px)
+      //minWidth(250.px)
+      float.left
     )*/
     val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
       fontSize(1.2.em),
+
+      /*mine*/
       textAlign.left,
      media.maxWidth(1306.px).minWidth(993.px)-
      fontSize(15.px),
@@ -99,6 +107,10 @@ object HeaderCSS {
         fontSize(12.px),
       media.minWidth(865.px).maxWidth(973.px)-
         fontSize(11.px)
+/*
+        paddingTop(8.px),
+      textAlign.left,
+      paddingLeft(0.px)*/
     )
     val dropdownMenuWidth=style(
       width(100.%%)
@@ -221,6 +233,5 @@ object HeaderCSS {
       marginTop(10.px),
       marginRight(15.px)
     )
-
   }
 }

@@ -12,9 +12,9 @@ object MessagesCSS {
 
 
     val newProjectbtn = style (
-      float.left,
-      marginLeft(10.px),
-      marginTop(-4.px),
+      // float.left,
+      // marginLeft(10.px),
+      // marginTop(-4.px),
       display.inlineBlock,
       position.absolute
     )
