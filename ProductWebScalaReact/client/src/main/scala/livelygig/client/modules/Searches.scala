@@ -299,21 +299,25 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Initiating"
+                      <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject", ^.marginLeft := "-18px"), " Initiating offer"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer outstanding to me"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Outstanding to me"
                       ),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer outstanding to other"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Outstanding to other"
                       ),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Offer rejected by other"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly", ^.marginLeft := "-18px"), " Rejected by other"
                       ),
                       <.br(),
                       <.label(LftcontainerCSS.Style.subcheckboxlabel)(
-                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Offer rejected by me"
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Rejected by me"
+                      ),
+                      <.br(),
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                        <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed", ^.marginLeft := "-18px"), " Expired"
                       )
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
