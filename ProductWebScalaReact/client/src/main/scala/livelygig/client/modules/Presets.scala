@@ -68,7 +68,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "New Jobs"))
+                        NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "New Job"))
                       )
                     )
                   } //project
@@ -88,7 +88,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "New Offerings"))
+                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "New Offering"))
                       )
                     )
                   } //project
