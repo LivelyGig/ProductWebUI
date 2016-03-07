@@ -88,7 +88,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "New Offering"))
+                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
                       )
                     )
                   } //project
