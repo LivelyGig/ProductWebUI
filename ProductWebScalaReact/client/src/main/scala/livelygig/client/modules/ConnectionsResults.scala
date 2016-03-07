@@ -123,11 +123,15 @@ object ConnectionList {
           } else {
             <.span()
           },
-          <.div(^.marginLeft:="30px")(
+          <.div(^.marginLeft := "30px")(
             <.div(^.className := "media-left", ^.float.left)(
-              <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.title := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
+              if (connection.imgSrc.isEmpty) {
+                <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/default_avatar.jpg", ^.borderRadius := "25px", ^.title := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
+              } else {
+                <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.title := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
+              }
             ),
-            <.div(/*^.className := "col-md-12"*/)(
+            <.div()(
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Software Developer"),
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
