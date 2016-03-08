@@ -12,7 +12,7 @@ object HeaderCSS {
 
     val naviContainer = style (
       backgroundColor(c"#005256"),
-      height(62.px),
+      minHeight(62.px),
       borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -23,6 +23,7 @@ object HeaderCSS {
         paddingTop(8.px)
 
     )
+
     val headerNavA = style (
       /*borderBottom(3.px, solid, transparent),*/
       color(c"#fff"),
@@ -158,6 +159,7 @@ object HeaderCSS {
           paddingLeft(10.px)
       //      float.right
     )
+
     val rsltContainerIconBtn = style(
       //      backgroundColor(c"#ffa500"),
 //      color(c"#de9000"),
@@ -228,5 +230,6 @@ object HeaderCSS {
       marginTop(10.px),
       marginRight(15.px)
     )
+
   }
 }
