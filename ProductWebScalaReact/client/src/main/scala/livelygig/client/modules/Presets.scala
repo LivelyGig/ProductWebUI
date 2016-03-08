@@ -68,7 +68,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "New Job"))
+                        NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
                       )
                     )
                   } //project
@@ -88,7 +88,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "New Offering"))
+                        Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
                       )
                     )
                   } //project
@@ -107,7 +107,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "New Contract"))
+                        BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
                       )
                     )
                   }
@@ -128,7 +128,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "New Message"))
+                        NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message"))
                       )
                     )
                   }
@@ -148,7 +148,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        NewConnectionModal(NewConnectionModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "New Connection"))
+                        NewConnectionModal(NewConnectionModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
                       )
                     )
                   }
