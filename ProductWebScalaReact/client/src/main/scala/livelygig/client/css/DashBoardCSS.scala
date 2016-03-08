@@ -33,15 +33,16 @@ object DashBoardCSS {
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
-      height(55.px),
+     // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
       marginRight(0.px),
       fontSize(1.1.em),
-      paddingTop(0.px),
       marginBottom(0.px),
       verticalAlign.middle,
-      width(100.%%)
+      width(100.%%),
+      paddingTop(4.px),
+      paddingBottom(4.px)
     )
     val rsltCheckboxStyle = style(
       height(22.px),
@@ -123,7 +124,8 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-      marginRight(5.px)
+      marginRight(5.px),
+      padding(4.px, 9.px)
     )
     val inputHeightWidth = style(
       height(25.px),
@@ -344,7 +346,7 @@ object DashBoardCSS {
     val footLegalStyle = style(
       color(c"#fff"),
       backgroundColor(transparent),
-      paddingTop(17.px),
+      paddingTop(12.px),
       fontSize(15.px),
       borderColor(transparent),
       &.active(

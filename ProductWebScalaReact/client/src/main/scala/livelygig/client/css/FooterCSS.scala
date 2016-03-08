@@ -35,13 +35,13 @@ object FooterCSS {
       &.hover(
         height(42.px),
         backgroundColor(c"#005256"),
-        color(c"#67EAF2"),
+        //color(c"#67EAF2"),
         outline(none)
       ),
       &.focus(
         height(42.px),
         backgroundColor(c"#005256"),
-        color(c"#67EAF2"),
+       // color(c"#67EAF2"),
         outline(none)
       )
     )

@@ -89,7 +89,7 @@ object HeaderCSS {
     val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
-      fontSize(1.2.em),
+      fontSize(1.em),
 
       /*mine*/
       textAlign.left,
