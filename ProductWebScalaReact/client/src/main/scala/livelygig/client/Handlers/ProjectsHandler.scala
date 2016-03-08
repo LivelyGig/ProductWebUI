@@ -1,10 +1,10 @@
-package livelygig.client.Handlers
+package livelygig.client.handlers
 
 import diode.data.PotState.PotPending
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
-import livelygig.client.RootModels.{ProjectsRootModel}
-import livelygig.client.models.{ProjectsModel, ConnectionsModel}
+import livelygig.client.models.{JobPosts, ProjectsModel, ConnectionsModel}
+import livelygig.client.rootmodels.ProjectsRootModel
 import livelygig.client.services.CoreApi
 import livelygig.client.dtos._
 //import rx.ops.Timer
@@ -28,15 +28,14 @@ case class ProjectsResponseTest(sessionURI: String, pageOfPosts: Seq[String], co
 
 object ProjectsModelHandler{
   def GetJobPostsModel(jobPostsResponse: String): ProjectsRootModel = {
-    val projectsFromBackend = upickle.default.read[Seq[ApiResponse[ProjectsResponse]]](jobPostsResponse)
+    val projectsFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](jobPostsResponse)
 //      println(model(0).content.pageOfPosts(0))
 //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[ProjectsModel]()
     for(projectFromBackend <- projectsFromBackend){
 //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       model:+= ProjectsModel(projectFromBackend.content.sessionURI,
-        upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)),projectFromBackend.content.connection,
-        projectFromBackend.content.filter)
+        upickle.default.read[JobPosts](projectFromBackend.content.pageOfPosts(0)))
     }
 //    println(model)
     ProjectsRootModel(model)
