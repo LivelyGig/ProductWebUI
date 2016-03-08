@@ -34,13 +34,13 @@ object MessagesModelHandler{
     var model = Seq[MessagesModel]()
     for(projectFromBackend <- messagesFromBackend){
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
-      /*try {
+      try {
         if (!projectFromBackend.content.pageOfPosts.isEmpty)
           upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
       } catch {
         case e: Exception =>
           println(e)
-      }*/
+      }
       if (!projectFromBackend.content.pageOfPosts.isEmpty)
         model:+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
     }
