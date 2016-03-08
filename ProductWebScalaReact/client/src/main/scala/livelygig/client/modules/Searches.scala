@@ -79,7 +79,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Profile Type")
@@ -157,7 +157,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
@@ -165,6 +165,9 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
@@ -208,7 +211,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Job Type")
@@ -296,6 +299,30 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Payment Escrow")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " Required"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow", ^.checked := "true"), " Optional"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " None")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
+                    <.div("Deliverables Escrow")
+                  ),
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"), " Required"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"), " Optional"),
+                    <.br(),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow", ^.checked := "true"), " None")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
@@ -316,7 +343,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Status")
@@ -403,7 +430,7 @@ object Searches {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for` := "folder1"),
+                <.label(^.`for` := "folder1", ^.margin := "0", ^.padding := "0"),
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
@@ -422,7 +449,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("From")
@@ -491,7 +518,7 @@ object Searches {
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
+              <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")

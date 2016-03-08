@@ -71,8 +71,10 @@ object ContractResults {
                     "Status: Initiating   11:20am 12/08/2015",
                     <.div(^.className := "col-md-12 col-sm-12 ")(
                       <.div(/*^.className:="profile-action-buttons"*/)(
-                        BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Apply")),
-                        NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message"))
+                        <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
+                        <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
+                        BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.fileTextO, "Manage")),
+                        NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
                       )
                     )
                   )

@@ -326,7 +326,8 @@ object DashBoardCSS {
     val rsltpaddingTop10p = style(
       paddingTop(10.px),
       paddingLeft(15.px),
-      paddingRight(15.px)
+      paddingRight(15.px),
+      marginTop(0.px) /* makes right bottom icons line up similarly on each result row */
     )
     val paddingLeftLoginbtn = style(
       paddingLeft(0.px)
