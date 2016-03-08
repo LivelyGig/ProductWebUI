@@ -35,7 +35,7 @@ object MessagesResults {
   val component = ReactComponentB[Props]("Messages")
     .backend(new Backend(_))
     .renderPS((B, P, S ) => {
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12", ^.paddingRight := "0px"/*, ^.paddingTop := "12px"*/)(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
@@ -50,7 +50,7 @@ object MessagesResults {
                 <.li()(<.a()("Unfavorite"))
               )
             ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px"/*, ^.paddingTop := "19px"*/)("2,352 Results")
+            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults/*, ^.paddingTop := "19px"*/)("2,352 Results")
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
 
@@ -79,8 +79,9 @@ object MessagesResults {
             )
           )
         ), //col-12
-        <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+
+        <.div(^.className := "container-fluid", ^.id := "resultsContainer",DashBoardCSS.Style.verticalImg)(
+            <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             P.proxy().render(messagesRootModel =>
               MessagesList(messagesRootModel.messagesModelList)
             ),
@@ -98,6 +99,7 @@ object MessagesResults {
             }
           )
         ) //gigConversation
+
        /* <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(

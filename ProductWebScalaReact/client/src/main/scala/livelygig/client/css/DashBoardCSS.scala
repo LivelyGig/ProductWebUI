@@ -469,5 +469,15 @@ object DashBoardCSS {
       padding(0.px)
     )
 
+    val marginResults = style (
+      marginLeft(24.%%),
+      marginTop(0.px),
+      marginRight(0.px),
+      marginBottom(0.px),
+      media.maxWidth(795.px)-
+        marginLeft(21.%%)
+    )
+
+
   }
 }

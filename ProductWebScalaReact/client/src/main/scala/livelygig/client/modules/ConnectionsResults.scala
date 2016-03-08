@@ -49,7 +49,7 @@ object ConnectionsResults {
                 <.li()(<.a()("Unfavorite"))
               )
             ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px"/*, ^.paddingTop := "19px"*/)("2,352 Results")
+            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults/*, ^.paddingTop := "19px"*/)("2,352 Results")
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
 
