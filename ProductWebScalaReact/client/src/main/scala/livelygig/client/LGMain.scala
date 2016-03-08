@@ -88,12 +88,14 @@ object LGMain extends js.JSApp {
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
-        <.div(^.className := "col-lg-1")()
+        <.div()()
       ),
       // the vertically center area
       r.render(),
       Footer(Footer.Props(c, r.page))
     )
+
+
   }
 
   @JSExport

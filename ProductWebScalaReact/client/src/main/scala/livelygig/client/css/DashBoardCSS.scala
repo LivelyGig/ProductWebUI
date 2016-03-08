@@ -17,6 +17,7 @@ object DashBoardCSS {
     val splitContainer = style(
       position.relative,
       height(100.%%),
+      width(100.%%),
       overflow.hidden
     )
     val rsltContainer = style(
@@ -27,8 +28,8 @@ object DashBoardCSS {
 
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
-      paddingLeft(0.px),
-      paddingRight(0.px)
+      paddingLeft(0.px)/*,
+      paddingRight(0.px)*/
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
@@ -325,7 +326,8 @@ object DashBoardCSS {
     val rsltpaddingTop10p = style(
       paddingTop(10.px),
       paddingLeft(15.px),
-      paddingRight(15.px)
+      paddingRight(15.px),
+      marginTop(0.px) /* makes right bottom icons line up similarly on each result row */
     )
     val paddingLeftLoginbtn = style(
       paddingLeft(0.px)
@@ -460,6 +462,9 @@ object DashBoardCSS {
     val paddingLeftModalHeaderbtn = style(
       paddingLeft(15.px),
       color(c"#000")
+    )
+    val padding0px = style(
+      padding(0.px)
     )
 
   }

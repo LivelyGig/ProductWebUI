@@ -96,19 +96,19 @@ object MainMenu {
                   ),
                   <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(HeaderCSS.Style.logoContainer, <.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
                   <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                    <.li()(<.a(^.href := "#")("Available for Chat")),
-                    <.li()(<.a(^.href := "#")("Invisible")),
+                    <.li()(<.a()("Available for Chat")),
+                    <.li()(<.a()("Invisible")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a(^.href := "#")("Availability Schedule")),
+                    <.li()(<.a()("Availability Schedule")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a(^.href := "#")("Account")),
-                    <.li()(<.a(^.href := "#")("Profiles")),
-                    <.li()(<.a(^.href := "#")("Notifications")),
-                    <.li()(<.a(^.href := "#")("Payments")),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" /*,^.href := "#"*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
+                    <.li()(<.a()("Account")),
+                    <.li()(<.a()("Profiles")),
+                    <.li()(<.a()("Notifications")),
+                    <.li()(<.a()("Payments")),
+                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" /*,*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
                     )),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a(^.href := "#", ^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
+                    <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
                   )
                 ),
                 <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(

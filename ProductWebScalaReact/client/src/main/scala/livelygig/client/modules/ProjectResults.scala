@@ -40,10 +40,10 @@ object ProjectResults {
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className := "dropdown-menu")(
-                <.li()(<.a(^.href := "#")("Hide")),
-                <.li()(<.a(^.href := "#")("Favorite")),
-                <.li()(<.a(^.href := "#")("Unhide")),
-                <.li()(<.a(^.href := "#")("Unfavorite"))
+                <.li()(<.a()("Hide")),
+                <.li()(<.a()("Favorite")),
+                <.li()(<.a()("Unhide")),
+                <.li()(<.a()("Unfavorite"))
               )
             ) //dropdown class
           ),
@@ -55,11 +55,11 @@ object ProjectResults {
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
                 <.ul(^.className := "dropdown-menu")(
-                  <.li()(<.a(^.href := "#")("By Date")),
-                  <.li()(<.a(^.href := "#")("By Experience")),
-                  <.li()(<.a(^.href := "#")("By Reputation")),
-                  <.li()(<.a(^.href := "#")("By Rate")),
-                  <.li()(<.a(^.href := "#")("By Projects Completed"))
+                  <.li()(<.a()("By Date")),
+                  <.li()(<.a()("By Experience")),
+                  <.li()(<.a()("By Reputation")),
+                  <.li()(<.a()("By Rate")),
+                  <.li()(<.a()("By Projects Completed"))
                 )
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
@@ -132,19 +132,12 @@ object ProjectsList {
             <.div(/*^.onMouseOver ==> displayBtn*/
               /*^.onMouseOver --> displayBtn*/
               /*^.className:="profile-action-buttons"*/)(
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.userTimes),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
-            //  <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Recommend", Icon.heart),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Find Matching Talent", Icon.exchange),
-            //  <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Apply", Icon.handOUp),
-            //  <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Message", Icon.envelope),
-
-
-              NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.heart,"Recommend")),
-              // <.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")(Icon.weibo, " Find Matching Talent")(),
-              BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Apply")),
+              NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend")),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Find Matching Talent", Icon.users),
+              BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.pencilSquareO,"Apply")),
               NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message" ))
-
             )
           ) //media-body
         ) //li

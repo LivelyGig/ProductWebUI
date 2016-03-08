@@ -43,8 +43,8 @@ object NewProject {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addProjectForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn),"",""),"New Job"),
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
+        Button(Button.Props(B.addProjectForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title,className = "profile-action-buttons"),P.buttonName),
         if (S.showNewProjectForm) PostAProjectForm(PostAProjectForm.Props(B.addNewProject))
         else
           Seq.empty[ReactElement]
@@ -134,9 +134,9 @@ object PostAProjectForm {
                   <.button(ProjectCSS.Style.projectdropdownbtn, ^.className:="btn dropdown-toggle","data-toggle".reactAttr := "dropdown")("Select One  ")(
                     <.span(^.className:="caret"),
                     <.ul(^.className:="dropdown-menu")(
-                      <.li()(<.a(^.href:="#")("Item 1")),
-                      <.li()(<.a(^.href:="#")("Item 2")),
-                      <.li()(<.a(^.href:="#")("Item 3"))
+                      <.li()(<.a()("Item 1")),
+                      <.li()(<.a()("Item 2")),
+                      <.li()(<.a()("Item 3"))
                     )
                   )
                   )
@@ -156,9 +156,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               ),
@@ -174,9 +174,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               ),
@@ -192,9 +192,9 @@ object PostAProjectForm {
                     <.span(^.className:="caret")
                   ),
                   <.ul(^.className:="dropdown-menu")(
-                    <.li()(<.a(^.href:="#")("Item 1")),
-                    <.li()(<.a(^.href:="#")("Item 2")),
-                    <.li()(<.a(^.href:="#")("Item 3"))
+                    <.li()(<.a()("Item 1")),
+                    <.li()(<.a()("Item 2")),
+                    <.li()(<.a()("Item 3"))
                   )
                 ))
               )

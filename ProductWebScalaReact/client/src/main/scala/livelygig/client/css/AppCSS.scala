@@ -16,7 +16,8 @@ object AppCSS {
       ProjectCSS.Style,
       TalentCSS.Style,
       BiddingScreenCSS.Style,
-      InvoiceCSS.Style
+      InvoiceCSS.Style,
+      PresetsCSS.Style
 
       )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))

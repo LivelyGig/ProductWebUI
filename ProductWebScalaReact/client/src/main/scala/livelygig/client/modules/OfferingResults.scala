@@ -4,12 +4,11 @@ import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Icon
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}
-import livelygig.client.modals.{ NewMessage, NewRecommendation}
+import livelygig.client.modals.{NewMessage, NewRecommendation}
 
 import scalacss.ScalaCssReact._
 
 object OfferingResults {
-  // create the React component for Dashboard
   val component = ReactComponentB[Unit]("Offerings")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
@@ -22,12 +21,12 @@ object OfferingResults {
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
               <.ul(^.className := "dropdown-menu")(
-                <.li()(<.a(^.href := "#")("Hide")),
-                <.li()(<.a(^.href := "#")("Favorite")),
-                <.li()(<.a(^.href := "#")("Unhide")),
-                <.li()(<.a(^.href := "#")("Unfavorite"))
+                <.li()(<.a()("Hide")),
+                <.li()(<.a()("Favorite")),
+                <.li()(<.a()("Unhide")),
+                <.li()(<.a()("Unfavorite"))
               )
-            ) //dropdown class
+            )
           ),
           <.div(^.className := "col-md-8 col-sm-8 col-xs-8", ^.paddingLeft := "0px")(
             <.div(DashBoardCSS.Style.rsltCountHolderDiv, ^.margin := "0px", ^.paddingTop := "19px")("2,352 Results"),
@@ -37,11 +36,11 @@ object OfferingResults {
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
                 <.ul(^.className := "dropdown-menu")(
-                  <.li()(<.a(^.href := "#")("By Date")),
-                  <.li()(<.a(^.href := "#")("By Experience")),
-                  <.li()(<.a(^.href := "#")("By Reputation")),
-                  <.li()(<.a(^.href := "#")("By Rate")),
-                  <.li()(<.a(^.href := "#")("By Projects Completed"))
+                  <.li()(<.a()("By Date")),
+                  <.li()(<.a()("By Experience")),
+                  <.li()(<.a()("By Reputation")),
+                  <.li()(<.a()("By Rate")),
+                  <.li()(<.a()("By Projects Completed"))
                 )
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
@@ -51,14 +50,14 @@ object OfferingResults {
             ),
             <.div(^.className := "pull-right", ^.paddingTop := "10px")(
               // todo: icon buttons should be different.  Earlier mockup on s3 had <span class="icon-List1">  2  3  ?
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
-        ), //col-12
+        ),
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
@@ -67,28 +66,21 @@ object OfferingResults {
                   <.div(DashBoardCSS.Style.profileNameHolder)("New company branding - icon and website... $250.  Posted  11:00am 12/05/2015"),
                   <.div(^.className := "media-body")(
                     "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                    <.div(DashBoardCSS.Style.marginTop10px)(
-                      <.div(DashBoardCSS.Style.profileNameHolder)("Recommended By: Tom")
-                    ),
-
+                    <.br(),
+                    "Recommended By: Tom",
                     <.div()(
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.userTimes),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
                       <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
-                      //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
-                      //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-                      NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.handOUp,"Recommend")),
-                      //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn,^.className := "btn profile-action-buttons")("Purchase")(),
+                      NewRecommendation(NewRecommendation.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend")),
                       <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Purchase", Icon.cartPlus),
-                      // BiddingScreenModal(BiddingScreenModal.Props(ctl, "Apply")),
-                     // NewMessage(NewMessage.Props("Message")
-                      NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Messages"))
+                      NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Messages"))
                     )
-                  ) //media-body
-                ) //li
+                  )
+                )
               }
-            ) //ul
+            )
           )
-        ) //gigConversation
+        )
       )
     )
     .build

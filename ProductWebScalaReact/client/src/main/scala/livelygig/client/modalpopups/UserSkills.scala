@@ -47,8 +47,8 @@ object UserSkills {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles,"",""), "Update Profile"),
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title), P.buttonName),
         if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]
