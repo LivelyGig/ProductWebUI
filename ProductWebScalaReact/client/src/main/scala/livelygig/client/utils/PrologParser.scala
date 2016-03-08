@@ -1,6 +1,4 @@
-package livelygig.client.components
-
-import livelygig.client.models.Label
+package livelygig.client.utils
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName

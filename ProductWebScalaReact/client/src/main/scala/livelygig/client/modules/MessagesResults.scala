@@ -1,10 +1,11 @@
 package livelygig.client.modules
 
+import diode.react.ReactPot._
+import diode.react._
 import diode.data.Pot
-import diode.react.ModelProxy
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.Handlers.RefreshProjects
-import livelygig.client.RootModels.ProjectsRootModel
+import livelygig.client.handlers.{RefreshMessages, RefreshProjects}
+import livelygig.client.rootmodels.{MessagesRootModel, ProjectsRootModel}
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import livelygig.client.modals.PostNewMessage
 import japgolly.scalajs.react._
@@ -24,16 +25,16 @@ import scalacss.ScalaCssReact._
 
 object MessagesResults {
 
-  case class Props (proxy : ModelProxy[Pot[ProjectsRootModel]] = null)
+  case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])
   case class State(selectedItem: Option[MessagesModel] = None)
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
+      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshMessages()))
   }
 
   val component = ReactComponentB[Props]("Messages")
     .backend(new Backend(_))
-    .renderPS((b, P, S ) => {
+    .renderPS((B, P, S ) => {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12", ^.paddingRight := "0px"/*, ^.paddingTop := "12px"*/)(
@@ -79,6 +80,25 @@ object MessagesResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
+          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+            P.proxy().render(messagesRootModel =>
+              MessagesList(messagesRootModel.messagesModelList)
+            ),
+            P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
+            if (P.proxy().isEmpty) {
+              if (!P.proxy().isFailed) {
+                <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
+                  <.img(^.src := "./assets/images/processing.gif")
+                )
+              } else {
+                <.div()
+              }
+            } else {
+              <.div()
+            }
+          )
+        ) //gigConversation
+       /* <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
@@ -101,10 +121,49 @@ object MessagesResults {
               }
             )
           )
-        )
+        )*/
       ) //gigConversation
 
     })
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
-  def apply(props: Props) = component(props)
+  def apply(proxy: ModelProxy[Pot[MessagesRootModel]]) = component(Props(proxy))
+}
+
+object MessagesList {
+  case class Props(messages: Seq[MessagesModel])
+
+  private val MessagesList = ReactComponentB[Props]("ProjectList")
+    .render_P(p => {
+      def renderMessages(message: MessagesModel) = {
+        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/)(
+          // if even row  DashBoardCSS.Style.rsltContentBackground
+          <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
+          <.span(^.className := "checkbox-lbl"),
+          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
+          <.div(^.className := "media-body")(
+            message.text,
+            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/")(
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.userTimes),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
+              //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
+              //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
+              //NewMessage(NewMessage.Props("Forward",Seq(HeaderCSS.Style.createNewProjectBtn),"","Forward")),
+              //NewMessage(NewMessage.Props("Reply",Seq(HeaderCSS.Style.createNewProjectBtn),"","Reply"))
+              NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailForward,"Forward")),
+              NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailReply,"Reply" ))
+              /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
+            )
+          ) //media-body
+        ) //li
+      }
+      <.div(^.className := "rsltSectionContainer")(
+        <.ul(^.className := "media-list")(p.messages map renderMessages)
+      )
+    })
+    .build
+
+  def apply(messages: Seq[MessagesModel]) =
+    MessagesList(Props(messages))
+
 }

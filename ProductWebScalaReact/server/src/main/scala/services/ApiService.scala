@@ -47,9 +47,10 @@ class ApiService extends Api {
 
   override def sessionPing(requestContent: String): Future[ /*Seq[ApiResponse[ConnectionProfileResponse]]*/ String] = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map(
-      response => response.body.toString
-    )
+    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {response =>
+      println("response.json.toString() = " + response.json.toString())
+      response.json.toString()
+    }
   }
 
   override def getConnections(requestContent: String): Future[String] = {
@@ -66,12 +67,17 @@ class ApiService extends Api {
     /*println(json)*/
     json
   }
+  override def getMessages(requestContent: String): String = {
+    val json = scala.io.Source.fromFile(MockFiles.messagesJsonLoc).getLines().map(_.trim).mkString
+    /*println(json)*/
+    json
+  }
 
   override def subscribeRequest(requestContent: String): Future[String] = {
     println(write(requestContent))
     WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {
       response =>
-        //        println("response.json.toString() = "+response.json.toString())
+        println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
   }

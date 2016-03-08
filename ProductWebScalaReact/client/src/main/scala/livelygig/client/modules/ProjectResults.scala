@@ -5,13 +5,13 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
-import livelygig.client.Handlers.RefreshProjects
-import livelygig.client.RootModels.ProjectsRootModel
+import livelygig.client.handlers.RefreshProjects
+import livelygig.client.rootmodels.ProjectsRootModel
 import livelygig.client.components._
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
 import livelygig.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
-import livelygig.client.models.{ProjectsModel, AppModel, ModelType}
-import livelygig.client.dtos.{ApiResponse, ProjectsResponse}
+import livelygig.client.models.{ProjectsModel, ModelType}
+import livelygig.client.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
 
@@ -19,7 +19,7 @@ object ProjectResults {
 
   case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
 
-  case class State(selectedItem: Option[ProjectsResponse] = None)
+  case class State(selectedItem: Option[EvalSubscribeResponseContent] = None)
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
@@ -112,16 +112,16 @@ object ProjectsList {
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.pageOfPosts.summary
+            project.jobPosts.summary
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
-            project.pageOfPosts.description,
+            project.jobPosts.description,
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
-              "Job Type: " + project.pageOfPosts.`type`,
+              "Job Type: " + project.jobPosts.`type`,
               <.br(),
               "Posted by: LivelyGig",
               <.br(),
-              "Posted: " + new Date(project.pageOfPosts.postedDate).toUTCString(),
+              "Posted: " + new Date(project.jobPosts.postedDate).toUTCString(),
               <.br(),
               "Recommended By: Tom",
               <.br(),

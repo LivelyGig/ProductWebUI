@@ -39,7 +39,7 @@ object AppModule {
                   case "talent" => TalentResults.component(Unit)
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
                   case "contract" => ContractResults.component(Unit)
-                  case "messages" => MessagesResults(MessagesResults.Props())/*(zoomRW(_.connections)((m, v) => m.copy(connections = v)))*/
+                  case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
                   case "offerings" => OfferingResults.component(Unit)
                   //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))

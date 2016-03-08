@@ -1,10 +1,10 @@
-package livelygig.client.Handlers
+package livelygig.client.handlers
 
 import diode.data.PotState.PotPending
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
-import livelygig.client.RootModels.ConnectionsRootModel
 import livelygig.client.models.ConnectionsModel
+import livelygig.client.rootmodels.ConnectionsRootModel
 import livelygig.client.services.CoreApi
 import livelygig.client.dtos.{ConnectionProfileResponse, ApiResponse}
 //import rx.ops.Timer
@@ -20,7 +20,7 @@ case class RefreshConnections(value: Pot[ConnectionsRootModel] = Empty) extends 
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
-object ModelHandler{
+object ConnectionModelHandler{
   def GetConnectionsModel(response: String): ConnectionsRootModel = {
 
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
@@ -48,7 +48,7 @@ object ModelHandler{
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action : RefreshConnections =>
-      val updateF = action.effect(CoreApi.getConnections())(connections=>ModelHandler.GetConnectionsModel(connections))
+      val updateF = action.effect(CoreApi.getConnections())(connections=>ConnectionModelHandler.GetConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }

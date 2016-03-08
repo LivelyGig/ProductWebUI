@@ -14,6 +14,8 @@ trait Api {
 
   def getConnections (requestContent: String) : Future[String]
 
+  def getMessages (requestContent: String) : String
+
   def getProjects(requestContent: String):String
 
   def subscribeRequest(requestContent: String): Future[String]

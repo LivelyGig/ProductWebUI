@@ -1,4 +1,4 @@
-package livelygig.client.Handlers
+package livelygig.client.handlers
 
 import diode.{ActionHandler, ModelRW}
 import livelygig.client.models.UserModel

@@ -1,4 +1,4 @@
-package livelygig.client.RootModels
+package livelygig.client.rootmodels
 
 import livelygig.client.models.UserModel
 

@@ -3,9 +3,9 @@ package livelygig.client.modules
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.Handlers.RefreshConnections
+import livelygig.client.handlers.RefreshConnections
 import livelygig.client.LGMain.Loc
-import livelygig.client.RootModels.ConnectionsRootModel
+import livelygig.client.rootmodels.ConnectionsRootModel
 import livelygig.client.components.Bootstrap.Panel
 import diode.react.ReactPot._
 import diode.react._
