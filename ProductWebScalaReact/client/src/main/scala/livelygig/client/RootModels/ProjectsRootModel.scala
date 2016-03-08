@@ -1,4 +1,4 @@
-package livelygig.client.RootModels
+package livelygig.client.rootmodels
 
 import livelygig.client.models.ProjectsModel
 import livelygig.client.dtos._
@@ -10,7 +10,7 @@ import livelygig.client.dtos._
 case class ProjectsRootModel(projectsModelList: Seq[ProjectsModel]) {
   def updated (newProject: ProjectsModel) = {
 //    println(newJobPostsResponse)
-    projectsModelList.indexWhere(_.connection.target == newProject.connection.target)
+    projectsModelList.indexWhere(_.jobPosts.id == newProject.jobPosts.id)
     match {
       case -1 =>
         ProjectsRootModel(projectsModelList:+newProject)

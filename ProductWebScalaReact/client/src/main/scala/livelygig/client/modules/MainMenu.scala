@@ -4,7 +4,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.{LogoutUser, LoginUser}
+import livelygig.client.handlers.{LogoutUser, LoginUser}
 import livelygig.client.LGMain._
 import livelygig.client.components.Bootstrap.CommonStyle
 import livelygig.client.modals.{UserPreferences, AgentLogin}

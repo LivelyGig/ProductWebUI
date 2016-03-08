@@ -1,14 +1,18 @@
-package livelygig.client.Handlers
+package livelygig.client.handlers
 
-import diode.{ActionHandler, ModelRW}
-import livelygig.client.RootModels.SearchesRootModel
-import livelygig.client.components.PrologParser
-import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
+import diode.{Effect, ActionHandler, ModelRW}
+import diode.data.PotAction
+import livelygig.client.dtos._
 import livelygig.client.models.Label
+import livelygig.client.rootmodels.SearchesRootModel
+import livelygig.client.services.CoreApi
+import livelygig.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
+//import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
+import scala.util.Success
 
 /**
   * Created by shubham.k on 2/23/2016.
@@ -74,9 +78,22 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         updated(value.updated(label))
       }
 
-    case SearchWithLabels() =>
+    case action: SearchWithLabels =>
       //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
-      SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(Connection("","","")),"alias")))
+//      any(Seq("Splicious"))
+
+//      println(Utils.GetLabelProlog(Seq(value.searchesModel.filter(p=>p.isChecked==true))))
+//      println(any(Seq("Splicious")).toString)
+      val selfConnection = Utils.GetSelfConnnection()
+      println(selfConnection)
+      val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
+//      action.effect()
+//      Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription))
+//      action.effect()
+////      .onComplete{
+////        case Success(response) =>
+////          CoreApi.sessionPing()
+////      }
       updated(value)
   }
 

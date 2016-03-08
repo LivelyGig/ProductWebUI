@@ -1,7 +1,7 @@
 package livelygig.client.modals
 
 import japgolly.scalajs.react.extra.OnUnmount
-import livelygig.client.Handlers.{CreateLabels, LoginUser}
+import livelygig.client.handlers.{CreateLabels, LoginUser}
 import livelygig.client.components.Bootstrap._
 import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS}

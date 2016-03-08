@@ -33,19 +33,16 @@ case class InitializeSessionResponse(sessionURI: String,listOfAliases: Seq[Strin
 case class InitializeSessionErrorResponse(reason : Option[String])
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String
                                     /* ,name: Option[String]*/)  /*extends Content*/
-case class ProjectsResponse(sessionURI: String, pageOfPosts: Seq[String], connection: Connection,
-                            filter : String)
+case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String], connection:Connection = Connection(),
+                                        filter : String = "")
 
 //case class JsonBlobModel(name: String, imgSrc: String)
 
-case class Connection (source: String, label: String, target: String) /*extends Content*/
+case class Connection (source: String = "", label: String = "", target: String = "") /*extends Content*/
 
-case class PageOfPosts(id : String, `type` : String,description : String,summary : String,
-                       postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
-                       location: String, isPayoutInPieces: String, skills: Seq[Skills], posterId: String, canForward: String,
-                       referents: Seq[Referents], contractType: String, budget: Float)
-case class Skills (skillId : String, skillName: String)
-case class Referents(referentId: String,referentName: String )
+
+
+
 
 case class SessionPing(sessionURI: String) extends Content
 
@@ -55,7 +52,9 @@ case class Expression (msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxs: Seq[Connection], label: String)
 
+case class any(labels: Seq[String])
 object Content {
   implicit val requestContentPickler: Pickler[Content] = generatePickler[Content]
 }
+
 

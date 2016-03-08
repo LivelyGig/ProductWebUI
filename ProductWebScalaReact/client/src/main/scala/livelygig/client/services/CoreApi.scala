@@ -50,14 +50,18 @@ object CoreApi {
       AjaxClient[Api].agentLogin(requestContent).call()
   }
 
-/*  def sessionPing () : Future[/*Seq[ApiResponse[ConnectionProfileResponse]]*/String] = {
-    val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.localStorage.getItem("sessionURI"))))
-    AjaxClient[Api].sessionPing(requestContent).call()
-  }*/
+  def sessionPing () : Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem("sessionURI"))))
+    AjaxClient[Api].getConnections(requestContent).call()
+  }
 
   def getConnections () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem("sessionURI"))))
     AjaxClient[Api].getConnections(requestContent).call()
+  }
+  def getMessages () : Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem("sessionURI"))))
+    AjaxClient[Api].getMessages(requestContent).call()
   }
 
   def getProjects () : Future[String] = {
@@ -66,7 +70,7 @@ object CoreApi {
   }
   def evalSubscribeRequest (subscribeRequest: SubscribeRequest) : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST,subscribeRequest))
-    AjaxClient[Api].getProjects(requestContent).call()
+    AjaxClient[Api].subscribeRequest(requestContent).call()
   }
 
 }

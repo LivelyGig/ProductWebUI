@@ -4,8 +4,8 @@ import livelygig.client.components.{Icon}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.Handlers.{UpdateLabel, CreateLabels}
-import livelygig.client.RootModels.SearchesRootModel
+import livelygig.client.handlers.{SearchWithLabels, UpdateLabel, CreateLabels}
+import livelygig.client.rootmodels.SearchesRootModel
 import livelygig.client.css._
 import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import livelygig.client.models.{Label, UserModel}
@@ -26,12 +26,12 @@ object Searches {
 
   case class Backend(t: BackendScope[Props, State]) {
 
-    def searchClick(e: ReactEventI): Unit = {
+    /*def searchClick(e: ReactEventI): Unit = {
 
       //      val label = t.props.map{root => root.proxy.value.searchesModel}
-
+      t.props >>= (_.proxy.dispatch(SearchWithLabels))
       SubscribeRequest(window.sessionStorage.getItem("sessionURI"), Expression(msgType = "feedExpr", ExpressionContent(Seq(Connection("", "", "")), "alias")))
-    }
+    }*/
 
     def updateDate(e: ReactEventI) = {
       println(e.target.value)
@@ -354,7 +354,7 @@ object Searches {
           }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.tpe := "button",^.onClick-->p.proxy.dispatch(SearchWithLabels()), ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.fontsize12em, LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 238px)")(
