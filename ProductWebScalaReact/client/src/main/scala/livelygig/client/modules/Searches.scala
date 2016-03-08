@@ -430,7 +430,7 @@ object Searches {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for` := "folder1"),
+                <.label(^.`for` := "folder1", ^.margin := "0", ^.padding := "0"),
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
