@@ -142,9 +142,9 @@ object BiddingScreenModalForm {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
           <.ul(^.className := "nav nav-tabs")(
-            <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
-            <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow")),
-            <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "In Progress")),
+            <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Agreement")),
+            <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow Setup")),
+            <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "Execution")),
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
           // ToDo: The layout details of all these tabs will depend on role, i.e., Employer, Talent, Moderator.  Generally for the initial layout, we are showing the Employer's view
