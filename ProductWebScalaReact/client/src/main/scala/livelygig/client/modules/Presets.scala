@@ -17,7 +17,6 @@ object Presets {
     def mounted(props: Props): Callback = Callback {
 
     }
-
     def render(p: Props) = {
       <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
         <.div(/*^.className := "row"*/)(

@@ -82,7 +82,7 @@ object LGMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            c.link(DashboardLoc)(HeaderCSS.Style.logoContainer, ^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
+            c.link(DashboardLoc)(/*HeaderCSS.Style.logoContainer,*/ ^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

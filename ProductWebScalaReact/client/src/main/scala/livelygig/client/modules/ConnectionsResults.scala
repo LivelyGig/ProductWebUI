@@ -1,18 +1,16 @@
 package livelygig.client.modules
 
-import japgolly.scalajs.react.extra.router.RouterCtl
+
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import livelygig.client.handlers.RefreshConnections
-import livelygig.client.LGMain.Loc
 import livelygig.client.rootmodels.ConnectionsRootModel
-import livelygig.client.components.Bootstrap.Panel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import livelygig.client.components.Icon
 import livelygig.client.css.{HeaderCSS, DashBoardCSS}
-import livelygig.client.modals.{NewMessage, BiddingScreenModal, NewRecommendation}
+import livelygig.client.modals.{NewMessage, NewRecommendation}
 import livelygig.client.models.ConnectionsModel
 
 //import livelygig.client.services.{ConnectionsRootModel, RefreshConnections}
@@ -36,7 +34,7 @@ object ConnectionsResults {
     .renderPS(($, P, S) => {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.verticalImg)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
-          <.div(^.className := "col-md-6 col-sm-6 col-xs-12", ^.paddingRight := "0px"/*, ^.paddingTop := "12px"*/)(
+          <.div(^.className := "col-md-6 col-sm-6 col-xs-12"/*, ^.paddingRight := "0px"*/)(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
             <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
@@ -49,13 +47,13 @@ object ConnectionsResults {
                 <.li()(<.a()("Unfavorite"))
               )
             ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults/*, ^.paddingTop := "19px"*/)("2,352 Results")
+            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
 
             <.div(^.display := "inline-block")(
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.borderWidth := "0px", ^.paddingTop := "0px", ^.paddingBottom := "2px")("By Date ")(
+                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
                 <.ul(^.className := "dropdown-menu")(
@@ -67,19 +65,18 @@ object ConnectionsResults {
                 )
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.padding := "0px"/*, ^.paddingBottom := "2px"*/, ^.border := "0px")("Newest ")(
+                <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
                   <.span(Icon.longArrowDown))
               )
             ),
-            <.div(^.className := "pull-right"/*, ^.paddingTop := "10px"*/)(
+            <.div(^.className := "pull-right")(
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
             )
           )
         ), //col-12
-        //    <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-        <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer", DashBoardCSS.Style.verticalImg)(
+         <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer", DashBoardCSS.Style.verticalImg)(
           P.proxy().render(connectionsRootModel =>
             ConnectionList(connectionsRootModel.connectionsResponse)
           ),
@@ -151,16 +148,16 @@ object ConnectionList {
           <.br(),
           <.div(^.className := "media-body")(
             <.div(^.className := "col-md-12 col-sm-12 ")(
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Introduce", Icon.userTimes),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Introduce", Icon.userTimes),
               NewRecommendation(NewRecommendation.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend")),
               NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
             )
           )
         )
       }
-      <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", /*DashBoardCSS.Style.verticalImg,*/ ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+      <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
         <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })

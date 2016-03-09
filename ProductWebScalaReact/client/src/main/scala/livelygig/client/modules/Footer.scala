@@ -28,8 +28,7 @@ object Footer {
     .stateless
     .render_P((P) => {
       <.nav(^.className := "footerContainer", FooterCSS.Style.footerContainer)(
-        <.div()(
-          <.div(^.className := "col-lg-1")(),
+        <.div(^.className := "col-lg-1")(),
           <.div(^.className := "col-lg-3 col-md-5 col-sm-5 col-xs-5")(
             <.div(FooterCSS.Style.footGlyphContainer)(
               <.div(FooterCSS.Style.displayInline)(
@@ -55,7 +54,7 @@ object Footer {
             )
           ),
           <.div(^.className := "col-lg-7 col-md-7 col-sm-7 col-xs-7")(
-            <.ul(/*bss.navbar, FooterCSS.Style.footRight, ^.id := "footMenu"*/ /*^.id := "headerNavUl",*/ ^.className := "nav", FooterCSS.Style.footRight)(
+            <.ul(^.className := "nav", FooterCSS.Style.footRight)(
               // build a list of menu items
               for (item <- footerItems) yield {
                 <.li(^.className:="pull-left")(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,
@@ -63,8 +62,7 @@ object Footer {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
                   }
                   else if (item.idx == 2) {
-                    //  LegalModal(LegalModal.Props(P.ctl)),
-                    Legal(Legal.Props("",Seq(),"",""))
+                     Legal(Legal.Props("",Seq(),"",""))
                   }
                   else {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
@@ -74,7 +72,7 @@ object Footer {
             )
           ),
           <.div(^.className := "col-lg-1")
-        )
+
       )
     })
     .build

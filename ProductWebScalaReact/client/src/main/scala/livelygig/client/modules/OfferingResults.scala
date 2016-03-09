@@ -13,7 +13,7 @@ object OfferingResults {
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
-          <.div(^.className := "col-md-6 col-sm-6 col-xs-12", ^.paddingRight := "0px"/*, ^.paddingTop := "12px"*/)(
+          <.div(^.className := "col-md-6 col-sm-6 col-xs-12"/*, ^.paddingRight := "0px"*/)(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
             <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
@@ -26,13 +26,13 @@ object OfferingResults {
                 <.li()(<.a()("Unfavorite"))
               )
             ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults/*, ^.paddingTop := "19px"*/)("2,352 Results")
+            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
 
             <.div(^.display := "inline-block")(
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.borderWidth := "0px", ^.paddingTop := "0px", ^.paddingBottom := "2px")("By Date ")(
+                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
                 <.ul(^.className := "dropdown-menu")(
@@ -44,11 +44,11 @@ object OfferingResults {
                 )
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
-                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.padding := "0px"/*, ^.paddingBottom := "2px"*/, ^.border := "0px")("Newest ")(
+                <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
                   <.span(Icon.longArrowDown))
               )
             ),
-            <.div(^.className := "pull-right"/*, ^.paddingTop := "10px"*/)(
+            <.div(^.className := "pull-right")(
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
@@ -68,10 +68,10 @@ object OfferingResults {
                     <.br(),
                     "Recommended By: Tom",
                     <.div()(
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
                       NewRecommendation(NewRecommendation.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend")),
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Purchase", Icon.cartPlus),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Purchase", Icon.cartPlus),
                       NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Messages"))
                     )
                   )

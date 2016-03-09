@@ -45,7 +45,9 @@ object SearchesModelHandler {
   }
   var children = Seq[Label]()
   def GetChildren(label: Label, labels: Seq[Label]): Seq[Label] ={
-    labels.filter(e => e.parentUid == label.uid)
+   labels.filter(e => e.parentUid == label.uid)
+
+
   }
 }
 
@@ -72,6 +74,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case UpdateLabel(label) =>
       if (label.parentUid == "self"){
         val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+        println("children" + children)
         val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid ) e.copy(isChecked = label.isChecked) else e)
         updated(SearchesRootModel(test))
       } else {

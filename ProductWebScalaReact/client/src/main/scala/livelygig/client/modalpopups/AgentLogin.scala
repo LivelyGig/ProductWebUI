@@ -85,7 +85,7 @@ object AgentLogin {
                val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
                $("#loginLoader").addClass("hidden")
                $(".dashboard-container").removeClass("hidden")
-               $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+             /*  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")*/
                window.sessionStorage.setItem("sessionURI",response.content.sessionURI)
                 val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
                  imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
@@ -104,7 +104,7 @@ object AgentLogin {
             }
           case Failure(s) =>
             $("#loginLoader").addClass("hidden")
-            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+//            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
