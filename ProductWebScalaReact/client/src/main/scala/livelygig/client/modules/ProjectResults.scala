@@ -32,9 +32,9 @@ object ProjectResults {
     .renderPS((B, P, S) =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.verticalImg)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
-          <.div(^.className := "col-md-6 col-sm-6 col-xs-12"/*, ^.paddingRight := "0px"*/)(
-            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
-            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
+          <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
+            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
+            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", DashBoardCSS.Style.verticalAlignMiddle)(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
@@ -75,7 +75,7 @@ object ProjectResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.height := "100%", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer",DashBoardCSS.Style.padding0px)(
             P.proxy().render(jobPostsRootModel =>
               ProjectsList(jobPostsRootModel.projectsModelList)
             ),
@@ -128,9 +128,7 @@ object ProjectsList {
               "Skills: Java, Financial Apps, cryptography"
               // project.pageOfPosts.skills.toString()
             ),
-            <.div(/*^.onMouseOver ==> displayBtn*/
-              /*^.onMouseOver --> displayBtn*/
-              /*^.className:="profile-action-buttons"*/)(
+            <.div()(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,^.title := "Hide", Icon.remove),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
               NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend")),

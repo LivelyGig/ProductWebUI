@@ -105,7 +105,7 @@ object MainMenu {
                     <.li()(<.a()("Profiles")),
                     <.li()(<.a()("Notifications")),
                     <.li()(<.a()("Payments")),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" /*,*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
+                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" )(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
                     )),
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))

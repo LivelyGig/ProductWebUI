@@ -28,8 +28,7 @@ object DashBoardCSS {
 
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
-      paddingLeft(0.px)/*,
-      paddingRight(0.px)*/
+      paddingLeft(0.px)
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
@@ -60,7 +59,7 @@ object DashBoardCSS {
       paddingRight(15.px)
     )
     val rsltGigActionsDropdown = style(
-      display.inlineBlock
+      display.inline
     )
     val rsltCaretStyle = style(
       width(10.px),
@@ -382,9 +381,23 @@ object DashBoardCSS {
       media.minWidth(810.px).maxWidth(1238.px)-
         marginLeft(21.%%),
       media.maxWidth(808.px)-
-        marginLeft(17.%%)
+        marginLeft(16.%%)
+    )
+    val paddingRight0px = style(
+      paddingRight(0.px)
+    )
+    val paddingLeft0px = style (
+      paddingLeft(0.px)
+    )
+    val verticalAlignMiddle = style (
+      verticalAlign.middle
     )
 
-
+   /* val resultsContainer = style(
+      height("100vh - 201px"),
+      overflow.auto,
+      paddingLeft(0.px),
+      paddingRight(0.px)
+    )*/
   }
 }

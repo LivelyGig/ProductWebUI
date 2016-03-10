@@ -4,7 +4,7 @@ package livelygig.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import livelygig.client.components.Icon
-import livelygig.client.css.{MessagesCSS, HeaderCSS, PresetsCSS}
+import livelygig.client.css.{DashBoardCSS, MessagesCSS, HeaderCSS, PresetsCSS}
 import livelygig.client.modals._
 import scalacss.ScalaCssReact._
 
@@ -23,12 +23,12 @@ object Presets {
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "col-md-12 col-lg-10")(
             <.div(^.className := "row")(
-              <.div(^.className := "col-md-3 col-sm-3", ^.paddingLeft := "0px")(
+              <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                 p.view match {
                   case "talent" => {
                     <.div()(
                       <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, /*HeaderCSS.Style.recommendMatches,*/ ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
                         <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
@@ -53,7 +53,7 @@ object Presets {
                   case "projects" => {
                     <.div()(
                       <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, /*HeaderCSS.Style.recommendMatches,*/ ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                        <.button(HeaderCSS.Style.presetPickBtn,^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
                         <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
@@ -153,7 +153,7 @@ object Presets {
                   }
                 } //main switch
               ),
-              <.div(^.className := "col-md-9 col-sm-9", ^.paddingLeft := "0px")()
+              <.div(^.className := "col-md-9 col-sm-9",DashBoardCSS.Style.paddingLeft0px)()
             )
           ),
           <.div(^.className := "col-lg-1")()

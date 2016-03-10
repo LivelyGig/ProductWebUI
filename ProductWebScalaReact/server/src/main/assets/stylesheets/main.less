@@ -45,30 +45,14 @@
  overflow:auto;
  padding-left: 0px;
  padding-right: 0px;
- justify-content: flex-start;
+/* justify-content: flex-start; */
 }
 @media(max-width:1300px){
-    /*
-    #mainContainer{
-        padding-left:0%;
-        padding-right:0%;
-    }
-    */
+
     #headerNavUl>li>a{
         padding: 10px 8px 19px;
     }
 
-    /* #naviContainer{
-        padding-left:4%;
-        padding-right:4%;
-    }
-    */
-    /*
-    #middelNaviContainer{
-          padding-left:4%;
-          padding-right:4%;
-    }
-    */
     .footerContainer{
         padding-left:2%;
         padding-right:2%;
@@ -121,11 +105,6 @@ a:hover, a:focus {
       height:100%;
       overflow:hidden
     }
-.dashboardResults2 {
-      border-left: 2px solid #005256;
-      padding-left:0px
-    }
-
 .profile-description:hover .profile-action-buttons {
     visibility: visible;
 }
@@ -141,7 +120,9 @@ a:hover, a:focus {
 .modal-open .profile-description .profile-action-buttons:active {
     visibility: show;
 }
-
+.rsltSectionContainer{
+height:100%
+}
 .rsltSectionContainer > .media-list > li:nth-child(even) {
     background-color: #D7E3E3;
 }
@@ -268,6 +249,7 @@ a:hover {cursor: hand; cursor: pointer;}
 	content: "\e902";
 }
 
+/* treeview  */
 .treeview
 	{
 		position: absolute;
@@ -280,11 +262,6 @@ a:hover {cursor: hand; cursor: pointer;}
 		width: 1em;
 		top: 0;
 	}
-
-
-/* treeview  */
-/* Just some base styles not needed for example to function */
-/* CSS Tree menu styles */
 ol.tree
 {
 	padding: 0 0 0 0px;

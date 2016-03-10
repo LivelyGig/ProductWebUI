@@ -13,9 +13,9 @@ object OfferingResults {
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
-          <.div(^.className := "col-md-6 col-sm-6 col-xs-12"/*, ^.paddingRight := "0px"*/)(
-            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, ^.verticalAlign := "middle"),
-            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", ^.verticalAlign := "middle")(
+          <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
+            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
+            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", DashBoardCSS.Style.verticalAlignMiddle)(
               <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                 <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
               ),
@@ -56,7 +56,7 @@ object OfferingResults {
           )
         ),
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+          <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.padding0px)(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(

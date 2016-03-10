@@ -26,12 +26,6 @@ object Searches {
 
   case class Backend(t: BackendScope[Props, State]) {
 
-    /*def searchClick(e: ReactEventI): Unit = {
-
-      //      val label = t.props.map{root => root.proxy.value.searchesModel}
-      t.props >>= (_.proxy.dispatch(SearchWithLabels))
-      SubscribeRequest(window.sessionStorage.getItem("sessionURI"), Expression(msgType = "feedExpr", ExpressionContent(Seq(Connection("", "", "")), "alias")))
-    }*/
 
     def updateDate(e: ReactEventI) = {
       println(e.target.value)
@@ -41,11 +35,6 @@ object Searches {
 
     def mounted(props: Props): Callback = Callback {
     }
-
-    /*def labelChecked: Leaf = Callback{
-
-    }*/
-
     val baseOpts = BootstrapDatepickerOptions.
       autoclose(true).
       todayHighlight(true).
@@ -75,11 +64,11 @@ object Searches {
       p.view match {
         case "talent" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Profile Type")
@@ -153,11 +142,11 @@ object Searches {
         } //talent
         case "offerings" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
@@ -207,11 +196,11 @@ object Searches {
         }
         case "projects" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Job Type")
@@ -339,11 +328,11 @@ object Searches {
         } //project
         case "contract" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Status")
@@ -430,7 +419,7 @@ object Searches {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for` := "folder1", ^.margin := "0", ^.padding := "0"),
+                <.label(^.`for` := "folder1", ^.margin := "0",DashBoardCSS.Style.padding0px),
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
@@ -438,14 +427,12 @@ object Searches {
             } else {
 
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
                   + label.text)
             }
-
           }
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button",^.onClick-->p.proxy.dispatch(SearchWithLabels()), ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -514,7 +501,7 @@ object Searches {
         }
         case "connections" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right", ^.height := "55px")(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(

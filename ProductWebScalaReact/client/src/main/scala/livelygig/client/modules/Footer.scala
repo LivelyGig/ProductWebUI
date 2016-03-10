@@ -72,7 +72,6 @@ object Footer {
             )
           ),
           <.div(^.className := "col-lg-1")
-
       )
     })
     .build
