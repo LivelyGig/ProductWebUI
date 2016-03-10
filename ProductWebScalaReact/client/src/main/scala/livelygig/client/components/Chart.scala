@@ -7,7 +7,7 @@ import org.scalajs.dom.raw.HTMLCanvasElement
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.JSName
-
+@js.native
 trait ChartDataset extends js.Object {
   def label: String = js.native
   def fillColor: String = js.native

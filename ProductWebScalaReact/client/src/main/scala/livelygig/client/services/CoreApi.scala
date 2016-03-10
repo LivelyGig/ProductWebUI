@@ -7,7 +7,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.ext.Ajax
 import upickle.default._
 import scala.concurrent.Future
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import autowire._
 import boopickle.Default._
 
@@ -52,7 +52,7 @@ object CoreApi {
 
   def sessionPing () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem("sessionURI"))))
-    AjaxClient[Api].getConnections(requestContent).call()
+    AjaxClient[Api].sessionPing(requestContent).call()
   }
 
   def getConnections () : Future[String] = {

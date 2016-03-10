@@ -4,11 +4,11 @@ import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.PotAction
 import livelygig.client.dtos._
 import livelygig.client.models.Label
-import livelygig.client.rootmodels.SearchesRootModel
-import livelygig.client.services.CoreApi
+import livelygig.client.rootmodels.{MessagesRootModel, SearchesRootModel}
+import livelygig.client.services.{LGCircuit, CoreApi}
 import livelygig.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
-//import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
@@ -78,23 +78,14 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         updated(value.updated(label))
       }
 
-    case action: SearchWithLabels =>
-      //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
-//      any(Seq("Splicious"))
-
-//      println(Utils.GetLabelProlog(Seq(value.searchesModel.filter(p=>p.isChecked==true))))
-//      println(any(Seq("Splicious")).toString)
+    /*case SearchWithLabels() =>
       val selfConnection = Utils.GetSelfConnnection()
-      println(selfConnection)
+      println("in searchWithLabel")
+      window.sessionStorage.setItem("messageSearchLabel","any([Splicious])")
       val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
-//      action.effect()
-//      Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription))
-//      action.effect()
-////      .onComplete{
-////        case Success(response) =>
-////          CoreApi.sessionPing()
-////      }
-      updated(value)
+      LGCircuit.dispatch(RefreshMessages)
+      val effectTest = Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)) >> Effect(CoreApi.sessionPing()).map(messages=>MessagesModelHandler.GetMessagesModel(messages.toString))
+      updated(value, effectTest)*/
   }
 
 }

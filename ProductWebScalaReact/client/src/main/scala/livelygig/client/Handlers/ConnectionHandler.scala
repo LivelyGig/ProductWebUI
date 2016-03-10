@@ -16,7 +16,7 @@ import scala.scalajs.js.JSON
   * Created by shubham.k on 1/25/2016.
   */
 // Actions
-case class RefreshConnections(value: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
+case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 

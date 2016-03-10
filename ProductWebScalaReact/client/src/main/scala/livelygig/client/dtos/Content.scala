@@ -46,11 +46,11 @@ case class Connection (source: String = "", label: String = "", target: String =
 
 case class SessionPing(sessionURI: String) extends Content
 
-case class SubscribeRequest (sessionUri: String, expression: Expression) extends Content
+case class SubscribeRequest (sessionURI: String, expression: Expression) extends Content
 
 case class Expression (msgType: String, content: ExpressionContent)
 
-case class ExpressionContent(cnxs: Seq[Connection], label: String)
+case class ExpressionContent(cnxns: Seq[Connection], label: String)
 
 case class any(labels: Seq[String])
 object Content {

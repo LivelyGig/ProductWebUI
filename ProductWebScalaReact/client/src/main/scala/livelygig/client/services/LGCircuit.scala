@@ -26,7 +26,7 @@ case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, me
 
 object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
-  override protected var model = RootModel(Empty, UserModel("","",""), Empty, Empty, SearchesRootModel(Nil))
+  override protected def initialModel = RootModel(Empty, UserModel("","",""), Empty, Empty, SearchesRootModel(Nil))
   // combine all handlers into one
   override protected val actionHandler = combineHandlers(
     new ConnectionHandler(zoomRW(_.connections)((m, v) => m.copy(connections = v))),

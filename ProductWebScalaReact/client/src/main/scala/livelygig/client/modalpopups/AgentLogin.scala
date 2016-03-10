@@ -72,8 +72,8 @@ object AgentLogin {
               showNewAgentForm: Boolean = false) : Callback = {
       log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
-        $("#loginLoader").removeClass("hidden")
-       // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
+        $().find("#loginLoader").removeClass("hidden")
+       // $().find("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
         CoreApi.agentLogin(userModel).onComplete {
 //          case Success(s) =>
           case Success(responseStr) =>
@@ -83,9 +83,9 @@ object AgentLogin {
              try {
                log.debug("login successful")
                val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-               $("#loginLoader").addClass("hidden")
-               $(".dashboard-container").removeClass("hidden")
-               $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+               $().find("#loginLoader").addClass("hidden")
+               $().find(".dashboard-container").removeClass("hidden")
+               $().find("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
                window.sessionStorage.setItem("sessionURI",response.content.sessionURI)
                 val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
                  imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
@@ -99,12 +99,12 @@ object AgentLogin {
             } catch {
               case e: Exception  =>
                 log.debug("login failed")
-                $("#loginLoader").addClass("hidden")
+                $().find("#loginLoader").addClass("hidden")
                 t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
-            $("#loginLoader").addClass("hidden")
-            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+            $().find("#loginLoader").addClass("hidden")
+            $().find("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }

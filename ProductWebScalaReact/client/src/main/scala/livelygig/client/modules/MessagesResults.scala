@@ -84,44 +84,13 @@ object MessagesResults {
               MessagesList(messagesRootModel.messagesModelList)
             ),
             P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
-            if (P.proxy().isEmpty) {
-              if (!P.proxy().isFailed) {
-                <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
-                  <.img(^.src := "./assets/images/processing.gif")
-                )
-              } else {
-                <.div()
-              }
-            } else {
-              <.div()
-            }
+            P.proxy().renderPending(ex => <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
+              <.img(^.src := "./assets/images/processing.gif")))
+
           )
-        ) //gigConversation
-       /* <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className:="rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
-            <.ul(^.className := "media-list")(
-              for (i <- 1 to 50) yield {
-                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/)(
-                  // if even row  DashBoardCSS.Style.rsltContentBackground
-                  <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
-                  <.span(^.className := "checkbox-lbl"),
-                  <.div(DashBoardCSS.Style.profileNameHolder)("From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
-                  <.div(^.className := "media-body")(
-                    "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                    <.div(/*^.className := "col-md-12 col-sm-12 */ /*profile-action-buttons*/)(
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Hide", Icon.remove),
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons", HeaderCSS.Style.rsltContainerIconBtn, HeaderCSS.Style.floatBtn, ^.title := "Favorite", Icon.star),
-                      NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailForward, "Forward")),
-                      // ToDo:  minor bug here or in NewMessage?  The Reply icon draws too close to Forward.  Perhaps because two NewMessage objects next to each other? Style displayInitialButton has negative margins
-                      NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailReply, "Reply"))
-                    )
-                  ) //media-body
-                ) //li
-              }
-            )
-          )
-        )*/
-      ) //gigConversation
+        )
+
+      )
 
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))

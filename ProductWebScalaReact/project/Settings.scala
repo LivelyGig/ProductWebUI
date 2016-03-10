@@ -28,21 +28,21 @@ object Settings {
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
     val scala = "2.11.7"
-    val scalaDom = "0.8.2"
-    val scalajsReact = "0.10.0"
+    val scalaDom = "0.9.0"
+    val scalajsReact = "0.10.4"
     val scalaCSS = "0.3.1"
-    val scalaRx = "0.2.8"
     val log4js = "1.4.10"
     val autowire = "0.2.5"
-    val booPickle = "1.1.0"
+    val booPickle = "1.1.2"
+    val diode = "0.5.0"
     val uTest = "0.3.1"
-    val diode = "0.3.0"
-    val react = "0.14.0"
-    val jQuery = "2.1.4"
-    val bootstrap = "3.3.4"
+
+    val react = "0.14.7"
+    val jQuery = "2.2.1"
+    val bootstrap = "3.3.2"
     val chartjs = "1.0.1"
-    val bootstrapTagsinput="0.6.1"
-    val playScripts = "0.3.0"
+
+    val playScripts = "0.4.0"
   }
 
   /**
@@ -53,7 +53,7 @@ object Settings {
     "com.lihaoyi" %%% "autowire" % versions.autowire,
     "me.chrons" %%% "boopickle" % versions.booPickle,
     "com.lihaoyi" %%% "utest" % versions.uTest,
-	  "com.lihaoyi" %%% "upickle" % "0.3.6"
+	  "com.lihaoyi" %%% "upickle" % "0.3.8"
   ))
 
   /** Dependencies only used by the JVM project */
@@ -72,11 +72,11 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
-    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
+//    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
-    "org.querki" %%% "jquery-facade" % "0.10",
-    "org.querki" %%% "querki-jsext" % "0.6",
+    "org.querki" %%% "jquery-facade" % "1.0-RC1",
+//    "org.querki" %%% "querki-jsext" % "0.6",
 //    "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"/*,
     "com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/

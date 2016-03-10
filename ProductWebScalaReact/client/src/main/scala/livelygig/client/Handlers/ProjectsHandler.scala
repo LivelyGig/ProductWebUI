@@ -18,7 +18,7 @@ import scala.scalajs.js.JSON
   * Created by shubham.k on 1/25/2016.
   */
 // Actions
-case class RefreshProjects(value: Pot[ProjectsRootModel] = Empty) extends PotAction[ProjectsRootModel, RefreshProjects]{
+case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty) extends PotAction[ProjectsRootModel, RefreshProjects]{
   override def next(value: Pot[ProjectsRootModel]) = RefreshProjects(value)
 }
 
