@@ -104,7 +104,7 @@ object AgentLogin {
             }
           case Failure(s) =>
             $().find("#loginLoader").addClass("hidden")
-            $().find("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+//            $().find("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }

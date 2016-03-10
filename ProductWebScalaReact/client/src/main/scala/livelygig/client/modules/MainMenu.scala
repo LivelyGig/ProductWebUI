@@ -94,7 +94,7 @@ object MainMenu {
                 <.div(^.className := "btn-group")(
                   <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                   ),
-                  <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(HeaderCSS.Style.logoContainer, <.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
+                  <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
                   <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
                     <.li()(<.a()("Available for Chat")),
                     <.li()(<.a()("Invisible")),
@@ -105,7 +105,7 @@ object MainMenu {
                     <.li()(<.a()("Profiles")),
                     <.li()(<.a()("Notifications")),
                     <.li()(<.a()("Payments")),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" /*,*/)(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
+                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" )(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
                     )),
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
@@ -116,7 +116,7 @@ object MainMenu {
                     <.div(^.className := "modal-dialog", DashBoardCSS.Style.verticalAlignCenter)(
                       <.div(^.className := "modal-content", DashBoardCSS.Style.modalBorderRadius)(
                         <.div(^.className := "modal-header", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding)(
-                          <.span(<.button(^.tpe := "button", bss.close, /* ^.onClick --> hide,*/ "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
+                          <.span(<.button(^.tpe := "button", bss.close, "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
                         ),
                         <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(
                           <.h2("hello")
@@ -137,7 +137,4 @@ object MainMenu {
     .build
 
   def apply(props: Props) = MainMenu(props)
-
-  //def apply(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel]): ReactElement =
-  //  MainMenu(Props(ctl, currentLoc, proxy))
 }

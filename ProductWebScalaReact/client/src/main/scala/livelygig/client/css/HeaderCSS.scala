@@ -68,28 +68,19 @@ object HeaderCSS {
       media.maxWidth(820.px)-
       marginTop(3.px)
     )
-    val logoContainer = style(
-    )
+
     /* css*/
     val middelNaviContainer =style(
       marginTop(0.px),
       height(44.px),
-      // paddingLeft(0.px),
-      // paddingRight(0.%%),
       backgroundColor(c"#00767C"),
-      // top(-2.px),
-
       width(100.%%),
       paddingTop(4.px)
     )
-   /* val presetPickContainer= style(
-      //minWidth(250.px)
-      float.left
-    )*/
-    val presetPickBtn= style(
+      val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),
-      fontSize(1.2.em),
+      fontSize(1.em),
 
       /*mine*/
       textAlign.left,
@@ -103,10 +94,6 @@ object HeaderCSS {
         fontSize(12.px),
       media.minWidth(865.px).maxWidth(973.px)-
         fontSize(11.px)
-/*
-        paddingTop(8.px),
-      textAlign.left,
-      paddingLeft(0.px)*/
     )
     val dropdownMenuWidth=style(
       width(100.%%)
@@ -133,10 +120,7 @@ object HeaderCSS {
       media.maxWidth(1130 px) -
         fontSize(1.em)
     )
-    val ContainerHeight=style(
-      height(800.px),
-      marginTop(75.px)
-    )
+
     val SignUpBtn = style(
       color(white),
       backgroundColor(transparent),
@@ -151,22 +135,16 @@ object HeaderCSS {
       backgroundColor(c"#ffa500"),
       color.rgba(51,51,51,1),
       fontSize(16.px),
-      /*  marginLeft(8.px),*/
       marginTop(10.px),
       marginBottom(8.px),
       marginRight(10.px),
         paddingRight(10.px),
           paddingLeft(10.px)
-      //      float.right
+
     )
 
     val rsltContainerIconBtn = style(
-      //      backgroundColor(c"#ffa500"),
-//      color(c"#de9000"),
       fontSize(20.px),
-      // marginTop(10.px),
-      // marginBottom(8.px),
-     // marginRight(10.px),
       color(orange),
       backgroundColor.transparent,
       border.none,
@@ -178,8 +156,6 @@ object HeaderCSS {
       )
     )
     val searchContainerBtn = style(
-//      backgroundColor(c"#ffa500"),
-//      color.rgba(51,51,51,1),
       fontSize(16.px),
       marginTop(10.px),
       marginBottom(8.px),
@@ -188,9 +164,7 @@ object HeaderCSS {
     backgroundColor.transparent,
     border.none
     )
-    val  floatBtn = style (
-      float.right
-    )
+
     val loginbtn = style (
       backgroundColor.transparent,
       paddingLeft(0.px),
@@ -208,28 +182,13 @@ object HeaderCSS {
       )
     )
 
-    val rsltbtn = style (
-      marginLeft( 30.px),
-      marginTop( 10.px),
-      marginRight(10.px),
-      float.right,
-      backgroundColor (c"#ffa500"),
-      color.rgba(51,51,51,1),
-      fontSize(16.px)
-    )
+
     val userpreferences = style (
       border.none,
       marginRight(15.px),
       marginTop(-8.px)
     )
-    val showDisputeBtn=style(
-      backgroundColor(c"#FFA500"),
-      color(rgba(51,51,51,1)),
-      fontSize(16.px),
-      marginLeft(15.px),
-      marginTop(10.px),
-      marginRight(15.px)
-    )
+
 
   }
 }

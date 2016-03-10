@@ -29,12 +29,12 @@ object AppModule {
         ),
         <.div(DashBoardCSS.Style.splitContainer)(
           <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "split col-lg-10 col-md-12", ^.paddingRight := "0px")(
+          <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
            <.div(^.className := "row")(
-              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-xs-3", ^.padding := "0px", ^.overflow := "hidden")(
+              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-xs-3", DashBoardCSS.Style.padding0px)(
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "col-md-9 col-xs-9", ^.id := "dashboardResults2", DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "col-md-9 col-xs-9",DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
                   case "talent" => TalentResults.component(Unit)
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))

@@ -142,9 +142,9 @@ object BiddingScreenModalForm {
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
           <.ul(^.className := "nav nav-tabs")(
-            <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Initiating")),
-            <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow")),
-            <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "In Progress")),
+            <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Agreement")),
+            <.li()(<.a(^.href := "#menu1", "data-toggle".reactAttr := "tab", "Escrow Setup")),
+            <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "Execution")),
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
           // ToDo: The layout details of all these tabs will depend on role, i.e., Employer, Talent, Moderator.  Generally for the initial layout, we are showing the Employer's view
@@ -199,7 +199,7 @@ object BiddingScreenModalForm {
                         <.div(^.id := "rsltScrollContainer")(
                           <.div(^.className := "container-fluid")(
                             <.div()(
-                              <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomHeader, BiddingScreenCSS.Style.marginLeftRight)(
+                              <.div(^.className := "row", BiddingScreenCSS.Style.borderInitiating, BiddingScreenCSS.Style.marginLeftRight)(
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Employer Agreement"),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1", DashBoardCSS.Style.slctHeaders)("Talent Agreement"),
@@ -305,7 +305,7 @@ object BiddingScreenModalForm {
                               )
                             ),
                             <.div()(
-                              <.div(^.className := "row", BiddingScreenCSS.Style.borderBottomFooter, BiddingScreenCSS.Style.marginLeftRight)(
+                              <.div(^.className := "row", BiddingScreenCSS.Style.borderInitiating, BiddingScreenCSS.Style.marginLeftRight)(
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("All Terms"),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),

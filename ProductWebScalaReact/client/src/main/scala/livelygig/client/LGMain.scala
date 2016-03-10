@@ -63,7 +63,6 @@ object LGMain extends js.JSApp {
       | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props("contract")))
       | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#talent", TalentLoc) ~> renderR(ctl => AppModule(AppModule.Props("talent")))
-      //|staticRoute("#apploc", AppModuleLoc) ~> renderR(ctl => AppModule(AppModule.Props(ctl , "")))
       | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props("offerings")))
       | staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props("connections")))
@@ -74,15 +73,14 @@ object LGMain extends js.JSApp {
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
       <.img(^.id:="loginLoader", DashBoardCSS.Style.loading, ^.className:="hidden", ^.src:="./assets/images/processing.gif"),
-      // here we use plain Bootstrap class names as these are specific to the top level layout defined here
-      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
+        <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            c.link(DashboardLoc)(HeaderCSS.Style.logoContainer, ^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
+            c.link(DashboardLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
@@ -94,8 +92,6 @@ object LGMain extends js.JSApp {
       r.render(),
       Footer(Footer.Props(c, r.page))
     )
-
-
   }
 
   @JSExport

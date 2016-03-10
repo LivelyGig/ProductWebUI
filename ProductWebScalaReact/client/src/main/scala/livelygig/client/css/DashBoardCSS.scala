@@ -28,20 +28,20 @@ object DashBoardCSS {
 
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
-      paddingLeft(0.px)/*,
-      paddingRight(0.px)*/
+      paddingLeft(0.px)
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
-      height(55.px),
+     // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
       marginRight(0.px),
       fontSize(1.1.em),
-      paddingTop(0.px),
       marginBottom(0.px),
       verticalAlign.middle,
-      width(100.%%)
+      width(100.%%),
+      paddingTop(4.px),
+      paddingBottom(4.px)
     )
     val rsltCheckboxStyle = style(
       height(22.px),
@@ -59,7 +59,7 @@ object DashBoardCSS {
       paddingRight(15.px)
     )
     val rsltGigActionsDropdown = style(
-      display.inlineBlock
+      display.inline
     )
     val rsltCaretStyle = style(
       width(10.px),
@@ -78,34 +78,26 @@ object DashBoardCSS {
     val gigMatchButton = style(
       backgroundColor(transparent),
       // fontWeight.normal,
-      media.maxWidth(1130.px) - (
-        fontSize(11.px)),
-      media.minWidth(1131.px) - (
-        fontSize(15.px)
-        ),
-      media.minWidth(1367.px) - (
+      media.maxWidth(1130.px) -
+        fontSize(11.px),
+      media.minWidth(1131.px) -
+        fontSize(15.px),
+      media.minWidth(1367.px) -
         fontSize(1.1.em)
-        )
     )
     val rsltCountHolderDiv = style(
       display.inlineBlock,
       fontSize(1.2.em),
       margin(3.%%),
       // fontWeight.bold,
-      media.maxWidth(1130.px) - (
-        fontSize(11.px)),
-      media.minWidth(1131.px) -(
-        fontSize(15.px)
-        // margin(5.%%)
-        ),
-      media.minWidth(1367.px) -(
+      media.maxWidth(1130.px) -
+        fontSize(11.px),
+      media.minWidth(1131.px) -
+        fontSize(15.px),
+      media.minWidth(1367.px) -
         fontSize(18.px)
-        // margin(5.%%)
-        )
     )
-    val listIconPadding = style(
-      padding(14.px, 0.px, 14.px, 0.px)
-    )
+
     val profileNameHolder = style(
       height(40.px),
       padding(0.7.%%),
@@ -123,7 +115,8 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-      marginRight(5.px)
+      marginRight(5.px),
+      padding(4.px, 9.px)
     )
     val inputHeightWidth = style(
       height(25.px),
@@ -144,14 +137,7 @@ object DashBoardCSS {
         paddingLeft(9.%%)
         )
     )
-    val slctInputWidthValidateLabel = style(
-      width(179.px),
-      marginLeft(36.%%)
-    )
-    val slctInputLeftContainerMargin = style(
-      marginLeft(60.px),
-      marginRight(19.px)
-    )
+
     val scltInputModalLeftContainerMargin = style(
       marginLeft(180.px),
       marginRight(60.px),
@@ -182,60 +168,14 @@ object DashBoardCSS {
       width(400.px),
       backgroundColor(yellow)
     )
-    val borderColorStyle = style(
-      height(400.px),
-      width(600.px),
-      border(1.px, solid, c"#4AB8E6"),
-      padding(3.px)
-    )
+
     val btnStyle = style(
       width(100.%%),
       height(55.px),
       backgroundColor(c"#4AB8E6"),
       borderRadius(12.px)
     )
-    val btnContainerDiv = style(
-      margin(3.px)
-    )
-    val headerBtnFont = style(
-      fontSize(22.px),
-      color(c"#fff"),
-      fontWeight.bold,
-      display.inlineBlock
-    )
-    val closeBtnFont = style(
-      color(c"#4AB8E6"),
-      fontSize(20.px),
-      paddingLeft(6.px),
-      paddingRight(6.px),
-      fontWeight.bold
-    )
-    val btnClose = style(
-      display.inlineBlock,
-      backgroundColor(c"#D6EEF8"),
-      float.right,
-      borderRadius(5.px),
-      marginTop(3.px)
-    )
-    val inputContainer = style(
-      marginTop(3.%%),
-      marginLeft(10.%%),
-      marginRight(10.%%)
-    )
-    val inputStyle = style(
-      height(37.px),
-      color(c"#F38430"),
-      fontWeight.bold,
-      fontSize(1.3.em)
-    )
-    val backgroundTransperant = style(
-      backgroundColor(transparent),
-      border.none,
-      &.hover(
-        backgroundColor(transparent),
-        border.none
-      )
-    )
+
     val modalHeaderText = style(
       fontSize(1.3.em)
     )
@@ -254,11 +194,7 @@ object DashBoardCSS {
       marginLeft(15.px),
       marginRight(15.px)
     )
-    val headerbtnstyle = style(
-      height(0.px),
-      width(0.px),
-      padding(0.px)
-    )
+
     val verticalAlignmentHelper = style(
       display.table,
       height(100.%%),
@@ -329,22 +265,11 @@ object DashBoardCSS {
       paddingRight(15.px),
       marginTop(0.px) /* makes right bottom icons line up similarly on each result row */
     )
-    val paddingLeftLoginbtn = style(
-      paddingLeft(0.px)
-    )
-    val paddingRightLoginbtn = style(
-      paddingRight(0.px)
-    )
-    val marginTop20px = style(
-      marginTop(20.px)
-    )
-    val floatRightbtn = style(
-      float.right
-    )
+
     val footLegalStyle = style(
       color(c"#fff"),
       backgroundColor(transparent),
-      paddingTop(17.px),
+      paddingTop(12.px),
       fontSize(15.px),
       borderColor(transparent),
       &.active(
@@ -360,9 +285,8 @@ object DashBoardCSS {
         fontSize(15.px),
         borderColor(transparent)
       ),
-      media.maxWidth(1299.px) - (
+      media.maxWidth(1299.px) -
         paddingTop(12.px)
-        )
     )
     val replyMarginTop = style(
       marginTop(20.px)
@@ -375,26 +299,13 @@ object DashBoardCSS {
       border.none,
       padding(0.2.em, 0.6.em, 0.1.em)
     )
-    val horizontalImg = style(
-      display.flex,
-      justifyContent.center
-    )
+
     val verticalImg = style(
       display.flex,
       justifyContent.center,
       flexDirection.column
     )
-    val overlay = style (
-      position.absolute ,
-      left(0.px),
-      top(0.px),
-      bottom(0.px),
-      right(0.px),
-      //background(gray),
-      backgroundColor(c"#000"),
-      opacity(0.8)
-      //filter.alpha(opacity=80);
-    )
+
     val loading = style (
       width (50.px),
       height(57.px),
@@ -403,12 +314,7 @@ object DashBoardCSS {
       left(50.%%),
       zIndex(10000)
     )
-    val addLoaderImg = style (
-      visibility.visible
-    )
-    val removeLoaderImg = style (
-      visibility.hidden
-    )
+
     val attentionContainer =style (
       padding(20.px),
       backgroundColor(c"#CCE6FF"),
@@ -467,5 +373,31 @@ object DashBoardCSS {
       padding(0.px)
     )
 
+    val marginResults = style (
+      marginLeft(24.%%),
+      marginTop(0.px),
+      marginRight(0.px),
+      marginBottom(0.px),
+      media.minWidth(810.px).maxWidth(1238.px)-
+        marginLeft(21.%%),
+      media.maxWidth(808.px)-
+        marginLeft(16.%%)
+    )
+    val paddingRight0px = style(
+      paddingRight(0.px)
+    )
+    val paddingLeft0px = style (
+      paddingLeft(0.px)
+    )
+    val verticalAlignMiddle = style (
+      verticalAlign.middle
+    )
+
+   /* val resultsContainer = style(
+      height("100vh - 201px"),
+      overflow.auto,
+      paddingLeft(0.px),
+      paddingRight(0.px)
+    )*/
   }
 }

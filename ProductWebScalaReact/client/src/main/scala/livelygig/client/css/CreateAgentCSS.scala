@@ -29,21 +29,7 @@ object CreateAgentCSS {
       display.inline,
       color(c"#333")
     )
-    val ModalFoot = style (
-      height(60.px),
-      backgroundColor(white),
-      borderTop(1.px , solid , gray),
-      paddingTop(10.px)
-    )
-    val marginLeftbtn = style (
-      marginLeft(-15.px)
-    )
-    val paddinglefttitle = style (
-      paddingLeft(107.px)
-    )
-    val marginTopClosebtn = style (
-      marginTop(13.px)
-    )
+
     val closebtn = style (
       backgroundColor(transparent),
       border.none,

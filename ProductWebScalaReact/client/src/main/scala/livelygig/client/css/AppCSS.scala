@@ -14,9 +14,7 @@ object AppCSS {
       CreateAgentCSS.Style,
       MessagesCSS.Style,
       ProjectCSS.Style,
-      TalentCSS.Style,
       BiddingScreenCSS.Style,
-      InvoiceCSS.Style,
       PresetsCSS.Style
 
       )

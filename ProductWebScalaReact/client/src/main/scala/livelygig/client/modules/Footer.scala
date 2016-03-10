@@ -28,9 +28,8 @@ object Footer {
     .stateless
     .render_P((P) => {
       <.nav(^.className := "footerContainer", FooterCSS.Style.footerContainer)(
-        <.div()(
-          <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-3")(
+        <.div(^.className := "col-lg-1")(),
+          <.div(^.className := "col-lg-3 col-md-5 col-sm-5 col-xs-5")(
             <.div(FooterCSS.Style.footGlyphContainer)(
               <.div(FooterCSS.Style.displayInline)(
                 <.a(FooterCSS.Style.displayInlineGlyph)(^.href := "https://github.com/LivelyGig", ^.target := "_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr := "GitHub")(<.span()(Icon.github))),
@@ -54,17 +53,16 @@ object Footer {
                   <.span()(Icon.slack)))
             )
           ),
-          <.div(^.className := "col-lg-7 col-md-9 col-sm-9 col-xs-9")(
-            <.ul(/*bss.navbar, FooterCSS.Style.footRight, ^.id := "footMenu"*/ ^.id := "headerNavUl", ^.className := "nav navbar-nav", FooterCSS.Style.footRight)(
+          <.div(^.className := "col-lg-7 col-md-7 col-sm-7 col-xs-7")(
+            <.ul(^.className := "nav", FooterCSS.Style.footRight)(
               // build a list of menu items
               for (item <- footerItems) yield {
-                <.li(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,
+                <.li(^.className:="pull-left")(^.key := item.idx, (P.currentLoc == item.location) ?= FooterCSS.Style.footerNavLi,
                   if (item.idx == 3) {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", Icon.copyright, item.label(P))
                   }
                   else if (item.idx == 2) {
-                    //  LegalModal(LegalModal.Props(P.ctl)),
-                    Legal(Legal.Props("",Seq(),"",""))
+                     Legal(Legal.Props("",Seq(),"",""))
                   }
                   else {
                     P.ctl.link(item.location)(FooterCSS.Style.footerNavA, " ", item.label(P))
@@ -74,7 +72,6 @@ object Footer {
             )
           ),
           <.div(^.className := "col-lg-1")
-        )
       )
     })
     .build
