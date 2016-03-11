@@ -1,18 +1,14 @@
 package livelygig.client.handlers
 
 import diode.{Effect, ActionHandler, ModelRW}
-import diode.data.PotAction
 import livelygig.client.dtos._
 import livelygig.client.models.Label
 import livelygig.client.rootmodels.SearchesRootModel
-import livelygig.client.services.CoreApi
 import livelygig.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
-//import scala.concurrent.ExecutionContext.Implicits.global
-
+import scala.collection.mutable.ListBuffer
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
-import scala.util.Success
 
 /**
   * Created by shubham.k on 2/23/2016.
@@ -34,7 +30,6 @@ object SearchesModelHandler {
     else {
       SearchesRootModel(Nil)
     }
-
   }
   def updateModel (label: Label, labels: Seq[Label]): Seq[Label] ={
     val children = labels.filter(p=>p.parentUid==label.uid)
@@ -43,11 +38,34 @@ object SearchesModelHandler {
     }
     labels
   }
+  /*   val indexofRoot =  labels.indexWhere(p=>p.uid==label.uid)
+    println(indexofRoot)*/
+
   var children = Seq[Label]()
-  def GetChildren(label: Label, labels: Seq[Label]): Seq[Label] ={
-   labels.filter(e => e.parentUid == label.uid)
+  var listE = new ListBuffer[Label]() /*Seq[Label]()*/
+//   def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
+// //  labels.filter(e => e.parentUid == label.uid)
+//    children = labels.filter(p=>p.parentUid==label.uid)
+//    if (!children.isEmpty){
+//      listE ++= children
+//      //println("childerbn" + children)
+//     // println("listE" + listE)
+//      children.map(e => GetChildren(e, labels))
+//    }
+//        listE
+//  }
 
-
+  def GetChildrenToParent(label: Label, labels: Seq[Label]):  Seq[Label]={
+    //  labels.filter(e => e.parentUid == label.uid)
+    println(labels)
+    children = labels.filter(p=>p.uid==label.parentUid)
+    if (!children.isEmpty){
+      listE ++= children
+      println("childernToParent" + children)
+      println("listEToParent" + listE)
+      children.map(e => GetChildrenToParent(e, labels))
+    }
+    listE
   }
 }
 
@@ -72,14 +90,20 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         updated(SearchesModelHandler.GetSearchesModel(Nil))
       }
     case UpdateLabel(label) =>
-      if (label.parentUid == "self"){
-        val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
-        println("children" + children)
-        val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid ) e.copy(isChecked = label.isChecked) else e)
+      SearchesModelHandler.listE.clear()
+//      if (label.parentUid == ""){
+      // val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+        val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
+        // println("children" + children)
+         println("childrenToParent" + childrenToParent)
+        val test = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
+        if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
+        else e)
         updated(SearchesRootModel(test))
-      } else {
-        updated(value.updated(label))
-      }
+//      } else {
+//        updated(value.updated(label))
+//      }
+
 
     case action: SearchWithLabels =>
       //      val modelToQuery = value.searchesModel.filter(SearchesModelHandler.IsChecked)
