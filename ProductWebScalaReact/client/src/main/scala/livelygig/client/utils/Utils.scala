@@ -15,33 +15,22 @@ object Utils {
     Connection(sourceStr,"alias",sourceStr)
   }
   def GetLabelProlog(labelFamilies: Seq[Seq[Label]]) : String = {
-    println(labelFamilies)
+    // println("labelFamilies = " + labelFamilies)
+    var labelsCount =  labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
     prolog.append("any(")
-    val outerLen = 0
-    val len = 0
-    labelFamilies.foreach{ e=>prolog.append("[")
-      println(outerLen)
-      e.foreach{p=>
-        println(len)
-        if (len == e.length){
-          prolog.append(p.text+",")
-        } else {
-          prolog.append(prolog+p.text+"")
-        }
-        len+1
+    val results = for{ a <- labelFamilies } yield {
+      prolog.append("[")
+      val res = for{b <- a }yield {prolog.append(b.text); if(b.parentUid != "self") prolog.append(",") }
+      prolog.append("]")
+      if(labelsCount!=0){
+        prolog.append(",")
+        labelsCount=(labelsCount-1)
       }
-      if (outerLen == labelFamilies.length ){
-        prolog.append(prolog+"],")
-      } else {
-        prolog.append(prolog+"]")
-      }
-      prolog.append(prolog+"]")
-      outerLen+1
     }
-//    prolog +"["
-//    val oho = for (labelFamily <- labelFamilies  ) yield  for(label<-labelFamily) yield prolog+label.text+","
-//    prolog+oho+")"
+    prolog.append(")")
+    // println(prolog)
     prolog.toString()
+
   }
 }
