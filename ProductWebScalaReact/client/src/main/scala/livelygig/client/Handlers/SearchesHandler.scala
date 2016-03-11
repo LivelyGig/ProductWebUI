@@ -8,6 +8,7 @@ import livelygig.client.rootmodels.{MessagesRootModel, SearchesRootModel}
 import livelygig.client.services.{LGCircuit, CoreApi}
 import livelygig.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.scalajs.js.JSConverters._
@@ -44,16 +45,44 @@ object SearchesModelHandler {
     labels
   }
   var children = Seq[Label]()
+  var listE = new ListBuffer[Label]() /*Seq[Label]()*/
+
   def GetChildren(label: Label, labels: Seq[Label]): Seq[Label] ={
-   labels.filter(e => e.parentUid == label.uid)
+    //  labels.filter(e => e.parentUid == label.uid)
+    children = labels.filter(p=>p.parentUid==label.uid)
+    if (!children.isEmpty){
+      println("shilderbn" + children)
+
+      children.map(e => GetChildren(e, labels))
+    }
+
+    //    GetLeafs(labels)
 
 
+    // for loop execution with a yield
+    val retVal= for{ a <- labels
+                     if (a.uid == label.uid)
+    }yield a
+    // Now print returned values using another loop.
+    for( a <- retVal){
+      listE.append(a)
+      println( "Value of a: " + a)
+    }
+    listE
   }
+
+
+
+
+
+
+
+
 }
 
 case class CreateLabels()
 case class UpdateLabel(label: Label)
-case class SearchWithLabels()
+case class SubscribeSearch()
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW){
   override def handle = {
     case CreateLabels() =>
@@ -81,14 +110,18 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         updated(value.updated(label))
       }
 
-    /*case SearchWithLabels() =>
-      val selfConnection = Utils.GetSelfConnnection()
-      println("in searchWithLabel")
-      window.sessionStorage.setItem("messageSearchLabel","any([Splicious])")
-      val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
-      LGCircuit.dispatch(RefreshMessages)
-      val effectTest = Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)) >> Effect(CoreApi.sessionPing()).map(messages=>MessagesModelHandler.GetMessagesModel(messages.toString))
-      updated(value, effectTest)*/
+    case SubscribeSearch() =>
+      val labels = window.sessionStorage.getItem("messageSearchLabel")
+      if (labels!=null){
+        val selfConnection = Utils.GetSelfConnnection()
+//        println("in searchWithLabel")
+        val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
+        effectOnly(Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)))
+      } else {
+        noChange
+      }
+
+
   }
 
 }

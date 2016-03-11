@@ -1,7 +1,7 @@
 package livelygig.client.handlers
 
 import diode.data.PotState.PotPending
-import diode.{Effect, ActionHandler, ModelRW}
+import diode.{ActionResult, Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
 import livelygig.client.models.MessagesModel
 import livelygig.client.rootmodels.{MessagesRootModel}
@@ -57,14 +57,11 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
   override def handle = {
     case action : RefreshMessages =>
       // todo investigate calling of this method due to callback
-      println("in refresh messages")
+//      println("in refresh messages")
       val labels = window.sessionStorage.getItem("messageSearchLabel")
       if (labels!=null)
       {
-        val selfConnection = Utils.GetSelfConnnection()
-        val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
-        Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)).run(e=>e.toString)
-        val updateF = action.effect(CoreApi.sessionPing())(messages=>MessagesModelHandler.GetMessagesModel(messages))
+        val updateF =  action.effect(CoreApi.sessionPing())(messages=>MessagesModelHandler.GetMessagesModel(messages))
         action.handleWith(this, updateF)(PotAction.handler())
       } else {
         updated(Empty)
