@@ -46,38 +46,30 @@ object SearchesModelHandler {
   }
   var children = Seq[Label]()
   var listE = new ListBuffer[Label]() /*Seq[Label]()*/
+  //   def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
+  // //  labels.filter(e => e.parentUid == label.uid)
+  //    children = labels.filter(p=>p.parentUid==label.uid)
+  //    if (!children.isEmpty){
+  //      listE ++= children
+  //      //println("childerbn" + children)
+  //     // println("listE" + listE)
+  //      children.map(e => GetChildren(e, labels))
+  //    }
+  //        listE
+  //  }
 
-  def GetChildren(label: Label, labels: Seq[Label]): Seq[Label] ={
+  def GetChildrenToParent(label: Label, labels: Seq[Label]):  Seq[Label]={
     //  labels.filter(e => e.parentUid == label.uid)
-    children = labels.filter(p=>p.parentUid==label.uid)
+    println(labels)
+    children = labels.filter(p=>p.uid==label.parentUid)
     if (!children.isEmpty){
-      println("shilderbn" + children)
-
-      children.map(e => GetChildren(e, labels))
-    }
-
-    //    GetLeafs(labels)
-
-
-    // for loop execution with a yield
-    val retVal= for{ a <- labels
-                     if (a.uid == label.uid)
-    }yield a
-    // Now print returned values using another loop.
-    for( a <- retVal){
-      listE.append(a)
-      println( "Value of a: " + a)
+      listE ++= children
+      println("childernToParent" + children)
+      println("listEToParent" + listE)
+      children.map(e => GetChildrenToParent(e, labels))
     }
     listE
   }
-
-
-
-
-
-
-
-
 }
 
 case class CreateLabels()
@@ -101,14 +93,16 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         updated(SearchesModelHandler.GetSearchesModel(Nil))
       }
     case UpdateLabel(label) =>
-      if (label.parentUid == "self"){
-        val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
-        println("children" + children)
-        val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid ) e.copy(isChecked = label.isChecked) else e)
-        updated(SearchesRootModel(test))
-      } else {
-        updated(value.updated(label))
-      }
+      SearchesModelHandler.listE.clear()
+      //      if (label.parentUid == ""){
+      // val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+      val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
+      // println("children" + children)
+      println("childrenToParent" + childrenToParent)
+      val test = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
+        if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
+        else e)
+      updated(SearchesRootModel(test))
 
     case SubscribeSearch() =>
       val labels = window.sessionStorage.getItem("messageSearchLabel")
