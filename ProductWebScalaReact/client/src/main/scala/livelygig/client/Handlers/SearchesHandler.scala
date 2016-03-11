@@ -60,12 +60,12 @@ object SearchesModelHandler {
 
   def GetChildrenToParent(label: Label, labels: Seq[Label]):  Seq[Label]={
     //  labels.filter(e => e.parentUid == label.uid)
-    println(labels)
+    // println(labels)
     children = labels.filter(p=>p.uid==label.parentUid)
     if (!children.isEmpty){
       listE ++= children
-      println("childernToParent" + children)
-      println("listEToParent" + listE)
+      // println("childernToParent" + children)
+      // println("listEToParent" + listE)
       children.map(e => GetChildrenToParent(e, labels))
     }
     listE
@@ -98,7 +98,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       // val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
       // println("children" + children)
-      println("childrenToParent" + childrenToParent)
+      // println("childrenToParent" + childrenToParent)
       val test = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
         if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
         else e)
