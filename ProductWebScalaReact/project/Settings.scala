@@ -75,7 +75,7 @@ object Settings {
 //    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
-    "org.querki" %%% "jquery-facade" % "1.0-RC1",
+    "org.querki" %%% "jquery-facade" % "0.10",
 //    "org.querki" %%% "querki-jsext" % "0.6",
 //    "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"/*,

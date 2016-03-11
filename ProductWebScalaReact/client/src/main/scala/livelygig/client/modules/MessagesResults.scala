@@ -4,7 +4,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import livelygig.client.handlers.{RefreshMessages, RefreshProjects}
+import livelygig.client.handlers.{SubscribeSearch, RefreshMessages, RefreshProjects}
 import livelygig.client.rootmodels.{MessagesRootModel, ProjectsRootModel}
 import livelygig.client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import livelygig.client.modals.PostNewMessage
@@ -18,6 +18,7 @@ import livelygig.client.components._
 import livelygig.client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 import livelygig.client.models.MessagesModel
 import livelygig.client.modules.ConnectionList.ConnectionListProps
+import livelygig.client.services.LGCircuit
 import scala.util.{Failure, Success}
 import livelygig.client.modals.NewMessage
 import scalacss.ScalaCssReact._
@@ -28,8 +29,16 @@ object MessagesResults {
   case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])
   case class State(selectedItem: Option[MessagesModel] = None)
   class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshMessages()))
+    def mounted(props: Props) = {
+      if (props.proxy().isEmpty){
+          LGCircuit.dispatch(RefreshMessages())
+          props.proxy.dispatch(SubscribeSearch())
+
+      } else {
+        Callback.empty
+      }
+    }
+
   }
 
   val component = ReactComponentB[Props]("Messages")

@@ -4,12 +4,12 @@ import livelygig.client.components.{Icon}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import livelygig.client.handlers.{RefreshMessages, SearchWithLabels, UpdateLabel, CreateLabels}
+import livelygig.client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import livelygig.client.rootmodels.SearchesRootModel
 import livelygig.client.css._
 import livelygig.client.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import livelygig.client.models.{Label, UserModel}
-import livelygig.client.services.LGCircuit
+import livelygig.client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import scala.annotation.tailrec
 import scalacss.ScalaCssReact._
@@ -27,12 +27,10 @@ object Searches {
   case class Backend(t: BackendScope[Props, State]) {
 
     def searchClick(props: Props): Unit = {
-      println("in searchClick")
+//      println("in searchClick")
       window.sessionStorage.setItem("messageSearchLabel","any([Splicious])")
-      val label = props.proxy().searchesModel
-      println(label)
-      /*Callback{*/LGCircuit.dispatch(RefreshMessages())/*}.runNow()*/
-//      SubscribeRequest(window.sessionStorage.getItem("sessionURI"), Expression(msgType = "feedExpr", ExpressionContent(Seq(Connection("", "", "")), "alias")))
+      LGCircuit.dispatch(SubscribeSearch())
+      LGCircuit.dispatch(RefreshMessages())
     }
 
     def updateDate(e: ReactEventI) = {
@@ -61,12 +59,12 @@ object Searches {
       else
         baseOpts
 
-    $().find("#availableToDate").datepicker(baseOpts)
-    $().find("#availableFromDate").datepicker(baseOpts)
-    $().find("#projectsStartDate").datepicker(baseOpts)
-    $().find("#projectsEndDate").datepicker(baseOpts)
-    $().find("#messagesBeforeDate").datepicker(baseOpts)
-    $().find("#messagesFromDate").datepicker(baseOpts)
+    $("#availableToDate").datepicker(baseOpts)
+    $("#availableFromDate").datepicker(baseOpts)
+    $("#projectsStartDate").datepicker(baseOpts)
+    $("#projectsEndDate").datepicker(baseOpts)
+    $("#messagesBeforeDate").datepicker(baseOpts)
+    $("#messagesFromDate").datepicker(baseOpts)
 
     //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
     //      save()
@@ -446,7 +444,7 @@ object Searches {
           }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button",^.onClick-->p.proxy.dispatch(SearchWithLabels()), ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick-->Callback{searchClick(p)})
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(

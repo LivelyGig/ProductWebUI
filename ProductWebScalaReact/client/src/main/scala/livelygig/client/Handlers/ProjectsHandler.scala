@@ -46,6 +46,7 @@ object ProjectsModelHandler{
 class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action : RefreshProjects =>
+      println("in refreshProjects")
       val updateF = action.effect(CoreApi.getProjects())(jobPostsResponse=>ProjectsModelHandler.GetJobPostsModel(jobPostsResponse))
       action.handleWith(this, updateF)(PotAction.handler())
   }
