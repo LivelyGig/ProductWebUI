@@ -1,0 +1,17 @@
+package l.client.rootmodels
+
+import l.client.models.ProjectsModel
+import l.client.dtos._
+
+case class ProjectsRootModel(projectsModelList: Seq[ProjectsModel]) {
+  def updated (newProject: ProjectsModel) = {
+//    println(newJobPostsResponse)
+    projectsModelList.indexWhere(_.jobPosts.id == newProject.jobPosts.id)
+    match {
+      case -1 =>
+        ProjectsRootModel(projectsModelList:+newProject)
+      case target =>
+        ProjectsRootModel(projectsModelList.updated(target, newProject))
+    }
+  }
+}
