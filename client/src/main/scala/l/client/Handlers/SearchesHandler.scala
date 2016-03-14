@@ -30,7 +30,6 @@ object SearchesModelHandler {
     else {
       SearchesRootModel(Nil)
     }
-
   }
   def updateModel (label: Label, labels: Seq[Label]): Seq[Label] ={
     val children = labels.filter(p=>p.parentUid==label.uid)
@@ -41,31 +40,25 @@ object SearchesModelHandler {
   }
   var children = Seq[Label]()
   var listE = new ListBuffer[Label]() /*Seq[Label]()*/
-  //   def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
-  // //  labels.filter(e => e.parentUid == label.uid)
-  //    children = labels.filter(p=>p.parentUid==label.uid)
-  //    if (!children.isEmpty){
-  //      listE ++= children
-  //      //println("childerbn" + children)
-  //     // println("listE" + listE)
-  //      children.map(e => GetChildren(e, labels))
-  //    }
-  //        listE
-  //  }
-
+  var searchLabels = new ListBuffer[Seq[Label]]()
+  def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
+    children = labels.filter(p=>p.parentUid==label.uid)
+    if (!children.isEmpty){
+      listE ++= children
+      children.map(e => GetChildren(e, labels))
+    }
+    listE
+  }
   def GetChildrenToParent(label: Label, labels: Seq[Label]):  Seq[Label]={
-    //  labels.filter(e => e.parentUid == label.uid)
-    // println(labels)
     children = labels.filter(p=>p.uid==label.parentUid)
     if (!children.isEmpty){
       listE ++= children
-      // println("childernToParent" + children)
-      // println("listEToParent" + listE)
       children.map(e => GetChildrenToParent(e, labels))
     }
     listE
   }
 }
+
 
 case class CreateLabels()
 case class UpdateLabel(label: Label)
@@ -89,11 +82,16 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       }
     case UpdateLabel(label) =>
       SearchesModelHandler.listE.clear()
-      //      if (label.parentUid == ""){
-      // val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+//      SearchesModelHandler.searchLabels.clear()
+      if (label.parentUid == "self"){
+        val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+        val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else e)
+        updated(SearchesRootModel(test))
+      }
       val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
-      // println("children" + children)
-      // println("childrenToParent" + childrenToParent)
+      val allLeafs = label +: childrenToParent
+      if(label.isChecked == true)
+        SearchesModelHandler.searchLabels.append(allLeafs.seq)
       val test = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
         if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
         else e)
@@ -101,9 +99,10 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case SubscribeSearch() =>
       val labels = window.sessionStorage.getItem("messageSearchLabel")
+      println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels))
       if (labels!=null){
         val selfConnection = Utils.GetSelfConnnection()
-//        println("in searchWithLabel")
+        //        println("in searchWithLabel")
         val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
         effectOnly(Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)))
       } else {

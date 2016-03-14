@@ -11,6 +11,7 @@ object Utils {
     val sourceStr = "agent://"+sessionUriSplit(2)
     Connection(sourceStr,"alias",sourceStr)
   }
+
   def GetLabelProlog(labelFamilies: Seq[Seq[Label]]) : String = {
     // println("labelFamilies = " + labelFamilies)
     var labelsCount =  labelFamilies.length - 1
