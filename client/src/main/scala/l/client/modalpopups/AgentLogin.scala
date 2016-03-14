@@ -1,6 +1,6 @@
 package l.client.modals
 
-import japgolly.scalajs.react.extra.OnUnmount
+//import japgolly.scalajs.react.extra.OnUnmount
 import l.client.handlers.{CreateLabels, LoginUser}
 import l.client.components.Bootstrap._
 import l.client.components._
@@ -12,12 +12,13 @@ import l.client.services._
 import l.client.dtos._
 import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import l.client.models.UserModel
-import scala.scalajs.js.{JSON, Date, UndefOr}
-import org.querki.jquery._
+import scala.scalajs.js.{JSON}
+import org.querki.jquery.$
 
 object AgentLogin {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -28,7 +29,7 @@ object AgentLogin {
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed : Boolean = false , showTermsOfServicesForm : Boolean = false)
 
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
@@ -72,20 +73,21 @@ object AgentLogin {
               showNewAgentForm: Boolean = false) : Callback = {
       log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
-        $("#loginLoader").removeClass("hidden")
+        val loginLoader:js.Object = "#loginLoader"
+        val dashboardContainer:js.Object = ".dashboard-container"
+
+        $(loginLoader).removeClass("hidden")
        // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
         CoreApi.agentLogin(userModel).onComplete {
 //          case Success(s) =>
           case Success(responseStr) =>
-
          //   val responseError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
-
              try {
                log.debug("login successful")
                val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-               $("#loginLoader").addClass("hidden")
-               $(".dashboard-container").removeClass("hidden")
-               $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+               $(loginLoader).addClass("hidden")
+               $(dashboardContainer).removeClass("hidden")
+               //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
                window.sessionStorage.setItem("sessionURI",response.content.sessionURI)
                 val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
                  imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
@@ -99,12 +101,12 @@ object AgentLogin {
             } catch {
               case e: Exception  =>
                 log.debug("login failed")
-                $("#loginLoader").addClass("hidden")
+                $(loginLoader).addClass("hidden")
                 t.modState(s => s.copy(showLoginFailed = true)).runNow()
             }
           case Failure(s) =>
-            $("#loginLoader").addClass("hidden")
-            $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
+            $(loginLoader).addClass("hidden")
+          //  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
             println("internal server error")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
@@ -189,7 +191,7 @@ object AgentLogin {
       )
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .configure(OnUnmount.install)
+  //  .configure(OnUnmount.install)
     .build
   def apply(props: Props) = component(props)
 }
