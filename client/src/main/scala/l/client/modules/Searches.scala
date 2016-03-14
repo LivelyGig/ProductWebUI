@@ -28,7 +28,7 @@ object Searches {
 
     def searchClick(props: Props): Unit = {
 //      println("in searchClick")
-      window.sessionStorage.setItem("messageSearchLabel","any([Splicious])")
+      window.sessionStorage.setItem("messageSearchClick","true")
       LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }

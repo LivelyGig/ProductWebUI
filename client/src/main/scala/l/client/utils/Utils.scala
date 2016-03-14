@@ -17,9 +17,9 @@ object Utils {
     var labelsCount =  labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
     prolog.append("any(")
-    val results = for{ a <- labelFamilies } yield {
+    val results = for{ labelFamily <- labelFamilies } yield {
       prolog.append("[")
-      val res = for{b <- a }yield {prolog.append(b.text); if(b.parentUid != "self") prolog.append(",") }
+      val res = for{label <- labelFamily }yield {prolog.append(label.text); if(label.parentUid != "self") prolog.append(",") }
       prolog.append("]")
       if(labelsCount!=0){
         prolog.append(",")

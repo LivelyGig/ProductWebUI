@@ -18,6 +18,7 @@ object CoreApi {
   val SESSION_PING = "sessionPing"
   val PROJECT_MSG = "projectsRequest"
   val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
+  val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
   //  var BASE_URL = "http://52.35.10.219:9876/api"
   //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
   //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
@@ -68,6 +69,10 @@ object CoreApi {
   def evalSubscribeRequest (subscribeRequest: SubscribeRequest) : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST,subscribeRequest))
     AjaxClient[Api].subscribeRequest(requestContent).call()
+  }
+  def cancelSubscriptionRequest(cancelSubscribeRequest: CancelSubscribeRequest) :Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_CANCEL_REQUEST, cancelSubscribeRequest))
+    AjaxClient[Api].cancelSubscriptionRequest(requestContent).call()
   }
 
 }

@@ -79,6 +79,14 @@ class ApiService extends Api {
         "ok"
     }
   }
+
+  override def cancelSubscriptionRequest(requestContent: String): Future[String] = {
+    println(write(requestContent))
+    WS.url(BASE_URL).post(requestContent).map{
+      response =>
+        "ok"
+    }
+  }
 }
 
 
