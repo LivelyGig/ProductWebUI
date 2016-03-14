@@ -58,13 +58,18 @@ object Searches {
         baseOpts.clearBtn(true)
       else
         baseOpts
-
-    $("#availableToDate").datepicker(baseOpts)
-    $("#availableFromDate").datepicker(baseOpts)
-    $("#projectsStartDate").datepicker(baseOpts)
-    $("#projectsEndDate").datepicker(baseOpts)
-    $("#messagesBeforeDate").datepicker(baseOpts)
-    $("#messagesFromDate").datepicker(baseOpts)
+    val availableToDate : js.Object = "#availableToDate"
+    val availableFromDate : js.Object =   "#availableFromDate"
+    val projectStartDate : js.Object = "#projectsStartDate"
+    val projectsEndDate : js.Object = "#projectsEndDate"
+    val messageBeforeDate:js.Object = "#messagesBeforeDate"
+    val messagesFromDate:js.Object = "#messagesFromDate"
+    $(availableToDate).datepicker(baseOpts)
+    $(availableFromDate).datepicker(baseOpts)
+    $(projectStartDate).datepicker(baseOpts)
+    $(projectsEndDate).datepicker(baseOpts)
+    $(messageBeforeDate).datepicker(baseOpts)
+    $(messagesFromDate).datepicker(baseOpts)
 
     //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
     //      save()

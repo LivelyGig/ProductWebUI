@@ -36,7 +36,6 @@ object Settings {
     val booPickle = "1.1.2"
     val diode = "0.5.0"
     val uTest = "0.3.1"
-
     val react = "0.14.7"
     val jQuery = "2.2.1"
     val bootstrap = "3.3.2"
@@ -75,9 +74,10 @@ object Settings {
 //    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
-    "org.querki" %%% "jquery-facade" % "0.10",
-//    "org.querki" %%% "querki-jsext" % "0.6",
-//    "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
+    //"org.querki" %%% "jquery-facade" % "0.10",
+    "org.querki" %%% "jquery-facade" % "1.0-RC2",
+    "org.querki" %%% "querki-jsext" % "0.6",
+ //   "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"/*,
     "com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
   ))
