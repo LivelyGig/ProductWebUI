@@ -55,7 +55,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val labels = window.sessionStorage.getItem("messageSearchLabel")
       if (labels!=null)
       {
-        val updateF =  action.effect(CoreApi.sessionPing())(messages=>MessagesModelHandler.GetMessagesModel(messages))
+        val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
         action.handleWith(this, updateF)(PotAction.handler())
       } else {
         updated(Empty)
