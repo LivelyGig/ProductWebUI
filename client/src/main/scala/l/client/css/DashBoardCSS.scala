@@ -22,7 +22,7 @@ object DashBoardCSS {
     )
     val rsltContainer = style(
       display.inlineBlock,
-      width(100.%%),
+      width(98.2.%%),
       fontSize(1.2.em)
     )
 
@@ -393,11 +393,11 @@ object DashBoardCSS {
       verticalAlign.middle
     )
 
-   /* val resultsContainer = style(
-      height("100vh - 201px"),
-      overflow.auto,
-      paddingLeft(0.px),
-      paddingRight(0.px)
-    )*/
-  }
+    val chatIcon = style {
+      color(green)
+    }
+    val chatInvisibleIcon = style{
+      color(gray)
+    }
+   }
 }

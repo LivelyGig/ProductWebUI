@@ -9,12 +9,30 @@ import l.client.LGMain._
 import l.client.components.Bootstrap.CommonStyle
 import l.client.modals.{UserPreferences, AgentLogin}
 import l.client.components._
-import l.client.css.{DashBoardCSS, HeaderCSS}
+import l.client.css.{FooterCSS, DashBoardCSS, HeaderCSS}
 import l.client.models.UserModel
 import l.client.services.LGCircuit
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
+import org.querki.jquery._
+import scala.language.reflectiveCalls
+
 
 object MainMenu {
+
+  val chatIconBlank : js.Object ="#chatIconBlank"
+  val chatIconAvailable : js.Object ="#chatIcon"
+  def availableForChat = Callback {
+    println("In availablefor chat")
+    $(chatIconBlank).addClass("hidden")
+    $(chatIconAvailable).removeClass("hidden")
+  }
+
+  def invisibleForChat = Callback {
+    $(chatIconAvailable).addClass("hidden")
+    $(chatIconBlank).removeClass("hidden")
+  }
+
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -36,7 +54,7 @@ object MainMenu {
     if (counter > 0) {
       retRE = <.span(
         <.span(mItem),
-        //        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
+             //        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
         <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter)
       )
     }
@@ -66,16 +84,16 @@ object MainMenu {
           for (item <- menuItems) yield {
             if (Seq(ConnectionsLoc, MessagesLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
-                <.li(^.key := item.idx,
+                <.li(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA,
                     (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                     " ", item.label(props))
                 )
               } else {
-                <.li()
+                <.li("data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in")
               }
             } else {
-              <.li(^.key := item.idx,
+              <.li(^.key := item.idx,"data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                 props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA,
                   (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                   " ", item.label(props))
@@ -86,7 +104,7 @@ object MainMenu {
         <.div(HeaderCSS.Style.LoginInMenuItem)(
           if (props.proxy.value.isLoggedIn) {
             var model = props.proxy.value
-            //          <.ul(bss.navbar)(<.li()(<.span(Icon.bell)))
+
             <.div(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline)(
@@ -94,9 +112,11 @@ object MainMenu {
                   <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                   ),
                   <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
+                  <.span(^.id:="chatIcon",^.className:="hidden",DashBoardCSS.Style.chatIcon,HeaderCSS.Style.displayInline/*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
+                  <.span(^.id:="chatIconBlank",^.className:="hidden",DashBoardCSS.Style.chatInvisibleIcon,HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(Icon.circleO),
                   <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
-                    <.li()(<.a()("Available for Chat")),
-                    <.li()(<.a()("Invisible")),
+                    <.li()(<.a(^.onClick --> availableForChat)("Available for Chat")),
+                    <.li()(<.a(^.onClick-->invisibleForChat)("Invisible")),
                     <.li(^.className := "divider")(),
                     <.li()(<.a()("Availability Schedule")),
                     <.li(^.className := "divider")(),
@@ -104,7 +124,7 @@ object MainMenu {
                     <.li()(<.a()("Profiles")),
                     <.li()(<.a()("Notifications")),
                     <.li()(<.a()("Payments")),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" )(/*UserPreferences(UserPreferences.Props(props.ctl))*/ "Preferences"
+                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true" )("Preferences"
                     )),
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))

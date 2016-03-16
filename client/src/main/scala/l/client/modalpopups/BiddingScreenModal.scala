@@ -19,6 +19,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
 
 object BiddingScreenModal {
   val component = ReactComponentB[Props]("BiddingScreen")

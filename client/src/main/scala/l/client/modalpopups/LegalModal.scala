@@ -11,6 +11,7 @@ import l.client.components.Bootstrap._
 import l.client.components._
 import l.client.css._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.language.reflectiveCalls
 
 object LegalModal {   //TodoForm
 @inline private def bss = GlobalStyles.bootstrapStyles

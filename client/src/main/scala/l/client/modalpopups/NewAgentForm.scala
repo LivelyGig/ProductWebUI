@@ -8,6 +8,7 @@ import l.client.css.{FooterCSS, DashBoardCSS}
 import l.client.models.{UserModel}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
 
 object NewAgentForm {
   // shorthand for styles

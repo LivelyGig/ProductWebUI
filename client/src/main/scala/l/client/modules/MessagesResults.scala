@@ -22,9 +22,9 @@ import l.client.services.LGCircuit
 import scala.util.{Failure, Success}
 import l.client.modals.NewMessage
 import scalacss.ScalaCssReact._
+import l.client.css.standaloneCSS
 
 object MessagesResults {
-
   case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])
   case class State(selectedItem: Option[MessagesModel] = None)
   class Backend($: BackendScope[Props, _]) {
@@ -37,7 +37,6 @@ object MessagesResults {
         Callback.empty
       }
     }
-
   }
 
   val component = ReactComponentB[Props]("Messages")

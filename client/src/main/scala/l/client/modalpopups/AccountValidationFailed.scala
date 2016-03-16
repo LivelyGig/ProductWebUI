@@ -6,6 +6,7 @@ import l.client.components.Bootstrap._
 import l.client.components._
 import l.client.css.DashBoardCSS
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
 
 object AccountValidationFailed {
   @inline private def bss = GlobalStyles.bootstrapStyles

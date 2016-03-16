@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import l.client.components.Bootstrap._
 import l.client.components._
 import l.client.css.DashBoardCSS
-
+import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 object AccountValidationSuccess {
