@@ -2,28 +2,20 @@ package l.client.modals
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import l.client.LGMain.Loc
 import l.client.components.Bootstrap.Button
 import l.client.components.Bootstrap.CommonStyle
 import l.client.components.Bootstrap.Modal
 import l.client.components.Bootstrap._
 import l.client.components.GlobalStyles
 import l.client.components.Icon
-import l.client.components.Icon
 import l.client.components.Icon._
 import l.client.components._
-import l.client.components._
-import l.client.css.DashBoardCSS
-import l.client.css.HeaderCSS
-import l.client.css.ProjectCSS
 import l.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import l.client.modals.NewMessage.State
-import l.client.modals.PostNewMessage.State
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
 
 object Offering {
   @inline private def bss = GlobalStyles.bootstrapStyles

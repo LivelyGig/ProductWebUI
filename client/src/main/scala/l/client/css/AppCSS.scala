@@ -14,7 +14,6 @@ object AppCSS {
       ProjectCSS.Style,
       BiddingScreenCSS.Style,
       PresetsCSS.Style
-
       )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }

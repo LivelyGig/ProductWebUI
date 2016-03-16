@@ -1,12 +1,8 @@
 package l.client.modals
 
-import l.client.LGMain.Loc
 import l.client.components.Bootstrap.Modal
 import l.client.components.GlobalStyles
 import l.client.components.Icon
-import l.client.components._
-import l.client.css.DashBoardCSS
-import l.client.css.MessagesCSS
 import l.client.models.{EmailValidationModel, UserModel}
 import l.client.LGMain.{Loc}
 import scala.util.{Failure, Success}
@@ -15,7 +11,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import l.client.components.Bootstrap._
 import l.client.components._
-import l.client.css.{DashBoardCSS,MessagesCSS}
+import l.client.css.{DashBoardCSS}
+import scala.language.reflectiveCalls
 
 object CopyrightModal {
   // shorthand for styles

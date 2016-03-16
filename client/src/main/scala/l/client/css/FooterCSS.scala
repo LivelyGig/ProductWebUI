@@ -55,10 +55,13 @@ object FooterCSS {
       )
     )
     val displayInline=style(
-      paddingLeft(4.%%),
+      paddingRight(4.%%),
       display.inline,
       fontSize(1.2.em),
       color(c"#fff")
+    )
+    val footPaddingLeft = style(
+      paddingLeft(7.px)
     )
     val footGlyphContainer=style(
       paddingTop(14.px)

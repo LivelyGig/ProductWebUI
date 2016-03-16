@@ -6,7 +6,7 @@ import l.client.components.Bootstrap._
 import l.client.components._
 import l.client.css.DashBoardCSS
 import l.client.models.EmailValidationModel
-import org.scalajs.dom._
+import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 object ConfirmAccountCreation {

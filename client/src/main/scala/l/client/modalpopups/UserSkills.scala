@@ -10,6 +10,7 @@ import l.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
+import scala.language.reflectiveCalls
 
 object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles

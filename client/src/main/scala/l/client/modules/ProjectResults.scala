@@ -9,11 +9,12 @@ import l.client.handlers.RefreshProjects
 import l.client.rootmodels.ProjectsRootModel
 import l.client.components._
 import l.client.css.{HeaderCSS, DashBoardCSS}
-import l.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal}
+import l.client.modals.{NewRecommendation, NewMessage, BiddingScreenModal,RecommendationJobs}
 import l.client.models.{ProjectsModel, ModelType}
 import l.client.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
+import l.client.css.standaloneCSS.Style
 
 object ProjectResults {
 
@@ -102,7 +103,6 @@ object ProjectResults {
 }
 
 object ProjectsList {
-
   case class Props(projects: Seq[ProjectsModel])
 
   private val ProjectsList = ReactComponentB[Props]("ProjectList")
@@ -131,7 +131,7 @@ object ProjectsList {
             <.div()(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,^.title := "Hide", Icon.remove),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
-              NewRecommendation(NewRecommendation.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend")),
+              RecommendationJobs(RecommendationJobs.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend Job")),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Find Matching Talent", Icon.users),
               BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.pencilSquareO,"Apply")),
               NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message" ))

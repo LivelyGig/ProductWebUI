@@ -1,22 +1,16 @@
 package l.client.modals
 
 import l.client.models.{EmailValidationModel, UserModel}
-import japgolly.scalajs.react.extra.router.RouterCtl
+
 import l.client.LGMain.{Loc}
-import l.client.services.CoreApi._
-import org.scalajs.dom._
-import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import l.client.components.Bootstrap._
 import l.client.components._
-import l.client.logger._
-import l.client.services._
 import l.client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.language.reflectiveCalls
 
 object EndUserAgreement {
   // shorthand for styles

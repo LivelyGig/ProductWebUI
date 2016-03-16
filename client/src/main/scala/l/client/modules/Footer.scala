@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import l.client.LGMain.{DashboardLoc, Loc}
 import l.client.components._
-import l.client.css.FooterCSS
+import l.client.css.{FooterCSS,DashBoardCSS}
 import l.client.modals._
 import scalacss.ScalaCssReact._
 
@@ -25,7 +25,7 @@ object Footer {
     .render_P((P) => {
       <.nav(^.className := "footerContainer", FooterCSS.Style.footerContainer)(
         <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-lg-3 col-md-5 col-sm-5 col-xs-5")(
+          <.div(^.className := "col-lg-3 col-md-5 col-sm-5 col-xs-5", FooterCSS.Style.footPaddingLeft)(
             <.div(FooterCSS.Style.footGlyphContainer)(
               <.div(FooterCSS.Style.displayInline)(
                 <.a(FooterCSS.Style.displayInlineGlyph)(^.href := "https://github.com/LivelyGig", ^.target := "_blank", "data-toggle".reactAttr := "tooltip", "title".reactAttr := "GitHub")(<.span()(Icon.github))),
@@ -49,7 +49,7 @@ object Footer {
                   <.span()(Icon.slack)))
             )
           ),
-          <.div(^.className := "col-lg-7 col-md-7 col-sm-7 col-xs-7")(
+          <.div(^.className := "col-lg-7 col-md-7 col-sm-7 col-xs-7",DashBoardCSS.Style.paddingRight0px)(
             <.ul(^.className := "nav", FooterCSS.Style.footRight)(
               // build a list of menu items
               for (item <- footerItems) yield {

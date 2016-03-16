@@ -2,9 +2,7 @@ package l.client.modals
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import l.client.LGMain.Loc
 import l.client.components.Bootstrap._
 import l.client.components.Icon
 import l.client.components.Icon._
@@ -13,6 +11,7 @@ import l.client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
 
 object UserPreferences {
   @inline private def bss = GlobalStyles.bootstrapStyles
