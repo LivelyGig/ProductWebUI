@@ -98,7 +98,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         else e)
       updated(SearchesRootModel(modelModified))
 
-    case SubscribeSearch() =>
+    /*case SubscribeSearch() =>
       println(SearchesModelHandler.children)
       println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels.reverse))
       val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
@@ -119,7 +119,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         }
       } else {
         noChange
-      }
+      }*/
 
 
 
