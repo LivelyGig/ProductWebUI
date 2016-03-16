@@ -30,7 +30,7 @@ object MessagesResults {
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) = {
       if (props.proxy().isEmpty){
-          LGCircuit.dispatch(SubscribeSearch())
+//          LGCircuit.dispatch(SubscribeSearch())
           props.proxy.dispatch(RefreshMessages())
 
       } else {

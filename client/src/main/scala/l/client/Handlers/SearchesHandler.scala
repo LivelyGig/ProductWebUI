@@ -82,6 +82,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       }
     case UpdateLabel(label) =>
       SearchesModelHandler.listE.clear()
+//      value.
 //      SearchesModelHandler.searchLabels.clear()
       if (label.parentUid == "self"){
         val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
@@ -92,22 +93,36 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       val allLeafs = label +: childrenToParent
       if(label.isChecked == true)
         SearchesModelHandler.searchLabels.append(allLeafs.seq)
-      val test = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
+      val modelModified = value.searchesModel.map(e=> /*if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else*/
         if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
         else e)
-      updated(SearchesRootModel(test))
+      updated(SearchesRootModel(modelModified))
 
     case SubscribeSearch() =>
-      val labels = window.sessionStorage.getItem("messageSearchLabel")
-      println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels))
-      if (labels!=null){
+      println(SearchesModelHandler.children)
+      println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels.reverse))
+      val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
+      if (messageSearchClick == "true") {
         val selfConnection = Utils.GetSelfConnnection()
-        //        println("in searchWithLabel")
-        val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),"any([Splicious])")))
-        effectOnly(Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription)))
+        val prevLabels = window.sessionStorage.getItem("messageSearchLabel")
+        val currentLabels = "any([Splicious])"
+        window.sessionStorage.setItem("messageSearchLabel",currentLabels)
+        val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),currentLabels)))
+        val newSubscription = Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription))
+        if (prevLabels != null){
+          val cancelSubscription = Effect(CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(prevLabels,Seq(selfConnection),"any([Spilicious])")))
+          //        println("in searchWithLabel")
+
+          effectOnly(cancelSubscription >> newSubscription)
+        } else {
+          effectOnly(newSubscription)
+        }
       } else {
         noChange
       }
+
+
+
   }
 
 }

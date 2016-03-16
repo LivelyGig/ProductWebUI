@@ -19,4 +19,6 @@ trait Api {
   def getProjects(requestContent: String):String
 
   def subscribeRequest(requestContent: String): Future[String]
+
+  def cancelSubscriptionRequest(requestContent: String): Future[String]
 }
