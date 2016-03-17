@@ -1,8 +1,9 @@
 package l.client.handlers
 
-import diode.{ActionHandler, ModelRW}
+import diode.{Effect, ActionHandler, ModelRW}
+import l.client.dtos.{InitializeSessionResponse, ApiResponse}
 import l.client.models.UserModel
-import l.client.services.LGCircuit
+import l.client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom.window
 import concurrent._
 import ExecutionContext.Implicits._
@@ -10,6 +11,8 @@ import scala.scalajs.js.JSON
 
 case class LoginUser(userModel: UserModel)
 case class LogoutUser()
+case class CreateSessionForMessages(userModel2: UserModel)
+
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   override def handle = {
@@ -22,6 +25,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
       }
       updated(modelFromStore)
+    case CreateSessionForMessages(userModel2) =>
+      CoreApi.agentLogin(userModel2).map{responseStr=>
+        val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+        window.sessionStorage.setItem(CoreApi.MESSAGES_SESSION_URI,response.content.sessionURI)
+      }
+        noChange
     case LogoutUser() =>
       window.sessionStorage.clear()
       window.location.href = "/"

@@ -52,14 +52,14 @@ class ApiService extends Api {
     }
   }
 
-  override def getConnections(requestContent: String): Future[String] = {
+  /*override def getConnections(requestContent: String): Future[String] = {
     println(write(requestContent))
     WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {
       response =>
         //        println("response.json.toString() = "+response.json.toString())
         response.json.toString()
     }
-  }
+  }*/
 
   override def getProjects(requestContent: String): String = {
     val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString

@@ -5,8 +5,8 @@ import l.client.models.Label
 import org.scalajs.dom._
 
 object Utils {
-  def GetSelfConnnection() : Connection ={
-    val sessionUri = window.sessionStorage.getItem("sessionURI")
+  def GetSelfConnnection(uri: String) : Connection ={
+    val sessionUri = window.sessionStorage.getItem(uri)
     val sessionUriSplit = sessionUri.split('/')
     val sourceStr = "agent://"+sessionUriSplit(2)
     Connection(sourceStr,"alias",sourceStr)

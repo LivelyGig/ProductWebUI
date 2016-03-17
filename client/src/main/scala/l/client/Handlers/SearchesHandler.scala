@@ -108,7 +108,7 @@ val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       }else e)
       updated(SearchesRootModel(modelToUpdate))
 
-    case SubscribeSearch() =>
+    /*case SubscribeSearch() =>
       println(SearchesModelHandler.children)
       println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels.reverse))
       val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
@@ -129,7 +129,7 @@ val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
         }
       } else {
         noChange
-      }
+      }*/
 
 
 

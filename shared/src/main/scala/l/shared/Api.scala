@@ -12,7 +12,7 @@ trait Api {
 
   def sessionPing (requestContent: String) : Future[String]
 
-  def getConnections (requestContent: String) : Future[String]
+  /*def getConnections (requestContent: String) : Future[String]*/
 
   def getMessages (requestContent: String) : String
 

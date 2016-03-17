@@ -1,7 +1,7 @@
 package l.client.modals
 
 //import japgolly.scalajs.react.extra.OnUnmount
-import l.client.handlers.{CreateLabels, LoginUser}
+import l.client.handlers.{CreateSessionForMessages, CreateLabels, LoginUser}
 import l.client.components.Bootstrap._
 import l.client.components._
 import l.client.css.{DashBoardCSS, HeaderCSS}
@@ -88,7 +88,7 @@ object AgentLogin {
                $(loginLoader).addClass("hidden")
                $(dashboardContainer).removeClass("hidden")
                //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
-               window.sessionStorage.setItem("sessionURI",response.content.sessionURI)
+               window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI,response.content.sessionURI)
                 val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
                  imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
                window.sessionStorage.setItem("userEmail", userModel.email)
@@ -96,7 +96,10 @@ object AgentLogin {
                window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
                window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
                LGCircuit.dispatch(LoginUser(user))
+//               println(userModel)
+               LGCircuit.dispatch(CreateSessionForMessages(userModel))
                LGCircuit.dispatch(CreateLabels())
+
 
             } catch {
               case e: Exception  =>
