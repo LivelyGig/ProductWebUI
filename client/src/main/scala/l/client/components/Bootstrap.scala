@@ -11,6 +11,7 @@ import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import org.scalajs.dom.ext.KeyCode
+import scala.language.reflectiveCalls
 
 /**
   * Common Bootstrap components for scalajs-react

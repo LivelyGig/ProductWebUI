@@ -33,8 +33,8 @@ object LftcontainerCSS {
       paddingBottom(7.px)
     )
     val textArea = style(
-      minWidth(100 %%),
-      maxWidth(100 %%),
+      minWidth(100.%%),
+      maxWidth(100.%%),
       fontSize(0.8.em),
       fontWeight.normal
     )

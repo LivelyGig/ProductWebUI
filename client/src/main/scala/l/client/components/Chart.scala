@@ -26,6 +26,7 @@ object ChartDataset {
   }
 }
 
+@js.native
 trait ChartData extends js.Object {
   def labels: js.Array[String] = js.native
   def datasets: js.Array[ChartDataset] = js.native
