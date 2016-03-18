@@ -1,5 +1,12 @@
 package client.modules
 
+import client.css.DashBoardCSS
+import client.css.DashBoardCSS
+import client.modules.Searches
+import client.modules.Searches
+import client.modules.TalentResults
+import client.services.LGCircuit
+import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS}
@@ -30,11 +37,12 @@ object AppModule {
         <.div(DashBoardCSS.Style.splitContainer)(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
-           <.div(^.className := "row")(
-              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-xs-3", DashBoardCSS.Style.padding0px)(
+            <.div(^.className := "row")(
+              //Left Sidebar
+              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-sm-3 sidebar ", DashBoardCSS.Style.padding0px)(
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "col-md-9 col-xs-9",DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "main col-md-9 col-md-offset-3",DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
                   case "talent" => TalentResults.component(Unit)
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
@@ -45,7 +53,7 @@ object AppModule {
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }
               )
-          )
+            )
           ),
           <.div(^.className := "col-lg-1")()
         ) //row

@@ -1,10 +1,12 @@
 package client
 
+
 import japgolly.scalajs.react.extra.router._
 import client.components.{GlobalStyles, Icon}
 import client.css.{AppCSS, FooterCSS, HeaderCSS,DashBoardCSS}
 import client.logger._
 import client.modules._
+import org.querki.jquery._
 import org.scalajs.dom
 import client.services.{LGCircuit}
 import scala.scalajs.js.annotation.JSExport
@@ -19,7 +21,6 @@ import js.{Date, UndefOr}
 
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
-
   // Define the locations (pages) used in this application
   sealed trait Loc
 
@@ -51,7 +52,10 @@ object LGMain extends js.JSApp {
 
   case object BiddingScreenLoc extends Loc
 
-
+  def sidebar = Callback{
+    val sidebtn : js.Object = "#searchContainer"
+    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+  }
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
@@ -79,6 +83,12 @@ object LGMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
+            //Adding toggle button for sidebar
+            <.button(^.id:="sidebarbtn",^.`type`:="button",^.className:="navbar-toggle toggle-left hidden-md hidden-lg",^.float:="left","data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+              ^.onClick-->sidebar)(
+              <.span(Icon.bars)
+            ),
+
             c.link(DashboardLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
