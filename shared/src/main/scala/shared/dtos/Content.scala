@@ -29,7 +29,7 @@ case class InitializeSessionResponse(sessionURI: String,listOfAliases: Seq[Strin
 case class InitializeSessionErrorResponse(reason : Option[String])
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String
                                     /* ,name: Option[String]*/)  /*extends Content*/
-case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String], connection:Connection = Connection(),
+case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection:Connection = Connection(),
                                         filter : String = "")
 
 //case class JsonBlobModel(name: String, imgSrc: String)
