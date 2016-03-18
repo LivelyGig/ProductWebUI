@@ -40,7 +40,7 @@ object SearchesModelHandler {
   }
   var children = Seq[Label]()
   var listE = new ListBuffer[Label]() /*Seq[Label]()*/
-  var searchLabels = new ListBuffer[Seq[Label]]()
+  /*var searchLabels = new ListBuffer[Seq[Label]]()*/
   def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
     children = labels.filter(p=>p.parentUid==label.uid)
     if (!children.isEmpty){
@@ -57,6 +57,11 @@ object SearchesModelHandler {
     }
     listE
   }
+  var labelFamilies = new ListBuffer[Label]()
+  /*def GetLabelFamilies (label: Label,labels: Seq[Label]) : Seq[Label] = {
+
+    labelFamilies
+  }*/
 }
 
 
@@ -108,31 +113,16 @@ val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       }else e)
       updated(SearchesRootModel(modelToUpdate))
 
-    /*case SubscribeSearch() =>
-      println(SearchesModelHandler.children)
-      println(Utils.GetLabelProlog(SearchesModelHandler.searchLabels.reverse))
-      val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
-      if (messageSearchClick == "true") {
-        val selfConnection = Utils.GetSelfConnnection()
-        val prevLabels = window.sessionStorage.getItem("messageSearchLabel")
-        val currentLabels = "any([Splicious])"
-        window.sessionStorage.setItem("messageSearchLabel",currentLabels)
-        val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem("sessionURI"),Expression(msgType = "feedExpr",ExpressionContent(Seq(selfConnection),currentLabels)))
-        val newSubscription = Effect(CoreApi.evalSubscribeRequest(getMessagesSubscription))
-        if (prevLabels != null){
-          val cancelSubscription = Effect(CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(prevLabels,Seq(selfConnection),"any([Spilicious])")))
-          //        println("in searchWithLabel")
+    case SubscribeSearch() =>
+      val selectedRootParents = value.searchesModel.filter(e=>e.isChecked==true && e.parentUid== "self")
+      val labelFamilies = Seq[Seq[Label]]()
+      selectedRootParents.foreach{selectedRootParent=>
 
-          effectOnly(cancelSubscription >> newSubscription)
-        } else {
-          effectOnly(newSubscription)
-        }
-      } else {
-        noChange
-      }*/
-
-
-
+          val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent,value.searchesModel).filter(e=>e.isChecked==true)
+        labelFamilies:+(selectedChildren:+selectedRootParent)
+      }
+      println("labelfamilies:"+Utils.GetLabelProlog(labelFamilies))
+      noChange
   }
 
 }

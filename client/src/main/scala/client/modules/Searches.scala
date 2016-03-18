@@ -30,7 +30,7 @@ object Searches {
 //      println("in searchClick")
 //      window.sessionStorage.setItem("messageSearchClick","true")
       window.sessionStorage.setItem("messageSearchLabel","any([Spilicious])")
-//      LGCircuit.dispatch(SubscribeSearch())
+      LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }
 

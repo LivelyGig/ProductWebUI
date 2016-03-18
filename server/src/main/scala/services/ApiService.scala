@@ -1,6 +1,6 @@
 package services
 
-import l.shared._
+import shared._
 import mockdata.MockFiles
 import play.api.Play.current
 import play.api.libs.ws._
