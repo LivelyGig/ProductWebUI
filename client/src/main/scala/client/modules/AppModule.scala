@@ -39,7 +39,7 @@ object AppModule {
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
             <.div(^.className := "row")(
               //Left Sidebar
-              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-sm-3 sidebar ", DashBoardCSS.Style.padding0px)(
+              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-sm-4 sidebar ", DashBoardCSS.Style.padding0px)(
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
               <.div(^.className := "main col-md-9 col-md-offset-3",DashBoardCSS.Style.dashboardResults2)(

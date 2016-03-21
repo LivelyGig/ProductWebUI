@@ -18,15 +18,23 @@ import scala.scalajs.js
 import js.{Date, UndefOr}
 import org.querki.jquery._
 
+
 object Searches {
 
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
   case class State(userModel: UserModel)
 
+  def sidebar = Callback{
+    val sidebtn : js.Object = "#searchContainer"
+    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+  }
+
   case class Backend(t: BackendScope[Props, State]) {
 
     def searchClick(props: Props): Unit = {
+      val sidebtn : js.Object = "#searchContainer"
+      $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
 //      println("in searchClick")
 //      window.sessionStorage.setItem("messageSearchClick","true")
       window.sessionStorage.setItem("messageSearchLabel","any([Spilicious])")
@@ -46,6 +54,8 @@ object Searches {
     /*def labelChecked: Leaf = Callback{
 
     }*/
+    val typedate : js.Object = "#availableToDate"
+
 
     val baseOpts = BootstrapDatepickerOptions.
       autoclose(true).
@@ -82,7 +92,7 @@ object Searches {
         case "talent" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
@@ -160,7 +170,7 @@ object Searches {
         case "offerings" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
@@ -214,7 +224,7 @@ object Searches {
         case "projects" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
@@ -346,7 +356,7 @@ object Searches {
         case "contract" => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition/*, ^.height := "calc(100vh - 215px)"*/)(
@@ -450,6 +460,7 @@ object Searches {
           }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
+              /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick-->Callback{searchClick(p)})
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -519,7 +530,7 @@ object Searches {
         case "connections" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search)
+              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
