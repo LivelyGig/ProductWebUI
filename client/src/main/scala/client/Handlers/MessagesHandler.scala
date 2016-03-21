@@ -52,7 +52,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
     case action : RefreshMessages =>
       // todo investigate calling of this method due to callback
 //      println("in refresh messages")
-      val labels = window.sessionStorage.getItem("messageSearchLabel")
+      val labels = window.sessionStorage.getItem("currentSearchLabel")
       if (labels!=null)
       {
         val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))

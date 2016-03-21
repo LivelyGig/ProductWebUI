@@ -115,13 +115,18 @@ val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
 
     case SubscribeSearch() =>
       val selectedRootParents = value.searchesModel.filter(e=>e.isChecked==true && e.parentUid== "self")
-      val labelFamilies = Seq[Seq[Label]]()
+      val labelFamilies = ListBuffer[Seq[Label]]()
       selectedRootParents.foreach{selectedRootParent=>
-
+        SearchesModelHandler.listE.clear()
           val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent,value.searchesModel).filter(e=>e.isChecked==true)
-        labelFamilies:+(selectedChildren:+selectedRootParent)
+//        println("selectedRootParent"+selectedRootParent)
+        val family = (selectedChildren:+selectedRootParent)
+//        println("family in "+family)
+        labelFamilies.append(family)
       }
       println("labelfamilies:"+Utils.GetLabelProlog(labelFamilies))
+      window.sessionStorage.setItem("currentSearchLabel",Utils.GetLabelProlog(labelFamilies))
+      labelFamilies.clear()
       noChange
   }
 

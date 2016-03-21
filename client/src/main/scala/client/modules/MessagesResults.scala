@@ -86,7 +86,7 @@ object MessagesResults {
             )
           )
         ), //col-12
-        <.div(^.className := "container-fluid", ^.id := "resultsContainer",DashBoardCSS.Style.verticalImg)(
+        <.div( ^.id := "resultsContainer",DashBoardCSS.Style.verticalImg)(
             <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
             P.proxy().render(messagesRootModel =>
               MessagesList(messagesRootModel.messagesModelList)
