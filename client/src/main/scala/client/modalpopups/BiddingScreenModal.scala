@@ -148,11 +148,10 @@ object BiddingScreenModalForm {
             <.li()(<.a(^.href := "#menu2", "data-toggle".reactAttr := "tab", "Execution")),
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
-          // ToDo: The layout details of all these tabs will depend on role, i.e., Employer, Talent, Moderator.  Generally for the initial layout, we are showing the Employer's view
           <.div(^.className := "tab-content")(
             <.div(^.id := "home", ^.className := "tab-pane fade in active")(
               // Initiating details
-              <.div(^.id := "initiatingDetail",^.className:="tab-container")(
+              <.div(^.id := "initiatingDetail", ^.className := "tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Project:")
@@ -321,94 +320,108 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                      <.div(DashBoardCSS.Style.footTextAlign)(
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                    )
-                )
-            ),
-            <.div(^.id := "menu1", ^.className := "tab-pane fade")(
-              // escrowDetail
-              <.div(^.id := "escrowDetail",^.className:="tab-container")(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div()(
-                      <.span(^.fontWeight := "bold")("1: Pending Funding -- Join Shared Wallet"), <.br(),
-                      "All parties in the contract have agreed to the terms as of 2016-07-30 00:34 UTC-7 (PST). ",
-                      "Those terms included Escrow. ",
-                      "In order to set up for Escrow, assure you have an CoPay wallet application installed, or install it now from ",
-                      <.a(^.href := "#")("BitPay"),
-                      ". Then, from the CoPay application, perform the following steps:",
-                      <.br(),
-                      "a) Add Wallet -> Join Shared Wallet.",
-                      <.br(),
-                      "b) Either past the invitation code below, or scan it after pressing the + button.",
-                      <.br(),
-                      <.img(^.width := "263px")(^.src := "./assets/images/example-copay-invitation.png"),
-                      <.br(),
-                      "c) follow the prompts to complete your multi-sig wallet configuration, including backing up and confirming your wallet seed.",
-                      <.br(),
-                      "d) Wait for the other party to do the same. Your CoPay wallet will indicate when completed.",
-                      <.hr(),
-
-                      <.span(^.fontWeight := "bold")("1a: Pending Funding -- Waiting for other party to joint shared wallet"), <.br(),
-
-                      <.span(^.fontWeight := "bold")("2: Pending Funding -- Waiting on funding transaction"), <.br(),
-                      "Funding into escrow is required:",
-                      <.br(),
-                      "From Employer, Pam:  1 XBT requested.  Not yet funded.",
-                      <.br(),
-                      "Send bitcoin into the following address:",
-                      <.br(),
-                      <.img()(^.src := "./assets/images/example-bitcoin-qr-code.png"),
-                      <.br(),
-                      "342ftSRCvFHfCeFFBuz4xwbeqnDw6BGUey",
-                      <.br(),
-                      "From Talent, Abed:  0.02 XBT  requested.",
-                      <.br(),
-                      <.button(^.className := "btn dropdown-toggle", "data-target".reactAttr := "#demo", "data-toggle".reactAttr := "collapse")(" Escrow deposit, payment, and refund details..."),
-                      <.div(^.id := "escrowDepositDetails", ^.id := "demo", ^.className := "collapse")(
-                        <.span(^.fontWeight.bold)("Escrow Deposit and Payout Details"),
-                        <.div(^.className := "row")(
-                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                            "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
-                            <.a()("details"),
-                            ".",
-                            // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
-                            <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
-                            )
-                          )
-                        )
-                      ),
-                      <.br(),
-                      <.span(^.fontWeight := "bold")("3: Funded"), <.br(),
-                      "Funding received", <.br(),
-                      "The following deposits were made into this contract:", <.br(),
-                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 1"), <.br(),
-                      <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
-                      "pending funding from buyer",
-                      <.br(),
-                      <.span(^.fontWeight := "bold")("4: Pay Escrow Setup Commission"), <.br(),
-                      "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
-                    )
-                  )
-                )
-              ),
-              <.div()(
-                <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
+                <.div(DashBoardCSS.Style.footTextAlign)(
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                 )
               )
             ),
+            <.div(^.id := "menu1", ^.className := "tab-pane fade")(
+              // escrowDetail
+              <.div(^.id := "escrowDetail", ^.className := "tab-container")(
+                /*
+                <.span(^.fontWeight.bold)("Status: "),
+                <.div(^.className := "btn-group")(
+                  <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Pending Funding: Join Shared Wallet ")(
+                    <.span(^.className := "caret")
+                  ),
+                  <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                    <.li()(<.a()("Pending Funding - Join Shared Wallet")),
+                    <.li()(<.a()("Pending Funding - Waiting on Funding Transaction")),
+                    <.li()(<.a()("Funded")),
+                    <.li()(<.a()("Pay Escrow Setup Commission"))
+                  )
+                ),
+                */
+                <.div(^.id := "Escrow1", ^.minHeight := "100%")(
+                  <.span(^.fontWeight := "bold")("Status: Pending Funding -- Join Shared Wallet"), <.br(),
+                  "All parties in the contract have agreed to the terms as of 2016-07-30 00:34 UTC-7 (PST). ",
+                  "Those terms included Escrow. ",
+                  // or "Those terms did not include Escrow. ",
+                  <.br(),
+                  "Please now set up Escrow:",
+                  <.div(^.marginLeft := "15px")(
+                    <.span(^.fontWeight := "bold")("1)"), " Prerequisite: Assure you have a CoPay wallet application installed, or ", <.a(^.href := "https://copay.io/", ^.target := "blank")("install it now"), ".", <.br(),
+                    <.span(^.fontWeight := "bold")("2)"), " From the CoPay application:",
+                    <.div(^.marginLeft := "15px")(
+                      <.span(^.fontWeight := "bold")("a)"), " Add Wallet -> Join Shared Wallet.", <.br(),
+                      <.span(^.fontWeight := "bold")("b)"), " After pressing the + button, scan the invitation QR below, or copy the code and paste it into CoPay", <.br(),
+                      <.div(^.marginLeft := "15px")(
+                        <.img(^.width := "263px")(^.src := "./assets/images/example-copay-invitation.png"), <.br(),
+                        "92LtV5QQ6cMVEwlekjasfi9JKLH93277asllkjasdf98776ZHnL2LtV5QQ6cMVE ",
+                        <.button()(
+                          <.span(^.color := "red", ^.title := "Copy to clipboard")(Icon.copy)
+                        )
+                      ),
+                      <.span(^.fontWeight := "bold")("c)"), " Follow prompts to complete your multi-sig wallet configuration. ", <.span(^.fontWeight.bold)("Important: back up and confirm your wallet seed."), <.br(),
+                      <.span(^.fontWeight := "bold")("d)"), " Wait for the other party to do the same. Your CoPay application will indicate when completed."
+                    )
+                  )
+                ),
+                <.div(^.id := "Escrow2", ^.minHeight := "100%")(
+                  <.span(^.fontWeight := "bold")("Status: Pending Funding -- Waiting on funding transaction"), <.br(),
+                  "Both parties have set up their escrow wallet for this contract.", <.br(),
+                  "Now, funding into escrow is required:", <.br(),
+                  "From Employer, Pam:  1 XBT requested.  Not yet funded.", <.br(),
+                  "Send bitcoin into the following address:", <.br(),
+                  <.img()(^.src := "./assets/images/example-bitcoin-qr-code.png"),
+                  <.br(),
+                  "342ftSRCvFHfCeFFBzu4xwbeqnDw6BGUey",
+                  "Copy to clipboard",
+                  <.br(),
+                  "From Talent, Abed:  0.02 XBT  requested.",
+                  <.br(),
+                  <.button(^.className := "btn dropdown-toggle", "data-target".reactAttr := "#demo", "data-toggle".reactAttr := "collapse")(" Escrow deposit, payment, and refund details..."),
+                  <.div(^.id := "escrowDepositDetails", ^.id := "demo", ^.className := "collapse")(
+                    <.span(^.fontWeight.bold)("Escrow Deposit and Payout Details"),
+                    <.div(^.className := "row")(
+                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                        "The following amounts are expected deposit and payout amounts under various circumstances, based on current LivelyGig policies applicable in this situation. See ",
+                        <.a()("details"),
+                        ".",
+                        // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
+                        <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
+                        )
+                      )
+                    )
+                  )
+                ),
+                <.div(^.id := "Escrow3", ^.minHeight := "100%")(
+                  <.span(^.fontWeight := "bold")("Status: Funded"), <.br(),
+                  "Funding received", <.br(),
+                  "The following deposits were made into this contract:", <.br(),
+                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 1"), <.br(),
+                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
+                  "pending funding from buyer"
+                ),
+                <.div(^.id := "Escrow4", ^.minHeight := "100%")(
+                  <.span(^.fontWeight := "bold")("Status: Pay Escrow Setup Commission"), <.br(),
+                  "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
+                )
+              ),
+              <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
+                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+              )
+            ),
             <.div(^.id := "menu2", ^.className := "tab-pane fade")(
               // inProgressDeatil
-              <.div(^.id := "inProgressDetail",^.className:="tab-container")(
+              <.div(^.id := "inProgressDetail", ^.className := "tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "inProgress")(
@@ -588,19 +601,16 @@ object BiddingScreenModalForm {
                   )
                 )
               ),
-              <.div()(
                 <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                  // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                )
               )
             ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
               // feedbackDetail
-              <.div(^.id := "feedbackDetail",^.className:="tab-container" )(
+              <.div(^.id := "feedbackDetail", ^.className := "tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
@@ -793,11 +803,11 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                      <.div(DashBoardCSS.Style.footTextAlign)(
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                 )
+                <.div(DashBoardCSS.Style.footTextAlign)(
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                )
               )
             )
           )
