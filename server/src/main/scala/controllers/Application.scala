@@ -16,7 +16,7 @@ object Application extends Controller {
   val apiService = new ApiService()
 
   def index = Action {
-    Ok(views.html.index("Welcome LivelyGig"))
+    Ok(views.html.index("LivelyGig - work from anywhere with anyone"))
   }
 
   def indexl = Action {
