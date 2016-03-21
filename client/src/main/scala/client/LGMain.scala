@@ -88,7 +88,6 @@ object LGMain extends js.JSApp {
               ^.onClick-->sidebar)(
               <.span(Icon.bars)
             ),
-
             c.link(DashboardLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(

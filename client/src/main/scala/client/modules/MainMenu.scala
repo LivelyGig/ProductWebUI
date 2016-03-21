@@ -19,7 +19,6 @@ import scala.language.reflectiveCalls
 
 
 object MainMenu {
-
   val chatIconBlank : js.Object ="#chatIconBlank"
   val chatIconAvailable : js.Object ="#chatIcon"
   def availableForChat = Callback {
@@ -104,7 +103,6 @@ object MainMenu {
         <.div(HeaderCSS.Style.LoginInMenuItem)(
           if (props.proxy.value.isLoggedIn) {
             var model = props.proxy.value
-
             <.div(
               <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
               <.div(HeaderCSS.Style.displayInline)(
@@ -112,6 +110,7 @@ object MainMenu {
                   <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                   ),
                   <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
+                  <.span(^.id:="chatIcon",DashBoardCSS.Style.chatIcon,HeaderCSS.Style.displayInline/*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
                   <.span(^.id:="chatIcon",^.className:="hidden",DashBoardCSS.Style.chatIcon,HeaderCSS.Style.displayInline/*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
                   <.span(^.id:="chatIconBlank",^.className:="hidden",DashBoardCSS.Style.chatInvisibleIcon,HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(Icon.circleO),
                   <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(

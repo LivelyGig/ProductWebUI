@@ -149,10 +149,10 @@ object BiddingScreenModalForm {
             <.li()(<.a(^.href := "#menu4", "data-toggle".reactAttr := "tab", "Feedback"))
           ),
           // ToDo: The layout details of all these tabs will depend on role, i.e., Employer, Talent, Moderator.  Generally for the initial layout, we are showing the Employer's view
-          <.div(^.className := "tab-content tab-container")(
+          <.div(^.className := "tab-content")(
             <.div(^.id := "home", ^.className := "tab-pane fade in active")(
               // Initiating details
-              <.div(^.id := "initiatingDetail" /*, ^.borderStyle.solid*/)(
+              <.div(^.id := "initiatingDetail",^.className:="tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(
                     <.div()("Project:")
@@ -312,21 +312,6 @@ object BiddingScreenModalForm {
                                 <.div(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action:Statement of work: Abed updated..")
                               )
-                            ),
-                            <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                              <.div(^.className := "row")(
-                                <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                                  <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
-                                  <.div(^.className := "col-md-10 col-sm-10 col-xs-10")(
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                                  )
-                                )
-                              )
                             )
                           )
                         )
@@ -334,11 +319,21 @@ object BiddingScreenModalForm {
                     )
                   )
                 )
-              )
+              ),
+              <.div(BiddingScreenCSS.Style.marginLeftRight)(
+                      <.div(DashBoardCSS.Style.footTextAlign)(
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                      <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                    )
+                )
             ),
             <.div(^.id := "menu1", ^.className := "tab-pane fade")(
               // escrowDetail
-              <.div(^.id := "escrowDetail" /*, ^.borderStyle.solid*/)(
+              <.div(^.id := "escrowDetail",^.className:="tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
@@ -401,19 +396,19 @@ object BiddingScreenModalForm {
                       "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
                     )
                   )
-                ),
-                <.div()(
-                  <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                  )
+                )
+              ),
+              <.div()(
+                <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                 )
               )
             ),
             <.div(^.id := "menu2", ^.className := "tab-pane fade")(
               // inProgressDeatil
-              <.div(^.id := "inProgressDetail" /*, ^.borderStyle.solid*/)(
+              <.div(^.id := "inProgressDetail",^.className:="tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "inProgress")(
@@ -591,21 +586,21 @@ object BiddingScreenModalForm {
                       )
                     )
                   )
-                ),
-                <.div()(
-                  <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-                    // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
-                    <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                  )
+                )
+              ),
+              <.div()(
+                <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                  // ToDo: Need to wire up the Accept Deliverables button to  Accept(Accept.Props(p.ctl, "Accept")))
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
+                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                 )
               )
             ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
               // feedbackDetail
-              <.div(^.id := "feedbackDetail" /*, ^.borderStyle.solid*/)(
+              <.div(^.id := "feedbackDetail",^.className:="tab-container" )(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div()(
@@ -798,17 +793,11 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div(^.className := "col-md-1 col-sm-1 col-xs-1")(),
-                    <.div(^.className := "col-md-2 col-sm-2 col-xs-2")(),
-                    <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
+                      <.div(DashBoardCSS.Style.footTextAlign)(
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                       <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
-                    )
-                  )
-                )
+                 )
               )
             )
           )

@@ -93,7 +93,8 @@ object Settings {
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
     "org.webjars.bower" % "perfect-scrollbar" % "0.6.7"/ "perfect-scrollbar.js",
-    "org.webjars" % "bootstrap-datepicker" % "1.4.0" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js"
+    "org.webjars" % "bootstrap-datepicker" % "1.4.0" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
+    "org.webjars" % "Bootstrap-3-Typeahead" % "3.1.1"/ "bootstrap3-typeahead.js" minified "bootstrap3-typeahead.min.js"
     //"org.webjars" % "bootstrap-sidebar" % "0.2.2"
 
 //    "org.webjars" % "bootstrapvalidator" % "0.5.3" / "js/validator.js"
