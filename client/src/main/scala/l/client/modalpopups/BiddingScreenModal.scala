@@ -207,7 +207,7 @@ object BiddingScreenModalForm {
                                 <.div(^.className := "col-md-4 col-sm-5 col-xs-5", DashBoardCSS.Style.slctHeaders)("History")
                                 // ToDo: add actions column, e.g. for delete.
                               ),
-                              <.div(BiddingScreenCSS.Style.biddingScreenData)(
+                              <.div(BiddingScreenCSS.Style.biddingScreenData, ^.id := "workContractTermContainer")(
                                 <.div(^.className := "row", BiddingScreenCSS.Style.marginLeftRight)(
                                   <.div(^.className := "col-md-4 col-sm-5 col-xs-5")(
                                     <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),

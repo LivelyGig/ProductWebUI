@@ -12,7 +12,7 @@ object BiddingScreenCSS {
     val marginLeftRight = style (
       marginLeft(15.px),
       marginRight(15.px),
-      padding(15.px)
+      padding(4.px)
     )
     val biddingScreenData = style (
       height(250.px),
