@@ -35,7 +35,7 @@ object AccountValidationFailed {
             <.div(^.className:="row")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Validation code you entered is incorrect, please check your email and enter valid code",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->hide )("Try again"))
+                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn", DashBoardCSS.Style.btnBackground,  ^.onClick-->hide )("Try again"))
                 )
               )
             )

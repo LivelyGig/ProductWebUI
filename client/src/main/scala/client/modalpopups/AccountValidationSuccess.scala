@@ -34,7 +34,7 @@ object AccountValidationSuccess {
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Account Validation Successful!",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide)("Login")))
+                  <.div(/*DashBoardCSS.Style.modalContentFont*/)(<.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Login")))
               )
             )
           )

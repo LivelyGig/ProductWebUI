@@ -225,7 +225,7 @@ object PostAProjectForm {
               )
 
               ),
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Save as Draft"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Submit"),

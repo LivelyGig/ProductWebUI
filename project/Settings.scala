@@ -71,15 +71,16 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
-//    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
+    //"com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
     //"org.querki" %%% "jquery-facade" % "0.10",
     "org.querki" %%% "jquery-facade" % "1.0-RC2",
     "org.querki" %%% "querki-jsext" % "0.6",
- //   "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
-    "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"/*,
-    "com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
+    //"be.doeraene" %%% "scalajs-jquery" % "0.9.0",
+    "org.querki" %%% "bootstrap-datepicker-facade" % "0.5"
+    //"org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1" //add dependency
+   /*,"com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -96,10 +97,8 @@ object Settings {
     "org.webjars" % "bootstrap-datepicker" % "1.4.0" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
     "org.webjars" % "Bootstrap-3-Typeahead" % "3.1.1"/ "bootstrap3-typeahead.js" minified "bootstrap3-typeahead.min.js"
     //"org.webjars" % "bootstrap-sidebar" % "0.2.2"
-
-//    "org.webjars" % "bootstrapvalidator" % "0.5.3" / "js/validator.js"
-
-//    "org.webjars" % "typeahead.js" % "0.9.3",
-//    "org.webjars" % "bootstrap-tagsinput" % "0.6.1"/ "bootstrap-tagsinput.js" dependsOn "typeahead.js"
+    //"org.webjars" % "bootstrapvalidator" % "0.5.3" / "js/validator.js"
+    //"org.webjars" % "typeahead.js" % "0.9.3",
+    //"org.webjars" % "bootstrap-tagsinput" % "0.6.1"/ "bootstrap-tagsinput.js" dependsOn "typeahead.js"
   ))
 }

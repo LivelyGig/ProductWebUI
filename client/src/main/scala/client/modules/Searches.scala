@@ -320,7 +320,7 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " Required"),
                     <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow", ^.checked := "true"), " Optional"),
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"/*, ^.checked := "true"*/), " Optional"),
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " None")
                   )
@@ -334,7 +334,7 @@ object Searches {
                     <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"), " Optional"),
                     <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow", ^.checked := "true"), " None")
+                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"/*, ^.checked := "true"*/), " None")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(

@@ -97,9 +97,9 @@ object PayoutTransaction {
         <.form(^.onSubmit ==> submitForm)(
           <.div()("Accept All Deliverables?", " ... details of payout transaction"),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Accept"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
+              <.button(^.tpe := "submit",^.className:="btn", DashBoardCSS.Style.marginLeftCloseBtn, "Accept"),
+              <.button(^.tpe := "button",^.className:="btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
           <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")

@@ -217,8 +217,8 @@ object UserSkillsForm {
                 ^.required := true, ^.placeholder := "Enter commission rate, 0% - 2%")
             )
           ),
-          <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
-            <.button(^.tpe := "submit", ^.className := "btn btn-default", ^.onClick --> hide, "Submit"),
+          <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
+            <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Submit"),
             <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()

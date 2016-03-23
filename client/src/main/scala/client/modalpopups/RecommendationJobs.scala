@@ -123,7 +123,7 @@ object RecommendationJobsForm {
             )
           ),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
+            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
               <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )

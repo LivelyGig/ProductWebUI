@@ -36,7 +36,7 @@ object ErrorModal {
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Encountering problems in serving request. Please try after sometime!",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->closeForm )("Close"))
+                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnBackground,^.onClick-->closeForm )("Close"))
                 )
               )
             )

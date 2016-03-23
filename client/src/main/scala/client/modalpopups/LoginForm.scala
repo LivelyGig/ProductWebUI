@@ -65,7 +65,7 @@ object LoginForm {
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             //left
-            <.div(^.className := "col-md-7 col-sm-7 col-xs-7")(
+            <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
 
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with LivelyGig credentials"),
@@ -73,26 +73,26 @@ object LoginForm {
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.btnWidth, "Login"),
+                <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
 
                 <.div(^.paddingTop := "10px")(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-4",DashBoardCSS.Style.padding0px)(
-                    <.button(^.tpe := "button", ^.className := "btn btn-default", /* DashBoardCSS.Style.btnWidth,*/ "Validate Account",
+                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",
                       ^.onClick ==> showValidate)
                   ),
                   <.div(^.className := "col-md-3 col-sm-3 col-xs-3")(
-                    <.button(^.tpe := "button", ^.className := "btn btn-default", /* DashBoardCSS.Style.btnWidth,*/ "Sign Up",
+                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
-                    <.button(^.tpe := "button", ^.className := "btn btn-default", /* DashBoardCSS.Style.btnWidth,*/ "Forgot My Password",
+                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Forgot My Password",
                       ^.onClick ==> showValidate)
                   )
                 )
               )
             ),
             // right
-            <.div(^.className := "col-md-5 col-sm-5 col-xs-5", ^.borderLeft := "solid")(
+            <.div(^.className := "col-md-5 col-sm-12 col-xs-12", ^.borderLeft := "solid")(
               <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
               <.button(^.tpe := "button", ^.className := "btn",CreateAgentCSS.Style.loginBtn, Icon.githubSquare, " GitHub"),
               <.button(^.tpe := "button", ^.className := "btn",CreateAgentCSS.Style.loginBtn, Icon.googlePlusSquare, " Google+"),

@@ -48,7 +48,7 @@ object ConfirmAccountCreation {
               <.h5("After registration, you were emailed a confirmation code. Please enter the code below"),
               <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.marginTop10px ,
                 ^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
-              <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnWidth, "Confirm", ^.onClick--> submitForm)
+              <.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Confirm", ^.onClick--> submitForm)
             )
             ,
             <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()

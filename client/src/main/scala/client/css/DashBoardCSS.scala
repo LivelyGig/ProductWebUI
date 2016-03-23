@@ -241,14 +241,20 @@ object DashBoardCSS {
       paddingBottom(15.px)
     )
     val marginLeftCloseBtn = style(
-      marginLeft(20.px)
+      marginLeft(20.px),
+      backgroundColor(orange)
+     // addClassName("btnBackground")
+
+    )
+    val btnBackground = style(
+      backgroundColor(orange)
     )
     val imgLogoLogin = style(
       height(65.px),
       width(65.px)
     )
     val footTextAlign = style(
-      textAlign.center
+     textAlign.center
     )
     val modalBorderRadius = style(
       borderRadius(0.px)

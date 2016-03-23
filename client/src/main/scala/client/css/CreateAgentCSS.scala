@@ -45,16 +45,14 @@ object CreateAgentCSS {
       display.inline,
       marginLeft(5.px)
     )
-    val marginLeftCloseBtn = style (
-      marginLeft(20.px)
-    )
+
     val imgLogoLogin = style(
       height(65.px),
       width(65.px)
     )
-    val footTextAlign = style(
+    /*val footTextAlign = style(
       textAlign.center
-    )
+    )*/
 
     val loginBtn = style (
       width(100.%%),

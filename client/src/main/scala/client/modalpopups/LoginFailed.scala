@@ -37,7 +37,7 @@ object LoginFailed {
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)("Username/Password combination is not correct please try again.",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn btn-default", ^.onClick --> hide)("Try again"))
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"))
                 )
               )
             )
