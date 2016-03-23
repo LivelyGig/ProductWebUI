@@ -249,12 +249,20 @@ object DashBoardCSS {
     val btnBackground = style(
       backgroundColor(orange)
     )
+
     val imgLogoLogin = style(
       height(65.px),
       width(65.px)
     )
     val footTextAlign = style(
      textAlign.center
+    )
+    val linksConatiner = style (
+      media.maxWidth(991.px)-
+        border.none,
+        marginTop(20.px),
+      media.minWidth(992.px)-
+        borderLeft(2.px , double , c"#000000")
     )
     val modalBorderRadius = style(
       borderRadius(0.px)

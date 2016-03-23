@@ -92,7 +92,7 @@ object LoginForm {
               )
             ),
             // right
-            <.div(^.className := "col-md-5 col-sm-12 col-xs-12", ^.borderLeft := "solid")(
+            <.div(^.className := "col-md-5 col-sm-12 col-xs-12",DashBoardCSS.Style.linksConatiner)(
               <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
               <.button(^.tpe := "button", ^.className := "btn",CreateAgentCSS.Style.loginBtn, Icon.githubSquare, " GitHub"),
               <.button(^.tpe := "button", ^.className := "btn",CreateAgentCSS.Style.loginBtn, Icon.googlePlusSquare, " Google+"),

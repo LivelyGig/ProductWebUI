@@ -192,6 +192,121 @@ object BiddingScreenModalForm {
                     <.div()("Offer from talent to employer")
                   )
                 ),
+
+//
+//                <.table(^.className := "table")(
+//                  <.thead(
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")("Employer Agreement"),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")("Talent Agreement"),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("History")
+//                    )
+//                  ),
+//                  <.tbody(BiddingScreenCSS.Style.biddingScreenData)(
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
+//                        <.div(^.className := "row")(
+//                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12", BiddingScreenCSS.Style.slctBiddingInputWidth)(
+//                            <.div(^.className := "btn-group")(
+//                              <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Nolo Service..-23")(
+//                                <.span(^.className := "caret")
+//                              ),
+//                              <.ul(^.className := "dropdown-menu")(
+//                                <.li()(<.a()("Item 1")),
+//                                <.li()(<.a()("Item 2")),
+//                                <.li()(<.a()("Item 3"))
+//                              )
+//                            )
+//                          ),
+//                          <.div(BiddingScreenCSS.Style.slctBiddingInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
+//                            //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+//                            <.div()(<.a("view"))
+//                          )
+//                        )
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+//                    ),
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
+//                        <.div(^.className := "row")(
+//                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+//                            <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
+//                          )
+//                        )
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Original")
+//                    ),
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                        <.div()("Statement of Work"),
+//                        <.div(^.className := "row")(
+//                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+//                            <.div()(
+//                              <.a()("View / Modify "),
+//                              "Updated: 2016-01-12 SHA256:d14a sf"
+//                            )
+//                          )
+//                        )
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
+//                    ),
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Moderator:"),
+//                        <.div(^.className := "row")(
+//
+//                          <.div(DashBoardCSS.Style.marginTop10px)(
+//                            //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
+//                            <.div(^.className := "btn-group")(
+//                              <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
+//                                <.span(^.className := "caret")
+//                              ),
+//                              <.ul(^.className := "dropdown-menu")(
+//                                <.li()(<.a()("Jim P. Blesho")),
+//                                <.li()(<.a()("Remi Fastaou")),
+//                                <.li()(<.a()("Jami Corporation"))
+//                              )
+//                            )
+//                          )
+//                        )
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
+//                    ),
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
+//                        <.div(^.className := "row")(
+//                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+//                            <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
+//                          )
+//                        )
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action: Abed updated 2016-01-12")
+//                    ),
+//                    <.tr()(
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")(
+//                          "All Terms"
+//                      ),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-2 col-sm-1 col-xs-1")(<.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle)),
+//                      <.td(^.className := "col-md-4 col-sm-5 col-xs-5")("Last action:Statement of work: Abed updated..")
+//                    )
+//                  )
+//                ),
+
                 <.div(DashBoardCSS.Style.splitContainer)(
                   <.div(^.className := "split")(
                     <.div(^.className := "row")(
