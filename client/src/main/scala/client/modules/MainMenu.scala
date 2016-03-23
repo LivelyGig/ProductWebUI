@@ -114,7 +114,7 @@ object MainMenu {
                   <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                   ),
                   <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
-                  <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                  <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                     <.li()(<.a(^.onClick --> availableForChat)("Available for Chat")),
                     <.li()(<.a(^.onClick --> invisibleForChat)("Invisible")),
                     <.li(^.className := "divider")(),

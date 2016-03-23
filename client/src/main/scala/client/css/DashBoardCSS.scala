@@ -16,15 +16,27 @@ object DashBoardCSS {
     )
     val splitContainer = style(
       position.relative,
-      height(100.%%),
+     /* height(100.%%),*/
       width(100.%%),
       overflow.hidden
     )
-    val rsltContainer = style(
+  /*  val rsltContainer = style(
       display.inlineBlock,
       width(98.2.%%),
       fontSize(1.2.em)
+    )*/
+
+    val rsltContainer = style(
+      display.inlineBlock,
+      fontSize(1.2.em),
+      media.maxWidth(1199.px) -(
+        width(100.%%)
+        ),
+      media.minWidth(1200.px) -(
+        width(98.2.%%)
+        )
     )
+
 
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),

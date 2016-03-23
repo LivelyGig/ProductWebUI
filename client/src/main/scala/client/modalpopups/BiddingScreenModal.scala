@@ -320,7 +320,7 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                <.div(DashBoardCSS.Style.footTextAlign)(
+                <.div(^.className:="pull-right")(
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
@@ -413,7 +413,7 @@ object BiddingScreenModalForm {
                   "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
                 )
               ),
-              <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+              <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                 <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -601,7 +601,7 @@ object BiddingScreenModalForm {
                   )
                 )
               ),
-                <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign)(
+                <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
@@ -803,7 +803,7 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(BiddingScreenCSS.Style.marginLeftRight)(
-                <.div(DashBoardCSS.Style.footTextAlign)(
+                <.div(^.className:="pull-right")(
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                   <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()

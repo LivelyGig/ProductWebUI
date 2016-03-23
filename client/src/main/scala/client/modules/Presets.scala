@@ -30,7 +30,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#talent")("Recommended Matches")),
                           <.li()(<.a(^.href := "#talent")("My Profiles")),
                           <.li()(<.a(^.href := "#talent")("Favorited")),
@@ -55,7 +55,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn,^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#projects")("Recommended Matches")),
                           <.li()(<.a(^.href := "#projects")("Direct from Connection")),
                           <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
@@ -76,7 +76,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
                           <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
                           <.li()(<.a(^.href := "#offerings")("Favorited")),
@@ -96,7 +96,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#contract")("Active")),
                           <.li()(<.a(^.href := "#contract")("Favorited")),
                           <.li()(<.a(^.href := "#contract")("Hidden")),
@@ -115,7 +115,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#messages")("Inbox")),
                           <.li()(<.a(^.href := "#messages")("Sent")),
                           <.li()(<.a(^.href := "#messages")("Unread")),
@@ -136,7 +136,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(HeaderCSS.Style.dropdownMenuWidth, ^.className := "dropdown-menu")(
+                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#connections")("All")),
                           <.li()(<.a(^.href := "#connections")("Available for Chat")),
                           <.li()(<.a(^.href := "#connections")("Favorited")),
