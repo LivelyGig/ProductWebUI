@@ -33,8 +33,7 @@
  padding-left: 0px;
  padding-right: 0px;
 }
-
- .dashboardContainer {
+.dashboardContainer {
     height:calc(~"100vh - 116px");
     overflow-y:auto;
     z-index:100
@@ -123,13 +122,53 @@ height:100%
     background-color: #D7E3E3;
 }
 
-#workContractTermContainer > div:nth-child(even) {
+.rowStyle > tbody > tr:nth-child(even) {
      background-color: #D7E3E3;
  }
- #workContractTermContainer {
-    border-bottom: solid;
+
+
+   .rowStyle thead, .rowStyle tbody, .rowStyle tr, .rowStyle td, .rowStyle th { display: block; }
+
+   .rowStyle tr:after {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
     }
 
+   .rowStyle thead th {
+        height: 30px;
+        /*text-align: left;*/
+    }
+
+  .rowStyle  tbody {
+        height: 350px;
+        overflow-y: auto;
+    }
+
+   .rowStyle thead {
+        /* fallback */
+    }
+
+   .rowStyle tbody td, .rowStyle thead th, .rowStyle tfoot td {
+        width: 25%;
+        float: left;
+    }
+
+.inProgress tr {
+width: 100%;
+display: inline-table;
+}
+
+.inProgress table{
+ height:190px;
+}
+.inProgress tbody{
+  overflow-y: auto;
+  height: 135px;
+  position: absolute;
+  width: 97%;
+}
 
 @media (max-width: 991px) {
     #sidebarbtn.navbar-header {
@@ -209,40 +248,14 @@ height:100%
 	}
 }
 
-.inProgress tr {
-width: 100%;
-display: inline-table;
-}
-
-.inProgress table{
- height:190px;
-}
-.inProgress tbody{
-  overflow-y: scroll;
-  height: 135px;
-  position: absolute;
-  width: 97%;
-}
 
 .modal{
 background: rgba(0, 0, 0, 0.5);
 }
 
-.table-fixed thead {
-  width: 97%;
-}
-.table-fixed tbody {
-  height: 190px;
-  overflow-y: auto;
-  width: 100%;
-}
-.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
-  display: block;
-}
-.table-fixed tbody td, .table-fixed thead > tr> th {
-  float: left;
-  border-bottom-width: 0;
-}
+
+
+
 
 a:hover {cursor: hand; cursor: pointer;}
 

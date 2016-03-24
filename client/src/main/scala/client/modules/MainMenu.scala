@@ -9,7 +9,7 @@ import client.LGMain._
 import client.components.Bootstrap.CommonStyle
 import client.modals.{UserPreferences, AgentLogin}
 import client.components._
-import client.css.{FooterCSS, DashBoardCSS, HeaderCSS}
+import client.css.{BiddingScreenCSS, FooterCSS, DashBoardCSS, HeaderCSS}
 import client.models.UserModel
 import client.services.LGCircuit
 import scala.scalajs.js
@@ -134,13 +134,13 @@ object MainMenu {
                   <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
                     <.div(^.className := "modal-dialog", DashBoardCSS.Style.verticalAlignCenter)(
                       <.div(^.className := "modal-content", DashBoardCSS.Style.modalBorderRadius)(
-                        <.div(^.className := "modal-header", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding)(
+                        <.div(^.className := "modal-header modalheader", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding)(
                           <.span(<.button(^.tpe := "button", bss.close, "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
                         ),
                         <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(
-                          <.h2("hello")
-                        ),
-                        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.footPreferences)()
+                          <.h2("hello"),
+                          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+                        )
                       )
                     ))
                 )

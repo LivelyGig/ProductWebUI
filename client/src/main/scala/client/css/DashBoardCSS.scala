@@ -270,7 +270,8 @@ object DashBoardCSS {
     val marginLeftRight = style(
       marginRight(-15.px),
       marginLeft(-15.px),
-      padding(22.px),
+      padding(0.px),
+      height(5.px),
       backgroundColor(c"#00767c")
     )
     val btnWidth = style(
@@ -317,10 +318,10 @@ object DashBoardCSS {
     val replyMarginTop = style(
       marginTop(20.px)
     )
-    val footPreferences = style (
+  /*  val footPreferences = style (
       padding(22.px) ,
       backgroundColor(c"#00767c")
-    )
+    )*/
     val inputBtnRadius = style (
       border.none,
       padding(0.2.em, 0.6.em, 0.1.em)
@@ -395,9 +396,6 @@ object DashBoardCSS {
       paddingLeft(15.px),
       color(c"#000")
     )
-    val padding0px = style(
-      padding(0.px)
-    )
 
     val marginResults = style (
       marginLeft(24.%%),
@@ -409,6 +407,9 @@ object DashBoardCSS {
       media.maxWidth(808.px)-
         marginLeft(16.%%)
     )
+    val padding0px = style(
+      padding(0.px)
+    )
     val paddingRight0px = style(
       paddingRight(0.px)
     )
@@ -418,6 +419,9 @@ object DashBoardCSS {
     val verticalAlignMiddle = style (
       verticalAlign.middle
     )
+    val tfootMargin = style (
+      marginRight(15.px)
+    )
 
     val chatIcon = style {
       color(green)
@@ -425,5 +429,12 @@ object DashBoardCSS {
     val chatInvisibleIcon = style{
       color(gray)
     }
+
+//    val tablecontents = style(
+//      &.nthChild("3n+2")     -
+//      backgroundColor.red
+//
+//    )
+
    }
 }
