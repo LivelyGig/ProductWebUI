@@ -45,6 +45,7 @@ object HeaderCSS {
         padding(10.px , 10.px)
         )
     )
+
     val nav = style(
       addClassName("nav > li > a"),
       padding(10.px , 10.px)

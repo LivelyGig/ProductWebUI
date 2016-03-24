@@ -40,7 +40,7 @@ object MainMenu {
 
   case class State(isLoggedIn: Boolean = false)
 
-  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
+  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc, count: ReactElement , locationCount: Loc)
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
@@ -49,26 +49,22 @@ object MainMenu {
         imgSrc = "", isLoggedIn = false))))
   }
 
-  private def buildMenuItem(mItem: String, counter: Int): ReactElement = {
-    var retRE = <.span(<.span(mItem))
+  private def buildMenuItem(counter: Int): ReactElement = {
+    var retRE = <.span()
     if (counter > 0) {
-      retRE = <.span(
-        <.span(mItem),
-        //        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
-        <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter)
-      )
+      retRE = <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter))
     }
     return retRE
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => buildMenuItem("Dashboard", 0), DashboardLoc),
-    MenuItem(2, _ => buildMenuItem("Messages ", 6), MessagesLoc),
-    MenuItem(3, _ => buildMenuItem("Jobs ", 3), JobPostsLoc),
-    MenuItem(4, _ => buildMenuItem("Offerings", 0), OfferingsLoc),
-    MenuItem(5, _ => buildMenuItem("Profiles", 0), TalentLoc),
-    MenuItem(6, _ => buildMenuItem("Contracts", 0), ContractsLoc),
-    MenuItem(7, _ => buildMenuItem("Connections", 0), ConnectionsLoc)
+    MenuItem(1, _ => "Dashboard", DashboardLoc , buildMenuItem(0) , DashboardLoc),
+    MenuItem(2, _ => "Messages ",MessagesLoc, buildMenuItem(6), DashboardLoc),
+    MenuItem(3, _ => "Jobs",JobPostsLoc, buildMenuItem(3), DashboardLoc),
+    MenuItem(4, _ => "Offerings",OfferingsLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(5, _ => "Profiles",TalentLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(6, _ => "Contracts",ContractsLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(7, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc)
     //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
@@ -76,7 +72,6 @@ object MainMenu {
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       /*var test = LGCircuit.wrap(_.user)(p => Data)
-
       println(props.proxy.value.isLoggedIn)*/
       <.div(
         <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
@@ -84,19 +79,21 @@ object MainMenu {
           for (item <- menuItems) yield {
             if (Seq(ConnectionsLoc, MessagesLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
-                <.li(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
+                <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA,
                     (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
-                    " ", item.label(props))
+                    " ", item.label(props)),
+                  props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA,^.className:="countBadge"," ", item.count)
                 )
               } else {
                 <.li("data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in")
               }
             } else {
-              <.li(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
+              <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                 props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA,
                   (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
-                  " ", item.label(props))
+                  " ", item.label(props)),
+                props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA,^.className:="countBadge"," ", item.count)
               )
             }
           }
