@@ -420,6 +420,9 @@ object DashBoardCSS {
       verticalAlign.middle
     )
     val tfootMargin = style (
+      media.maxWidth(1024.px)-
+      marginRight(0.px),
+      media.minWidth(1024.px)-
       marginRight(15.px)
     )
 
