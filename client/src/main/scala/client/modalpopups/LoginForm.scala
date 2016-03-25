@@ -57,7 +57,7 @@ object LoginForm {
 
     def render(s: State, p: Props) = {
            // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Login"
+      val headerText = "Sign In and Sign Up"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
