@@ -1,5 +1,4 @@
 import sbt.Keys._
-import bintray.Keys._
 import sbt.Project.projectToRef
 
 // a special crossProject for configuring a JS/JVM/shared structure
@@ -25,6 +24,7 @@ lazy val client: Project = (project in file("client"))
       version := Settings.version,
       scalaVersion := Settings.versions.scala,
       scalacOptions ++= Settings.scalacOptions,
+      resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
       libraryDependencies ++= Settings.scalajsDependencies.value,
       // by default we do development build, no eliding
       elideOptions := Seq(),

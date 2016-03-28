@@ -432,12 +432,5 @@ object DashBoardCSS {
     val chatInvisibleIcon = style{
       color(gray)
     }
-
-//    val tablecontents = style(
-//      &.nthChild("3n+2")     -
-//      backgroundColor.red
-//
-//    )
-
    }
 }

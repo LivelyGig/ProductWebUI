@@ -17,6 +17,7 @@ import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import js.{Date, UndefOr}
 import org.querki.jquery._
+import org.denigma.selectize._
 
 
 object Searches {
@@ -75,16 +76,29 @@ object Searches {
     val projectsEndDate : js.Object = "#projectsEndDate"
     val messageBeforeDate:js.Object = "#messagesBeforeDate"
     val messagesFromDate:js.Object = "#messagesFromDate"
+
     $(availableToDate).datepicker(baseOpts)
     $(availableFromDate).datepicker(baseOpts)
     $(projectStartDate).datepicker(baseOpts)
     $(projectsEndDate).datepicker(baseOpts)
     $(messageBeforeDate).datepicker(baseOpts)
     $(messagesFromDate).datepicker(baseOpts)
-
     //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
     //      save()
     //    })
+
+    val inputTags : js.Object = "#input-tags"
+    //    $(inputTags).selectize({
+    //      delimiter: ',',
+    //      persist: false,
+    //      create: function(input) {
+    //        return {
+    //          value: input,
+    //          text: input
+    //        }
+    //      }
+    //    });
+
 
     def render(s: State, p: Props) = {
 
