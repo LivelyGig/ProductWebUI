@@ -34,7 +34,7 @@ object AppModule {
             case "connections" => Presets(Presets.Props("connections"))
           }
         ),
-        <.div(DashBoardCSS.Style.splitContainer)(
+        <.div(DashBoardCSS.Style.splitContainer, ^.background := "url(./assets/images/background_texture.jpg)")(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
             <.div(^.className := "row")(
