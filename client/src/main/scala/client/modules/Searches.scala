@@ -49,55 +49,59 @@ object Searches {
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
-    def mounted(props: Props): Callback = Callback {
-    }
 
     /*def labelChecked: Leaf = Callback{
 
     }*/
     val typedate : js.Object = "#availableToDate"
 
+def initializeDatepicker() : Unit = {
+  val baseOpts = BootstrapDatepickerOptions.
+    autoclose(true).
+    todayHighlight(true).
+    todayBtnLinked().
+    disableTouchKeyboard(true).
+    orientation(Orientation.Top)
+  // Iff this Date is Optional, show the Clear button:
+  val opts =
+    if (true)
+      baseOpts.clearBtn(true)
+    else
+      baseOpts
+  val availableToDate : js.Object = "#availableToDate"
+  val availableFromDate : js.Object =   "#availableFromDate"
+  val projectStartDate : js.Object = "#projectsStartDate"
+  val projectsEndDate : js.Object = "#projectsEndDate"
+  val messageBeforeDate:js.Object = "#messagesBeforeDate"
+  val messagesFromDate:js.Object = "#messagesFromDate"
 
-    val baseOpts = BootstrapDatepickerOptions.
-      autoclose(true).
-      todayHighlight(true).
-      todayBtnLinked().
-      disableTouchKeyboard(true).
-      orientation(Orientation.Top)
-    // Iff this Date is Optional, show the Clear button:
-    val opts =
-      if (true)
-        baseOpts.clearBtn(true)
-      else
-        baseOpts
-    val availableToDate : js.Object = "#availableToDate"
-    val availableFromDate : js.Object =   "#availableFromDate"
-    val projectStartDate : js.Object = "#projectsStartDate"
-    val projectsEndDate : js.Object = "#projectsEndDate"
-    val messageBeforeDate:js.Object = "#messagesBeforeDate"
-    val messagesFromDate:js.Object = "#messagesFromDate"
+  $(availableToDate).datepicker(baseOpts)
+  $(availableFromDate).datepicker(baseOpts)
+  $(projectStartDate).datepicker(baseOpts)
+  $(projectsEndDate).datepicker(baseOpts)
+  $(messageBeforeDate).datepicker(baseOpts)
+  $(messagesFromDate).datepicker(baseOpts)
+  //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
+  //      save()
+  //    })
+}
 
-    $(availableToDate).datepicker(baseOpts)
-    $(availableFromDate).datepicker(baseOpts)
-    $(projectStartDate).datepicker(baseOpts)
-    $(projectsEndDate).datepicker(baseOpts)
-    $(messageBeforeDate).datepicker(baseOpts)
-    $(messagesFromDate).datepicker(baseOpts)
-    //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-    //      save()
-    //    })
+def initializeTagsInput() : Unit = {
+      val inputTags : js.Object = ".input-tags"
+      $(inputTags).selectize({
+        SelectizeConfig
+          .delimiter(",")
+          .persist(false)
+          .create(true)
+      }
+      )
+}
 
-    val inputTags : js.Object = "#input-tags"
-    //    $(inputTags).selectize({
-    //      delimiter: ',',
-    //      persist: false,
-    //      create: function(input) {
-    //        return {
-    //          value: input,
-    //          text: input
-    //        }
-    //      }
-    //    });
+def mounted(): Callback = Callback {
+  initializeDatepicker
+  initializeTagsInput
+  LGCircuit.dispatch(CreateLabels())
+}
 
 
     def render(s: State, p: Props) = {
@@ -162,7 +166,9 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -298,7 +304,8 @@ object Searches {
                     <.div("Skills Required")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                    <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -324,7 +331,8 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
+                     <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -508,7 +516,8 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -615,17 +624,17 @@ object Searches {
           )
         }
       } //main switch
-
     }
   }
-
 
   private val component = ReactComponentB[Props]("Searches")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
+    .componentDidMount(scope => scope.backend.mounted()/*Callback {
+      scope.backend.initializeDatepicker
+      scope.backend.initializeTagsInput
       LGCircuit.dispatch(CreateLabels())
-    })
+    }*/)
     .build
 
   def apply(props: Props) = component(props)
