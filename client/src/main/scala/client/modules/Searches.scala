@@ -87,14 +87,16 @@ def initializeDatepicker() : Unit = {
 }
 
 def initializeTagsInput() : Unit = {
-      val inputTags : js.Object = ".input-tags"
+  /*    val inputTags : js.Object = ".input-tags"
       $(inputTags).selectize({
         SelectizeConfig
           .delimiter(",")
           .persist(false)
           .create(true)
       }
-      )
+      )*/
+  val selectState : js.Object = ".select-state"
+  $(selectState).selectize(SelectizeConfig.maxItems(10))
 }
 
 def mounted(): Callback = Callback {
@@ -102,7 +104,6 @@ def mounted(): Callback = Callback {
   initializeTagsInput
   LGCircuit.dispatch(CreateLabels())
 }
-
 
     def render(s: State, p: Props) = {
 
@@ -167,7 +168,14 @@ def mounted(): Callback = Callback {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                    <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                      <.option(^.value:="")("Select"),
+                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                      <.option(^.value:="Synereo")("@Synereo"),
+                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                      <.option(^.value:="Synereo1")("@Synereo1")
+                    )
 
                   )
                 ),
@@ -305,7 +313,14 @@ def mounted(): Callback = Callback {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
-                    <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                   // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                      <.option(^.value:="")("Select"),
+                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                      <.option(^.value:="Synereo")("@Synereo"),
+                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                      <.option(^.value:="Synereo1")("@Synereo1")
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -332,7 +347,14 @@ def mounted(): Callback = Callback {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
-                     <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                   //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                      <.option(^.value:="")("Select"),
+                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                      <.option(^.value:="Synereo")("@Synereo"),
+                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                      <.option(^.value:="Synereo1")("@Synereo1")
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -517,7 +539,14 @@ def mounted(): Callback = Callback {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
+                     // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
+                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                      <.option(^.value:="")("Select"),
+                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                      <.option(^.value:="Synereo")("@Synereo"),
+                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                      <.option(^.value:="Synereo1")("@Synereo1")
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
