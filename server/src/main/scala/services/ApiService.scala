@@ -1,7 +1,7 @@
 package services
 
 import shared._
-import mockdata.MockFiles
+import mockdata.{MessagesMock, JobPostsMock, MockFiles}
 import play.api.Play.current
 import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -62,13 +62,16 @@ class ApiService extends Api {
   }*/
 
   override def getProjects(requestContent: String): String = {
-    val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
+//    val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
+    /*println(json)*/
+    val json = JobPostsMock.content
     /*println(json)*/
     json
   }
   override def getMessages(requestContent: String): String = {
-    val json = scala.io.Source.fromFile(MockFiles.messagesJsonLoc).getLines().map(_.trim).mkString
+    /*val json = scala.io.Source.fromFile(MockFiles.messagesJsonLoc).getLines().map(_.trim).mkString*/
     /*println(json)*/
+    val json = MessagesMock.content
     json
   }
 

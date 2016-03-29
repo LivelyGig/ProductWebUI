@@ -29,7 +29,7 @@ object Application extends Controller {
 
   def autowireApi(path: String) = Action.async(parse.raw) {
     implicit request =>
-      println(s"Applicaiton - Request path: $path")
+      println(s"Application - Request path: $path")
 
       // get the request body as Array[Byte]
       val b = request.body.asBytes(parse.UNLIMITED).get
