@@ -29,6 +29,7 @@ object DashBoardCSS {
     val rsltContainer = style(
       display.inlineBlock,
       fontSize(1.2.em),
+      backgroundColor(c"#EAEAEA"),
       media.maxWidth(1199.px) -(
         width(100.%%)
         ),

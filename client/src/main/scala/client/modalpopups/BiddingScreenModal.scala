@@ -390,11 +390,11 @@ object BiddingScreenModalForm {
                 ),
                 <.div(^.id := "Escrow3", ^.minHeight := "100%")(
                   <.span(^.fontWeight := "bold")("Status: Funded"), <.br(),
-                  "Funding received", <.br(),
+                  // "Funding received", <.br(),
                   "The following deposits were made into this contract:", <.br(),
-                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 1"), <.br(),
-                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
-                  "pending funding from buyer"
+                  <.span (^.fontWeight.bold) ("4.34000"), " XBT From: @Pam Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("details"), <.br(),
+                  <.span (^.fontWeight.bold) ("0.38000"), " XBT From: @Abed Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("detials"), <.br(),
+                  <.span (^.fontWeight.bold) ("4.72000"), " XBT Total ($1,945.80)"
                 ),
                 <.div(^.id := "Escrow4", ^.minHeight := "100%")(
                   <.span(^.fontWeight := "bold")("Status: Pay Escrow Setup Commission"), <.br(),

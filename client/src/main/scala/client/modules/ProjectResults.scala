@@ -119,11 +119,11 @@ object ProjectsList {
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
               "Job Type: " + project.jobPosts.`type`,
               <.br(),
-              "Posted by: LivelyGig",
+              "Posted by: @LivelyGig",
               <.br(),
               "Posted: " + new Date(project.jobPosts.postedDate).toUTCString(),
               <.br(),
-              "Recommended By: Tom",
+              "Recommended By: @Tom",
               <.br(),
               "Skills: Java, Financial Apps, cryptography"
               // project.pageOfPosts.skills.toString()
