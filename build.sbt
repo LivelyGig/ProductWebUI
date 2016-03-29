@@ -18,7 +18,7 @@ lazy val sharedJS = shared.js.settings(name := "sharedJS")
 lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable functions")
 
 // instantiate the JS project for SBT with some additional settings
-lazy val client: Project = (project in file("client"))
+lazy val client: Project = (project in file("sclient"))
   .settings(
       name := "client",
       version := Settings.version,
