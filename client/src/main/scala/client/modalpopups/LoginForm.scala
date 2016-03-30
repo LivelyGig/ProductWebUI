@@ -1,6 +1,8 @@
 package client.modals
 
+import client.LGMain.{DashboardLoc, Loc}
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
@@ -54,7 +56,6 @@ object LoginForm {
       props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
     }
 
-
     def render(s: State, p: Props) = {
            // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Sign In and Sign Up"
@@ -73,7 +74,7 @@ object LoginForm {
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
+                /*p.c.link(DashboardLoc)( */<.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login")/*)*/,
 
                 <.div(^.paddingTop := "10px")(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-4",DashBoardCSS.Style.padding0px)(

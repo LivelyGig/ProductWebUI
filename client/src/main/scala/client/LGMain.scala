@@ -52,6 +52,8 @@ object LGMain extends js.JSApp {
 
   case object BiddingScreenLoc extends Loc
 
+  case object LandingLoc extends Loc
+
   def sidebar = Callback{
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
@@ -60,7 +62,8 @@ object LGMain extends js.JSApp {
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
+    (staticRoute(root, LandingLoc) ~> renderR(ctl => LandingLocation.component(ctl))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
       | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props("messages")))
       | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props("projects")))
       | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props("contract")))
@@ -69,7 +72,7 @@ object LGMain extends js.JSApp {
       | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props("offerings")))
       | staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props("connections")))
-      ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+      ).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -88,7 +91,7 @@ object LGMain extends js.JSApp {
               ^.onClick-->sidebar)(
               <.span(Icon.bars)
             ),
-            c.link(DashboardLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
+            c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

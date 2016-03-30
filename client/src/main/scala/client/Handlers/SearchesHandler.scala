@@ -64,7 +64,6 @@ object SearchesModelHandler {
   }*/
 }
 
-
 case class CreateLabels()
 case class UpdateLabel(label: Label)
 case class SubscribeSearch()
@@ -81,7 +80,10 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         }
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         //        println("listOfLabels"+listOfLabels)
-        updated(SearchesModelHandler.GetSearchesModel(listOfLabels))
+        if (value.searchesModel.isEmpty)
+          updated(SearchesModelHandler.GetSearchesModel(listOfLabels))
+        else
+          noChange
       } else {
         updated(SearchesModelHandler.GetSearchesModel(Nil))
       }

@@ -20,7 +20,7 @@ import client.models.UserModel
 import scala.scalajs.js.{JSON}
 import org.querki.jquery.$
 
-object AgentLogin {
+object AgentLoginSignUp {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props()
 
@@ -32,15 +32,15 @@ object AgentLogin {
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
 
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+  case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback =  {
       t.modState(s => s.copy(showLoginForm = true))
     }
     def addLoginForm() : Callback = {
       t.modState(s => s.copy(showLoginForm = true))
     }
-    def addNewLoginForm() : Callback = {
-      t.modState(s => s.copy(showLoginForm = true))
+    def addNewAgentForm() : Callback = {
+      t.modState(s => s.copy(showNewAgentForm = true))
     }
 
     def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
@@ -99,6 +99,7 @@ object AgentLogin {
 //               println(userModel)
                LGCircuit.dispatch(CreateSessionForMessages(userModel))
                LGCircuit.dispatch(CreateLabels())
+               window.location.href = "/#dashboard"
 
 
             } catch {
@@ -167,7 +168,7 @@ object AgentLogin {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
     def termsOfServices() : Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false))
+      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewAgentForm = true))
     }
   }
 
@@ -178,6 +179,7 @@ object AgentLogin {
       val B = t.backend
       <.div()(
         Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn),"",""),"Login"),
+        Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn),"",""),"Sign Up"),
 //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
 //          HeaderCSS.Style.SignUpBtn)("Login"),
         if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))

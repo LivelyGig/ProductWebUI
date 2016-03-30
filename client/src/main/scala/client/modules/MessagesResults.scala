@@ -86,11 +86,14 @@ object MessagesResults {
             )
           )
         ), //col-12
-        <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-            <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
+
+        <.div(^.id := "resultsContainer")(
+          <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
             P.proxy().render(messagesRootModel =>
               MessagesList(messagesRootModel.messagesModelList)
-            ),
+            ))),
+         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
+          <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
             P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
             P.proxy().renderPending(ex => <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
               <.img(^.src := "./assets/images/processing.gif")))
