@@ -60,7 +60,7 @@ object TalentResults {
                 <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p )(
                   <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                   <.span(^.className := "checkbox-lbl"),
-                  <.div(DashBoardCSS.Style.profileNameHolder)("Name : job-title"),
+                  <.div(DashBoardCSS.Style.profileNameHolder)("Abed Shome, Videographer"),
                   <.div(^.className := "col-md-12")(
                     <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
                     <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),
@@ -73,7 +73,7 @@ object TalentResults {
                       (" Need Videographer...")
                     )
                   ),
-                  <.div(^.className := "media-left")(
+                  <.div(^.className := "media-left", ^.paddingLeft := "24px")(
                     <.a(^.href := "https://www.youtube.com/embed/0oHhD3Bk9Uc?rel=0", ^.target := "new", (
                       <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img2.jpg")
                       )
