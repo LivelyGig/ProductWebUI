@@ -19,6 +19,9 @@ object SDashboardCSS {
     val profileActionButton = style(
       backgroundColor(c"#1F85B5")
     )
+    val glanceViewName = style(
+      display.inlineBlock
+    )
     val userPost = style(
       marginTop(5.%%),
       width(100.%%),

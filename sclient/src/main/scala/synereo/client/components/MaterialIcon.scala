@@ -40,4 +40,6 @@ object MIcon {
   def modeEdit = apply("mode_edit")
 
   def keyboardArrowDown = apply("keyboard_arrow_down")
+
+  def helpOutline = apply("help_outline")
 }

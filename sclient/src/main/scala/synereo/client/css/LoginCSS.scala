@@ -19,11 +19,14 @@ object LoginCSS {
     val formPadding = style(
       padding(4.%%)
     )
-      val iconStylePasswordInputBox = style(
-        color.white,
-        marginLeft(-25.px),
-        cursor.pointer
-      )
+    val requestInviteModalStyle = style(
+      backgroundColor(c"#96989B")
+    )
+    val iconStylePasswordInputBox = style(
+      color.white,
+      marginLeft(-25.px),
+      cursor.pointer
+    )
     val loginDilogContainerDiv = style(
       width(100.%%),
       marginTop(2.%%),
@@ -122,7 +125,8 @@ object LoginCSS {
       fontSize(18.px),
       padding(10.px, 15.px),
       &.hover(
-        color(c"#D2E1E3")
+        color(c"#D2E1E3"),
+        backgroundColor.transparent.important
       )
     )
     val message = style(

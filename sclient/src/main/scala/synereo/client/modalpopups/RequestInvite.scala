@@ -129,7 +129,7 @@ object PostNewInvite {
                )
              ),
              <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()*/
-          <.div(^.className := "row")(
+          <.div(^.className := "row",LoginCSS.Style.requestInviteModalStyle)(
             <.div(^.className := "col-md-12")(
               <.div(LoginCSS.Style.modalText)(
                 "Invites aren't quite ready, however we're eager for you to join us on this journey!"

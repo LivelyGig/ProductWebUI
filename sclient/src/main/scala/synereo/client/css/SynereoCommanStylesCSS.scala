@@ -13,7 +13,7 @@ object SynereoCommanStylesCSS {
 
 
     val naviContainer = style(
-      backgroundColor(c"#00131D"),
+     // backgroundColor(c"#00131D"),
       minHeight(85.px),
       /*borderBottom(2.px, solid, c"#67EAF2"),*/
       paddingLeft(0.%%),
@@ -63,6 +63,9 @@ object SynereoCommanStylesCSS {
     val modalHeaderPadding = style(
       padding(10.px)
     )
+    val modalHeaderMarginBottom = style(
+      marginBottom(10.px)
+    )
     val modalHeaderFont = style(
       fontSize(1.em),
       paddingBottom(15.px)
@@ -74,7 +77,10 @@ object SynereoCommanStylesCSS {
       textAlign.center
     )
     val modalBorderRadius = style(
-      borderRadius(0.px)
+      borderRadius(20.px)
+    )
+    val modalBackgroundColor = style(
+      backgroundColor(c"#96989B")
     )
     val marginLeftRight = style(
       marginRight(-15.px),
@@ -85,9 +91,8 @@ object SynereoCommanStylesCSS {
     val modalBodyPadding = style(
       paddingLeft(15.px),
       paddingBottom(0.px),
-      // paddingTop(15.px),
-      paddingRight(15.px),
-      marginTop(30.px)
+      paddingTop(0.px),
+      paddingRight(15.px)
     )
 
     val replyMarginTop = style(

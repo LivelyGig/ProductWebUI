@@ -96,8 +96,8 @@ object Bootstrap {
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1  ,
         <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
           <.div(modalStyle.dialog,
-            <.div(modalStyle.content,SynereoCommanStylesCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
-              <.div(^.className:= "modalheader" , modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, P.header(hide)),
+            <.div(modalStyle.content,SynereoCommanStylesCSS.Style.modalBorderRadius,SynereoCommanStylesCSS.Style.modalBackgroundColor,  ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
+              <.div(^.className:= "modal-header" , modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding,SynereoCommanStylesCSS.Style.modalHeaderMarginBottom, P.header(hide)),
               <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
 //              <.div(modalStyle.footer, P.footer(hide))
             )

@@ -13,6 +13,9 @@ object BlogPostFullCSS {
 
     import dsl._
 
+    val blogPostFullContainer = style(
+      marginBottom(60.px)
+    )
     val blogMainImage = style(
       marginLeft.auto,
       marginRight.auto,
@@ -26,6 +29,10 @@ object BlogPostFullCSS {
     val postedImageContainerDiv = style(
 
 
+    )
+    val glanceView = style(
+      paddingTop(5.px),
+      paddingBottom(5.px)
     )
     val navigationIcons = style(
       fontSize(4.em),
@@ -68,7 +75,6 @@ object BlogPostFullCSS {
     val postedUserActionDiv = style(
       textAlign.center,
       paddingTop(20.px)
-
     )
     val postHeadlineContainerDiv = style(
       marginTop(60.px),
@@ -79,7 +85,22 @@ object BlogPostFullCSS {
       borderRadius(50.%%),
       color(c"#000000"),
       &.focus(
-        outline.none
+        outline.none.important,
+        backgroundColor.transparent.important,
+        color(c"#000000").important,
+        borderRadius(50.%%).important
+      ),
+      &.active(
+        outline.none.important,
+        backgroundColor.transparent.important,
+        color(c"#000000").important,
+        borderRadius(50.%%).important
+      ),
+      &.hover(
+        outline.none.important,
+        backgroundColor.transparent.important,
+        color(c"#000000").important,
+        borderRadius(50.%%).important
       )
     )
   }

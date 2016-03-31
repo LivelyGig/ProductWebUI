@@ -35,7 +35,9 @@ object Login {
                         ),
                         <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
                           <.input(^.`type` := "Password", ^.placeholder := "Password", LoginCSS.Style.inputStyleLoginForm),
-                          <.span(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
+                          <.span(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox),
+                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+                          //<.a(^.href := "/#synereodashboard")("Login Here")
                         ),
                         <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
                           <.div(LoginCSS.Style.keepMeLoggedIn)(

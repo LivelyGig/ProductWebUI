@@ -45,8 +45,8 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => buildMenuItem("WATCH THE VIDEO", 0), DashboardLoc),
-    MenuItem(2, _ => buildMenuItem("WHAT IS SYNEREO", 0), DashboardLoc)
+    MenuItem(1, _ => buildMenuItem("WHAT IS SYNEREO", 0), DashboardLoc),
+    MenuItem(2, _ => buildMenuItem("WATCH THE VIDEO", 0), DashboardLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
@@ -58,12 +58,12 @@ object MainMenu {
             <.li(^.className := "active")(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
-                "WHAT IS SYNEREO")
+                "WATCH THE VIDEO")
             ),
             <.li()(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                <.span(LoginCSS.Style.navLiAIcon)(MIcon.help),
-                "WATCH THE VIDEO"
+                <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
+                "WHAT IS SYNEREO"
               )
             )
           )

@@ -16,7 +16,7 @@ import scalacss.ScalaCssReact._
 object BlogPostFull {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid")(
+      <.div(^.className := "container-fluid",BlogPostFullCSS.Style.blogPostFullContainer)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
@@ -109,17 +109,68 @@ object BlogPostFull {
                               <.span("1 hour")
                             )
                           ),
-                          <.div(^.className := " col-md-12 text-center")(
-                            <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
-                              , BlogPostFullCSS.Style.collapsePostsButton)(
-                              <.span(MIcon.keyboardArrowDown)
-                            ),
-                            <.div (^.id:="collapse-post",^.className:="collapse")
-                            ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-                              "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
-                              "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
-                              " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
-                              "Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                          /*collapsible component*/
+                          <.div(^.className := "row")(
+                            /* <.div(^.className := " col-md-12 text-center")(
+                               <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
+                                 , BlogPostFullCSS.Style.collapsePostsButton)(
+                                 <.span(MIcon.keyboardArrowDown)
+                               )
+                             ),*/
+                            <.div(^.className := " col-md-12")(
+                              <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
+                                <.div(^.className := "col-md-1")(
+                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar)
+                                ),
+                                <.div(^.className := "col-md-9", SDashboardCSS.Style.glanceViewName)(
+                                  <.span("James Gosling", ^.fontWeight.bold), <.br(),
+                                  <.span("19 Mins Ago")
+                                ),
+                                <.div(^.className := " col-md-2 text-center")(
+                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
+                                    , BlogPostFullCSS.Style.collapsePostsButton)(
+                                    <.span(MIcon.moreHoriz)
+                                  )
+                                )
+                              ),
+                              <.div(^.id := "collapse-post", ^.className := "collapse")
+                              ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+                                "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
+                                "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
+                                " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
+                                "Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                            )
+                          ),
+                          <.div(^.className := "row")(
+                            /*     <.div(^.className := " col-md-12 text-center")(
+                                   <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1"
+                                     , BlogPostFullCSS.Style.collapsePostsButton)(
+                                     <.span(MIcon.keyboardArrowDown)
+                                   )
+                                 ),*/
+                            <.div(^.className := " col-md-12")(
+                              <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
+                                <.div(^.className := "col-md-1")(
+                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar)
+                                ),
+                                <.div(^.className := "col-md-9", SDashboardCSS.Style.glanceViewName)(
+                                  <.span("Evan Moore", ^.fontWeight.bold), <.br(),
+                                  <.span("19 Mins Ago")
+                                ),
+                                <.div(^.className := " col-md-2 text-center")(
+                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1"
+                                    , BlogPostFullCSS.Style.collapsePostsButton)(
+                                    <.span(MIcon.moreHoriz)
+                                  )
+                                )
+                              ),
+                              <.div(^.id := "collapse-post1", ^.className := "collapse")
+                              ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+                                "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
+                                "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
+                                " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
+                                "Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                            )
                           )
                         )
                       ),
