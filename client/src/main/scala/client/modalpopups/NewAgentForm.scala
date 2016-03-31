@@ -63,7 +63,7 @@ object NewAgentForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.addNewAgent)
+//      println(state.addNewAgent)
       props.submitHandler(state.userModel, state.addNewAgent, state.showTermsOfServicesForm)
     }
 

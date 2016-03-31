@@ -1,7 +1,7 @@
 package client.modals
 
 //import japgolly.scalajs.react.extra.OnUnmount
-import client.handlers.{CreateSessionForMessages, CreateLabels, LoginUser}
+import client.handlers.{RefreshConnections, CreateSessionForMessages, CreateLabels, LoginUser}
 import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
@@ -99,6 +99,7 @@ object AgentLoginSignUp {
 //               println(userModel)
                LGCircuit.dispatch(CreateSessionForMessages(userModel))
                LGCircuit.dispatch(CreateLabels())
+               LGCircuit.dispatch(RefreshConnections())
                window.location.href = "/#dashboard"
 
 

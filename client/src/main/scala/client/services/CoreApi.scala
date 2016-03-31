@@ -58,7 +58,7 @@ object CoreApi {
 
   def getConnections () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem(CONNECTIONS_SESSION_URI))))
-    AjaxClient[Api].sessionPing(requestContent).call()
+    AjaxClient[Api].getConnections(requestContent).call()
   }
   def getMessages () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(MESSAGES_SESSION_URI))))

@@ -10,6 +10,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
+import org.denigma.selectize
 import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import client.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
@@ -99,7 +100,9 @@ def initializeTagsInput() : Unit = {
       }
       )*/
   val selectState : js.Object = ".select-state"
-  $(selectState).selectize(SelectizeConfig.maxItems(10))
+  $(selectState).selectize(SelectizeConfig
+    .maxItems(10)
+      .plugins("remove_button"))
 }
 
 def mounted(): Callback = Callback {
@@ -543,10 +546,10 @@ def mounted(): Callback = Callback {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                      // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
+//                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+//                      <.option(^.value:="")("Select"),
                       LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
-                    )
+//                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -673,10 +676,12 @@ object SearchesConnectionList {
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 
   val component = ReactComponentB[Props]("SearchesConnectionList")
-      .render_P((P) => <.div( P.proxy().render(connectionsRootModel =>
-        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=connection.name)(connection.name)
-
-      ) ))
+      .render_P((P) =>    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+        <.option(^.value:="")("Select"),
+        P.proxy().render(connectionsRootModel =>
+        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=connection.name,^.key:=connection.connection.target)(connection.name)
+        ))
+      )
     .build
 
   def apply (props: Props) = component(props)

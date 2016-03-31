@@ -1,5 +1,7 @@
 package client.modals
 
+import client.modules.SearchesConnectionList
+import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -7,13 +9,17 @@ import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS,ProjectCSS}
+import org.querki.jquery._
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.denigma.selectize._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
 
 
   case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
@@ -71,8 +77,11 @@ object PostNewMessage {
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
     }
-    def mounted(props: Props): Callback = Callback {
-
+    def mounted(): Callback = Callback {
+      val selectState : js.Object = ".select-state"
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button"))
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -102,7 +111,13 @@ object PostNewMessage {
               <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
             ),
             <.div()(
-              <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
+             // <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
+              /*<.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                <.option(^.value:="")("Select"),
+                <.option(^.value:="LivelyGig")("@LivelyGig"),
+                <.option(^.value:="Synereo")("@Synereo")
+              )*/
+                LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
             ),
             <.div()(
               <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop )
@@ -130,6 +145,7 @@ object PostNewMessage {
            scope.$.backend.hideModal
          }
     })
+      .componentDidMount(scope => scope.backend.mounted())
     .build
   def apply(props: Props) = component(props)
 }

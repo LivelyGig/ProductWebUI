@@ -2,7 +2,7 @@ package services
 
 import com.typesafe.config.ConfigFactory
 import shared._
-import mockdata.{MessagesMock, JobPostsMock}
+import mockdata.{ConnectionsMockData, MessagesMock, JobPostsMock}
 import play.api.Play.current
 import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -47,14 +47,12 @@ class ApiService extends Api {
     }
   }
 
-  /*override def getConnections(requestContent: String): Future[String] = {
+  override def getConnections(requestContent: String): String = {
     println(write(requestContent))
-    WS.url(BASE_URL).post(/*write(ApiRequest(SESSION_PING,sessionPingRequest))*/ requestContent).map {
-      response =>
-        //        println("response.json.toString() = "+response.json.toString())
-        response.json.toString()
-    }
-  }*/
+    val json = ConnectionsMockData.content
+    /*println(json)*/
+    json
+  }
 
   override def getProjects(requestContent: String): String = {
 //    val json = scala.io.Source.fromFile(MockFiles.jobsPostJsonLoc).getLines().map(_.trim).mkString
