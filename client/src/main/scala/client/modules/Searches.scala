@@ -1,11 +1,14 @@
 package client.modules
 
 import client.components.{Icon}
+import diode.data.Pot
+import diode.react._
+import diode.react.ReactPot._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
-import client.rootmodels.SearchesRootModel
+import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
 import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import client.models.{Label, UserModel}
@@ -542,10 +545,7 @@ def mounted(): Callback = Callback {
                      // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
                     <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                       <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
+                      LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
                     )
                   )
                 ),
@@ -667,6 +667,20 @@ def mounted(): Callback = Callback {
     .build
 
   def apply(props: Props) = component(props)
+}
+
+object SearchesConnectionList {
+  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
+
+  val component = ReactComponentB[Props]("SearchesConnectionList")
+      .render_P((P) => <.div( P.proxy().render(connectionsRootModel =>
+        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=connection.name)(connection.name)
+
+      ) ))
+    .build
+
+  def apply (props: Props) = component(props)
+
 }
 
 

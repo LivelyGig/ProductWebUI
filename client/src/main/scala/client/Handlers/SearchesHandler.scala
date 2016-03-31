@@ -89,21 +89,14 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       }
     case UpdateLabel(label) =>
       SearchesModelHandler.listE.clear()
-//      value.
-//      SearchesModelHandler.searchLabels.clear()
-val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
+      val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       if (!children.isEmpty){
-//        val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
         val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else e)
         updated(SearchesRootModel(test))
       }
       val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
-//      val allLeafs = label +: childrenToParent
-//      if(label.isChecked == true)
-//        SearchesModelHandler.searchLabels.append(allLeafs.seq)
       val modelModified = value.searchesModel.map(e=> if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
         else e)
-//       println(modelModified)
       val modelToUpdate = modelModified.map(e=>if (e.parentUid=="self" && childrenToParent.exists(p=>p.uid == e.uid)){
         SearchesModelHandler.listE.clear()
         val childList = SearchesModelHandler.GetChildren(e,modelModified)
@@ -121,12 +114,9 @@ val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       selectedRootParents.foreach{selectedRootParent=>
         SearchesModelHandler.listE.clear()
           val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent,value.searchesModel).filter(e=>e.isChecked==true)
-//        println("selectedRootParent"+selectedRootParent)
         val family = (selectedChildren:+selectedRootParent)
-//        println("family in "+family)
         labelFamilies.append(family)
       }
-      println("labelfamilies:"+Utils.GetLabelProlog(labelFamilies))
       window.sessionStorage.setItem("currentSearchLabel",Utils.GetLabelProlog(labelFamilies))
       labelFamilies.clear()
       noChange
