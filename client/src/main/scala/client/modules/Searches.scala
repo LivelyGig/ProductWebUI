@@ -34,6 +34,13 @@ object Searches {
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
+  def initializeTagsInput() : Unit = {
+    val selectState : js.Object = ".select-state"
+    println($(selectState).get())
+    $(selectState).selectize(SelectizeConfig
+      .maxItems(10)
+      .plugins("remove_button"))
+  }
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -54,10 +61,7 @@ object Searches {
     }
 
 
-    /*def labelChecked: Leaf = Callback{
 
-    }*/
-    val typedate : js.Object = "#availableToDate"
 
 def initializeDatepicker() : Unit = {
   val baseOpts = BootstrapDatepickerOptions.
@@ -88,21 +92,6 @@ def initializeDatepicker() : Unit = {
   //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
   //      save()
   //    })
-}
-
-def initializeTagsInput() : Unit = {
-  /*    val inputTags : js.Object = ".input-tags"
-      $(inputTags).selectize({
-        SelectizeConfig
-          .delimiter(",")
-          .persist(false)
-          .create(true)
-      }
-      )*/
-  val selectState : js.Object = ".select-state"
-  $(selectState).selectize(SelectizeConfig
-    .maxItems(10)
-      .plugins("remove_button"))
 }
 
 def mounted(): Callback = Callback {
@@ -674,14 +663,29 @@ def mounted(): Callback = Callback {
 
 object SearchesConnectionList {
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
-
+/*case class Bac*/
+case class Backend(t: BackendScope[Props, _]) {
+  def initializeTagsInput() : Unit = {
+    val selectState : js.Object = ".select-state"
+    println($(selectState).get())
+    $(selectState).selectize(SelectizeConfig
+      .maxItems(10)
+      .plugins("remove_button"))
+  }
+  def mounted() : Callback = Callback {
+    initializeTagsInput()
+  }
+  def render (props: Props) = {
+    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+      <.option(^.value:="")("Select"),
+      props.proxy().render(connectionsRootModel =>
+        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
+      ))
+  }
+}
   val component = ReactComponentB[Props]("SearchesConnectionList")
-      .render_P((P) =>    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-        <.option(^.value:="")("Select"),
-        P.proxy().render(connectionsRootModel =>
-        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=connection.name,^.key:=connection.connection.target)(connection.name)
-        ))
-      )
+        .renderBackend[Backend]
+      .componentDidMount(scope => scope.backend.mounted())
     .build
 
   def apply (props: Props) = component(props)

@@ -4,8 +4,8 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{SubscribeSearch, RefreshMessages, RefreshProjects}
-import client.rootmodels.{MessagesRootModel, ProjectsRootModel}
+import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
+import client.rootmodels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
 import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import client.modals.PostNewMessage
 import japgolly.scalajs.react._
@@ -31,7 +31,10 @@ object MessagesResults {
     def mounted(props: Props) = {
       if (props.proxy().isEmpty){
 //          LGCircuit.dispatch(SubscribeSearch())
+        LGCircuit.dispatch(RefreshConnections())
           props.proxy.dispatch(RefreshMessages())
+
+//        props.proxy.dispatch(RefreshMessages())
 
       } else {
         Callback.empty

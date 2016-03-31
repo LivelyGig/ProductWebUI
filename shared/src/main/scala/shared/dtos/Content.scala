@@ -44,7 +44,7 @@ case class CancelSubscribeRequest (sessionURI: String, connections: Seq[Connecti
 
 case class Expression (msgType: String, content: ExpressionContent)
 
-case class ExpressionContent(cnxns: Seq[Connection], label: String)
+case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
 case class any(labels: Seq[String])
 

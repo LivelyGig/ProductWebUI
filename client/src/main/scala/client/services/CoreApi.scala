@@ -1,5 +1,7 @@
 package client.services
 
+import client.handlers.RefreshConnections
+import client.modules.Searches
 import client.utils.Utils
 import shared.Api
 import shared.dtos._
@@ -70,6 +72,7 @@ object CoreApi {
     //    todo move the logic from button click messages subscription to messages feed
     val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
     if (messageSearchClick != null) {
+//      Searches.initializeTagsInput()
       window.sessionStorage.setItem("previousSearchLabel",currentLabels)
       for {
         cancel <- cancelSubscriptionRequest(cancelPreviousRequest)

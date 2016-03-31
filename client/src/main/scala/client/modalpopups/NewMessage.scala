@@ -78,10 +78,10 @@ object PostNewMessage {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(): Callback = Callback {
-      val selectState : js.Object = ".select-state"
+      /*val selectState : js.Object = ".select-state"
       $(selectState).selectize(SelectizeConfig
         .maxItems(10)
-        .plugins("remove_button"))
+        .plugins("remove_button"))*/
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
