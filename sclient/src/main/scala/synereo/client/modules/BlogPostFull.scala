@@ -6,14 +6,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{SynereoBlogPostFullCSS, SynereoCommanStylesCSS, SynereoDashboardCSS}
+import synereo.client.css.{BlogPostFullCSS, SynereoCommanStylesCSS, SDashboardCSS}
 
 import scalacss.ScalaCssReact._
 
 /**
   * Created by Mandar on 3/22/2016.
   */
-object SynereoBlogPostFull {
+object BlogPostFull {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
       <.div(^.className := "container-fluid")(
@@ -21,18 +21,18 @@ object SynereoBlogPostFull {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-1")(
-                <.span(MIcon.chevronLeft, SynereoBlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.chevronLeft, BlogPostFullCSS.Style.navigationIcons)
               ),
               <.div(^.className := "col-md-10")(
-                <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postedImageContainerDiv)(
-                  <.img(^.src := "./assets/images/blogpostimg.png", SynereoBlogPostFullCSS.Style.blogMainImage)
+                <.div(^.className := "row", BlogPostFullCSS.Style.postedImageContainerDiv)(
+                  <.img(^.src := "./assets/images/blogpostimg.png", BlogPostFullCSS.Style.blogMainImage)
                 ),
-                <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postedUserInfoContainerDiv)(
+                <.div(^.className := "row", BlogPostFullCSS.Style.postedUserInfoContainerDiv)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                      <.div(^.className := " col-md-12", SynereoBlogPostFullCSS.Style.postedUserAvatarDiv)(
-                        <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
-                        <.div(SynereoDashboardCSS.Style.userNameDescription)(
+                      <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
+                        <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
+                        <.div(SDashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
                           <.span(MIcon.chevronRight),
                           <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
@@ -41,26 +41,26 @@ object SynereoBlogPostFull {
                       )
                     ),
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                      <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.postedUserActionDiv)(
+                      <.div(^.className := "col-md-12", BlogPostFullCSS.Style.postedUserActionDiv)(
                         <.div(^.className := "pull-right")(
-                          <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
                             <.span(MIcon.chatBubble),
                             <.span("6")
                           ),
-                          <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
                             <.span(MIcon.share),
                             <.span("36")
                           ),
-                          <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
                             <.span(MIcon.share),
                             <.span("4")
                           ),
-                          <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
                             <.span(Icon.minus),
                             <.span(Icon.heartO),
                             <.span(Icon.plus)
                           ),
-                          <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
                             <.span(MIcon.moreVert)
                           )
                         )
@@ -69,14 +69,14 @@ object SynereoBlogPostFull {
                   )
 
                 ),
-                <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postedUserInfoContainerDiv)(
+                <.div(^.className := "row", BlogPostFullCSS.Style.postedUserInfoContainerDiv)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "col-md-offset-2 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12")(
-                      <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postHeadlineContainerDiv)(
+                      <.div(^.className := "row", BlogPostFullCSS.Style.postHeadlineContainerDiv)(
                         <.h1("\"The Beauty of Island\""),
                         <.h4(<.span(Icon.mapMarker)("xyz abc Island"))
                       ),
-                      <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postDescription)(
+                      <.div(^.className := "row", BlogPostFullCSS.Style.postDescription)(
                         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. " +
                           "Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat. " +
                           "Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
@@ -87,23 +87,23 @@ object SynereoBlogPostFull {
                           " +\n\"non\\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum"
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.tagsEditorsDiv)(
+                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsEditorsDiv)(
                           <.div("editable area for tags to add and remove tags "),
                           <.span(MIcon.modeEdit)
                         )
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.tagsResponsesDiv)(
-                          <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.tagsResponseHeadingSmall)(
+                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponsesDiv)(
+                          <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponseHeadingSmall)(
                             "Responses"
                           ),
-                          <.div(^.className := "col-md-12", SynereoDashboardCSS.Style.userPost)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
-                            <.input(SynereoDashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
+                          <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
+                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
+                            <.input(SDashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                           ),
-                          <.div(^.className := " col-md-12", SynereoBlogPostFullCSS.Style.postedUserAvatarDiv)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
-                            <.div(SynereoDashboardCSS.Style.userNameDescription)(
+                          <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
+                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
+                            <.div(SDashboardCSS.Style.userNameDescription)(
                               <.span("James Everet"),
                               <.br(),
                               <.span("1 hour")
@@ -111,7 +111,7 @@ object SynereoBlogPostFull {
                           ),
                           <.div(^.className := " col-md-12 text-center")(
                             <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
-                              , SynereoBlogPostFullCSS.Style.collapsePostsButton)(
+                              , BlogPostFullCSS.Style.collapsePostsButton)(
                               <.span(MIcon.keyboardArrowDown)
                             ),
                             <.div (^.id:="collapse-post",^.className:="collapse")
@@ -124,7 +124,7 @@ object SynereoBlogPostFull {
                         )
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.tagsResponseHeadingSmall, SynereoCommanStylesCSS.Style.bottomBorderOnePx)(
+                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponseHeadingSmall, SynereoCommanStylesCSS.Style.bottomBorderOnePx)(
                           "Similar Content Loved by your network"
                         )
                       ),
@@ -188,8 +188,8 @@ object SynereoBlogPostFull {
                 )
               ),
               <.div(^.className := "col-md-1")(
-                <.span(MIcon.close, SynereoBlogPostFullCSS.Style.closeIcon),
-                <.span(MIcon.chevronRight, SynereoBlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.close, BlogPostFullCSS.Style.closeIcon),
+                <.span(MIcon.chevronRight, BlogPostFullCSS.Style.navigationIcons)
               )
             )
 

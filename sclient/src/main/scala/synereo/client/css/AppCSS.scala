@@ -8,19 +8,10 @@ import scalacss.mutable.GlobalRegistry
 object AppCSS {
   def load() {
     GlobalRegistry.register(
-      HeaderCSS.Style,
-      /*LftcontainerCSS.Style,*/
-      /*FooterCSS.Style,*/
-      DashBoardCSS.Style,
-      /*CreateAgentCSS.Style,*/
-      /*MessagesCSS.Style,*/
-      /*ProjectCSS.Style,*/
-      /*BiddingScreenCSS.Style,*/
-      /*PresetsCSS.Style,*/
-      SynereoLoginCSS.Style,
-      SynereoDashboardCSS.Style,
-      SynereoBlogPostFullCSS.Style,
       SynereoCommanStylesCSS.Style,
+      LoginCSS.Style,
+      SDashboardCSS.Style,
+      BlogPostFullCSS.Style,
       UserProfileViewCSS.Style,
       UserTimelineViewCSS.Style
     )

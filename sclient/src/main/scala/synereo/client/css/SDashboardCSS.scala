@@ -6,7 +6,7 @@ import scalacss.Defaults._
   * Created by Mandar on 3/17/2016.
   */
 
-object SynereoDashboardCSS {
+object SDashboardCSS {
 
   object Style extends StyleSheet.Inline {
 

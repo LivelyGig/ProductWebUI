@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.SynereoLoginCSS
+import synereo.client.css.LoginCSS
 import synereo.client.components.jQuery
 
 import scalacss.Defaults._
@@ -131,14 +131,14 @@ object PostNewInvite {
              <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()*/
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
-              <.div(SynereoLoginCSS.Style.modalText)(
+              <.div(LoginCSS.Style.modalText)(
                 "Invites aren't quite ready, however we're eager for you to join us on this journey!"
               ),
               <.div()(
-                <.input(^.`type` := "text", SynereoLoginCSS.Style.textareaModal, ^.placeholder := "you@email.com")
+                <.input(^.`type` := "text", LoginCSS.Style.textareaModal, ^.placeholder := "you@email.com")
               ),
               <.div()(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", SynereoLoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", LoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")
               )
             )
           )

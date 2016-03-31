@@ -9,7 +9,7 @@ import SYNEREOMain._
 import synereo.client.Handlers.LoginUser
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.{MIcon, Bootstrap, GlobalStyles, Icon}
-import synereo.client.css.{DashBoardCSS, SynereoLoginCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
 import synereo.client.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
@@ -38,7 +38,7 @@ object MainMenu {
       retRE = <.span(
         <.span(mItem),
         //        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
-        <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter)
+        <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, SynereoCommanStylesCSS.Style.inputBtnRadius, counter)
       )
     }
     return retRE
@@ -56,13 +56,13 @@ object MainMenu {
         <.div(^.className := "container-fluid")(
           <.ul(^.className := "nav navbar-nav navbar-right")(
             <.li(^.className := "active")(
-              <.a(^.href := "http://www.synereo.com/", SynereoLoginCSS.Style.navLiAStyle)(
-                <.span(SynereoLoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
+              <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
+                <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
                 "WHAT IS SYNEREO")
             ),
             <.li()(
-              <.a(^.href := "http://www.synereo.com/", SynereoLoginCSS.Style.navLiAStyle)(
-                <.span(SynereoLoginCSS.Style.navLiAIcon)(MIcon.help),
+              <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
+                <.span(LoginCSS.Style.navLiAIcon)(MIcon.help),
                 "WATCH THE VIDEO"
               )
             )

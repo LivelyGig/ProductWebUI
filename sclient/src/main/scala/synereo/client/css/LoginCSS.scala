@@ -5,7 +5,7 @@ import scalacss.Defaults._
 /**
   * Created by Mandar  on 3/11/2016.
   */
-object SynereoLoginCSS {
+object LoginCSS {
 
   object Style extends StyleSheet.Inline {
 

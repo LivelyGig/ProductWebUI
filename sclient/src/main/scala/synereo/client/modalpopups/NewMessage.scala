@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.DashBoardCSS
+import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.components.jQuery
 import scala.language.reflectiveCalls
 
@@ -92,33 +92,33 @@ object PostNewMessage {
       val headerText = p.header
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(SynereoCommanStylesCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-            <.div(DashBoardCSS.Style.marginTop10px)(
+          <.div(^.className:="row" , SynereoCommanStylesCSS.Style.MarginLeftchkproduct)(
+            <.div(SynereoCommanStylesCSS.Style.marginTop10px)(
             ),
             <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(SynereoCommanStylesCSS.Style.modalHeaderFont)("To"))
             ),
             <.div()(
               <.input(^.`type` := "text")
             ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Subject",DashBoardCSS.Style.replyMarginTop )
+              <.textarea(^.rows:= 6,^.placeholder:="Subject",SynereoCommanStylesCSS.Style.replyMarginTop )
              ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",DashBoardCSS.Style.replyMarginTop )
+              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",SynereoCommanStylesCSS.Style.replyMarginTop )
             )
           ),
           <.div()(
-              <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+              <.div(SynereoCommanStylesCSS.Style.modalHeaderPadding,SynereoCommanStylesCSS.Style.footTextAlign)(
+              <.button(^.tpe := "submit",^.className:="btn btn-default", SynereoCommanStylesCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
+              <.button(^.tpe := "button",^.className:="btn btn-default", SynereoCommanStylesCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.marginTop10px,SynereoCommanStylesCSS.Style.marginLeftRight)()
         )
       )
     }

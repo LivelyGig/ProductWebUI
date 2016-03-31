@@ -12,7 +12,7 @@ import scalacss.ScalaCssReact._
 /**
   * Created by Mandar on 3/28/2016.
   */
-object SynereoUserProfileView {
+object UserProfileView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
       <.div(^.className := "container-fluid")(
