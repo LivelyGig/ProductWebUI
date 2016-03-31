@@ -49,7 +49,7 @@ object CoreApi {
   def agentLogin(userModel: UserModel): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     val requestContent = upickle.default.write(ApiRequest(INITIALIZE_SESSION_MSG,InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")))
-    println("login data : " + requestContent)
+//    println("login data : " + requestContent)
     AjaxClient[Api].agentLogin(requestContent).call()
   }
 
@@ -61,6 +61,7 @@ object CoreApi {
   def getConnections () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem(CONNECTIONS_SESSION_URI))))
     AjaxClient[Api].getConnections(requestContent).call()
+//    AjaxClient[Api].sessionPing(requestContent).call()
   }
   def getMessages () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(MESSAGES_SESSION_URI))))

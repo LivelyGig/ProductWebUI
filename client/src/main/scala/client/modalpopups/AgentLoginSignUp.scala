@@ -71,7 +71,7 @@ object AgentLoginSignUp {
 
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
               showNewAgentForm: Boolean = false) : Callback = {
-      log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
+//      log.debug(s"Login agentLoginModel: ${userModel}, login: ${login}, showConfirmAccountCreation: ${showConfirmAccountCreation}")
       if (login){
         val loginLoader:js.Object = "#loginLoader"
         val dashboardContainer:js.Object = ".dashboard-container"

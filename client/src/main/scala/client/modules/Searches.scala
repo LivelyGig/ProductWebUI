@@ -36,7 +36,7 @@ object Searches {
   }
   def initializeTagsInput() : Unit = {
     val selectState : js.Object = ".select-state"
-    println($(selectState).get())
+//    println($(selectState).get())
     $(selectState).selectize(SelectizeConfig
       .maxItems(10)
       .plugins("remove_button"))
@@ -537,7 +537,14 @@ def mounted(): Callback = Callback {
                      // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
 //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
 //                      <.option(^.value:="")("Select"),
-                      LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+                      /*LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))*/
+                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                      <.option(^.value:="")("Select"),
+                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                      <.option(^.value:="Synereo")("@Synereo"),
+                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                      <.option(^.value:="Synereo1")("@Synereo1")
+                    )
 //                    )
                   )
                 ),
