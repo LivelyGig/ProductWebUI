@@ -19,6 +19,11 @@ object SynereoLoginCSS {
     val formPadding = style(
       padding(4.%%)
     )
+      val iconStylePasswordInputBox = style(
+        color.white,
+        marginLeft(-25.px),
+        cursor.pointer
+      )
     val loginDilogContainerDiv = style(
       width(100.%%),
       marginTop(2.%%),
@@ -58,7 +63,7 @@ object SynereoLoginCSS {
       width(70.%%),
       borderRadius(5.px),
       border(1.px, solid, c"#3C4346"),
-      height(40.px ),
+      height(40.px),
       padding(4.%%),
       fontSize(18.px)
     )
@@ -79,17 +84,16 @@ object SynereoLoginCSS {
     )
     val forgotMyPassLink = style(
       float.right,
-      paddingTop(10.px),
       marginRight(65.px),
       color(c"#35b0e2"),
-      &.hover (
+      &.hover(
         color(c"#35b0e2"),
         border.none
       )
     )
     val navLiAStyle = style(
       fontSize(1.1.em),
-      &hover(
+      & hover(
         color(c"#35b0e2"),
         backgroundColor.transparent.important
         )
@@ -116,7 +120,7 @@ object SynereoLoginCSS {
       color(c"#D2E1E3"),
       border(0.2.px, solid, c"#D2E1E3"),
       fontSize(18.px),
-      padding(10.px,15.px),
+      padding(10.px, 15.px),
       &.hover(
         color(c"#D2E1E3")
       )
@@ -125,7 +129,7 @@ object SynereoLoginCSS {
       fontSize(24.px),
       fontWeight.normal
     )
-    val subscribeButton = style (
+    val subscribeButton = style(
       backgroundColor(c"#F58634").important,
       fontSize(1.7.em),
       color.white.important,
@@ -135,14 +139,15 @@ object SynereoLoginCSS {
       fontSize(4.em),
       padding(40.px)
     )
-    val textareaModal= style(
+    val textareaModal = style(
       marginTop(20.px),
       marginBottom(20.px),
-      borderBottom(2.px,solid,black),
+      borderBottom(2.px, solid, black),
       fontSize(1.5.em),
       fontWeight._700,
       backgroundColor.transparent.important,
-      padding(10.px,20.px)
+      padding(10.px, 20.px)
     )
   }
+
 }

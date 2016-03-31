@@ -14,11 +14,14 @@ object SynereoCommanStylesCSS {
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
     )
-    val paddingRightZero= style(
+    val paddingRightZero = style(
       paddingRight(0.px).important
     )
-    val paddingLeftZero= style(
+    val paddingLeftZero = style(
       paddingLeft(0.px).important
+    )
+    val synereoBlueText = style(
+      color(c"#2DBAF1")
     )
   }
 

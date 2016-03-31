@@ -5,10 +5,11 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.Icon
+import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.SynereoLoginCSS
 import synereo.client.modalpopups.RequestInvite
 
+import scalacss.Color
 import scalacss.ScalaCssReact._
 
 /**
@@ -33,10 +34,11 @@ object SynereoLogin {
                           <.input(^.`type` := "text", ^.placeholder := "User Name", SynereoLoginCSS.Style.inputStyleLoginForm), <.br()
                         ),
                         <.div(^.className := "form-group", SynereoLoginCSS.Style.inputFormLoginForm)(
-                          <.input(^.`type` := "Password", ^.placeholder := "Password", SynereoLoginCSS.Style.inputStyleLoginForm)
+                          <.input(^.`type` := "Password", ^.placeholder := "Password", SynereoLoginCSS.Style.inputStyleLoginForm),
+                          <.span(MIcon.playCircleOutline, SynereoLoginCSS.Style.iconStylePasswordInputBox)
                         ),
                         <.div(^.className := "col-md-12", SynereoLoginCSS.Style.loginFormFooter)(
-                          <.div( SynereoLoginCSS.Style.keepMeLoggedIn)(
+                          <.div(SynereoLoginCSS.Style.keepMeLoggedIn)(
                             <.input(^.`type` := "radio"), "Keep me logged in"
                           ),
                           <.a(^.href := "#", "Forgot Your Password?", SynereoLoginCSS.Style.forgotMyPassLink)
@@ -56,7 +58,7 @@ object SynereoLogin {
               <.a(^.href := "#", "Dont have an account?", SynereoLoginCSS.Style.dontHaveAccount)
             ),
             //   <.button(^.className := "btn text-center", "",),
-           /* NewMessage(NewMessage.Props("Request invite", Seq(SynereoLoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
+            /* NewMessage(NewMessage.Props("Request invite", Seq(SynereoLoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(SynereoLoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")
             )
           )

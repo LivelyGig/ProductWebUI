@@ -20,7 +20,7 @@ object SynereoDashboardCSS {
       backgroundColor(c"#1F85B5")
     )
     val userPost = style(
-      marginTop(2.%%),
+      marginTop(5.%%),
       width(100.%%),
       backgroundColor.white,
       borderRadius(5.px),
@@ -28,7 +28,7 @@ object SynereoDashboardCSS {
       paddingBottom(5.px)
     )
     val userPostRight = style(
-      marginTop(2.%%),
+      marginTop(5.%%),
       marginLeft(15.px).important,
       width(100.%%),
       backgroundColor.white,
@@ -53,11 +53,12 @@ object SynereoDashboardCSS {
       )
     )
     val userNameDescription = style(
-      width(91.%%),
+      width(89.%%),
       display.inlineBlock,
       padding(15.px)
     )
     val postActions = style(
+
 
     )
     val cardHeading = style(

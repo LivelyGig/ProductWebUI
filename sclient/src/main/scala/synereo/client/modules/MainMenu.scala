@@ -8,10 +8,10 @@ import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.Handlers.LoginUser
 import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.components.{Bootstrap, GlobalStyles, Icon}
+import synereo.client.components.{MIcon, Bootstrap, GlobalStyles, Icon}
 import synereo.client.css.{DashBoardCSS, SynereoLoginCSS}
 import synereo.client.models.UserModel
-import synereo.client.services.LGCircuit
+import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
 
@@ -28,7 +28,7 @@ object MainMenu {
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
     //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
-      Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
+      Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
   }
 
@@ -57,12 +57,12 @@ object MainMenu {
           <.ul(^.className := "nav navbar-nav navbar-right")(
             <.li(^.className := "active")(
               <.a(^.href := "http://www.synereo.com/", SynereoLoginCSS.Style.navLiAStyle)(
-                <.span(SynereoLoginCSS.Style.navLiAIcon)(Icon.play),
+                <.span(SynereoLoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
                 "WHAT IS SYNEREO")
             ),
             <.li()(
               <.a(^.href := "http://www.synereo.com/", SynereoLoginCSS.Style.navLiAStyle)(
-                <.span(SynereoLoginCSS.Style.navLiAIcon)(Icon.question),
+                <.span(SynereoLoginCSS.Style.navLiAIcon)(MIcon.help),
                 "WATCH THE VIDEO"
               )
             )

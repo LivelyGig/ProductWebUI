@@ -2,7 +2,11 @@ package synereo.client.components
 
 /*import scala.concurrent.duration._*/
 
+import japgolly.scalajs.react.ReactNode
+import japgolly.scalajs.react.vdom.prefix_<^._
+
 import scalacss.Defaults._
+
 /*import scalacss.FontFace
 import scalacss.FontFace.FontSrcSelector*/
 
@@ -13,14 +17,14 @@ import scalacss.FontFace.FontSrcSelector*/
   */
 object IconFont extends StyleSheet.Inline {
 
-/*
-  import dsl._
+  /*
+    import dsl._
 
-  val materialicons = fontFace("material-icons")(
-    _.src("url(assets/lib/iconfont/MaterialIcons-Regular.woff)")
-      .fontStretch.expanded
-      .fontStyle.normal)
-*/
+    val materialicons = fontFace("material-icons")(
+      _.src("url(assets/lib/iconfont/MaterialIcons-Regular.woff)")
+        .fontStretch.expanded
+        .fontStyle.normal)
+  */
 
 
 }

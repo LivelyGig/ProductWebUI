@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.Icon
+import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.{SynereoBlogPostFullCSS, SynereoCommanStylesCSS, SynereoDashboardCSS}
 
 import scalacss.ScalaCssReact._
@@ -21,7 +21,7 @@ object SynereoBlogPostFull {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-1")(
-                <.span(Icon.chevronLeft, SynereoBlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.chevronLeft, SynereoBlogPostFullCSS.Style.navigationIcons)
               ),
               <.div(^.className := "col-md-10")(
                 <.div(^.className := "row", SynereoBlogPostFullCSS.Style.postedImageContainerDiv)(
@@ -34,8 +34,8 @@ object SynereoBlogPostFull {
                         <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                         <.div(SynereoDashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
-                          <.span(Icon.chevronRight),
-                          <.span(^.color := "blue")("Epic Landscape Photography,Landscape love...(2)"), <.br(),
+                          <.span(MIcon.chevronRight),
+                          <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
                           <.span("1 hour")
                         )
                       )
@@ -44,24 +44,24 @@ object SynereoBlogPostFull {
                       <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.postedUserActionDiv)(
                         <.div(^.className := "pull-right")(
                           <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
-                            <.span(Icon.archive),
+                            <.span(MIcon.chatBubble),
                             <.span("6")
                           ),
                           <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
-                            <.span(Icon.dashboard),
+                            <.span(MIcon.share),
                             <.span("36")
                           ),
                           <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
-                            <.span(Icon.share),
+                            <.span(MIcon.share),
                             <.span("4")
                           ),
                           <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
                             <.span(Icon.minus),
-                            <.span(Icon.heart),
+                            <.span(Icon.heartO),
                             <.span(Icon.plus)
                           ),
                           <.button(^.className := "btn", SynereoBlogPostFullCSS.Style.postedActionbtn)(
-                            <.span(Icon.ellipsisV)
+                            <.span(MIcon.moreVert)
                           )
                         )
                       )
@@ -88,7 +88,8 @@ object SynereoBlogPostFull {
                       ),
                       <.div(^.className := "row")(
                         <.div(^.className := "col-md-12", SynereoBlogPostFullCSS.Style.tagsEditorsDiv)(
-                          <.div("editable area for tags to add and remove tags ")
+                          <.div("editable area for tags to add and remove tags "),
+                          <.span(MIcon.modeEdit)
                         )
                       ),
                       <.div(^.className := "row")(
@@ -108,10 +109,18 @@ object SynereoBlogPostFull {
                               <.span("1 hour")
                             )
                           ),
-                          <.div(^.className := " col-md-12")(
-                            "Collapsible panel or accordion  for users posts"
+                          <.div(^.className := " col-md-12 text-center")(
+                            <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
+                              , SynereoBlogPostFullCSS.Style.collapsePostsButton)(
+                              <.span(MIcon.keyboardArrowDown)
+                            ),
+                            <.div (^.id:="collapse-post",^.className:="collapse")
+                            ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+                              "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
+                              "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
+                              " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
+                              "Excepteur sint occaecat cupidatat non\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
                           )
-
                         )
                       ),
                       <.div(^.className := "row")(
@@ -179,8 +188,8 @@ object SynereoBlogPostFull {
                 )
               ),
               <.div(^.className := "col-md-1")(
-                <.span(Icon.close, SynereoBlogPostFullCSS.Style.closeIcon),
-                <.span(Icon.chevronRight, SynereoBlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.close, SynereoBlogPostFullCSS.Style.closeIcon),
+                <.span(MIcon.chevronRight, SynereoBlogPostFullCSS.Style.navigationIcons)
               )
             )
 

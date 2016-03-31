@@ -9,7 +9,7 @@ import synereo.client.models.UserModel
 
 
 /**
-  * Created by shubham.k on 1/11/2016.
+  * Created by Mandar on 3/29/2016.
   */
 
 
@@ -17,7 +17,7 @@ import synereo.client.models.UserModel
 case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: Pot[MessagesRootModel],
                      jobPosts: Pot[ProjectsRootModel], searches: SearchesRootModel)
 
-object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
+object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(Empty, UserModel("","",""), Empty, Empty, SearchesRootModel(Nil))
   // combine all handlers into one

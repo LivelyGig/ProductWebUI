@@ -59,7 +59,8 @@ lazy val server = (project in file("server"))
       scalaJSProjects := clients,
       pipelineStages := Seq(scalaJSProd, digest, gzip),
       // compress CSS
-      LessKeys.compress in Assets := true
+      LessKeys.compress in Assets := true,
+      includeFilter in (Assets, LessKeys.less) := "synereo-main.less"
   )
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom

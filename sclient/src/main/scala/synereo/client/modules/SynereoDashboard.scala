@@ -5,8 +5,8 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.Icon
-import synereo.client.css.SynereoDashboardCSS
+import synereo.client.components.{MIcon,Icon}
+import synereo.client.css.{SynereoCommanStylesCSS, SynereoDashboardCSS}
 
 import scalacss.ScalaCssReact._
 
@@ -21,10 +21,9 @@ object SynereoDashboard {
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
             <.div(^.className := "pull-right", SynereoDashboardCSS.Style.profileActionContainer)(
               <.button(^.className := "btn", SynereoDashboardCSS.Style.profileActionButton)(
-                <.span(^.color := "white")(Icon.thList),
-                <.span(^.color := "white")(Icon.adjust),
-                <.span(^.color := "white")(Icon.anchor),
-                <.span(^.color := "white")(Icon.apple)
+                <.span(^.color := "white")(MIcon.chatBubble),
+                <.span(^.color := "white")(MIcon.share),
+                <.span(^.color := "white")(MIcon.chevronRight)
               )
             )
           )
@@ -43,27 +42,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -74,27 +73,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -107,27 +106,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -138,27 +137,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -169,27 +168,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -200,27 +199,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )
@@ -231,27 +230,27 @@ object SynereoDashboard {
                     <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SynereoDashboardCSS.Style.userAvatar),
                     <.div(SynereoDashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
-                      <.span(Icon.chevronRight),
-                      <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(Icon.ellipsisV),
+                    <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                     <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", SynereoDashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(^.color := "blue")(Icon.ellipsisH)
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(SynereoDashboardCSS.Style.postActions)(
-                        <.span(Icon.thList),
-                        <.span(Icon.adjust),
-                        <.span(Icon.anchor),
-                        <.span(Icon.apple),
+                        <.span(MIcon.chatBubble),
+                        <.span(MIcon.share),
+                        <.span(MIcon.add),
+
                         <.span(^.className := "pull-right")(
-                          <.span(Icon.thList),
-                          <.span(Icon.adjust)
+                          <.span(MIcon.chatBubble),
+                          <.span(MIcon.share)
                         )
 
                       )

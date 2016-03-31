@@ -35,7 +35,7 @@ object SynereoBlogPostFullCSS {
     )
     val closeIcon = style(
       fontSize(4.em),
-      width(100%%),
+      width(100 %%),
       color.white,
       display.block
     )
@@ -73,6 +73,14 @@ object SynereoBlogPostFullCSS {
     val postHeadlineContainerDiv = style(
       marginTop(60.px),
       marginBottom(30.px)
+    )
+    val collapsePostsButton = style(
+      backgroundColor.transparent,
+      borderRadius(50.%%),
+      color(c"#000000"),
+      &.focus(
+        outline.none
+      )
     )
   }
 

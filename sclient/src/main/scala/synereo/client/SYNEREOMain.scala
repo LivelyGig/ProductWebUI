@@ -7,7 +7,7 @@ import org.scalajs.dom
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{AppCSS, DashBoardCSS, HeaderCSS}
 import synereo.client.modules._
-import synereo.client.services.LGCircuit
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
 
 import scala.scalajs.js
@@ -60,7 +60,7 @@ object SYNEREOMain extends js.JSApp {
             c.link(DashboardLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/Synereo-logo-name.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-            LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+            SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
         <.div()()
