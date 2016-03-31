@@ -417,6 +417,14 @@ object DashBoardCSS {
     val paddingLeft0px = style (
       paddingLeft(0.px)
     )
+    val imgc = style(
+      position.absolute,
+      left(0.px),
+      right(0.px),
+      top(0.px),
+      bottom(0.px),
+      margin.auto
+     )
     val verticalAlignMiddle = style (
       verticalAlign.middle
     )
