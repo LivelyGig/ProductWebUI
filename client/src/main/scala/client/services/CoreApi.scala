@@ -88,6 +88,12 @@ object CoreApi {
 
 
   }
+  def cancelAllSubscriptionRequest() = {
+    val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)
+    val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
+    val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Seq(selfConnection), previousLabels)
+    cancelSubscriptionRequest(cancelPreviousRequest)
+  }
 
   def getProjects () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG,SessionPing(window.sessionStorage.getItem("sessionURI"))))

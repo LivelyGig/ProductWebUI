@@ -7,12 +7,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{LogoutUser, LoginUser}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
-import client.modals.{UserPreferences, AgentLogin}
+import client.modals.{AgentLoginSignUp}
 import client.components._
-import client.css.{BiddingScreenCSS, FooterCSS, DashBoardCSS, HeaderCSS}
+import client.css.{DashBoardCSS, HeaderCSS}
 import client.models.UserModel
-import client.services.LGCircuit
+import client.services.{LGCircuit}
+import shared.dtos._
 import scala.scalajs.js
+import scala.util._
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
 import scala.language.reflectiveCalls
@@ -39,14 +41,14 @@ object MainMenu {
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
   case class State(isLoggedIn: Boolean = false)
-
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc, count: ReactElement , locationCount: Loc)
 
-  class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props) =
-    //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+  class Backend($: BackendScope[Props, State]) {
+    def mounted(props: Props) = {
+      //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
+    }
   }
 
   private def buildMenuItem(counter: Int): ReactElement = {
@@ -65,9 +67,8 @@ object MainMenu {
     MenuItem(5, _ => "Profiles",TalentLoc, buildMenuItem(0), DashboardLoc),
     MenuItem(6, _ => "Contracts",ContractsLoc, buildMenuItem(0), DashboardLoc),
     MenuItem(7, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc)
-    //   MenuItem(10, _ => "Wallets", AddNewAgentLoc)
   )
-  private val MainMenu = ReactComponentB[Props]("MainMenu")
+   val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
@@ -77,7 +78,7 @@ object MainMenu {
         <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
           // build a list of menu items
           for (item <- menuItems) yield {
-            if (Seq(ConnectionsLoc, MessagesLoc).contains(item.location)) {
+            if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc,TalentLoc, ContractsLoc, ConnectionsLoc, DashboardLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
                 <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                   props.ctl.link(item.location)((props.currentLoc != item.location) ?= HeaderCSS.Style.headerNavA,
@@ -144,8 +145,10 @@ object MainMenu {
               )
             )
           } else {
-            AgentLogin(AgentLogin.Props())
-          }
+            <.div(AgentLoginSignUp(AgentLoginSignUp.Props()))
+           // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailReply,"Reply" ))
+            /*NewAgentModal(NewAgentModal.Props("Sign Up",Seq(HeaderCSS.Style.rsltContainerIconBtn),"","Sign Up"))*/
+             }
         )
       )
     })

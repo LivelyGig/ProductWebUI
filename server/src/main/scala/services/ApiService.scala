@@ -1,7 +1,8 @@
 package services
 
+import com.typesafe.config.ConfigFactory
 import shared._
-import mockdata.{MessagesMock, JobPostsMock, MockFiles}
+import mockdata.{MessagesMock, JobPostsMock}
 import play.api.Play.current
 import play.api.libs.ws._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -10,14 +11,8 @@ import org.json4s.jackson.Serialization.write
 
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
-  //var BASE_URL = "http://54.187.198.243:9876/api"
-  var BASE_URL = "http://54.187.44.115:9876/api"
-  var CREATE_USER_REQUEST_MSG = "createUserRequest"
-  var CONFIRM_EMAIL_MSG = "confirmEmailToken"
-  var INITIALIZE_SESSION_MSG = "initializeSessionRequest"
-  var SESSION_PING = "sessionPing"
-  val wsRequest: WSRequest = WS.url(BASE_URL)
-
+  var BASE_URL = ConfigFactory.load().getString("api.baseURL")
+  println ("services.ApiService: loading base URL from application.conf " +BASE_URL)
 
   override def createAgent(requestContent: String): Future[ /*ApiResponse[CreateUserResponse]*/ String] = {
     println(write(requestContent))
@@ -40,7 +35,7 @@ class ApiService extends Api {
     WS.url(BASE_URL).post(/*write(ApiRequest(INITIALIZE_SESSION_MSG,initializeSessionRequest))*/ requestContent).map {
       response =>
         //  println("login receiving at server response.body.tostring : " + response.body.toString)
-        response.body.toString()
+        response.body.toString
     }
   }
 
@@ -92,5 +87,3 @@ class ApiService extends Api {
     }
   }
 }
-
-

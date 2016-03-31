@@ -1,7 +1,7 @@
 package client.handlers
 
 import diode.{Effect, ActionHandler, ModelRW}
-import shared.dtos.{InitializeSessionResponse, ApiResponse}
+import shared.dtos.{CancelSubscribeRequest, InitializeSessionResponse, ApiResponse}
 import client.models.UserModel
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom.window
@@ -32,6 +32,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
         noChange
     case LogoutUser() =>
+      CoreApi.cancelAllSubscriptionRequest()
       window.sessionStorage.clear()
       window.location.href = "/"
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))
