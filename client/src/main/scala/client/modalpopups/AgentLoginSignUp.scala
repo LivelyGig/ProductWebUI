@@ -101,8 +101,6 @@ object AgentLoginSignUp {
                LGCircuit.dispatch(CreateLabels())
                LGCircuit.dispatch(RefreshConnections())
                window.location.href = "/#dashboard"
-
-
             } catch {
               case e: Exception  =>
                 log.debug("login failed")

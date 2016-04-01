@@ -24,6 +24,7 @@ object CoreApi {
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
   val MESSAGES_SESSION_URI = "messagesSessionUri"
   val CONNECTIONS_SESSION_URI = "connectionsSessionUri"
+  val INSERT_CONTENT = "insertContent"
   //  var BASE_URL = "http://52.35.10.219:9876/api"
   //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
   //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
@@ -89,8 +90,6 @@ object CoreApi {
         messages <-  AjaxClient[Api].sessionPing(requestContent).call()
       } yield messages
     }
-
-
   }
   def cancelAllSubscriptionRequest() = {
     val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)

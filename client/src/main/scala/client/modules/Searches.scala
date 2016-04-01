@@ -47,15 +47,12 @@ object Searches {
     def searchClick(props: Props): Unit = {
       val sidebtn : js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-//      println("in searchClick")
-//      window.sessionStorage.setItem("messageSearchClick","true")
       window.sessionStorage.setItem("messageSearchLabel","any([Spilicious])")
       LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }
 
     def updateDate(e: ReactEventI) = {
-      println(e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
@@ -63,42 +60,42 @@ object Searches {
 
 
 
-def initializeDatepicker() : Unit = {
-  val baseOpts = BootstrapDatepickerOptions.
-    autoclose(true).
-    todayHighlight(true).
-    todayBtnLinked().
-    disableTouchKeyboard(true).
-    orientation(Orientation.Top)
-  // Iff this Date is Optional, show the Clear button:
-  val opts =
-    if (true)
-      baseOpts.clearBtn(true)
-    else
-      baseOpts
-  val availableToDate : js.Object = "#availableToDate"
-  val availableFromDate : js.Object =   "#availableFromDate"
-  val projectStartDate : js.Object = "#projectsStartDate"
-  val projectsEndDate : js.Object = "#projectsEndDate"
-  val messageBeforeDate:js.Object = "#messagesBeforeDate"
-  val messagesFromDate:js.Object = "#messagesFromDate"
+    def initializeDatepicker() : Unit = {
+      val baseOpts = BootstrapDatepickerOptions.
+        autoclose(true).
+        todayHighlight(true).
+        todayBtnLinked().
+        disableTouchKeyboard(true).
+        orientation(Orientation.Top)
+      // Iff this Date is Optional, show the Clear button:
+      val opts =
+        if (true)
+          baseOpts.clearBtn(true)
+        else
+          baseOpts
+      val availableToDate : js.Object = "#availableToDate"
+      val availableFromDate : js.Object =   "#availableFromDate"
+      val projectStartDate : js.Object = "#projectsStartDate"
+      val projectsEndDate : js.Object = "#projectsEndDate"
+      val messageBeforeDate:js.Object = "#messagesBeforeDate"
+      val messagesFromDate:js.Object = "#messagesFromDate"
 
-  $(availableToDate).datepicker(baseOpts)
-  $(availableFromDate).datepicker(baseOpts)
-  $(projectStartDate).datepicker(baseOpts)
-  $(projectsEndDate).datepicker(baseOpts)
-  $(messageBeforeDate).datepicker(baseOpts)
-  $(messagesFromDate).datepicker(baseOpts)
-  //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-  //      save()
-  //    })
-}
+      $(availableToDate).datepicker(baseOpts)
+      $(availableFromDate).datepicker(baseOpts)
+      $(projectStartDate).datepicker(baseOpts)
+      $(projectsEndDate).datepicker(baseOpts)
+      $(messageBeforeDate).datepicker(baseOpts)
+      $(messagesFromDate).datepicker(baseOpts)
+      //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
+      //      save()
+      //    })
+    }
 
-def mounted(): Callback = Callback {
-  initializeDatepicker
-  initializeTagsInput
-  LGCircuit.dispatch(CreateLabels())
-}
+    def mounted(): Callback = Callback {
+      initializeDatepicker
+      initializeTagsInput
+      LGCircuit.dispatch(CreateLabels())
+    }
 
     def render(s: State, p: Props) = {
 
@@ -533,11 +530,8 @@ def mounted(): Callback = Callback {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                     // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
-//                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-//                      <.option(^.value:="")("Select"),
-                      /*LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))*/
+                    //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
                     <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                       <.option(^.value:="")("Select"),
                       <.option(^.value:="LivelyGig")("@LivelyGig"),
@@ -545,7 +539,8 @@ def mounted(): Callback = Callback {
                       <.option(^.value:="LivelyGig1")("@LivelyGig1"),
                       <.option(^.value:="Synereo1")("@Synereo1")
                     )
-//                    )
+                    //                      LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -672,12 +667,19 @@ object SearchesConnectionList {
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 /*case class Bac*/
 case class Backend(t: BackendScope[Props, _]) {
+  /*def f(str: String,_) = {
+
+  }*/
+//  val hum = (s: String) => println(s)
   def initializeTagsInput() : Unit = {
     val selectState : js.Object = ".select-state"
-    println($(selectState).get())
-    $(selectState).selectize(SelectizeConfig
+//    println($(selectState).get())
+    val yo = $(selectState).selectize(SelectizeConfig
       .maxItems(10)
-      .plugins("remove_button"))
+      .plugins("remove_button")
+//    .onChange((g:String)=>println(g))
+)
+
   }
   def mounted() : Callback = Callback {
     initializeTagsInput()
@@ -691,8 +693,8 @@ case class Backend(t: BackendScope[Props, _]) {
   }
 }
   val component = ReactComponentB[Props]("SearchesConnectionList")
-        .renderBackend[Backend]
-      .componentDidMount(scope => scope.backend.mounted())
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted())
     .build
 
   def apply (props: Props) = component(props)

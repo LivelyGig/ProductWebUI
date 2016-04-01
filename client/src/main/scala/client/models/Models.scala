@@ -21,6 +21,7 @@ case class MessagesModel(uid : String, `type` : String, created: String, modifie
 case class ParentMessageModel (uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
 case class UserModel (email: String = "", password: String = "", name: String = "", createBTCWallet: Boolean = true,
                       isLoggedIn: Boolean = false, imgSrc: String = "")
+case class MessagesData(to: String ="" /*Connection*/ , subject : String="", content : String="")
 case class EmailValidationModel (token: String)
 case class LabelResponse(text: String, color: String, imgSrc: String)
 case class Label(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)
