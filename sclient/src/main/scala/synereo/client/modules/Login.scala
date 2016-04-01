@@ -8,7 +8,9 @@ import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups.RequestInvite
-
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import org.querki.jquery._
 import scalacss.Color
 import scalacss.ScalaCssReact._
 
@@ -35,7 +37,7 @@ object Login {
                         ),
                         <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
                           <.input(^.`type` := "Password", ^.placeholder := "Password", LoginCSS.Style.inputStyleLoginForm),
-                          <.span(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox),
+                          <.a(^.href := "/#synereodashboard")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
                           //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
                           //<.a(^.href := "/#synereodashboard")("Login Here")
                         ),
@@ -51,7 +53,6 @@ object Login {
                 )
               )
             )
-
           )
         ),
         <.div(^.className := "row")(

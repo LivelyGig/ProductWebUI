@@ -17,7 +17,11 @@ object MIcon {
 
   def pause = apply("pause")
 
-  def help = apply("live_help")
+  def help = apply("help")
+
+  def helpLive = apply("live_help")
+
+  def helpOutline = apply("help_outline")
 
   def moreVert = apply("more_vert")
 
@@ -41,5 +45,19 @@ object MIcon {
 
   def keyboardArrowDown = apply("keyboard_arrow_down")
 
-  def helpOutline = apply("help_outline")
+  def localParking = apply("local_parking")
+
+  def speakerNotes = apply("speaker_notes")
+
+  def people = apply("people")
+
+  def settings = apply("settings")
+
+  def casino = apply("casino")
+
+  def starRate = apply("star_rate")
+
+  def star = apply("star")
+
+  def person = apply("person")
 }

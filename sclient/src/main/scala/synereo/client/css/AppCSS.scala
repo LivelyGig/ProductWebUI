@@ -13,7 +13,9 @@ object AppCSS {
       SDashboardCSS.Style,
       BlogPostFullCSS.Style,
       UserProfileViewCSS.Style,
-      UserTimelineViewCSS.Style
+      UserTimelineViewCSS.Style,
+      MarketPlaceFullCSS.Style
+
     )
     //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }

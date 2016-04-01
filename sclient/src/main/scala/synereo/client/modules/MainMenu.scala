@@ -32,21 +32,13 @@ object MainMenu {
         imgSrc = "", isLoggedIn = false))))
   }
 
-  private def buildMenuItem(mItem: String, counter: Int): ReactElement = {
-    var retRE = <.span(<.span(mItem))
-    if (counter > 0) {
-      retRE = <.span(
-        <.span(mItem),
-        //        <.span(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, counter)
-        <.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, SynereoCommanStylesCSS.Style.inputBtnRadius, counter)
-      )
-    }
-    return retRE
+  private def buildMenuItem(mItem: String): ReactElement = {
+    <.span(<.span(mItem))
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => buildMenuItem("WHAT IS SYNEREO", 0), DashboardLoc),
-    MenuItem(2, _ => buildMenuItem("WATCH THE VIDEO", 0), DashboardLoc)
+    MenuItem(1, _ => buildMenuItem("WHAT IS SYNEREO"), DashboardLoc),
+    MenuItem(2, _ => buildMenuItem("WATCH THE VIDEO"), DashboardLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
@@ -55,6 +47,9 @@ object MainMenu {
       <.nav(^.className := "nav navbar-nav navbar-right")(
         <.div(^.className := "container-fluid")(
           <.ul(^.className := "nav navbar-nav navbar-right")(
+           /* for (item <- menuItems) yield {
+              <.li(item.label)
+            },*/
             <.li(^.className := "active")(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
@@ -64,6 +59,11 @@ object MainMenu {
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
                 "WHAT IS SYNEREO"
+              )
+            ),
+            <.li()(
+              <.a(^.href:="#","data-toggle".reactAttr:="popover","title".reactAttr:="Popover Header","data-content".reactAttr:="Some content inside the popover")(
+                <.span(MIcon.speakerNotes)
               )
             )
           )
