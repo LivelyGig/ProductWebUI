@@ -34,13 +34,13 @@ object Searches {
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
-  def initializeTagsInput() : Unit = {
+  /*def initializeTagsInput() : Unit = {
     val selectState : js.Object = ".select-state"
 //    println($(selectState).get())
     $(selectState).selectize(SelectizeConfig
       .maxItems(10)
       .plugins("remove_button"))
-  }
+  }*/
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -93,7 +93,7 @@ object Searches {
 
     def mounted(): Callback = Callback {
       initializeDatepicker
-      initializeTagsInput
+//      initializeTagsInput
       LGCircuit.dispatch(CreateLabels())
     }
 
@@ -532,14 +532,14 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                     //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
-                    )
-                    //                      LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+//                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+//                      <.option(^.value:="")("Select"),
+//                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+//                      <.option(^.value:="Synereo")("@Synereo"),
+//                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+//                      <.option(^.value:="Synereo1")("@Synereo1")
+//                    )
+                                          LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
                     //                    )
                   )
                 ),
@@ -664,6 +664,16 @@ object Searches {
 }
 
 object SearchesConnectionList {
+
+  val selectState : js.Object = ".select-state"
+  //    println($(selectState).get())
+  $(selectState).selectize(SelectizeConfig
+    .maxItems(10)
+    .plugins("remove_button")
+    //    .onChange((g:String)=>println(g))
+  )
+
+
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 /*case class Bac*/
 case class Backend(t: BackendScope[Props, _]) {
@@ -672,24 +682,33 @@ case class Backend(t: BackendScope[Props, _]) {
   }*/
 //  val hum = (s: String) => println(s)
   def initializeTagsInput() : Unit = {
-    val selectState : js.Object = ".select-state"
+    val selectState : js.Object = "#selectize"
+    val selectizeInput : js.Object = ".selectize-input"
 //    println($(selectState).get())
-    val yo = $(selectState).selectize(SelectizeConfig
-      .maxItems(10)
-      .plugins("remove_button")
-//    .onChange((g:String)=>println(g))
-)
+    if ($(selectizeInput).length <= 1){
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button")
+        //    .onChange((g:String)=>println(g))
+      )
+    }
 
   }
   def mounted() : Callback = Callback {
     initializeTagsInput()
   }
   def render (props: Props) = {
-    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-      <.option(^.value:="")("Select"),
-      props.proxy().render(connectionsRootModel =>
-        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
-      ))
+    val selectizeInput : js.Object = ".selectize-input"
+    if ($(selectizeInput).length <= 1) {
+      <.select(^.className:="select-state",^.id:="selectize",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+        <.option(^.value:="")("Select"),
+        props.proxy().render(connectionsRootModel =>
+          for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
+        ))
+    } else {
+      <.div()
+    }
+
   }
 }
   val component = ReactComponentB[Props]("SearchesConnectionList")

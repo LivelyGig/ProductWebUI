@@ -46,7 +46,7 @@ case class Expression (msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
-case class PostMessageValue(uid : String, msgtype: String, created : String , modified : String, labels : Seq[String], connections : Seq[Connection],text : String )
+case class PostMessageValue(uid : String = "", msgtype: String = "", created : String ="", modified : String = "", labels : Seq[String] = Nil, connections : Seq[Connection] = Nil,text : String = "")  extends Content
 
 case class any(labels: Seq[String])
 

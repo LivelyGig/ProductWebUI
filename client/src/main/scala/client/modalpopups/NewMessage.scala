@@ -1,6 +1,6 @@
 package client.modals
 
-import client.models.MessagesData
+import client.models.PostMessage
 import client.modules.SearchesConnectionList
 import client.services.LGCircuit
 import japgolly.scalajs.react._
@@ -35,19 +35,16 @@ object NewMessage {
     def addNewMessageForm() : Callback = {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
-    def addMessage(/*messagesData:MessagesData,*/ postMessage: Boolean = false): Callback = {
+    def addMessage(/*postMessage:PostMessage*/): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postMessage){
+      t.modState(s => s.copy(showNewMessageForm = false))
+
+      /*if(postMessage){
         t.modState(s => s.copy(showNewMessageForm = true))
       } else {
         t.modState(s => s.copy(showNewMessageForm = false))
-      }
-
-
-
+      }*/
     }
-
-
   }
   val component = ReactComponentB[Props]("NewMessage")
     .initialState(State())
@@ -70,19 +67,23 @@ object NewMessage {
 object PostNewMessage {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (/*MessagesData ,*/ Boolean) => Callback, header: String)
-  case class State(messagesData:MessagesData ,postMessage: Boolean = false)
+  case class Props(submitHandler: (/*PostMessage*/) => Callback, header: String)
+  case class State(postMessage:PostMessage, postNewMessage: Boolean = false)
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
+    /*def updateTo(e:ReactEventI)  = {
+      val value = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
+      t.modState(s => s.copy(messagesData = s.messagesData.copy(recipients = value)))
+    }*/
     def updateSubject(e:ReactEventI)  = {
       val value = e.target.value
-      t.modState(s => s.copy(messagesData = s.messagesData.copy(subject = value)))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
     def updateContent(e:ReactEventI) ={
       val value = e.target.value
-      t.modState(s => s.copy(messagesData = s.messagesData.copy(content = value)))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
     def hideModal =  {
       jQuery(t.getDOMNode()).modal("hide")
@@ -95,14 +96,15 @@ object PostNewMessage {
     }
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postMessage = false))
+      t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-//      println(state.postMessage)
-      props.submitHandler(/*state.messagesData,*/state.postMessage)
-
+      if (state.postNewMessage){
+        println(state.postMessage)
+      }
+      props.submitHandler(/*state.postMessage*/)
     }
 
     def render(s: State, p: Props) = {
@@ -127,13 +129,14 @@ object PostNewMessage {
                 <.option(^.value:="LivelyGig")("@LivelyGig"),
                 <.option(^.value:="Synereo")("@Synereo")
               )*/
+//              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
                LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
             ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.messagesData.subject ,^.onChange ==> updateSubject)
+              <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.subject ,^.onChange ==> updateSubject)
              ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.messagesData.content, ^.onChange ==> updateContent )
+              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.content, ^.onChange ==> updateContent )
             )
           ),
           <.div()(
@@ -148,15 +151,16 @@ object PostNewMessage {
     }
   }
   private val component = ReactComponentB[Props]("PostNewMessage")
-   // .initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagesData("", "", "")))
+    //.initialState_P(p => State(p=> new MessagesData("","","")))
+    .initialState_P(p => State(new PostMessage("", "", "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
-         if(scope.currentState.postMessage){
+         if(scope.currentState.postNewMessage){
            scope.$.backend.hideModal
          }
     })
       .componentDidMount(scope => scope.backend.mounted())
+//      .shouldComponentUpdate(scope => false)
     .build
   def apply(props: Props) = component(props)
 }

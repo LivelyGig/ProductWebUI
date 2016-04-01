@@ -65,7 +65,7 @@ object BiddingScreenModal {
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
                          postDispute: Boolean = false): Callback = {
-      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
+//      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
       } else if (postMessage) {
@@ -85,7 +85,7 @@ object BiddingScreenModal {
       }
     }
 
-    def hideMessage(showMessage: Boolean = false): Callback = {
+    def hideMessage(/*showMessage: Boolean = false*/): Callback = {
       t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
     }
 
@@ -832,7 +832,7 @@ object BiddingScreenModalForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postBiddingScreen)
+//      println(state.postBiddingScreen)
       props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation, state.postAcceptDependencies, state.postDispute)
     }
   }
