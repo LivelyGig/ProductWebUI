@@ -2,7 +2,6 @@ package client.modules
 
 import client.components.{Icon}
 import diode.data.Pot
-import diode.react._
 import diode.react.ReactPot._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
@@ -10,12 +9,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
-import org.denigma.selectize
 import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import client.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
-import scala.annotation.tailrec
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js

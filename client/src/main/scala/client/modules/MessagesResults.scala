@@ -7,22 +7,16 @@ import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
 import client.rootmodels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
 import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import client.modals.PostNewMessage
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.LGMain.Loc
-import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import client.css.{DashBoardCSS, HeaderCSS}
 import client.models.MessagesModel
-import client.modules.ConnectionList.ConnectionListProps
 import client.services.LGCircuit
 import scala.util.{Failure, Success}
 import client.modals.NewMessage
 import scalacss.ScalaCssReact._
-import client.css.standaloneCSS
+
 
 object MessagesResults {
   case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])

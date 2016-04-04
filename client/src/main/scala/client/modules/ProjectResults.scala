@@ -14,7 +14,7 @@ import client.models.{ProjectsModel, ModelType}
 import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
-import client.css.standaloneCSS.Style
+
 
 object ProjectResults {
 
