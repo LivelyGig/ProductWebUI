@@ -16,7 +16,7 @@ import scalacss.ScalaCssReact._
 object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid")(
+      <.div(^.className := "container-fluid",SDashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
             <.div(^.className := "pull-right", SDashboardCSS.Style.profileActionContainer)(

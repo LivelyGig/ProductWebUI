@@ -60,12 +60,12 @@ object MainMenu {
                 <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
                 "WHAT IS SYNEREO"
               )
-            ),
+            )/*,
             <.li()(
               <.a(^.href:="#","data-toggle".reactAttr:="popover","title".reactAttr:="Popover Header","data-content".reactAttr:="Some content inside the popover")(
                 <.span(MIcon.speakerNotes)
               )
-            )
+            )*/
           )
         )
       )
