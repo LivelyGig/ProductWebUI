@@ -34,13 +34,6 @@ object Searches {
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
-  /*def initializeTagsInput() : Unit = {
-    val selectState : js.Object = ".select-state"
-//    println($(selectState).get())
-    $(selectState).selectize(SelectizeConfig
-      .maxItems(10)
-      .plugins("remove_button"))
-  }*/
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -57,8 +50,13 @@ object Searches {
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
-
-
+    def initializeTagsInput() : Unit = {
+      val selectState : js.Object = ".select-state"
+      //    println($(selectState).get())
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button"))
+    }
 
     def initializeDatepicker() : Unit = {
       val baseOpts = BootstrapDatepickerOptions.
@@ -93,7 +91,7 @@ object Searches {
 
     def mounted(): Callback = Callback {
       initializeDatepicker
-//      initializeTagsInput
+      initializeTagsInput
       LGCircuit.dispatch(CreateLabels())
     }
 
@@ -672,7 +670,6 @@ object SearchesConnectionList {
     .plugins("remove_button")
     //    .onChange((g:String)=>println(g))
   )
-
 
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 /*case class Bac*/
