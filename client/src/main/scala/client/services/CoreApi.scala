@@ -40,11 +40,11 @@ object CoreApi {
       Map("name" -> userModel.name), true)))
     AjaxClient[Api].createAgent(requestContent).call()
   }
-  def postMessage(messagesData: PostMessage) : Future[String] = {
+  /*def postMessage(messagesData: PostMessage) : Future[String] = {
     val connections = upickle.default.read[Seq[Connection]](messagesData.recipients)
     val requestContent = upickle.default.write(ApiRequest(INSERT_CONTENT,PostMessageValue("","" ,"" ,"",Nil ,connections,messagesData.content)))
     AjaxClient[Api].postMessage(requestContent).call()
-  }
+  }*/
   def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(CONFIRM_EMAIL_MSG,ConfirmEmail(emailValidationModel.token)))
     println("emailvalidation token : " + requestContent)
