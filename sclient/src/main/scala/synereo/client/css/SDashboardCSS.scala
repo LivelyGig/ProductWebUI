@@ -16,6 +16,11 @@ object SDashboardCSS {
       /*      minHeight(60.px),
             minWidth(100.px)*/
     )
+    val dashboardContainerMain = style(
+      height(890.px),
+      overflowY.scroll.important,
+      backgroundImage := "url(\"./assets/images/globalBg.jpg\")"
+    )
     val profileActionButton = style(
       backgroundColor(c"#1F85B5")
     )

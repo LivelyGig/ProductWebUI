@@ -11,6 +11,10 @@ object LoginCSS {
 
     import dsl._
 
+    val loginPageContainerMain = style(
+      height(870.px),
+      backgroundImage := "url(\"./assets/images/Login-bg.jpg\")"
+    )
     val loginDilog = style(
       width(50.%%),
       minHeight(500.px),

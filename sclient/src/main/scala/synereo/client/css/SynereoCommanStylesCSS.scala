@@ -14,7 +14,7 @@ object SynereoCommanStylesCSS {
 
     val naviContainer = style (
       // backgroundColor(c"#00131D"),
-      minHeight(85.px),
+      //minHeight(85.px),
       /*borderBottom(2.px, solid, c"#67EAF2"),*/
       paddingLeft(0.%%),
       paddingRight(0.%%),

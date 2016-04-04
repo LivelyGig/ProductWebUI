@@ -14,7 +14,9 @@ object BlogPostFullCSS {
     import dsl._
 
     val blogPostFullContainer = style(
-      marginBottom(60.px)
+      marginBottom(60.px),
+      overflowY.scroll,
+      height(890.px)
     )
     val blogMainImage = style(
       marginLeft.auto,

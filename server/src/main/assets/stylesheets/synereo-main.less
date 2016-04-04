@@ -5,7 +5,10 @@
 
 body {
   font-family: 'Lora', serif;
-  background-image: url("../images/Login-bg.jpg");
+  //background-image: url("../images/Login-bg.jpg");
+  background-repeat: no-repeat;
+  height:100vh;
+  overflow-y: hidden;
 }
 *:focus {
   outline:none !important
@@ -33,16 +36,6 @@ body {
 }
 .navbar-nav>li > a {
   display:inline-flex;
-}
-
-#headerNavUl>li>a:hover,#headerNavUl>li>a:focus {
-  background-color : #005256
-}
-
-.dashboardContainer {
-  height:calc(~"100vh - 116px");
-  overflow-y:auto;
-  z-index:100
 }
 @media(max-width:1300px) {
   #headerNavUl>li>a{

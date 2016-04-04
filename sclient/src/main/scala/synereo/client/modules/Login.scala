@@ -20,7 +20,7 @@ import scalacss.ScalaCssReact._
 object Login {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P { ctr =>
-      <.div(^.className := "container-fluid")(
+      <.div(^.className := "container-fluid",LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(LoginCSS.Style.loginDilog)(
             <.div(LoginCSS.Style.formPadding)(
