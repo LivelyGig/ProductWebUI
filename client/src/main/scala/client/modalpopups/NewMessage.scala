@@ -1,22 +1,27 @@
 package client.modals
 
+import java.util.UUID
+
 import client.models.PostMessage
 import client.modules.SearchesConnectionList
-import client.services.LGCircuit
+import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{DashBoardCSS,ProjectCSS}
+import client.css.{DashBoardCSS, ProjectCSS}
+import client.utils.Utils
 import org.querki.jquery._
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.denigma.selectize._
+import shared.dtos._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -103,6 +108,15 @@ object PostNewMessage {
       // call parent handler with the new item and whether form was OK or cancelled
       if (state.postNewMessage){
         println(state.postMessage)
+        val uid = UUID.randomUUID().toString.replaceAll("-","")
+        println(uid)
+        val dummyTargetConnection = "{\n\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\",\n                  \"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\",\n                  \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\"\n}"
+        val dummyTarget = upickle.default.read[Connection](dummyTargetConnection)
+        val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), dummyTarget),state.postMessage.content)
+        CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), dummyTarget),"",upickle.default.write(value),"")))).onComplete{
+          case Success(response) => println("success")
+          case Failure(response) => println("failure")
+        }
       }
       props.submitHandler(/*state.postMessage*/)
     }
@@ -133,10 +147,10 @@ object PostNewMessage {
                LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
             ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.subject ,^.onChange ==> updateSubject)
+              <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.subject ,^.onChange ==> updateSubject, ^.required:= true)
              ),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.content, ^.onChange ==> updateContent )
+              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.content, ^.onChange ==> updateContent, ^.required:= true )
             )
           ),
           <.div()(

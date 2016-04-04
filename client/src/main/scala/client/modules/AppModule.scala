@@ -1,16 +1,9 @@
 package client.modules
 
-import client.css.DashBoardCSS
-import client.css.DashBoardCSS
-import client.modules.Searches
-import client.modules.Searches
-import client.modules.TalentResults
-import client.services.LGCircuit
 import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS}
-import client.services.LGCircuit
 import scalacss.ScalaCssReact._
 
 object AppModule {
