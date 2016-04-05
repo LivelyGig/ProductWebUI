@@ -89,6 +89,7 @@ object Bootstrap {
      def plainKey: CallbackOption[Unit] =             // CallbackOption will stop if a key isn't matched
        CallbackOption.keyCodeSwitch(e) {
          case  KeyCode.Escape => hide
+       //  case  KeyCode.Enter => hide
        }
          plainKey >>   e.preventDefaultCB
    }

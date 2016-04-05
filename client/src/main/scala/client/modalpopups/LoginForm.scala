@@ -74,7 +74,7 @@ object LoginForm {
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                /*p.c.link(DashboardLoc)( */<.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login")/*)*/,
+               <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
 
                 <.div(^.paddingTop := "10px")(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-12",DashBoardCSS.Style.padding0px)(

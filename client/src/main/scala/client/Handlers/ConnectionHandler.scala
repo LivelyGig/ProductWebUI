@@ -34,7 +34,7 @@ object ConnectionModelHandler{
         model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
           name, imgSrc)
     }
-    model.foreach(temp => println(temp.name))
+//    model.foreach(temp => println(temp.name))
     ConnectionsRootModel(model)
   }
 

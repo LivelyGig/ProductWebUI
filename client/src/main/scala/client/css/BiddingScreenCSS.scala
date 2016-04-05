@@ -6,9 +6,9 @@ object BiddingScreenCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
 
-    val borderInitiating = style (
+  /*  val borderInitiating = style (
       borderBottom(2.px , solid, black)
-    )
+    )*/
     val marginLeftRight = style (
       marginLeft(15.px),
       marginRight(15.px),
@@ -19,9 +19,9 @@ object BiddingScreenCSS {
       overflowX.auto/*,
       marginRight(10.px)*/
     )
-    val BiddingScreenResults = style (
+   /* val BiddingScreenResults = style (
       paddingLeft(15.px)
-    )
+    )*/
      val slctBiddingInputWidth = style (
       width(100.px)
     )

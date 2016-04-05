@@ -46,7 +46,9 @@ case class Expression (msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
-case class any(labels: Seq[String])
+case class ExpressionContentValue(uid : String = "", `type`: String = "", created : String ="", modified : String = "", labels : Seq[String] = Nil, connections : Seq[Connection] = Nil, text : String = "")
+
+//case class any(labels: Seq[String])
 
 object Content {
   implicit val requestContentPickler: Pickler[Content] = generatePickler[Content]

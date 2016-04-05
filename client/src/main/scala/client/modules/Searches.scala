@@ -2,7 +2,6 @@ package client.modules
 
 import client.components.{Icon}
 import diode.data.Pot
-import diode.react._
 import diode.react.ReactPot._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
@@ -10,12 +9,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
-import org.denigma.selectize
 import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import client.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
-import scala.annotation.tailrec
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
@@ -34,71 +31,66 @@ object Searches {
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
-  def initializeTagsInput() : Unit = {
-    val selectState : js.Object = ".select-state"
-//    println($(selectState).get())
-    $(selectState).selectize(SelectizeConfig
-      .maxItems(10)
-      .plugins("remove_button"))
-  }
 
   case class Backend(t: BackendScope[Props, State]) {
 
     def searchClick(props: Props): Unit = {
       val sidebtn : js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-//      println("in searchClick")
-//      window.sessionStorage.setItem("messageSearchClick","true")
       window.sessionStorage.setItem("messageSearchLabel","any([Spilicious])")
       LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }
 
     def updateDate(e: ReactEventI) = {
-      println(e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
+    def initializeTagsInput() : Unit = {
+      val selectState : js.Object = ".select-state"
+      //    println($(selectState).get())
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button"))
+    }
 
+    def initializeDatepicker() : Unit = {
+      val baseOpts = BootstrapDatepickerOptions.
+        autoclose(true).
+        todayHighlight(true).
+        todayBtnLinked().
+        disableTouchKeyboard(true).
+        orientation(Orientation.Top)
+      // Iff this Date is Optional, show the Clear button:
+      val opts =
+        if (true)
+          baseOpts.clearBtn(true)
+        else
+          baseOpts
+      val availableToDate : js.Object = "#availableToDate"
+      val availableFromDate : js.Object =   "#availableFromDate"
+      val projectStartDate : js.Object = "#projectsStartDate"
+      val projectsEndDate : js.Object = "#projectsEndDate"
+      val messageBeforeDate:js.Object = "#messagesBeforeDate"
+      val messagesFromDate:js.Object = "#messagesFromDate"
 
+      $(availableToDate).datepicker(baseOpts)
+      $(availableFromDate).datepicker(baseOpts)
+      $(projectStartDate).datepicker(baseOpts)
+      $(projectsEndDate).datepicker(baseOpts)
+      $(messageBeforeDate).datepicker(baseOpts)
+      $(messagesFromDate).datepicker(baseOpts)
+      //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
+      //      save()
+      //    })
+    }
 
-def initializeDatepicker() : Unit = {
-  val baseOpts = BootstrapDatepickerOptions.
-    autoclose(true).
-    todayHighlight(true).
-    todayBtnLinked().
-    disableTouchKeyboard(true).
-    orientation(Orientation.Top)
-  // Iff this Date is Optional, show the Clear button:
-  val opts =
-    if (true)
-      baseOpts.clearBtn(true)
-    else
-      baseOpts
-  val availableToDate : js.Object = "#availableToDate"
-  val availableFromDate : js.Object =   "#availableFromDate"
-  val projectStartDate : js.Object = "#projectsStartDate"
-  val projectsEndDate : js.Object = "#projectsEndDate"
-  val messageBeforeDate:js.Object = "#messagesBeforeDate"
-  val messagesFromDate:js.Object = "#messagesFromDate"
-
-  $(availableToDate).datepicker(baseOpts)
-  $(availableFromDate).datepicker(baseOpts)
-  $(projectStartDate).datepicker(baseOpts)
-  $(projectsEndDate).datepicker(baseOpts)
-  $(messageBeforeDate).datepicker(baseOpts)
-  $(messagesFromDate).datepicker(baseOpts)
-  //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-  //      save()
-  //    })
-}
-
-def mounted(): Callback = Callback {
-  initializeDatepicker
-  initializeTagsInput
-  LGCircuit.dispatch(CreateLabels())
-}
+    def mounted(): Callback = Callback {
+      initializeDatepicker
+      initializeTagsInput
+      LGCircuit.dispatch(CreateLabels())
+    }
 
     def render(s: State, p: Props) = {
 
@@ -533,19 +525,17 @@ def mounted(): Callback = Callback {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                     // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
+                    //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
 //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
 //                      <.option(^.value:="")("Select"),
-                      /*LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))*/
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
-                    )
+//                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+//                      <.option(^.value:="Synereo")("@Synereo"),
+//                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+//                      <.option(^.value:="Synereo1")("@Synereo1")
 //                    )
+                                          LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -669,30 +659,55 @@ def mounted(): Callback = Callback {
 }
 
 object SearchesConnectionList {
+
+  val selectState : js.Object = ".select-state"
+  //    println($(selectState).get())
+  $(selectState).selectize(SelectizeConfig
+    .maxItems(10)
+    .plugins("remove_button")
+    //    .onChange((g:String)=>println(g))
+  )
+
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 /*case class Bac*/
 case class Backend(t: BackendScope[Props, _]) {
+  /*def f(str: String,_) = {
+
+  }*/
+//  val hum = (s: String) => println(s)
   def initializeTagsInput() : Unit = {
-    val selectState : js.Object = ".select-state"
-    println($(selectState).get())
-    $(selectState).selectize(SelectizeConfig
-      .maxItems(10)
-      .plugins("remove_button"))
+    val selectState : js.Object = "#selectize"
+    val selectizeInput : js.Object = ".selectize-input"
+//    println($(selectState).get())
+    if ($(selectizeInput).length <= 1){
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button")
+        //    .onChange((g:String)=>println(g))
+      )
+    }
+
   }
   def mounted() : Callback = Callback {
     initializeTagsInput()
   }
   def render (props: Props) = {
-    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-      <.option(^.value:="")("Select"),
-      props.proxy().render(connectionsRootModel =>
-        for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
-      ))
+    val selectizeInput : js.Object = ".selectize-input"
+    if ($(selectizeInput).length <= 1) {
+      <.select(^.className:="select-state",^.id:="selectize",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+        <.option(^.value:="")("Select"),
+        props.proxy().render(connectionsRootModel =>
+          for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
+        ))
+    } else {
+      <.div()
+    }
+
   }
 }
   val component = ReactComponentB[Props]("SearchesConnectionList")
-        .renderBackend[Backend]
-      .componentDidMount(scope => scope.backend.mounted())
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted())
     .build
 
   def apply (props: Props) = component(props)
