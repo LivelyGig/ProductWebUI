@@ -77,15 +77,15 @@ object LoginForm {
                 /*p.c.link(DashboardLoc)( */<.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login")/*)*/,
 
                 <.div(^.paddingTop := "10px")(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4",DashBoardCSS.Style.padding0px)(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12",DashBoardCSS.Style.padding0px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",
                       ^.onClick ==> showValidate)
                   ),
-                  <.div(^.className := "col-md-3 col-sm-3 col-xs-3")(
+                  <.div(^.className := "col-md-3 col-sm-4 col-xs-12")(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Forgot My Password",
                       ^.onClick ==> showValidate)
                   )
