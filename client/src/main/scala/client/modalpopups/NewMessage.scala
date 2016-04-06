@@ -3,7 +3,6 @@ package client.modals
 import java.util.UUID
 
 import client.models.PostMessage
-import client.modules.SearchesConnectionList
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
@@ -14,18 +13,22 @@ import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.utils.Utils
 import org.querki.jquery._
+import org.scalajs.dom
+import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs.js
+import scala.scalajs._
+
+//import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.denigma.selectize._
 import shared.dtos._
+//import org.scalajs.jquery
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
-
 
   case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
 
@@ -73,7 +76,7 @@ object PostNewMessage {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (/*PostMessage*/) => Callback, header: String)
-  case class State(postMessage:PostMessage, postNewMessage: Boolean = false)
+  case class State(postMessage:PostMessage, postNewMessage: Boolean = false, selectizeInputId : String = "postNewMessageSelectizeInput")
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
@@ -99,25 +102,35 @@ object PostNewMessage {
         .maxItems(10)
         .plugins("remove_button"))*/
     }
-    def submitForm(e: ReactEventI) = {
+    def sendMessage(content: String, connectionString: String) = {
+      val uid = UUID.randomUUID().toString.replaceAll("-","")
+      //      println(uid)
+      //      val dummyTargetConnection = "{\n\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\",\n                  \"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\",\n                  \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\"\n}"
+      val targetConnection = upickle.default.read[Connection](connectionString)
+      val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
+      CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"each([LivelyGig],[Synereo])",upickle.default.write(value),"")))).onComplete{
+        case Success(response) => {println("success")
+//          t.modState(s => s.copy(postNewMessage = true))
+        }
+        case Failure(response) => println("failure")
+      }
+    }
+    def submitForm(e: ReactEventI) = Callback{
       e.preventDefault()
-      t.modState(s => s.copy(postNewMessage = true))
+      val state = t.state.runNow()
+      /*if (state.postNewMessage){*/
+      //        val selectState : js.Object  = s"#${state.selectizeInputId} > option"
+      var selectedConnections = Seq[String]()
+      val selector : js.Object  = s"#${state.selectizeInputId} > .selectize-control> .selectize-input > div"
+
+      $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
+      selectedConnections.foreach(e => sendMessage(state.postMessage.content, e))
+
+      /*}*/
+      //      t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      if (state.postNewMessage){
-        println(state.postMessage)
-        val uid = UUID.randomUUID().toString.replaceAll("-","")
-        println(uid)
-        val dummyTargetConnection = "{\n\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\",\n                  \"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\",\n                  \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\"\n}"
-        val dummyTarget = upickle.default.read[Connection](dummyTargetConnection)
-        val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), dummyTarget),state.postMessage.content)
-        CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), dummyTarget),"",upickle.default.write(value),"")))).onComplete{
-          case Success(response) => println("success")
-          case Failure(response) => println("failure")
-        }
-      }
       props.submitHandler(/*state.postMessage*/)
     }
 
@@ -136,26 +149,27 @@ object PostNewMessage {
             <.div(^.className:="row")(
               <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
             ),
-            <.div()(
-             // <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
+            /*val selectizeControl : js.Object =*/
+            <.div(^.id:=s.selectizeInputId)(
+              // <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
               /*<.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                 <.option(^.value:="")("Select"),
                 <.option(^.value:="LivelyGig")("@LivelyGig"),
                 <.option(^.value:="Synereo")("@Synereo")
               )*/
-//              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
-               LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+              //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
+              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy,s.selectizeInputId)))
             ),
             <.div()(
               <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.subject ,^.onChange ==> updateSubject, ^.required:= true)
-             ),
+            ),
             <.div()(
               <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop, ^.value:=s.postMessage.content, ^.onChange ==> updateContent, ^.required:= true )
             )
           ),
           <.div()(
-              <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
+            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
+              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
@@ -169,12 +183,12 @@ object PostNewMessage {
     .initialState_P(p => State(new PostMessage("", "", "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
-         if(scope.currentState.postNewMessage){
-           scope.$.backend.hideModal
-         }
+      if(scope.currentState.postNewMessage){
+        scope.$.backend.hideModal
+      }
     })
-      .componentDidMount(scope => scope.backend.mounted())
-//      .shouldComponentUpdate(scope => false)
+    .componentDidMount(scope => scope.backend.mounted())
+    //      .shouldComponentUpdate(scope => false)
     .build
   def apply(props: Props) = component(props)
 }

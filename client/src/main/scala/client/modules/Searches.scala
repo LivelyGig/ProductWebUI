@@ -9,14 +9,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
-import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
 import client.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
+import scala.collection.mutable.ListBuffer
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import org.querki.jquery._
 import org.denigma.selectize._
 
@@ -25,12 +24,13 @@ object Searches {
 
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
-  case class State(userModel: UserModel)
+  case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
 
   def sidebar = Callback{
     val sidebtn : js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
+  val selectState : js.Object = "#selectize"
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -41,6 +41,10 @@ object Searches {
       LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }
+    /*val ref = RefHolder[ReactTagsInputM]*/
+
+    val onChange: (js.Array[String]) => Callback =
+      tags => t.modState(_.copy(tags = tags)) >> Callback.info(s"New state: $tags")
 
     def updateDate(e: ReactEventI) = {
       val value = e.target.value
@@ -54,7 +58,6 @@ object Searches {
         .maxItems(10)
         .plugins("remove_button"))
     }
-
     def initializeDatepicker() : Unit = {
       val baseOpts = BootstrapDatepickerOptions.
         autoclose(true).
@@ -156,13 +159,13 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                     //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
-                    )
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
 
                   )
                 ),
@@ -300,14 +303,14 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
-                   // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
-                    )
+                    // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -334,14 +337,14 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
-                   //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                      <.option(^.value:="")("Select"),
-                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                      <.option(^.value:="Synereo")("@Synereo"),
-                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                      <.option(^.value:="Synereo1")("@Synereo1")
-                    )
+                    //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -520,6 +523,7 @@ object Searches {
                     // )
                   )
                 ),
+
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
@@ -527,14 +531,33 @@ object Searches {
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                     //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
-//                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-//                      <.option(^.value:="")("Select"),
-//                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-//                      <.option(^.value:="Synereo")("@Synereo"),
-//                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-//                      <.option(^.value:="Synereo1")("@Synereo1")
-//                    )
-                                          LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+                    //                                        <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                                          <.option(^.value:="")("Select"),
+                    //                                          <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                                          <.option(^.value:="Synereo")("@Synereo"),
+                    //                                          <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                                          <.option(^.value:="Synereo1")("@Synereo1")
+                    //                                        ),
+                    //                    <.div(
+                    //                      try {
+                    //                        CodeExample("code", "Demo")(
+                    //                          <.div(
+                    //                            ReactTagsInput(
+                    //                              value = s.tags,
+                    //                              onChange = onChange
+                    //                            )()
+                    //                          )
+                    //                        )
+                    //                      } catch {
+                    //                         case e: Exception =>
+                    //                          println(e)
+                    //                      }
+                    //                    )
+
+                    //   if ($(selectState).length <= 1)
+//                    LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+
+
                     //                    )
                   )
                 ),
@@ -658,60 +681,62 @@ object Searches {
   def apply(props: Props) = component(props)
 }
 
-object SearchesConnectionList {
+/*object SearchesConnectionList {
+  var getSelectedValue = new ListBuffer[String]() /*Seq[Label]()*/
+  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier : String)
+  case class Backend(t: BackendScope[Props, _]) {
+    def initializeTagsInput(parentIdentifier: String) : Unit = {
+      val selectState : js.Object = s"#$parentIdentifier > .selectize-control"
+      //    println($(selectState).get())
+      if ($(selectState).length < 1){
+        val selectizeInput : js.Object = "#selectize"
+        $(selectizeInput).selectize(SelectizeConfig
+          .maxItems(10)
+          .plugins("remove_button"))
+      }
 
-  val selectState : js.Object = ".select-state"
-  //    println($(selectState).get())
-  $(selectState).selectize(SelectizeConfig
-    .maxItems(10)
-    .plugins("remove_button")
-    //    .onChange((g:String)=>println(g))
-  )
+    }
+    def getSelectedValues = Callback {
+      val selectState : js.Object = "#selectize"
+      val getSelectedValue =  $(selectState).find("option").text()
+      println(getSelectedValue)
 
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
-/*case class Bac*/
-case class Backend(t: BackendScope[Props, _]) {
-  /*def f(str: String,_) = {
+      //       var x = document.getElementById("mySelect").value;
+      //       document.getElementById("demo").innerHTML = "You selected: " + x;
 
-  }*/
-//  val hum = (s: String) => println(s)
-  def initializeTagsInput() : Unit = {
-    val selectState : js.Object = "#selectize"
-    val selectizeInput : js.Object = ".selectize-input"
-//    println($(selectState).get())
-    if ($(selectizeInput).length <= 1){
-      $(selectState).selectize(SelectizeConfig
-        .maxItems(10)
-        .plugins("remove_button")
-        //    .onChange((g:String)=>println(g))
-      )
+      //     var x =  document.getElementById("#selectize").textContent
+      //       println(x)
     }
 
-  }
-  def mounted() : Callback = Callback {
-    initializeTagsInput()
-  }
-  def render (props: Props) = {
-    val selectizeInput : js.Object = ".selectize-input"
-    if ($(selectizeInput).length <= 1) {
-      <.select(^.className:="select-state",^.id:="selectize",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+    //     def getSelectedValues(e: ReactEventI) = Callback {
+    //       val value = e.target.value
+    //       println(value)
+    //
+    //     }
+
+    def mounted(props: Props) : Callback = Callback {
+      initializeTagsInput(props.parentIdentifier)
+    }
+
+    def render (props: Props) = {
+            val parentDiv : js.Object = s"#${props.parentIdentifier}"
+            if ($(parentDiv).length == 0) {
+      <.select(^.className:="select-state",^.id:="selectize", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
         <.option(^.value:="")("Select"),
         props.proxy().render(connectionsRootModel =>
           for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
         ))
-    } else {
-      <.div()
-    }
+            } else {
+              <.div()
+            }
 
+    }
   }
-}
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .renderBackend[Backend]
-    .componentDidMount(scope => scope.backend.mounted())
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply (props: Props) = component(props)
 
-}
-
-
+}*/
