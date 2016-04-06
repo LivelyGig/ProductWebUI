@@ -6,6 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
+import synereo.client.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
@@ -22,8 +23,6 @@ object SYNEREOMain extends js.JSApp {
   // Define the locations (pages) used in this application
   sealed trait Loc
 
-  case object DashboardLoc extends Loc
-
   case object SynereoUserProfileViewLOC extends Loc
 
   case object SynereoLoc extends Loc
@@ -39,14 +38,14 @@ object SYNEREOMain extends js.JSApp {
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => Login(ctl))
-      | staticRoute("#synereologin", SynereoLoc) ~> renderR(ctl => Login(ctl))
+    (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
+      | staticRoute("#synereologin", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#synereodashboard", SynereoDashboardLoc) ~> renderR(ctl => Dashboard(ctl))
       | staticRoute("#synereofullblogpost", SynereoBlogPostFullLOC) ~> renderR(ctl => BlogPostFull(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
       | staticRoute("#marketplacefull", MarketPlaceFullLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
-      ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+      ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -60,7 +59,7 @@ object SYNEREOMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            c.link(DashboardLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/images/Synereo-logo-name.png"))
+            c.link(SynereoLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/images/Synereo-logo-name.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

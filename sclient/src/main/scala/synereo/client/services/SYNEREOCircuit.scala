@@ -9,7 +9,7 @@ import synereo.client.models.UserModel
 
 
 /**
-  * Created by Mandar on 3/29/2016.
+  * Created by shubham.k on 3/29/2016.
   */
 
 

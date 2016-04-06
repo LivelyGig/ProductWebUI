@@ -57,6 +57,7 @@ object NewMessage {
     .configure(OnUnmount.install)
     .build
   def apply(props: Props) = component(props)
+
 }
 
 object PostNewMessage {
@@ -75,6 +76,7 @@ object PostNewMessage {
     def mounted(props: Props): Callback = Callback {
 
     }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(postMessage = false))

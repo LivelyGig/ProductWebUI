@@ -37,8 +37,8 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => buildMenuItem("WHAT IS SYNEREO"), DashboardLoc),
-    MenuItem(2, _ => buildMenuItem("WATCH THE VIDEO"), DashboardLoc)
+    MenuItem(1, _ => buildMenuItem("WHAT IS SYNEREO"), SynereoLoc),
+    MenuItem(2, _ => buildMenuItem("WATCH THE VIDEO"), SynereoLoc)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())

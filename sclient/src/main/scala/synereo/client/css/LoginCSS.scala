@@ -12,7 +12,7 @@ object LoginCSS {
     import dsl._
 
     val loginPageContainerMain = style(
-      height(870.px),
+      height(890.px),
       backgroundImage := "url(\"./assets/images/Login-bg.jpg\")"
     )
     val loginDilog = style(
@@ -27,9 +27,13 @@ object LoginCSS {
       backgroundColor(c"#96989B")
     )
     val iconStylePasswordInputBox = style(
+      backgroundColor.transparent.important,
+      marginLeft(-45.px),
+      cursor.pointer,
       color.white,
-      marginLeft(-25.px),
-      cursor.pointer
+      border.none.important,
+      marginTop(10.px),
+      outline.none.important
     )
     val loginDilogContainerDiv = style(
       width(100.%%),
@@ -72,7 +76,8 @@ object LoginCSS {
       border(1.px, solid, c"#3C4346"),
       height(40.px),
       padding(4.%%),
-      fontSize(18.px)
+      fontSize(18.px),
+      color.white
     )
     val inputFormLoginForm = style(
       textAlign.center,
