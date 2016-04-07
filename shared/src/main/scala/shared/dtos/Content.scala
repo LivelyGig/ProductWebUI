@@ -40,7 +40,7 @@ case class SessionPing(sessionURI: String) extends Content
 
 case class SubscribeRequest (sessionURI: String, expression: Expression) extends Content
 
-case class CancelSubscribeRequest (sessionURI: String, connections: Seq[Connection], filter: String) extends Content
+case class CancelSubscribeRequest (sessionURI: String, connections: Seq[Connection]=Nil, filter: String = "") extends Content
 
 case class Expression (msgType: String, content: ExpressionContent)
 
