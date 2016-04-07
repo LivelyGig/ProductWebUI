@@ -13,19 +13,15 @@ import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.utils.Utils
 import org.querki.jquery._
-import org.scalajs.dom
 import org.scalajs.dom._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs._
-
-//import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import org.denigma.selectize._
 import shared.dtos._
-//import org.scalajs.jquery
+
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -97,10 +93,7 @@ object PostNewMessage {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def mounted(): Callback = Callback {
-      /*val selectState : js.Object = ".select-state"
-      $(selectState).selectize(SelectizeConfig
-        .maxItems(10)
-        .plugins("remove_button"))*/
+
     }
     def sendMessage(content: String, connectionString: String) = {
       val uid = UUID.randomUUID().toString.replaceAll("-","")
@@ -110,6 +103,7 @@ object PostNewMessage {
       val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"each([LivelyGig],[Synereo])",upickle.default.write(value),"")))).onComplete{
         case Success(response) => {println("success")
+           println("Responce = "+response)
 //          t.modState(s => s.copy(postNewMessage = true))
         }
         case Failure(response) => println("failure")
@@ -151,12 +145,6 @@ object PostNewMessage {
             ),
             /*val selectizeControl : js.Object =*/
             <.div(^.id:=s.selectizeInputId)(
-              // <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
-              /*<.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                <.option(^.value:="")("Select"),
-                <.option(^.value:="LivelyGig")("@LivelyGig"),
-                <.option(^.value:="Synereo")("@Synereo")
-              )*/
               //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
               LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy,s.selectizeInputId)))
             ),
@@ -169,7 +157,7 @@ object PostNewMessage {
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
+              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,/*^.onClick --> hide, */"Send"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),

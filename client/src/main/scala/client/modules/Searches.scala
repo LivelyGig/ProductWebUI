@@ -64,7 +64,7 @@ object Searches {
         todayHighlight(true).
         todayBtnLinked().
         disableTouchKeyboard(true).
-        orientation(Orientation.Top)
+        orientation(Orientation.Bottom)
       // Iff this Date is Optional, show the Clear button:
       val opts =
         if (true)
