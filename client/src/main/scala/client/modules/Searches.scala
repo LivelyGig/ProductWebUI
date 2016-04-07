@@ -59,7 +59,6 @@ object Searches {
         .plugins("remove_button"))
     }
     def initializeDatepicker() : Unit = {
-
       val baseOpts = BootstrapDatepickerOptions.
         autoclose(true).
         todayHighlight(true).

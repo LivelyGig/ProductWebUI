@@ -1,6 +1,6 @@
 package shared.dtos
 
-import java.beans.Expression
+//import java.beans.Expression
 import java.util.Date
 import boopickle.Default._
 import upickle.Js
