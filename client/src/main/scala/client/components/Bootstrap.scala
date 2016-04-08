@@ -96,7 +96,7 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1  ,
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-          <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
+          <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter) (
             <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
               <.div(^.className:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
               <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
