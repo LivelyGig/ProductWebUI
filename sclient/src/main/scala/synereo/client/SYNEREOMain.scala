@@ -1,21 +1,27 @@
 package synereo.client
 
-import japgolly.scalajs.react.ReactDOM
-import japgolly.scalajs.react.extra.router._
-import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
+//import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
-import synereo.client.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-
+import japgolly.scalajs.react.{ReactDOM, React}
 import scala.scalajs.js
+import js.{Date, UndefOr}
+import japgolly.scalajs.react.extra.router._
+import org.querki.jquery._
+import org.scalajs.dom
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
+import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import scala.scalajs.js
+import js.{Date, UndefOr}
+
 
 @JSExport("SYNEREOMain")
 object SYNEREOMain extends js.JSApp {
@@ -35,6 +41,11 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceFullLOC extends Loc
 
+  def sidebar = Callback{
+       val sidebtn : js.Object = "#searchContainer"
+    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
+  }
+
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
@@ -48,17 +59,26 @@ object SYNEREOMain extends js.JSApp {
       ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)
 
+
+
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
       <.img(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
-        <.div(^.className := "col-lg-1")(),
+        <.div(^.className := "col-lg-1")(
+          //Adding toggle button for sidebar
+          <.button(^.id:="sidebarbtn",^.`type`:="button",^.className:="navbar-toggle toggle-left",^.float:="left","data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+            ^.onClick-->sidebar)(
+            <.span(Icon.bars)
+          )
+        ),
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
+
             c.link(SynereoLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/images/Synereo-logo-name.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(

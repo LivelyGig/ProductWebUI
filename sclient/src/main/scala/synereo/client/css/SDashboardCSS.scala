@@ -73,8 +73,19 @@ object SDashboardCSS {
 
 
     )
+    val sidebarBtn = style (
+      float.left,
+      backgroundColor.transparent,
+      border.none,fontSize(22.px),
+      marginTop(9.px),
+      color.white
+    )
     val cardHeading = style(
       fontWeight._600
+    )
+
+    val sidebarNavStyle = style(
+      fontSize(17.px)
     )
 
   }

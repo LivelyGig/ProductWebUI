@@ -1,10 +1,12 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.{CreateUser, InitializeSessionResponse, ApiResponse}
 import synereo.client.Handlers.{CreateLabels, LoginUser}
+import synereo.client.SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups.RequestInvite
@@ -66,10 +68,6 @@ object Login {
           //  SYNEREOCircuit.dispatch()
             window.location.href = "/#synereodashboard"
             //  t.modState(s => s.copy(userModel = s.userModel.copy()))
-            SYNEREOCircuit.dispatch(LoginUser(user))
-            //               println(userModel)
-            //SYNEREOCircuit.dispatch(CreateSessionForMessages(userModel))
-           // SYNEREOCircuit.dispatch(CreateLabels())
           } catch {
             case e: Exception =>
              /* log.debug("login failed")*/
@@ -77,7 +75,7 @@ object Login {
           }
         case Failure(s) =>
           println("internal server error")
-      }*/
+      }
       //      window.location.href = "/#synereodashboard"
     }
 

@@ -119,3 +119,160 @@ a:hover {cursor: hand; cursor: pointer;}
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
 background-color:#E7E7E7 !important
 }
+
+
+
+/* sidebar settings */
+
+
+    #sidebarbtn.navbar-header {
+        float: none;
+    }
+    #sidebarbtn.navbar-left,#sidebarbtn.navbar-right {
+        float: none !important;
+    }
+    #sidebarbtn.navbar-toggle {
+        display: block;
+        padding:0px 0px;
+        margin-top: 13px;
+        margin-bottom: 0px;
+        color: white;
+        font-size: 20px;
+    }
+    #sidebarbtn.navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    #sidebarbtn.navbar-fixed-top {
+		top: 0;
+		border-width: 0 0 1px;
+	}
+   #sidebarbtn.navbar-collapse.collapse {
+        display: none!important;
+    }
+    #sidebarbtn.navbar-nav {
+        float: none!important;
+		margin-top: 7.5px;
+	}
+	#sidebarbtn.navbar-nav>li {
+        float: none;
+    }
+    #sidebarbtn.navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #sidebarbtn.collapse.in{
+  		display:block !important;
+	}
+
+
+
+.sidebar {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    top:69px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    transition: all 1s ease-in-out;
+}
+
+
+.sidebar-left {
+    left: 0;
+}
+
+.sidebar-right {
+    right: 0;
+}
+
+/* css to override hiding the sidebar according to different screen sizes */
+.row .sidebar.sidebar-left.sidebar-xs-show {
+    left: 0;
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    transform: translate(0,0);
+}
+
+@media (min-width: 768px) {
+    .row .sidebar.sidebar-left.sidebar-sm-show {
+        left: 0;
+        -webkit-transform: translate(0,0);
+        -ms-transform: translate(0,0);
+        -o-transform: translate(0,0);
+        -moz-transform: translate(0,0);
+        transform: translate(0,0);
+    }
+}
+
+@media (min-width: 992px) {
+    .row .sidebar.sidebar-left.sidebar-md-show {
+        left: 0;
+        -webkit-transform: translate(0,0);
+        -ms-transform: translate(0,0);
+        -o-transform: translate(0,0);
+        -moz-transform: translate(0,0);
+        transform: translate(0,0);
+    }
+
+}
+
+@media (min-width: 2000px) {
+    .row .sidebar.sidebar-left.sidebar-lg-show {
+        left: 0;
+        -webkit-transform: translate(0,0);
+        -moz-transform: translate(0,0);
+        -ms-transform: translate(0,0);
+        -o-transform: translate(0,0);
+        transform: translate(0,0);
+    }
+}
+
+/* animation class - optional: without it the sidebar would just pop in and out*/
+.sidebar-animate {
+    -webkit-transition: all 3ms ;
+    -moz-transition: all 3ms ;
+    -o-transition: all 3ms ;
+     transition: all 1s ease-in-out;
+}
+
+/* Left panel positioning classes */
+.sidebar.sidebar-left {
+    -webkit-transform: translate(-100%,0);
+    -moz-transform: translate(-100%,0);
+    -ms-transform: translate(-100%,0);
+    -o-transform: translate(-100%,0);
+    transform: translate(-100%,0);
+
+}
+
+.sidebar.sidebar-left.sidebar-open {
+    /* -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0); */
+
+}
+
+#sidebarNavStyle> li > a {
+color:white;
+}
+#sidebarNavStyle> li > a:hover {
+background-color: black;
+}
+#sidebarNavStyle> li > a >span {
+margin-right:10px;
+}
+
+.sidebarBtn{
+    background-color: #1aa3ff;
+    border: none;
+    border-top-right-radius: 50px;
+    padding: 10px;
+    font-size: 17px;
+    width:100%;
+    color: white;
+    }
