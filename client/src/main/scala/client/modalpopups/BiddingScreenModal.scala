@@ -20,6 +20,7 @@ import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object BiddingScreenModal {
   val component = ReactComponentB[Props]("BiddingScreen")
@@ -127,7 +128,7 @@ object BiddingScreenModalForm {
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hidemodal = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {
@@ -806,7 +807,7 @@ object BiddingScreenModalForm {
 
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def messageForm(e: ReactEventI) = {

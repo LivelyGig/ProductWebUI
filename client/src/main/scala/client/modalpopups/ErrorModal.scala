@@ -7,6 +7,7 @@ import client.components._
 import client.css.DashBoardCSS
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
+import org.querki.jquery._
 
 object ErrorModal {
   // shorthand fo
@@ -16,7 +17,7 @@ object ErrorModal {
   case class State()
   class Backend(t: BackendScope[Props, State]) {
     def closeForm = Callback{
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def modalClosed(state: State, props: Props): Callback = {

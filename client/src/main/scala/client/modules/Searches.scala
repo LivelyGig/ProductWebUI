@@ -1,18 +1,15 @@
 package client.modules
 
 import client.components.{Icon}
-import diode.data.Pot
-import diode.react.ReactPot._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
-import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
+import client.rootmodels.{ SearchesRootModel}
 import client.css._
 import client.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
-import scala.collection.mutable.ListBuffer
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js

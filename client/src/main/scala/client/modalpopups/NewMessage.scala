@@ -21,6 +21,7 @@ import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import shared.dtos._
+import org.querki.jquery._
 
 
 object NewMessage {
@@ -75,7 +76,7 @@ object PostNewMessage {
   case class State(postMessage:PostMessage, postNewMessage: Boolean = false, selectizeInputId : String = "postNewMessageSelectizeInput")
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     /*def updateTo(e:ReactEventI)  = {
       val value = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
@@ -90,7 +91,7 @@ object PostNewMessage {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
     def hideModal =  {
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def mounted(): Callback = Callback {
 

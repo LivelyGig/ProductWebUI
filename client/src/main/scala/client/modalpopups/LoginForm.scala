@@ -10,6 +10,7 @@ import client.css.{HeaderCSS, DashBoardCSS,CreateAgentCSS}
 import client.models.UserModel
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object LoginForm {
   //TodoForm
@@ -28,7 +29,7 @@ object LoginForm {
       }
 
     def hide = {
-        jQuery(t.getDOMNode()).modal("hide")
+        $(t.getDOMNode()).modal("hide")
     }
 
     def updateEmail(e: ReactEventI) = {

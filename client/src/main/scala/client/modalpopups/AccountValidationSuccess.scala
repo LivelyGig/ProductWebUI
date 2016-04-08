@@ -7,6 +7,7 @@ import client.components._
 import client.css.DashBoardCSS
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
+import org.querki.jquery._
 
 object AccountValidationSuccess {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -15,7 +16,7 @@ object AccountValidationSuccess {
 
   class Backend(t: BackendScope[Props, State]) {
     def hide = Callback{
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled

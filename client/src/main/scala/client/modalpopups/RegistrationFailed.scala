@@ -7,6 +7,7 @@ import client.components._
 import client.css.DashBoardCSS
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object RegistrationFailed {
   // shorthand fo
@@ -17,7 +18,7 @@ object RegistrationFailed {
   class Backend(t: BackendScope[Props, State]) {
 
     def hide = Callback{
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def login(): Callback  = {
       t.modState(s=>s.copy(registrationFailed = true))
