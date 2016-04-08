@@ -4,6 +4,7 @@ import japgolly.scalajs.react._
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.{CreateUser, InitializeSessionResponse, ApiResponse}
+import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups.RequestInvite
@@ -41,7 +42,15 @@ object Login {
     }
 
     def login(userModel: UserModel) = {
-      CoreApi.agentLogin(userModel).onComplete {
+      val user = UserModel(email = userModel.email, name = "",
+        imgSrc = "", isLoggedIn = true)
+      window.sessionStorage.setItem("userEmail", userModel.email)
+//      window.sessionStorage.setItem("userName",userModel.password)
+//      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
+//      window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
+      SYNEREOCircuit.dispatch(LoginUser(user))
+      window.location.href = "/#synereodashboard"
+      /*CoreApi.agentLogin(userModel).onComplete {
         case Success(responseStr) =>
           try {
            // log.debug("login successful")
@@ -57,6 +66,10 @@ object Login {
           //  SYNEREOCircuit.dispatch()
             window.location.href = "/#synereodashboard"
             //  t.modState(s => s.copy(userModel = s.userModel.copy()))
+            SYNEREOCircuit.dispatch(LoginUser(user))
+            //               println(userModel)
+            //SYNEREOCircuit.dispatch(CreateSessionForMessages(userModel))
+           // SYNEREOCircuit.dispatch(CreateLabels())
           } catch {
             case e: Exception =>
              /* log.debug("login failed")*/
@@ -64,7 +77,7 @@ object Login {
           }
         case Failure(s) =>
           println("internal server error")
-      }
+      }*/
       //      window.location.href = "/#synereodashboard"
     }
 
@@ -99,7 +112,7 @@ object Login {
                         ),
                         <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
                           <.div(LoginCSS.Style.keepMeLoggedIn)(
-                            <.input(^.`type` := "radio"), "Keep me logged in"
+                            <.input(^.`type` := "radio"), <.span("Keep me logged in",LoginCSS.Style.keepMeLoggedInText)
                           ),
                           <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
                         )

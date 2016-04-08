@@ -16,6 +16,10 @@ object SDashboardCSS {
       /*      minHeight(60.px),
             minWidth(100.px)*/
     )
+ /*   val navBackgroundImage = style(
+      width(100.%%),
+      height(70.px)
+    )*/
     val dashboardContainerMain = style(
       height(890.px),
       overflowY.scroll.important,

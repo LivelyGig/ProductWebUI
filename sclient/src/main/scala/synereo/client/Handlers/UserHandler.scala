@@ -23,6 +23,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(modelFromStore)
     case LogoutUser() =>
       window.sessionStorage.clear()
+      window.location.href = "/#synereologin"
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))
   }
 }

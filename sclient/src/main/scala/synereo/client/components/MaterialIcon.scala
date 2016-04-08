@@ -9,13 +9,17 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 object MIcon {
   type MIcon = ReactNode
 
-  def apply(name: String): MIcon = <.i(^.className := "material-icons")(name)
+  def apply(name: String): MIcon = <.i(^.className := "material-icons md-18")(name)
 
   def face = apply("face")
 
   def playCircleOutline = apply("play_circle_outline")
 
   def pause = apply("pause")
+
+  def insertComment = apply("insert_comment")
+
+  def cancel = apply("cancel")
 
   def help = apply("help")
 
