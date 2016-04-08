@@ -1,9 +1,11 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.{CreateUser, InitializeSessionResponse, ApiResponse}
+import synereo.client.SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups.RequestInvite
@@ -77,48 +79,52 @@ object Login {
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
-          <.div(LoginCSS.Style.loginDilog)(
-            <.div(LoginCSS.Style.formPadding)(
-              <.div(LoginCSS.Style.loginDilogContainerDiv)(
-                <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/images/Synereo-logo.png"),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12")(
-                    <.div(LoginCSS.Style.loginFormContainerDiv)(
-                      <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("Log in"),
-                      <.h3(^.className := "text-center", LoginCSS.Style.textBlue)("Social Self-determination"),
+             <.div()(
+            <.div(/*^.className := "row"*/)(
+              <.div(LoginCSS.Style.loginDilog)(
+                <.div(LoginCSS.Style.formPadding)(
+                  <.div(LoginCSS.Style.loginDilogContainerDiv)(
+                    <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/images/Synereo-logo.png"),
+                    <.div(^.className := "row")(
+                      <.div(^.className := "col-md-12")(
+                        <.div(LoginCSS.Style.loginFormContainerDiv)(
+                          <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("Log in"),
+                          <.h3(^.className := "text-center", LoginCSS.Style.textBlue)("Social Self-determination"),
 
-                      <.form(^.onSubmit ==> loginUser)(
-                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                          <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.userModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
-                        ),
-                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                          <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
-                          <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
-                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
-                          //<.a(^.href := "/#synereodashboard")("Login Here")
-                        ),
-                        <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
-                          <.div(LoginCSS.Style.keepMeLoggedIn)(
-                            <.input(^.`type` := "radio"), "Keep me logged in"
-                          ),
-                          <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
+                          <.form(^.onSubmit ==> loginUser)(
+                            <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                              <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.userModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
+                            ),
+                            <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                              <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
+                              <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
+                              //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+                              //<.a(^.href := "/#synereodashboard")("Login Here")
+                            ),
+                            <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
+                              <.div(LoginCSS.Style.keepMeLoggedIn)(
+                                <.input(^.`type` := "radio"), "Keep me logged in"
+                              ),
+                              <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
+                            )
+                          )
                         )
                       )
                     )
                   )
                 )
               )
-            )
-          )
-        ),
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 text-center")(
-            <.div(^.className := "col-md-12")(
-              <.a(^.href := "#", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
             ),
-            //   <.button(^.className := "btn text-center", "",),
-            /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
-            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12 text-center")(
+                <.div(^.className := "col-md-12")(
+                  <.a(^.href := "#", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+                ),
+                //   <.button(^.className := "btn text-center", "",),
+                /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
+                RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")
+                )
+              )
             )
           )
         )

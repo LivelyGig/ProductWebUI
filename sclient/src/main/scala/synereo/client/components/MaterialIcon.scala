@@ -60,4 +60,13 @@ object MIcon {
   def star = apply("star")
 
   def person = apply("person")
+
+  def mailOutline = apply("mail outline")
+
+  def accountCircle = apply("account circle")
+
+  def accessTime = apply("access time")
+
+
+
 }

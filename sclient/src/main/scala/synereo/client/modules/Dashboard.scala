@@ -18,6 +18,12 @@ object Dashboard {
     render_P { ctr =>
       <.div(^.className := "container-fluid",SDashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
+          //Left Sidebar
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+            //            Footer(Footer.Props(c, r.page))
+            Sidebar(Sidebar.Props())
+          )),
+        <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
             <.div(^.className := "pull-right", SDashboardCSS.Style.profileActionContainer)(
               <.button(^.className := "btn", SDashboardCSS.Style.profileActionButton)(
