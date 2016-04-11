@@ -11,6 +11,11 @@ object MIcon {
 
   def apply(name: String): MIcon = <.i(^.className := "material-icons md-18")(name)
 
+
+  def apply(name: String, size: String): MIcon = {
+    <.i(^.className := s"material-icons md-$size")(name)
+  }
+
   def face = apply("face")
 
   def playCircleOutline = apply("play_circle_outline")
@@ -71,6 +76,7 @@ object MIcon {
 
   def accessTime = apply("access time")
 
+  def search = apply("search")
 
 
 }

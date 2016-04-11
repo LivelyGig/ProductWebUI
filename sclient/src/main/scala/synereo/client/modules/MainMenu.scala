@@ -35,6 +35,10 @@ object MainMenu {
         imgSrc = "", isLoggedIn = false))))
   }
 
+  def displayMenu() = {
+
+  }
+
   private val menuItems = Seq(
     MenuItem(0, _ => "FullBlogPostView", SynereoBlogPostFullLOC),
     MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
@@ -52,7 +56,8 @@ object MainMenu {
               <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(<.span(model.email)),
               <.li(
                 <.div(^.className := "dropdown")(
-                  <.button(^.className := "btn btn-default dropdown-toggle",SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown")(MIcon.speakerNotes),
+                  <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown"/*,
+                    ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
                   <.ul(^.className := "dropdown-menu")(
                     <.li(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
                     <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
@@ -86,8 +91,9 @@ object MainMenu {
           if (props.proxy().isLoggedIn) {
             <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
               <.div(^.className := "form-group")(
-                <.input(^.className := "form-control",SynereoCommanStylesCSS.Style.searchFormInputBox)
-              )
+                <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
+              ),
+              <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
             )
           }
           else {

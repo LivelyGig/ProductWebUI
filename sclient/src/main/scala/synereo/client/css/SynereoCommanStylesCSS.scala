@@ -23,8 +23,8 @@ object SynereoCommanStylesCSS {
       marginBottom(0.px),
       media.maxWidth(820.px) -
         paddingTop(4.px)
-        //media.minWidth(821.px) -
-       // paddingTop(8.px)
+      //media.minWidth(821.px) -
+      // paddingTop(8.px)
     )
     val searchFormInputBox = style(
       backgroundColor(rgba(115, 99, 99, 0.4)),
@@ -32,7 +32,8 @@ object SynereoCommanStylesCSS {
       borderRight.`0`,
       borderRadius.`0`.important,
       borderLeft.`0`,
-      borderBottom(1.px, solid, grey)
+      borderBottom(1.px, solid, grey),
+      color(c"#95C9DE")
     )
     val userActionButton = style(
       fontSize(1.5.em),
@@ -157,6 +158,16 @@ object SynereoCommanStylesCSS {
     )
     val inlineBlock = style(
       display.inlineBlock
+    )
+    val searchBtn = style(
+      backgroundColor.transparent.important,
+      border.none.important,
+      color(c"#95C9DE").important,
+      &.hover.focus.active(
+        backgroundColor.transparent.important,
+        border.none.important,
+        color(c"#95C9DE").important
+      )
     )
   }
 
