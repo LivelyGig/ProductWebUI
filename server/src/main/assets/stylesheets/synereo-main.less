@@ -289,9 +289,33 @@ a:hover {cursor: hand; cursor: pointer;}
     display:block;
   }
   .nav ul.dropdown-menu{
-    display: block;
     width: 240px;
     right: -80px;
     height: 260px;
     width: 350px;
+  }
+  .dropdown-arrow {
+    position: absolute;
+    top: 88.1%;
+    right: 20px;
+    border-bottom: 8px solid white;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    position: absolute;
+    visibility:hidden;
+  }
+  .nav.nav-pills li .dropdown:hover .dropdown-arrow {
+    visibility:visible;
+  }
+  .nav ul.dropdown-arrow::before{
+    content: " ";
+    border-bottom: 7px solid #fff;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    top: 2px;
+    left: -7px;
+    border-top: 0;
+    z-index: 2000;
+    opacity: 1;
   }
