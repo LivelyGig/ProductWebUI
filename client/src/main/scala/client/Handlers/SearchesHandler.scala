@@ -3,7 +3,7 @@ package client.handlers
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
-import client.models.Label
+import client.models.LabelModel
 import client.rootmodels.{MessagesRootModel, SearchesRootModel}
 import client.services.{LGCircuit, CoreApi}
 import client.utils.{Utils, PrologParser}
@@ -19,29 +19,29 @@ object SearchesModelHandler {
     if (listOfLabels != Nil) {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       try {
-        upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
+        upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
       } catch {
         case e: Exception =>
           SearchesRootModel(Nil)
       }
-      val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
+      val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
       SearchesRootModel(model)
     }
     else {
       SearchesRootModel(Nil)
     }
   }
-  def updateModel (label: Label, labels: Seq[Label]): Seq[Label] ={
+  def updateModel (label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] ={
     val children = labels.filter(p=>p.parentUid==label.uid)
     if (!children.isEmpty){
       children.map(e => updateModel(e, labels))
     }
     labels
   }
-  var children = Seq[Label]()
-  var listE = new ListBuffer[Label]() /*Seq[Label]()*/
+  var children = Seq[LabelModel]()
+  var listE = new ListBuffer[LabelModel]() /*Seq[Label]()*/
   /*var searchLabels = new ListBuffer[Seq[Label]]()*/
-  def GetChildren(label: Label, labels: Seq[Label]):  Seq[Label]={
+  def GetChildren(label: LabelModel, labels: Seq[LabelModel]):  Seq[LabelModel]={
     children = labels.filter(p=>p.parentUid==label.uid)
     if (!children.isEmpty){
       listE ++= children
@@ -49,7 +49,7 @@ object SearchesModelHandler {
     }
     listE
   }
-  def GetChildrenToParent(label: Label, labels: Seq[Label]):  Seq[Label]={
+  def GetChildrenToParent(label: LabelModel, labels: Seq[LabelModel]):  Seq[LabelModel]={
     children = labels.filter(p=>p.uid==label.parentUid)
     if (!children.isEmpty){
       listE ++= children
@@ -57,7 +57,7 @@ object SearchesModelHandler {
     }
     listE
   }
-  var labelFamilies = new ListBuffer[Label]()
+  var labelFamilies = new ListBuffer[LabelModel]()
   /*def GetLabelFamilies (label: Label,labels: Seq[Label]) : Seq[Label] = {
 
     labelFamilies
@@ -65,7 +65,7 @@ object SearchesModelHandler {
 }
 
 case class CreateLabels()
-case class UpdateLabel(label: Label)
+case class UpdateLabel(label: LabelModel)
 case class SubscribeSearch()
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW){
   override def handle = {
@@ -110,7 +110,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case SubscribeSearch() =>
       val selectedRootParents = value.searchesModel.filter(e=>e.isChecked==true && e.parentUid== "self")
-      val labelFamilies = ListBuffer[Seq[Label]]()
+      val labelFamilies = ListBuffer[Seq[LabelModel]]()
       selectedRootParents.foreach{selectedRootParent=>
         SearchesModelHandler.listE.clear()
           val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent,value.searchesModel).filter(e=>e.isChecked==true)

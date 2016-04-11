@@ -9,7 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ConnectionsRootModel, SearchesRootModel}
 import client.css._
-import client.models.{Label, UserModel}
+import client.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import scala.collection.mutable.ListBuffer
@@ -476,7 +476,7 @@ object Searches {
         }
         case "messages" => {
           //          @tailrec
-          def renderLabel(label: Label): ReactTag = {
+          def renderLabel(label: LabelModel): ReactTag = {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(

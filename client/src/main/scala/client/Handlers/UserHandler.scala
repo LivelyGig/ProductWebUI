@@ -32,7 +32,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
         noChange
     case LogoutUser() =>
-      CoreApi.cancelAllSubscriptionRequest()
+      CoreApi.cancelPreviousSubsForLabelSearch()
       window.sessionStorage.clear()
       window.location.href = "/"
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))

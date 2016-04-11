@@ -1,9 +1,9 @@
 package client.rootmodels
 
-import client.models.Label
+import client.models.LabelModel
 
-case class SearchesRootModel(searchesModel: Seq[Label]) {
-  def updated (newSearch: Label) = {
+case class SearchesRootModel(searchesModel: Seq[LabelModel]) {
+  def updated (newSearch: LabelModel) = {
     val searchu = searchesModel
     searchesModel.indexWhere(_.uid == newSearch.uid)
     match {
