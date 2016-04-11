@@ -240,6 +240,7 @@ display: inline-table;
 }
 
 
+
 @media (max-width: 820px) {
     .navbar-header {
         float: none;
@@ -275,7 +276,24 @@ display: inline-table;
     .collapse.in{
   		display:block !important;
 	}
+	 .loggedInUser {
+      display:none;
+     }
+     .loggedInUserNav{
+        display:block;
+       width: calc(68vw);
+     }
 }
+@media (min-width: 821px) {
+   .loggedInUser {
+        display:block;
+        margin-top: -50px;
+   }
+       .loggedInUserNav{
+         display:none;
+       }
+}
+
 
 
 .modal{
