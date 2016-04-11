@@ -16,6 +16,7 @@ import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object Accept {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -67,10 +68,10 @@ object PayoutTransaction {
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def hideModal =  {
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
 

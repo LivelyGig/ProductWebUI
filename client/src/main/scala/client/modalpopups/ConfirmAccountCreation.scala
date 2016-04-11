@@ -8,6 +8,7 @@ import client.css.DashBoardCSS
 import client.models.EmailValidationModel
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
+import org.querki.jquery._
 
 object ConfirmAccountCreation {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -22,7 +23,7 @@ object ConfirmAccountCreation {
     }
      def hide = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def updateToken(e: ReactEventI) = {
       // update TodoItem content

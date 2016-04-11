@@ -12,6 +12,7 @@ import client.components._
 import client.css._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object LegalModal {   //TodoForm
 @inline private def bss = GlobalStyles.bootstrapStyles
@@ -29,7 +30,7 @@ object LegalModal {   //TodoForm
     def hide = {
       console.log("hide")
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def showPrivacyPolicy(e:ReactEventI) = {

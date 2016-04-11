@@ -8,7 +8,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
-
+import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 

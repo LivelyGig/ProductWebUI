@@ -5,6 +5,7 @@ import scalacss.Defaults._
 object DashBoardCSS {
 
   object Style extends StyleSheet.Inline {
+
     import dsl._
 
     val mainContainerDiv = style(
@@ -16,28 +17,25 @@ object DashBoardCSS {
     )
     val splitContainer = style(
       position.relative,
-     /* height(100.%%),*/
+      /* height(100.%%),*/
       width(100.%%),
       overflow.hidden
     )
-  /*  val rsltContainer = style(
-      display.inlineBlock,
-      width(98.2.%%),
-      fontSize(1.2.em)
-    )*/
+    /*  val rsltContainer = style(
+        display.inlineBlock,
+        width(98.2.%%),
+        fontSize(1.2.em)
+      )*/
 
     val rsltContainer = style(
       display.inlineBlock,
       fontSize(1.2.em),
       backgroundColor(c"#EAEAEA"),
-      media.maxWidth(1199.px) -(
-        width(100.%%)
-        ),
-      media.minWidth(1200.px) -(
+      media.maxWidth(1199.px) -
+        width(100.%%),
+      media.minWidth(1200.px) -
         width(98.2.%%)
-        )
     )
-
 
     val dashboardResults2 = style(
       borderLeft(2.px, solid, c"#005256"),
@@ -45,7 +43,7 @@ object DashBoardCSS {
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
-     // height(55.px),
+      // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
       marginRight(0.px),
@@ -217,8 +215,10 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      paddingRight(17.%%),
-      paddingLeft(17.%%)
+      media.minWidth(927.px) -
+        paddingRight(17.%%),
+      media.minWidth(927.px) -
+        paddingLeft(17.%%)
     )
     val modalContent = style(
       width.inherit,
@@ -244,7 +244,7 @@ object DashBoardCSS {
     val marginLeftCloseBtn = style(
       marginLeft(20.px),
       backgroundColor(orange)
-     // addClassName("btnBackground")
+      // addClassName("btnBackground")
 
     )
     val btnBackground = style(
@@ -256,14 +256,14 @@ object DashBoardCSS {
       width(65.px)
     )
     val footTextAlign = style(
-     textAlign.center
+      textAlign.center
     )
-    val linksConatiner = style (
-      media.maxWidth(991.px)-
+    val linksConatiner = style(
+      media.maxWidth(991.px) -
         border.none,
-        marginTop(20.px),
-      media.minWidth(992.px)-
-        borderLeft(2.px , double , c"#000000")
+      marginTop(20.px),
+      media.minWidth(992.px) -
+        borderLeft(2.px, double, c"#000000")
     )
     val modalBorderRadius = style(
       borderRadius(0.px)
@@ -284,7 +284,7 @@ object DashBoardCSS {
     val modalBodyPadding = style(
       paddingLeft(15.px),
       paddingBottom(0.px),
-     // paddingTop(15.px),
+      // paddingTop(15.px),
       paddingRight(15.px)
     )
     val rsltpaddingTop10p = style(
@@ -319,11 +319,11 @@ object DashBoardCSS {
     val replyMarginTop = style(
       marginTop(20.px)
     )
-  /*  val footPreferences = style (
-      padding(22.px) ,
-      backgroundColor(c"#00767c")
-    )*/
-    val inputBtnRadius = style (
+    /*  val footPreferences = style (
+        padding(22.px) ,
+        backgroundColor(c"#00767c")
+      )*/
+    val inputBtnRadius = style(
       border.none,
       padding(0.2.em, 0.6.em, 0.1.em)
     )
@@ -334,8 +334,8 @@ object DashBoardCSS {
       flexDirection.column
     )
 
-    val loading = style (
-      width (50.px),
+    val loading = style(
+      width(50.px),
       height(57.px),
       position.absolute,
       top(50.%%),
@@ -343,14 +343,14 @@ object DashBoardCSS {
       zIndex(10000)
     )
 
-    val attentionContainer =style (
+    val attentionContainer = style(
       padding(20.px),
       backgroundColor(c"#CCE6FF"),
       textAlign.center,
       height(300.px),
       margin(15.px)
     )
-    val opportunitiesContainer =style (
+    val opportunitiesContainer = style(
       padding(20.px),
       backgroundColor(c"#E6CCFF"),
       textAlign.center,
@@ -359,7 +359,7 @@ object DashBoardCSS {
       marginRight(15.px),
       marginBottom(15.px)
     )
-    val suggestionsContainer =style (
+    val suggestionsContainer = style(
       padding(20.px),
       backgroundColor(c"#FFD9B3"),
       //  textAlign.center,
@@ -369,7 +369,7 @@ object DashBoardCSS {
       marginBottom(15.px),
       marginLeft(15.px)
     )
-    val browseforContainer =style (
+    val browseforContainer = style(
       padding(20.px),
       backgroundColor(c"#CCE6FF"),
       // textAlign.center,
@@ -378,7 +378,7 @@ object DashBoardCSS {
       marginRight(15.px),
       marginBottom(15.px)
     )
-    val introduceColleaguesContainer = style (
+    val introduceColleaguesContainer = style(
       padding(20.px),
       backgroundColor(c"#E6CCFF"),
       // textAlign.center,
@@ -388,7 +388,7 @@ object DashBoardCSS {
       marginBottom(15.px),
       marginLeft(15.px)
     )
-    val headerFontDashboard = style (
+    val headerFontDashboard = style(
       fontSize(20.px),
       fontWeight.bold
     )
@@ -398,14 +398,14 @@ object DashBoardCSS {
       color(c"#000")
     )
 
-    val marginResults = style (
+    val marginResults = style(
       marginLeft(24.%%),
       marginTop(0.px),
       marginRight(0.px),
       marginBottom(0.px),
-      media.minWidth(810.px).maxWidth(1238.px)-
+      media.minWidth(810.px).maxWidth(1238.px) -
         marginLeft(21.%%),
-      media.maxWidth(808.px)-
+      media.maxWidth(808.px) -
         marginLeft(16.%%)
     )
     val padding0px = style(
@@ -414,7 +414,7 @@ object DashBoardCSS {
     val paddingRight0px = style(
       paddingRight(0.px)
     )
-    val paddingLeft0px = style (
+    val paddingLeft0px = style(
       paddingLeft(0.px)
     )
     val imgc = style(
@@ -424,22 +424,23 @@ object DashBoardCSS {
       top(0.px),
       bottom(0.px),
       margin.auto
-     )
-    val verticalAlignMiddle = style (
+    )
+    val verticalAlignMiddle = style(
       verticalAlign.middle
     )
-    val tfootMargin = style (
-      media.maxWidth(1024.px)-
-      marginRight(0.px),
-      media.minWidth(1024.px)-
-      marginRight(15.px)
+    val tfootMargin = style(
+      media.maxWidth(1024.px) -
+        marginRight(0.px),
+      media.minWidth(1024.px) -
+        marginRight(15.px)
     )
 
     val chatIcon = style {
       color(green)
     }
-    val chatInvisibleIcon = style{
+    val chatInvisibleIcon = style {
       color(gray)
     }
-   }
+  }
+
 }
