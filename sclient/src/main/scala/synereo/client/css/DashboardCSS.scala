@@ -16,17 +16,19 @@ object DashboardCSS {
       /*      minHeight(60.px),
             minWidth(100.px)*/
     )
- /*   val navBackgroundImage = style(
-      width(100.%%),
-      height(70.px)
-    )*/
+    /*   val navBackgroundImage = style(
+         width(100.%%),
+         height(70.px)
+       )*/
     val dashboardContainerMain = style(
-      height(900.px),
+      height(100.vh),
       overflowY.scroll.important,
       backgroundImage := "url(\"./assets/images/globalBg.jpg\")"
     )
     val profileActionButton = style(
-      backgroundColor(c"#1F85B5")
+      backgroundColor(c"#1F85B5"),
+      position.fixed,
+      right(20.px)
     )
     val glanceViewName = style(
       display.inlineBlock
@@ -65,18 +67,17 @@ object DashboardCSS {
       )
     )
     val userNameDescription = style(
-      width(89.%%),
+      width(86.%%),
       display.inlineBlock,
-      padding(5.px,15.px)
+      padding(5.px, 15.px)
     )
     val postActions = style(
-
-
+      marginLeft(-10.px)
     )
-    val sidebarBtn = style (
+    val sidebarBtn = style(
       float.left,
       backgroundColor.transparent,
-      border.none,fontSize(22.px),
+      border.none, fontSize(22.px),
       marginTop(9.px),
       color.white
     )
@@ -86,6 +87,9 @@ object DashboardCSS {
 
     val sidebarNavStyle = style(
       fontSize(17.px)
+    )
+    val postActionButton = style(
+      border.none.important
     )
 
   }

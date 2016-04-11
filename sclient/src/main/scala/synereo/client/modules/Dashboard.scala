@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.{MIcon,Icon}
+import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 
 import scalacss.ScalaCssReact._
@@ -16,7 +16,7 @@ import scalacss.ScalaCssReact._
 object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid",DashboardCSS.Style.dashboardContainerMain)(
+      <.div(^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
@@ -52,7 +52,7 @@ object Dashboard {
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.span()(MIcon.moreVert),
+                    <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton)(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
                       <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
@@ -62,17 +62,32 @@ object Dashboard {
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(DashboardCSS.Style.postActions)(
-                        <.span(MIcon.chatBubble),
-                        <.span(MIcon.share),
-                        <.span(MIcon.add),
-
-                        <.span(^.className := "pull-right")(
-                          <.span(MIcon.chatBubble),
-                          <.span(MIcon.share)
+                        <.div(^.className := "btn-group")(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(MIcon.chatBubble),
+                           <.div("12", SynereoCommanStylesCSS.Style.inlineBlock)
+                          ),
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(MIcon.share),
+                           <.div("123", SynereoCommanStylesCSS.Style.inlineBlock)
+                          ),
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(MIcon.add),
+                           <.div("10", SynereoCommanStylesCSS.Style.inlineBlock)
+                          )
+                        ),
+                        <.div(^.className := "btn-group pull-right")(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(Icon.minus)
+                          ),
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(Icon.heartO)
+                          ),
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                            <.span(Icon.plus)
+                          )
                         )
-
                       )
-
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(

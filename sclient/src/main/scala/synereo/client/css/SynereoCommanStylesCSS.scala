@@ -155,6 +155,9 @@ object SynereoCommanStylesCSS {
       borderRadius(50.%%),
       display.inlineBlock
     )
+    val inlineBlock = style(
+      display.inlineBlock
+    )
   }
 
 }
