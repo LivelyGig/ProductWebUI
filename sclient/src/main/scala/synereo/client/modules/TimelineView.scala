@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.Icon
-import synereo.client.css.{SynereoCommanStylesCSS, SDashboardCSS, UserTimelineViewCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS, UserTimelineViewCSS}
 
 import scalacss.ScalaCssReact._
 
@@ -48,14 +48,14 @@ object TimelineView {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12", SynereoCommanStylesCSS.Style.paddingRightZero)(
-                  <.div(^.className := "row", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.input(SDashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
+                  <.div(^.className := "row", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.input(DashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
                     <.span()(Icon.camera)
                   ),
-                  <.div(^.className := "row", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -63,14 +63,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),
@@ -84,9 +84,9 @@ object TimelineView {
 
                     )
                   ),
-                  <.div(^.className := "row", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -94,14 +94,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),
@@ -117,9 +117,9 @@ object TimelineView {
                   )
                 ),
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                  <.div(^.className := "row", SDashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -127,14 +127,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),
@@ -148,9 +148,9 @@ object TimelineView {
 
                     )
                   ),
-                  <.div(^.className := "row", SDashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -158,14 +158,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),
@@ -179,9 +179,9 @@ object TimelineView {
 
                     )
                   ),
-                  <.div(^.className := "row", SDashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -189,14 +189,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),
@@ -210,9 +210,9 @@ object TimelineView {
 
                     )
                   ),
-                  <.div(^.className := "row", SDashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
                       <.span(^.color := "blue")("Ux love,party at new york"), <.br(),
@@ -220,14 +220,14 @@ object TimelineView {
                     ),
                     <.span()(Icon.ellipsisV),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(^.color := "blue")(Icon.ellipsisH)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(Icon.thList),
                         <.span(Icon.adjust),
                         <.span(Icon.anchor),

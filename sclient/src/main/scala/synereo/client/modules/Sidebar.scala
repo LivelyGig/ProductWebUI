@@ -10,7 +10,7 @@ import synereo.client.SYNEREOMain.{SynereoLoc, Loc}
 import synereo.client.components.GlobalStyles
 import scalacss.ScalaCssReact._
 import synereo.client.components._
-import synereo.client.css.SDashboardCSS
+import synereo.client.css.DashboardCSS
 
 
 object Sidebar {
@@ -29,7 +29,7 @@ object Sidebar {
     .stateless
     .render_P((P) => {
           <.div(
-            <.ul(^.id:="sidebarNavStyle", ^.className:="nav nav-stacked", SDashboardCSS.Style.sidebarNavStyle )(
+            <.ul(^.id:="sidebarNavStyle", ^.className:="nav nav-stacked", DashboardCSS.Style.sidebarNavStyle )(
               <.li()(<.a(^.href:="#")(<.span(Icon.home), "  Stream")),
               <.li()(<.a(^.href:="#")(<.span(/*MIcon.mailOutline*/ Icon.envelope ),   " Messages")),
               <.li()(<.a(^.href:="#")(<.span(/*MIcon.accountCircle*/Icon.user),"  Profile")),

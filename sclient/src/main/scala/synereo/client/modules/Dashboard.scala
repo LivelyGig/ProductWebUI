@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon,Icon}
-import synereo.client.css.{SynereoCommanStylesCSS, SDashboardCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 
 import scalacss.ScalaCssReact._
 
@@ -16,7 +16,7 @@ import scalacss.ScalaCssReact._
 object Dashboard {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid",SDashboardCSS.Style.dashboardContainerMain)(
+      <.div(^.className := "container-fluid",DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
@@ -25,8 +25,8 @@ object Dashboard {
           )),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-            <.div(^.className := "pull-right", SDashboardCSS.Style.profileActionContainer)(
-              <.button(^.className := "btn", SDashboardCSS.Style.profileActionButton)(
+            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+              <.button(^.className := "btn", DashboardCSS.Style.profileActionButton)(
                 <.span(^.color := "white")(MIcon.chatBubble),
                 <.span(^.color := "white")(MIcon.share),
                 <.span(^.color := "white")(MIcon.chevronRight)
@@ -39,14 +39,14 @@ object Dashboard {
             <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.input(SDashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.input(DashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
                     <.span()(Icon.camera)
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -54,14 +54,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -75,9 +75,9 @@ object Dashboard {
 
                     )
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -85,14 +85,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -108,9 +108,9 @@ object Dashboard {
                   )
                 ),
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -118,14 +118,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -139,9 +139,9 @@ object Dashboard {
 
                     )
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -149,14 +149,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -170,9 +170,9 @@ object Dashboard {
 
                     )
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -180,14 +180,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -201,9 +201,9 @@ object Dashboard {
 
                     )
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -211,14 +211,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),
@@ -232,9 +232,9 @@ object Dashboard {
 
                     )
                   ),
-                  <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                    <.div(SDashboardCSS.Style.userNameDescription)(
+                  <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
@@ -242,14 +242,14 @@ object Dashboard {
                     ),
                     <.span()(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
-                      <.h3("Headed to  sxsw", SDashboardCSS.Style.cardHeading),
+                      <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
-                      <.div(SDashboardCSS.Style.postActions)(
+                      <.div(DashboardCSS.Style.postActions)(
                         <.span(MIcon.chatBubble),
                         <.span(MIcon.share),
                         <.span(MIcon.add),

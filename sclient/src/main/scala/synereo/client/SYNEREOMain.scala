@@ -41,8 +41,8 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceFullLOC extends Loc
 
-  def sidebar = Callback{
-       val sidebtn : js.Object = "#searchContainer"
+  def sidebar = Callback {
+    val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
@@ -60,7 +60,6 @@ object SYNEREOMain extends js.JSApp {
   }.renderWith(layout)
 
 
-
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
@@ -68,10 +67,14 @@ object SYNEREOMain extends js.JSApp {
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         <.div(^.className := "col-lg-1")(
           //Adding toggle button for sidebar
-          <.button(^.id:="sidebarbtn",^.`type`:="button",^.className:="navbar-toggle toggle-left",^.float:="left","data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
-            ^.onClick-->sidebar)(
-            <.span(Icon.bars)
-          )
+          if (r.page == SynereoLoc) {
+            <.span()
+          } else {
+            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+              ^.onClick --> sidebar)(
+              <.span(Icon.bars)
+            )
+          }
         ),
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(

@@ -10,7 +10,7 @@ object AppCSS {
     GlobalRegistry.register(
       SynereoCommanStylesCSS.Style,
       LoginCSS.Style,
-      SDashboardCSS.Style,
+      DashboardCSS.Style,
       BlogPostFullCSS.Style,
       UserProfileViewCSS.Style,
       UserTimelineViewCSS.Style,

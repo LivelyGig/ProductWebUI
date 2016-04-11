@@ -6,7 +6,7 @@ import scalacss.Defaults._
   * Created by Mandar on 3/17/2016.
   */
 
-object SDashboardCSS {
+object DashboardCSS {
 
   object Style extends StyleSheet.Inline {
 
@@ -21,7 +21,7 @@ object SDashboardCSS {
       height(70.px)
     )*/
     val dashboardContainerMain = style(
-      height(890.px),
+      height(900.px),
       overflowY.scroll.important,
       backgroundImage := "url(\"./assets/images/globalBg.jpg\")"
     )
@@ -67,7 +67,7 @@ object SDashboardCSS {
     val userNameDescription = style(
       width(89.%%),
       display.inlineBlock,
-      padding(15.px)
+      padding(5.px,15.px)
     )
     val postActions = style(
 

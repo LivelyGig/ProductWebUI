@@ -1,6 +1,6 @@
 package synereo.client.css
 
-import synereo.client.css.SDashboardCSS.Style._
+import synereo.client.css.DashboardCSS.Style._
 
 import scalacss.Defaults._
 
@@ -22,9 +22,9 @@ object SynereoCommanStylesCSS {
       paddingRight(0.%%),
       marginBottom(0.px),
       media.maxWidth(820.px) -
-        paddingTop(4.px),
-      media.minWidth(821.px) -
-        paddingTop(8.px)
+        paddingTop(4.px)
+        //media.minWidth(821.px) -
+       // paddingTop(8.px)
     )
     val searchFormInputBox = style(
       backgroundColor(rgba(115, 99, 99, 0.4)),

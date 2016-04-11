@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{BlogPostFullCSS, SynereoCommanStylesCSS, SDashboardCSS}
+import synereo.client.css.{BlogPostFullCSS, SynereoCommanStylesCSS, DashboardCSS}
 
 import scalacss.ScalaCssReact._
 
@@ -31,8 +31,8 @@ object BlogPostFull {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
                       <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
-                        <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                        <.div(SDashboardCSS.Style.userNameDescription)(
+                        <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                        <.div(DashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
                           <.span(MIcon.chevronRight),
                           <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
@@ -97,13 +97,13 @@ object BlogPostFull {
                           <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponseHeadingSmall)(
                             "Responses"
                           ),
-                          <.div(^.className := "col-md-12", SDashboardCSS.Style.userPost)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                            <.input(SDashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
+                          <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                           ),
                           <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar),
-                            <.div(SDashboardCSS.Style.userNameDescription)(
+                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.div(DashboardCSS.Style.userNameDescription)(
                               <.span("James Everet"),
                               <.br(),
                               <.span("1 hour")
@@ -120,9 +120,9 @@ object BlogPostFull {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
-                                <.div(^.className := "col-md-9", SDashboardCSS.Style.glanceViewName)(
+                                <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("James Gosling", ^.fontWeight.bold), <.br(),
                                   <.span("19 Mins Ago")
                                 ),
@@ -151,9 +151,9 @@ object BlogPostFull {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", SDashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
-                                <.div(^.className := "col-md-9", SDashboardCSS.Style.glanceViewName)(
+                                <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("Evan Moore", ^.fontWeight.bold), <.br(),
                                   <.span("19 Mins Ago")
                                 ),

@@ -52,7 +52,7 @@ object Login {
 //      window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
       SYNEREOCircuit.dispatch(LoginUser(user))
       window.location.href = "/#synereodashboard"
-      /*CoreApi.agentLogin(userModel).onComplete {
+      CoreApi.agentLogin(userModel).onComplete {
         case Success(responseStr) =>
           try {
            // log.debug("login successful")
