@@ -58,7 +58,7 @@ object Dashboard {
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
+                      <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton,SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(DashboardCSS.Style.postActions)(

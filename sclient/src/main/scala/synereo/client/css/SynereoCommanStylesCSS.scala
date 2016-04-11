@@ -62,7 +62,8 @@ object SynereoCommanStylesCSS {
             width(40.px),
             height(40.px),
             media.maxWidth(820.px)-*/
-      marginTop(8.px)
+      marginTop(8.px),
+      padding(5.px)
     )
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")

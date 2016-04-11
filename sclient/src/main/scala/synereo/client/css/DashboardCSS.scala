@@ -89,7 +89,8 @@ object DashboardCSS {
       fontSize(17.px)
     )
     val postActionButton = style(
-      border.none.important
+      border.none.important,
+      marginTop(-30.px)
     )
 
   }

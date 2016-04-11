@@ -14,7 +14,7 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/images/Login-bg.jpg\")",
-      marginTop(-50.px)
+      marginTop(-55.px)
     )
     val loginDilog = style(
       width(50.%%),
@@ -89,11 +89,11 @@ object LoginCSS {
 
     )
     val loginFormFooter = style(
-      padding(20.px),
+      padding(5.%%,15.%%),
       fontSize(16.px)
     )
     val keepMeLoggedIn = style(
-      marginLeft(85.px),
+//      marginLeft(65.px),
       display.inlineBlock,
       color(c"#35b0e2")
     )
@@ -102,7 +102,7 @@ object LoginCSS {
     )
     val forgotMyPassLink = style(
       float.right,
-      marginRight(65.px),
+//      marginRight(65.px),
       color(c"#35b0e2"),
       &.hover(
         color(c"#35b0e2"),

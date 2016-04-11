@@ -15,7 +15,7 @@ import scalacss.Color
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by a4tech on 4/1/2016.
+  * Created by Mandar on 4/1/2016.
   */
 object MarketPlaceFull {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")

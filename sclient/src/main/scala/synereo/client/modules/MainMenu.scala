@@ -58,6 +58,7 @@ object MainMenu {
                 <.div(^.className := "dropdown")(
                   <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown"/*,
                     ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
+                  <.div(^.className:="dropdown-arrow"),
                   <.ul(^.className := "dropdown-menu")(
                     <.li(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
                     <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
