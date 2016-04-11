@@ -98,11 +98,11 @@ object PostNewMessage {
     }
     def sendMessage(content: String, connectionString: String) = {
       val uid = UUID.randomUUID().toString.replaceAll("-","")
-      //      println(uid)
+      //      println(uid) each([LivelyGig],[Synereo])
       //      val dummyTargetConnection = "{\n\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\",\n                  \"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\",\n                  \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\"\n}"
       val targetConnection = upickle.default.read[Connection](connectionString)
-      val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"each([LivelyGig],[Synereo])",upickle.default.write(value),"")))).onComplete{
+      val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(""),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
+      CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"",upickle.default.write(value),uid)))).onComplete{
         case Success(response) => {println("success")
            println("Responce = "+response)
 //          t.modState(s => s.copy(postNewMessage = true))
@@ -110,7 +110,7 @@ object PostNewMessage {
         case Failure(response) => println("failure")
       }
     }
-    def submitForm(e: ReactEventI) = Callback{
+    def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
       /*if (state.postNewMessage){*/
@@ -121,8 +121,17 @@ object PostNewMessage {
       $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
       selectedConnections.foreach(e => sendMessage(state.postMessage.content, e))
 
+      /*var futureArray = Seq[Future[String]]()
+      selectedConnections.foreach(e => futureArray :+= sendMessage(state.postMessage.content, e))
+      var messagesPosted = false
+      futureArray.foreach(p => p.onComplete{
+        case Success(response) => println("success")
+        case Failure(response) => messagesPosted = true
+      })
+      Await.ready(futureArray, Duration.Inf)*/
+
       /*}*/
-      //      t.modState(s => s.copy(postNewMessage = true))
+            t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {

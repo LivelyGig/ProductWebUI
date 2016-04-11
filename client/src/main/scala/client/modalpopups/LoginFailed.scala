@@ -12,7 +12,7 @@ import org.querki.jquery._
 object LoginFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: () => Callback)
+  case class Props(submitHandler: () => Callback, loginErrorMessage: String = "")
   case class State()
   class Backend(t: BackendScope[Props, State]) {
 
@@ -37,7 +37,7 @@ object LoginFailed {
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
              <.div(^.className:="row")(
                 <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("Username/Password combination is not correct please try again.",
+                <.div(DashBoardCSS.Style.modalBodyText)(p.loginErrorMessage,
                   <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"))
                 )
               )

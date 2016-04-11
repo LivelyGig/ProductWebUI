@@ -25,7 +25,7 @@ object ConnectionsSelectize {
       if ($(selectState).length < 1){
         val selectizeInput : js.Object = "#selectize"
         $(selectizeInput).selectize(SelectizeConfig
-          .maxItems(10)
+          .maxItems(30)
           .plugins("remove_button"))
       }
 

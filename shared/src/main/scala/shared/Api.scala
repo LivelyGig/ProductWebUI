@@ -4,7 +4,7 @@ package shared
 import scala.concurrent.Future
 
 trait Api {
-  def createAgent(requestContent: String): Future[String]
+  /*def createAgent(requestContent: String): Future[String]
 
   def confirmEmail(requestContent: String): Future[String]
 
@@ -22,5 +22,9 @@ trait Api {
 
   def cancelSubscriptionRequest(requestContent: String): Future[String]
 
-  def postMessage(requestContent: String): Future[String]
+  def postMessage(requestContent: String): Future[String]*/
+
+  def queryApiBackend (requestContent: String) : Future[String]
+
+  def getMock (requestContent: String,`type`: String) : String
 }

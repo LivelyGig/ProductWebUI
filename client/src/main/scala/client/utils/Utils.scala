@@ -1,7 +1,7 @@
 package client.utils
 
 import shared.dtos.Connection
-import client.models.Label
+import client.models.LabelModel
 import org.scalajs.dom._
 
 object Utils {
@@ -12,7 +12,7 @@ object Utils {
     Connection(sourceStr,"alias",sourceStr)
   }
 
-  def GetLabelProlog(labelFamilies: Seq[Seq[Label]]) : String = {
+  def GetLabelProlog(labelFamilies: Seq[Seq[LabelModel]]) : String = {
     // println("labelFamilies = " + labelFamilies)
     var labelsCount =  labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder

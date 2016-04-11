@@ -26,7 +26,7 @@ case class InitializeSession(agentURI: String)  extends Content
 case class InitializeSessionResponse(sessionURI: String,listOfAliases: Seq[String],defaultAlias: String,listOfLabels: Seq[String],listOfConnections:Seq[Connection],
                                      lastActiveLabel:String,jsonBlob:Map[String, String]
                                      /*reason : Option[String]*/)  /*extends Content*/
-case class InitializeSessionErrorResponse(reason : Option[String])
+case class InitializeSessionErrorResponse(reason : String)
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String
                                     /* ,name: Option[String]*/)  /*extends Content*/
 case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection:Connection = Connection(),
@@ -47,6 +47,7 @@ case class Expression (msgType: String, content: ExpressionContent)
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
 case class ExpressionContentValue(uid : String = "", `type`: String = "", created : String ="", modified : String = "", labels : Seq[String] = Nil, connections : Seq[Connection] = Nil, text : String = "")
+case class Label(text: String, color: String, imgSrc: String)
 
 //case class any(labels: Seq[String])
 
