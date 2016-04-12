@@ -91,7 +91,7 @@ object LGMain extends js.JSApp {
                   case  DashboardLoc    => <.span(^.color := "white",^.float:="right")("Dashboard ","  ", Icon.thList)
                   case  MessagesLoc     => <.span(^.color := "white",^.float:="right")("Messages ","  ", Icon.thList)
                   case  OfferingsLoc    => <.span(^.color := "white",^.float:="right")("Offerings ","  ", Icon.thList)
-                  case  ProfilesLoc     => <.span(^.color := "white",^.float:="right")("Talent ","  ", Icon.thList)
+                  case  ProfilesLoc     => <.span(^.color := "white",^.float:="right")("Profiles ","  ", Icon.thList)
                   case  ContractsLoc    => <.span(^.color := "white",^.float:="right")("Contracts ","  ", Icon.thList)
                   case  ConnectionsLoc  => <.span(^.color := "white",^.float:="right")("Connections ","  ", Icon.thList)
                   case _                => <.span()
