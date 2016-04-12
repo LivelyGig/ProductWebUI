@@ -411,6 +411,9 @@ object DashBoardCSS {
     val padding0px = style(
       padding(0.px)
     )
+    val DisplayFlex = style (
+      display.flex
+    )
     val paddingRight0px = style(
       paddingRight(0.px)
     )
