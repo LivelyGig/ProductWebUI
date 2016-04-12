@@ -1,6 +1,8 @@
 package client.modals
 
+import client.LGMain.{DashboardLoc, Loc}
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
@@ -8,6 +10,7 @@ import client.css.{HeaderCSS, DashBoardCSS,CreateAgentCSS}
 import client.models.UserModel
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object LoginForm {
   //TodoForm
@@ -26,7 +29,7 @@ object LoginForm {
       }
 
     def hide = {
-        jQuery(t.getDOMNode()).modal("hide")
+        $(t.getDOMNode()).modal("hide")
     }
 
     def updateEmail(e: ReactEventI) = {
@@ -54,7 +57,6 @@ object LoginForm {
       props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
     }
 
-
     def render(s: State, p: Props) = {
            // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Sign In and Sign Up"
@@ -73,18 +75,18 @@ object LoginForm {
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
+               <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
 
                 <.div(^.paddingTop := "10px")(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4",DashBoardCSS.Style.padding0px)(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12",DashBoardCSS.Style.padding0px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",
                       ^.onClick ==> showValidate)
                   ),
-                  <.div(^.className := "col-md-3 col-sm-3 col-xs-3")(
+                  <.div(^.className := "col-md-3 col-sm-4 col-xs-12")(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Forgot My Password",
                       ^.onClick ==> showValidate)
                   )

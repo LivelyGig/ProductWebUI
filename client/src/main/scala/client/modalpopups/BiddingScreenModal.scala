@@ -20,6 +20,7 @@ import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object BiddingScreenModal {
   val component = ReactComponentB[Props]("BiddingScreen")
@@ -65,7 +66,7 @@ object BiddingScreenModal {
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
                          postDispute: Boolean = false): Callback = {
-      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
+//      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showBiddingScreen = false))
       } else if (postMessage) {
@@ -85,7 +86,7 @@ object BiddingScreenModal {
       }
     }
 
-    def hideMessage(showMessage: Boolean = false): Callback = {
+    def hideMessage(/*showMessage: Boolean = false*/): Callback = {
       t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
     }
 
@@ -127,7 +128,7 @@ object BiddingScreenModalForm {
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hidemodal = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {
@@ -390,11 +391,11 @@ object BiddingScreenModalForm {
                 ),
                 <.div(^.id := "Escrow3", ^.minHeight := "100%")(
                   <.span(^.fontWeight := "bold")("Status: Funded"), <.br(),
-                  "Funding received", <.br(),
+                  // "Funding received", <.br(),
                   "The following deposits were made into this contract:", <.br(),
-                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 1"), <.br(),
-                  <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("Tx 2"), <.br(),
-                  "pending funding from buyer"
+                  <.span (^.fontWeight.bold) ("4.34000"), " XBT From: @Pam Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("details"), <.br(),
+                  <.span (^.fontWeight.bold) ("0.38000"), " XBT From: @Abed Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("detials"), <.br(),
+                  <.span (^.fontWeight.bold) ("4.72000"), " XBT Total ($1,945.80)"
                 ),
                 <.div(^.id := "Escrow4", ^.minHeight := "100%")(
                   <.span(^.fontWeight := "bold")("Status: Pay Escrow Setup Commission"), <.br(),
@@ -806,7 +807,7 @@ object BiddingScreenModalForm {
 
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def messageForm(e: ReactEventI) = {
@@ -832,7 +833,7 @@ object BiddingScreenModalForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postBiddingScreen)
+//      println(state.postBiddingScreen)
       props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation, state.postAcceptDependencies, state.postDispute)
     }
   }

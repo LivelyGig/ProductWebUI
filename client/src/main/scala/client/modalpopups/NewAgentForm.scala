@@ -9,6 +9,7 @@ import client.models.{UserModel}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object NewAgentForm {
   // shorthand for styles
@@ -21,12 +22,12 @@ object NewAgentForm {
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def hidecomponent = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {
@@ -63,7 +64,7 @@ object NewAgentForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.addNewAgent)
+//      println(state.addNewAgent)
       props.submitHandler(state.userModel, state.addNewAgent, state.showTermsOfServicesForm)
     }
 

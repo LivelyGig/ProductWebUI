@@ -14,7 +14,7 @@ import client.models.{ProjectsModel, ModelType}
 import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
-import client.css.standaloneCSS.Style
+
 
 object ProjectResults {
 
@@ -31,7 +31,7 @@ object ProjectResults {
   val component = ReactComponentB[Props]("Projects")
     .backend(new Backend(_))
     .renderPS((B, P, S) =>
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.verticalImg)(
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
@@ -75,16 +75,15 @@ object ProjectResults {
             )
           )
         ), //col-12
-        <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer",DashBoardCSS.Style.padding0px)(
-            P.proxy().render(jobPostsRootModel =>
+        <.div(^.id := "resultsContainer")(
+           P.proxy().render(jobPostsRootModel =>
               ProjectsList(jobPostsRootModel.projectsModelList)
             ),
-            P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
+            P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
             if (P.proxy().isEmpty) {
               if (!P.proxy().isFailed) {
-                <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
-                  <.img(^.src := "./assets/images/processing.gif")
+                <.div()(
+                  <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
                 )
               } else {
                 <.div()
@@ -92,7 +91,7 @@ object ProjectResults {
             } else {
               <.div()
             }
-          )
+
         ) //gigConversation
       )
     )
@@ -119,11 +118,11 @@ object ProjectsList {
             <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
               "Job Type: " + project.jobPosts.`type`,
               <.br(),
-              "Posted by: LivelyGig",
+              "Posted by: @LivelyGig",
               <.br(),
               "Posted: " + new Date(project.jobPosts.postedDate).toUTCString(),
               <.br(),
-              "Recommended By: Tom",
+              "Recommended By: @Tom",
               <.br(),
               "Skills: Java, Financial Apps, cryptography"
               // project.pageOfPosts.skills.toString()

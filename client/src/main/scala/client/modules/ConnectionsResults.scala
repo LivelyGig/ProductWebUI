@@ -29,7 +29,7 @@ object ConnectionsResults {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer, DashBoardCSS.Style.verticalImg)(
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
@@ -73,16 +73,16 @@ object ConnectionsResults {
             )
           )
         ), //col-12
-         <.div(^.className := "container-fluid", ^.id := "resultsConnectionsContainer", DashBoardCSS.Style.verticalImg)(
+         <.div(^.id := "resultsConnectionsContainer")(
           P.proxy().render(connectionsRootModel =>
             ConnectionList(connectionsRootModel.connectionsResponse)
           ),
           //                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
-          P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
+          P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
           if (P.proxy().isEmpty) {
             if (!P.proxy().isFailed) {
               <.div("Loading")
-              <.img(^.src := "./assets/images/processing.gif")
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
             } else {
               <.div()
             }

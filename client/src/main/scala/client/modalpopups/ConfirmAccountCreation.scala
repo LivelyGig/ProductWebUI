@@ -8,6 +8,7 @@ import client.css.DashBoardCSS
 import client.models.EmailValidationModel
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
+import org.querki.jquery._
 
 object ConfirmAccountCreation {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -15,13 +16,14 @@ object ConfirmAccountCreation {
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
-    def submitForm(): Callback = {
+    def submitForm(e: ReactEventI) = {
+      e.preventDefault()
       // mark it as NOT cancelled (which is the default)
-         t.modState(s => s.copy(accountValidationFailed = true))
+      t.modState(s => s.copy(accountValidationFailed = true))
     }
-    def hide = {
+     def hide = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
@@ -41,6 +43,7 @@ object ConfirmAccountCreation {
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
             closed = () => formClosed(s, p)),
+        <.form(^.onSubmit ==> submitForm)(
         <.div(^.className:="row")(
           <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
             <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
@@ -48,11 +51,12 @@ object ConfirmAccountCreation {
               <.h5("After registration, you were emailed a confirmation code. Please enter the code below"),
               <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin,DashBoardCSS.Style.marginTop10px ,
                 ^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
-              <.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Confirm", ^.onClick--> submitForm)
+              <.button(^.tpe := "submit",^.className:="btn",DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Confirm")
             )
             ,
             <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
           )
+        )
         )
       )
     }

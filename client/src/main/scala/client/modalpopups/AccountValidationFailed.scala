@@ -5,6 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
+import  org.querki.jquery._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 
@@ -15,7 +16,7 @@ object AccountValidationFailed {
 
   class Backend(t: BackendScope[Props, State]) {
     def hide = Callback{
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def modalClosed(state: State, props: Props): Callback = {

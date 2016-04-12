@@ -4,25 +4,19 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{SubscribeSearch, RefreshMessages, RefreshProjects}
-import client.rootmodels.{MessagesRootModel, ProjectsRootModel}
+import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
+import client.rootmodels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
 import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
-import client.modals.PostNewMessage
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.LGMain.Loc
-import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import client.css.{DashBoardCSS, HeaderCSS}
 import client.models.MessagesModel
-import client.modules.ConnectionList.ConnectionListProps
 import client.services.LGCircuit
 import scala.util.{Failure, Success}
 import client.modals.NewMessage
 import scalacss.ScalaCssReact._
-import client.css.standaloneCSS
+
 
 object MessagesResults {
   case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])
@@ -31,7 +25,10 @@ object MessagesResults {
     def mounted(props: Props) = {
       if (props.proxy().isEmpty){
 //          LGCircuit.dispatch(SubscribeSearch())
+        LGCircuit.dispatch(RefreshConnections())
           props.proxy.dispatch(RefreshMessages())
+
+//        props.proxy.dispatch(RefreshMessages())
 
       } else {
         Callback.empty
@@ -42,7 +39,7 @@ object MessagesResults {
   val component = ReactComponentB[Props]("Messages")
     .backend(new Backend(_))
     .renderPS((B, P, S ) => {
-      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer,DashBoardCSS.Style.verticalImg)(
+      <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
@@ -86,18 +83,16 @@ object MessagesResults {
             )
           )
         ), //col-12
-        <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-            <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
+
+         <.div( ^.id := "resultsContainer")(
             P.proxy().render(messagesRootModel =>
-              MessagesList(messagesRootModel.messagesModelList)
+                         MessagesList(messagesRootModel.messagesModelList)
             ),
-            P.proxy().renderFailed(ex => <.div(<.span(Icon.warning), " Error loading")),
-            P.proxy().renderPending(ex => <.div(^.height := "100%", DashBoardCSS.Style.verticalImg)(
-              <.img(^.src := "./assets/images/processing.gif")))
-          )
+            P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
+            P.proxy().renderPending(ex => <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)))
         )
      )
-
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

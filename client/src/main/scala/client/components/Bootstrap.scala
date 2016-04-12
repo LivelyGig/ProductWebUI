@@ -4,20 +4,18 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Icon._
 import client.css.DashBoardCSS
-import org.scalajs.dom._
-
 import scala.language.implicitConversions
 import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import org.scalajs.dom.ext.KeyCode
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 /**
   * Common Bootstrap components for scalajs-react
   */
 object Bootstrap {
-
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   @js.native
@@ -75,11 +73,11 @@ object Bootstrap {
 
       def hide = Callback {
         // instruct Bootstrap to hide the modal
-        jQuery(t.getDOMNode()).modal("hide")
+        $(t.getDOMNode()).modal("hide")
 
       }
       // jQuery event handler to be fired when the modal has been hidden
-      def hidden(e: JQueryEventObject): js.Any = {
+      def hidden(/*e: JQueryEventObject, *//*string: String*/): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
         t.props.runNow().closed().runNow()
       }
@@ -89,6 +87,7 @@ object Bootstrap {
      def plainKey: CallbackOption[Unit] =             // CallbackOption will stop if a key isn't matched
        CallbackOption.keyCodeSwitch(e) {
          case  KeyCode.Escape => hide
+       //  case  KeyCode.Enter => hide
        }
          plainKey >>   e.preventDefaultCB
    }
@@ -97,7 +96,7 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1  ,
         <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-          <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter,
+          <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter) (
             <.div(modalStyle.content,DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
               <.div(^.className:= "modalheader" , modalStyle.header, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
               <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
@@ -115,9 +114,10 @@ object Bootstrap {
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
+        $(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
-        jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+          // jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
+               $(scope.getDOMNode()).on("hidden.bs.modal","",js.undefined, scope.backend.hidden  _)
       })
       .configure()
       .build

@@ -11,6 +11,7 @@ import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -72,12 +73,12 @@ object UserSkillsForm {
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def hidemodal = {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {

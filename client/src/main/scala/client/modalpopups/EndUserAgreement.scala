@@ -11,6 +11,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS,ProjectCSS,MessagesCSS}
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object EndUserAgreement {
   // shorthand for styles
@@ -20,7 +21,7 @@ object EndUserAgreement {
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
     }

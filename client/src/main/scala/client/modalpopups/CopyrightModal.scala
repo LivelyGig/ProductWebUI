@@ -13,6 +13,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS}
 import scala.language.reflectiveCalls
+import org.querki.jquery._
 
 object CopyrightModal {
   // shorthand for styles
@@ -23,7 +24,7 @@ object CopyrightModal {
   case class Backend(t: BackendScope[Props, State]){
     def hide = Callback {
       // instruct Bootstrap to hide the modal
-      jQuery(t.getDOMNode()).modal("hide")
+      $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
     }

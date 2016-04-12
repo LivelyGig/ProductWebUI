@@ -5,17 +5,14 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
-import client.rootmodels.SearchesRootModel
+import client.rootmodels.{ SearchesRootModel}
 import client.css._
-import shared.dtos.{Connection, ExpressionContent, Expression, SubscribeRequest}
-import client.models.{Label, UserModel}
+import client.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
-import scala.annotation.tailrec
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import org.querki.jquery._
 import org.denigma.selectize._
 
@@ -24,92 +21,90 @@ object Searches {
 
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
-  case class State(userModel: UserModel)
+  case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
 
-  def sidebar = Callback{
-    val sidebtn : js.Object = "#searchContainer"
+  def sidebar = Callback {
+    val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
   }
+
+  val selectState: js.Object = "#selectize"
 
   case class Backend(t: BackendScope[Props, State]) {
 
     def searchClick(props: Props): Unit = {
-      val sidebtn : js.Object = "#searchContainer"
+      val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-//      println("in searchClick")
-//      window.sessionStorage.setItem("messageSearchClick","true")
-      window.sessionStorage.setItem("messageSearchLabel","any([Spilicious])")
+      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
       LGCircuit.dispatch(SubscribeSearch())
       LGCircuit.dispatch(RefreshMessages())
     }
 
+    /*val ref = RefHolder[ReactTagsInputM]*/
+
+    val onChange: (js.Array[String]) => Callback =
+      tags => t.modState(_.copy(tags = tags)) >> Callback.info(s"New state: $tags")
+
     def updateDate(e: ReactEventI) = {
-      println(e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
-    def mounted(props: Props): Callback = Callback {
+    def initializeTagsInput(): Unit = {
+      val selectState: js.Object = ".select-state"
+      //    println($(selectState).get())
+      $(selectState).selectize(SelectizeConfig
+        .maxItems(10)
+        .plugins("remove_button"))
     }
 
-    /*def labelChecked: Leaf = Callback{
+    def initializeDatepicker(): Unit = {
+      val baseOpts = BootstrapDatepickerOptions.
+        autoclose(true).
+        todayHighlight(true).
+        todayBtnLinked().
+        disableTouchKeyboard(true).
+        orientation(Orientation.Bottom)
+      // Iff this Date is Optional, show the Clear button:
+      val opts =
+        if (true)
+          baseOpts.clearBtn(true)
+        else
+          baseOpts
+      val availableToDate: js.Object = "#availableToDate"
+      val availableFromDate: js.Object = "#availableFromDate"
+      val projectStartDate: js.Object = "#projectsStartDate"
+      val projectsEndDate: js.Object = "#projectsEndDate"
+      val messageBeforeDate: js.Object = "#messagesBeforeDate"
+      val messagesFromDate: js.Object = "#messagesFromDate"
 
-    }*/
-    val typedate : js.Object = "#availableToDate"
+      $(availableToDate).datepicker(baseOpts)
+      $(availableFromDate).datepicker(baseOpts)
+      $(projectStartDate).datepicker(baseOpts)
+      $(projectsEndDate).datepicker(baseOpts)
+      $(messageBeforeDate).datepicker(baseOpts)
+      $(messagesFromDate).datepicker(baseOpts)
+      //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
+      //      save()
+      //    })
+    }
 
-
-    val baseOpts = BootstrapDatepickerOptions.
-      autoclose(true).
-      todayHighlight(true).
-      todayBtnLinked().
-      disableTouchKeyboard(true).
-      orientation(Orientation.Top)
-    // Iff this Date is Optional, show the Clear button:
-    val opts =
-      if (true)
-        baseOpts.clearBtn(true)
-      else
-        baseOpts
-    val availableToDate : js.Object = "#availableToDate"
-    val availableFromDate : js.Object =   "#availableFromDate"
-    val projectStartDate : js.Object = "#projectsStartDate"
-    val projectsEndDate : js.Object = "#projectsEndDate"
-    val messageBeforeDate:js.Object = "#messagesBeforeDate"
-    val messagesFromDate:js.Object = "#messagesFromDate"
-
-    $(availableToDate).datepicker(baseOpts)
-    $(availableFromDate).datepicker(baseOpts)
-    $(projectStartDate).datepicker(baseOpts)
-    $(projectsEndDate).datepicker(baseOpts)
-    $(messageBeforeDate).datepicker(baseOpts)
-    $(messagesFromDate).datepicker(baseOpts)
-    //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-    //      save()
-    //    })
-
-    val inputTags : js.Object = "#input-tags"
-    //    $(inputTags).selectize({
-    //      delimiter: ',',
-    //      persist: false,
-    //      create: function(input) {
-    //        return {
-    //          value: input,
-    //          text: input
-    //        }
-    //      }
-    //    });
-
+    def mounted(): Callback = Callback {
+      initializeDatepicker
+      initializeTagsInput
+      LGCircuit.dispatch(CreateLabels())
+    }
 
     def render(s: State, p: Props) = {
 
       p.view match {
         case "talent" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Profile Type")
@@ -162,7 +157,16 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
+
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -183,11 +187,11 @@ object Searches {
         } //talent
         case "offerings" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
@@ -237,11 +241,11 @@ object Searches {
         }
         case "projects" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Job Type")
@@ -298,12 +302,20 @@ object Searches {
                     <.div("Skills Required")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                    // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
-                    <.div("Project State")
+                    <.div("Job State")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
@@ -312,9 +324,9 @@ object Searches {
                         <.span(^.className := "caret")
                       ),
                       <.ul(^.className := "dropdown-menu")(
-                        <.li()(<.a()("Item 1")),
-                        <.li()(<.a()("Item 2")),
-                        <.li()(<.a()("Item 3"))
+                        <.li()(<.a()("Open")),
+                        <.li()(<.a()("Bidding")),
+                        <.li()(<.a()("Contracted"))
                       )
                     )
                   )
@@ -324,7 +336,15 @@ object Searches {
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
+                    //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -332,11 +352,18 @@ object Searches {
                     <.div("Payment Escrow")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " Required"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"/*, ^.checked := "true"*/), " Optional"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "paymentEscrow"), " None")
+                    //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
+                    <.div(^.className := "btn-group")(
+                      <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.border := "none", ^.paddingLeft := "0px")("Any ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(^.className := "dropdown-menu")(
+                        <.li()(<.a()("Any")),
+                        <.li()(<.a()("None")),
+                        <.li()(<.a()("Optional")),
+                        <.li()(<.a()("Required"))
+                      )
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -344,11 +371,18 @@ object Searches {
                     <.div("Deliverables Escrow")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"), " Required"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"), " Optional"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(<.input(^.`type` := "radio", ^.name := "deliverablesEscrow"/*, ^.checked := "true"*/), " None")
+                    //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
+                    <.div(^.className := "btn-group")(
+                      <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.border := "none", ^.paddingLeft := "0px")("Any ")(
+                        <.span(^.className := "caret")
+                      ),
+                      <.ul(^.className := "dropdown-menu")(
+                        <.li()(<.a()("Any")),
+                        <.li()(<.a()("None")),
+                        <.li()(<.a()("Optional")),
+                        <.li()(<.a()("Required"))
+                      )
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -369,11 +403,11 @@ object Searches {
         } //project
         case "contract" => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Status")
@@ -456,11 +490,11 @@ object Searches {
         }
         case "messages" => {
           //          @tailrec
-          def renderLabel(label: Label): ReactTag = {
+          def renderLabel(label: LabelModel): ReactTag = {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for` := "folder1", ^.margin := "0",DashBoardCSS.Style.padding0px),
+                <.label(^.`for` := "folder1", ^.margin := "0", DashBoardCSS.Style.padding0px),
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
@@ -473,12 +507,14 @@ object Searches {
             }
           }
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick-->Callback{searchClick(p)})
+              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
+                searchClick(p)
+              })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("From")
@@ -503,12 +539,42 @@ object Searches {
                     // )
                   )
                 ),
+
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                    //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
+                    //                                        <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                                          <.option(^.value:="")("Select"),
+                    //                                          <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                                          <.option(^.value:="Synereo")("@Synereo"),
+                    //                                          <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                                          <.option(^.value:="Synereo1")("@Synereo1")
+                    //                                        ),
+                    //                    <.div(
+                    //                      try {
+                    //                        CodeExample("code", "Demo")(
+                    //                          <.div(
+                    //                            ReactTagsInput(
+                    //                              value = s.tags,
+                    //                              onChange = onChange
+                    //                            )()
+                    //                          )
+                    //                        )
+                    //                      } catch {
+                    //                         case e: Exception =>
+                    //                          println(e)
+                    //                      }
+                    //                    )
+
+                    //   if ($(selectState).length <= 1)
+                    //                    LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
+
+
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -543,11 +609,11 @@ object Searches {
         }
         case "connections" => /*MessagesPresets.component(p.ctl)*/ {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right"/*, ^.height := "55px"*/)(
-              <.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->sidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
-              <.div( LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
+              <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Flags")
@@ -615,20 +681,78 @@ object Searches {
           )
         }
       } //main switch
-
     }
   }
-
 
   private val component = ReactComponentB[Props]("Searches")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
+    .componentDidMount(scope => scope.backend.mounted() /*Callback {
+      scope.backend.initializeDatepicker
+      scope.backend.initializeTagsInput
       LGCircuit.dispatch(CreateLabels())
-    })
+    }*/)
     .build
 
   def apply(props: Props) = component(props)
 }
 
+/*object SearchesConnectionList {
+  var getSelectedValue = new ListBuffer[String]() /*Seq[Label]()*/
+  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier : String)
+  case class Backend(t: BackendScope[Props, _]) {
+    def initializeTagsInput(parentIdentifier: String) : Unit = {
+      val selectState : js.Object = s"#$parentIdentifier > .selectize-control"
+      //    println($(selectState).get())
+      if ($(selectState).length < 1){
+        val selectizeInput : js.Object = "#selectize"
+        $(selectizeInput).selectize(SelectizeConfig
+          .maxItems(10)
+          .plugins("remove_button"))
+      }
 
+    }
+    def getSelectedValues = Callback {
+      val selectState : js.Object = "#selectize"
+      val getSelectedValue =  $(selectState).find("option").text()
+      println(getSelectedValue)
+
+      //       var x = document.getElementById("mySelect").value;
+      //       document.getElementById("demo").innerHTML = "You selected: " + x;
+
+      //     var x =  document.getElementById("#selectize").textContent
+      //       println(x)
+    }
+
+    //     def getSelectedValues(e: ReactEventI) = Callback {
+    //       val value = e.target.value
+    //       println(value)
+    //
+    //     }
+
+    def mounted(props: Props) : Callback = Callback {
+      initializeTagsInput(props.parentIdentifier)
+    }
+
+    def render (props: Props) = {
+            val parentDiv : js.Object = s"#${props.parentIdentifier}"
+            if ($(parentDiv).length == 0) {
+      <.select(^.className:="select-state",^.id:="selectize", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
+        <.option(^.value:="")("Select"),
+        props.proxy().render(connectionsRootModel =>
+          for (connection<-connectionsRootModel.connectionsResponse) yield <.option(^.value:=upickle.default.write(connection.connection) ,^.key:=connection.connection.target)(connection.name)
+        ))
+            } else {
+              <.div()
+            }
+
+    }
+  }
+  val component = ReactComponentB[Props]("SearchesConnectionList")
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .build
+
+  def apply (props: Props) = component(props)
+
+}*/
