@@ -91,7 +91,7 @@ object Login {
           <.div(LoginCSS.Style.loginDilog)(
             <.div(LoginCSS.Style.formPadding)(
               <.div(LoginCSS.Style.loginDilogContainerDiv)(
-                <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/images/Synereo-logo.png"),
+                <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/synereo-images/Synereo-logo.png"),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12")(
                     <.div(LoginCSS.Style.loginFormContainerDiv)(

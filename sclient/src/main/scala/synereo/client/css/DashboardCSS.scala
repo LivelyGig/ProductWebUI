@@ -23,7 +23,7 @@ object DashboardCSS {
     val dashboardContainerMain = style(
       height(100.vh),
       overflowY.scroll.important,
-      backgroundImage := "url(\"./assets/images/globalBg.jpg\")"
+      backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
     val profileActionButton = style(
       backgroundColor(c"#1F85B5"),

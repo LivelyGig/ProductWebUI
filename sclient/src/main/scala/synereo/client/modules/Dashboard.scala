@@ -40,12 +40,12 @@ object Dashboard {
               <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.input(DashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
                     <.span()(Icon.camera)
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -91,7 +91,7 @@ object Dashboard {
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -124,7 +124,7 @@ object Dashboard {
                 ),
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -155,7 +155,7 @@ object Dashboard {
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -186,7 +186,7 @@ object Dashboard {
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -217,7 +217,7 @@ object Dashboard {
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),
@@ -248,7 +248,7 @@ object Dashboard {
                     )
                   ),
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(MIcon.chevronRight),

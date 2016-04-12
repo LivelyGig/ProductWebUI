@@ -66,7 +66,7 @@ object MarketPlaceFull {
           <.div(^.className := "container")(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-12", MarketPlaceFullCSS.Style.headingImageContainerDiv)(
-                <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive")
+                <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive")
               ),
               <.div(^.className := "col-md-12", MarketPlaceFullCSS.Style.cardsAndButtonContainerDiv)(
                 <.div("Blah Blah", MarketPlaceFullCSS.Style.cardsHeading),
@@ -76,7 +76,7 @@ object MarketPlaceFull {
               ),
               <.div(^.className := "col-md-12")(
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -89,7 +89,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -102,7 +102,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -115,7 +115,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -128,7 +128,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard,SynereoCommanStylesCSS.Style.paddingRightZero)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -149,7 +149,7 @@ object MarketPlaceFull {
               ),
               <.div(^.className := "col-md-12")(
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -162,7 +162,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -175,7 +175,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -188,7 +188,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(
@@ -201,7 +201,7 @@ object MarketPlaceFull {
                   )
                 ),
                 <.div(^.className := "", MarketPlaceFullCSS.Style.appCard,SynereoCommanStylesCSS.Style.paddingRightZero)(
-                  <.img(^.src := "./assets/images/cover-background.jpg", ^.className := "img-responsive"),
+                  <.img(^.src := "./assets/synereo-images/cover-background.jpg", ^.className := "img-responsive"),
                   <.div("Create Meetings"),
                   <.div("Combo Company LLC"),
                   <.div(

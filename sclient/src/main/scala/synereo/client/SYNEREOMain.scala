@@ -63,7 +63,7 @@ object SYNEREOMain extends js.JSApp {
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
-      <.img(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
+      <.img(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/synereo-images/processing.gif"),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         <.div(^.className := "col-lg-1")(
           //Adding toggle button for sidebar
@@ -82,7 +82,7 @@ object SYNEREOMain extends js.JSApp {
               <.span(^.color := "white")(Icon.thList)
             ),
 
-            c.link(SynereoLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/images/Synereo-logo-name.png"))
+            c.link(SynereoLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/synereo-images/Synereo-logo-name.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

@@ -23,11 +23,11 @@ object TimelineView {
           <.div(^.className := "col-md-12")(
             <.div(^.className := "container")(
               <.div(^.className := "row", UserTimelineViewCSS.Style.coverHolderDiv)(
-                <.img(^.src := "./assets/images/cover-background.jpg", UserTimelineViewCSS.Style.coverBackgroundImg),
+                <.img(^.src := "./assets/synereo-images/cover-background.jpg", UserTimelineViewCSS.Style.coverBackgroundImg),
                 <.div(UserTimelineViewCSS.Style.coverDescriptionContainer)(
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-2 text-center")(
-                      <.img(^.src := "./assets/images/default_avatar.jpg", UserTimelineViewCSS.Style.userAvatar),
+                      <.img(^.src := "./assets/synereo-images/default_avatar.jpg", UserTimelineViewCSS.Style.userAvatar),
                       <.div(^.className := "text-center", UserTimelineViewCSS.Style.userName)("Anderson Hooper")
                     ),
                     <.div(^.className := "col-md-7")(
@@ -49,12 +49,12 @@ object TimelineView {
               <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12", SynereoCommanStylesCSS.Style.paddingRightZero)(
                   <.div(^.className := "row", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.input(DashboardCSS.Style.UserInput, ^.placeholder := "contribute your thoughts..."),
                     <.span()(Icon.camera)
                   ),
                   <.div(^.className := "row", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
@@ -85,7 +85,7 @@ object TimelineView {
                     )
                   ),
                   <.div(^.className := "row", DashboardCSS.Style.userPost)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
@@ -118,7 +118,7 @@ object TimelineView {
                 ),
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                   <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
@@ -149,7 +149,7 @@ object TimelineView {
                     )
                   ),
                   <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
@@ -180,7 +180,7 @@ object TimelineView {
                     )
                   ),
                   <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),
@@ -211,7 +211,7 @@ object TimelineView {
                     )
                   ),
                   <.div(^.className := "row", DashboardCSS.Style.userPostRight)(
-                    <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                    <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span("James Gosling"),
                       <.span(Icon.chevronRight),

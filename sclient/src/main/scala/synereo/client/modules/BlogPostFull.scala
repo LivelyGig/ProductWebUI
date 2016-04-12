@@ -25,13 +25,13 @@ object BlogPostFull {
               ),
               <.div(^.className := "col-md-10")(
                 <.div(^.className := "row", BlogPostFullCSS.Style.postedImageContainerDiv)(
-                  <.img(^.src := "./assets/images/blogpostimg.png", BlogPostFullCSS.Style.blogMainImage)
+                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", BlogPostFullCSS.Style.blogMainImage)
                 ),
                 <.div(^.className := "row", BlogPostFullCSS.Style.postedUserInfoContainerDiv)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
                       <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
-                        <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                        <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                         <.div(DashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
                           <.span(MIcon.chevronRight),
@@ -98,11 +98,11 @@ object BlogPostFull {
                             "Responses"
                           ),
                           <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                             <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                           ),
                           <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
-                            <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                             <.div(DashboardCSS.Style.userNameDescription)(
                               <.span("James Everet"),
                               <.br(),
@@ -120,7 +120,7 @@ object BlogPostFull {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
                                 <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("James Gosling", ^.fontWeight.bold), <.br(),
@@ -151,7 +151,7 @@ object BlogPostFull {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
                                 <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("Evan Moore", ^.fontWeight.bold), <.br(),
@@ -185,7 +185,7 @@ object BlogPostFull {
                             <.li(^.className := "media")(
                               <.div(^.className := "media-left")(
                                 <.a(^.href := "#synereofullblogpost")(
-                                  <.img(^.className := "media-object", ^.src := "./assets/images/postSmallImage.png")
+                                  <.img(^.className := "media-object", ^.src := "./assets/synereo-images/postSmallImage.png")
                                 )
                               ),
                               <.div(^.className := "media-body")(
@@ -200,7 +200,7 @@ object BlogPostFull {
                             <.li(^.className := "media")(
                               <.div(^.className := "media-left")(
                                 <.a(^.href := "#synereofullblogpost")(
-                                  <.img(^.className := "media-object", ^.src := "./assets/images/postSmallImage.png")
+                                  <.img(^.className := "media-object", ^.src := "./assets/synereo-images/postSmallImage.png")
                                 )
                               ),
                               <.div(^.className := "media-body")(
@@ -215,7 +215,7 @@ object BlogPostFull {
                             <.li(^.className := "media")(
                               <.div(^.className := "media-left")(
                                 <.a(^.href := "#synereofullblogpost")(
-                                  <.img(^.className := "media-object", ^.src := "./assets/images/postSmallImage.png")
+                                  <.img(^.className := "media-object", ^.src := "./assets/synereo-images/postSmallImage.png")
                                 )
                               ),
                               <.div(^.className := "media-body")(
