@@ -18,7 +18,7 @@ lazy val sharedJS = shared.js.settings(name := "sharedJS")
 lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable functions")
 
 // instantiate the JS project for SBT with some additional settings
-lazy val client: Project = (project in file("client"))
+lazy val client: Project = (project in file("sclient"))
   .settings(
       name := "client",
       version := Settings.version,
@@ -59,7 +59,8 @@ lazy val server = (project in file("server"))
       scalaJSProjects := clients,
       pipelineStages := Seq(scalaJSProd, digest, gzip),
       // compress CSS
-      LessKeys.compress in Assets := true
+      LessKeys.compress in Assets := true,
+      includeFilter in (Assets, LessKeys.less) := "synereo-main.less"
   )
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom
