@@ -26,6 +26,15 @@ object SynereoCommanStylesCSS {
       //media.minWidth(821.px) -
       // paddingTop(8.px)
     )
+    val dropdownMenu = style(
+      padding(40.px, 20.px)
+    )
+    val dropdownLiMenuSeperator = style(
+      backgroundColor(c"#F2F2F2"),
+      fontSize(1.2.em),
+      margin(20.px, 0.px),
+      padding.`0`.important
+    )
     val searchFormInputBox = style(
       backgroundColor(rgba(115, 99, 99, 0.4)),
       borderTop.`0`,
@@ -52,6 +61,11 @@ object SynereoCommanStylesCSS {
         color(c"#69A5BF")
         )
     )
+    val dropDownLIHeading = style(
+      fontSize(1.7.em),
+      marginBottom(5.%%),
+      display.inlineBlock
+    )
     val userNameNavBar = style(
       fontSize(1.5.em),
       color(c"#69A5BF"),
@@ -68,8 +82,17 @@ object SynereoCommanStylesCSS {
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
     )
+    val marginRightZero = style(
+      marginRight.`0`.important
+    )
+    val marginLeftZero = style(
+      marginLeft.`0`.important
+    )
     val paddingRightZero = style(
       paddingRight(0.px).important
+    )
+    val dropdownIcon = style(
+      margin(0.px, 25.px)
     )
     val searchFormNavbar = style(
       float.right,

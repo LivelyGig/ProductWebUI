@@ -56,21 +56,41 @@ object MainMenu {
               <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(<.span(model.email)),
               <.li(
                 <.div(^.className := "dropdown")(
-                  <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown"/*,
+                  <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
                     ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
-                  <.div(^.className:="dropdown-arrow"),
-                  <.ul(^.className := "dropdown-menu")(
-                    <.li(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
-                    <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
-                  )
+                  <.div(^.className := "dropdown-arrow"),
+                  <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
+                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
+                    <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
+                    <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((MIcon.settings))),
+                      <.ul(^.className := "list-unstyled nav-pills")(
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
+                      )
+                    ),
+                    <.br(),
+                    <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("My apps 16"),
+                    <.li(<.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
+                      <.ul(^.className := "list-unstyled nav-pills")(
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon,SynereoCommanStylesCSS.Style.marginLeftZero)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
+                      )
+                    ),
+                  <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
                 )
-              ),
-              <.li(
-                <.a(^.href := "")(MIcon.chatBubble)
-              ),
-              <.li(^.className := "")(
-                <.a(^.href := "/#userprofileview")(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
               )
+            ),
+            <.li(
+              <.a(^.href := "")(MIcon.chatBubble)
+            ),
+            <.li(^.className := "")(
+              <.a(^.href := "/#userprofileview")(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+            )
             )
           } else {
             <.ul(^.className := "nav nav-pills")(

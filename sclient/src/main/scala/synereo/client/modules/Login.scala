@@ -55,7 +55,7 @@ object Login {
       CoreApi.agentLogin(userModel).onComplete {
         case Success(responseStr) =>
           try {
-           // log.debug("login successful")
+//            log.debug("login successful")
             val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
             println("the response is := " + response)
             window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)

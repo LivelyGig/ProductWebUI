@@ -20,7 +20,7 @@ object UserProfileViewCSS {
     val heading = style(
       color.white,
       textAlign.center,
-      marginTop(10 %%),
+      marginTop(10.%%),
       fontSize(3.em)
     )
 
