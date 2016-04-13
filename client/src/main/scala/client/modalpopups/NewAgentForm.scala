@@ -10,8 +10,11 @@ import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-
+//case class UserModel (email: String = "", password: String = "",ConfirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
+//                      isLoggedIn: Boolean = false, imgSrc: String = "")
 object NewAgentForm {
+  var addNewAgentState : Boolean = false
+  var userModelUpdate = new UserModel ("","","","","",false,false,"")
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -20,8 +23,10 @@ object NewAgentForm {
   case class State(userModel: UserModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
+    def hideModal = Callback {
       // instruct Bootstrap to hide the modal
+      addNewAgentState = false
+      userModelUpdate = new UserModel ("","","","","",false,false,"")
       $(t.getDOMNode()).modal("hide")
     }
 
@@ -39,6 +44,16 @@ object NewAgentForm {
       t.modState(s => s.copy(userModel = s.userModel.copy(name = value)))
     }
 
+    def updateLastName(e: ReactEventI) = {
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(lastName = value)))
+    }
+
+    def updateConfirmPassword(e: ReactEventI) = {
+      val value = e.target.value
+      t.modState(s => s.copy(userModel = s.userModel.copy(ConfirmPassword = value)))
+    }
+
     def updateEmail(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
@@ -54,6 +69,7 @@ object NewAgentForm {
     }
 
     def showTermsOfServices(e: ReactEventI) = {
+      addNewAgentState = true
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
 
@@ -65,6 +81,7 @@ object NewAgentForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
 //      println(state.addNewAgent)
+      userModelUpdate = state.userModel
       props.submitHandler(state.userModel, state.addNewAgent, state.showTermsOfServicesForm)
     }
 
@@ -72,7 +89,7 @@ object NewAgentForm {
       val headerText = "Sign up with LivelyGig credentials"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hideModal, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
@@ -92,7 +109,8 @@ object NewAgentForm {
                   <.label(^.`for` := "Last name *", "Last name *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name")
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name",^.value := s.userModel.lastName,
+                    ^.onChange ==> updateLastName)
                 )
               ),
               <.div(^.className := "row")(
@@ -118,7 +136,8 @@ object NewAgentForm {
                   <.label(^.`for` := "Confirm Password *", "Confirm Password *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.required := true)
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.userModel.ConfirmPassword,
+                    ^.onChange ==> updateConfirmPassword,^.required := true)
                 )
               )
             ), //col-md-8
@@ -159,8 +178,8 @@ object NewAgentForm {
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a via email a code confirming creation of your new account shortly after completing this form"),
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
-              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Submit"),
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Cancel")
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
@@ -168,9 +187,15 @@ object NewAgentForm {
       )
     }
   }
-
+  //case class UserModel (email: String = "", password: String = "",ConfirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
+  //                      isLoggedIn: Boolean = false, imgSrc: String = "")
   private val component = ReactComponentB[Props]("NewAgentForm")
-    .initialState_P(p => State(new UserModel("", "", "", false)))
+    .initialState_P(p =>
+      if(addNewAgentState)
+      State(new UserModel(userModelUpdate.email ,userModelUpdate.password,userModelUpdate.ConfirmPassword,userModelUpdate.name,userModelUpdate.lastName, false))
+    else
+      State(new UserModel ("","","","","",false,false,""))
+    )
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm) {
