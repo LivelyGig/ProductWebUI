@@ -62,8 +62,9 @@ object LoginCSS {
       marginRight.auto,
       marginBottom(150.px),
       marginTop.auto,
-      backgroundColor(c"#012E3D")
-
+      backgroundColor(c"#012E3D"),
+      media.maxWidth(1400.px)   -
+        width(100.%%)
     )
     val textWhite = style(
       color(c"#FFFFFF"),

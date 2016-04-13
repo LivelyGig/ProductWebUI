@@ -53,7 +53,7 @@ object MainMenu {
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
-              <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(<.span(model.email)),
+              <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(<.span(model.name)),
               <.li(
                 <.div(^.className := "dropdown")(
                   <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
@@ -76,21 +76,25 @@ object MainMenu {
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon,SynereoCommanStylesCSS.Style.marginLeftZero)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon, SynereoCommanStylesCSS.Style.marginLeftZero)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
                       )
                     ),
-                  <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
+                    <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
+                  )
                 )
+              ),
+              <.li(^.className := "dropdown")(
+                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown")((MIcon.chatBubble)),
+                <.ul(^.className := "dropdown-menu")(
+                  <.li(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
+                  <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+                )
+              ),
+              <.li(^.className := "")(
+                <.a(^.href := "/#userprofileview")(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
               )
-            ),
-            <.li(
-              <.a(^.href := "")(MIcon.chatBubble)
-            ),
-            <.li(^.className := "")(
-              <.a(^.href := "/#userprofileview")(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
-            )
             )
           } else {
             <.ul(^.className := "nav nav-pills")(
