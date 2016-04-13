@@ -17,14 +17,6 @@ object AppModule {
     val sidebtn: js.Object = "#searchContainer"
     val sidebarIcon : js.Object  = "#sidebarIcon"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-//    val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
-//    val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
-//    $(t2).removeClass("fa fa-chevron-circle-right")
-//    $(t2).addClass("fa fa-chevron-circle-left")
-//
-//    $(t1).removeClass("fa fa-chevron-circle-left")
-//    $(t1).addClass("fa fa-chevron-circle-right")
-
   }
   case class Backend(t: BackendScope[Props, Unit]) {
 
@@ -64,11 +56,11 @@ object AppModule {
               ),
               <.div(^.className := "main col-md-9 col-md-offset-3",DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
-                  case "talent" => TalentResults.component(Unit)
+                  case "talent" => TalentResults.component()
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
-                  case "contract" => ContractResults.component(Unit)
+                  case "contract" => ContractResults.component()
                   case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
-                  case "offerings" => OfferingResults.component(Unit)
+                  case "offerings" => OfferingResults.component()
                   //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }

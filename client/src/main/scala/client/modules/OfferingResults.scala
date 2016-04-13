@@ -9,6 +9,7 @@ import client.modals.{NewMessage, NewRecommendation}
 import scalacss.ScalaCssReact._
 
 object OfferingResults {
+
   val component = ReactComponentB[Unit]("Offerings")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
