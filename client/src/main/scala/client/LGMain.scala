@@ -64,12 +64,13 @@ object LGMain extends js.JSApp {
     (staticRoute(root, LandingLoc) ~> renderR(ctl => LandingLocation.component(ctl))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
       | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props("messages")))
+      // ToDo: the following should be renamed from projects to jobs ?
       | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props("projects")))
+      // ToDo: the following should be contracts not contract
       | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props("contract")))
-      | staticRoute("#contests", ContestsLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
+      // ToDo: following route should be called Profiles not Talent.
       | staticRoute("#talent", ProfilesLoc) ~> renderR(ctl => AppModule(AppModule.Props("talent")))
       | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props("offerings")))
-      | staticRoute("#employers", EmployersLoc) ~> renderR(ctl => <.div(^.id := "mainContainer", ^.className := "DashBoardCSS_Style-mainContainerDiv")(""))
       | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props("connections")))
       ).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -85,13 +86,12 @@ object LGMain extends js.JSApp {
             <.div(^.className:="col-md-8 col-sm-8 col-xs-8", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.DisplayFlex)(
               c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png")),
               <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
-                // ToDo:  put actual menu name below, not r.page.toString.  Also some alignment problems?
                 r.page match {
                   case JobPostsLoc      => <.span(^.color := "white",^.float:="right")("Jobs ","  ", Icon.thList)
                   case  DashboardLoc    => <.span(^.color := "white",^.float:="right")("Dashboard ","  ", Icon.thList)
                   case  MessagesLoc     => <.span(^.color := "white",^.float:="right")("Messages ","  ", Icon.thList)
                   case  OfferingsLoc    => <.span(^.color := "white",^.float:="right")("Offerings ","  ", Icon.thList)
-                  case  ProfilesLoc     => <.span(^.color := "white",^.float:="right")("Talent ","  ", Icon.thList)
+                  case  ProfilesLoc     => <.span(^.color := "white",^.float:="right")("Profiles ","  ", Icon.thList)
                   case  ContractsLoc    => <.span(^.color := "white",^.float:="right")("Contracts ","  ", Icon.thList)
                   case  ConnectionsLoc  => <.span(^.color := "white",^.float:="right")("Connections ","  ", Icon.thList)
                   case _                => <.span()

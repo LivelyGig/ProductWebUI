@@ -60,13 +60,14 @@ object MainMenu {
   }
 
   val menuItems = Seq(
-    MenuItem(1, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc),
+    MenuItem(1, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc),
     MenuItem(2, _ => "Messages ",  MessagesLoc, buildMenuItem(6), DashboardLoc),
     MenuItem(3, _ => "Jobs",       JobPostsLoc, buildMenuItem(3), DashboardLoc),
     MenuItem(4, _ => "Offerings",  OfferingsLoc, buildMenuItem(0), DashboardLoc),
     MenuItem(5, _ => "Profiles",   ProfilesLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(6, _ => "Contracts",  ContractsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(7, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc)
+    MenuItem(6, _ => "Contracts",  ContractsLoc, buildMenuItem(0), DashboardLoc)
+    // ToDo: Dashboard menu intentionally hidden for now.  EE  2016-04-12
+    // MenuItem(7, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc)
   )
    val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())

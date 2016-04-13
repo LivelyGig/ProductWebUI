@@ -96,9 +96,6 @@ object TalentResults {
         )
       )
     )
-    .componentDidMount(scope => Callback {
-
-    })
     .build
 }
 
