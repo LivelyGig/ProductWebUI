@@ -7,7 +7,7 @@ import sbt._
   */
 object Settings {
   /** The name of your application */
-  val name = "scalajs-livelygig"
+  val name = "scalajs-synereo"
 
   /** The version of your application */
   val version = "1.0.1"
