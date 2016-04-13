@@ -37,8 +37,8 @@ object CoreApi {
 
   def getConnections () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem(CONNECTIONS_SESSION_URI))))
-    AjaxClient[Api].getMock(requestContent,"connectionsMock").call()
-    //    AjaxClient[Api].sessionPing(requestContent).call()
+//    AjaxClient[Api].getMock(requestContent,"connectionsMock").call()
+        AjaxClient[Api].queryApiBackend(requestContent).call()
   }
   def getProjects () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG,SessionPing(window.sessionStorage.getItem("sessionURI"))))
