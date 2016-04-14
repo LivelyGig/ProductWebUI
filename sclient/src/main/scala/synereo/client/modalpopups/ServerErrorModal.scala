@@ -21,11 +21,11 @@ import scalacss.ScalaCssReact._
 /**
   * Created by Mandar on 4/13/2016.
   */
-object ErrorModal {
+object ServerErrorModal {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, loginError: String = "")
+  case class Props(submitHandler: () => Callback)
 
   case class State()
 
@@ -50,14 +50,14 @@ object ErrorModal {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()(p.loginError,
+                <.div()("Internal Server Error Occuored Server Is Not Responding",
                   <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
                 )
               )
             )
           )
-        ),
-        <.div(bss.modal.footer)()
+        )
+        //        <.div(bss.modal.footer)()
       )
     }
   }

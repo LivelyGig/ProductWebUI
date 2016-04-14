@@ -9,7 +9,7 @@ import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
-import synereo.client.modalpopups.{ErrorModal, RequestInvite}
+import synereo.client.modalpopups.{ServerErrorModal, ErrorModal, RequestInvite}
 import synereo.client.models.UserModel
 import synereo.client.services.{SYNEREOCircuit, CoreApi}
 import scala.scalajs.js
@@ -31,7 +31,7 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, login: Boolean = false, showErrorModal: Boolean = false)
+  case class State(userModel: UserModel, isloggedIn: Boolean = false, showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -41,14 +41,32 @@ object Login {
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
-    def serverError(): Callback = {
-      t.modState(s => s.copy(showErrorModal = false))
-    }
-
     def updatePassword(e: ReactEventI) = {
       //      println("updatePassword = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
+    }
+
+    def loginUser(e: ReactEventI) = Callback {
+      e.preventDefault()
+      val user = t.state.runNow().userModel
+      processLogin(user)
+    }
+
+    def processLogin(userModel: UserModel): Unit = {
+      $(loginLoader).removeClass("hidden")
+      CoreApi.agentLogin(userModel).onComplete {
+        case Success(responseStr) =>
+          validateResponse(responseStr) match {
+            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
+            case LOGIN_ERROR => processLoginFailed(responseStr)
+            case SERVER_ERROR => processServerError(responseStr)
+          }
+        case Failure(s) =>
+          $(loginLoader).addClass("hidden")
+          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
+      }
+
     }
 
     def validateResponse(response: String): String = {
@@ -68,22 +86,27 @@ object Login {
       }
     }
 
+    def serverError(): Callback = {
+      t.modState(s => s.copy(showServerErrorModal = false))
+    }
+
     def processLoginFailed(responseStr: String) = {
       println("in processLoginFailed")
       $(loginLoader).addClass("hidden")
-      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       //window.alert("please enter valid credentials")
-      println(loginError)
-      processServerError(loginError)
+      //      println(loginErrorMessage)
+      //      processLoginFailed(loginErrorMessage.content.reason)
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
 
     }
 
-    def processServerError(loginError: String) = {
+    def processServerError(responseStr: String): Unit = {
+      println("in processServerError")
       $(loginLoader).addClass("hidden")
-      //println("internal server error")
-      t.modState(s => s.copy(showErrorModal = true)).runNow()
+      val serverErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      t.modState(s => s.copy(showServerErrorModal = true)).runNow()
     }
-
 
     def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       println("in processSuccessfulLogin")
@@ -101,32 +124,6 @@ object Login {
       window.location.href = "/#synereodashboard"
     }
 
-    def processLogin(userModel: UserModel): Unit = {
-      $(loginLoader).removeClass("hidden")
-      CoreApi.agentLogin(userModel).onComplete {
-        case Success(responseStr) =>
-          validateResponse(responseStr) match {
-            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
-            case LOGIN_ERROR => processLoginFailed(responseStr)
-            case SERVER_ERROR => processServerError()
-          }
-        case Failure(s) =>
-          println("internal server error")
-          window.alert("internal server error")
-      }
-
-    }
-
-    def login(userModel: UserModel) = {
-      val user = UserModel(email = userModel.email, name = "", imgSrc = "", isLoggedIn = true, password = userModel.password)
-      processLogin(user)
-    }
-
-    def loginUser(e: ReactEventI) = Callback {
-      e.preventDefault()
-      val user = t.state.runNow().userModel
-      login(user)
-    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
@@ -173,7 +170,8 @@ object Login {
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
-            if (s.showErrorModal) ErrorModal(ErrorModal.Props(serverError))
+            if (s.showErrorModal) ErrorModal(ErrorModal.Props(serverError, s.loginErrorMessage))
+            else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(serverError))
             else
               Seq.empty[ReactElement]
 
