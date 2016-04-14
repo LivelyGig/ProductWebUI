@@ -31,7 +31,7 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, login: Boolean = false, showErrorModal:Boolean = false)
+  case class State(userModel: UserModel, login: Boolean = false, showErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -41,7 +41,7 @@ object Login {
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
-    def serverError() : Callback = {
+    def serverError(): Callback = {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
@@ -70,16 +70,18 @@ object Login {
 
     def processLoginFailed(responseStr: String) = {
       println("in processLoginFailed")
-      //      $(loginLoader).removeClass("hidden")
+      $(loginLoader).addClass("hidden")
       val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
-      window.alert("please enter valid credentials")
-      //      val inputs = window.document.getElementsByTagName("input")
-      ErrorModal(ErrorModal.Props(serverError))
+      //window.alert("please enter valid credentials")
+      println(loginError)
+      processServerError(loginError)
+
     }
 
-    def processServerError() = {
-      println("in processServerError")
-      window.alert("Server Error Occoured")
+    def processServerError(loginError: String) = {
+      $(loginLoader).addClass("hidden")
+      //println("internal server error")
+      t.modState(s => s.copy(showErrorModal = true)).runNow()
     }
 
 
@@ -170,10 +172,15 @@ object Login {
             ),
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
-            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite"))
+            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
+            if (s.showErrorModal) ErrorModal(ErrorModal.Props(serverError))
+            else
+              Seq.empty[ReactElement]
+
           )
         )
       )
+
     }
 
   }
@@ -181,6 +188,7 @@ object Login {
   val component = ReactComponentB[Props]("SynereoLogin")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
+
     .build
 
   def apply(props: Props) = component(props)
