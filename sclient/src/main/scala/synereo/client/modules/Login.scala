@@ -9,7 +9,7 @@ import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
-import synereo.client.modalpopups.RequestInvite
+import synereo.client.modalpopups.{ErrorModal, RequestInvite}
 import synereo.client.models.UserModel
 import synereo.client.services.{SYNEREOCircuit, CoreApi}
 import scala.scalajs.js
@@ -31,7 +31,7 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, login: Boolean = false)
+  case class State(userModel: UserModel, login: Boolean = false, showErrorModal:Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -39,6 +39,10 @@ object Login {
       //      println("updateEmail = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
+    }
+
+    def serverError() : Callback = {
+      t.modState(s => s.copy(showErrorModal = false))
     }
 
     def updatePassword(e: ReactEventI) = {
@@ -66,10 +70,11 @@ object Login {
 
     def processLoginFailed(responseStr: String) = {
       println("in processLoginFailed")
-      $(loginLoader).removeClass("hidden")
+      //      $(loginLoader).removeClass("hidden")
       val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       window.alert("please enter valid credentials")
-//      val inputs = window.document.getElementsByTagName("input")
+      //      val inputs = window.document.getElementsByTagName("input")
+      ErrorModal(ErrorModal.Props(serverError))
     }
 
     def processServerError() = {

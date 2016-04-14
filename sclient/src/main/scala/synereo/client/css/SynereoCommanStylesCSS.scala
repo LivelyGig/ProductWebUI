@@ -88,6 +88,12 @@ object SynereoCommanStylesCSS {
     val marginLeftZero = style(
       marginLeft.`0`.important
     )
+    val marginLeftTwentyFive = style(
+      marginLeft(22.px)
+    )
+    val marginLeftFifteen = style(
+      marginLeft(8.px)
+    )
     val paddingRightZero = style(
       paddingRight(0.px).important
     )
@@ -169,7 +175,8 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top(50.%%),
       left(50.%%),
-      zIndex(10000)
+      zIndex(10000),
+      color.grey
     )
     val backgroundColorWhite = style(
       backgroundColor(c"#EEEEEE")
