@@ -27,22 +27,23 @@ object Settings {
 
   /** Declare global dependency versions here to avoid mismatches in multi part dependencies */
   object versions {
-    val scala = "2.11.7"
+    val scala = "2.11.8"
     val scalaDom = "0.9.0"
-    val scalajsReact = "0.10.4"
-    val scalaCSS = "0.3.1"
+    val scalajsReact = "0.11.0"
+    val scalaCSS = "0.4.1"
     val log4js = "1.4.13-1"
     val autowire = "0.2.5"
-    val booPickle = "1.1.3"
+    val booPickle = "1.1.2"
     val diode = "0.5.1"
     val uTest = "0.3.1"
-    val react = "0.14.8"
+    val react = "15.0.1"
     val jQuery = "2.2.3"
     val bootstrap = "3.3.6"
     val chartjs = "1.0.1"
     val playScripts = "0.4.0"
     val perfectScrollbar = "0.6.10"
     val datePicker = "1.5.0-1"
+
   }
 
   /**
@@ -94,8 +95,8 @@ object Settings {
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "2.2.3/jquery.js",
     //  "org.webjars.bower" % "split-pane" % "0.5.1",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
-    "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js",
-//    "org.webjars.bower" % "perfect-scrollbar" % versions.perfectScrollbar / "perfect-scrollbar.js",
+    "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "2.2.3/jquery.js",
+   // "org.webjars.bower" % "perfect-scrollbar" % versions.perfectScrollbar / "js/perfect-scrollbar.js"  minified "js/min/perfect-scrollbar.min.js",
     "org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
     "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "2.2.3/jquery.js"
     //"org.webjars" % "bootstrap-sidebar" % "0.2.2"

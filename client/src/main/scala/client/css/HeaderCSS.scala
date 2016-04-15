@@ -185,5 +185,19 @@ object HeaderCSS {
       marginRight(15.px),
       marginTop(-8.px)
     )
+
+    val ModalNameDropDown = style {
+      media.maxWidth(768.px) -
+        display.block
+      media.minWidth(769.px) -
+        display.none
+    }
+
+    val ModalName = style {
+      media.maxWidth(768.px) -
+        display.none
+      media.minWidth(769.px) -
+        display.block
+    }
   }
 }

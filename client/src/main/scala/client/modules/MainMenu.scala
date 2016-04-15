@@ -60,13 +60,14 @@ object MainMenu {
   }
 
   val menuItems = Seq(
-    MenuItem(1, _ => "Dashboard", DashboardLoc , buildMenuItem(0) , DashboardLoc),
-    MenuItem(2, _ => "Messages ",MessagesLoc, buildMenuItem(6), DashboardLoc),
-    MenuItem(3, _ => "Jobs",JobPostsLoc, buildMenuItem(3), DashboardLoc),
-    MenuItem(4, _ => "Offerings",OfferingsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(5, _ => "Profiles",ProfilesLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(6, _ => "Contracts",ContractsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(7, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc)
+    MenuItem(1, _ => "Connections",ConnectionsLoc,buildMenuItem(0), DashboardLoc),
+    MenuItem(2, _ => "Messages ",  MessagesLoc, buildMenuItem(6), DashboardLoc),
+    MenuItem(3, _ => "Jobs",       JobPostsLoc, buildMenuItem(3), DashboardLoc),
+    MenuItem(4, _ => "Offerings",  OfferingsLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(5, _ => "Profiles",   ProfilesLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(6, _ => "Contracts",  ContractsLoc, buildMenuItem(0), DashboardLoc)
+    // ToDo: Dashboard menu intentionally hidden for now.  EE  2016-04-12
+    // MenuItem(7, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc)
   )
    val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
@@ -100,57 +101,6 @@ object MainMenu {
           }
         )
 
-//        <.div(HeaderCSS.Style.LoginInMenuItem)(
-//          if (props.proxy.value.isLoggedIn) {
-//            var model = props.proxy.value
-//            <.div(
-//              <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
-//              <.div(HeaderCSS.Style.displayInline)(
-//                <.div(^.className := "btn-group")(
-//                  <.span(^.id := "chatIcon", DashBoardCSS.Style.chatIcon, HeaderCSS.Style.displayInline /*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
-//                  <.span(^.id := "chatIcon", ^.className := "hidden", DashBoardCSS.Style.chatIcon, HeaderCSS.Style.displayInline /*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
-//                  <.span(^.id := "chatIconBlank", ^.className := "hidden", DashBoardCSS.Style.chatInvisibleIcon, HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(Icon.circleO),
-//                  <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
-//                  ),
-//                  <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
-//                  <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-//                    <.li()(<.a(^.onClick --> availableForChat)("Available for Chat")),
-//                    <.li()(<.a(^.onClick --> invisibleForChat)("Invisible")),
-//                    <.li(^.className := "divider")(),
-//                    <.li()(<.a()("Availability Schedule")),
-//                    <.li(^.className := "divider")(),
-//                    <.li()(<.a()("Account")),
-//                    <.li()(<.a()("Profiles")),
-//                    <.li()(<.a()("Notifications")),
-//                    <.li()(<.a()("Payments")),
-//                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true")("Preferences"
-//                    )),
-//                    <.li(^.className := "divider")(),
-//                    <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
-//                  )
-//                ),
-//                <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(
-//                  <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-//                    <.div(^.className := "modal-dialog", DashBoardCSS.Style.verticalAlignCenter)(
-//                      <.div(^.className := "modal-content", DashBoardCSS.Style.modalBorderRadius)(
-//                        <.div(^.className := "modal-header modalheader", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding)(
-//                          <.span(<.button(^.tpe := "button", bss.close, "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
-//                        ),
-//                        <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(
-//                          <.h2("hello"),
-//                          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
-//                        )
-//                      )
-//                    ))
-//                )
-//              )
-//            )
-//          } else {
-//            <.div(AgentLoginSignUp(AgentLoginSignUp.Props()))
-//           // NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailReply,"Reply" ))
-//            /*NewAgentModal(NewAgentModal.Props("Sign Up",Seq(HeaderCSS.Style.rsltContainerIconBtn),"","Sign Up"))*/
-//             }
-//        )
       )
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
@@ -204,10 +154,11 @@ object LoggedInUser {
                           <.span(^.id := "chatIcon", DashBoardCSS.Style.chatIcon, HeaderCSS.Style.displayInline /*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
                           <.span(^.id := "chatIcon", ^.className := "hidden", DashBoardCSS.Style.chatIcon, HeaderCSS.Style.displayInline /*, "data-toggle".reactAttr := "dropdown"*/)(Icon.circle),
                           <.span(^.id := "chatIconBlank", ^.className := "hidden", DashBoardCSS.Style.chatInvisibleIcon, HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(Icon.circleO),
-                          <.button(^.className := "btn dropdown-toggle", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
+                          <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                           ),
                           <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
-                          <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                          <.ul(^.id:="navbar",/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                            <.li()(<.a(^.className:="ModalNameDropDown")(model.name)),
                             <.li()(<.a(^.onClick --> availableForChat)("Available for Chat")),
                             <.li()(<.a(^.onClick --> invisibleForChat)("Invisible")),
                             <.li(^.className := "divider")(),

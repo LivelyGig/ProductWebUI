@@ -120,7 +120,7 @@ object AgentLoginSignUp {
       LGCircuit.dispatch(CreateLabels())
       LGCircuit.dispatch(RefreshConnections())
       log.debug("login successful")
-      window.location.href = "/#dashboard"
+      window.location.href = "/#connections"
     }
 
     def processLoginFailed (responseStr : String) = {

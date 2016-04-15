@@ -16,7 +16,8 @@ object Application extends Controller {
   val apiService = new ApiService()
 
   def index = Action {
-    Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
+    Ok(views.html.index("Welcome to LivelyGig - work from anywhere with anyone"))
+    // Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
   }
 
   def indexl = Action {
@@ -36,7 +37,8 @@ object Application extends Controller {
 
       // call Autowire route
       Router.route[Api](apiService)(
-        autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(ByteBuffer.wrap(b)))
+       autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(ByteBuffer.wrap(b)))
+//      autowire.Core.Request(path.split("/"), Unpickle[Map[String, ByteBuffer]].fromBytes(b.asByteBuffer))
       ).map(buffer => {
         val data = Array.ofDim[Byte](buffer.remaining())
         buffer.get(data)

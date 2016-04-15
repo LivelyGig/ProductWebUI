@@ -209,7 +209,7 @@ display: inline-table;
     #sidebarbtn.navbar-toggle {
         display: block;
         padding:0px 0px;
-        margin-top: 13px;
+        margin-right:-13px;
         margin-bottom: 0px;
     }
     #sidebarbtn.navbar-collapse {
@@ -281,7 +281,6 @@ display: inline-table;
      }
      .loggedInUserNav{
         display:block;
-       width: calc(68vw);
      }
 }
 @media (min-width: 821px) {
@@ -294,15 +293,9 @@ display: inline-table;
        }
 }
 
-
-
 .modal{
 background: rgba(0, 0, 0, 0.5);
 }
-
-
-
-
 
 a:hover {cursor: hand; cursor: pointer;}
 
@@ -424,6 +417,47 @@ ol.tree
 		li input:checked + ol > li { display: block; margin: 2px 0 0.125em;  /* 2px */}
 		li input:checked + ol > li:last-child { margin: 1px 0 0.063em; /* 1px */ }
 
+@media (min-width: 769px) {
+.dropdown-menu>li>a.ModalNameDropDown {
+    display : none;
+}
+.ModalName {
+    display : block;
+}
+}
+
+@media (max-width: 768px) {
+.dropdown-menu>li>a.ModalNameDropDown {
+    display : block;
+}
+.ModalName {
+    display : none;
+}
+
+#navbar.dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: -160%;
+            z-index: 1000;
+            float: right;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            font-size: 14px;
+            text-align: left;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+            background-clip: padding-box;
+        }
+
+}
+
+
 /* sidebar settings */
 .sidebar {
     position: absolute;
@@ -432,8 +466,17 @@ ol.tree
     top:0;
     background-color:#eaeaea;
     z-index: 10;
+    transition: all 0.3s ease-in;
+        border-right-style: solid;
+        border-right-width: 2px;
+        border-right-color: rgb(0, 82, 86);
 }
 
+ @media (max-width: 991px) {
+ .sidebar {
+  width: 340px;
+  }
+  }
 
 .sidebar-left {
     left: 0;
@@ -493,7 +536,7 @@ ol.tree
     -webkit-transition: -webkit-transform 300ms ease;
     -moz-transition: -moz-transform 300ms ease;
     -o-transition: transform 300ms ease;
-    transition: transform 300ms ease;
+    transition: all 1s ease-in;
 }
 
 /* Left panel positioning classes */

@@ -86,7 +86,7 @@ object Legal {
       t.modState(s => s.copy(showEndUserAgreementModal = false, showLegalForm = false))
     }
     def termsOfServices() : Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false, showLegalForm = false))
+      t.modState(s => s.copy(showTermsOfServicesForm = false, showLegalForm = true))
     }
     def tradeMarks() : Callback = {
       t.modState(s => s.copy(showTrademarksModal = false, showLegalForm = false))
