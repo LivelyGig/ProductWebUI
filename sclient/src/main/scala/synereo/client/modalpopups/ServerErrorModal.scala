@@ -14,6 +14,7 @@ import synereo.client.components._
 import synereo.client.components.{GlobalStyles}
 import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
 import synereo.client.components.jQuery._
+import scala.language.reflectiveCalls
 
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._

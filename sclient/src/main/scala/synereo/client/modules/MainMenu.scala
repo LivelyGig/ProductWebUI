@@ -4,7 +4,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shapeless.Tuple
+//import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.Handlers.{LogoutUser, LoginUser}

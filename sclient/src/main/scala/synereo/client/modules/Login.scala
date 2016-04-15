@@ -14,7 +14,7 @@ import synereo.client.models.UserModel
 import synereo.client.services.{SYNEREOCircuit, CoreApi}
 import scala.scalajs.js
 import js.{Date, UndefOr}
-import scala.util.parsing.json.JSON
+//import scala.util.parsing.json.JSON
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global

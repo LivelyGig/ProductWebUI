@@ -21,7 +21,7 @@ object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] 
   // initial application model
   override protected def initialModel = RootModel(Empty, UserModel("","",""), Empty, Empty, SearchesRootModel(Nil))
   // combine all handlers into one
-  override protected val actionHandler = combineHandlers(
+  override protected val actionHandler = composeHandlers(
     new ConnectionHandler(zoomRW(_.connections)((m, v) => m.copy(connections = v))),
     new UserHandler(zoomRW(_.user)((m, v) => m.copy(user = v))),
     new ProjectsHandler(zoomRW(_.jobPosts)((m, v) => m.copy(jobPosts = v))),
