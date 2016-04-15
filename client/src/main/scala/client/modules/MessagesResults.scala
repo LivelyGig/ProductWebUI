@@ -57,7 +57,6 @@ object MessagesResults {
             <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
-
             <.div(^.display := "inline-block")(
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
@@ -83,12 +82,11 @@ object MessagesResults {
             )
           )
         ), //col-12
-
          <.div( ^.id := "resultsContainer")(
             P.proxy().render(messagesRootModel =>
                          MessagesList(messagesRootModel.messagesModelList)
             ),
-            P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
+            P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
             P.proxy().renderPending(ex => <.div()(
               <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)))
         )

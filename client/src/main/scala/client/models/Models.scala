@@ -10,27 +10,16 @@ object ModelType {
 case class AppModel(modelType: String, connectionsModel: Seq[ConnectionsModel] = null, jobPostsModel: Seq[EvalSubscribeResponseContent] = null)
 
 //case class MessagesModel (count: Int)
-case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
-
-
-case class Skills(skillId: String, skillName: String)
-
-case class Referents(referentId: String, referentName: String)
 
 //sealed trait SubscribeResponse
 case class MessagesModel(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Seq[LabelResponse] = Nil, connections: Seq[Connection] = Nil, text: String = "", parent: ParentMessageModel = ParentMessageModel("", "", "", "", Nil, Nil, ""))
 
+case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
+
+case class Skills(skillId: String, skillName: String)
+
 /*extends SubscribeResponse*/
-case class ParentMessageModel(uid: String, `type`: String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
-
-case class UserModel(email: String = "", password: String = "", ConfirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
-                     isLoggedIn: Boolean = false, imgSrc: String = "")
-
-case class EmailValidationModel(token: String)
-
-case class LabelResponse(text: String, color: String, imgSrc: String)
-
-case class LabelModel(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)
+//case class ParentMessageModel(uid: String, `type`: String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
 
 //{"source":"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias", "label":"34dceeb1-65d3-4fe8-98db-114ad16c1b31","target":"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias"}
 case class ProjectsModel(sessionURI: String, jobPosts: JobPosts)
@@ -43,8 +32,8 @@ abstract class MimePost()
   extends Post
 
 // ToDo: rename PostMessage to MessagePost to match class diagram and consistent naming?
-case class PostMessage(recipients: String = "", subject: String = "", content: String = "")
-  extends MimePost
+//case class PostMessage(recipients: String = "", subject: String = "", content: String = "")
+ // extends MimePost
 // Splicious posts have the following inside the post:
 // uid
 // type   enum
@@ -80,6 +69,19 @@ case class JobPosts(id: String, `type`: String, description: String, summary: St
                     postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
                     location: String, isPayoutInPieces: String, skills: Seq[Skills], posterId: String, canForward: String,
                     referents: Seq[Referents], contractType: String, budget: Float)
+//case class Skills (skillId : String, skillName: String)
+case class Referents(referentId: String,referentName: String )
+//sealed trait SubscribeResponse
+//case class MessagesModel(uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String, parent: ParentMessageModel = ParentMessageModel("","","","",Nil,Nil,"")) /*extends SubscribeResponse*/
+case class ParentMessageModel (uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
+case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "")
+case class SignUpModel (email: String = "", password: String = "", confirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator:Boolean =false,
+                        isClient:Boolean =false, isFreelancer:Boolean=false, canReceiveEmailUpdates:Boolean=false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
+case class PostMessage(recipients: String = "", subject : String="", content : String="")
+case class EmailValidationModel (token: String)
+case class LabelResponse(text: String, color: String, imgSrc: String)
+case class LabelModel(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)
+//{"source":"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias", "label":"34dceeb1-65d3-4fe8-98db-114ad16c1b31","target":"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias"}
   extends VersionedPost
 // Ed's suggestions for projectPostTypeSpec
 // specVersion

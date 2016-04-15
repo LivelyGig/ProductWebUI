@@ -5,32 +5,31 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.{FooterCSS, DashBoardCSS}
-import client.models.{UserModel}
+import client.models.{SignUpModel}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-//case class UserModel (email: String = "", password: String = "",ConfirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
-//                      isLoggedIn: Boolean = false, imgSrc: String = "")
+
 object NewAgentForm {
   var addNewAgentState : Boolean = false
-  var userModelUpdate = new UserModel ("","","","","",false,false,"")
+  var signUpModelUpdate = new SignUpModel()
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
 
-  case class State(userModel: UserModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
+  case class State(userModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
       // instruct Bootstrap to hide the modal
       addNewAgentState = false
-      userModelUpdate = new UserModel ("","","","","",false,false,"")
+      signUpModelUpdate = new SignUpModel ()
       $(t.getDOMNode()).modal("hide")
     }
 
-    def hidecomponent = {
+    def hideComponent = {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
@@ -51,21 +50,35 @@ object NewAgentForm {
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(ConfirmPassword = value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy( confirmPassword = value )))
     }
 
     def updateEmail(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
+      t.modState(s => s.copy(userModel = s.userModel.copy( email = value )))
+    }
+
+    def updateCanReceiveEmailUpdates(e: ReactEventI) = {
+     t.modState(s => s.copy(userModel = s.userModel.copy( canReceiveEmailUpdates = !s.userModel.canReceiveEmailUpdates)))
+
+    }
+    def updateIsFreelancer(e: ReactEventI) = {
+      t.modState(s => s.copy(userModel = s.userModel.copy( isFreelancer = !s.userModel.isFreelancer )))
+    }
+
+    def updateIsClient(e: ReactEventI) = {
+      t.modState(s => s.copy(userModel = s.userModel.copy( isClient = !s.userModel.isClient )))
+    }
+    def updateIsModerator(e: ReactEventI) = {
+      t.modState(s => s.copy(userModel = s.userModel.copy( isModerator = !s.userModel.isModerator )))
+    }
+    def toggleBTCWallet(e: ReactEventI) = {
+      t.modState(s => s.copy(userModel = s.userModel.copy( createBTCWallet = !s.userModel.createBTCWallet )))
     }
 
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
-    }
-
-    def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+      t.modState(s => s.copy(userModel = s.userModel.copy( password = value )))
     }
 
     def showTermsOfServices(e: ReactEventI) = {
@@ -81,7 +94,7 @@ object NewAgentForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
 //      println(state.addNewAgent)
-      userModelUpdate = state.userModel
+      signUpModelUpdate = state.userModel
       props.submitHandler(state.userModel, state.addNewAgent, state.showTermsOfServicesForm)
     }
 
@@ -136,7 +149,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Confirm Password *", "Confirm Password *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.userModel.ConfirmPassword,
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.userModel.confirmPassword,
                     ^.onChange ==> updateConfirmPassword,^.required := true)
                 )
               )
@@ -148,9 +161,10 @@ object NewAgentForm {
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.div()(
-                    <.label()(<.input(^.`type` := "checkbox"), " Freelancer"), <.br(),
-                    <.label()(<.input(^.`type` := "checkbox"), " Client"), <.br(),
-                    <.label()(<.input(^.`type` := "checkbox"), " Moderator"), <.br()
+                    <.label()(<.input(^.`type` := "checkbox",^.id:="Freelancer",^.checked := s.userModel.isFreelancer, ^.onChange==> updateIsFreelancer), " Freelancer"), <.br(),
+                    <.label()(<.input(^.`type` := "checkbox",^.id:="Client",^.checked := s.userModel.isClient , ^.onChange==> updateIsClient ), " Client"), <.br(),
+                    <.label()(<.input(^.`type` := "checkbox",^.id:="Moderator",^.checked := s.userModel.isModerator ,  ^.onChange==> updateIsModerator ), " Moderator"), <.br()
+
                   ),
                   <.div()(
                   "These roles have distinct alias profiles and reputation. You can change your role options later. Obviously, one cannot moderate their own work contracts."
@@ -161,19 +175,12 @@ object NewAgentForm {
           ), //main row
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.div()(<.input(^.`type` := "checkbox"), " * I understand and agree to the LivelyGig",
+              <.div()(<.input(^.`type` := "checkbox",^.id:="createBTCWallet",^.checked := s.userModel.createBTCWallet,^.onChange==> toggleBTCWallet), " * I understand and agree to the LivelyGig",
                 <.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
             ),
             <.div()(
-              <.input(^.`type` := "checkbox"), " Send me occasional email updates from LivelyGig"
+              <.input(^.`type` := "checkbox",^.id:="updateEmail",^.checked:=s.userModel.canReceiveEmailUpdates, ^.onChange==> updateCanReceiveEmailUpdates ), " Send me occasional email updates from LivelyGig"
             )
-            /*,
-            <.div(DashBoardCSS.Style.marginTop10px)(
-              <.div()(
-                <.input(^.tpe := "checkbox") ," Send me notifications related to projects"
-              )
-            )
-            */
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a via email a code confirming creation of your new account shortly after completing this form"),
@@ -187,19 +194,19 @@ object NewAgentForm {
       )
     }
   }
-  //case class UserModel (email: String = "", password: String = "",ConfirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
-  //                      isLoggedIn: Boolean = false, imgSrc: String = "")
+
   private val component = ReactComponentB[Props]("NewAgentForm")
     .initialState_P(p =>
       if(addNewAgentState)
-      State(new UserModel(userModelUpdate.email ,userModelUpdate.password,userModelUpdate.ConfirmPassword,userModelUpdate.name,userModelUpdate.lastName, false))
+      State(new SignUpModel(signUpModelUpdate.email ,signUpModelUpdate.password,signUpModelUpdate.confirmPassword,signUpModelUpdate.name,signUpModelUpdate.lastName,signUpModelUpdate.createBTCWallet,signUpModelUpdate.isModerator,
+        signUpModelUpdate.isClient,signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
     else
-      State(new UserModel ("","","","","",false,false,""))
+      State(new SignUpModel ("","","","","",false,false,false,false,false,false,""))
     )
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm) {
-        scope.$.backend.hidecomponent
+        scope.$.backend.hideComponent
       }
     })
     .build

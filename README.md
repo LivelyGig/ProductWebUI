@@ -20,13 +20,11 @@ To run the application, open a command line interface (CLI) follow the step belo
     git clone https://github.com/LivelyGig/ProductWebUI.git
     sbt -verbose -Dhttp.port=8080 run
 
-By default Play Server run on port 9000 and URL would be
-* http://localhost:9000/ or
-* http://localhost:8080/
+Then visit the home page at http://localhost:8080/
 
 To edit source code using IntelliJ IDEA editor please follow the instruction in Google Docs [here] (https://docs.google.com/document/d/1VyU5XtWzXugTa7R3odUEa8I1kmj_nVUa7VgrnkDHnQE/edit)
 
-On Mac, you may need to install 'sbt' using [Homebrew](http://brew.sh/):
+To install 'sbt', you may need to use [Homebrew](http://brew.sh/) on your mac:
 
     brew install sbt
 

@@ -45,9 +45,9 @@ object CoreApi {
     AjaxClient[Api].getMock(requestContent, "jobPostsMock").call()
   }
 
-  def createUser(userModel: UserModel): Future[/*ApiResponse[CreateUserResponse]*/String] = {
-    val requestContent = upickle.default.write(ApiRequest(CREATE_USER_REQUEST_MSG,CreateUser(userModel.email, userModel.password,
-      Map("name" -> userModel.name), true)))
+  def createUser(signUpModel: SignUpModel): Future[/*ApiResponse[CreateUserResponse]*/String] = {
+    val requestContent = upickle.default.write(ApiRequest(CREATE_USER_REQUEST_MSG,CreateUser(signUpModel.email, signUpModel.password,
+      Map("name" -> signUpModel.name), true)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
   /*def postMessage(messagesData: PostMessage) : Future[String] = {
