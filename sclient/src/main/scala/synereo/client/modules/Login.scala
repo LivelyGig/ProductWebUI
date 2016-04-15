@@ -169,7 +169,7 @@ object Login {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 text-center")(
             <.div(^.className := "col-md-12")(
-              <.a(^.href := "#", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+              <.a(^.href := "/#signup", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
             ),
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/

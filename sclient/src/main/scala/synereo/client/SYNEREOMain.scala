@@ -3,6 +3,7 @@ package synereo.client
 //import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
+import synereo.client.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
@@ -41,6 +42,8 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceFullLOC extends Loc
 
+  case object SignupLOC extends Loc
+
   def sidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
@@ -55,6 +58,7 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#synereofullblogpost", SynereoBlogPostFullLOC) ~> renderR(ctl => BlogPostFull(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
+      | staticRoute("#signup", SignupLOC) ~> renderR(ctl => Signup(Signup.Props()))
       | staticRoute("#marketplacefull", MarketPlaceFullLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
       ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)
