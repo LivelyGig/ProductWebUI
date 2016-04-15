@@ -18,9 +18,11 @@ object Bootstrap {
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   @js.native
   trait BootstrapJQuery extends JQuery {
     def modal(action: String): BootstrapJQuery = js.native
+
     def modal(options: js.Any): BootstrapJQuery = js.native
   }
 
@@ -33,14 +35,15 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), addIcons : Icon, title: String, id: String=null, className: String = null)
+    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, id: String = null, className: String = null)
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>
-        <.button(^.className:="btn btn-default ".concat(P.className),P.addStyles,P.addIcons,^.title:= P.title, ^.id:= P.id,  ^.tpe := "button", ^.onClick --> P.onClick)(C)
+        <.button(^.className := "btn btn-default ".concat(P.className), P.addStyles, P.addIcons, ^.title := P.title, ^.id := P.id, ^.tpe := "button", ^.onClick --> P.onClick)(C)
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+
     def apply() = component
   }
 
@@ -57,10 +60,12 @@ object Bootstrap {
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)
+
     def apply() = component
   }
 
   object Modal {
+
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
                      keyboard: Boolean = true)
@@ -76,38 +81,41 @@ object Bootstrap {
         jQuery(t.getDOMNode()).modal("hide")
 
       }
+
       // jQuery event handler to be fired when the modal has been hidden
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
         t.props.runNow().closed().runNow()
       }
 
-   def modalClose(e:ReactKeyboardEvent) : Callback = {
+      def modalClose(e: ReactKeyboardEvent): Callback = {
 
-     def plainKey: CallbackOption[Unit] =             // CallbackOption will stop if a key isn't matched
-       CallbackOption.keyCodeSwitch(e) {
-         case  KeyCode.Escape => hide
-       }
-         plainKey >>   e.preventDefaultCB
-   }
+        def plainKey: CallbackOption[Unit] = // CallbackOption will stop if a key isn't matched
+          CallbackOption.keyCodeSwitch(e) {
+            case KeyCode.Escape => hide
+          }
+        plainKey >> e.preventDefaultCB
+      }
 
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1  ,
-        <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
-          <.div(modalStyle.dialog,
-            <.div(modalStyle.content,SynereoCommanStylesCSS.Style.modalBorderRadius,SynereoCommanStylesCSS.Style.modalBackgroundColor,  ^.onKeyDown ==> modalClose ,^.ref:= OuterRef,
-              <.div(^.className:= "modal-header" , modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding,SynereoCommanStylesCSS.Style.modalHeaderMarginBottom, P.header(hide)),
-              <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
-//              <.div(modalStyle.footer, P.footer(hide))
+        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
+          <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
+            <.div(modalStyle.dialog,
+              <.div(modalStyle.content, SynereoCommanStylesCSS.Style.modalBorderRadius, SynereoCommanStylesCSS.Style.modalBackgroundColor, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
+                <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderMarginBottom
+                  , SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
+                <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
+                //              <.div(modalStyle.footer, P.footer(hide))
+              )
             )
           )
-         )
         )
       }
     }
+
     val component = ReactComponentB[Props]("Modal")
-    /*  .stateless*/
+      /*  .stateless*/
       .renderBackend[Backend]
       .componentDidMount(_.backend.init)
       .componentDidMount(scope => Callback {
@@ -121,6 +129,8 @@ object Bootstrap {
       .build
 
     def apply(props: Props, children: ReactElement*) = component(props, children: _*)
+
     def apply() = component
   }
+
 }

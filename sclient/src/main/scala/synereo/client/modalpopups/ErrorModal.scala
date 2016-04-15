@@ -12,9 +12,9 @@ import synereo.client.components.Icon.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.components.{GlobalStyles}
-import synereo.client.css.LoginCSS
+import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
 import synereo.client.components.jQuery._
-
+import scala.language.reflectiveCalls
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
@@ -22,7 +22,6 @@ import scalacss.ScalaCssReact._
   * Created by Mandar on 4/13/2016.
   */
 object ErrorModal {
-  // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback, loginError: String = "")
@@ -42,7 +41,7 @@ object ErrorModal {
       val headerText = "Error"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.div()(headerText)),
+        header = hide => <.span(<.h4(headerText)),
 
         closed = () => modalClosed(s, p)),
 
@@ -50,14 +49,18 @@ object ErrorModal {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()(p.loginError,
-                  <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(p.loginError)
+              ),
+              <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.errorModalFooter)(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-12 text-center")(
+                    <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                  )
                 )
               )
             )
           )
-        ),
-        <.div(bss.modal.footer)()
+        )
       )
     }
   }

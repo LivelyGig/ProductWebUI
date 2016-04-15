@@ -26,8 +26,14 @@ object SynereoCommanStylesCSS {
       //media.minWidth(821.px) -
       // paddingTop(8.px)
     )
+    val mainMenuNavbar = style(
+      paddingTop(6.px)
+    )
     val dropdownMenu = style(
       padding(40.px, 20.px)
+    )
+    val loginErrorHeading = style(
+      marginTop.`0`.important
     )
     val dropdownLiMenuSeperator = style(
       backgroundColor(c"#F2F2F2"),
@@ -35,12 +41,21 @@ object SynereoCommanStylesCSS {
       margin(20.px, 0.px),
       padding.`0`.important
     )
+    val mainMenuUserActionDropdownBtn = style(
+      marginTop(5.px),
+      backgroundColor.transparent.important,
+      color(c"#69a5bf"),
+      &.hover(
+        color(c"#69a5bf")
+      )
+    )
     val searchFormInputBox = style(
       backgroundColor(rgba(115, 99, 99, 0.4)),
-      borderTop.`0`,
-      borderRight.`0`,
+      borderTop.`0`.important,
+      borderRight.`0`.important,
+      borderLeft.`0`.important,
+      borderRight.`0`.important,
       borderRadius.`0`.important,
-      borderLeft.`0`,
       borderBottom(1.px, solid, grey),
       color(c"#95C9DE")
     )
@@ -130,8 +145,14 @@ object SynereoCommanStylesCSS {
     val modalHeaderPadding = style(
       padding(10.px)
     )
+    val errorModalFooter = style(
+      borderTop.`0`.important
+    )
     val modalHeaderMarginBottom = style(
       marginBottom(10.px)
+    )
+    val modalHeaderBorder = style(
+      borderRadius(20.px)
     )
     val modalHeaderFont = style(
       fontSize(1.em),
@@ -191,13 +212,18 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val searchBtn = style(
-      backgroundColor.transparent.important,
+      backgroundColor(rgba(115, 99, 99, 0.4)),
       border.none.important,
-      color(c"#95C9DE").important,
-      &.hover.focus.active(
+      borderRadius.`0`.important,
+      paddingTop(3.px),
+      paddingBottom(3.px),
+      paddingLeft.`0`,
+      paddingRight.`0`,
+      color(c"#69a5bf").important,
+      &.hover.focus.active.visited(
         backgroundColor.transparent.important,
         border.none.important,
-        color(c"#95C9DE").important
+        color(c"#69a5bf").important
       )
     )
   }

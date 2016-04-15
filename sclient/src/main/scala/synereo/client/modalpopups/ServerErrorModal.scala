@@ -12,7 +12,7 @@ import synereo.client.components.Icon.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.components.{GlobalStyles}
-import synereo.client.css.LoginCSS
+import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
 import synereo.client.components.jQuery._
 
 import scalacss.Defaults._
@@ -50,14 +50,18 @@ object ServerErrorModal {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()("Internal Server Error Occuored Server Is Not Responding",
-                  <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)("Encountering problems in serving request. Please try after sometime!")
+              ),
+              <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-12 text-center")(
+                    <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                  )
                 )
               )
             )
           )
         )
-        //        <.div(bss.modal.footer)()
       )
     }
   }

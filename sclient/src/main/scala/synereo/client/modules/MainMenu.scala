@@ -49,7 +49,7 @@ object MainMenu {
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right")(
+        <.ul(^.className := "nav navbar-nav navbar-right",SynereoCommanStylesCSS.Style.mainMenuNavbar)(
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
@@ -85,8 +85,8 @@ object MainMenu {
                   )
                 )
               ),
-              <.li(^.className := "dropdown")(
-                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown")((MIcon.chatBubble)),
+              <.li(^.className := "dropdown"/*,SynereoCommanStylesCSS.Style.*/)(
+                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown",SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
                 <.ul(^.className := "dropdown-menu")(
                   <.li(props.ctl.link(MarketPlaceFullLOC)("MarketPlace")),
                   <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))

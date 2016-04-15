@@ -86,8 +86,12 @@ object Login {
       }
     }
 
-    def serverError(): Callback = {
+    def closeServerErrorPopup(): Callback = {
       t.modState(s => s.copy(showServerErrorModal = false))
+    }
+
+    def closeLoginErrorPopup(): Callback = {
+      t.modState(s => s.copy(showErrorModal = false))
     }
 
     def processLoginFailed(responseStr: String) = {
@@ -96,7 +100,7 @@ object Login {
       val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       //window.alert("please enter valid credentials")
       //      println(loginErrorMessage)
-      //      processLoginFailed(loginErrorMessage.content.reason)
+            println(loginErrorMessage.content.reason)
       t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
 
     }
@@ -170,8 +174,8 @@ object Login {
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
-            if (s.showErrorModal) ErrorModal(ErrorModal.Props(serverError, s.loginErrorMessage))
-            else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(serverError))
+            if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
+            else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else
               Seq.empty[ReactElement]
 
