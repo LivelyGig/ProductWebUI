@@ -28,22 +28,25 @@ object MessagesModelHandler{
         println(e)
     }
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
+
     //      println(model(0).content.pageOfPosts(0))
     //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[MessagesModel]()
     for(projectFromBackend <- messagesFromBackend){
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       try {
-        if (!projectFromBackend.content.pageOfPosts.isEmpty)
-          upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+        if (!projectFromBackend.content.pageOfPosts.isEmpty){
+          val project = upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+          model:+= project
+        }
       } catch {
         case e: Exception =>
-          println(e)
+          println(projectFromBackend.content.pageOfPosts(0))
       }
-      if (!projectFromBackend.content.pageOfPosts.isEmpty)
-        model:+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+//      if (!projectFromBackend.content.pageOfPosts.isEmpty)
+
     }
-    //    println(model)
+//        println(model)
     MessagesRootModel(model)
   }
 

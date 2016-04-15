@@ -17,7 +17,7 @@ import scala.scalajs.js
 import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.models.UserModel
+import com.sun.media.jfxmedia.locator.ConnectionHolder
 
 import scala.scalajs.js.JSON
 import org.querki.jquery._
@@ -104,6 +104,8 @@ object AgentLoginSignUp {
 
     def processSuccessfulLogin(responseStr : String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+//      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
+      window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
       $(loginLoader).addClass("hidden")
       $(dashboardContainer).removeClass("hidden")
       //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")

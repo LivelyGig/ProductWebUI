@@ -100,8 +100,10 @@ object PostNewMessage {
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       //      println(uid) each([LivelyGig],[Synereo])
       //      val dummyTargetConnection = "{\n\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\",\n                  \"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\",\n                  \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\"\n}"
+      /*println(upickle.default.write(Map[String, String]().empty))
+      println(upickle.default.write(Map[Label, String]().empty))*/
       val targetConnection = upickle.default.read[Connection](connectionString)
-      val value =  ExpressionContentValue(uid.toString,"TEXT","","",Seq(""),Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
+      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"",upickle.default.write(value),uid)))).onComplete{
         case Success(response) => {println("success")
            println("Responce = "+response)

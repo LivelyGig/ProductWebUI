@@ -18,7 +18,7 @@ case class Skills(skillId: String, skillName: String)
 case class Referents(referentId: String, referentName: String)
 
 //sealed trait SubscribeResponse
-case class MessagesModel(uid: String, `type`: String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String, parent: ParentMessageModel = ParentMessageModel("", "", "", "", Nil, Nil, ""))
+case class MessagesModel(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Seq[LabelResponse] = Nil, connections: Seq[Connection] = Nil, text: String = "", parent: ParentMessageModel = ParentMessageModel("", "", "", "", Nil, Nil, ""))
 
 /*extends SubscribeResponse*/
 case class ParentMessageModel(uid: String, `type`: String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
