@@ -34,7 +34,8 @@ object DashBoardCSS {
       media.maxWidth(1199.px) -
         width(100.%%),
       media.minWidth(1200.px) -
-        width(98.2.%%)
+        width(98.2.%%),
+      marginLeft(-4.px)
     )
 
     val dashboardResults2 = style(
