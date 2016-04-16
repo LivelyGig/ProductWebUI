@@ -2,7 +2,7 @@ package client.modals
 
 import java.util.UUID
 
-import client.models.PostMessage
+import client.models.MessagePost
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
@@ -73,7 +73,7 @@ object PostNewMessage {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (/*PostMessage*/) => Callback, header: String)
-  case class State(postMessage:PostMessage, postNewMessage: Boolean = false, selectizeInputId : String = "postNewMessageSelectizeInput")
+  case class State(postMessage:MessagePost, postNewMessage: Boolean = false, selectizeInputId : String = "postNewMessageSelectizeInput")
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
@@ -180,7 +180,7 @@ object PostNewMessage {
   }
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new PostMessage("", "", "")))
+    .initialState_P(p => State(new MessagePost("", "", "", "", "", "", "", "", "", "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
       if(scope.currentState.postNewMessage){
