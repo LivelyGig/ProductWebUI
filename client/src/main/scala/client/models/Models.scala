@@ -1,5 +1,8 @@
 package client.models
 
+import java.text.SimpleDateFormat
+import java.util.{Calendar, Date, SimpleTimeZone, TimeZone}
+
 import shared.dtos._
 
 object ModelType {
@@ -41,6 +44,13 @@ case class LabelModel(uid: String, text: String, color: String, imgSrc: String, 
 abstract class Post (val id: String, val spliciousType: String, val createdDate: String, val modifiedDate: String, val labels: String, val connecitons: String, val text: String) {
   // The arguments here are to assure compatibility with SpliciousUI, at least for a while.
   def postKindLabel = "undefined"
+
+  // ToDo: Shubham, please check this. Should createdDate and modifiedDate be passed in as var (mutable)?
+  // if (createdDate.isEmpty){
+    // createdDate = Calendar.getInstance(TimeZone.getTimeZone("UTC")).toString
+    // modifiedDate = createdDate
+  // }
+
   // Ed's suggestions for postTypeSpec
   // authorizingAddress
   // authorizingSignature
@@ -75,8 +85,6 @@ case class JobPost(id: String, `type`: String, description: String, summary: Str
   // ToDo: needs to extends VersionedPost.  However, this would then have a large signature that would macro-expand to exceed the 22 fields limit in case classes. http://www.scala-lang.org/old/node/7910
   //  override def postKindLabel = "cba62260f2ec4bfc86fb49c180c3987d"
   // Ed's notes:
-  // startDate
-  // endDate
   // requiredSkills
   // desiredSkills
   // projectCategories
@@ -98,7 +106,6 @@ case class BuyerProfilePost(override val id: String, override val spliciousType:
 case class SellerProfilePost(override val id: String, override val spliciousType: String, override val createdDate: String, override val modifiedDate: String, override val labels: String, override val connecitons: String, override val text: String) extends VersionedPost (id, spliciousType, createdDate, modifiedDate, labels, connecitons, text) {
   override def postKindLabel = "fa44572406ec49f792fe6932dd1dc27e"
   // Ed's notes:
-  // specVersion
   // numberProjectsCompleted
   // firstName
   // middleName
@@ -120,17 +127,12 @@ case class ModeratorProfilePost(override val id: String, override val spliciousT
 case class ContractPost(override val id: String, override val spliciousType: String, override val createdDate: String, override val modifiedDate: String, override val labels: String, override val connecitons: String, override val text: String) extends VersionedPost (id, spliciousType, createdDate, modifiedDate, labels, connecitons, text) {
   override def postKindLabel = "5d11a8528a6b477fb009c0a1028ddc99"
   // Ed's notes.  See also sample-data-demo.xlsx, "contract blob" tab.  It is quite detailed
-  // specVersion
-  // state
   // originatingPostID
   // buyerID
   // sellerID
   // moderatorID
-  // feedbackBuyerToSeller
-  // feedbackSellerToBuyer
-  // feedbackBuyerToModerator
-  // feedbackSellerToModerator
-  // Contract
+  //
+  // ## Contract
   // status : enum (Initiating | Escrow | InProgress | Feedback | Closed)
   // escrowStatus: enum (new, waiting on seller, ....)
   // buyerAgreement : Boolean
@@ -145,7 +147,8 @@ case class ContractPost(override val id: String, override val spliciousType: Str
   // buyerProfile
   // moderatorProfile
   // sellableEntity
-  // ContractTerm
+  //
+  // ## ContractTerms
   // name
   // termType
   // termValue
@@ -153,24 +156,33 @@ case class ContractPost(override val id: String, override val spliciousType: Str
   // employerAgreement : Boolean
   // talentAgreement : Boolean
   // history
-  // Milestone
+  //
+  // ## Milestone
   // plannedFinish
   // scheduledFinish
   // title
   // sellerComplete
   // buyerComplete
-  // ContractNote
   //
-  // Link
+  // ## ContractNote
+  //
+  // ## Links
   // added
   // by
   // name
-  // FeedbackItem
+  //
+  // ## FeedbackItems
+  // feedbackBuyerToSeller
+  // feedbackSellerToBuyer
+  // feedbackBuyerToModerator
+  // feedbackSellerToModerator
+  // feedbackModeratorToBuyer
+  // feedbackModeratorToSeller
+  //
   // name
   // type: enum (...)
   // value
   // escrowBitcoinTransaction
   // transactionId
   // transactionType : enum (buyerFund, sellerFund, payout, unknown)
-
 }
