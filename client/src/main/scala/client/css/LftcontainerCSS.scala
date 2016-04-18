@@ -97,7 +97,7 @@ object LftcontainerCSS {
     )
 
   val toggleBtn =style(
-    fontSize(20.px),
+    fontSize(34.px),
     color(c"#00767c")
   )
   }

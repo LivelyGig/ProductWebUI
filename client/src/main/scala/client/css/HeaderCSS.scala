@@ -11,7 +11,7 @@ object HeaderCSS {
 
     val naviContainer = style (
       backgroundColor(c"#005256"),
-      minHeight(62.px),
+      minHeight(52.px),
       borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -64,8 +64,10 @@ object HeaderCSS {
       borderRadius(50.%%),
       width(40.px),
       height(40.px),
+      media.minWidth(821.px)-
+      marginTop(-3.px),
       media.maxWidth(820.px)-
-      marginTop(3.px)
+      marginTop(4.px)
     )
 
     /* css*/
@@ -106,10 +108,14 @@ object HeaderCSS {
     )
     val LoginInMenuItem=style(
       float.right,
-      paddingTop(6.px),
+      paddingTop(5.px),
       display.inlineBlock
     )
 
+    val marginTopLoggedIn = style(
+      media.minWidth(821.px) -
+      marginTop(-7.px)
+    )
 
     val displayInline=style(
       display.inline,
@@ -167,6 +173,10 @@ object HeaderCSS {
       backgroundColor.transparent,
       paddingLeft(0.px),
       paddingRight(0.px),
+      media.minWidth(821.px)-
+        paddingTop(4.px),
+      media.maxWidth(820.px)-
+      paddingTop(10.px),
 
       &.hover (
         backgroundColor.transparent,
