@@ -6,7 +6,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import client.models.{EmailValidationModel, UserModel}
+import client.models.{SignUpModel, EmailValidationModel, UserModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
@@ -54,10 +54,10 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showNewAgentForm = true))
     }
 
-    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
-      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
+    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false , showTermsOfServicesForm : Boolean = false ): Callback = {
+      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if(addNewAgent){
-        createUser(userModel).onComplete {
+        createUser(signUpModel).onComplete {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
             log.debug(s"createUser msg : ${s.msgType}")
@@ -104,6 +104,8 @@ object AgentLoginSignUp {
 
     def processSuccessfulLogin(responseStr : String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+//      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
+      window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
       $(loginLoader).addClass("hidden")
       $(dashboardContainer).removeClass("hidden")
       //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")

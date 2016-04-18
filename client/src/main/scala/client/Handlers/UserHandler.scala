@@ -26,7 +26,6 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
       updated(modelFromStore)
     case CreateSessionForMessages(userModel2) =>
-      println("in CreateSessionForMessages")
       CoreApi.agentLogin(userModel2).map{responseStr=>
         val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
         window.sessionStorage.setItem(CoreApi.MESSAGES_SESSION_URI,response.content.sessionURI)

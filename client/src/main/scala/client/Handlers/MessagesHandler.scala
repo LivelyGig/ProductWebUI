@@ -1,22 +1,20 @@
 package client.handlers
 
-import diode.data.PotState.{PotFailed, PotPending}
-import diode._
-import diode.data._
+import diode.data.PotState.PotPending
+import diode.{ActionResult, Effect, ActionHandler, ModelRW}
+import diode.data.{Empty, PotAction, Ready, Pot}
 import client.models.MessagesModel
-import client.rootmodels.MessagesRootModel
+import client.rootmodels.{MessagesRootModel}
 import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
-import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
 // Actions
-case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3)) extends PotActionRetriable[MessagesRootModel, RefreshMessages]{
-  override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy) = RefreshMessages(value, newRetryPolicy)
+case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends PotAction[MessagesRootModel, RefreshMessages]{
+  override def next(value: Pot[MessagesRootModel]) = RefreshMessages(value)
 }
 
 object MessagesModelHandler{
@@ -28,22 +26,25 @@ object MessagesModelHandler{
         println(e)
     }
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
+
     //      println(model(0).content.pageOfPosts(0))
     //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[MessagesModel]()
     for(projectFromBackend <- messagesFromBackend){
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       try {
-        if (!projectFromBackend.content.pageOfPosts.isEmpty)
-          upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+        if (!projectFromBackend.content.pageOfPosts.isEmpty){
+          val project = upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+          model:+= project
+        }
       } catch {
         case e: Exception =>
-          println(e)
+          println(projectFromBackend.content.pageOfPosts(0))
       }
-      if (!projectFromBackend.content.pageOfPosts.isEmpty)
-        model:+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+//      if (!projectFromBackend.content.pageOfPosts.isEmpty)
+
     }
-    //    println(model)
+//        println(model)
     MessagesRootModel(model)
   }
 
@@ -55,21 +56,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       // todo investigate calling of this method due to callback
 //      println("in refresh messages")
       val labels = window.sessionStorage.getItem("currentSearchLabel")
-      val updateF =  action.effectWithRetry(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
       if (labels!=null)
       {
-        action.handleWith(this,updateF)(PotActionRetriable.handler())
+        val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
+        action.handleWith(this, updateF)(PotAction.handler())
       } else {
         updated(Empty)
       }
-      /*action.handle{
-        case PotFailed =>
-          action.retryPolicy.retry(action.result.failed.get, updateF) match {
-            case Right((_, retryEffect)) =>
-              effectOnly(retryEffect)
-            case Left(ex) =>
-              updated(value.fail(ex))
-          }
-      }*/
   }
 }

@@ -2,7 +2,6 @@ package client
 
 
 import client.LGMain.{ContractsLoc, OfferingsLoc}
-import client.modules
 import japgolly.scalajs.react.extra.router._
 import client.components.{GlobalStyles, Icon}
 import client.css.{AppCSS, FooterCSS, HeaderCSS, DashBoardCSS}

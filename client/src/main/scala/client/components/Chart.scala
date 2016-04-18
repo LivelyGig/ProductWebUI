@@ -62,7 +62,7 @@ object Chart {
 
   case object PieChart extends ChartStyle
 
-  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: Int = 400, height: Int = 200)
+  case class ChartProps(name: String, style: ChartStyle, data: ChartData, width: String = "400px", height: String = "200px")
 
   class Backend(t: BackendScope[ChartProps, _])
 
