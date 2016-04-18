@@ -3,7 +3,7 @@ package client.handlers
 import diode.data.PotState.PotPending
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
-import client.models.{JobPosts, ProjectsModel, ConnectionsModel}
+import client.models.{JobPost, ProjectsModel, ConnectionsModel}
 import client.rootmodels.ProjectsRootModel
 import client.services.CoreApi
 import shared.dtos._
@@ -24,7 +24,7 @@ object ProjectsModelHandler{
     var model = Seq[ProjectsModel]()
     for(projectFromBackend <- projectsFromBackend){
       model:+= ProjectsModel(projectFromBackend.content.sessionURI,
-        upickle.default.read[JobPosts](projectFromBackend.content.pageOfPosts(0)))
+        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0)))
     }
     ProjectsRootModel(model)
   }
