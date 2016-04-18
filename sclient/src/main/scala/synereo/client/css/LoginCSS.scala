@@ -26,8 +26,14 @@ object LoginCSS {
     val formPadding = style(
       padding(4.%%)
     )
+    val SignUpBtn = style(
+
+    )
     val requestInviteModalStyle = style(
       backgroundColor(c"#96989B")
+    )
+    val signUpModalStyle = style(
+      backgroundColor(c"#FFFFFF")
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -62,8 +68,9 @@ object LoginCSS {
       marginRight.auto,
       marginBottom(150.px),
       marginTop.auto,
-      backgroundColor(c"#012E3D")
-
+      backgroundColor(c"#012E3D"),
+      media.maxWidth(1400.px) -
+        width(100.%%)
     )
     val textWhite = style(
       color(c"#FFFFFF"),
@@ -89,11 +96,11 @@ object LoginCSS {
 
     )
     val loginFormFooter = style(
-      padding(5.%%,15.%%),
+      padding(5.%%, 15.%%),
       fontSize(16.px)
     )
     val keepMeLoggedIn = style(
-//      marginLeft(65.px),
+      //      marginLeft(65.px),
       display.inlineBlock,
       color(c"#35b0e2")
     )
@@ -102,7 +109,7 @@ object LoginCSS {
     )
     val forgotMyPassLink = style(
       float.right,
-//      marginRight(65.px),
+      //      marginRight(65.px),
       color(c"#35b0e2"),
       &.hover(
         color(c"#35b0e2"),
@@ -125,13 +132,24 @@ object LoginCSS {
       marginRight(10.px)
     )
     val dontHaveAccount = style(
-      fontSize(20.px),
+      fontSize(22.px),
       display.inlineBlock,
       marginBottom(30.px),
+      color(c"#1282B2"),
+      backgroundColor.transparent.important,
+      outline.none.important,
       &.hover(
-        color(c"#D2E1E3")
-      )
-
+        color(c"#1282B2"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#1282B2"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      border.none.important,
+      fontFamily := "karla"
     )
     val requestInviteBtn = style(
       backgroundColor.transparent,

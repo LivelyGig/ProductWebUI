@@ -4,85 +4,161 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.dtos.{CreateUser, InitializeSessionResponse, ApiResponse}
+import shared.dtos._
 import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.SYNEREOMain.Loc
+import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
-import synereo.client.modalpopups.RequestInvite
+import synereo.client.modalpopups.{NewUserForm, ServerErrorModal, ErrorModal, RequestInvite}
 import synereo.client.models.UserModel
-import synereo.client.services.{SYNEREOCircuit, CoreApi}
+import synereo.client.services.{ApiResponseMsg, SYNEREOCircuit, CoreApi}
 import scala.scalajs.js
 import js.{Date, UndefOr}
-import scala.util.parsing.json.JSON
+
+//import scala.util.parsing.json.JSON
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global
-import org.querki.jquery.$
+import org.querki.jquery._
 
 /**
   * Created by Mandar on 3/11/2016.
   */
 object Login {
+  val LOGIN_ERROR = "LOGIN_ERROR"
+  val SERVER_ERROR = "SERVER_ERROR"
+  val SUCCESS = "SUCCESS"
+  val loginLoader: js.Object = "#loginLoader"
 
   case class Props()
 
-  case class State(userModel: UserModel, login: Boolean = false)
+  case class State(userModel: UserModel, isloggedIn: Boolean = false, showNewUserForm: Boolean = false,
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
     def updateEmail(e: ReactEventI) = {
-      println("updateEmail = " + e.target.value)
+      //      println("updateEmail = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
     def updatePassword(e: ReactEventI) = {
-      println("updatePassword = " + e.target.value)
+      //      println("updatePassword = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
-    }
-
-    def login(userModel: UserModel) = {
-      val user = UserModel(email = userModel.email, name = "",
-        imgSrc = "", isLoggedIn = true)
-      window.sessionStorage.setItem("userEmail", userModel.email)
-//      window.sessionStorage.setItem("userName",userModel.password)
-//      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
-//      window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
-      SYNEREOCircuit.dispatch(LoginUser(user))
-      window.location.href = "/#synereodashboard"
-      CoreApi.agentLogin(userModel).onComplete {
-        case Success(responseStr) =>
-          try {
-           // log.debug("login successful")
-            val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-            println("the response is := " + response)
-            window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
-            val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
-              imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
-            window.sessionStorage.setItem("userEmail", userModel.email)
-            window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
-            window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-            window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
-          //  SYNEREOCircuit.dispatch()
-            window.location.href = "/#synereodashboard"
-            //  t.modState(s => s.copy(userModel = s.userModel.copy()))
-          } catch {
-            case e: Exception =>
-             /* log.debug("login failed")*/
-              e.printStackTrace()
-          }
-        case Failure(s) =>
-          println("internal server error")
-      }
-      //      window.location.href = "/#synereodashboard"
     }
 
     def loginUser(e: ReactEventI) = Callback {
       e.preventDefault()
       val user = t.state.runNow().userModel
-      login(user)
+      processLogin(user)
+    }
+
+    def processLogin(userModel: UserModel): Unit = {
+      $(loginLoader).removeClass("hidden")
+      CoreApi.agentLogin(userModel).onComplete {
+        case Success(responseStr) =>
+          validateResponse(responseStr) match {
+            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
+            case LOGIN_ERROR => processLoginFailed(responseStr)
+            case SERVER_ERROR => processServerError(responseStr)
+          }
+        case Failure(s) =>
+          $(loginLoader).addClass("hidden")
+          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
+      }
+
+    }
+
+    def validateResponse(response: String): String = {
+      try {
+        upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+        LOGIN_ERROR
+      } catch {
+        case e: Exception =>
+          try {
+            upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
+            SUCCESS
+          } catch {
+            case p: Exception =>
+              SERVER_ERROR
+          }
+
+      }
+    }
+
+    def closeServerErrorPopup(): Callback = {
+      t.modState(s => s.copy(showServerErrorModal = false))
+    }
+
+    def closeLoginErrorPopup(): Callback = {
+      t.modState(s => s.copy(showErrorModal = false))
+    }
+
+    def processLoginFailed(responseStr: String) = {
+      println("in processLoginFailed")
+      $(loginLoader).addClass("hidden")
+      val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      //window.alert("please enter valid credentials")
+      //      println(loginErrorMessage)
+      println(loginErrorMessage.content.reason)
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
+
+    }
+
+    def processServerError(responseStr: String): Unit = {
+      println("in processServerError")
+      $(loginLoader).addClass("hidden")
+      val serverErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      t.modState(s => s.copy(showServerErrorModal = true)).runNow()
+    }
+
+    def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
+      println("in processSuccessfulLogin")
+      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
+        imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
+      window.sessionStorage.setItem("userEmail", userModel.email)
+      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
+      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
+      window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
+      SYNEREOCircuit.dispatch(LoginUser(user))
+      println(userModel)
+      $(loginLoader).addClass("hidden")
+      window.location.href = "/#synereodashboard"
+    }
+
+    def addNewUserForm(): Callback = {
+      t.modState(s => s.copy(showNewUserForm = true))
+    }
+
+    def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+      //      log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+      println("in add new user methiood")
+      if (addNewUser) {
+        CoreApi.createUser(userModel).onComplete {
+          case Success(response) =>
+            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
+            //            log.debug(s"createUser msg : ${s.msgType}")
+            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+              //              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+            } else {
+              //              log.debug(s"createUser msg : ${s.content}")
+              //              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            }
+          case Failure(s) =>
+            //            log.debug(s"createUserFailure: ${s}")
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
+          // now you need to refresh the UI
+        }
+        t.modState(s => s.copy(showNewUserForm = false))
+      }
+      else {
+        t.modState(s => s.copy(showNewUserForm = false))
+      }
     }
 
     def render(s: State, p: Props) = {
@@ -106,11 +182,12 @@ object Login {
                           <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
                           <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
                           //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
                           //<.a(^.href := "/#synereodashboard")("Login Here")
                         ),
                         <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
                           <.div(LoginCSS.Style.keepMeLoggedIn)(
-                            <.input(^.`type` := "radio"), <.span("Keep me logged in",LoginCSS.Style.keepMeLoggedInText)
+                            <.input(^.`type` := "radio"), <.span("Keep me logged in", LoginCSS.Style.keepMeLoggedInText)
                           ),
                           <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
                         )
@@ -125,14 +202,22 @@ object Login {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 text-center")(
             <.div(^.className := "col-md-12")(
-              <.a(^.href := "#", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+              //              <.a(^.href := "/#signup", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+              Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?")
             ),
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
-            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite"))
+            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
+            if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
+            else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
+            else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
+            else
+              Seq.empty[ReactElement]
+
           )
         )
       )
+
     }
 
   }
@@ -140,6 +225,7 @@ object Login {
   val component = ReactComponentB[Props]("SynereoLogin")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
+
     .build
 
   def apply(props: Props) = component(props)

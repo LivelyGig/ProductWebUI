@@ -603,5 +603,7 @@ object Icon {
   def youtube = apply("youtube")
   def youtubePlay = apply("youtube-play")
   def youtubeSquare = apply("youtube-square")
+  def spinnerIcon = apply("spinner fa-spin fa-3x fa-fw")
+  def spinnerIconPulse = apply("spinner fa-pulse fa-3x fa-fw")
 }
 

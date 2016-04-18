@@ -14,7 +14,7 @@ trait ChartDataset extends js.Object {
   def strokeColor: String = js.native
   def data: js.Array[Double] = js.native
 }
-
+//@js.native
 object ChartDataset {
   def apply(data: Seq[Double], label: String, fillColor: String = "#005C99", strokeColor: String = "#000"): ChartDataset = {
     js.Dynamic.literal(

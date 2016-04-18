@@ -26,12 +26,36 @@ object SynereoCommanStylesCSS {
       //media.minWidth(821.px) -
       // paddingTop(8.px)
     )
+    val mainMenuNavbar = style(
+      paddingTop(6.px)
+    )
+    val dropdownMenu = style(
+      padding(40.px, 20.px)
+    )
+    val loginErrorHeading = style(
+      marginTop.`0`.important
+    )
+    val dropdownLiMenuSeperator = style(
+      backgroundColor(c"#F2F2F2"),
+      fontSize(1.2.em),
+      margin(20.px, 0.px),
+      padding.`0`.important
+    )
+    val mainMenuUserActionDropdownBtn = style(
+      marginTop(5.px),
+      backgroundColor.transparent.important,
+      color(c"#69a5bf"),
+      &.hover(
+        color(c"#69a5bf")
+      )
+    )
     val searchFormInputBox = style(
       backgroundColor(rgba(115, 99, 99, 0.4)),
-      borderTop.`0`,
-      borderRight.`0`,
+      borderTop.`0`.important,
+      borderRight.`0`.important,
+      borderLeft.`0`.important,
+      borderRight.`0`.important,
       borderRadius.`0`.important,
-      borderLeft.`0`,
       borderBottom(1.px, solid, grey),
       color(c"#95C9DE")
     )
@@ -52,6 +76,11 @@ object SynereoCommanStylesCSS {
         color(c"#69A5BF")
         )
     )
+    val dropDownLIHeading = style(
+      fontSize(1.7.em),
+      marginBottom(5.%%),
+      display.inlineBlock
+    )
     val userNameNavBar = style(
       fontSize(1.5.em),
       color(c"#69A5BF"),
@@ -68,8 +97,23 @@ object SynereoCommanStylesCSS {
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
     )
+    val marginRightZero = style(
+      marginRight.`0`.important
+    )
+    val marginLeftZero = style(
+      marginLeft.`0`.important
+    )
+    val marginLeftTwentyFive = style(
+      marginLeft(22.px)
+    )
+    val marginLeftFifteen = style(
+      marginLeft(8.px)
+    )
     val paddingRightZero = style(
       paddingRight(0.px).important
+    )
+    val dropdownIcon = style(
+      margin(0.px, 25.px)
     )
     val searchFormNavbar = style(
       float.right,
@@ -80,7 +124,10 @@ object SynereoCommanStylesCSS {
       paddingLeft(0.px).important
     )
     val synereoBlueText = style(
-      color(c"#2DBAF1")
+      color(c"#1282B2"),
+      &.hover(
+        color(c"#2EAEE3")
+      )
     )
     val modalHeaderText = style(
       fontSize(1.3.em)
@@ -101,8 +148,14 @@ object SynereoCommanStylesCSS {
     val modalHeaderPadding = style(
       padding(10.px)
     )
+    val errorModalFooter = style(
+      borderTop.`0`.important
+    )
     val modalHeaderMarginBottom = style(
       marginBottom(10.px)
+    )
+    val modalHeaderBorder = style(
+      borderRadius(20.px)
     )
     val modalHeaderFont = style(
       fontSize(1.em),
@@ -114,12 +167,7 @@ object SynereoCommanStylesCSS {
     val footTextAlign = style(
       textAlign.center
     )
-    val modalBorderRadius = style(
-      borderRadius(20.px)
-    )
-    val modalBackgroundColor = style(
-      backgroundColor(c"#96989B")
-    )
+
     val marginLeftRight = style(
       marginRight(-15.px),
       marginLeft(-15.px),
@@ -127,10 +175,10 @@ object SynereoCommanStylesCSS {
       backgroundColor(c"#00767c")
     )
     val modalBodyPadding = style(
-      paddingLeft(15.px),
+      paddingLeft(46.px),
+      paddingRight(46.px),
       paddingBottom(0.px),
-      paddingTop(0.px),
-      paddingRight(15.px)
+      paddingTop(0.px)
     )
 
     val replyMarginTop = style(
@@ -146,7 +194,8 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top(50.%%),
       left(50.%%),
-      zIndex(10000)
+      zIndex(10000),
+      color.grey
     )
     val backgroundColorWhite = style(
       backgroundColor(c"#EEEEEE")
@@ -161,13 +210,18 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val searchBtn = style(
-      backgroundColor.transparent.important,
+      backgroundColor(rgba(115, 99, 99, 0.4)),
       border.none.important,
-      color(c"#95C9DE").important,
-      &.hover.focus.active(
+      borderRadius.`0`.important,
+      paddingTop(3.px),
+      paddingBottom(3.px),
+      paddingLeft.`0`,
+      paddingRight.`0`,
+      color(c"#69a5bf").important,
+      &.hover.focus.active.visited(
         backgroundColor.transparent.important,
         border.none.important,
-        color(c"#95C9DE").important
+        color(c"#69a5bf").important
       )
     )
   }
