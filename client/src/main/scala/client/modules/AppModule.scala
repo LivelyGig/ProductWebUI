@@ -17,6 +17,14 @@ object AppModule {
     val sidebtn: js.Object = "#searchContainer"
     val sidebarIcon : js.Object  = "#sidebarIcon"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+    val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
+    val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
+    $(t2).removeClass("fa fa-chevron-circle-right")
+  //  $(t2).css("opacity","0")
+    $(t2).addClass("fa fa-chevron-circle-left")
+    $(t1).removeClass("fa fa-chevron-circle-left")
+    $(t1).addClass("fa fa-chevron-circle-right")
+    //$(t1).css("opacity","0.4")
   }
   case class Backend(t: BackendScope[Props, Unit]) {
 
@@ -25,7 +33,8 @@ object AppModule {
       val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
       $(t2).removeClass("fa fa-chevron-circle-right")
       $(t2).addClass("fa fa-chevron-circle-left")
-
+   //   $(t2).css("opacity","0")
+   //   $(t1).css("opacity","0.4")
       $(t1).removeClass("fa fa-chevron-circle-left")
       $(t1).addClass("fa fa-chevron-circle-right")
     }

@@ -59,7 +59,7 @@ object DashBoardCSS {
       height(22.px),
       width(22.px),
       verticalAlign.middle,
-      marginTop(-3.px),
+      marginTop(-3.px).important,
       media.maxWidth(1365.px) -(
         height(18.px),
         width(18.px)
@@ -127,8 +127,9 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-      marginRight(5.px),
-      padding(4.px, 9.px)
+    /*  marginRight(5.px),
+      padding(4.px, 9.px),*/
+      margin(1.px ,5.px,1.px,0.px)
     )
     val inputHeightWidth = style(
       height(25.px),
@@ -401,9 +402,15 @@ object DashBoardCSS {
 
     val marginResults = style(
       marginLeft(24.%%),
-      marginTop(0.px),
       marginRight(0.px),
       marginBottom(0.px),
+      position.absolute,
+      media.maxWidth(767.px) -
+        marginTop(1.1.%%),
+      media.minWidth(768.px).maxWidth(1499.px) -
+        marginTop(1.4.%%),
+      media.minWidth(1500.px) -
+        marginTop(1.5.%%),
       media.minWidth(810.px).maxWidth(1238.px) -
         marginLeft(21.%%),
       media.maxWidth(808.px) -
@@ -415,6 +422,7 @@ object DashBoardCSS {
     val DisplayFlex = style (
       display.flex
     )
+
     val paddingRight0px = style(
       paddingRight(0.px)
     )

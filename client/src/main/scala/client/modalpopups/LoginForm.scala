@@ -8,6 +8,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS,CreateAgentCSS}
 import client.models.UserModel
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
@@ -21,6 +22,10 @@ object LoginForm {
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
                    showNewAgentForm: Boolean = false)
+
+  val name : js.Object = "#Name"
+  $(name).focus()
+
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
@@ -68,15 +73,15 @@ object LoginForm {
           <.div(^.className := "row")(
             //left
             <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with LivelyGig credentials"),
                 <.input(^.tpe := "text", bss.formControl,  DashBoardCSS.Style.inputModalMargin,  ^.id := "Name",
-                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
+                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail,^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-               <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth,DashBoardCSS.Style.btnBackground, "Login"),
-
+                <.div(^.className:="text-center")(
+               <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnBackground, "Login")
+                ),
                 <.div(^.paddingTop := "10px")(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-12",DashBoardCSS.Style.padding0px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",

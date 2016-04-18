@@ -5,31 +5,35 @@ import japgolly.scalajs.react.{Callback, ReactComponentB}
 import client.components.Icon
 import client.css.{HeaderCSS, DashBoardCSS}
 import client.modals.{BiddingScreenModal, NewMessage}
+import org.querki.jquery._
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object ContractResults {
+
   // create the React component for Dashboard
   val component = ReactComponentB[Unit]("ContractResults")
     .render_P(ctl =>
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
-            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle, DashBoardCSS.Style.verticalAlignMiddle),
-            <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown", DashBoardCSS.Style.verticalAlignMiddle)(
-              <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
-                <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
+            <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
+            <.div(^.display := "inline-block")(
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+                <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
+                  <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
+                ),
+                <.ul(^.className := "dropdown-menu")(
+                  <.li()(<.a()("Hide")),
+                  <.li()(<.a()("Favorite")),
+                  <.li()(<.a()("Unhide")),
+                  <.li()(<.a()("Unfavorite"))
+                )
               ),
-              <.ul(^.className := "dropdown-menu")(
-                <.li()(<.a()("Hide")),
-                <.li()(<.a()("Favorite")),
-                <.li()(<.a()("Unhide")),
-                <.li()(<.a()("Unfavorite"))
-              )
-            ), //dropdown class
-            <.div(DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+            )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
-
             <.div(^.display := "inline-block")(
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
@@ -54,7 +58,7 @@ object ContractResults {
               <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
             )
           )
-        ),
+        ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer",DashBoardCSS.Style.padding0px)(
             <.ul(^.className := "media-list")(

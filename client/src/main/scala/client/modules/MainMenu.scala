@@ -156,7 +156,7 @@ object LoggedInUser {
                           <.span(^.id := "chatIconBlank", ^.className := "hidden", DashBoardCSS.Style.chatInvisibleIcon, HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(Icon.circleO),
                           <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(
                           ),
-                          <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo, ^.src := model.imgSrc)),
+                          <.span(HeaderCSS.Style.displayInline, "data-toggle".reactAttr := "dropdown")(<.img(HeaderCSS.Style.imgLogo,HeaderCSS.Style.marginTopLoggedIn, ^.src := model.imgSrc)),
                           <.ul(^.id:="navbar",/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                             <.li()(<.a(^.className:="ModalNameDropDown")(model.name)),
                             <.li()(<.a(^.onClick --> availableForChat)("Available for Chat")),
