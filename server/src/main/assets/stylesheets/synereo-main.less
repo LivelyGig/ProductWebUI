@@ -1,22 +1,24 @@
 @import "lib/bootstrap/less/bootstrap.less";
 @import "lib/font-awesome/less/font-awesome.less";
-@import url(https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic);
 
 
 body {
-  font-family: 'Lora', serif;
-  //background-image: url("../images/Login-bg.jpg");
-  background-repeat: no-repeat;
-  height:100vh;
-  overflow-y: hidden;
+ font-family: 'Karla', sans-serif;
+ //background-image: url("../images/Login-bg.jpg");
+ background-repeat: no-repeat;
+ height:100vh;
+ overflow-y: hidden;
+}
+.modal-dialog{
+  margin: 130px auto;
 }
 *:focus {
   outline:none !important
 }
-#SignUpForm label {
-  color:#35b0e2;
-  margin-left: 90px;
-  margin-top: 20px;
+.modal-content {
+  width: 567px;
+  margin: auto;
 }
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
@@ -56,9 +58,9 @@ body {
   }
 }
 .modal-header {
-  background-color:#96989B;
-  color : white;
-  border-bottom:none !important;
+ // background-color:#96989B;
+ color : white;
+ border-bottom:none !important;
 }
 .navbar-fixed-top {
   position: initial;

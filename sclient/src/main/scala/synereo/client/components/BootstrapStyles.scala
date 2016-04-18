@@ -40,7 +40,8 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
   val modal = new Object {
     val modal = styleWrap("modal")
     val fade = styleWrap("fade")
-    val dialog = styleWrap("modal-dialog modal-lg")
+    val dialog = styleWrap("modal-dialog")
+    val dialogLg = styleWrap("modal-dialog modal-lg")
     val content = styleWrap("modal-content")
     val header = styleWrap("modal-header")
     val body = styleWrap("modal-body")

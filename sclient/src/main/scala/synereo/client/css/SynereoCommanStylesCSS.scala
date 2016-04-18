@@ -124,7 +124,10 @@ object SynereoCommanStylesCSS {
       paddingLeft(0.px).important
     )
     val synereoBlueText = style(
-      color(c"#2DBAF1")
+      color(c"#1282B2"),
+      &.hover(
+        color(c"#2EAEE3")
+      )
     )
     val modalHeaderText = style(
       fontSize(1.3.em)
@@ -164,12 +167,7 @@ object SynereoCommanStylesCSS {
     val footTextAlign = style(
       textAlign.center
     )
-    val modalBorderRadius = style(
-      borderRadius(20.px)
-    )
-    val modalBackgroundColor = style(
-      backgroundColor(c"#96989B")
-    )
+
     val marginLeftRight = style(
       marginRight(-15.px),
       marginLeft(-15.px),
@@ -177,10 +175,10 @@ object SynereoCommanStylesCSS {
       backgroundColor(c"#00767c")
     )
     val modalBodyPadding = style(
-      paddingLeft(15.px),
+      paddingLeft(46.px),
+      paddingRight(46.px),
       paddingBottom(0.px),
-      paddingTop(0.px),
-      paddingRight(15.px)
+      paddingTop(0.px)
     )
 
     val replyMarginTop = style(

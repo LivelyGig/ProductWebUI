@@ -4,16 +4,18 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.dtos.{InitializeSessionErrorResponse, CreateUser, InitializeSessionResponse, ApiResponse}
+import shared.dtos._
 import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.SYNEREOMain.Loc
+import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
-import synereo.client.modalpopups.{ServerErrorModal, ErrorModal, RequestInvite}
+import synereo.client.modalpopups.{NewUserForm, ServerErrorModal, ErrorModal, RequestInvite}
 import synereo.client.models.UserModel
-import synereo.client.services.{SYNEREOCircuit, CoreApi}
+import synereo.client.services.{ApiResponseMsg, SYNEREOCircuit, CoreApi}
 import scala.scalajs.js
 import js.{Date, UndefOr}
+
 //import scala.util.parsing.json.JSON
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
@@ -31,7 +33,8 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, isloggedIn: Boolean = false, showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false)
+  case class State(userModel: UserModel, isloggedIn: Boolean = false, showNewUserForm: Boolean = false,
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -100,7 +103,7 @@ object Login {
       val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       //window.alert("please enter valid credentials")
       //      println(loginErrorMessage)
-            println(loginErrorMessage.content.reason)
+      println(loginErrorMessage.content.reason)
       t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
 
     }
@@ -128,6 +131,35 @@ object Login {
       window.location.href = "/#synereodashboard"
     }
 
+    def addNewUserForm(): Callback = {
+      t.modState(s => s.copy(showNewUserForm = true))
+    }
+
+    def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+      //      log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+      println("in add new user methiood")
+      if (addNewUser) {
+        CoreApi.createUser(userModel).onComplete {
+          case Success(response) =>
+            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
+            //            log.debug(s"createUser msg : ${s.msgType}")
+            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+              //              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+            } else {
+              //              log.debug(s"createUser msg : ${s.content}")
+              //              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            }
+          case Failure(s) =>
+            //            log.debug(s"createUserFailure: ${s}")
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
+          // now you need to refresh the UI
+        }
+        t.modState(s => s.copy(showNewUserForm = false))
+      }
+      else {
+        t.modState(s => s.copy(showNewUserForm = false))
+      }
+    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
@@ -150,6 +182,7 @@ object Login {
                           <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
                           <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
                           //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
                           //<.a(^.href := "/#synereodashboard")("Login Here")
                         ),
                         <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
@@ -169,13 +202,15 @@ object Login {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 text-center")(
             <.div(^.className := "col-md-12")(
-              <.a(^.href := "/#signup", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+              //              <.a(^.href := "/#signup", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
+              Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?")
             ),
             //   <.button(^.className := "btn text-center", "",),
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
+            else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
             else
               Seq.empty[ReactElement]
 
