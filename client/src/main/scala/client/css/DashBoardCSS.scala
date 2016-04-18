@@ -40,7 +40,8 @@ object DashBoardCSS {
 
     val dashboardResults2 = style(
       // borderLeft(2.px, solid, c"#005256"),
-      paddingLeft(0.px)
+      paddingLeft(0.px),
+      paddingRight(0.px)
     )
     val gigActionsContainer = style(
       backgroundColor(c"#CCCCFF"),
