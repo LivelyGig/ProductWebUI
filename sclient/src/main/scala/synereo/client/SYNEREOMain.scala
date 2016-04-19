@@ -80,7 +80,7 @@ object SYNEREOMain extends js.JSApp {
             )
           }
         ),
-        <.div(^.className := "col-lg-10")(
+        <.div(^.className := "col-lg-11")(
           <.div(^.className := "navbar-header")(
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
