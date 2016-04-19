@@ -9,11 +9,6 @@ import synereo.client.models.UserModel
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import org.querki.jquery._
-import synereo.client.components.jQuery._
-import scalacss.Defaults._
-import synereo.client.components.Bootstrap.Button
-import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.Bootstrap._
 
 
@@ -90,7 +85,7 @@ object NewUserForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      //      println(state.addNewUser)
+            println(state.addNewUser)
       userModelUpdate = state.userModel
       props.submitHandler(state.userModel, state.addNewUser, state.showTermsOfServicesForm)
     }
@@ -124,8 +119,7 @@ object NewUserForm {
           <.div()(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", ^.value := s.userModel.ConfirmPassword,
               ^.onChange ==> updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password")
-          )
-        ), //main row
+          ),
         <.div(^.className := "row")(
           //          <.div(^.className:="col-md-12")(
           //            <.div()(<.input(^.`type` := "checkbox"), " * I am cool with the",
@@ -138,7 +132,7 @@ object NewUserForm {
         <.div()(
           <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero,SignupCSS.Style.howItWorks)(
             <.div(^.className := "pull-left")(
-              <.div(^.className := "text-left")("creating account for node:", <.span()),
+              <.div(^.className := "text-left")("creating account for node:", <.span(s.userModel.name)),
               <.a(^.href := "#")("How do accounts works accross nodes?")
             ),
             <.div(^.className := "pull-right")(
@@ -148,6 +142,7 @@ object NewUserForm {
           )
         ) ,
         <.div(bss.modal.footer)()
+      )
       )
     }
   }

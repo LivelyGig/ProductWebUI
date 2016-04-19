@@ -1,22 +1,21 @@
 package synereo.client.modules
 
+
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import synereo.client.Handlers.{CreateLabels, LoginUser}
-import synereo.client.SYNEREOMain.Loc
 import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
-import synereo.client.modalpopups.{NewUserForm, ServerErrorModal, ErrorModal, RequestInvite}
-import synereo.client.models.UserModel
+import synereo.client.modalpopups._
+import synereo.client.models.{EmailValidationModel, UserModel}
 import synereo.client.services.{ApiResponseMsg, SYNEREOCircuit, CoreApi}
+import synereo.client.services.CoreApi._
 import scala.scalajs.js
 import js.{Date, UndefOr}
-
-//import scala.util.parsing.json.JSON
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -34,18 +33,17 @@ object Login {
   case class Props()
 
   case class State(userModel: UserModel, isloggedIn: Boolean = false, showNewUserForm: Boolean = false,
-                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false)
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false,showConfirmAccountCreation:Boolean=false,showRegistrationFailed:Boolean=false,
+                   showAccountValidationSuccess:Boolean=false,showAccountValidationFailed:Boolean=false)
 
   class Backend(t: BackendScope[Props, State]) {
 
     def updateEmail(e: ReactEventI) = {
-      //      println("updateEmail = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
     }
 
     def updatePassword(e: ReactEventI) = {
-      //      println("updatePassword = " + e.target.value)
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
@@ -69,7 +67,6 @@ object Login {
           $(loginLoader).addClass("hidden")
           t.modState(s => s.copy(showServerErrorModal = true)).runNow()
       }
-
     }
 
     def validateResponse(response: String): String = {
@@ -85,10 +82,15 @@ object Login {
             case p: Exception =>
               SERVER_ERROR
           }
-
       }
     }
-
+    def registrationFailed(registrationFailed : Boolean = false) : Callback = {
+      if (registrationFailed){
+        t.modState(s => s.copy(showRegistrationFailed = false/*, showLoginForm = true*/))
+      } else {
+        t.modState(s => s.copy(showRegistrationFailed = false, showNewUserForm = true))
+      }
+    }
     def closeServerErrorPopup(): Callback = {
       t.modState(s => s.copy(showServerErrorModal = false))
     }
@@ -136,21 +138,24 @@ object Login {
     }
 
     def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
-      //      log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+         //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+      println("usermodal " + userModel + "addNewUser " + addNewUser)
       println("in add new user methiood")
       if (addNewUser) {
         CoreApi.createUser(userModel).onComplete {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-            //            log.debug(s"createUser msg : ${s.msgType}")
+            println(" In success value s = " + s)
+            //           log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
-              //              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+                           t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               //              log.debug(s"createUser msg : ${s.content}")
-              //              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+                            t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
             //            log.debug(s"createUserFailure: ${s}")
+            println(" In faliure = " + s)
             t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
         }
@@ -159,6 +164,35 @@ object Login {
       else {
         t.modState(s => s.copy(showNewUserForm = false))
       }
+    }
+
+    def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
+      if (confirmAccountCreation) {
+        emailValidation(emailValidationModel).onComplete {
+          case Success(responseStr) =>
+            try {
+              upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
+            //  log.debug(ApiResponseMsg.CreateUserError)
+              t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
+            } catch {
+              case e: Exception  =>
+                t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
+            }
+
+          case Failure(s) =>
+          //  log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
+            t.modState(s => s.copy(showErrorModal = true)).runNow()
+        }
+        t.modState(s => s.copy(showConfirmAccountCreation = false))
+      } else {
+        t.modState(s => s.copy(showConfirmAccountCreation = false))
+      }
+    }
+    def accountValidationSuccess() : Callback = {
+      t.modState(s => s.copy(showAccountValidationSuccess = false/*, showLoginForm = true*/))
+    }
+    def accountValidationFailed() : Callback = {
+      t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
 
     def render(s: State, p: Props) = {
@@ -211,8 +245,11 @@ object Login {
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
-            else
-              Seq.empty[ReactElement]
+            else if(s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
+            else if(s.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(registrationFailed))
+            else if (s.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(accountValidationSuccess))
+            else if (s.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))
+            else Seq.empty[ReactElement]
 
           )
         )
