@@ -118,8 +118,10 @@ object LoginCSS {
     )
     val navLiAStyle = style(
       fontSize(1.1.em),
+      color(c"#FFFFFF"),
+      opacity(0.5),
       & hover(
-        color(c"#35b0e2"),
+        color(c"#FFFFFF"),
         backgroundColor.transparent.important
         )
 
@@ -184,6 +186,29 @@ object LoginCSS {
       fontWeight._700,
       backgroundColor.transparent.important,
       padding(10.px, 20.px)
+    )
+    val checkBoxLoginModal = style(
+      width(25.px),
+      opacity(0.5),
+      marginTop(-2.px),
+      marginRight(2.px)
+    )
+    val loginModalTextStyle = style(
+      fontFamily := "karla",
+      opacity(0.5),
+      color(c"#000"),
+      fontSize(20.px)
+    )
+    val loginModalTextActionContainer = style(
+      marginTop(16.px)
+    )
+    val modalLoginBtn = style(
+      backgroundColor(c"#ff806c"),
+      height(58.px),
+      fontSize(22.px),
+      fontFamily := "karla",
+      float.right,
+      marginTop(74.px)
     )
   }
 

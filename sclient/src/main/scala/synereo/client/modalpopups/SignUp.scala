@@ -36,12 +36,9 @@ object NewUserForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(props: Props): Callback = Callback {
-
-    }
-
     def updateName(e: ReactEventI) = {
       val value = e.target.value
+      println(value)
       t.modState(s => s.copy(userModel = s.userModel.copy(name = value)))
     }
 
@@ -52,6 +49,7 @@ object NewUserForm {
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
+      println(value)
       t.modState(s => s.copy(userModel = s.userModel.copy(ConfirmPassword = value)))
     }
 
@@ -62,19 +60,20 @@ object NewUserForm {
 
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
+      println(value)
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
-    def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
-    }
+//    def toggleBTCWallet(e: ReactEventI) = {
+//      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+//    }
 
     def showTermsOfServices(e: ReactEventI) = {
       addNewUserState = true
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
 
-    def changeImage(e: ReactEventI) = {
+    def changeCheckBox(e: ReactEventI) = {
       println(e.target)
     }
 
@@ -126,7 +125,7 @@ object NewUserForm {
           //              <.button(^.tpe := "button", ^.className := "btn btn-default", "Terms of Service ", ^.onClick ==> showTermsOfServices))
           //          )
           <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-            <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeImage*/), <.span("I am cool with the"),
+            <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
             <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> showTermsOfServices, "Terms of Service "))
         ),
         <.div()(
@@ -146,9 +145,6 @@ object NewUserForm {
       )
     }
   }
-
-  //case class UserModel (email: String = "", password: String = "",ConfirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
-  //                      isLoggedIn: Boolean = false, imgSrc: String = "")
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)

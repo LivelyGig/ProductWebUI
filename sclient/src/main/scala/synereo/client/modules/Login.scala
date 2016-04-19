@@ -32,7 +32,8 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, isloggedIn: Boolean = false, showNewUserForm: Boolean = false,
+ 
+  case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
                    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false,showConfirmAccountCreation:Boolean=false,showRegistrationFailed:Boolean=false,
                    showAccountValidationSuccess:Boolean=false,showAccountValidationFailed:Boolean=false)
 
@@ -52,6 +53,32 @@ object Login {
       e.preventDefault()
       val user = t.state.runNow().userModel
       processLogin(user)
+    }
+
+    def LoginViaModal(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
+      true match {
+        case `login` => processLoginForModal(userModel)
+        case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
+        case `showNewAgentForm` => t.modState(s => s.copy(showLoginForm = false))
+        case _ => t.modState(s => s.copy(showLoginForm = false))
+      }
+    }
+
+    def processLoginForModal(userModel: UserModel): Callback = {
+      $(loginLoader).removeClass("hidden")
+      // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
+      CoreApi.agentLogin(userModel).onComplete {
+        //          case Success(s) =>
+        case Success(responseStr) =>
+          validateResponse(responseStr) match {
+            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
+            case LOGIN_ERROR => processLoginFailed(responseStr)
+            case SERVER_ERROR => processServerError(responseStr)
+          }
+        case Failure(s) =>
+          processServerError(responseStr = "")
+      }
+      t.modState(s => s.copy(showLoginForm = false))
     }
 
     def processLogin(userModel: UserModel): Unit = {
@@ -157,7 +184,7 @@ object Login {
             //            log.debug(s"createUserFailure: ${s}")
             println(" In faliure = " + s)
             t.modState(s => s.copy(showErrorModal = true)).runNow()
-          // now you need to refresh the UI
+
         }
         t.modState(s => s.copy(showNewUserForm = false))
       }
@@ -243,6 +270,7 @@ object Login {
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
+            else if (s.showLoginForm) LoginForm(LoginForm.Props(LoginViaModal))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
             else if(s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
