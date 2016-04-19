@@ -68,7 +68,7 @@ object Bootstrap {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
-                     keyboard: Boolean = true)
+                     keyboard: Boolean = true, addStyles: Seq[StyleA] = Seq())
 
     val OuterRef = Ref("o")
 
@@ -99,11 +99,11 @@ object Bootstrap {
 
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
+        <.div(modalStyle.modal, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
             <.div(modalStyle.dialog,
               <.div(modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
-                <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding,SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
+                <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
                 //              <.div(modalStyle.footer, P.footer(hide))
               )

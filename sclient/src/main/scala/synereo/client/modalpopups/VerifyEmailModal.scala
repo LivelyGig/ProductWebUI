@@ -19,7 +19,9 @@ import synereo.client.components.Bootstrap._
   */
 object VerifyEmailModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
+
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -28,10 +30,12 @@ object VerifyEmailModal {
       // mark it as NOT cancelled (which is the default)
       t.modState(s => s.copy(accountValidationFailed = true))
     }
+
     def hide = {
       // instruct Bootstrap to hide the modal
       jQuery(t.getDOMNode()).modal("hide")
     }
+
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
       val value = e.target.value
@@ -45,26 +49,33 @@ object VerifyEmailModal {
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Verify Email"
+      val headerText = "Verify email"
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span()(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),
           <.div(SignupCSS.Style.signUpHeading)(headerText)),
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p),
+        addStyles = Seq(SignupCSS.Style.signUpModalStyle)
+      ),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row")(
-            <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
                 // <.div(DashBoardCSS.Style.modalHeaderFont)("Confirm Account Creation"),
-                <.h5("Your account has been created!"),
-                <.h5("We have sent a verification code to your email address, Please check your email and copy the code, or follow the link."),
-                <.div()(
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken)
+                <.div(SignupCSS.Style.verificationMessageContainer)(
+                  <.h4("Your account has been created!"),
+                  <.h4("We have sent a verification code to your email address, Please check your email and copy the code, or follow the link.")
                 ),
-              //  <.input(^.tpe := "text", bss.formControl,^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
-               // <.button(^.tpe := "submit",^.className:="btn", "Confirm")
+                <.div()(
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
+                    ^.placeholder := "Verification code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken),
+                  <.div(SignupCSS.Style.verificationMessageText,"Verification code has been sent to your email address")
+
+                ),
+                //  <.input(^.tpe := "text", bss.formControl,^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
+                // <.button(^.tpe := "submit",^.className:="btn", "Confirm")
                 <.div(^.className := "pull-right")(
-                  <.button(^.tpe := "submit", SignupCSS.Style.SignUpBtn, ^.className := "btn", "Confirm")
+                  <.button(^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", "Verify")
                 )
               )
               ,
@@ -75,10 +86,11 @@ object VerifyEmailModal {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
     .initialState_P(p => State(new EmailValidationModel("")))
     .renderBackend[Backend]
-    .componentDidUpdate(scope => Callback{
+    .componentDidUpdate(scope => Callback {
       if (scope.currentState.accountValidationFailed) {
         scope.$.backend.hide
       }

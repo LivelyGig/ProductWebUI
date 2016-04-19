@@ -19,7 +19,23 @@ object SignupCSS {
       opacity(0.65)
     )
     val howItWorks = style(
-      margin(57.px, 0.px)
+      margin(57.px, 0.px),
+      color(c"#000"),
+      fontSize(12.px)
+    )
+    val verificationMessageText = style(
+      fontSize(12.px),
+      marginTop(-15 px),
+      marginBottom(25 px)
+    )
+    val verificationMessageContainer = style(
+      marginBottom(30.px)
+    )
+    val signUpuserNameContainer = style(
+      opacity(0.5)
+    )
+    val howAccountsWorkLink = style(
+
     )
     val termsAndCondBtn = style(
       color(c"#000"),
@@ -32,14 +48,22 @@ object SignupCSS {
       backgroundColor(c"#FF806C"),
       height(58.px),
       fontSize(22.px),
-      fontFamily := "karla"
-//      margin(48.px, 0.px)
+      fontFamily :=! "karla"
+    )
+    val verifyBtn = style(
+      backgroundColor(c"#FF806C"),
+      height(48.px),
+      width(110.px),
+      fontSize(22.px),
+      fontFamily :=! "karla"
     )
     val signUpHeading = style(
       color(c"#000"),
       fontSize(64.px),
       fontFamily := "karla",
-      opacity(0.65)
+      opacity(0.65),
+      textAlign.center,
+      marginBottom(30.px)
     )
     val checkBoxTermsAndCond = style(
       width(20.px),
@@ -54,6 +78,9 @@ object SignupCSS {
       opacity(0.5),
       padding.`0`.important,
       fontSize(0.9 em)
+    )
+    val signUpModalStyle = style(
+      marginTop(100.px)
     )
     val inputStyleSignUpForm = style(
       fontSize(25.px),

@@ -16,12 +16,23 @@ object LoginCSS {
       backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
       marginTop(-55.px)
     )
+    val loginScreenBgImage = style(
+      margin.auto.important,
+      maxHeight(850.px),
+      minWidth(600.px)
+    )
+    val loginModalStyle = style(
+      marginTop(200.px)
+    )
     val loginDilog = style(
       width(50.%%),
       minHeight(500.px),
       marginLeft(auto),
       marginRight(auto),
       marginTop(50.px)
+    )
+    val nodeDecorationImageBackground = style(
+      backgroundImage := "url(\"./assets/synereo-images/login_nodeDecoration.png\")"
     )
     val formPadding = style(
       padding(4.%%)
@@ -134,6 +145,9 @@ object LoginCSS {
       marginRight(10.px)
     )
     val dontHaveAccount = style(
+      position.absolute,
+      right(43.%%),
+      bottom(12.%%),
       fontSize(22.px),
       display.inlineBlock,
       marginBottom(30.px),
@@ -151,9 +165,12 @@ object LoginCSS {
         backgroundColor.transparent.important
       ),
       border.none.important,
-      fontFamily := "karla"
+      fontFamily :=! "karla"
     )
     val requestInviteBtn = style(
+      position.absolute,
+      right(46.%%),
+      bottom(9.%%),
       backgroundColor.transparent,
       color(c"#D2E1E3"),
       border(0.2.px, solid, c"#D2E1E3"),
@@ -194,7 +211,7 @@ object LoginCSS {
       marginRight(2.px)
     )
     val loginModalTextStyle = style(
-      fontFamily := "karla",
+      fontFamily :=! "karla",
       opacity(0.5),
       color(c"#000"),
       fontSize(20.px)
@@ -206,7 +223,7 @@ object LoginCSS {
       backgroundColor(c"#ff806c"),
       height(58.px),
       fontSize(22.px),
-      fontFamily := "karla",
+      fontFamily :=! "karla",
       float.right,
       marginTop(74.px)
     )
