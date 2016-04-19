@@ -104,7 +104,7 @@ object PostNewMessage {
       println(upickle.default.write(Map[Label, String]().empty))*/
       val targetConnection = upickle.default.read[Connection](connectionString)
       val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"",upickle.default.write(value),uid)))).onComplete{
+      CoreApi.evalSubscribeRequest(SubscribeRequest(CoreApi.MESSAGES_SESSION_URI, Expression(CoreApi.INSERT_CONTENT, ExpressionContent(Seq(Utils.GetSelfConnnection(CoreApi.MESSAGES_SESSION_URI), targetConnection),"[1111]",upickle.default.write(value),uid)))).onComplete{
         case Success(response) => {println("success")
            println("Responce = "+response)
 //          t.modState(s => s.copy(postNewMessage = true))
