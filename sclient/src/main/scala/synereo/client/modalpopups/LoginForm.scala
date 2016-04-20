@@ -73,6 +73,7 @@ object LoginForm {
         closed = () => formClosed(s, p),
         addStyles = Seq(LoginCSS.Style.loginModalStyle)),
         <.form(^.onSubmit ==> submitForm)(
+
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(
@@ -80,25 +81,29 @@ object LoginForm {
                   <.div(^.className:="emailVerifiedContainer")(<.h5("Email address verified."),<.h5("Please login with your credentails "))
                 }
                 else
-                            <.div(),
+                  <.div(),
 
-                <.div(SignupCSS.Style.signUpHeading)(headerText),
+                <.div(SynereoCommanStylesCSS.Style.loginContainer)(
+                 <.div(SignupCSS.Style.signUpHeading)(headerText),
                 <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name",
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                 <.div(^.className := "row")(
-                  <.div(^.className := "col-md-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-                   // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-                    <.input(^.`type`:="checkbox", ^.id:="KeepMeLoggedIn"),<.label(^.`for`:="KeepMeLoggedIn",LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
+                  <.div(^.className := "col-md-6 text-left", LoginCSS.Style.loginModalTextActionContainer,SignupCSS.Style.termsAndServicesContainer)(
+                    <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
+                    <.span("Keep me logged in", LoginCSS.Style.loginModalTextStyle)
+//                    <.div( LoginCSS.Style.loginModalTextActionContainer, SignupCSS.Style.termsAndServicesContainer)(
+//                      <.input(^.`type`:="checkbox", ^.id:="KeepMeLoggedIn"),<.label(^.`for`:="KeepMeLoggedIn")("Keep me logged in")   )
                   ),
-                  <.div(^.className := "col-md-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
+                  <.div(^.className := "col-md-6 text-right", LoginCSS.Style.loginModalTextActionContainer,SignupCSS.Style.termsAndServicesContainer)(
                     <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
                   )
                 ),
                 <.div(^.className := "text-center")(
                   <.button(^.tpe := "submit", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
                 )
+              )
               )
             )
           )

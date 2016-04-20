@@ -241,8 +241,18 @@ object SynereoCommanStylesCSS {
 //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
 
+val loginContainer = style (
+  backgroundColor.white,
+  marginTop(-30.px),
+  paddingTop(27.px),
+  marginRight(-46.px),
+  paddingRight(46.px),
+  marginLeft(-46.px),
+  paddingLeft(46.px),
+  borderTopLeftRadius(6.px),
+  borderTopRightRadius(6.px)
 
-
+  )
   }
 
 }
