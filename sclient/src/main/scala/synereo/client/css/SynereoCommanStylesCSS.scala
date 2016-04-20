@@ -227,17 +227,22 @@ object SynereoCommanStylesCSS {
     )
 
     val emailVerifiedContainer = style (
-      marginTop(-34.%%),
-      backgroundColor(c"#9554B0"),
-      marginLeft(-46.px),
-      marginRight(-46.px),
-      borderTopLeftRadius(6.px),
-      borderTopRightRadius(6.px),
-      textAlign.left,
-      padding(10.px),
-      color(white),
-      marginBottom(18.%%)
+//      marginTop(-10.%%),
+//      backgroundColor(c"#9554B0"),
+//      marginLeft(-46.px),
+//      marginRight(-46.px),
+//      borderTopLeftRadius(6.px),
+//      borderTopRightRadius(6.px),
+//      textAlign.left,
+//      padding(10.px),
+//      color(white),
+//      marginBottom(5.%%),
+//      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
+//     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
+
+
+
   }
 
 }

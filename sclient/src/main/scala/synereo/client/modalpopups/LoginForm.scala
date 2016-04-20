@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
-import synereo.client.css.{SignupCSS, LoginCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
 import synereo.client.models.UserModel
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -68,27 +68,29 @@ object LoginForm {
       Modal(Modal.Props(
         // header contains a cancel button (X)
        
-        header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),<.div(SignupCSS.Style.signUpHeading)(headerText)), /*<.div()(headerText)),*/
+        header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),<.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
   
         closed = () => formClosed(s, p),
         addStyles = Seq(LoginCSS.Style.loginModalStyle)),
         <.form(^.onSubmit ==> submitForm)(
-//          if(p.showLoginContent) {
-//            <.div()(<.h5("Email address verified."),<.h5("Please login with your credentails "))
-//          }
-//          else
-//            <.div(),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(
+                if(p.showLoginContent) {
+                  <.div(^.className:="emailVerifiedContainer")(<.h5("Email address verified."),<.h5("Please login with your credentails "))
+                }
+                else
+                            <.div(),
+
+                <.div(SignupCSS.Style.signUpHeading)(headerText),
                 <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name",
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password"
                   , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-                    <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-                    <.span("Keep me logged in", LoginCSS.Style.loginModalTextStyle)
+                   // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
+                    <.input(^.`type`:="checkbox", ^.id:="KeepMeLoggedIn"),<.label(^.`for`:="KeepMeLoggedIn",LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
                   ),
                   <.div(^.className := "col-md-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
                     <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")

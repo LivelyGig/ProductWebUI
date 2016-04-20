@@ -212,7 +212,6 @@ object LoginCSS {
     )
     val loginModalTextStyle = style(
       fontFamily :=! "karla",
-      opacity(0.5),
       color(c"#000"),
       fontSize(20.px)
     )
