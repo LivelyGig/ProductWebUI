@@ -61,7 +61,7 @@ object InviteFriend {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewRequestForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), ""),
-        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage, "New Invite"))
+        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage))
         else
           Seq.empty[ReactElement]
       )

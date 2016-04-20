@@ -91,17 +91,24 @@ object SynereoCommanStylesCSS {
       color(c"#8CBFD7 "),
       padding(5.px, 20.px)
     )
+    val userActionsMenu = style(
+      width.auto.important,
+      minHeight.auto.important,
+      right.`0`.important
+    )
     val imgLogo = style(
       /*      borderRadius(50.%%),
             width(40.px),
             height(40.px),
             media.maxWidth(820.px)-*/
       marginTop(34.px),
-      padding(5.px)
+      padding(5.px),
+      maxHeight(48.px)
     )
     val imgLogoOtherLoc = style(
       marginTop(8.px),
-      padding(5.px)
+      padding(5.px),
+      maxHeight(48.px)
     )
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
@@ -234,21 +241,20 @@ object SynereoCommanStylesCSS {
       )
     )
 
-    val emailVerifiedContainer = style (
-//      marginTop(-10.%%),
-//      backgroundColor(c"#9554B0"),
-//      marginLeft(-46.px),
-//      marginRight(-46.px),
-//      borderTopLeftRadius(6.px),
-//      borderTopRightRadius(6.px),
-//      textAlign.left,
-//      padding(10.px),
-//      color(white),
-//      marginBottom(5.%%),
-//      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
-//     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
+    val emailVerifiedContainer = style(
+      //      marginTop(-10.%%),
+      //      backgroundColor(c"#9554B0"),
+      //      marginLeft(-46.px),
+      //      marginRight(-46.px),
+      //      borderTopLeftRadius(6.px),
+      //      borderTopRightRadius(6.px),
+      //      textAlign.left,
+      //      padding(10.px),
+      //      color(white),
+      //      marginBottom(5.%%),
+      //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
+      //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
-
 
 
   }

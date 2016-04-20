@@ -6,6 +6,7 @@ import scalacss.Defaults._
   * Created by Mandar  on 3/11/2016.
   */
 object LoginCSS {
+  val zero: Int = 0
 
   object Style extends StyleSheet.Inline {
 
@@ -28,7 +29,7 @@ object LoginCSS {
       border(1.px, solid)
     )
     val loginModalStyle = style(
-      marginTop(200.px),
+      marginTop(120.px),
       media.maxWidth(1400.px) -
         marginTop(50.px)
     )
@@ -152,37 +153,104 @@ object LoginCSS {
     val dontHaveAccount = style(
       position.absolute,
       right(43.%%),
-      bottom(12.%%),
-      fontSize(22.px),
+      bottom(10.%%),
+      fontSize(20.px),
       display.inlineBlock,
-      marginBottom(30.px),
-      color(c"#1282B2"),
+      marginBottom(28.px),
+      color(c"#fff"),
       backgroundColor.transparent.important,
       outline.none.important,
       &.hover(
-        color(c"#1282B2"),
+        color(c"#fff"),
         outline.none.important,
         backgroundColor.transparent.important
       ),
       &.focus(
-        color(c"#1282B2"),
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      border.none.important,
+      fontFamily :=! "karla",
+      opacity(0.4)
+    )
+    val loginModalFooter = style(
+      textAlign.center,
+      marginLeft(-46 px),
+      marginRight(-46 px),
+      backgroundColor(rgb(0, 0, 0)),
+      padding.`0`.important
+    )
+    val dontHaveAccountBtnLoginModal = style(
+      //      position.absolute,
+      //      right(43.%%),
+      //      bottom(10.%%),
+      display.block,
+      marginLeft.auto,
+      marginRight.auto,
+      opacity(0.6),
+      marginTop(38.px),
+      color(c"#fff"),
+      fontSize(20.px),
+      //      display.inlineBlock,
+      //      marginBottom(28.px),
+      color(c"#fff"),
+      backgroundColor.transparent.important,
+      outline.none.important,
+
+      &.hover(
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      )
+      ,
+      &.focus(
+        color(c"#fff"),
         outline.none.important,
         backgroundColor.transparent.important
       ),
       border.none.important,
       fontFamily :=! "karla"
     )
+
     val requestInviteBtn = style(
       position.absolute,
-      right(46.%%),
-      bottom(9.%%),
+      right(45.%%),
+      bottom(7.%%),
       backgroundColor.transparent,
-      color(c"#D2E1E3"),
+      color(c"#fff"),
+      opacity(0.7),
+      height(48.px),
       border(0.2.px, solid, c"#D2E1E3"),
-      fontSize(18.px),
+      fontSize(20.px),
       padding(10.px, 15.px),
       &.hover(
         color(c"#D2E1E3"),
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#D2E1E3"),
+        backgroundColor.transparent.important
+      )
+    )
+    val requestInviteBtnLoginModal = style(
+      //      position.absolute,
+      //      right(45.%%),
+      //      bottom(7.%%),
+      backgroundColor.transparent,
+      color(c"#fff"),
+      opacity(0.7),
+      height(48.px),
+      marginTop(28.px),
+      border(0.2.px, solid, c"#D2E1E3"),
+      fontSize(20.px),
+      padding(10.px, 15.px),
+      &.hover(
+        color(c"#fff"),
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#fff"),
         backgroundColor.transparent.important
       )
     )
@@ -227,7 +295,8 @@ object LoginCSS {
       fontSize(22.px),
       fontFamily :=! "karla",
       float.right,
-      marginTop(74.px)
+      marginTop(74.px),
+      marginBottom(40.px)
     )
   }
 

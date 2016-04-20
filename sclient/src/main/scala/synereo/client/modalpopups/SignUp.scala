@@ -21,13 +21,14 @@ object NewUserForm {
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean) => Callback)
 
-  case class State(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false)
+  case class State(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false, showLoginForm: Boolean = true)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
       // instruct Bootstrap to hide the modal
       addNewUserState = false
       userModelUpdate = new UserModel("", "", "", "", "", false, false, "")
+      t.modState(s=>s.copy(showLoginForm = true))
       jQuery(t.getDOMNode()).modal("hide")
     }
 
@@ -64,9 +65,9 @@ object NewUserForm {
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
-//    def toggleBTCWallet(e: ReactEventI) = {
-//      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
-//    }
+    //    def toggleBTCWallet(e: ReactEventI) = {
+    //      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+    //    }
 
     def showTermsOfServices(e: ReactEventI) = {
       addNewUserState = true
@@ -84,7 +85,7 @@ object NewUserForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-            println(state.addNewUser)
+      println(state.addNewUser)
       userModelUpdate = state.userModel
       props.submitHandler(state.userModel, state.addNewUser, state.showTermsOfServicesForm)
     }
@@ -93,7 +94,7 @@ object NewUserForm {
       val headerText = "Sign up"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span()(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hideModal, Icon.close),
+        header = hide => <.span()(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
           <.div(SignupCSS.Style.signUpHeading)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p),
@@ -121,33 +122,34 @@ object NewUserForm {
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", ^.value := s.userModel.ConfirmPassword,
               ^.onChange ==> updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password")
           ),
-        <.div(^.className := "row")(
-          //          <.div(^.className:="col-md-12")(
-          //            <.div()(<.input(^.`type` := "checkbox"), " * I am cool with the",
-          //              <.button(^.tpe := "button", ^.className := "btn btn-default", "Terms of Service ", ^.onClick ==> showTermsOfServices))
-          //          )
-          <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-          <.input(^.`type`:="checkbox", ^.id:="IamCoolWithThe"),<.label(^.`for`:="IamCoolWithThe")("I'm cool with the"),
-           // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
-            <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> showTermsOfServices, "Terms of Service "))
-        ),
-        <.div()(
-          <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero,SignupCSS.Style.howItWorks)(
-            <.div(^.className := "pull-left",SignupCSS.Style.signUpuserNameContainer)(
-              <.div(^.className := "text-left")("creating account on node: ", <.span(s.userModel.name)),
-              <.a(^.href := "#",SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
-            ),
-            <.div(^.className := "pull-right")(
-              <.button(^.tpe := "submit", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
+          <.div(^.className := "row")(
+            //          <.div(^.className:="col-md-12")(
+            //            <.div()(<.input(^.`type` := "checkbox"), " * I am cool with the",
+            //              <.button(^.tpe := "button", ^.className := "btn btn-default", "Terms of Service ", ^.onClick ==> showTermsOfServices))
+            //          )
+            <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
+              <.input(^.`type` := "checkbox", ^.id := "IamCoolWithThe"), <.label(^.`for` := "IamCoolWithThe")("I'm cool with the"),
+              // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> showTermsOfServices, "Terms of Service "))
+          ),
+          <.div()(
+            <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
+              <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
+                <.div(^.className := "text-left")("creating account on node: ", <.span(s.userModel.name)),
+                <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
+              ),
+              <.div(^.className := "pull-right")(
+                <.button(^.tpe := "submit", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
+              )
+              //            <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hideModal, "Cancel")
             )
-            //            <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hideModal, "Cancel")
-          )
-        ) ,
-        <.div(bss.modal.footer)()
-      )
+          ),
+          <.div(bss.modal.footer)()
+        )
       )
     }
   }
+
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)

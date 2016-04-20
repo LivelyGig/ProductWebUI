@@ -51,7 +51,7 @@ object RequestInvite {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewRequestForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), "Request invite"),
-        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage, "New Invite"))
+        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage))
         else
           Seq.empty[ReactElement]
       )
@@ -67,7 +67,7 @@ object PostNewInvite {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean) => Callback, header: String)
+  case class Props(submitHandler: (Boolean) => Callback)
 
   case class State(postMessage: Boolean = false)
 
@@ -98,8 +98,6 @@ object PostNewInvite {
     }
 
     def render(s: State, p: Props) = {
-
-      val headerText = p.header
       Modal(Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),

@@ -97,7 +97,7 @@ object Bootstrap {
         plainKey >> e.preventDefaultCB
       }
 
-      def render(P: Props, C: PropsChildren) = {
+      def render(P: Props,C: PropsChildren) = {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(

@@ -30,20 +30,28 @@ object Login {
   val SUCCESS = "SUCCESS"
   val loginLoader: js.Object = "#loginLoader"
 
-  var showLoginContent :Boolean=false
+  var showLoginContent: Boolean = false
 
   case class Props()
 
 
   case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
                    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false)
+                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
 
   class Backend(t: BackendScope[Props, State]) {
 
     def updateEmail(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
+    }
+
+    def closeRequestInvitePopup(postInvite: Boolean): Callback = {
+      true match {
+        case `postInvite` => t.modState(s => s.copy(showLoginForm = true, showNewInviteForm = false))
+        case _ => t.modState(s => s.copy(showLoginForm = true, showNewInviteForm = false))
+      }
+      t.modState(s => s.copy(showNewInviteForm = false, showLoginForm = true))
     }
 
     def updatePassword(e: ReactEventI) = {
@@ -57,12 +65,14 @@ object Login {
       processLogin(user)
     }
 
-    def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
+    def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
+      println(s"showNewUserForm: $showNewUserForm")
       true match {
         case `login` => processLoginForModal(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
-        case `showNewAgentForm` => t.modState(s => s.copy(showLoginForm = false))
-        case _ => t.modState(s => s.copy(showLoginForm = false))
+        case `showNewUserForm` => t.modState(s => s.copy(showLoginForm = false, showNewUserForm = true))
+        case `showNewInviteForm` => t.modState(s => s.copy(showLoginForm = false, showNewInviteForm = true))
+        case _ => t.modState(s => s.copy(showLoginForm = true))
       }
     }
 
@@ -113,8 +123,9 @@ object Login {
           }
       }
     }
-    def registrationFailed(registrationFailed : Boolean = false) : Callback = {
-      if (registrationFailed){
+
+    def registrationFailed(registrationFailed: Boolean = false): Callback = {
+      if (registrationFailed) {
         t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
       } else {
         t.modState(s => s.copy(showRegistrationFailed = false, showNewUserForm = true))
@@ -192,7 +203,7 @@ object Login {
         t.modState(s => s.copy(showNewUserForm = false))
       }
       else {
-        t.modState(s => s.copy(showNewUserForm = false))
+        t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }
 
@@ -203,8 +214,8 @@ object Login {
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
               //  log.debug(ApiResponseMsg.CreateUserError)
-              showLoginContent =true
-              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/showLoginForm = true)).runNow()
+              showLoginContent = true
+              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
             } catch {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
@@ -219,7 +230,8 @@ object Login {
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       }
     }
-    def accountValidationSuccess() : Callback = {
+
+    def accountValidationSuccess(): Callback = {
       t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
     }
 
@@ -270,16 +282,17 @@ object Login {
             <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
           ),
           <.div(
-            Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?"),
-            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
+            //            Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?"),
+            //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
-            else if (s.showLoginForm) LoginForm(LoginForm.Props(Login,showLoginContent))
+            else if (s.showLoginForm) LoginForm(LoginForm.Props(Login, showLoginContent))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
             else if (s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
             else if (s.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             else if (s.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(accountValidationSuccess))
             else if (s.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))
+            else if (s.showNewInviteForm) PostNewInvite(PostNewInvite.Props(closeRequestInvitePopup))
             else Seq.empty[ReactElement]
           )
         )

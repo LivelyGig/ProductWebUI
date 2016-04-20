@@ -25,7 +25,7 @@ import org.querki.jquery._
 /**
   * Created by Mandar on 4/15/2016.
   */
-object Signup {
+object Signup {/*
   var addNewAgentState: Boolean = false
   var userModelUpdate = new UserModel("", "", "", "", "", false, false, "")
 
@@ -74,42 +74,44 @@ object Signup {
       t.modState(s => s.copy(userModel = s.userModel.copy(ConfirmPassword = value)))
     }
 
-    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false): Unit = {
-      //      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
-      if (addNewAgent) {
-        CoreApi.createUser(userModel).onComplete {
-          case Success(response) =>
-            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-            //            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
-              //              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
-            } else {
-              //              log.debug(s"createUser msg : ${s.content}")
-              //              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
-            }
-          case Failure(s) =>
-            //            log.debug(s"createUserFailure: ${s}")
-            //            t.modState(s => s.copy(showErrorModal = true)).runNow()
-            Callback {
-              println("failure")
-            }
-        }
-        //        t.modState(s => s.copy(showNewAgentForm = false))
-      } else if (showTermsOfServicesForm) {
-        //        t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true))
-        Callback {
-
-        }
-      } else {
-        //        t.modState(s => s.copy(showNewAgentForm = false))
-        Callback {
-          println("failure")
-        }
-      }
-    }
+    //
+    //    def addNewAgent(userModel: UserModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false): Unit = {
+    //      //      log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addNewAgent}")
+    //      if (addNewAgent) {
+    //        CoreApi.createUser(userModel).onComplete {
+    //          case Success(response) =>
+    //            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
+    //            //            log.debug(s"createUser msg : ${s.msgType}")
+    //            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+    //              //              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+    //            } else {
+    //              //              log.debug(s"createUser msg : ${s.content}")
+    //              //              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+    //            }
+    //          case Failure(s) =>
+    //            //            log.debug(s"createUserFailure: ${s}")
+    //            //            t.modState(s => s.copy(showErrorModal = true)).runNow()
+    //            Callback {
+    //              println("failure")
+    //            }
+    //        }
+    //        //        t.modState(s => s.copy(showNewAgentForm = false))
+    //      } else if (showTermsOfServicesForm) {
+    //        //        t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true))
+    //        Callback {
+    //
+    //        }
+    //      } else {
+    //        //        t.modState(s => s.copy(showNewAgentForm = false))
+    //        Callback {
+    //          println("failure")
+    //        }
+    //      }
+    //    }
 
 
     def render(s: State, p: Props) = {
+      <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.h1(^.className := "text-center", SignupCSS.Style.signUpHeading)("Sign Up For Synereo")
@@ -185,5 +187,5 @@ object Signup {
     .renderBackend[Backend]
     .build
 
-  def apply(props: Props) = component(props)
+  def apply(props: Props) = component(props)*/
 }

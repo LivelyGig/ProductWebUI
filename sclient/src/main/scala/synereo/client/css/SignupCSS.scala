@@ -63,7 +63,8 @@ object SignupCSS {
       fontFamily := "karla",
       opacity(0.65),
       textAlign.center,
-      marginBottom(30.px)
+      marginBottom(30.px),
+      marginTop(20.px)
     )
     val checkBoxTermsAndCond = style(
       width(20.px),

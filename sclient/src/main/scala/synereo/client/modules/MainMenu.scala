@@ -89,7 +89,8 @@ object MainMenu {
               ),
               <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/)(
                 <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
-                <.ul(^.className := "dropdown-menu")(
+                <.div(^.className := "dropdown-arrow-small"),
+                <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                   <.li(props.ctl.link(MarketPlaceFullLOC)("MarketPlace")),
                   <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
                 )
@@ -99,7 +100,7 @@ object MainMenu {
               )
             )
           } else {
-            <.ul(^.className := "nav nav-pills",SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
+            <.ul(^.className := "nav nav-pills", SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
               <.li(
                 <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                   //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),

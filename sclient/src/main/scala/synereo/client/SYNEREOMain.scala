@@ -53,12 +53,12 @@ object SYNEREOMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#synereologin", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
+      | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#synereodashboard", SynereoDashboardLoc) ~> renderR(ctl => Dashboard(ctl))
       | staticRoute("#synereofullblogpost", SynereoBlogPostFullLOC) ~> renderR(ctl => BlogPostFull(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
-      | staticRoute("#signup", SignupLOC) ~> renderR(ctl => Signup(Signup.Props()))
+//      | staticRoute("#signup", SignupLOC) ~> renderR(ctl => Signup(Signup.Props()))
       | staticRoute("#marketplacefull", MarketPlaceFullLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
       ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -86,8 +86,8 @@ object SYNEREOMain extends js.JSApp {
               <.span(^.color := "white")(Icon.thList)
             ),
 
-            c.link(SynereoLoc)(^.className := "navbar-header", <.img(if(r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc
-              , ^.src := "./assets/synereo-images/Synereo-logo-name.png"))
+            c.link(SynereoDashboardLoc)(^.className := "navbar-header", <.img(if(r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc
+              , ^.src := "./assets/synereo-images/Synereo_Logo_White.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
