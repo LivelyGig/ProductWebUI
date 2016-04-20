@@ -86,7 +86,8 @@ object SYNEREOMain extends js.JSApp {
               <.span(^.color := "white")(Icon.thList)
             ),
 
-            c.link(SynereoLoc)(^.className := "navbar-header", <.img(SynereoCommanStylesCSS.Style.imgLogo, ^.src := "./assets/synereo-images/Synereo-logo-name.png"))
+            c.link(SynereoLoc)(^.className := "navbar-header", <.img(if(r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc
+              , ^.src := "./assets/synereo-images/Synereo-logo-name.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

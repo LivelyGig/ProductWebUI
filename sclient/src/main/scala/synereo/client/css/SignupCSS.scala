@@ -26,7 +26,7 @@ object SignupCSS {
     val verificationMessageText = style(
       fontSize(12.px),
       marginTop(-15 px),
-      marginBottom(25 px)
+      marginBottom(25.px)
     )
     val verificationMessageContainer = style(
       marginBottom(30.px)
@@ -80,7 +80,9 @@ object SignupCSS {
       fontSize(0.9 em)
     )
     val signUpModalStyle = style(
-      marginTop(100.px)
+      marginTop(100.px),
+      media.maxWidth(1367.px)-
+        marginTop(1.px)
     )
     val inputStyleSignUpForm = style(
       fontSize(25.px),

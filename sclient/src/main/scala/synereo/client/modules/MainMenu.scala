@@ -98,14 +98,14 @@ object MainMenu {
               )
             )
           } else {
-            <.ul(^.className := "nav nav-pills")(
+            <.ul(^.className := "nav nav-pills",SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
               <.li(
                 <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                   //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
                   "WHAT IS SYNEREO?"
                 )
               ),
-              <.li(^.className := "")(
+              <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
                 <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                   //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
                   <.span("WATCH THE VIDEO")

@@ -29,6 +29,10 @@ object SynereoCommanStylesCSS {
     val mainMenuNavbar = style(
       paddingTop(6.px)
     )
+    val nonLoggedInMenu = style(
+      paddingRight(15.px),
+      paddingTop(28.px)
+    )
     val dropdownMenu = style(
       padding(40.px, 20.px)
     )
@@ -91,6 +95,10 @@ object SynereoCommanStylesCSS {
             width(40.px),
             height(40.px),
             media.maxWidth(820.px)-*/
+      marginTop(34.px),
+      padding(5.px)
+    )
+    val imgLogoOtherLoc = style(
       marginTop(8.px),
       padding(5.px)
     )

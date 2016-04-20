@@ -106,36 +106,13 @@ object PostNewInvite {
         // this is called after the modal has been hidden (animation is completed)
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          /*   <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-               <.div(DashBoardCSS.Style.marginTop10px)(
-               ),
-               <.div(^.className:="row")(
-                 <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
-               ),
-               <.div()(
-                 <.input(^.`type` := "text",ProjectCSS.Style.textareaWidth)
-               ),
-               <.div()(
-                 <.textarea(^.rows:= 6,^.placeholder:="Subject",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop )
-               ),
-               <.div()(
-                 <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",ProjectCSS.Style.textareaWidth,DashBoardCSS.Style.replyMarginTop )
-               )
-             ),
-             <.div()(
-               <.div(DashBoardCSS.Style.modalHeaderPadding,DashBoardCSS.Style.footTextAlign)(
-                 <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
-                 <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-               )
-             ),
-             <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()*/
           <.div(^.className := "row",LoginCSS.Style.requestInviteModalStyle)(
             <.div(^.className := "col-md-12")(
-              <.div(LoginCSS.Style.modalText)(
+              <.div(LoginCSS.Style.requestInviteModalText)(
                 "Invites aren't quite ready, however we're eager for you to join us on this journey!"
               ),
               <.div()(
-                <.input(^.`type` := "text", LoginCSS.Style.textareaModal, ^.placeholder := "you@email.com")
+                <.input(^.`type` := "text",^.className:="form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
               ),
               <.div()(
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", LoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")
