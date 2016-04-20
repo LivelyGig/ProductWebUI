@@ -1,7 +1,6 @@
 package synereo.client.modalpopups
 
 
-
 import synereo.client.components.{Icon, GlobalStyles}
 import synereo.client.css.SignupCSS
 import synereo.client.models.EmailValidationModel
@@ -21,16 +20,19 @@ import synereo.client.components.Bootstrap._
 object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (Boolean) => Callback)
-  case class State(registrationFailed : Boolean = false)
+
+  case class State(registrationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
-    def hide = Callback{
+    def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
-    def login(): Callback  = {
-      t.modState(s=>s.copy(registrationFailed = true))
+
+    def login(): Callback = {
+      t.modState(s => s.copy(registrationFailed = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
@@ -44,14 +46,14 @@ object RegistrationFailed {
         // header contains a cancel button (X)
         header = hide => <.span(<.div()(headerText)),
 
-        closed = () => modalClosed(s, p)),
+        closed = () => modalClosed(s, p), "static", true, addStyles = (Seq(SignupCSS.Style.signUpModalStyle))),
 
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className:="row")(
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
               <.div()(
-                <.div()("This user already exists. Please try logging in!" ),
-                  <.div()( <.button(^.tpe := "button",^.className:="btn",^.onClick-->hide )("Try again"), <.button(^.tpe := "button",^.className:="btn btn-default",  ^.onClick-->login )("Login"))
+                <.div()("This user already exists. Please try logging in!"),
+                <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hide)("Try again"), <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> login)("Login"))
               )
             )
           )
@@ -60,10 +62,11 @@ object RegistrationFailed {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("RegistrationFailed")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope => Callback{
+    .componentDidUpdate(scope => Callback {
       if (scope.currentState.registrationFailed) {
         scope.$.backend.hide
       }

@@ -4,7 +4,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS}
+import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.models.UserModel
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
@@ -96,7 +96,9 @@ object NewUserForm {
         header = hide => <.span()(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hideModal, Icon.close),
           <.div(SignupCSS.Style.signUpHeading)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p),
+        addStyles = Seq(SignupCSS.Style.signUpModalStyle)
+      ),
         <.form(^.onSubmit ==> submitForm)(
           <.div()(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.userModel.name,
@@ -131,9 +133,9 @@ object NewUserForm {
         ),
         <.div()(
           <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero,SignupCSS.Style.howItWorks)(
-            <.div(^.className := "pull-left")(
-              <.div(^.className := "text-left")("Creating account for node:", <.span(s.userModel.name)),
-              <.a(^.href := "#")("How do accounts works accross nodes?")
+            <.div(^.className := "pull-left",SignupCSS.Style.signUpuserNameContainer)(
+              <.div(^.className := "text-left")("creating account on node: ", <.span(s.userModel.name)),
+              <.a(^.href := "#",SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
             ),
             <.div(^.className := "pull-right")(
               <.button(^.tpe := "submit", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")

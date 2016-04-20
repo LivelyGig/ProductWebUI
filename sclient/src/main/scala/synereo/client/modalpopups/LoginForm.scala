@@ -8,6 +8,7 @@ import synereo.client.components._
 import synereo.client.css.{SignupCSS, LoginCSS}
 import synereo.client.models.UserModel
 import scala.scalajs.js
+import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
@@ -18,6 +19,7 @@ import org.querki.jquery._
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
+ 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback , showLoginContent: Boolean)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
@@ -65,8 +67,11 @@ object LoginForm {
       val headerText = "Log In"
       Modal(Modal.Props(
         // header contains a cancel button (X)
+       
         header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),<.div(SignupCSS.Style.signUpHeading)(headerText)), /*<.div()(headerText)),*/
-        closed = () => formClosed(s, p)),
+  
+        closed = () => formClosed(s, p),
+        addStyles = Seq(LoginCSS.Style.loginModalStyle)),
         <.form(^.onSubmit ==> submitForm)(
 //          if(p.showLoginContent) {
 //            <.div()(<.h5("Email address verified."),<.h5("Please login with your credentails "))

@@ -34,10 +34,10 @@ object Login {
 
   case class Props()
 
- 
+
   case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
-                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false,showConfirmAccountCreation:Boolean=false,showRegistrationFailed:Boolean=false,
-                   showAccountValidationSuccess:Boolean=false,showAccountValidationFailed:Boolean=false)
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
+                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -57,7 +57,7 @@ object Login {
       processLogin(user)
     }
 
-    def LoginViaModal(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
+    def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
       true match {
         case `login` => processLoginForModal(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
@@ -120,6 +120,7 @@ object Login {
         t.modState(s => s.copy(showRegistrationFailed = false, showNewUserForm = true))
       }
     }
+
     def closeServerErrorPopup(): Callback = {
       t.modState(s => s.copy(showServerErrorModal = false))
     }
@@ -167,7 +168,7 @@ object Login {
     }
 
     def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
-         //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+      //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
       println("usermodal " + userModel + "addNewUser " + addNewUser)
       println("in add new user methiood")
       if (addNewUser) {
@@ -177,10 +178,10 @@ object Login {
             println(" In success value s = " + s)
             //           log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
-                           t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               //              log.debug(s"createUser msg : ${s.content}")
-                            t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
             //            log.debug(s"createUserFailure: ${s}")
@@ -195,22 +196,22 @@ object Login {
       }
     }
 
-    def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false) : Callback = {
+    def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false): Callback = {
       if (confirmAccountCreation) {
         emailValidation(emailValidationModel).onComplete {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-            //  log.debug(ApiResponseMsg.CreateUserError)
+              //  log.debug(ApiResponseMsg.CreateUserError)
               showLoginContent =true
               t.modState(s => s.copy(/*showAccountValidationSuccess = true*/showLoginForm = true)).runNow()
             } catch {
-              case e: Exception  =>
+              case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
             }
 
           case Failure(s) =>
-          //  log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
+            //  log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
@@ -221,63 +222,62 @@ object Login {
     def accountValidationSuccess() : Callback = {
       t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
     }
-    def accountValidationFailed() : Callback = {
+
+    def accountValidationFailed(): Callback = {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
+        //        <.div(^.className := "row")(
+        //          <.div(LoginCSS.Style.loginDilog)(
+        //            <.div(LoginCSS.Style.formPadding)(
+        //              <.div(LoginCSS.Style.loginDilogContainerDiv)(
+        //                <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/synereo-images/Synereo-logo.png"),
+        //                <.div(^.className := "row")(
+        //                  <.div(^.className := "col-md-12")(
+        //                    <.div(LoginCSS.Style.loginFormContainerDiv)(
+        //                      <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("Log in"),
+        //                      <.h3(^.className := "text-center", LoginCSS.Style.textBlue)("Social Self-determination"),
+        //
+        //                      <.form(^.onSubmit ==> loginUser)(
+        //                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+        //                          <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.userModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
+        //                        ),
+        //                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+        //                          <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
+        //                          <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
+        //                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+        //                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
+        //                          //<.a(^.href := "/#synereodashboard")("Login Here")
+        //                        ),
+        //                        <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
+        //                          <.div(LoginCSS.Style.keepMeLoggedIn)(
+        //                            <.input(^.`type` := "radio"), <.span("Keep me logged in", LoginCSS.Style.keepMeLoggedInText)
+        //                          ),
+        //                          <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
+        //                        )
+        //                      )
+        //                    )
+        //                  )
+        //                )
+        //              )
+        //            )
+        //          )
+        //        ),
         <.div(^.className := "row")(
-          <.div(LoginCSS.Style.loginDilog)(
-            <.div(LoginCSS.Style.formPadding)(
-              <.div(LoginCSS.Style.loginDilogContainerDiv)(
-                <.img(LoginCSS.Style.loginFormImg, ^.src := "./assets/synereo-images/Synereo-logo.png"),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12")(
-                    <.div(LoginCSS.Style.loginFormContainerDiv)(
-                      <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("Log in"),
-                      <.h3(^.className := "text-center", LoginCSS.Style.textBlue)("Social Self-determination"),
-
-                      <.form(^.onSubmit ==> loginUser)(
-                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                          <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.userModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
-                        ),
-                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                          <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
-                          <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
-                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
-                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
-                          //<.a(^.href := "/#synereodashboard")("Login Here")
-                        ),
-                        <.div(^.className := "col-md-12", LoginCSS.Style.loginFormFooter)(
-                          <.div(LoginCSS.Style.keepMeLoggedIn)(
-                            <.input(^.`type` := "radio"), <.span("Keep me logged in", LoginCSS.Style.keepMeLoggedInText)
-                          ),
-                          <.a(^.href := "#", "Forgot Your Password?", LoginCSS.Style.forgotMyPassLink)
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        ),
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 text-center")(
-            <.div(^.className := "col-md-12")(
-              //              <.a(^.href := "/#signup", "Dont have an account?", LoginCSS.Style.dontHaveAccount)
-              Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?")
-            ),
-            //   <.button(^.className := "btn text-center", "",),
-            /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
+          <.div(^.className := "col-md-12")(
+            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+          ),
+          <.div(
+            Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccount), "", ""), "Dont have an account?"),
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
-            else if (s.showLoginForm) LoginForm(LoginForm.Props(LoginViaModal,showLoginContent))
+            else if (s.showLoginForm) LoginForm(LoginForm.Props(Login,showLoginContent))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
-            else if(s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
-            else if(s.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(registrationFailed))
+            else if (s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
+            else if (s.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             else if (s.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(accountValidationSuccess))
             else if (s.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))
             else Seq.empty[ReactElement]
