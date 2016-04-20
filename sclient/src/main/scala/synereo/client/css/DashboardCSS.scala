@@ -25,6 +25,12 @@ object DashboardCSS {
       overflowY.scroll.important,
       backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
+    val bodyImg = style (
+      borderImageRepeat.:=(none),
+      overflow.hidden,
+      height(100.vh),
+      backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
+    )
     val profileActionButton = style(
       backgroundColor(c"#1F85B5"),
       position.fixed,

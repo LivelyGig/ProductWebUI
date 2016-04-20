@@ -7,6 +7,12 @@ import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
+
+import scala.scalajs.js
+import scalacss.ScalaCssReact._
+import japgolly.scalajs.react._
+import org.querki.jquery._
+import scala.scalajs.js
 import org.querki.jquery._
 import scalacss.ScalaCssReact._
 
@@ -52,38 +58,38 @@ object Dashboard {
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(MIcon.moreVert),
+                    <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton)(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
                       <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton, SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
+                      <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton,SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(DashboardCSS.Style.postActions)(
                         <.div(^.className := "btn-group")(
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.chatBubble),
-                            <.div("12", SynereoCommanStylesCSS.Style.inlineBlock)
+                           <.div("12", SynereoCommanStylesCSS.Style.inlineBlock)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.share),
-                            <.div("123", SynereoCommanStylesCSS.Style.inlineBlock)
+                           <.div("123", SynereoCommanStylesCSS.Style.inlineBlock)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.add),
-                            <.div("10", SynereoCommanStylesCSS.Style.inlineBlock)
+                           <.div("10", SynereoCommanStylesCSS.Style.inlineBlock)
                           )
                         ),
                         <.div(^.className := "btn-group pull-right")(
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(Icon.minus)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(Icon.heartO)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
                             <.span(Icon.plus)
                           )
                         )
@@ -116,9 +122,7 @@ object Dashboard {
                           <.span(MIcon.chatBubble),
                           <.span(MIcon.share)
                         )
-
                       )
-
                     )
                   )
                 ),
