@@ -18,7 +18,7 @@ import org.querki.jquery._
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback , showLoginContent: Boolean)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
                    showNewAgentForm: Boolean = false)
@@ -65,9 +65,14 @@ object LoginForm {
       val headerText = "Log In"
       Modal(Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(SignupCSS.Style.signUpHeading)(headerText)), /*<.div()(headerText)),*/
+        header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),<.div(SignupCSS.Style.signUpHeading)(headerText)), /*<.div()(headerText)),*/
         closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
+//          if(p.showLoginContent) {
+//            <.div()(<.h5("Email address verified."),<.h5("Please login with your credentails "))
+//          }
+//          else
+//            <.div(),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(

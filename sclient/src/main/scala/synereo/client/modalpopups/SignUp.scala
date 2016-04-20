@@ -125,13 +125,14 @@ object NewUserForm {
           //              <.button(^.tpe := "button", ^.className := "btn btn-default", "Terms of Service ", ^.onClick ==> showTermsOfServices))
           //          )
           <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-            <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
+          <.input(^.`type`:="checkbox", ^.id:="IamCoolWithThe"),<.label(^.`for`:="IamCoolWithThe")("I'm cool with the"),
+           // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
             <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> showTermsOfServices, "Terms of Service "))
         ),
         <.div()(
           <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero,SignupCSS.Style.howItWorks)(
             <.div(^.className := "pull-left")(
-              <.div(^.className := "text-left")("creating account for node:", <.span(s.userModel.name)),
+              <.div(^.className := "text-left")("Creating account for node:", <.span(s.userModel.name)),
               <.a(^.href := "#")("How do accounts works accross nodes?")
             ),
             <.div(^.className := "pull-right")(

@@ -30,6 +30,8 @@ object Login {
   val SUCCESS = "SUCCESS"
   val loginLoader: js.Object = "#loginLoader"
 
+  var showLoginContent :Boolean=false
+
   case class Props()
 
  
@@ -113,7 +115,7 @@ object Login {
     }
     def registrationFailed(registrationFailed : Boolean = false) : Callback = {
       if (registrationFailed){
-        t.modState(s => s.copy(showRegistrationFailed = false/*, showLoginForm = true*/))
+        t.modState(s => s.copy(showRegistrationFailed = false, showLoginForm = true))
       } else {
         t.modState(s => s.copy(showRegistrationFailed = false, showNewUserForm = true))
       }
@@ -200,7 +202,8 @@ object Login {
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
             //  log.debug(ApiResponseMsg.CreateUserError)
-              t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
+              showLoginContent =true
+              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/showLoginForm = true)).runNow()
             } catch {
               case e: Exception  =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
@@ -216,7 +219,7 @@ object Login {
       }
     }
     def accountValidationSuccess() : Callback = {
-      t.modState(s => s.copy(showAccountValidationSuccess = false/*, showLoginForm = true*/))
+      t.modState(s => s.copy(showAccountValidationSuccess = false, showLoginForm = true))
     }
     def accountValidationFailed() : Callback = {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
@@ -270,7 +273,7 @@ object Login {
             /* NewMessage(NewMessage.Props("Request invite", Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),*/
             RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtn), Icon.mailForward, "Request invite")),
             if (s.showErrorModal) ErrorModal(ErrorModal.Props(closeLoginErrorPopup, s.loginErrorMessage))
-            else if (s.showLoginForm) LoginForm(LoginForm.Props(LoginViaModal))
+            else if (s.showLoginForm) LoginForm(LoginForm.Props(LoginViaModal,showLoginContent))
             else if (s.showServerErrorModal) ServerErrorModal(ServerErrorModal.Props(closeServerErrorPopup))
             else if (s.showNewUserForm) NewUserForm(NewUserForm.Props(addNewUser))
             else if(s.showConfirmAccountCreation) VerifyEmailModal(VerifyEmailModal.Props(confirmAccountCreation))
@@ -278,13 +281,10 @@ object Login {
             else if (s.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(accountValidationSuccess))
             else if (s.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))
             else Seq.empty[ReactElement]
-
           )
         )
       )
-
     }
-
   }
 
   val component = ReactComponentB[Props]("SynereoLogin")

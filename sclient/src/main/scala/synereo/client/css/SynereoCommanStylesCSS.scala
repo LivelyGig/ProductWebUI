@@ -50,18 +50,19 @@ object SynereoCommanStylesCSS {
       )
     )
     val searchFormInputBox = style(
-      backgroundColor(rgba(115, 99, 99, 0.4)),
+      backgroundColor.transparent,
       borderTop.`0`.important,
       borderRight.`0`.important,
       borderLeft.`0`.important,
       borderRight.`0`.important,
       borderRadius.`0`.important,
-      borderBottom(1.px, solid, grey),
-      color(c"#95C9DE")
+      borderBottom(1.px, solid),
+      color(c"#95C9DE"),
+      boxShadow.:=(none)
     )
     val userActionButton = style(
       fontSize(1.5.em),
-      color(c"#69A5BF"),
+      color(c"#8CBFD7 "),
       padding(8.px, 20.px),
       backgroundColor.transparent,
       border.`0`.important,
@@ -73,7 +74,7 @@ object SynereoCommanStylesCSS {
       & hover(
         outline.none.important,
         backgroundColor.transparent.important,
-        color(c"#69A5BF")
+        color(c"#8CBFD7 ")
         )
     )
     val dropDownLIHeading = style(
@@ -83,7 +84,7 @@ object SynereoCommanStylesCSS {
     )
     val userNameNavBar = style(
       fontSize(1.5.em),
-      color(c"#69A5BF"),
+      color(c"#8CBFD7 "),
       padding(5.px, 20.px)
     )
     val imgLogo = style(
@@ -210,19 +211,32 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val searchBtn = style(
-      backgroundColor(rgba(115, 99, 99, 0.4)),
+      backgroundColor.transparent,
       border.none.important,
       borderRadius.`0`.important,
       paddingTop(3.px),
       paddingBottom(3.px),
       paddingLeft.`0`,
       paddingRight.`0`,
-      color(c"#69a5bf").important,
-      &.hover.focus.active.visited(
+      color(c"#8CBFD7").important,
+      &.hover(
         backgroundColor.transparent.important,
         border.none.important,
-        color(c"#69a5bf").important
+        color(c"#8CBFD7").important
       )
+    )
+
+    val emailVerifiedContainer = style (
+      marginTop(-34.%%),
+      backgroundColor(c"#9554B0"),
+      marginLeft(-46.px),
+      marginRight(-46.px),
+      borderTopLeftRadius(6.px),
+      borderTopRightRadius(6.px),
+      textAlign.left,
+      padding(10.px),
+      color(white),
+      marginBottom(18.%%)
     )
   }
 
