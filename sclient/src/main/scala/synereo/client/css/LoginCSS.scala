@@ -14,15 +14,23 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
-      marginTop(-55.px)
+      marginTop(-81.px)
     )
     val loginScreenBgImage = style(
       margin.auto.important,
       maxHeight(850.px),
-      minWidth(600.px)
+      minWidth(600.px),
+      media.maxWidth(1400.px) -
+        maxWidth(600.px)
+
+    )
+    val watchVideoBtn = style(
+      border(1.px, solid)
     )
     val loginModalStyle = style(
-      marginTop(200.px)
+      marginTop(200.px),
+      media.maxWidth(1400.px) -
+        marginTop(50.px)
     )
     val loginDilog = style(
       width(50.%%),
@@ -41,10 +49,7 @@ object LoginCSS {
 
     )
     val requestInviteModalStyle = style(
-      backgroundColor(c"#96989B")
-    )
-    val signUpModalStyle = style(
-      backgroundColor(c"#FFFFFF")
+      //      backgroundColor(c"#96989B")
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -186,23 +191,21 @@ object LoginCSS {
       fontWeight.normal
     )
     val subscribeButton = style(
-      backgroundColor(c"#F58634").important,
-      fontSize(1.7.em),
+      backgroundColor(c"#FF6F12 ").important,
+      fontSize(22.px),
       color.white.important,
-      margin(40.px)
+      margin(45.px, 0.px)
     )
-    val modalText = style(
+    val requestInviteModalText = style(
       fontSize(4.em),
       padding(40.px)
     )
-    val textareaModal = style(
+    val requestInviteTextarea = style(
       marginTop(20.px),
       marginBottom(20.px),
-      borderBottom(2.px, solid, black),
-      fontSize(1.5.em),
-      fontWeight._700,
-      backgroundColor.transparent.important,
-      padding(10.px, 20.px)
+      fontSize(25.px),
+      height(75.px)
+
     )
     val checkBoxLoginModal = style(
       width(25.px),

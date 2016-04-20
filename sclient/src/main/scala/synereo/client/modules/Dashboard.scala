@@ -1,9 +1,8 @@
 package synereo.client.modules
 
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.querki.jquery._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
@@ -14,18 +13,13 @@ import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import org.querki.jquery._
 import scala.scalajs.js
+import org.querki.jquery._
 import scalacss.ScalaCssReact._
 
 /**
   * Created by Mandar  on 3/17/2016.
   */
 object Dashboard {
-
-//  def toggleProfile = Callback{
-  //     val profileAction : js.Object = "#profileAction"
-  //    $(profileAction).toggleClass(".profileAction")
-  //  }
-
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
       <.div(^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
@@ -37,15 +31,12 @@ object Dashboard {
           )),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-              <.button(^.className := "btn", DashboardCSS.Style.profileActionButton/*, ^.onClick --> toggleProfile*/)(
+            <.div(^.className := "pull-right", "data-toggle".reactAttr := "popover","data-content".reactAttr:="Some content inside the popover", DashboardCSS.Style.profileActionContainer)(
+              <.button(^.className := "btn", DashboardCSS.Style.profileActionButton)(
                 <.span(^.color := "white")(MIcon.chatBubble),
                 <.span(^.color := "white")(MIcon.share),
                 <.span(^.color := "white")(MIcon.chevronRight)
               )
-//            ,  <.div(/*^.id:="profileAction"*/ )(
-//                <.div()("hello")
-//              )
             )
           )
         ),
