@@ -29,6 +29,7 @@ object Login {
   val SERVER_ERROR = "SERVER_ERROR"
   val SUCCESS = "SUCCESS"
   val loginLoader: js.Object = "#loginLoader"
+  val loadingScreen:js.Object = "#loadingScreen"
 
   var showLoginContent: Boolean = false
 
@@ -59,16 +60,16 @@ object Login {
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
-    def loginUser(e: ReactEventI) = Callback {
-      e.preventDefault()
-      val user = t.state.runNow().userModel
-      processLogin(user)
-    }
+//    def loginUser(e: ReactEventI) = Callback {
+//      e.preventDefault()
+//      val user = t.state.runNow().userModel
+//      processLogin(user)
+//    }
 
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
       println(s"showNewUserForm: $showNewUserForm")
       true match {
-        case `login` => processLoginForModal(userModel)
+        case `login` => processLogin(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
         case `showNewUserForm` => t.modState(s => s.copy(showLoginForm = false, showNewUserForm = true))
         case `showNewInviteForm` => t.modState(s => s.copy(showLoginForm = false, showNewInviteForm = true))
@@ -76,7 +77,8 @@ object Login {
       }
     }
 
-    def processLoginForModal(userModel: UserModel): Callback = {
+    def processLogin(userModel: UserModel): Callback = {
+      $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
       CoreApi.agentLogin(userModel).onComplete {
@@ -93,20 +95,20 @@ object Login {
       t.modState(s => s.copy(showLoginForm = false))
     }
 
-    def processLogin(userModel: UserModel): Unit = {
-      $(loginLoader).removeClass("hidden")
-      CoreApi.agentLogin(userModel).onComplete {
-        case Success(responseStr) =>
-          validateResponse(responseStr) match {
-            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
-            case LOGIN_ERROR => processLoginFailed(responseStr)
-            case SERVER_ERROR => processServerError(responseStr)
-          }
-        case Failure(s) =>
-          $(loginLoader).addClass("hidden")
-          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
-      }
-    }
+//    def processLogin(userModel: UserModel): Unit = {
+//      $(loginLoader).removeClass("hidden")
+//      CoreApi.agentLogin(userModel).onComplete {
+//        case Success(responseStr) =>
+//          validateResponse(responseStr) match {
+//            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
+//            case LOGIN_ERROR => processLoginFailed(responseStr)
+//            case SERVER_ERROR => processServerError(responseStr)
+//          }
+//        case Failure(s) =>
+//          $(loginLoader).addClass("hidden")
+//          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
+//      }
+//    }
 
     def validateResponse(response: String): String = {
       try {
@@ -142,6 +144,7 @@ object Login {
 
     def processLoginFailed(responseStr: String) = {
       println("in processLoginFailed")
+      $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
       val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       //window.alert("please enter valid credentials")
@@ -153,6 +156,7 @@ object Login {
 
     def processServerError(responseStr: String): Unit = {
       println("in processServerError")
+      $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
       val serverErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       t.modState(s => s.copy(showServerErrorModal = true)).runNow()
@@ -170,8 +174,9 @@ object Login {
       window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
       SYNEREOCircuit.dispatch(LoginUser(user))
       println(userModel)
+      $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
-      window.location.href = "/#synereodashboard"
+      window.location.href = "/#dashboard"
     }
 
     def addNewUserForm(): Callback = {
@@ -180,6 +185,8 @@ object Login {
 
     def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
       //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+      $(loadingScreen).removeClass("hidden")
+      $(loginLoader).removeClass("hidden")
       println("usermodal " + userModel + "addNewUser " + addNewUser)
       println("in add new user methiood")
       if (addNewUser) {
@@ -189,6 +196,8 @@ object Login {
             println(" In success value s = " + s)
             //           log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+              $(loadingScreen).addClass("hidden")
+              $(loginLoader).addClass("hidden")
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               //              log.debug(s"createUser msg : ${s.content}")

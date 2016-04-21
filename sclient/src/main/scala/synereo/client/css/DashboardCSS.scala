@@ -25,16 +25,38 @@ object DashboardCSS {
       overflowY.scroll.important,
       backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
-    val bodyImg = style (
+    val bodyImg = style(
       borderImageRepeat.:=(none),
       overflow.hidden,
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
+    val ampsEarnedHeading = style(
+      color(c"#FFFFFF"),
+      paddingLeft(15.px),
+      paddingTop(10.px)
+    )
     val profileActionButton = style(
-      backgroundColor(c"#1F85B5"),
-      position.fixed,
-      right(20.px)
+      width(110.px),
+      border(1.px, solid, transparent),
+      borderBottomLeftRadius(9.em),
+      //      borderColor.transparent.important,
+      backgroundColor(c"#1B76A3"),
+      position.absolute,
+      right.`0`,
+      fontSize(13.px),
+      padding(4.px).important,
+      color.white,
+      &.hover(
+        color.white
+      ),
+      &.focus(
+        color.white
+      ),
+      &.visited(
+        color.white
+      )
+
     )
     val glanceViewName = style(
       display.inlineBlock
@@ -93,6 +115,10 @@ object DashboardCSS {
 
     val sidebarNavStyle = style(
       fontSize(17.px)
+    )
+    val topBarStyle = style(
+      fontSize(15.px)
+      //      fontWeight.bold
     )
     val postActionButton = style(
       border.none.important,

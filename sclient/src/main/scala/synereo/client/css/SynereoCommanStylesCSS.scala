@@ -26,6 +26,22 @@ object SynereoCommanStylesCSS {
       //media.minWidth(821.px) -
       // paddingTop(8.px)
     )
+    val loadingScreen = style(
+      height(100.vh),
+      width(100.vw),
+      backgroundColor(rgba(0, 0, 0, 0.5)),
+      position.absolute,
+      top.`0`,
+      left.`0`,
+      zIndex(100)
+    )
+    val userNameTopMenubar = style(
+      opacity(0.6),
+      fontSize(12.px)
+    )
+    val ampsCount = style(
+      fontWeight._600
+    )
     val mainMenuNavbar = style(
       paddingTop(6.px)
     )

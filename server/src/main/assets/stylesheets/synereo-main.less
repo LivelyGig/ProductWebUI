@@ -428,41 +428,168 @@ a:hover {cursor: hand; cursor: pointer;}
     margin-bottom: 5%;
   }
 
-  //trial for another dropdown
-    .nav .nav-pills li.dropdown:hover ul.dropdown-menu{
-      opacity: 1;
-      visibility: visible;
-      display:block;
+  //css for smaller  dropdown
+  .nav .nav-pills li.dropdown:hover ul.dropdown-menu{
+    opacity: 1;
+    visibility: visible;
+    display:block;
+  }
+  .nav ul.dropdown-menu{
+    width: 240px;
+    right: -80px;
+    min-height: 260px;
+    width: 350px;
+  }
+  .dropdown-arrow-small {
+    position: absolute;
+    top: 89%;
+    right: 10px;
+    border-bottom: 8px solid white;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    position: absolute;
+    visibility:hidden;
+  }
+  .nav.nav-pills li.dropdown:hover .dropdown-arrow-small {
+    visibility:visible;
+  }
+  .nav ul.dropdown-arrow-small::before{
+    content: " ";
+    border-bottom: 7px solid #fff;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    position: absolute;
+    top: 2px;
+    left: -7px;
+    border-top: 0;
+    z-index: 2000;
+    opacity: 1;
+  }
+  /* topbar settings */
+  .topbar {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    //top: 55px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    //transition: all 1s ease-in-out;
+    right: 0px;
+  }
+  .topbar-left {
+    left: 50;
+  }
+  .topbar-right {
+    right: 0;
+  }
+  /* css to override hiding the topbar according to different screen sizes */
+  #TopbarContainer{
+    background-color: #1E84B4;
+    width: 210px;
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-box-shadow: 0px 4px 15px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 4px 15px -1px rgba(0,0,0,0.75);
+    box-shadow: 0px 4px 15px -1px rgba(0,0,0,0.75);
+  }
+  #topbarBtn{
+    -webkit-box-shadow: 0 1px 20px 0 rgba(0,0,0,0.75);
+    margin-top: 1px;
+    -moz-box-shadow: 0 1px 20px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 1px 20px 0 rgba(0,0,0,0.75);
+
+  }
+  .row .topbar.topbar-left.topbar-xs-show {
+    left: 0;
+    -webkit-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    transform: translate(0,0);
+  }
+
+  @media (min-width: 768px) {
+    .row .topbar.topbar-left.topbar-sm-show {
+      left: 0;
+      -webkit-transform: translate(0,0);
+      -ms-transform: translate(0,0);
+      -o-transform: translate(0,0);
+      -moz-transform: translate(0,0);
+      transform: translate(0,0);
     }
-    .nav ul.dropdown-menu{
-      width: 240px;
-      right: -80px;
-      min-height: 260px;
-      width: 350px;
-    }
-    .dropdown-arrow-small {
-      position: absolute;
-      top: 89%;
-      right: 10px;
-      border-bottom: 8px solid white;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      position: absolute;
-      visibility:hidden;
-    }
-    .nav.nav-pills li.dropdown:hover .dropdown-arrow-small {
-      visibility:visible;
-    }
-    .nav ul.dropdown-arrow-small::before{
-      content: " ";
-      border-bottom: 7px solid #fff;
-      border-left: 7px solid transparent;
-      border-right: 7px solid transparent;
-      position: absolute;
-      top: 2px;
-      left: -7px;
-      border-top: 0;
-      z-index: 2000;
-      opacity: 1;
+  }
+
+  @media (min-width: 992px) {
+    .row .topbar.topbar-left.topbar-md-show {
+      left: 0;
+      -webkit-transform: translate(0,0);
+      -ms-transform: translate(0,0);
+      -o-transform: translate(0,0);
+      -moz-transform: translate(0,0);
+      transform: translate(0,0);
     }
 
+  }
+
+  @media (min-width: 2000px) {
+    .row .topbar.topbar-left.topbar-lg-show {
+      top: 0;
+      -webkit-transform: translate(0,0);
+      -moz-transform: translate(0,0);
+      -ms-transform: translate(0,0);
+      -o-transform: translate(0,0);
+      transform: translate(0,0);
+    }
+  }
+
+  /* animation class - optional: without it the topbar would just pop in and out*/
+  .topbar-animate {
+    -webkit-transition: all 3ms ;
+    -moz-transition: all 3ms ;
+    -o-transition: all 3ms ;
+    transition: all 0.5s ease-in-out;
+  }
+
+  /* Left panel positioning classes */
+  .topbar.topbar-left {
+    -webkit-transform: translate(-100%,0);
+    -moz-transform: translate(-100%,0);
+    -ms-transform: translate(-100%,0);
+    -o-transform: translate(-100%,0);
+    //transform: translate(-100%,0);
+    transform: translate(0,566px);
+  }
+
+  .topbar.topbar-left.topbar-open {
+    /* -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0); */
+  }
+
+  #Topbarid> li > a {
+    color:white;
+    padding-right: 0;
+  }
+  #Topbarid> li > a:hover {
+    background-color: black;
+  }
+  #Topbarid> li > a >span {
+    margin-right:10px;
+    margin-left: 10px;
+  }
+
+  .topbarBtn{
+    background-color: #1aa3ff;
+    border: none;
+    border-top-right-radius: 50px;
+    padding: 10px;
+    font-size: 17px;
+    width:100%;
+    color: white;
+
+  }
+  .topbarBtn:hover{
+    background-color: #1FB6F1
+  }
