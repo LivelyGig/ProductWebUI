@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS, DashboardCSS}
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -43,7 +43,7 @@ object Dashboard {
         <.div(^.className := "container")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-              <.div(^.className := "row")(
+               <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
                     <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),

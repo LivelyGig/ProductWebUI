@@ -12,3 +12,6 @@ object PrologParser extends js.Object {
   def StringToLabel (json: js.Array[String]): js.Array[js.Any] = js.native
 
 }
+
+
+

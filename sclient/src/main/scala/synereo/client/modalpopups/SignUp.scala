@@ -2,14 +2,17 @@ package synereo.client.modalpopups
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.models.UserModel
-import scala.util.{Failure, Success}
+import scala.scalajs.js
+import scala.util
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+import synereo.client.utils._
 
 
 object NewUserForm {
@@ -24,12 +27,12 @@ object NewUserForm {
   case class State(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false, showLoginForm: Boolean = true)
 
   case class Backend(t: BackendScope[Props, State]) {
-    def hideModal = Callback {
+    def hideModal =  {
       // instruct Bootstrap to hide the modal
       addNewUserState = false
       userModelUpdate = new UserModel("", "", "", "", "", false, false, "")
       t.modState(s=>s.copy(showLoginForm = true))
-      jQuery(t.getDOMNode()).modal("hide")
+      //jQuery(t.getDOMNode()).modal("hide")
     }
 
     def hidecomponent = {
@@ -80,7 +83,11 @@ object NewUserForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(addNewUser = true))
+      val SignUp :js.Object ="#SignUp"
+      if($(SignUp).hasClass("disabled"))
+        t.modState(s => s.copy(addNewUser = false))
+      else
+        t.modState(s => s.copy(addNewUser = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -100,33 +107,29 @@ object NewUserForm {
         closed = () => formClosed(s, p),
         addStyles = Seq(SignupCSS.Style.signUpModalStyle)
       ),
-        <.form(^.onSubmit ==> submitForm)(
-          <.div()(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.userModel.name,
-              ^.onChange ==> updateName, ^.required := true, ^.placeholder := "Desired user name")
+        <.form(^.id:="SignUpForm", "data-toggle".reactAttr := "validator", ^.role:="form",^.onSubmit ==> submitForm)(
+          <.div(^.className:="form-group")(
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.userModel.name,^.className:="form-control","data-error".reactAttr:="Username is required",
+              ^.onChange ==> updateName, ^.required := true, ^.placeholder := "Desired user name"),
+            <.div(^.className:="help-block with-errors")
           ),
-          //          <.div()(
-          //            <.input(^.tpe := "text", bss.formControl, ^.id := "Last name", ^.value := s.userModel.lastName,
-          //              ^.onChange ==> updateLastName)
-          //          ),
-          <.div()(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "email", bss.formControl, ^.id := "Email", ^.value := s.userModel.email,
-              ^.onChange ==> updateEmail, ^.required := true, ^.placeholder := "Email address")
+          <.div(^.className:="form-group")(
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "email", bss.formControl, ^.id := "Email", ^.value := s.userModel.email,^.className:="form-control","data-error".reactAttr:="Email is Invalid",
+              ^.onChange ==> updateEmail, ^.required := true, ^.placeholder := "Email address"),
+            <.div(^.className:="help-block with-errors")
           ),
-          <.div()(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := s.userModel.password,
-              ^.onChange ==> updatePassword, ^.required := true, ^.placeholder := "Password"),
-            <.div(SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center")("Must be 6 characters long and include one or more number or symbol")
+          <.div(^.className:="form-group")(
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := s.userModel.password,^.className:="form-control",/*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
+              ^.onChange ==> updatePassword, ^.required := true, ^.placeholder := "Password","data-minlength".reactAttr:="6"),
+            <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/^.className:="help-block")("Must be 6 characters long and include one or more number or symbol")
           ),
-          <.div()(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", ^.value := s.userModel.ConfirmPassword,
-              ^.onChange ==> updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password")
+          <.div(^.className:="form-group")(
+//            data-match="#inputPassword" data-match-error="Whoops, these don't match"
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr:="#Password", ^.value := s.userModel.ConfirmPassword,^.className:="form-control","data-match-erro".reactAttr:="Whoops, these don't match",
+              ^.onChange ==> updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password"),
+              <.div(^.className:="help-block with-errors")
           ),
           <.div(^.className := "row")(
-            //          <.div(^.className:="col-md-12")(
-            //            <.div()(<.input(^.`type` := "checkbox"), " * I am cool with the",
-            //              <.button(^.tpe := "button", ^.className := "btn btn-default", "Terms of Service ", ^.onClick ==> showTermsOfServices))
-            //          )
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
               <.input(^.`type` := "checkbox", ^.id := "IamCoolWithThe"), <.label(^.`for` := "IamCoolWithThe")("I'm cool with the"),
               // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
@@ -138,8 +141,8 @@ object NewUserForm {
                 <.div(^.className := "text-left")("creating account on node: ", <.span(s.userModel.name)),
                 <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
               ),
-              <.div(^.className := "pull-right")(
-                <.button(^.tpe := "submit", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
+              <.div(^.className := "pull-right",^.className:="form-group")(
+                <.button(^.tpe := "submit",^.id:="SignUp", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
               )
               //            <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hideModal, "Cancel")
             )
@@ -158,6 +161,11 @@ object NewUserForm {
         State(new UserModel("", "", "", "", "", false, false, ""))
     )
     .renderBackend[Backend]
+    .componentDidMount(scope => Callback {
+//     val SignUpForm : js.Object = "#SignUpForm"
+//    $(SignUpForm)
+//    val signup =  Validator.Plugin()
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewUser || scope.currentState.showTermsOfServicesForm) {
         scope.$.backend.hidecomponent
