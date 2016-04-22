@@ -34,7 +34,7 @@ object SYNEREOMain extends js.JSApp {
 
   case object SynereoLoc extends Loc
 
-  case object SynereoDashboardLoc extends Loc
+  case object DashboardLoc extends Loc
 
   case object SynereoTimelineViewLOC extends Loc
 
@@ -54,7 +54,7 @@ object SYNEREOMain extends js.JSApp {
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#synereodashboard", SynereoDashboardLoc) ~> renderR(ctl => Dashboard(ctl))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard(Dashboard.Props()))
       | staticRoute("#synereofullblogpost", SynereoBlogPostFullLOC) ~> renderR(ctl => BlogPostFull(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
@@ -67,7 +67,9 @@ object SYNEREOMain extends js.JSApp {
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
-      <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", Icon.spinnerIconPulse),
+      <.div(^.id:="loadingScreen",^.className := "hidden",SynereoCommanStylesCSS.Style.loadingScreen)(
+        <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", Icon.spinnerIconPulse)
+      ),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         <.div(^.className := "col-lg-1")(
           //Adding toggle button for sidebar
@@ -86,7 +88,7 @@ object SYNEREOMain extends js.JSApp {
               <.span(^.color := "white")(Icon.thList)
             ),
 
-            c.link(SynereoDashboardLoc)(^.className := "navbar-header", <.img(if(r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc
+            c.link(DashboardLoc)(^.className := "navbar-header", <.img(if(r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc
               , ^.src := "./assets/synereo-images/Synereo_Logo_White.png"))
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(

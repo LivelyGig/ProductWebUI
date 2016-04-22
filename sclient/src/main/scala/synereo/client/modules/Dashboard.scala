@@ -1,13 +1,10 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react.ReactComponentB
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
-import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS, DashboardCSS}
-
+import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -17,11 +14,21 @@ import org.querki.jquery._
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar  on 3/17/2016.
+  * Created by Mandar on 3/11/2016.
   */
 object Dashboard {
-  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
-    render_P { ctr =>
+
+  case class Props()
+
+  case class State()
+
+  class Backend(t: BackendScope[Props, State]) {
+    def toggleTopbar = Callback {
+      val topBtn: js.Object = "#TopbarContainer"
+      $(topBtn).toggleClass("topbar-left topbar-lg-show")
+    }
+
+    def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
@@ -31,11 +38,12 @@ object Dashboard {
           )),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-            <.div(^.className := "pull-right", "data-toggle".reactAttr := "popover","data-content".reactAttr:="Some content inside the popover", DashboardCSS.Style.profileActionContainer)(
-              <.button(^.className := "btn", DashboardCSS.Style.profileActionButton)(
-                <.span(^.color := "white")(MIcon.chatBubble),
-                <.span(^.color := "white")(MIcon.share),
-                <.span(^.color := "white")(MIcon.chevronRight)
+            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+              <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+                TopMenuBar(TopMenuBar.Props()),
+                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
+                  <.img(^.src:="./assets/synereo-images/ampsIcon.PNG"),<.span("543")
+                )
               )
             )
           )
@@ -43,7 +51,7 @@ object Dashboard {
         <.div(^.className := "container")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-               <.div(^.className := "row")(
+              <.div(^.className := "row")(
                 <.div(^.className := "col-lg-6 col-md-6 col-sm-12 col-xs-12")(
                   <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
                     <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
@@ -58,38 +66,38 @@ object Dashboard {
                       <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                       <.span("just now")
                     ),
-                    <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton)(MIcon.moreVert),
+                    <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(MIcon.moreVert),
                     <.div(^.className := "col-md-12")(
                       <.h3("Headed to  sxsw", DashboardCSS.Style.cardHeading),
                       <.div("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                         "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                       <.br(),
-                      <.button(^.`type`:="button",^.className:="btn btn-default",DashboardCSS.Style.postActionButton,SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
+                      <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton, SynereoCommanStylesCSS.Style.synereoBlueText)(MIcon.moreHoriz)
                     ),
                     <.div(^.className := "col-md-12")(
                       <.div(DashboardCSS.Style.postActions)(
                         <.div(^.className := "btn-group")(
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.chatBubble),
-                           <.div("12", SynereoCommanStylesCSS.Style.inlineBlock)
+                            <.div("12", SynereoCommanStylesCSS.Style.inlineBlock)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.share),
-                           <.div("123", SynereoCommanStylesCSS.Style.inlineBlock)
+                            <.div("123", SynereoCommanStylesCSS.Style.inlineBlock)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(MIcon.add),
-                           <.div("10", SynereoCommanStylesCSS.Style.inlineBlock)
+                            <.div("10", SynereoCommanStylesCSS.Style.inlineBlock)
                           )
                         ),
                         <.div(^.className := "btn-group pull-right")(
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(Icon.minus)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(Icon.heartO)
                           ),
-                          <.button(^.`type` := "button", ^.className := "btn btn-default",DashboardCSS.Style.postActionButton)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-default", DashboardCSS.Style.postActionButton)(
                             <.span(Icon.plus)
                           )
                         )
@@ -291,9 +299,14 @@ object Dashboard {
         )
 
       )
+    }
+  }
 
-    }.build
+  val component = ReactComponentB[Props]("Dashboard")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
 
-  def apply(router: RouterCtl[Loc]) = component(router)
+    .build
 
+  def apply(props: Props) = component(props)
 }
