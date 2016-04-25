@@ -543,6 +543,33 @@ label:hover:before {
   }
 }
 
+
+/* animation class - optional: without it the topbar would just pop in and out*/
+
+.has-error input {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  background-color: #ff806c;
+  opacity:1;
+}
+
+.has-error   input::-webkit-input-placeholder {
+ color: white !important;
+}
+
+.has-error  input:-moz-placeholder { /* Firefox 18- */
+ color: white !important;
+}
+
+.has-error  input::-moz-placeholder {  /* Firefox 19+ */
+ color: white !important;
+}
+
+.has-error  input:-ms-input-placeholder {
+ color: white !important;
+}
+
 /* animation class - optional: without it the topbar would just pop in and out*/
 .topbar-animate {
   -webkit-transition: all 3ms ;

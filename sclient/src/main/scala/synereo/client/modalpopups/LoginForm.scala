@@ -1,21 +1,20 @@
 package synereo.client.modalpopups
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+
 import shared.dtos.{CreateUserResponse, ApiResponse}
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
 import synereo.client.models.UserModel
 import synereo.client.services.{ApiResponseMsg, CoreApi}
-import scala.scalajs.js
 import scala.util.{Failure, Success}
-import scalacss.Defaults._
-import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import scalacss.ScalaCssReact._
+import scala.scalajs.js
 import org.querki.jquery._
-import scala.concurrent.ExecutionContext.Implicits.global
+
 
 /**
   * Created by Mandar on 4/19/2016.
@@ -33,6 +32,10 @@ object LoginForm {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val LoginID :js.Object ="#LoginID"
+      if($(LoginID).hasClass("disabled"))
+      t.modState(s => s.copy(login = false))
+      else
       t.modState(s => s.copy(login = true))
     }
 
@@ -81,7 +84,7 @@ object LoginForm {
 
         closed = () => formClosed(s, p),
         addStyles = Seq(LoginCSS.Style.loginModalStyle)),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.id:="LoginForm","data-toggle".reactAttr := "validator", ^.role:="form",^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(
@@ -90,12 +93,17 @@ object LoginForm {
                 }
                 else
                   <.div(),
-
                 <.div(SignupCSS.Style.signUpHeading)(headerText),
-                <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name",
-                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
-                <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password"
-                  , ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
+                  <.div(^.className:="form-group")(
+                    <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className:="form-control","data-error".reactAttr:="Bruh, that email address is invalid",
+                    ^.placeholder := "username","data-error".reactAttr:="Username is required", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
+                    <.div(^.className:="help-block with-errors")
+                  ),
+                <.div(^.className:="form-group")(
+                <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password",^.className:="form-control",^.id:="inputPassword","data-error".reactAttr:="Password is required",
+                   ^.value := s.userModel.password, ^.onChange ==> updatePassword,  ^.required := true),
+                  <.div(^.className:="help-block with-errors")
+                ),
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
                     // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
@@ -105,8 +113,8 @@ object LoginForm {
                     <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
                   )
                 ),
-                <.div(^.className := "text-center")(
-                  <.button(^.tpe := "submit", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
+                <.div(^.className := "text-center",^.className:="form-group")(
+                  <.button(^.tpe := "submit",^.id:="LoginID", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
                 )
               )
             )
@@ -118,7 +126,6 @@ object LoginForm {
           //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
-
     }
   }
 
