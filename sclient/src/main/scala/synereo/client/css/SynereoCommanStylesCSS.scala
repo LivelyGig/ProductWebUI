@@ -156,10 +156,7 @@ object SynereoCommanStylesCSS {
       paddingLeft(0.px).important
     )
     val synereoBlueText = style(
-      color(c"#1282B2"),
-      &.hover(
-        color(c"#2EAEE3")
-      )
+      color(c"#2EAEE3")
     )
     val modalHeaderText = style(
       fontSize(1.3.em)

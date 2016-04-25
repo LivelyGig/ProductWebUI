@@ -25,7 +25,7 @@ object SignupCSS {
     )
     val verificationMessageText = style(
       fontSize(12.px),
-      marginTop(-15 px),
+      marginTop(-15.px),
       marginBottom(25.px)
     )
     val verificationMessageContainer = style(
@@ -60,7 +60,7 @@ object SignupCSS {
     val signUpHeading = style(
       color(c"#000"),
       fontSize(64.px),
-      fontFamily := "karla",
+      fontFamily :=! "karla",
       opacity(0.65),
       textAlign.center,
       marginBottom(30.px),
@@ -75,19 +75,19 @@ object SignupCSS {
       marginTop(-15.px),
       marginLeft(-33.px),
       marginBottom(5.px),
-      fontFamily := "karla",
+      fontFamily :=! "karla",
       opacity(0.5),
       padding.`0`.important,
-      fontSize(0.9 em)
+      fontSize(0.9.em)
     )
     val signUpModalStyle = style(
       marginTop(100.px),
-      media.maxWidth(1367.px)-
+      media.maxWidth(1367.px) -
         marginTop(1.px)
     )
     val inputStyleSignUpForm = style(
       fontSize(25.px),
-      fontFamily := "karla",
+      fontFamily :=! "karla",
       height(75.px),
       marginBottom(20.px),
       color(c"#000"),

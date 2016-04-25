@@ -31,10 +31,27 @@ object DashboardCSS {
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
+    val homeFeedContainer = style(
+      marginTop(30.px),
+      marginBottom(90.px)
+    )
+    val homeFeedMainContainer = style(
+      width(762.px),
+      padding(0.px)
+    )
+    val cardImage = style(
+//      paddingRight(65.px)s
+    )
+    val userInputSubmitButton = style(
+      backgroundColor.transparent.important
+    )
     val ampsEarnedHeading = style(
       color(c"#FFFFFF"),
       paddingLeft(15.px),
       paddingTop(10.px)
+    )
+    val descriptionHolderForImageCard = style(
+      paddingLeft(65.px)
     )
     val profileActionButton = style(
       width(110.px),
@@ -69,6 +86,13 @@ object DashboardCSS {
       paddingTop(5.px),
       paddingBottom(5.px)
     )
+    val userPostForm = style(
+      marginTop(5.%%),
+      backgroundColor(c"#FFFFFF"),
+      borderRadius(5.px),
+      paddingTop(5.px),
+      paddingBottom(5.px)
+    )
     val userPostRight = style(
       marginTop(5.%%),
       marginLeft(15.px).important,
@@ -84,23 +108,42 @@ object DashboardCSS {
       borderRadius(50.%%),
       display.inlineBlock
     )
+    val homeFeedUserAvatar = style(
+      width(45.px),
+      borderRadius(50.%%),
+      padding(5.px),
+      margin(5.px),
+      display.inlineBlock.important
+    )
     val UserInput = style(
       border.none.important,
       fontWeight._700,
       width(90.%%),
       height(40.px),
+      display.inlineBlock,
       paddingLeft(6.px),
       &.focus(
         outline.none.important
       )
     )
     val userNameDescription = style(
-      width(86.%%),
+      //      width(86.%%),
       display.inlineBlock,
-      padding(5.px, 15.px)
+      padding(0.px, 15.px),
+      fontFamily :=! "karla",
+      fontWeight.bold,
+      lineHeight(1.5.em),
+      color(c"#000"),
+      opacity(0.65)
     )
     val postActions = style(
       marginLeft(-10.px)
+    )
+    val homeFeedCardBtn = style(
+      backgroundColor.transparent.important,
+      border.`0`.important,
+      fontSize(24.px),
+      paddingLeft.`0`
     )
     val sidebarBtn = style(
       float.left,
@@ -110,9 +153,11 @@ object DashboardCSS {
       color.white
     )
     val cardHeading = style(
-      fontWeight._600
+      fontWeight.bold,
+      color(c"#000"),
+      lineHeight(1.25.em),
+      letterSpacing(0.5.px)
     )
-
     val sidebarNavStyle = style(
       fontSize(17.px)
     )
@@ -123,6 +168,13 @@ object DashboardCSS {
     val postActionButton = style(
       border.none.important,
       marginTop(-30.px)
+    )
+    val cardText = style(
+      fontSize(21.px),
+      fontFamily :=! "lora",
+      fontWeight.normal,
+      opacity(0.95),
+      lineHeight(1.5.em)
     )
 
   }

@@ -1,6 +1,7 @@
 package synereo.client.css
 
 import scalacss.Defaults._
+import scala.language.postfixOps
 
 /**
   * Created by Mandar  on 3/11/2016.
@@ -176,8 +177,8 @@ object LoginCSS {
     )
     val loginModalFooter = style(
       textAlign.center,
-      marginLeft(-46 px),
-      marginRight(-46 px),
+      marginLeft(-46.px),
+      marginRight(-46.px),
       backgroundColor(rgb(0, 0, 0)),
       padding.`0`.important
     )
