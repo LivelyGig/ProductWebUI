@@ -236,6 +236,12 @@ display: inline-table;
     #sidebarbtn.collapse.in{
   		display:block !important;
 	}
+
+.sidebarRightContainer {
+        background: rgba(0,0,0,0.5);
+        opacity: 0.4;
+        pointer-events: none;
+}
 }
 
 
@@ -465,6 +471,8 @@ ol.tree
     top:0;
     background-color:#eaeaea;
     z-index: 10;
+    pointer-events: all;
+    opacity: 1;
     transition: all 1s ease-in;
         border-right-style: solid;
         border-right-width: 2px;
@@ -515,7 +523,6 @@ ol.tree
         -moz-transform: translate(0,0);
         transform: translate(0,0);
     }
-
 }
 
 @media (min-width: 1170px) {
@@ -554,7 +561,6 @@ ol.tree
         -o-transform: translate(0,0);
         transform: translate(0,0);
     }
-
 
 
 /**

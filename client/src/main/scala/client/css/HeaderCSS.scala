@@ -54,12 +54,20 @@ object HeaderCSS {
       backgroundColor(c"#005256"),
       borderBottom(3.px, solid, c"#67EAF2"),
       color(c"#67EAF2"),
-      fontSize(1.2.em),
       letterSpacing(0.5.px),
       &.hover(
         color(c"#67EAF2")
+      ),
+        media.maxWidth(819.px) -(
+          fontSize(1.1.em),
+      padding(10.px , 10.px)
+      ),
+      media.minWidth(820.px) -(
+        fontSize(1.2.em),
+        padding(10.px , 10.px)
+        )
+
       )
-    )
     val imgLogo = style (
       borderRadius(50.%%),
       width(40.px),
@@ -108,13 +116,13 @@ object HeaderCSS {
     )
     val LoginInMenuItem=style(
       float.right,
-      paddingTop(5.px),
+      paddingTop(3.px),
       display.inlineBlock
     )
 
     val marginTopLoggedIn = style(
       media.minWidth(821.px) -
-      marginTop(-7.px)
+      marginTop(-6.px)
     )
 
     val displayInline=style(

@@ -17,6 +17,11 @@ object AppModule {
     val sidebtn: js.Object = "#searchContainer"
     val sidebarIcon : js.Object  = "#sidebarIcon"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+      if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
+      $(sidebtn).next().addClass("sidebarRightContainer")
+    }else{
+      $(sidebtn).next().removeClass("sidebarRightContainer")
+      }
     val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
     $(t2).removeClass("fa fa-chevron-circle-right")
@@ -29,14 +34,18 @@ object AppModule {
   case class Backend(t: BackendScope[Props, Unit]) {
 
     def mounted(props: Props): Callback = Callback {
+      val sidebtn: js.Object = "#searchContainer"
       val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
       val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
       $(t2).removeClass("fa fa-chevron-circle-right")
       $(t2).addClass("fa fa-chevron-circle-left")
-   //   $(t2).css("opacity","0")
-   //   $(t1).css("opacity","0.4")
       $(t1).removeClass("fa fa-chevron-circle-left")
       $(t1).addClass("fa fa-chevron-circle-right")
+      if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
+        $(sidebtn).next().addClass("sidebarRightContainer")
+      }else{
+        $(sidebtn).next().removeClass("sidebarRightContainer")
+      }
     }
     def render(p: Props) = {
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
@@ -63,7 +72,7 @@ object AppModule {
                 ),
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "main col-md-9 col-md-offset-3",DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer",DashBoardCSS.Style.dashboardResults2)(
                 p.view match {
                   case "talent" => TalentResults.component()
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))

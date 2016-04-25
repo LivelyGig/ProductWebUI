@@ -16,16 +16,13 @@ import org.querki.jquery._
 object LoginForm {
   //TodoForm
   // shorthand fo
+  val modal : js.Object = "#modal"
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
                    showNewAgentForm: Boolean = false)
-
-  val name : js.Object = "#Name"
-  $(name).focus()
-
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
@@ -55,6 +52,9 @@ object LoginForm {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
+   def userNameFocus : Unit ={
+     $(modal).find("input:first").focus()
+   }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
@@ -110,17 +110,20 @@ object LoginForm {
         ),
        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
       )
-
     }
   }
 
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
+    .componentDidMount(scope => Callback {
+      $(modal).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {
         scope.$.backend.hide
       }
+
     })
     .build
 
