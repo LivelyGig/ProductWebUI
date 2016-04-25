@@ -1,30 +1,19 @@
 package synereo.client.modalpopups
 
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+
 import shared.dtos.{CreateUserResponse, ApiResponse}
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
 import synereo.client.models.UserModel
 import synereo.client.services.{ApiResponseMsg, CoreApi}
-import scala.scalajs.js
 import scala.util.{Failure, Success}
-import scalacss.Defaults._
-import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import org.querki.jquery._
-import scala.concurrent.ExecutionContext.Implicits.global
-import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom._
 import scalacss.ScalaCssReact._
-import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import org.querki.jquery._
-import org.denigma.selectize._
 
 
 /**
@@ -95,7 +84,7 @@ object LoginForm {
 
         closed = () => formClosed(s, p),
         addStyles = Seq(LoginCSS.Style.loginModalStyle)),
-        <.form("data-toggle".reactAttr := "validator", ^.role:="form",^.onSubmit ==> submitForm)(
+        <.form(^.id:="LoginForm","data-toggle".reactAttr := "validator", ^.role:="form",^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(

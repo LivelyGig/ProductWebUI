@@ -13,6 +13,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 import synereo.client.utils._
+import org.scalajs.dom._
 
 
 object NewUserForm {
@@ -162,9 +163,7 @@ object NewUserForm {
     )
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
-//     val SignUpForm : js.Object = "#SignUpForm"
-//    $(SignUpForm)
-//    val signup =  Validator.Plugin()
+
     })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewUser || scope.currentState.showTermsOfServicesForm) {

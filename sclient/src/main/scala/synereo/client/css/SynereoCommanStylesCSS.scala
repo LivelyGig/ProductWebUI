@@ -272,6 +272,10 @@ object SynereoCommanStylesCSS {
       //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
 
+    val marginRight15px = style (
+      marginRight(15.px)
+    )
+
 
   }
 

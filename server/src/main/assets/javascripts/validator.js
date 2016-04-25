@@ -350,7 +350,7 @@
   // VALIDATOR DATA-API
   // ==================
 
-  $(window).on('load', function () {
+  $(window).on('click', function () {
     $('form[data-toggle="validator"]').each(function () {
       var $form = $(this)
       Plugin.call($form, $form.data())
