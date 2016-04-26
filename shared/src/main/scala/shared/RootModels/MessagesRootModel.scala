@@ -1,6 +1,6 @@
 package client.rootmodels
 
-import client.models.MessagesModel
+import shared.models.MessagesModel
 
 case class MessagesRootModel(messagesModelList: Seq[MessagesModel]) {
   def updated (newMessagesResponse: MessagesModel) = {

@@ -1,5 +1,5 @@
 package client.rootmodels
 
-import client.models.UserModel
+import shared.models.UserModel
 
 case class UserRootModel(userModel: UserModel)
