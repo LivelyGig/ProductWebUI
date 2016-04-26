@@ -57,7 +57,7 @@ object CoreApi {
   }*/
   def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(CONFIRM_EMAIL_MSG,ConfirmEmail(emailValidationModel.token)))
-    println("emailvalidation token : " + requestContent)
+//    println("emailvalidation token : " + requestContent)
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
@@ -76,7 +76,7 @@ object CoreApi {
   def getMessages () : Future[String] = {
     /*val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(MESSAGES_SESSION_URI))))*/
     val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.GetSelfConnnection(MESSAGES_SESSION_URI))
-    println(connectionsList)
+//    println(connectionsList)
     val currentLabels = window.sessionStorage.getItem("currentSearchLabel")
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
 //    val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)

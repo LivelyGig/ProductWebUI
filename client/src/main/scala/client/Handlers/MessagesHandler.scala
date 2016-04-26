@@ -1,20 +1,22 @@
 package client.handlers
 
-import diode.data.PotState.PotPending
-import diode.{ActionResult, Effect, ActionHandler, ModelRW}
-import diode.data.{Empty, PotAction, Ready, Pot}
+import diode.data.PotState.{PotFailed, PotPending}
+import diode._
+import diode.data._
 import client.models.MessagesModel
-import client.rootmodels.{MessagesRootModel}
+import client.rootmodels.MessagesRootModel
 import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
+import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
 // Actions
-case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends PotAction[MessagesRootModel, RefreshMessages]{
-  override def next(value: Pot[MessagesRootModel]) = RefreshMessages(value)
+case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3)) extends PotActionRetriable[MessagesRootModel, RefreshMessages]{
+  override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy) = RefreshMessages(value, newRetryPolicy)
 }
 
 object MessagesModelHandler{
@@ -39,12 +41,12 @@ object MessagesModelHandler{
         }
       } catch {
         case e: Exception =>
-          println(projectFromBackend.content.pageOfPosts(0))
+//          println(projectFromBackend.content.pageOfPosts(0))
       }
-//      if (!projectFromBackend.content.pageOfPosts.isEmpty)
+      //      if (!projectFromBackend.content.pageOfPosts.isEmpty)
 
     }
-//        println(model)
+    //        println(model)
     MessagesRootModel(model)
   }
 
@@ -54,12 +56,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
   override def handle = {
     case action : RefreshMessages =>
       // todo investigate calling of this method due to callback
-//      println("in refresh messages")
+      //      println("in refresh messages")
       val labels = window.sessionStorage.getItem("currentSearchLabel")
+      val updateF =  action.effectWithRetry(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
       if (labels!=null)
       {
-        val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
-        action.handleWith(this, updateF)(PotAction.handler())
+        action.handleWith(this,updateF)(PotActionRetriable.handler())
       } else {
         updated(Empty)
       }
