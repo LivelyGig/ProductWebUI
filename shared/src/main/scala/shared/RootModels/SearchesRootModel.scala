@@ -1,6 +1,6 @@
 package client.rootmodels
 
-import client.models.LabelModel
+import shared.models.LabelModel
 
 case class SearchesRootModel(searchesModel: Seq[LabelModel]) {
   def updated (newSearch: LabelModel) = {

@@ -3,7 +3,7 @@ package client.handlers
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
-import client.models.LabelModel
+import shared.models.LabelModel
 import client.rootmodels.{MessagesRootModel, SearchesRootModel}
 import client.services.{LGCircuit, CoreApi}
 import client.utils.{Utils, PrologParser}

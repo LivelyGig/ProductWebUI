@@ -1,6 +1,6 @@
 package client.rootmodels
 
-import client.models.ProjectsModel
+import shared.models.ProjectsModel
 import shared.dtos._
 
 case class ProjectsRootModel(projectsModelList: Seq[ProjectsModel]) {

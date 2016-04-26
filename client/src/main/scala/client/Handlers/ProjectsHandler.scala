@@ -3,7 +3,7 @@ package client.handlers
 import diode.data.PotState.PotPending
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
-import client.models.{JobPost, ProjectsModel, ConnectionsModel}
+import shared.models.{JobPost, ProjectsModel, ConnectionsModel}
 import client.rootmodels.ProjectsRootModel
 import client.services.CoreApi
 import shared.dtos._

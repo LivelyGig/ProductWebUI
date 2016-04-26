@@ -1,4 +1,4 @@
-package client.models
+package shared.models
 
 import java.text.SimpleDateFormat
 import java.util.{Calendar, Date, SimpleTimeZone, TimeZone}

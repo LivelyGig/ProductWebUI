@@ -1,7 +1,7 @@
 package client.utils
 
 import shared.dtos.Connection
-import client.models.LabelModel
+import shared.models.LabelModel
 import org.scalajs.dom._
 
 object Utils {

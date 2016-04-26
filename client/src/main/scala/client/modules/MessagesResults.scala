@@ -11,7 +11,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
-import client.models.MessagesModel
+import shared.models.MessagesModel
 import client.services.LGCircuit
 import scala.scalajs.js
 import scala.util.{Failure, Success}

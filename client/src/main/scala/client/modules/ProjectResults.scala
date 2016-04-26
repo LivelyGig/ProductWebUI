@@ -10,7 +10,7 @@ import client.rootmodels.ProjectsRootModel
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS}
 import client.modals.{NewRecommendation, NewMessage, BiddingScreenModal,RecommendationJobs}
-import client.models.{ProjectsModel, ModelType}
+import shared.models.{ProjectsModel, ModelType}
 import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js
 import scala.scalajs.js.Date

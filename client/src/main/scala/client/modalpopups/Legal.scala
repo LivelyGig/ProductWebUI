@@ -15,9 +15,9 @@ import client.components._
 import client.css._
 import client.logger._
 import client.logger._
-import client.models.EmailValidationModel
-import client.models.UserModel
-import client.models.{EmailValidationModel, UserModel}
+import shared.models.EmailValidationModel
+import shared.models.UserModel
+import shared.models.{EmailValidationModel, UserModel}
 import client.services.ApiResponseMsg
 import client.services.CoreApi
 import client.services.CoreApi._
