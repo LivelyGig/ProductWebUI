@@ -2,7 +2,7 @@ package client.handlers
 
 import diode.{Effect, ActionHandler, ModelRW}
 import shared.dtos.{CancelSubscribeRequest, InitializeSessionResponse, ApiResponse}
-import client.models.UserModel
+import shared.models.UserModel
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom.window
 import concurrent._

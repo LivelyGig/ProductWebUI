@@ -3,7 +3,7 @@ package client.modals
 import client.components.Bootstrap.Modal
 import client.components.GlobalStyles
 import client.components.Icon
-import client.models.{EmailValidationModel, UserModel}
+import shared.models.{EmailValidationModel, UserModel}
 import client.LGMain.{Loc}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._

@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.{FooterCSS, DashBoardCSS}
-import client.models.{SignUpModel}
+import shared.models.{SignUpModel}
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls

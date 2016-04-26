@@ -6,7 +6,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import client.models.{SignUpModel, EmailValidationModel, UserModel}
+import shared.models.{SignUpModel, EmailValidationModel, UserModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
@@ -17,7 +17,7 @@ import scala.scalajs.js
 import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.models.UserModel
+import shared.models.UserModel
 
 import scala.scalajs.js.JSON
 import org.querki.jquery._

@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
 import client.rootmodels.{ SearchesRootModel}
 import client.css._
-import client.models.{LabelModel, UserModel}
+import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import scalacss.ScalaCssReact._

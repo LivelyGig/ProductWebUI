@@ -10,7 +10,7 @@ import diode.data.Pot
 import client.components.Icon
 import client.css.{HeaderCSS, DashBoardCSS}
 import client.modals.{NewMessage, NewRecommendation}
-import client.models.ConnectionsModel
+import shared.models.ConnectionsModel
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._

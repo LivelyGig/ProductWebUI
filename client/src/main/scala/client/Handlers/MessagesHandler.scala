@@ -3,7 +3,7 @@ package client.handlers
 import diode.data.PotState.{PotFailed, PotPending}
 import diode._
 import diode.data._
-import client.models.MessagesModel
+import shared.models.MessagesModel
 import client.rootmodels.MessagesRootModel
 import client.services.CoreApi
 import shared.dtos._

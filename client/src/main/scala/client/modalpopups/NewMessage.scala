@@ -2,7 +2,7 @@ package client.modals
 
 import java.util.UUID
 
-import client.models.MessagePost
+import shared.models.MessagePost
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount

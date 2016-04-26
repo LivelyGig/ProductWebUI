@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
-import client.models.EmailValidationModel
+import shared.models.EmailValidationModel
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import org.querki.jquery._

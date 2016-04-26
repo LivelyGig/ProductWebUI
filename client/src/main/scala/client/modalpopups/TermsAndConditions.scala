@@ -9,7 +9,7 @@
 //import client.components._
 //import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
 //import client.logger._
-//import client.models.UserModel
+//import shared.models.UserModel
 //import client.services.CoreApi._
 //import client.services._
 //import scala.concurrent.ExecutionContext.Implicits.global

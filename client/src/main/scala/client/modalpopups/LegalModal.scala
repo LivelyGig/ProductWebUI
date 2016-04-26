@@ -1,6 +1,6 @@
 package client.modals
 
-import client.models.{EmailValidationModel, UserModel}
+import shared.models.{EmailValidationModel, UserModel}
 import client.LGMain.{Loc}
 import org.scalajs.dom._
 import scala.util.{Failure, Success}

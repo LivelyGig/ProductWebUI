@@ -22,7 +22,7 @@
 //import client.logger._
 //import client.modals.NewMessage.State
 //import client.modals.PostNewMessage.State
-//import client.models.UserModel
+//import shared.models.UserModel
 //import client.services.CoreApi._
 //import client.services._
 //

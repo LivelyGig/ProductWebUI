@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS,CreateAgentCSS}
-import client.models.UserModel
+import shared.models.UserModel
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
