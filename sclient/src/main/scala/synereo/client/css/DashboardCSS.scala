@@ -36,11 +36,11 @@ object DashboardCSS {
       marginBottom(90.px)
     )
     val homeFeedMainContainer = style(
-      width(762.px),
-      padding(0.px)
+      //      width(762.px),
+      //      padding(0.px)
     )
     val cardImage = style(
-//      paddingRight(65.px)s
+      //      paddingRight(65.px)s
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
@@ -75,13 +75,19 @@ object DashboardCSS {
       )
 
     )
+    val CardHolderLiElement = style(
+      margin(15.px),
+      padding(15.px)
+    )
     val glanceViewName = style(
       display.inlineBlock
     )
     val userPost = style(
-      marginTop(5.%%),
-      width(100.%%),
-      backgroundColor.white,
+      //      marginTop(5.%%),
+      marginLeft.auto.important,
+      marginRight.auto.important,
+      width(762.px),
+      backgroundColor(c"#FFFFFF"),
       borderRadius(5.px),
       paddingTop(5.px),
       paddingBottom(5.px)
@@ -91,7 +97,10 @@ object DashboardCSS {
       backgroundColor(c"#FFFFFF"),
       borderRadius(5.px),
       paddingTop(5.px),
-      paddingBottom(5.px)
+      paddingBottom(5.px),
+      marginLeft.auto,
+      marginRight.auto,
+      width(762.px)
     )
     val userPostRight = style(
       marginTop(5.%%),
