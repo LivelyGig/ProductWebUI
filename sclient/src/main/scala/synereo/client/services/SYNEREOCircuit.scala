@@ -5,7 +5,7 @@ import diode.data._
 import diode.react.ReactConnector
 import synereo.client.Handlers._
 import synereo.client.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel, SearchesRootModel}
-import synereo.client.models.UserModel
+import shared.models.UserModel
 
 
 /**

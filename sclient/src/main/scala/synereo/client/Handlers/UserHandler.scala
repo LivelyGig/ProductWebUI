@@ -2,7 +2,7 @@ package synereo.client.Handlers
 
 import diode.{ActionHandler, ModelRW}
 import org.scalajs.dom.window
-import synereo.client.models.UserModel
+import shared.models.UserModel
 
 /**
   * Created by shubham.k on 1/25/2016.

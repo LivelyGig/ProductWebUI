@@ -6,7 +6,7 @@ import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
-import synereo.client.models.UserModel
+import shared.models.UserModel
 import scala.scalajs.js
 import scala.util
 import scalacss.ScalaCssReact._
@@ -18,7 +18,10 @@ import org.scalajs.dom._
 
 object NewUserForm {
   var addNewUserState: Boolean = false
-  var userModelUpdate = new UserModel("", "", "", "", "", false, false, "")
+  var userModelUpdate = new UserModel("", "", "", false, "", "")
+  /*case class UserModel(email: String = "", password: String = "", ConfirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
+                       isLoggedIn: Boolean = false, imgSrc: String = "")*/
+  /*case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "",ConfirmPassword: String = "")*/
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -31,7 +34,7 @@ object NewUserForm {
     def hideModal =  {
       // instruct Bootstrap to hide the modal
       addNewUserState = false
-      userModelUpdate = new UserModel("", "", "", "", "", false, false, "")
+      userModelUpdate = new UserModel("", "", "", false, "", "")
       t.modState(s=>s.copy(showLoginForm = true))
       //jQuery(t.getDOMNode()).modal("hide")
     }
@@ -157,9 +160,9 @@ object NewUserForm {
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)
-        State(new UserModel(userModelUpdate.email, userModelUpdate.password, userModelUpdate.ConfirmPassword, userModelUpdate.name, userModelUpdate.lastName, false))
+        State(new UserModel(userModelUpdate.email, userModelUpdate.password, userModelUpdate.ConfirmPassword,false))
       else
-        State(new UserModel("", "", "", "", "", false, false, ""))
+        State(new UserModel("", "", "", false, "", ""))
     )
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {

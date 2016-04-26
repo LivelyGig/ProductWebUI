@@ -15,7 +15,7 @@ import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon
 import synereo.client.components.{MIcon, Bootstrap, GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
-import synereo.client.models.UserModel
+import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
@@ -42,7 +42,7 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(0, _ => "FullBlogPostView", SynereoBlogPostFullLOC),
+    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
     MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
     MenuItem(2, _ => "MarketPlaceView", MarketPlaceFullLOC)
   )

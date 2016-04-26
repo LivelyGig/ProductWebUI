@@ -29,6 +29,7 @@ object Dashboard {
 
   class Backend(t: BackendScope[Props, State]) {
     val homeFeedList: js.Object = "#homeFeedMediaList"
+    val collapsiblePost: js.Object = "#collapse-post"
     val window: js.Object = window
 
     def toggleTopbar = Callback {
@@ -56,20 +57,21 @@ object Dashboard {
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
       val Li = e.target
       setTimeout(1500) {
-        //        println("completed 1500ms")
-        $(Li).find(".glance-view-button").trigger("click")
+        if (!$(collapsiblePost).hasClass(".collapse.in")) {
+          $(Li).find(".glance-view-button").trigger("click")
+        }
       }
       CallbackTo.pure(0)
     }
 
-    def handleMouseLeaveEvent(e: ReactEvent): Callback = {
-      val Li = e.target
-      setTimeout(1500) {
-        //        println("completed 1500ms")
-        $(Li).find(".glance-view-button").trigger("click")
-      }
-      CallbackTo.pure(0)
-    }
+    //    def handleMouseLeaveEvent(e: ReactEvent): Callback = {
+    //      val Li = e.target
+    //      setTimeout(1500) {
+    //        //        println("completed 1500ms")
+    //        $(Li).find(".glance-view-button").trigger("click")
+    //      }
+    //      CallbackTo.pure(0)
+    //    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain, ^.onScroll ==> handleScroll)(
@@ -105,7 +107,7 @@ object Dashboard {
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onClick ==> modifyCardSize)(
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -145,7 +147,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -176,7 +178,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -206,7 +208,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -237,7 +239,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -267,7 +269,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -297,7 +299,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -327,7 +329,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -357,7 +359,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -387,7 +389,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(
@@ -417,7 +419,7 @@ object Dashboard {
                         )
                       )
                     ),
-                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent, ^.onMouseLeave ==> handleMouseLeaveEvent)(
+                    <.li(^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                       <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                         <.div(^.className := "")(
                           <.div(^.className := "col-md-1")(

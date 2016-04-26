@@ -6,12 +6,13 @@ import japgolly.scalajs.react.extra.router.{RouterCtl, Resolution}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
+import shared.models.UserModel
 import synereo.client.Handlers.{CreateLabels, LoginUser}
 import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
-import synereo.client.models.{EmailValidationModel, UserModel}
+import synereo.client.models.{EmailValidationModel}
 import synereo.client.services.{ApiResponseMsg, SYNEREOCircuit, CoreApi}
 import synereo.client.services.CoreApi._
 import scala.scalajs.js
@@ -29,7 +30,7 @@ object Login {
   val SERVER_ERROR = "SERVER_ERROR"
   val SUCCESS = "SUCCESS"
   val loginLoader: js.Object = "#loginLoader"
-  val loadingScreen:js.Object = "#loadingScreen"
+  val loadingScreen: js.Object = "#loadingScreen"
 
   var showLoginContent: Boolean = false
 
@@ -60,11 +61,11 @@ object Login {
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
-//    def loginUser(e: ReactEventI) = Callback {
-//      e.preventDefault()
-//      val user = t.state.runNow().userModel
-//      processLogin(user)
-//    }
+    //    def loginUser(e: ReactEventI) = Callback {
+    //      e.preventDefault()
+    //      val user = t.state.runNow().userModel
+    //      processLogin(user)
+    //    }
 
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
       println(s"showNewUserForm: $showNewUserForm")
@@ -95,20 +96,20 @@ object Login {
       t.modState(s => s.copy(showLoginForm = false))
     }
 
-//    def processLogin(userModel: UserModel): Unit = {
-//      $(loginLoader).removeClass("hidden")
-//      CoreApi.agentLogin(userModel).onComplete {
-//        case Success(responseStr) =>
-//          validateResponse(responseStr) match {
-//            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
-//            case LOGIN_ERROR => processLoginFailed(responseStr)
-//            case SERVER_ERROR => processServerError(responseStr)
-//          }
-//        case Failure(s) =>
-//          $(loginLoader).addClass("hidden")
-//          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
-//      }
-//    }
+    //    def processLogin(userModel: UserModel): Unit = {
+    //      $(loginLoader).removeClass("hidden")
+    //      CoreApi.agentLogin(userModel).onComplete {
+    //        case Success(responseStr) =>
+    //          validateResponse(responseStr) match {
+    //            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
+    //            case LOGIN_ERROR => processLoginFailed(responseStr)
+    //            case SERVER_ERROR => processServerError(responseStr)
+    //          }
+    //        case Failure(s) =>
+    //          $(loginLoader).addClass("hidden")
+    //          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
+    //      }
+    //    }
 
     def validateResponse(response: String): String = {
       try {

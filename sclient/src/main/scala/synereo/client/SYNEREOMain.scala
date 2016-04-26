@@ -3,7 +3,7 @@ package synereo.client
 //import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
-import synereo.client.models.UserModel
+import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
@@ -38,7 +38,7 @@ object SYNEREOMain extends js.JSApp {
 
   case object SynereoTimelineViewLOC extends Loc
 
-  case object SynereoBlogPostFullLOC extends Loc
+  case object PostFullViewLOC extends Loc
 
   case object MarketPlaceFullLOC extends Loc
 
@@ -55,10 +55,9 @@ object SYNEREOMain extends js.JSApp {
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard(Dashboard.Props()))
-      | staticRoute("#synereofullblogpost", SynereoBlogPostFullLOC) ~> renderR(ctl => BlogPostFull(ctl))
+      | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
-//      | staticRoute("#signup", SignupLOC) ~> renderR(ctl => Signup(Signup.Props()))
       | staticRoute("#marketplacefull", MarketPlaceFullLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
       ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)

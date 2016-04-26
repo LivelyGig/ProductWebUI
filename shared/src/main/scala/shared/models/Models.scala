@@ -31,7 +31,7 @@ case class Referents(referentId: String,referentName: String )
 //sealed trait SubscribeResponse
 //case class MessagesModel(uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String, parent: ParentMessageModel = ParentMessageModel("","","","",Nil,Nil,"")) /*extends SubscribeResponse*/
 case class ParentMessageModel (uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
-case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "")
+case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "",ConfirmPassword: String = "")
 case class SignUpModel (email: String = "", password: String = "", confirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator:Boolean =false,
                         isClient:Boolean =false, isFreelancer:Boolean=false, canReceiveEmailUpdates:Boolean=false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
 case class EmailValidationModel (token: String)
