@@ -26,6 +26,11 @@ object Searches {
   def sidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+    if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
+      $(sidebtn).next().addClass("sidebarRightContainer")
+    }else{
+      $(sidebtn).next().removeClass("sidebarRightContainer")
+    }
   }
 
   val selectState: js.Object = "#selectize"
