@@ -24,6 +24,7 @@ object CoreApi {
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
   val MESSAGES_SESSION_URI = "messagesSessionUri"
   val CONNECTIONS_SESSION_URI = "connectionsSessionUri"
+  val JOBS_SESSION_URI = "jobsSessionUri"
   val INSERT_CONTENT = "insertContent"
   //  var BASE_URL = "http://52.35.10.219:9876/api"
   //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
@@ -67,6 +68,7 @@ object CoreApi {
 //    println("login data : " + requestContent)
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
+
 
   def sessionPing (uri:String) : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem(uri))))
