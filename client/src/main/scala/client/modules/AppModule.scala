@@ -19,8 +19,11 @@ object AppModule {
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
       $(sidebtn).next().addClass("sidebarRightContainer")
+//        if($(sidebtn).next().hasClass("sidebarRightContainer"))
+//          $(sidebtn).next().first().css("pointer-events","none")
     }else{
       $(sidebtn).next().removeClass("sidebarRightContainer")
+
       }
     val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
@@ -72,7 +75,8 @@ object AppModule {
                 ),
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer",DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer",DashBoardCSS.Style.dashboardResults2, ^.onClick --> sidebar)(
+                <.div()(
                 p.view match {
                   case "talent" => TalentResults.component()
                   case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
@@ -82,6 +86,7 @@ object AppModule {
                   //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
                   case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                 }
+              )
               )
             )
           ),
