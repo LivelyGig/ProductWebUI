@@ -10,6 +10,8 @@ import client.components.Icon
 import client.components.Icon._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import client.services.LGCircuit
+
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -62,7 +64,7 @@ object PostAProjectForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: ( Boolean) => Callback)
-  case class State(postProject: Boolean = false)
+  case class State(postProject: Boolean = false, selectizeInputId : String = "postNewJobSelectizeInput")
 
 
   case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
@@ -215,7 +217,7 @@ object PostAProjectForm {
               <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Skill needed:",^.lineHeight:= 4)
             ),
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.input(^.`type` := "textarea",ProjectCSS.Style.textareaWidth,^.placeholder:="Recipients:",^.lineHeight:= 4)
+              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy,s.selectizeInputId)))
             )
           ),
           <.div()(

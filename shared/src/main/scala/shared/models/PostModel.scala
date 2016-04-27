@@ -4,9 +4,10 @@ package shared.models
   * Created by shubham.k on 27-04-2016.
   */
 
-case class Post (val id: String, postContent: PostContent)
+//case class Post (val id: String, postContent: PostContent)
 
-sealed trait PostContent {
+sealed trait Post {
+  def id : String
   def createdDate : String
   def modifiedDate: String
   def spliciousType: String
@@ -16,10 +17,10 @@ sealed trait PostContent {
   def postType : String
 
 }
-case class MessagePost ( val id: String, override val spliciousType: String, override val createdDate: String, override val modifiedDate: String, override val labels: String, override val connections: String, override val text: String, recipients: String = "", subject : String="", content : String="") extends PostContent{
+case class MessagePost ( val id: String, override val spliciousType: String, override val createdDate: String, override val modifiedDate: String, override val labels: String, override val connections: String, override val text: String, recipients: String = "", subject : String="", content : String="") extends Post{
   override def postType = "MessagePost"
 }
-case class VersionedPost (createdDate : String,modifiedDate: String, spliciousType: String,labels: String, connections: String, text: String, versionedPostContent: VersionedPostContent)extends PostContent{
+case class VersionedPost (val id: String , createdDate : String,modifiedDate: String, spliciousType: String,labels: String, connections: String, text: String, versionedPostContent: VersionedPostContent)extends Post{
   override def postType = "VersionedPost"
 }
 sealed trait VersionedPostContent {
