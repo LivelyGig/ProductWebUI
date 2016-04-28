@@ -15,41 +15,33 @@ object AppModule {
 
   def sidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
-    val sidebarIcon : js.Object  = "#sidebarIcon"
+    val sidebarIcon: js.Object = "#sidebarIcon"
+    val rsltScrollContainer: js.Object = "#rsltScrollContainer"
+    val middelNaviContainer: js.Object = "#middelNaviContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-      if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
+    if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("sidebarRightContainer")
-//        if($(sidebtn).next().hasClass("sidebarRightContainer"))
-//          $(sidebtn).next().first().css("pointer-events","none")
-    }else{
+      $(rsltScrollContainer).css("pointer-events", "none")
+      $(middelNaviContainer).css("pointer-events", "none")
+    } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
-
-      }
-    val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
-    val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
+      $(rsltScrollContainer).css("pointer-events", "all")
+      $(middelNaviContainer).css("pointer-events", "all")
+    }
+    val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
+    val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
     $(t2).removeClass("fa fa-chevron-circle-right")
-  //  $(t2).css("opacity","0")
     $(t2).addClass("fa fa-chevron-circle-left")
     $(t1).removeClass("fa fa-chevron-circle-left")
     $(t1).addClass("fa fa-chevron-circle-right")
-    //$(t1).css("opacity","0.4")
-  }
-  case class Backend(t: BackendScope[Props, Unit]) {
 
-    def mounted(props: Props): Callback = Callback {
-      val sidebtn: js.Object = "#searchContainer"
-      val t1 : js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
-      val t2 : js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
-      $(t2).removeClass("fa fa-chevron-circle-right")
-      $(t2).addClass("fa fa-chevron-circle-left")
-      $(t1).removeClass("fa fa-chevron-circle-left")
-      $(t1).addClass("fa fa-chevron-circle-right")
-      if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
-        $(sidebtn).next().addClass("sidebarRightContainer")
-      }else{
-        $(sidebtn).next().removeClass("sidebarRightContainer")
-      }
+  }
+
+  case class Backend(t: BackendScope[Props, Unit]) {
+    def mounted(props: Props) = {
+      sidebar
     }
+
     def render(p: Props) = {
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
@@ -71,22 +63,22 @@ object AppModule {
                 //Adding toggle button for sidebar
                 <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left hidden-md hidden-lg", ^.float := "right", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
                   ^.onClick --> sidebar)(
-                  <.span(^.id := "sidebarIcon",LftcontainerCSS.Style.toggleBtn)(/*Icon.chevronCircleLeft*/)
+                  <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)(/*Icon.chevronCircleLeft*/)
                 ),
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer",DashBoardCSS.Style.dashboardResults2, ^.onClick --> sidebar)(
-                <.div()(
-                p.view match {
-                  case "talent" => TalentResults.component()
-                  case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
-                  case "contract" => ContractResults.component()
-                  case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
-                  case "offerings" => OfferingResults.component()
-                  //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
-                  case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
-                }
-              )
+              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
+                <.div(^.onClick --> sidebar)(
+                  p.view match {
+                    case "talent" => TalentResults.component()
+                    case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
+                    case "contract" => ContractResults.component()
+                    case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
+                    case "offerings" => OfferingResults.component()
+                    //case "connections"=> ConnectionList(ConnectionList.ConnectionListProps())
+                    case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
+                  }
+                )
               )
             )
           ),
