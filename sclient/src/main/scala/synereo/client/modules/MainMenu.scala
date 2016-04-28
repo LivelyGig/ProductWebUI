@@ -44,7 +44,7 @@ object MainMenu {
   private val menuItems = Seq(
     MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
     MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
-    MenuItem(2, _ => "MarketPlaceView", MarketPlaceFullLOC)
+    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
@@ -62,7 +62,7 @@ object MainMenu {
                     ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
                   <.div(^.className := "dropdown-arrow"),
                   <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
-                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
+                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
                     <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
                     <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((Icon.connectdevelop))),
                       <.ul(^.className := "list-unstyled nav-pills")(
@@ -91,7 +91,7 @@ object MainMenu {
                 <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
                 <.div(^.className := "dropdown-arrow-small"),
                 <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                  <.li(props.ctl.link(MarketPlaceFullLOC)("MarketPlace")),
+                  <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
                   <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
                 )
               ),

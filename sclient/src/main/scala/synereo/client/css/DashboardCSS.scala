@@ -25,6 +25,26 @@ object DashboardCSS {
       overflowY.scroll.important,
       backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
     )
+    val cardPostTagBtn = style(
+      margin(5.px),
+      fontFamily :=! "karla",
+      fontWeight.normal,
+      fontSize(12.px),
+      textTransform.capitalize,
+      backgroundColor.transparent.important,
+      height(38.px),
+      color(c"#000"),
+      opacity(0.8),
+      border(1.px, solid, c"#78D3F5"),
+      borderRadius(20.px),
+      minWidth(80.px),
+      padding.`0`.important,
+      &.hover(
+        color(c"#000"),
+        border(1.px, solid, c"#78D3F5"),
+        backgroundColor.transparent.important
+      )
+    )
     val bodyImg = style(
       borderImageRepeat.:=(none),
       overflow.hidden,
@@ -50,7 +70,7 @@ object DashboardCSS {
       paddingLeft(15.px),
       paddingTop(10.px)
     )
-    val descriptionHolderForImageCard = style(
+    val cardDescriptionContainerDiv = style(
       paddingLeft(65.px)
     )
     val profileActionButton = style(

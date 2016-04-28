@@ -136,11 +136,11 @@ object Login {
     }
 
     def closeServerErrorPopup(): Callback = {
-      t.modState(s => s.copy(showServerErrorModal = false))
+      t.modState(s => s.copy(showLoginForm = true))
     }
 
     def closeLoginErrorPopup(): Callback = {
-      t.modState(s => s.copy(showErrorModal = false))
+      t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
     }
 
     def processLoginFailed(responseStr: String) = {
@@ -159,7 +159,7 @@ object Login {
       println("in processServerError")
       $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
-      val serverErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      //      val serverErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       t.modState(s => s.copy(showServerErrorModal = true)).runNow()
     }
 

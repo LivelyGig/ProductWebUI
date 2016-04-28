@@ -36,11 +36,11 @@ object SYNEREOMain extends js.JSApp {
 
   case object DashboardLoc extends Loc
 
-  case object SynereoTimelineViewLOC extends Loc
+  case object TimelineViewLOC extends Loc
 
   case object PostFullViewLOC extends Loc
 
-  case object MarketPlaceFullLOC extends Loc
+  case object MarketPlaceLOC extends Loc
 
   case object SignupLOC extends Loc
 
@@ -57,8 +57,8 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard(Dashboard.Props()))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
-      | staticRoute("#usertimeline", SynereoTimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
-      | staticRoute("#marketplacefull", MarketPlaceFullLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
+      | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
+      | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl))
       ).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
   }.renderWith(layout)
 
