@@ -52,7 +52,7 @@ object LoginForm {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
-   def userNameFocus : Unit ={
+   def userNameFocus() : Unit ={
      $(modal).find("input:first").focus()
    }
 

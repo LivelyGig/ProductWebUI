@@ -8,6 +8,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
+import org.scalajs.dom._
+
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
@@ -16,6 +18,14 @@ import scala.scalajs.js
   * Created by Shubham.K on 4/6/2016.
   */
 object ConnectionsSelectize {
+  def getConnectionsFromSelectizeInput (selectizeInputId : String) : Seq[String]= {
+    var selectedConnections = Seq[String]()
+    val selector : js.Object  = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
+
+    $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
+    selectedConnections
+  }
+
   var getSelectedValue = new ListBuffer[String]() /*Seq[Label]()*/
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier : String)
   case class Backend(t: BackendScope[Props, _]) {

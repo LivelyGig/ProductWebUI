@@ -24,7 +24,7 @@ object ConnectionsResults {
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
   }
 
   // create the React component for Dashboard
