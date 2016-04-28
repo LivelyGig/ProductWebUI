@@ -17,7 +17,7 @@ object HeaderCSS {
       paddingRight(0.%%),
       marginBottom(0.px),
       media.maxWidth(820.px)-
-        paddingTop(4.px),
+        paddingTop(2.px),
       media.minWidth(821.px)-
         paddingTop(8.px)
     )
@@ -40,10 +40,14 @@ object HeaderCSS {
         outline(none)
       ),
       /*media queries*/
-      media.maxWidth(1130.px) -(
-        fontSize(1.em),
+      media.maxWidth(1130.px).minWidth(820.px) -(
+        fontSize(1.2.em),
         padding(10.px , 10.px)
-        )
+        ),
+        media.maxWidth(819.px) -(
+      fontSize(1.em),
+      padding(10.px , 10.px)
+      )
     )
 
     val nav = style(
@@ -59,7 +63,7 @@ object HeaderCSS {
         color(c"#67EAF2")
       ),
         media.maxWidth(819.px) -(
-          fontSize(1.1.em),
+          fontSize(1.em),
       padding(10.px , 10.px)
       ),
       media.minWidth(820.px) -(
@@ -75,7 +79,7 @@ object HeaderCSS {
       media.minWidth(821.px)-
       marginTop(-3.px),
       media.maxWidth(820.px)-
-      marginTop(4.px)
+      marginTop(0.px)
     )
 
     /* css*/
@@ -204,6 +208,9 @@ object HeaderCSS {
       marginTop(-8.px)
     )
 
+    val navbarToggle = style (
+      margin(0.px).important
+    )
     val ModalNameDropDown = style {
       media.maxWidth(768.px) -
         display.block
