@@ -1,7 +1,7 @@
 package client.modals
 
 //import japgolly.scalajs.react.extra.OnUnmount
-import client.handlers.{CreateLabels, CreateSessionForMessages, LoginUser, RefreshConnections}
+import client.handlers.{CreateLabels, CreateSessions, LoginUser, RefreshConnections}
 import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
@@ -118,7 +118,7 @@ object AgentLoginSignUp {
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
       LGCircuit.dispatch(LoginUser(user))
       //               println(userModel)
-      LGCircuit.dispatch(CreateSessionForMessages(userModel))
+      LGCircuit.dispatch(CreateSessions(userModel))
       LGCircuit.dispatch(CreateLabels())
       LGCircuit.dispatch(RefreshConnections())
       log.debug("login successful")

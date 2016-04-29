@@ -26,7 +26,7 @@ object ProjectResults {
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
   }
 
   // create the React component for Dashboard
