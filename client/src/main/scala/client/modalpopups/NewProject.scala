@@ -99,7 +99,7 @@ object NewProjectForm {
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       val post = new VersionedPost(uid,new Date().toUTCString(),new Date().toUTCString(), "","", selectedConnections,state.projectPost)
       LGCircuit.dispatch(PostContent(post, selectedConnections, CoreApi.JOBS_SESSION_URI))
-      t.modState(s => s.copy(postProject = false))
+      t.modState(s => s.copy(postProject = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -152,8 +152,7 @@ object NewProjectForm {
                   <.label(^.`for` := "Project Name", "Project Name")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin , ^.value := model.name,
-                    ^.required:=true, ^.onChange==> updateName)
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin , ^.value := model.name, ^.required:=true, ^.onChange==> updateName)
                 )
               ),
               <.div(^.className:="row")(
@@ -161,7 +160,7 @@ object NewProjectForm {
                   <.label(^.`for` := "Start Date", "Start Date")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.startDate, ^.onChange==> updateStartDate)
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.startDate, ^.onChange==> updateStartDate, ^.required:=true)
                 )
               ),
               <.div(^.className:="row")(
@@ -277,7 +276,7 @@ object NewProjectForm {
             <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Save as Draft"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Submit"),
+              <.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn,"Submit"),
               <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
