@@ -1,4 +1,4 @@
-package client.rootmodels
+package shared.RootModels
 
 import shared.models.LabelModel
 

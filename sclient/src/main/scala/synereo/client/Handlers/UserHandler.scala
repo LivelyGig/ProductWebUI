@@ -1,4 +1,4 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
 import diode.{ActionHandler, ModelRW}
 import org.scalajs.dom.window

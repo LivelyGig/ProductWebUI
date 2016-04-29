@@ -1,11 +1,10 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
-//import synereo.client.handlers.RefreshConnections
 import diode.data.{Empty, Pot, PotAction}
 import diode.{ActionHandler, ModelRW}
-import synereo.client.RootModels.ConnectionsRootModel
+import shared.RootModels.ConnectionsRootModel
 import shared.dtos.{ApiResponse, ConnectionProfileResponse}
-import synereo.client.models.ConnectionsModel
+import shared.models.ConnectionsModel
 import synereo.client.services.CoreApi
 
 //import rx.ops.Timer

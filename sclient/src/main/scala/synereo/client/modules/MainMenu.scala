@@ -9,7 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
-import synereo.client.Handlers.{LogoutUser, LoginUser}
+import synereo.client.handlers.{LogoutUser, LoginUser}
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon

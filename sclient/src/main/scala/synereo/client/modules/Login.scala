@@ -7,12 +7,12 @@ import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.UserModel
-import synereo.client.Handlers.{CreateLabels, LoginUser}
+import synereo.client.handlers.{CreateLabels, LoginUser}
 import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
-import synereo.client.models.{EmailValidationModel}
+import shared.models.{EmailValidationModel}
 import synereo.client.services.{ApiResponseMsg, SYNEREOCircuit, CoreApi}
 import synereo.client.services.CoreApi._
 import scala.scalajs.js

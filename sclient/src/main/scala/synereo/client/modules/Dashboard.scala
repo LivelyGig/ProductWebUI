@@ -1,10 +1,17 @@
 package synereo.client.modules
 
+import diode.react.ReactPot._
+import diode.react._
+import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import synereo.client.handlers.{RefreshConnections, RefreshMessages}
+import shared.models.MessagesModel
+import shared.RootModels.MessagesRootModel
 import synereo.client.SYNEREOMain
 import synereo.client.components.{MIcon, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
+import synereo.client.services.SYNEREOCircuit
 import scala.scalajs.js
 import scalacss.Attrs.clear
 import scalacss.ScalaCssReact._
@@ -31,11 +38,24 @@ object Dashboard {
 
   // in "ms" (higher means lower fidelity )
 
-  case class Props()
+  case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
+    def mounted(props: Props) = {
+      if (props.proxy().isEmpty) {
+        println("proxy is empty")
+        SYNEREOCircuit.dispatch(RefreshConnections())
+        props.proxy.dispatch(RefreshMessages())
+
+        //        props.proxy.dispatch(RefreshMessages())
+
+      } else {
+        println("found Nothing")
+        Callback.empty
+      }
+    }
 
     def toggleTopbar = Callback {
       val topBtn: js.Object = "#TopbarContainer"
@@ -129,87 +149,14 @@ object Dashboard {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
-                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onClick ==> modifyCardSize)(
-                    for (i <- 1 to 50) yield {
-                      if (i % 2 != 0) {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
-                          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "")(
-                              <.div(^.className := "col-md-1")(
-                                <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                              ),
-                              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                <.div(DashboardCSS.Style.userNameDescription)(
-                                  <.span("James Gosling"),
-                                  <.span(MIcon.chevronRight),
-                                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                                  <.span("just now")
-                                ),
-                                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
-                              )
-                            ),
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-12")(
-                                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                                  <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                  <.div(DashboardCSS.Style.cardText)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                                    "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                                  <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                                    "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button")(
-                                    (MIcon.moreHoriz)
-                                  ),
-                                  <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText, ^.onClick ==> openFullPostView)(
-                                    <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
-                                    ),
-                                    <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      }
-                      else {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
-                          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "")(
-                              <.div(^.className := "col-md-1")(
-                                <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                              ),
-                              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                <.div(DashboardCSS.Style.userNameDescription)(
-                                  <.span("James Gosling"),
-                                  <.span(MIcon.chevronRight),
-                                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                                  <.span("just now")
-                                ),
-                                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
-                              )
-                            ),
-                            <.div(^.className := "")(
-                              <.div(^.className := "row")(
-                                <.div(^.className := "col-md-12")(
-                                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
-                                  <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                                    <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                    <.div(DashboardCSS.Style.cardText)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                                      "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                                    <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      }
-                    }
+                  <.div(
+                    p.proxy().render(
+                      messagesRootModel =>
+                        HomeFeedList(messagesRootModel.messagesModelList)
+                    ),
+                    p.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
+                    p.proxy().renderPending(ex => <.div()(
+                      <.img(^.src := "./assets/images/processing.gif")))
                   )
                 )
               )
@@ -223,7 +170,111 @@ object Dashboard {
   val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(props: Props) = component(props)
+  def apply(proxy: ModelProxy[Pot[MessagesRootModel]]) = component(Props(proxy))
+}
+
+object HomeFeedList {
+
+  case class Props(messages: Seq[MessagesModel])
+
+  private val MessagesList = ReactComponentB[Props]("ProjectList")
+    .render_P(p => {
+      def renderMessages(message: MessagesModel) = {
+        <.li(^.id := s"home-feed-card", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
+            <.div(^.className := "")(
+              <.div(^.className := "col-md-1")(
+                <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+              ),
+              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                <.div(DashboardCSS.Style.userNameDescription)(
+                  <.span("James Gosling"),
+                  <.span(MIcon.chevronRight),
+                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                  <.span("just now")
+                ),
+                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
+              )
+            ),
+            <.div(^.className := "")(
+              <.div(^.className := "row")(
+                <.div(^.className := "col-md-12")(
+                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
+                  <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                    <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                    <.div(DashboardCSS.Style.cardText)(
+                      message.text,
+                      <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      }
+      <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer /*, ^.onClick ==> modifyCardSize*/)(
+        p.messages map renderMessages
+        /*for (i <- 1 to 50) yield {
+          if (i % 2 != 0) {
+            <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+              <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
+                <.div(^.className := "")(
+                  <.div(^.className := "col-md-1")(
+                    <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                  ),
+                  <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                    <.div(DashboardCSS.Style.userNameDescription)(
+                      <.span("James Gosling"),
+                      <.span(MIcon.chevronRight),
+                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                      <.span("just now")
+                    ),
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
+                  )
+                ),
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-12")(
+                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                      <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                      <.div(DashboardCSS.Style.cardText)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                        "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
+                      <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                        "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button")(
+                        (MIcon.moreHoriz)
+                      ),
+                      <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText /*, ^.onClick ==> openFullPostView*/)(
+                        <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+                        ),
+                        <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
+                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
+                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
+                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
+                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          }
+          else {
+            <.span()
+          }
+        }*/
+      )
+
+
+    })
+    .build
+
+  def apply(messages: Seq[MessagesModel]) =
+    MessagesList(Props(messages))
+
 }

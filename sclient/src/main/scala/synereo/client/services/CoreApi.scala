@@ -5,7 +5,7 @@ import org.scalajs.dom._
 import shared.Api
 import shared.models._
 import shared.dtos._
-import synereo.client.models.{EmailValidationModel}
+import shared.models.EmailValidationModel
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import upickle.default._

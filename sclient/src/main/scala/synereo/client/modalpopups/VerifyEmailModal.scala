@@ -3,7 +3,7 @@ package synereo.client.modalpopups
 
 import synereo.client.components.{Icon, GlobalStyles}
 import synereo.client.css.SignupCSS
-import synereo.client.models.EmailValidationModel
+import shared.models.EmailValidationModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
@@ -15,7 +15,7 @@ import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 
 /**
-  * Created by bhagyashree.b on 4/19/2016.
+  * Created by Mandar on 4/19/2016.
   */
 object VerifyEmailModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -69,7 +69,7 @@ object VerifyEmailModal {
                 <.div()(
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
                     ^.placeholder := "Verification code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken),
-                  <.div(SignupCSS.Style.verificationMessageText,"Verification code has been sent to your email address")
+                  <.div(SignupCSS.Style.verificationMessageText, "Verification code has been sent to your email address")
 
                 ),
                 //  <.input(^.tpe := "text", bss.formControl,^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
