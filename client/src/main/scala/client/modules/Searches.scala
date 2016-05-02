@@ -5,7 +5,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
-import client.rootmodels.{ SearchesRootModel}
+import shared.RootModels.{ SearchesRootModel}
 import client.css._
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}

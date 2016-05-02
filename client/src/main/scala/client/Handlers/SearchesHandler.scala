@@ -4,7 +4,7 @@ import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
-import client.rootmodels.{MessagesRootModel, SearchesRootModel}
+import shared.RootModels.{MessagesRootModel, SearchesRootModel}
 import client.services.{LGCircuit, CoreApi}
 import client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
