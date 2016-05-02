@@ -228,7 +228,7 @@ object AgentLoginSignUp {
     .renderPS((t, P, S) => {
       val B = t.backend
       <.div()(
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn),"",""),"Login"),
+        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn),"",""),"Log In"),
         Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn),"",""),"Sign Up"),
         //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
         //          HeaderCSS.Style.SignUpBtn)("Login"),
