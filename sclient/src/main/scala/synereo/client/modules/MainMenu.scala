@@ -1,19 +1,21 @@
 package synereo.client.modules
 
+import synereo.client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
-import synereo.client.Handlers.{LogoutUser, LoginUser}
+import synereo.client.handlers.{LogoutUser, LoginUser}
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon
 import synereo.client.components.{MIcon, Bootstrap, GlobalStyles, Icon}
 import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
-import synereo.client.models.UserModel
+import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
@@ -40,16 +42,16 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(0, _ => "FullBlogPostView", SynereoBlogPostFullLOC),
+    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
     MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
-    MenuItem(2, _ => "MarketPlaceView", MarketPlaceFullLOC)
+    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
   )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right",SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+        <.ul(^.className := "nav navbar-nav navbar-right", SynereoCommanStylesCSS.Style.mainMenuNavbar)(
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
@@ -60,9 +62,9 @@ object MainMenu {
                     ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
                   <.div(^.className := "dropdown-arrow"),
                   <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
-                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceFullLOC)("Redirect to MarketPlace")),
+                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
                     <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
-                    <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((MIcon.settings))),
+                    <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((Icon.connectdevelop))),
                       <.ul(^.className := "list-unstyled nav-pills")(
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
@@ -85,10 +87,11 @@ object MainMenu {
                   )
                 )
               ),
-              <.li(^.className := "dropdown"/*,SynereoCommanStylesCSS.Style.*/)(
-                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown",SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
-                <.ul(^.className := "dropdown-menu")(
-                  <.li(props.ctl.link(MarketPlaceFullLOC)("MarketPlace")),
+              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/)(
+                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
+                <.div(^.className := "dropdown-arrow-small"),
+                <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
+                  <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
                   <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
                 )
               ),
@@ -97,17 +100,17 @@ object MainMenu {
               )
             )
           } else {
-            <.ul(^.className := "nav nav-pills")(
-              <.li(^.className := "")(
-                <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
-                  <.span("WATCH THE VIDEO")
-                )
-              ),
+            <.ul(^.className := "nav nav-pills", SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
               <.li(
                 <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
-                  "WHAT IS SYNEREO"
+                  //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
+                  "WHAT IS SYNEREO?"
+                )
+              ),
+              <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
+                <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
+                  //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
+                  <.span("WATCH THE VIDEO")
                 )
               )
             )

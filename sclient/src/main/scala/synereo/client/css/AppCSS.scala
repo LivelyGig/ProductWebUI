@@ -12,7 +12,7 @@ object AppCSS {
       LoginCSS.Style,
       SignupCSS.Style,
       DashboardCSS.Style,
-      BlogPostFullCSS.Style,
+      PostFullViewCSS.Style,
       UserProfileViewCSS.Style,
       UserTimelineViewCSS.Style,
       MarketPlaceFullCSS.Style

@@ -1,11 +1,13 @@
 package synereo.client.css
 
 import scalacss.Defaults._
+import scala.language.postfixOps
 
 /**
   * Created by Mandar  on 3/11/2016.
   */
 object LoginCSS {
+  val zero: Int = 0
 
   object Style extends StyleSheet.Inline {
 
@@ -14,7 +16,23 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
-      marginTop(-55.px)
+      marginTop(-81.px)
+    )
+    val loginScreenBgImage = style(
+      margin.auto.important,
+      maxHeight(850.px),
+      minWidth(600.px),
+      media.maxWidth(1400.px) -
+        maxWidth(600.px)
+
+    )
+    val watchVideoBtn = style(
+      border(1.px, solid)
+    )
+    val loginModalStyle = style(
+      marginTop(120.px),
+      media.maxWidth(1400.px) -
+        marginTop(50.px)
     )
     val loginDilog = style(
       width(50.%%),
@@ -23,6 +41,9 @@ object LoginCSS {
       marginRight(auto),
       marginTop(50.px)
     )
+    val nodeDecorationImageBackground = style(
+      backgroundImage := "url(\"./assets/synereo-images/login_nodeDecoration.png\")"
+    )
     val formPadding = style(
       padding(4.%%)
     )
@@ -30,10 +51,7 @@ object LoginCSS {
 
     )
     val requestInviteModalStyle = style(
-      backgroundColor(c"#96989B")
-    )
-    val signUpModalStyle = style(
-      backgroundColor(c"#FFFFFF")
+      //      backgroundColor(c"#96989B")
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -118,8 +136,10 @@ object LoginCSS {
     )
     val navLiAStyle = style(
       fontSize(1.1.em),
+      color(c"#FFFFFF"),
+      opacity(0.5),
       & hover(
-        color(c"#35b0e2"),
+        color(c"#FFFFFF"),
         backgroundColor.transparent.important
         )
 
@@ -132,33 +152,106 @@ object LoginCSS {
       marginRight(10.px)
     )
     val dontHaveAccount = style(
-      fontSize(22.px),
+      position.absolute,
+      right(43.%%),
+      bottom(10.%%),
+      fontSize(20.px),
       display.inlineBlock,
-      marginBottom(30.px),
-      color(c"#1282B2"),
+      marginBottom(28.px),
+      color(c"#fff"),
       backgroundColor.transparent.important,
       outline.none.important,
       &.hover(
-        color(c"#1282B2"),
+        color(c"#fff"),
         outline.none.important,
         backgroundColor.transparent.important
       ),
       &.focus(
-        color(c"#1282B2"),
+        color(c"#fff"),
         outline.none.important,
         backgroundColor.transparent.important
       ),
       border.none.important,
-      fontFamily := "karla"
+      fontFamily :=! "karla",
+      opacity(0.4)
     )
+    val loginModalFooter = style(
+      textAlign.center,
+      marginLeft(-46.px),
+      marginRight(-46.px),
+      backgroundColor(rgb(0, 0, 0)),
+      padding.`0`.important
+    )
+    val dontHaveAccountBtnLoginModal = style(
+      //      position.absolute,
+      //      right(43.%%),
+      //      bottom(10.%%),
+      display.block,
+      marginLeft.auto,
+      marginRight.auto,
+      opacity(0.6),
+      marginTop(38.px),
+      color(c"#fff"),
+      fontSize(20.px),
+      //      display.inlineBlock,
+      //      marginBottom(28.px),
+      color(c"#fff"),
+      backgroundColor.transparent.important,
+      outline.none.important,
+
+      &.hover(
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      )
+      ,
+      &.focus(
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      border.none.important,
+      fontFamily :=! "karla"
+    )
+
     val requestInviteBtn = style(
+      position.absolute,
+      right(45.%%),
+      bottom(7.%%),
       backgroundColor.transparent,
-      color(c"#D2E1E3"),
+      color(c"#fff"),
+      opacity(0.7),
+      height(48.px),
       border(0.2.px, solid, c"#D2E1E3"),
-      fontSize(18.px),
+      fontSize(20.px),
       padding(10.px, 15.px),
       &.hover(
         color(c"#D2E1E3"),
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#D2E1E3"),
+        backgroundColor.transparent.important
+      )
+    )
+    val requestInviteBtnLoginModal = style(
+      //      position.absolute,
+      //      right(45.%%),
+      //      bottom(7.%%),
+      backgroundColor.transparent,
+      color(c"#fff"),
+      opacity(0.7),
+      height(48.px),
+      marginTop(28.px),
+      border(0.2.px, solid, c"#D2E1E3"),
+      fontSize(20.px),
+      padding(10.px, 15.px),
+      &.hover(
+        color(c"#fff"),
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#fff"),
         backgroundColor.transparent.important
       )
     )
@@ -167,23 +260,44 @@ object LoginCSS {
       fontWeight.normal
     )
     val subscribeButton = style(
-      backgroundColor(c"#F58634").important,
-      fontSize(1.7.em),
+      backgroundColor(c"#FF6F12 ").important,
+      fontSize(22.px),
       color.white.important,
-      margin(40.px)
+      margin(45.px, 0.px)
     )
-    val modalText = style(
+    val requestInviteModalText = style(
       fontSize(4.em),
       padding(40.px)
     )
-    val textareaModal = style(
+    val requestInviteTextarea = style(
       marginTop(20.px),
       marginBottom(20.px),
-      borderBottom(2.px, solid, black),
-      fontSize(1.5.em),
-      fontWeight._700,
-      backgroundColor.transparent.important,
-      padding(10.px, 20.px)
+      fontSize(25.px),
+      height(75.px)
+
+    )
+    val checkBoxLoginModal = style(
+      width(25.px),
+      opacity(0.5),
+      marginTop(-2.px),
+      marginRight(2.px)
+    )
+    val loginModalTextStyle = style(
+      fontFamily :=! "karla",
+      color(c"#000"),
+      fontSize(20.px)
+    )
+    val loginModalTextActionContainer = style(
+      marginTop(16.px)
+    )
+    val modalLoginBtn = style(
+      backgroundColor(c"#ff806c"),
+      height(58.px),
+      fontSize(22.px),
+      fontFamily :=! "karla",
+      float.right,
+      marginTop(74.px),
+      marginBottom(40.px)
     )
   }
 

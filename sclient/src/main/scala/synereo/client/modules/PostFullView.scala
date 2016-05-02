@@ -6,31 +6,31 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{BlogPostFullCSS, SynereoCommanStylesCSS, DashboardCSS}
+import synereo.client.css.{PostFullViewCSS, SynereoCommanStylesCSS, DashboardCSS}
 
 import scalacss.ScalaCssReact._
 
 /**
   * Created by Mandar on 3/22/2016.
   */
-object BlogPostFull {
+object PostFullView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid",BlogPostFullCSS.Style.blogPostFullContainer)(
+      <.div(^.className := "container-fluid",PostFullViewCSS.Style.blogPostFullContainer)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-1")(
-                <.span(MIcon.chevronLeft, BlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.chevronLeft, PostFullViewCSS.Style.navigationIcons)
               ),
               <.div(^.className := "col-md-10")(
-                <.div(^.className := "row", BlogPostFullCSS.Style.postedImageContainerDiv)(
-                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", BlogPostFullCSS.Style.blogMainImage)
+                <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
+                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", PostFullViewCSS.Style.blogMainImage)
                 ),
-                <.div(^.className := "row", BlogPostFullCSS.Style.postedUserInfoContainerDiv)(
+                <.div(^.className := "row", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                      <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
+                      <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
                         <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                         <.div(DashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
@@ -41,26 +41,26 @@ object BlogPostFull {
                       )
                     ),
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                      <.div(^.className := "col-md-12", BlogPostFullCSS.Style.postedUserActionDiv)(
+                      <.div(^.className := "col-md-12", PostFullViewCSS.Style.postedUserActionDiv)(
                         <.div(^.className := "pull-right")(
-                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(MIcon.chatBubble),
                             <.span("6")
                           ),
-                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(MIcon.share),
                             <.span("36")
                           ),
-                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(MIcon.share),
                             <.span("4")
                           ),
-                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(Icon.minus),
                             <.span(Icon.heartO),
                             <.span(Icon.plus)
                           ),
-                          <.button(^.className := "btn", BlogPostFullCSS.Style.postedActionbtn)(
+                          <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(MIcon.moreVert)
                           )
                         )
@@ -69,14 +69,14 @@ object BlogPostFull {
                   )
 
                 ),
-                <.div(^.className := "row", BlogPostFullCSS.Style.postedUserInfoContainerDiv)(
+                <.div(^.className := "row", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "col-md-offset-2 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12")(
-                      <.div(^.className := "row", BlogPostFullCSS.Style.postHeadlineContainerDiv)(
+                      <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
                         <.h1("\"The Beauty of Island\""),
                         <.h4(<.span(Icon.mapMarker)("xyz abc Island"))
                       ),
-                      <.div(^.className := "row", BlogPostFullCSS.Style.postDescription)(
+                      <.div(^.className := "row", PostFullViewCSS.Style.postDescription)(
                         "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. " +
                           "Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat. " +
                           "Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " +
@@ -87,21 +87,21 @@ object BlogPostFull {
                           " +\n\"non\\nproident, sunt in culpa qui officia deserunt mollit anim id est laborum"
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsEditorsDiv)(
+                        <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsEditorsDiv)(
                           <.div("editable area for tags to add and remove tags "),
                           <.span(MIcon.modeEdit)
                         )
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponsesDiv)(
-                          <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponseHeadingSmall)(
+                        <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsResponsesDiv)(
+                          <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsResponseHeadingSmall)(
                             "Responses"
                           ),
                           <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
                             <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                             <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                           ),
-                          <.div(^.className := " col-md-12", BlogPostFullCSS.Style.postedUserAvatarDiv)(
+                          <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
                             <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
                             <.div(DashboardCSS.Style.userNameDescription)(
                               <.span("James Everet"),
@@ -113,12 +113,12 @@ object BlogPostFull {
                           <.div(^.className := "row")(
                             /* <.div(^.className := " col-md-12 text-center")(
                                <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
-                                 , BlogPostFullCSS.Style.collapsePostsButton)(
+                                 , PostFullViewCSS.Style.collapsePostsButton)(
                                  <.span(MIcon.keyboardArrowDown)
                                )
                              ),*/
                             <.div(^.className := " col-md-12")(
-                              <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
+                              <.div(^.className := "row", PostFullViewCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
                                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
@@ -128,7 +128,7 @@ object BlogPostFull {
                                 ),
                                 <.div(^.className := " col-md-2 text-center")(
                                   <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
-                                    , BlogPostFullCSS.Style.collapsePostsButton)(
+                                    , PostFullViewCSS.Style.collapsePostsButton)(
                                     <.span(MIcon.moreHoriz)
                                   )
                                 )
@@ -144,12 +144,12 @@ object BlogPostFull {
                           <.div(^.className := "row")(
                             /*     <.div(^.className := " col-md-12 text-center")(
                                    <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1"
-                                     , BlogPostFullCSS.Style.collapsePostsButton)(
+                                     , PostFullViewCSS.Style.collapsePostsButton)(
                                      <.span(MIcon.keyboardArrowDown)
                                    )
                                  ),*/
                             <.div(^.className := " col-md-12")(
-                              <.div(^.className := "row", BlogPostFullCSS.Style.glanceView)(
+                              <.div(^.className := "row", PostFullViewCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
                                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
                                 ),
@@ -159,7 +159,7 @@ object BlogPostFull {
                                 ),
                                 <.div(^.className := " col-md-2 text-center")(
                                   <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1"
-                                    , BlogPostFullCSS.Style.collapsePostsButton)(
+                                    , PostFullViewCSS.Style.collapsePostsButton)(
                                     <.span(MIcon.moreHoriz)
                                   )
                                 )
@@ -175,7 +175,7 @@ object BlogPostFull {
                         )
                       ),
                       <.div(^.className := "row")(
-                        <.div(^.className := "col-md-12", BlogPostFullCSS.Style.tagsResponseHeadingSmall, SynereoCommanStylesCSS.Style.bottomBorderOnePx)(
+                        <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsResponseHeadingSmall, SynereoCommanStylesCSS.Style.bottomBorderOnePx)(
                           "Similar Content Loved by your network"
                         )
                       ),
@@ -239,8 +239,8 @@ object BlogPostFull {
                 )
               ),
               <.div(^.className := "col-md-1")(
-                <.span(MIcon.close, BlogPostFullCSS.Style.closeIcon),
-                <.span(MIcon.chevronRight, BlogPostFullCSS.Style.navigationIcons)
+                <.span(MIcon.close, PostFullViewCSS.Style.closeIcon),
+                <.span(MIcon.chevronRight, PostFullViewCSS.Style.navigationIcons)
               )
             )
 

@@ -1,20 +1,21 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
-import diode.data.PotState.PotPending
+import diode.data.PotState.{PotPending,PotFailed}
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
+import diode._
+import diode.data._
 import org.scalajs.dom._
+import shared.RootModels.MessagesRootModel
 import shared.dtos.EvalSubscribeResponseContent
-import synereo.client.RootModels.MessagesRootModel
+import shared.models.MessagesModel
 import shared.dtos.{EvalSubscribeResponseContent, ApiResponse}
-import synereo.client.models.MessagesModel
 import synereo.client.services.CoreApi
+import diode.util.{Retry, RetryPolicy}
+import org.scalajs.dom._
 
-//import rx.ops.Timer
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.scalajs.js.JSON
-
 /**
   * Created by shubham.k on 1/25/2016.
   */

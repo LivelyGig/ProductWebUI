@@ -1,8 +1,8 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
 import diode.{ActionHandler, ModelRW}
 import org.scalajs.dom.window
-import synereo.client.models.UserModel
+import shared.models.UserModel
 
 /**
   * Created by shubham.k on 1/25/2016.
@@ -23,7 +23,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(modelFromStore)
     case LogoutUser() =>
       window.sessionStorage.clear()
-      window.location.href = "/#synereologin"
+      window.location.href = "/#login"
       updated(UserModel(email = "", name = "",imgSrc = "", isLoggedIn = false))
   }
 }
