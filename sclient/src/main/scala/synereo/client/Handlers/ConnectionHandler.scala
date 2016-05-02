@@ -16,6 +16,8 @@ import scala.scalajs.js.JSON
   */
 // Actions
 case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
+  // first ping after user login returns the connections for the user.
+  // todo replace the session ping with the connections specific calls to api backend server.
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
