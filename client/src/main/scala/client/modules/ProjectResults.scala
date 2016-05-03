@@ -9,7 +9,7 @@ import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{NewRecommendation, NewMessage, BiddingScreenModal,RecommendationJobs}
+import client.modals.{NewRecommendation, NewMessage, WorkContractModal,RecommendationJobs}
 import shared.models.{ProjectsModel, ModelType}
 import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import scala.scalajs.js
@@ -135,7 +135,7 @@ object ProjectsList {
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
               RecommendationJobs(RecommendationJobs.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend Job")),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Find Matching Talent", Icon.users),
-              BiddingScreenModal(BiddingScreenModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.pencilSquareO,"Apply")),
+              WorkContractModal(WorkContractModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.pencilSquareO,"Apply")),
               NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message" ))
             )
           ) //media-body

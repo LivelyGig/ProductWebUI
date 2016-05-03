@@ -21,12 +21,12 @@ object AppModule {
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("sidebarRightContainer")
-      $(rsltScrollContainer).css("pointer-events", "none")
-      $(middelNaviContainer).css("pointer-events", "none")
+    //  $(rsltScrollContainer).css("pointer-events", "none")
+    //  $(middelNaviContainer).css("pointer-events", "none")
     } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
-      $(rsltScrollContainer).css("pointer-events", "all")
-      $(middelNaviContainer).css("pointer-events", "all")
+    // $(rsltScrollContainer).css("pointer-events", "auto")
+    // $(middelNaviContainer).css("pointer-events", "auto")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
