@@ -6,7 +6,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import shared.models.{SignUpModel, EmailValidationModel, UserModel}
+import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
@@ -21,6 +21,8 @@ import shared.models.UserModel
 
 import scala.scalajs.js.JSON
 import org.querki.jquery._
+
+import scala.concurrent.Future
 
 object AgentLoginSignUp {
   val LOGIN_ERROR  = "LOGIN_ERROR"
@@ -101,13 +103,26 @@ object AgentLoginSignUp {
 
       }
     }
+    def createSessions(userModel: UserModel) = {
+      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI,CoreApi.JOBS_SESSION_URI)
+      var futureArray =  Seq[Future[String]]()
+      sessionURISeq.map{sessionURI => futureArray :+= CoreApi.agentLogin(userModel)}
+      Future.sequence(futureArray).map{responseArray =>
+        for (responseStr <- responseArray){
+          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+          window.sessionStorage.setItem(sessionURISeq(responseArray.indexOf(responseStr)),response.content.sessionURI)
+        }
+        $(loginLoader).addClass("hidden")
+        $(dashboardContainer).removeClass("hidden")
+        window.location.href = "/#connections"
+        log.debug("login successful")
+      }
+    }
 
     def processSuccessfulLogin(responseStr : String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-//      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
+      //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
       window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      $(loginLoader).addClass("hidden")
-      $(dashboardContainer).removeClass("hidden")
       //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
       window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI,response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
@@ -117,12 +132,9 @@ object AgentLoginSignUp {
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
       LGCircuit.dispatch(LoginUser(user))
-      //               println(userModel)
-      LGCircuit.dispatch(CreateSessions(userModel))
       LGCircuit.dispatch(CreateLabels())
       LGCircuit.dispatch(RefreshConnections())
-      log.debug("login successful")
-      window.location.href = "/#connections"
+      createSessions(userModel)
     }
 
     def processLoginFailed (responseStr : String) = {
