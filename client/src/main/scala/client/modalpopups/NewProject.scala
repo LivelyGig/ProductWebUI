@@ -92,12 +92,13 @@ object NewProjectForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      var selectedConnections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      val selector : js.Object  = s"#${state.selectizeInputId} > .selectize-control> .selectize-input > div"
+      val selectedConnections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
+      /*val selector : js.Object  = s"#${state.selectizeInputId} > .selectize-control> .selectize-input > div"
 
-      $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
+      $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)*/
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       val post = new VersionedPost(uid,new Date().toUTCString(),new Date().toUTCString(), "","", selectedConnections,state.projectPost)
+      println(selectedConnections)
       LGCircuit.dispatch(PostContent(post, selectedConnections, CoreApi.JOBS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))
     }
