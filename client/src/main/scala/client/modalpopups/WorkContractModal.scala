@@ -22,7 +22,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 
-object BiddingScreenModal {
+object WorkContractModal {
   val component = ReactComponentB[Props]("BiddingScreen")
     .initialState(State())
     .backend(new Backend(_))
@@ -31,7 +31,7 @@ object BiddingScreenModal {
       <.div(ProjectCSS.Style.displayModalbtn)(
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         // Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"),  Icon.music),
-        if (S.showBiddingScreen) BiddingScreenModalForm(BiddingScreenModalForm.Props(B.addBiddingScreen))
+        if (S.showBiddingScreen) WorkContractModalForm(WorkContractModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
         else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))
         else if (S.showAcceptDependencies) PayoutTransaction(PayoutTransaction.Props(B.hideAcceptDependencies, "Accept All Deliverables"))
@@ -39,6 +39,7 @@ object BiddingScreenModal {
         else
           Seq.empty[ReactElement]
       )
+
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
@@ -105,7 +106,7 @@ object BiddingScreenModal {
 
 }
 
-object BiddingScreenModalForm {
+object WorkContractModalForm {
   private val component = ReactComponentB[Props]("BiddingScreenModal")
     .initialState_P(p => State())
     .renderBackend[Backend]
@@ -203,12 +204,12 @@ object BiddingScreenModalForm {
                       <.th()("History")
                     )
                   ),
-                  <.tbody(BiddingScreenCSS.Style.biddingScreenData)(
+                  <.tbody(WorkContractCSS.Style.WorkContractData)(
                     <.tr()(
                       <.td()(
                         <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
                         <.div(^.className := "row")(
-                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12", BiddingScreenCSS.Style.slctBiddingInputWidth)(
+                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12", WorkContractCSS.Style.slctWorkContractInputWidth)(
                             <.div(^.className := "btn-group")(
                               <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Nolo Service..-23")(
                                 <.span(^.className := "caret")
@@ -220,7 +221,7 @@ object BiddingScreenModalForm {
                               )
                             )
                           ),
-                          <.div(BiddingScreenCSS.Style.slctBiddingInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
+                          <.div(WorkContractCSS.Style.slctWorkContractInputLeftContainerMargin, DashBoardCSS.Style.marginTop10px)(
                             //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                             <.div()(<.a("view"))
                           )
@@ -308,14 +309,14 @@ object BiddingScreenModalForm {
                   )
                 )
               ),
-              <.div(BiddingScreenCSS.Style.marginLeftRight)(
+              <.div(WorkContractCSS.Style.marginLeftRight)(
                 <.div(^.className:="pull-right")(
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Counter  Offer")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Reject  Offer")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Counter  Offer")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Reject  Offer")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                 )
               )
             ),
@@ -383,7 +384,7 @@ object BiddingScreenModalForm {
                         <.a()("details"),
                         ".",
                         // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
-                        <.div()(<.img()(BiddingScreenCSS.Style.biddingscreenImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
+                        <.div()(<.img()(WorkContractCSS.Style.WorkContractImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
                         )
                       )
                     )
@@ -403,9 +404,9 @@ object BiddingScreenModalForm {
                 )
               ),
               <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
-                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Next >")(),
-                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Next >")(),
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
               )
             ),
             <.div(^.id := "menu2", ^.className := "tab-pane fade")(
@@ -414,17 +415,17 @@ object BiddingScreenModalForm {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := "inProgress")(
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Milestones ", <.a("New")),
+                      <.div(WorkContractCSS.Style.marginHeader)("Milestones ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
                           <.tr(
-                            <.th(BiddingScreenCSS.Style.indexWidth)("#"),
-                            <.th(BiddingScreenCSS.Style.plannedFinishWidth)("Planned Finish"),
-                            <.th(BiddingScreenCSS.Style.scheduledFinishWidth)("Scheduled Finish"),
-                            <.th(BiddingScreenCSS.Style.scheduledFinishWidth)("Title"),
-                            <.th(BiddingScreenCSS.Style.talentWidth)("Talent Complete"),
-                            <.th(BiddingScreenCSS.Style.talentWidth)("Employer Complete"),
-                            <.th(BiddingScreenCSS.Style.actionsWidth)("Actions")
+                            <.th(WorkContractCSS.Style.indexWidth)("#"),
+                            <.th(WorkContractCSS.Style.plannedFinishWidth)("Planned Finish"),
+                            <.th(WorkContractCSS.Style.scheduledFinishWidth)("Scheduled Finish"),
+                            <.th(WorkContractCSS.Style.scheduledFinishWidth)("Title"),
+                            <.th(WorkContractCSS.Style.talentWidth)("Talent Complete"),
+                            <.th(WorkContractCSS.Style.talentWidth)("Employer Complete"),
+                            <.th(WorkContractCSS.Style.actionsWidth)("Actions")
                           )
                         ),
                         <.tbody(
@@ -432,7 +433,7 @@ object BiddingScreenModalForm {
                             <.td("1"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
-                            <.td(BiddingScreenCSS.Style.titleTable)("Architecture"),
+                            <.td(WorkContractCSS.Style.titleTable)("Architecture"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
@@ -441,7 +442,7 @@ object BiddingScreenModalForm {
                             <.td("2"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
-                            <.td(BiddingScreenCSS.Style.titleTable)("Detailed Design"),
+                            <.td(WorkContractCSS.Style.titleTable)("Detailed Design"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
@@ -450,7 +451,7 @@ object BiddingScreenModalForm {
                             <.td("3"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
-                            <.td(BiddingScreenCSS.Style.titleTable)("Prototype"),
+                            <.td(WorkContractCSS.Style.titleTable)("Prototype"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
@@ -459,14 +460,14 @@ object BiddingScreenModalForm {
                             <.td("4"),
                             <.td("1/22/16 11:22"),
                             <.td("1/22/16 11:22"),
-                            <.td(BiddingScreenCSS.Style.titleTable)("Code Complete"),
+                            <.td(WorkContractCSS.Style.titleTable)("Code Complete"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.input(^.`type` := "checkbox"), "1/22/16 11:22:00 AM"),
                             <.td(<.a("Link"), " ", <.a("Deliver"), " ", <.a("Pay"), " ", <.a("Delete"))
                           )
                         )
                       ),
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Escrowed Deliverables ", <.a("New")),
+                      <.div(WorkContractCSS.Style.marginHeader)("Escrowed Deliverables ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
                           <.tr(
@@ -497,7 +498,7 @@ object BiddingScreenModalForm {
                           )
                         )
                       ),
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Messages ", <.a("New")),
+                      <.div(WorkContractCSS.Style.marginHeader)("Messages ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
                           <.tr(
@@ -544,7 +545,7 @@ object BiddingScreenModalForm {
                           )
                         )
                       ),
-                      <.div(BiddingScreenCSS.Style.marginHeader)("Links ", <.a("New")),
+                      <.div(WorkContractCSS.Style.marginHeader)("Links ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
                           <.tr(
@@ -591,10 +592,10 @@ object BiddingScreenModalForm {
                 )
               ),
                 <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
               )
             ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
@@ -610,120 +611,120 @@ object BiddingScreenModalForm {
                       // <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("General"),
                       <.div()(
                         <.br(),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
                           <.div(^.className := "col-md-4 col-sm-4")("Communication"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Poor"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "communication")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
                           <.div(^.className := "col-md-4 col-sm-4")("Managed Expectations"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Poor"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "managedExpectations")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
                           <.div(^.className := "col-md-4 col-sm-4")("Met Schedule"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Poor"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "metSchedule")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
                           <.div(^.className := "col-md-4 col-sm-4")("Delivered value for price"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Poor"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "price")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
                           <.div(^.className := "col-md-4 col-sm-4")("Completeness of deliverables"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Poor"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Poor"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "deliverables")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Excellent"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Excellent"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
                           <.div(^.className := "col-md-4 col-sm-4")("Likely to contract in future(if and when similar talent is needed)"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Unlikely"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Unlikely"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "contract")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Likely"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Likely"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
                           <.div(^.className := "col-md-4 col-sm-4")("Likely to recommend to friend or colleague"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Unlikely"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Unlikely"),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
                             <.div(^.className := "col-md-1 col-sm-1")(<.input(^.`type` := "radio", ^.name := "recommend")),
-                            <.div(^.className := "col-md-2 col-sm-2", BiddingScreenCSS.Style.tableFont)("Likely"),
+                            <.div(^.className := "col-md-2 col-sm-2", WorkContractCSS.Style.tableFont)("Likely"),
                             <.div(^.className := "col-md-3 col-sm-3")()
                           )
                         ),
                         <.hr(),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Capabilities"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilities)("Capabilities"),
                           <.div(^.className := "col-md-8 col-sm-8")(
-                            <.table(^.className := "table table-bordered", BiddingScreenCSS.Style.tableFont)(
+                            <.table(^.className := "table table-bordered", WorkContractCSS.Style.tableFont)(
                               <.tbody(
                                 <.tr(
-                                  <.td(BiddingScreenCSS.Style.notApplicable)(^.rowSpan := 2)("Not applicable"),
+                                  <.td(WorkContractCSS.Style.notApplicable)(^.rowSpan := 2)("Not applicable"),
                                   <.th(^.className := "text-center", ^.colSpan := 6)("Demonstrated")
                                 ),
                                 <.tr(
-                                  <.td(BiddingScreenCSS.Style.noUnderstanding)("No Understanding"),
-                                  <.td(BiddingScreenCSS.Style.awareness)("Awareness"),
-                                  <.td(BiddingScreenCSS.Style.awareness)("Fundamental Understanding: Can work under supervision"),
-                                  <.td(BiddingScreenCSS.Style.awareness)("Skilled Understanding: Can work alone and can delegate"),
-                                  <.td(BiddingScreenCSS.Style.expertUnderstanding)("Expert Understanding")
+                                  <.td(WorkContractCSS.Style.noUnderstanding)("No Understanding"),
+                                  <.td(WorkContractCSS.Style.awareness)("Awareness"),
+                                  <.td(WorkContractCSS.Style.awareness)("Fundamental Understanding: Can work under supervision"),
+                                  <.td(WorkContractCSS.Style.awareness)("Skilled Understanding: Can work alone and can delegate"),
+                                  <.td(WorkContractCSS.Style.expertUnderstanding)("Expert Understanding")
                                 )
                               )
                             )
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("HTML, JavaScript, CSS"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("HTML, JavaScript, CSS"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS")),
@@ -733,8 +734,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "HJS"))
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("User Experience Design"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("User Experience Design"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign")),
@@ -744,8 +745,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "userDesign"))
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("SQL Anywhere"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("SQL Anywhere"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere")),
@@ -755,8 +756,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "sqlAnywhere"))
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Decentralized Architectures"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("Decentralized Architectures"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture")),
@@ -766,8 +767,8 @@ object BiddingScreenModalForm {
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "architecture"))
                           )
                         ),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader, BiddingScreenCSS.Style.feedbackbgColor)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("Financial Markets"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader, WorkContractCSS.Style.feedbackbgColor)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("Financial Markets"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
                             <.div(^.className := "col-md-2 col-sm-2 text-center")(<.input(^.`type` := "radio", ^.name := "markets")),
@@ -778,10 +779,10 @@ object BiddingScreenModalForm {
                           )
                         ),
                         <.hr(),
-                        <.div(^.className := "row", BiddingScreenCSS.Style.marginHeader)(
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilities)("Testimonial"),
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader)(
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilities)("Testimonial"),
                           <.br(),
-                          <.div(^.className := "col-md-4 col-sm-4", BiddingScreenCSS.Style.capabilitiesItems)("(will be made public if Talent agrees)"),
+                          <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilitiesItems)("(will be made public if Talent agrees)"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.textarea(^.rows := 3, ProjectCSS.Style.textareaWidth)
                           )
@@ -791,11 +792,11 @@ object BiddingScreenModalForm {
                   )
                 )
               ),
-              <.div(BiddingScreenCSS.Style.marginLeftRight)(
+              <.div(WorkContractCSS.Style.marginLeftRight)(
                 <.div(^.className:="pull-right")(
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn")("Send Feedback")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
-                  <.button(BiddingScreenCSS.Style.createBiddingBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Send Feedback")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
+                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
                 )
               )
             )

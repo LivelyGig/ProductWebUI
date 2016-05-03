@@ -2,7 +2,7 @@ package client.css
 
 import scalacss.Defaults._
 
-object BiddingScreenCSS {
+object WorkContractCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
 
@@ -14,7 +14,7 @@ object BiddingScreenCSS {
       marginRight(15.px),
       padding(4.px)
     )
-    val biddingScreenData = style (
+    val WorkContractData = style (
       height(250.px),
       overflowX.auto/*,
       marginRight(10.px)*/
@@ -22,19 +22,19 @@ object BiddingScreenCSS {
    /* val BiddingScreenResults = style (
       paddingLeft(15.px)
     )*/
-     val slctBiddingInputWidth = style (
+     val slctWorkContractInputWidth = style (
       width(100.px)
     )
-    val slctBiddingInputLeftContainerMargin = style (
+    val slctWorkContractInputLeftContainerMargin = style (
       marginLeft(165.px)
     )
-    val createBiddingBtn=style(
+    val createWorkContractBtn=style(
       backgroundColor(c"#FFA500"),
       color(rgba(51,51,51,1)),
       marginLeft(10.px),
       marginTop(6.px)
     )
-    val biddingscreenImgWidth = style (
+    val WorkContractImgWidth = style (
       width(700.px)
     )
     val marginHeader = style (
@@ -77,7 +77,7 @@ object BiddingScreenCSS {
     val actionsWidth = style(
       width(19.%%)
     )
-    val biddingscreenModalHeight = style (
+    val WorkContractModalHeight = style (
       height(845.px)
     )
 
