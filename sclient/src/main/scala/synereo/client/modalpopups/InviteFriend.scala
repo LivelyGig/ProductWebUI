@@ -61,7 +61,7 @@ object InviteFriend {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewRequestForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), ""),
-        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage, "New Invite"))
+        if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage))
         else
           Seq.empty[ReactElement]
       )
@@ -118,11 +118,11 @@ object InviteNewFriend {
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row", LoginCSS.Style.requestInviteModalStyle)(
             <.div(^.className := "col-md-12")(
-              <.div(LoginCSS.Style.modalText)(
+              <.div(LoginCSS.Style.requestInviteModalText)(
                 "Invites aren't quite ready, however we're eager for you to join us on this journey!"
               ),
               <.div()(
-                <.input(^.`type` := "text", LoginCSS.Style.textareaModal, ^.placeholder := "you@email.com")
+                <.input(^.`type` := "text",^.className:="form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
               ),
               <.div()(
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", LoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")

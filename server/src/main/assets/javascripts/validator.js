@@ -320,7 +320,6 @@
   // VALIDATOR PLUGIN DEFINITION
   // ===========================
 
-
   function Plugin(option) {
     return this.each(function () {
       var $this   = $(this)
@@ -334,6 +333,7 @@
   }
 
   var old = $.fn.validator
+
   $.fn.validator             = Plugin
   $.fn.validator.Constructor = Validator
 
@@ -350,11 +350,11 @@
   // VALIDATOR DATA-API
   // ==================
 
-    $(window).on('click', function () {
-        $('form[data-toggle="validator"]').each(function () {
-          var $form = $(this)
-          Plugin.call($form, $form.data())
-        })
-      })
+  $(window).on('click', function () {
+    $('form[data-toggle="validator"]').each(function () {
+      var $form = $(this)
+      Plugin.call($form, $form.data())
+    })
+  })
 
 }(jQuery);

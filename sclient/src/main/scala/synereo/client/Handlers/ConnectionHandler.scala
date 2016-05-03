@@ -1,11 +1,10 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
-//import synereo.client.handlers.RefreshConnections
 import diode.data.{Empty, Pot, PotAction}
 import diode.{ActionHandler, ModelRW}
-import synereo.client.RootModels.ConnectionsRootModel
+import shared.RootModels.ConnectionsRootModel
 import shared.dtos.{ApiResponse, ConnectionProfileResponse}
-import synereo.client.models.ConnectionsModel
+import shared.models.ConnectionsModel
 import synereo.client.services.CoreApi
 
 //import rx.ops.Timer
@@ -17,6 +16,8 @@ import scala.scalajs.js.JSON
   */
 // Actions
 case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
+  // first ping after user login returns the connections for the user.
+  // todo replace the session ping with the connections specific calls to api backend server.
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 

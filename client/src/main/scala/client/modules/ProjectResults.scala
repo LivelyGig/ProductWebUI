@@ -6,7 +6,7 @@ import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
 import client.handlers.RefreshProjects
-import client.rootmodels.ProjectsRootModel
+import shared.RootModels.ProjectsRootModel
 import client.components._
 import client.css.{HeaderCSS, DashBoardCSS}
 import client.modals.{NewRecommendation, NewMessage, WorkContractModal,RecommendationJobs}
@@ -26,7 +26,7 @@ object ProjectResults {
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshProjects()))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
   }
 
   // create the React component for Dashboard

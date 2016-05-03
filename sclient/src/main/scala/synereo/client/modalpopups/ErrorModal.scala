@@ -54,7 +54,8 @@ object ErrorModal {
               <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.errorModalFooter)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 text-center")(
-                    <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                    <.div()(<.h5("Encountering problems in serving request. Please try after sometime!"),
+                      <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
                   )
                 )
               )

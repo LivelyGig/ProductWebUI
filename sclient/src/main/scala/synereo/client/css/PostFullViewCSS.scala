@@ -7,7 +7,7 @@ import scala.language.postfixOps
 /**
   * Created by Mandar on 3/22/2016.
   */
-object BlogPostFullCSS {
+object PostFullViewCSS {
 
   object Style extends StyleSheet.Inline {
 

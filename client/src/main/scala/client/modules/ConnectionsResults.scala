@@ -3,7 +3,7 @@ package client.modules
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handlers.RefreshConnections
-import client.rootmodels.ConnectionsRootModel
+import shared.RootModels.ConnectionsRootModel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
@@ -24,7 +24,7 @@ object ConnectionsResults {
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
-      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
   }
 
   // create the React component for Dashboard

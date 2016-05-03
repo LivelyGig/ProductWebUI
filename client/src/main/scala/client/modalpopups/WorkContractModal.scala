@@ -32,7 +32,7 @@ object WorkContractModal {
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         // Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"),  Icon.music),
         if (S.showBiddingScreen) WorkContractModalForm(WorkContractModalForm.Props(B.addBiddingScreen))
-        else if (S.showMessage) PostNewMessage(PostNewMessage.Props(B.hideMessage, "Message"))
+        else if (S.showMessage) NewMessageForm(NewMessageForm.Props(B.hideMessage, "Message"))
         else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))
         else if (S.showAcceptDependencies) PayoutTransaction(PayoutTransaction.Props(B.hideAcceptDependencies, "Accept All Deliverables"))
         else if (S.showDispute) DisputeForm(DisputeForm.Props(B.hideDispute, "Dispute"))

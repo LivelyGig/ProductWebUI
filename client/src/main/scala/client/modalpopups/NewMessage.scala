@@ -11,7 +11,7 @@ import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
-import client.handlers.PostContent
+import client.handlers.PostMessage
 import client.utils.Utils
 import org.querki.jquery._
 import org.scalajs.dom._
@@ -60,7 +60,7 @@ object NewMessage {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title,className = "profile-action-buttons"),P.buttonName),
-        if (S.showNewMessageForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Message"))
+        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
       )
@@ -71,7 +71,7 @@ object NewMessage {
   def apply(props: Props) = component(props)
 }
 
-object PostNewMessage {
+object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (/*PostMessage*/) => Callback, header: String)
@@ -97,11 +97,9 @@ object PostNewMessage {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      var selectedConnections = Seq[String]()
-      val selector : js.Object  = s"#${state.selectizeInputId} > .selectize-control> .selectize-input > div"
-
-      $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
-      LGCircuit.dispatch(PostContent(state.postMessage.content, selectedConnections, CoreApi.MESSAGES_SESSION_URI))
+      LGCircuit.dispatch(PostMessage(state.postMessage.content,
+        ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
+        CoreApi.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -149,7 +147,7 @@ object PostNewMessage {
   }
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePost("", "", "", "", "", "", "", "", "", "")))
+    .initialState_P(p => State(new MessagePost("", "", "", "", "", Nil, "", "", "", "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope=> Callback{
       if(scope.currentState.postNewMessage){

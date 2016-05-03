@@ -1,20 +1,22 @@
-package synereo.client.Handlers
+package synereo.client.handlers
 
-import diode.data.PotState.PotPending
-import diode.{Effect, ActionHandler, ModelRW}
-import diode.data.{Empty, PotAction, Ready, Pot}
+import diode.data.PotState.{PotFailed, PotPending}
+import diode.{ActionHandler, Effect, ModelRW}
+import diode.data.{Empty, Pot, PotAction, Ready}
+import diode._
+import diode.data._
 import org.scalajs.dom._
+import shared.RootModels.MessagesRootModel
 import shared.dtos.EvalSubscribeResponseContent
-import synereo.client.RootModels.MessagesRootModel
-import shared.dtos.{EvalSubscribeResponseContent, ApiResponse}
-import synereo.client.models.MessagesModel
+import shared.models.MessagesModel
+import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
 import synereo.client.services.CoreApi
+import diode.util.{Retry, RetryPolicy}
+import org.scalajs.dom._
+import synereo.client.utils.Utils
 
-//import rx.ops.Timer
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.scalajs.js.JSON
-
 /**
   * Created by shubham.k on 1/25/2016.
   */
@@ -58,7 +60,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
     case action : RefreshMessages =>
       // todo investigate calling of this method due to callback
       //      println("in refresh messages")
-      val labels = window.sessionStorage.getItem("currentSearchLabel")
+      // temporarily setting labels to prolog any()
+      // later it has to be modified according to the seleted labels
+      val labels = Utils.GetLabelProlog(Nil)
+      window.sessionStorage.setItem("currentSearchLabel", labels)
+
+      println(labels)
       if (labels!=null)
       {
         val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
