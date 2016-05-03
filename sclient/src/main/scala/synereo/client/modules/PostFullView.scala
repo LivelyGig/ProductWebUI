@@ -16,7 +16,7 @@ import scalacss.ScalaCssReact._
 object PostFullView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid",PostFullViewCSS.Style.blogPostFullContainer)(
+      <.div(^.className := "container-fluid",PostFullViewCSS.Style.fullPostViewContainer)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
@@ -31,7 +31,7 @@ object PostFullView {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
                       <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
-                        <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                        <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                         <.div(DashboardCSS.Style.userNameDescription)(
                           <.span("Colby Brown"),
                           <.span(MIcon.chevronRight),
@@ -98,11 +98,11 @@ object PostFullView {
                             "Responses"
                           ),
                           <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
-                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                             <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                           ),
                           <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
-                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar),
+                            <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                             <.div(DashboardCSS.Style.userNameDescription)(
                               <.span("James Everet"),
                               <.br(),
@@ -120,7 +120,7 @@ object PostFullView {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", PostFullViewCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm)
                                 ),
                                 <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("James Gosling", ^.fontWeight.bold), <.br(),
@@ -151,7 +151,7 @@ object PostFullView {
                             <.div(^.className := " col-md-12")(
                               <.div(^.className := "row", PostFullViewCSS.Style.glanceView)(
                                 <.div(^.className := "col-md-1")(
-                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatar)
+                                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm)
                                 ),
                                 <.div(^.className := "col-md-9", DashboardCSS.Style.glanceViewName)(
                                   <.span("Evan Moore", ^.fontWeight.bold), <.br(),

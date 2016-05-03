@@ -23,8 +23,12 @@ object DashboardCSS {
     val dashboardContainerMain = style(
       height(100.vh),
       overflowY.scroll.important,
-      backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
+      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
     )
+    val fullViewModalDilog = style(
+      width(100.%%)
+    )
+
     val cardPostTagBtn = style(
       margin(5.px),
       fontFamily :=! "karla",
@@ -49,7 +53,7 @@ object DashboardCSS {
       borderImageRepeat.:=(none),
       overflow.hidden,
       height(100.vh),
-      backgroundImage := "url(\"./assets/synereo-images/globalBg.jpg\")"
+      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
     )
     val homeFeedContainer = style(
       marginTop(30.px),
@@ -131,7 +135,7 @@ object DashboardCSS {
       paddingTop(5.px),
       paddingBottom(5.px)
     )
-    val userAvatar = style(
+    val userAvatarDashboardForm = style(
       width(30.px),
       height(30.px),
       borderRadius(50.%%),
@@ -147,7 +151,7 @@ object DashboardCSS {
     val UserInput = style(
       border.none.important,
       fontWeight._700,
-      width(90.%%),
+      width(85.%%),
       height(40.px),
       display.inlineBlock,
       paddingLeft(6.px),

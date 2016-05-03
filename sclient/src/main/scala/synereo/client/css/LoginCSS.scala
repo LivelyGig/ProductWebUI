@@ -32,7 +32,7 @@ object LoginCSS {
     val loginModalStyle = style(
       marginTop(120.px),
       media.maxWidth(1400.px) -
-        marginTop(50.px)
+        marginTop(30.px)
     )
     val loginDilog = style(
       width(50.%%),

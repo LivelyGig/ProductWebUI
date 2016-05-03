@@ -2,12 +2,11 @@ package synereo.client.modules
 
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.router.{Resolution, RouterCtl}
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.UserModel
-import synereo.client.handlers.{CreateLabels, CreateSessions, LoginUser, RefreshConnections}
+import synereo.client.handlers.{CreateLabels, LoginUser, RefreshConnections}
 import synereo.client.components.Bootstrap.{Button, CommonStyle}
 import synereo.client.components.{Icon, MIcon}
 import synereo.client.css.LoginCSS
@@ -15,7 +14,7 @@ import synereo.client.modalpopups._
 import shared.models.EmailValidationModel
 import synereo.client.services.{ApiResponseMsg, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
-
+import scala.concurrent.Future
 import scala.scalajs.js
 import js.{Date, JSON, UndefOr}
 import scala.util.{Failure, Success}
@@ -164,46 +163,44 @@ object Login {
       t.modState(s => s.copy(showServerErrorModal = true)).runNow()
     }
 
-    /*def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
-      println("in processSuccessfulLogin")
-      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
-      val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
-        imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
-      window.sessionStorage.setItem("userEmail", userModel.email)
-      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
-      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      window.sessionStorage.setItem("listOfLabels", js.JSON.stringify(response.content.listOfLabels))
-      SYNEREOCircuit.dispatch(LoginUser(user))
-      println(userModel)
-      $(loadingScreen).addClass("hidden")
-      $(loginLoader).addClass("hidden")
-      window.location.href = "/#dashboard"
-    }*/
+    def createSessions(userModel: UserModel) = {
+      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI,CoreApi.JOBS_SESSION_URI)
+      var futureArray =  Seq[Future[String]]()
+      sessionURISeq.map{sessionURI => futureArray :+= CoreApi.agentLogin(userModel)}
+      Future.sequence(futureArray).map{responseArray =>
+        println(responseArray)
+        for (responseStr <- responseArray){
+          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+//          println(response)
+          val index = sessionURISeq(responseArray.indexOf(responseStr))
+//          println()
+          window.sessionStorage.setItem(index,response.content.sessionURI)
+        }
+        println("login successful")
+        $(loadingScreen).addClass("hidden")
+        $(loginLoader).addClass("hidden")
+        window.location.href = "/#dashboard"
+      }
+    }
 
     def processSuccessfulLogin(responseStr : String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
       window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      /*$(loginLoader).addClass("hidden")
-      $(dashboardContainer).removeClass("hidden")*/
-      //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
       window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI,response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
         imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
+      t.modState(s=>s.copy(showLoginForm = false))
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-      SYNEREOCircuit.dispatch(LoginUser(user))
-      //               println(userModel)
-      SYNEREOCircuit.dispatch(CreateSessions(userModel))
       SYNEREOCircuit.dispatch(CreateLabels())
+//      SYNEREOCircuit.dispatch(CreateSessions(userModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
-      println("login successful")
-      $(loadingScreen).addClass("hidden")
-      $(loginLoader).addClass("hidden")
-      window.location.href = "/#dashboard"
+      SYNEREOCircuit.dispatch(LoginUser(user))
+      createSessions(userModel)
+
     }
 
     def addNewUserForm(): Callback = {

@@ -81,7 +81,7 @@ object SignupCSS {
       fontSize(0.9.em)
     )
     val signUpModalStyle = style(
-      marginTop(100.px),
+      marginTop(50.px),
       media.maxWidth(1367.px) -
         marginTop(1.px)
     )

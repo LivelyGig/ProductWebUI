@@ -13,10 +13,12 @@ object PostFullViewCSS {
 
     import dsl._
 
-    val blogPostFullContainer = style(
-      marginBottom(60.px),
+    val fullPostViewContainer = style(
+      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
+      marginTop(-20.px),
+      marginLeft(-15.px),
       overflowY.scroll,
-      height(890.px)
+      height(953.px)
     )
     val blogMainImage = style(
       marginLeft.auto,
@@ -31,6 +33,14 @@ object PostFullViewCSS {
     val postedImageContainerDiv = style(
 
 
+    )
+    val modalCloseButton = style(
+      fontSize(60.px),
+      color(c"#678892"),
+      &.hover(
+        color(c"#678892")
+      ),
+      margin(20.px)
     )
     val glanceView = style(
       paddingTop(5.px),

@@ -17,15 +17,18 @@ import synereo.client.utils.Utils
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
+
 /**
   * Created by shubham.k on 1/25/2016.
   */
 // Actions
-case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends PotAction[MessagesRootModel, RefreshMessages]{
+case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends PotAction[MessagesRootModel, RefreshMessages] {
+  println(Pot)
+
   override def next(value: Pot[MessagesRootModel]) = RefreshMessages(value)
 }
 
-object MessagesModelHandler{
+object MessagesModelHandler {
   def GetMessagesModel(response: String): MessagesRootModel = {
     try {
       upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
@@ -37,7 +40,7 @@ object MessagesModelHandler{
     //      println(model(0).content.pageOfPosts(0))
     //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[MessagesModel]()
-    for(projectFromBackend <- messagesFromBackend){
+    for (projectFromBackend <- messagesFromBackend) {
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       try {
         if (!projectFromBackend.content.pageOfPosts.isEmpty)
@@ -47,7 +50,7 @@ object MessagesModelHandler{
           println(e)
       }
       if (!projectFromBackend.content.pageOfPosts.isEmpty)
-        model:+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+        model :+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
     }
     //    println(model)
     MessagesRootModel(model)
@@ -57,7 +60,7 @@ object MessagesModelHandler{
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
-    case action : RefreshMessages =>
+    case action: RefreshMessages =>
       // todo investigate calling of this method due to callback
       //      println("in refresh messages")
       // temporarily setting labels to prolog any()
@@ -65,10 +68,9 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val labels = Utils.GetLabelProlog(Nil)
       window.sessionStorage.setItem("currentSearchLabel", labels)
 
-      println(labels)
-      if (labels!=null)
-      {
-        val updateF =  action.effect(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
+      println("labels = " + labels)
+      if (labels != null) {
+        val updateF = action.effect(CoreApi.getMessages())(messages => MessagesModelHandler.GetMessagesModel(messages))
         action.handleWith(this, updateF)(PotAction.handler())
       } else {
         updated(Empty)

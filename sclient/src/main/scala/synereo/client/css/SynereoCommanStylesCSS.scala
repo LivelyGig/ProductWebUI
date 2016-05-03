@@ -67,7 +67,11 @@ object SynereoCommanStylesCSS {
       color(c"#69a5bf"),
       &.hover(
         color(c"#69a5bf")
+      ),
+      &.focus(
+        color(c"#69a5bf")
       )
+
     )
     val searchFormInputBox = style(
       backgroundColor.transparent,

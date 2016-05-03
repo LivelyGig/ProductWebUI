@@ -5,9 +5,8 @@
 
 
 body {
-  font-family: 'Karla', sans-serif;
-  //background-image: url("../images/Login-bg.jpg");
-  background-repeat: no-repeat;
+  font-family: 'Karla', sans-serif;  
+  background-color: #242D40;
   height:100vh;
   overflow-y: hidden;
 }
@@ -673,7 +672,7 @@ transform: translate(0,0); */
 }
 #homeFeedMediaList li:hover,#homeFeedMediaList li:focus {
   opacity:1 !important;
-  transform: scale(1.03) 1s;
+  transform: scale(1.03);
   transition: opacity 1s;
   /*transition:opacity .25s;*/
 }
@@ -687,4 +686,40 @@ transform: translate(0,0); */
 }
 .scale-large {
  transform: scale(1.03); 
+}
+
+//full post view modal styles
+.full-post-view-modal {
+  width:100% !important;
+}
+.full-post-view-modal .modal-dialog {
+  width:100% !important;
+  margin-top: 0;
+  margin-bottom:0;
+}
+.full-post-view-modal .modal-body{
+  padding-left:0 !important;
+  padding-right:0 !important;
+}
+
+.full-post-view-modal.modal.fade .modal-dialog {
+    -webkit-transform: scale(0.1);
+    -moz-transform: scale(0.1);
+    -ms-transform: scale(0.1);
+    transform: scale(0.1);
+    top: 300px;
+    opacity: 0;
+    -webkit-transition: all 0.6s;
+    -moz-transition: all 0.6s;
+    transition: all 0.6s;
+}
+
+.full-post-view-modal.modal.fade.in .modal-dialog {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform: translate3d(0, -300px, 0);
+    transform: translate3d(0, -300px, 0);
+    opacity: 1;
 }
