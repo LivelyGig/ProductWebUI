@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg height="600" width="600" 
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">
+	<defs>
+		<style type="text/css">
+			@font-face { 
+				font-family: ubuntu; 
+				src: url(fonts/UbuntuTitleBold.svg#UbuntuTitleBold) format("svg");
+				}
+			.ex1 {
+				font: 400px ubuntu;
+				}
+			</style>
+		
+		<radialGradient id="starFill" cx="50%" cy="50%" r="12%" >
+			<stop offset="40%" style="stop-color:rgb(255,52,41);
+				stop-opacity:1" />
+			<stop offset="100%" style="stop-color:rgb(173,9,0);stop-opacity:2" />
+			</radialGradient>
+	    <radialGradient id="logoFill" cx="50%" cy="50%" r="100%" >
+			<stop offset="0%" style="stop-color:rgb(255,200,200);
+				stop-opacity:1" />
+			<stop offset="18%" style="stop-color:rgb(255,250,250);
+				stop-opacity:1" />
+			<stop offset="50%" style="stop-color:rgb(255,255,255);stop-opacity:1" />
+			</radialGradient>
+		<filter id="StarFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="4000" height="4000">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+			<!-- 
+				<feOffset in="blur" dx="4" dy="4" result="offsetBlur"/>
+				-->
+			<feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75" 
+				specularExponent="20" lighting-color="#ffffff"  
+				result="specOut">
+				<fePointLight x="300" y="300" z="100"/>
+				</feSpecularLighting>
+			<feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+			<feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+				k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+			<feMerge>
+				<feMergeNode in="offsetBlur"/>
+				<feMergeNode in="litPaint"/>
+				</feMerge>
+			</filter>
+		<filter id="PeopleFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="4000" height="4000">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+			<!--
+				<feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
+				-->
+			<feSpecularLighting 
+				in="blur" surfaceScale="10" specularConstant="1" specularExponent="25" lighting-color="#ffdddd" result="specOut">
+				<fePointLight x="300" y="250" z="300"/>
+				</feSpecularLighting>
+			<feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+	        <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+                   k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+			<feMerge>
+				<feMergeNode in="offsetBlur"/>
+				<feMergeNode in="litPaint"/>
+				</feMerge>
+			</filter>
+		<filter id="TextFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="4000" height="4000">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+			<feOffset in="blur" dx="12" dy="4" result="offsetBlur"/>
+			<feSpecularLighting 
+				in="blur" surfaceScale="10" specularConstant="1" specularExponent="25" lighting-color="#ffdddd" result="specOut">
+				<fePointLight x="300" y="250" z="300"/>
+				</feSpecularLighting>
+			<feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+	        <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" 
+                   k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+			<feMerge>
+				<feMergeNode in="offsetBlur"/>
+				<feMergeNode in="litPaint"/>
+				</feMerge>
+			</filter>
+		</defs>
+
+<!-- LIVELYGIG TEXT -->
+<!--
+<g>
+	<text class="ex1" x="610" y="425" fill="#ad0900" stroke="black">Lively</text>
+	<text class="ex1" x="1660" y="425" fill="#00a5ad" stroke="black">Gig</text>
+	</g>
+-->
+<!-- LIVELYGIG LOGO -->
+<circle cx="300" cy="300" r="293" stroke="black" stroke-width="5" fill="white"/>
+<g transform="translate(8,51)" >
+	<g >
+		<!-- PEOPLE -->
+		<g  >
+			<g stroke="00a5ad" stroke-width="1" fill="#00A5AD" >
+				<g transform="rotate(90) translate(-150,-370)" >
+					<circle cx="490" cy="240" r="60" stroke="black"/>
+					<path d="M300,200 a150,150 0 1,0 150,-150 V 110 a102,100 45 1,1 -90,90 z" stroke="black"/>
+					</g>
+				<g transform="rotate(-90) translate(-650,215)">
+					<circle cx="490" cy="240" r="60" stroke="black"/>
+					<path d="M300,200 a150,150 0 1,0 150,-150 V 110 a102,100 45 1,1 -90,90 z" stroke="black"/>
+					</g>
+				</g>
+			</g>
+			
+		<!-- STAR -->
+		<g  >
+			<path	
+				transform=" translate(855 180) rotate(-2.25) scale(0.7,0.7) "
+				fill="#ad0900" 
+				d="m -791.42858,89.505043 18.63317,98.399267 -34.83114,-93.895699 -48.976,87.355389 33.67279,-94.317312 -93.66875,35.436942 86.42085,-50.606796 -94.53285,-33.062835 98.73163,16.783194 -51.16398,-86.092148 64.84479,76.320144 16.14508,-98.837988 0.61635,100.146051 75.89968,-65.336435 -63.90049,77.112508 100.13998,-1.263238 -98.51758,17.997165 77.52367,63.401038 z"
+				stroke="black"
+				/>
+			</g>
+		</g>
+	</g>
+</svg>
