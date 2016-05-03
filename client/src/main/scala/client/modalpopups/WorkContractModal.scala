@@ -31,7 +31,7 @@ object WorkContractModal {
       <.div(ProjectCSS.Style.displayModalbtn)(
         Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         // Button(Button.Props(B.addBiddingScreenForm(), CommonStyle.default, Seq(HeaderCSS.Style.createNewProjectBtn), className = "profile-action-buttons"),  Icon.music),
-        if (S.showBiddingScreen) WorkContractModalForm(WorkContractModalForm.Props(B.addBiddingScreen))
+        if (S.showWorkContract) WorkContractModalForm(WorkContractModalForm.Props(B.addBiddingScreen))
         else if (S.showMessage) NewMessageForm(NewMessageForm.Props(B.hideMessage, "Message"))
         else if (S.showConfirmation) ConfirmationForm(ConfirmationForm.Props(B.hideConfirmation, "Confirmation"))
         else if (S.showAcceptDependencies) PayoutTransaction(PayoutTransaction.Props(B.hideAcceptDependencies, "Accept All Deliverables"))
@@ -54,53 +54,53 @@ object WorkContractModal {
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
-  case class State(showBiddingScreen: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false, showAcceptDependencies: Boolean = false, showDispute: Boolean = false)
+  case class State(showWorkContract: Boolean = false, showMessage: Boolean = false, showConfirmation: Boolean = false, showAcceptDependencies: Boolean = false, showDispute: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback = {
-      t.modState(s => s.copy(showBiddingScreen = true))
+      t.modState(s => s.copy(showWorkContract = true))
     }
 
     def addBiddingScreenForm(): Callback = {
-      t.modState(s => s.copy(showBiddingScreen = true))
+      t.modState(s => s.copy(showWorkContract = true))
     }
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
                          postDispute: Boolean = false): Callback = {
 //      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
-        t.modState(s => s.copy(showBiddingScreen = false))
+        t.modState(s => s.copy(showWorkContract = false))
       } else if (postMessage) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = true))
+        t.modState(s => s.copy(showWorkContract = false, showMessage = true))
       }
       else if (postConfirmation) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = true))
+        t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = true))
       }
       else if (postAcceptDependencies) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = false, showAcceptDependencies = true))
+        t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = false, showAcceptDependencies = true))
       }
       else if (postDispute) {
-        t.modState(s => s.copy(showBiddingScreen = false, showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = true))
+        t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = true))
       }
       else {
-        t.modState(s => s.copy(showBiddingScreen = false))
+        t.modState(s => s.copy(showWorkContract = false))
       }
     }
 
     def hideMessage(/*showMessage: Boolean = false*/): Callback = {
-      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
     }
 
     def hideConfirmation(showConfirmation: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
     }
 
     def hideAcceptDependencies(showAcceptDependencies: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showWorkContract = true))
     }
 
     def hideDispute(showDispute: Boolean = false): Callback = {
-      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = false, showBiddingScreen = true))
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = false, showWorkContract = true))
     }
   }
 

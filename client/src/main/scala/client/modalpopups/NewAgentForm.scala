@@ -187,7 +187,7 @@ object NewAgentForm {
             )
           ),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a email of code confirming creation of your new account shortly after completing this form"),
+           // <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a email of code confirming creation of your new account shortly after completing this form"),
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
               <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Submit"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Cancel")
