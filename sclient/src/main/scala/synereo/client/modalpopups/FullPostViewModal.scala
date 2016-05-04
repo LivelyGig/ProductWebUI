@@ -7,27 +7,36 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{PostFullViewCSS, DashboardCSS, SynereoCommanStylesCSS, SignupCSS}
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 import scala.scalajs.js.dom
+import org.querki.jquery._
 
 /**
   * Created by Mandar on 5/3/2016.
   */
 object FullPostViewModal {
-
+  val fullPostViewContainer: js.Object = "#fullPostViewContainer"
+  val fullViewModalNavBar: js.Object = "#fullViewModalNavBar"
+  val fullViewImage: js.Object = "#fullViewImage"
+  val fullViewImageHeight = $(fullViewImage).height()
+  val dashboardContainerMain: js.Object = "#dashboardContainerMain"
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback)
 
+
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
-    def mounted() = Callback {
+    var scrollY: Int = 0
 
+    def mounted() = Callback {
+      $(fullPostViewContainer).height($(dashboardContainerMain).height() - 2)
     }
 
     def hide = Callback {
@@ -38,6 +47,19 @@ object FullPostViewModal {
       props.submitHandler()
     }
 
+
+    def handleScroll(e: ReactEventI): Callback = {
+      val fullViewImageHeight = $(fullViewImage).height()
+      scrollY = $(fullPostViewContainer).scrollTop()
+      println(scrollY)
+      if (scrollY > fullViewImageHeight) {
+        $(fullViewModalNavBar).addClass("postedUserInfoNavModalScroll").css("top", fullViewImageHeight.toInt + (scrollY - fullViewImageHeight.toInt))
+      } else if (scrollY < fullViewImageHeight - 160) {
+        $(fullViewModalNavBar).removeClass("postedUserInfoNavModalScroll").css("top", "0")
+      }
+      Callback.empty
+    }
+
     def render(s: State, p: Props) = {
 
       Modal(Modal.Props(
@@ -46,57 +68,50 @@ object FullPostViewModal {
         closed = () => modalClosed(s, p),
         CSSClass = "full-post-view-modal"),
         <.div(
-          <.div(^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer)(
+          <.div(^.id := "fullPostViewContainer", ^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer, ^.onScroll ==> handleScroll)(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-offset-1 col-md-10")(
                   <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
-                    <.img(^.src := "./assets/synereo-images/blogpostimg.png", PostFullViewCSS.Style.blogMainImage)
+                    <.img(^.id := "fullViewImage", ^.src := "./assets/synereo-images/blogpostimg.png", PostFullViewCSS.Style.blogMainImage)
                   ),
-                  <.div(^.className := "row", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                    <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                      <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                        <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
-                          <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                          <.div(DashboardCSS.Style.userNameDescription)(
-                            <.span("Colby Brown"),
-                            <.span(MIcon.chevronRight),
-                            <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
-                            <.span("1 hour")
-                          )
-                        )
-                      ),
-                      <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                        <.div(^.className := "col-md-12", PostFullViewCSS.Style.postedUserActionDiv)(
-                          <.div(^.className := "pull-right")(
-                            <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
-                              <.span(MIcon.chatBubble),
-                              <.span("6")
-                            ),
-                            <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
-                              <.span(MIcon.share),
-                              <.span("36")
-                            ),
-                            <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
-                              <.span(MIcon.share),
-                              <.span("4")
-                            ),
-                            <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
-                              <.span(Icon.minus),
-                              <.span(Icon.heartO),
-                              <.span(Icon.plus)
-                            ),
-                            <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
-                              <.span(MIcon.moreVert)
-                            )
-                          )
+                  <.ul(^.id := "fullViewModalNavBar", ^.className := "nav nav-tabs", PostFullViewCSS.Style.postedUserInfoNavModal)(
+                    <.li(PostFullViewCSS.Style.postedUserAvatarDiv)(
+                      <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
+                      <.div(DashboardCSS.Style.userNameDescription)(
+                        <.span("Colby Brown"),
+                        <.span(MIcon.chevronRight),
+                        <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
+                        <.span("1 hour")
+                      )
+                    ),
+                    <.li(PostFullViewCSS.Style.smallLiContainerUserActions)(
+                      <.div(^.className := "pull-right")(
+//                        <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
+//                          <.span(MIcon.chatBubble),
+//                          <.span("6")
+//                        ),
+//                        <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
+//                          <.span(MIcon.share),
+//                          <.span("36")
+//                        ),
+//                        <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
+//                          <.span(MIcon.share),
+//                          <.span("4")
+//                        ),
+//                        <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
+//                          <.span(Icon.minus),
+//                          <.span(Icon.heartO),
+//                          <.span(Icon.plus)
+//                        ),
+                        <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
+                          <.span(MIcon.moreVert)
                         )
                       )
                     )
-
                   ),
-                  <.div(^.className := "row", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                    <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                  <.div(^.className := "row")(
+                    <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
                       <.div(^.className := "col-md-offset-2 col-md-6 col-sm-offset-1 col-sm-8 col-xs-12")(
                         <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
                           <.h1("\"The Beauty of Island\""),
@@ -122,17 +137,18 @@ object FullPostViewModal {
                               <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                               <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                             ),
-                            <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
-                              <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                              <.div(DashboardCSS.Style.userNameDescription)(
-                                <.span("James Everet"),
-                                <.br(),
-                                <.span("1 hour")
+                            <.div(^.className:="row")(
+                              <.div(^.className := " col-md-12", PostFullViewCSS.Style.postedUserAvatarDiv)(
+                                <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
+                                <.div(DashboardCSS.Style.userNameDescription)(
+                                  <.span("James Everet"),
+                                  <.br(),
+                                  <.span("1 hour")
+                                )
                               )
                             ),
                             /*collapsible component*/
                             <.div(^.className := "row")(
-
                               <.div(^.className := " col-md-12")(
                                 <.div(^.className := "row", PostFullViewCSS.Style.glanceView)(
                                   <.div(^.className := "col-md-1")(
@@ -243,7 +259,7 @@ object FullPostViewModal {
                 ),
                 <.div(^.className := "col-md-1")(
                   //                  <.span(MIcon.close, PostFullViewCSS.Style.closeIcon)
-                  <.button(^.tpe := "button", bss.close,PostFullViewCSS.Style.modalCloseButton, ^.onClick --> hide, (MIcon.apply("close","48")))
+                  <.button(^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> hide, (MIcon.apply("close", "48")))
                 )
               )
             )

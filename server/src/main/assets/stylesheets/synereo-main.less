@@ -703,23 +703,45 @@ transform: translate(0,0); */
 }
 
 .full-post-view-modal.modal.fade .modal-dialog {
-    -webkit-transform: scale(0.1);
-    -moz-transform: scale(0.1);
-    -ms-transform: scale(0.1);
-    transform: scale(0.1);
-    top: 300px;
-    opacity: 0;
-    -webkit-transition: all 0.6s;
-    -moz-transition: all 0.6s;
-    transition: all 0.6s;
+  -webkit-transform: scale(0.1);
+  -moz-transform: scale(0.1);
+  -ms-transform: scale(0.1);
+  transform: scale(0.1);
+  top: 300px;
+  opacity: 0;
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
 }
 
 .full-post-view-modal.modal.fade.in .modal-dialog {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform: translate3d(0, -300px, 0);
-    transform: translate3d(0, -300px, 0);
-    opacity: 1;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+  -webkit-transform: translate3d(0, -300px, 0);
+  transform: translate3d(0, -300px, 0);
+  opacity: 1;
+}
+.postedUserInfoNavModalScroll {
+  position: absolute;
+  width: 100%;
+  background-color: grey;
+  -webkit-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.15);
+  box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.15);
+}
+.postedUserInfoNavModalScroll li {
+  z-index: 200;
+}
+.collapsing-transition{
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: .5s;
+  transition-duration: .5s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
 }

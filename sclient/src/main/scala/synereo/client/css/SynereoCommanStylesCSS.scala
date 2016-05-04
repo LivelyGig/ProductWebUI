@@ -227,7 +227,7 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top(50.%%),
       left(50.%%),
-      zIndex(10000),
+      zIndex(2000),
       color.grey
     )
     val backgroundColorWhite = style(
