@@ -83,7 +83,7 @@ object LGMain extends js.JSApp {
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(
             <.div(^.className:="col-md-8 col-sm-8 col-xs-8", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.DisplayFlex)(
-              c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/logo-symbol.png")),
+              c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")),
               <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", HeaderCSS.Style.navbarToggle, "data-target".reactAttr := "#navi-collapse")(
                 r.page match {
                   case JobPostsLoc      => <.span(^.color := "white",^.float:="right")("Jobs ","  ", Icon.thList)
