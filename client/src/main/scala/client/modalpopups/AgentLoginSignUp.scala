@@ -105,8 +105,8 @@ object AgentLoginSignUp {
     }
     def createSessions(userModel: UserModel) = {
       val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI,CoreApi.JOBS_SESSION_URI)
-      var futureArray =  Seq[Future[String]]()
-      sessionURISeq.map{sessionURI => futureArray :+= CoreApi.agentLogin(userModel)}
+      //      var futureArray =  Seq[Future[String]]()
+      val futureArray = for (sessionURI <- sessionURISeq) yield CoreApi.agentLogin(userModel)
       Future.sequence(futureArray).map{responseArray =>
         for (responseStr <- responseArray){
           val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
