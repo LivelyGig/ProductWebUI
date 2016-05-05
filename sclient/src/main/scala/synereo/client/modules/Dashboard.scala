@@ -21,6 +21,7 @@ import scala.scalajs.js.timers._
 import synereo.client.components.{Icon}
 import scala.language.reflectiveCalls
 import scala.concurrent.ExecutionContext.Implicits.global
+import org.scalajs.dom.window
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -38,14 +39,14 @@ object Dashboard {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(postMessage:MessagePost,ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView:Boolean = true)
+  case class State(postMessage: MessagePost, ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView: Boolean = true)
 
   class Backend(t: BackendScope[Props, State]) {
-    def submitForm(e: ReactEventI)  =  {
+    def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
       println(state.postMessage.content)
-      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
+      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content, Seq[String](), CoreApi.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(isMessagePosted = true))
     }
 
@@ -59,7 +60,7 @@ object Dashboard {
       }
     }
 
-    def updateContent(e:ReactEventI) ={
+    def updateContent(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
@@ -94,7 +95,12 @@ object Dashboard {
 
     def handleScroll(e: ReactEvent): Callback = {
       clearScrollPositions
+      val windowHeight = $(window).height()
+      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
+      //      var listOfAllLi = $("li[id^=\"home-feed-card-_\"]")
+      //      listOfAllLi.ma
       Callback.empty
+
     }
 
     def modifyCardSize(e: ReactEvent): Callback = {
@@ -150,9 +156,9 @@ object Dashboard {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
                 <.form(^.onSubmit ==> submitForm)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
+                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton/*, ^.onClick == submitForm*/ )(Icon.camera)
+                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
                 )
               ),
               <.div(^.className := "row")(
