@@ -65,6 +65,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       //      println("in refresh messages")
       // temporarily setting labels to prolog any()
       // later it has to be modified according to the seleted labels
+      println("In Refreshmessages")
       val labels = Utils.GetLabelProlog(Nil)
       window.sessionStorage.setItem("currentSearchLabel", labels)
 

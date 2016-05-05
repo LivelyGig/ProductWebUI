@@ -1,32 +1,26 @@
 package synereo.client.modules
 
+
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.handlers.{RefreshConnections, RefreshMessages}
-import shared.models.MessagesModel
+import synereo.client.handlers.{PostMessages, RefreshConnections, RefreshMessages}
+import shared.models.{MessagePost, MessagesModel}
 import shared.RootModels.MessagesRootModel
-import synereo.client.SYNEREOMain
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 import synereo.client.modalpopups.FullPostViewModal
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.scalajs.js
-import scalacss.Attrs.clear
 import scalacss.ScalaCssReact._
-import org.querki.jquery._
 import scala.scalajs.js
 import org.querki.jquery._
-import org.scalajs.dom._
-import js.{Date, UndefOr}
 import scala.scalajs.js.timers._
-import org.scalajs.dom.window
-import synereo.client.components.{Icon, GlobalStyles}
-import synereo.client.components.Bootstrap.Modal
+import synereo.client.components.{Icon}
 import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -44,9 +38,17 @@ object Dashboard {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(ShowFullPostView: Boolean = false)
+  case class State(postMessage:MessagePost,ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
+    def submitForm(e: ReactEventI)  =  {
+      e.preventDefault()
+      val state = t.state.runNow()
+      println(state.postMessage.content)
+      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
+      t.modState(s => s.copy(isMessagePosted = true))
+    }
+
     def mounted(props: Props) = {
       if (props.proxy().isEmpty) {
         //        SYNEREOCircuit.dispatch(RefreshConnections())
@@ -55,6 +57,11 @@ object Dashboard {
       } else {
         Callback.empty
       }
+    }
+
+    def updateContent(e:ReactEventI) ={
+      val value = e.target.value
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
 
     def closeFullViewModalPopUp(): Callback = {
@@ -82,7 +89,6 @@ object Dashboard {
       clearScrollPositions
       Callback.empty
     }
-
 
     def modifyCardSize(e: ReactEvent): Callback = {
       var clickedElement = e.target
@@ -133,24 +139,24 @@ object Dashboard {
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
-                <.form(/*^.onSubmit ==> submitForm*/)(
+                <.form(^.onSubmit ==> submitForm)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts..."),
+                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton)(Icon.camera)
+                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton/*, ^.onClick == submitForm*/ )(Icon.camera)
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
-                  //                  <.div(
-                  //                    p.proxy().render(
-                  //                      messagesRootModel =>
-                  //                        HomeFeedList(messagesRootModel.messagesModelList)
-                  //                    ),
-                  //                    p.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-                  //                    p.proxy().renderPending(ex => <.div()(
-                  //                      <.img(^.src := "./assets/images/processing.gif")))
-                  //                  )
+                    <.div(
+                      p.proxy().render(
+                        messagesRootModel =>
+                          HomeFeedList(messagesRootModel.messagesModelList)
+                      ),
+                      p.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
+                      p.proxy().renderPending(ex => <.div()(
+                        <.img(^.src := "./assets/images/processing.gif")))
+                    ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer /*, ^.onClick ==> modifyCardSize*/)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
@@ -265,7 +271,7 @@ object Dashboard {
   }
 
   val component = ReactComponentB[Props]("Dashboard")
-    .initialState_P(p => State())
+    .initialState_P(p => State(new MessagePost("", "", "", "", "", Nil, "", "", "", "")))
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
