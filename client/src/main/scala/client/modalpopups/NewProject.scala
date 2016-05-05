@@ -76,7 +76,7 @@ object NewProjectForm {
   case class State(projectPost: ProjectPost, postProject: Boolean = false, selectizeInputId : String = "postNewJobSelectizeInput")
 
 
-  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
@@ -97,7 +97,7 @@ object NewProjectForm {
 
       $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)*/
       val uid = UUID.randomUUID().toString.replaceAll("-","")
-      val post = new VersionedPost(uid,new Date().toUTCString(),new Date().toUTCString(), "","", selectedConnections,state.projectPost)
+      val post = new VersionedPost(uid,new Date().toUTCString(),new Date().toUTCString(), "","", Nil,state.projectPost)
       println(selectedConnections)
       LGCircuit.dispatch(PostContent(post, selectedConnections, CoreApi.JOBS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))

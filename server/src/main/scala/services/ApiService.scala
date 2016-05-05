@@ -92,8 +92,7 @@ class ApiService extends Api {
 
   override def queryApiBackend (requestContent: String) : Future[String] = {
     println(requestContent)
-    /*val req = s"requestContent = ${write(requestContent)}"
-    new PrintWriter("chacha.log") { write(requestContent); close }*/
+    //    new PrintWriter("chacha.log") { write(requestContent); close }
     WS.url(BASE_URL).post(requestContent).map{
       response =>
         println(s"response.body = ${response.body}")
