@@ -6,6 +6,7 @@ import diode.react.ReactConnector
 import synereo.client.handlers._
 import shared.RootModels.{SearchesRootModel, ProjectsRootModel, ConnectionsRootModel, MessagesRootModel}
 import shared.models.UserModel
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 
 /**
