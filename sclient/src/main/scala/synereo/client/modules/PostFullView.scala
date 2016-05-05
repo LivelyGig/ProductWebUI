@@ -41,7 +41,7 @@ object PostFullView {
                       )
                     ),
                     <.div(^.className := " col-md-6 col-sm-12 col-xs-12")(
-                      <.div(^.className := "col-md-12", PostFullViewCSS.Style.postedUserActionDiv)(
+                      <.div(^.className := "col-md-12", PostFullViewCSS.Style.smallLiContainerUserActions)(
                         <.div(^.className := "pull-right")(
                           <.button(^.className := "btn", PostFullViewCSS.Style.postedActionbtn)(
                             <.span(MIcon.chatBubble),

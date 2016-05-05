@@ -17,13 +17,14 @@ object PostFullViewCSS {
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
       marginTop(-20.px),
       marginLeft(-15.px),
-      overflowY.scroll,
-      height(953.px)
+      overflowY.scroll
+//      height(953.px)
     )
     val blogMainImage = style(
       marginLeft.auto,
       marginRight.auto,
-      display.block
+      display.block,
+      width(100.%%)
     )
     val postedActionbtn = style(
       backgroundColor.transparent,
@@ -77,16 +78,26 @@ object PostFullViewCSS {
       fontSize(1.1.em)
     )
     val postedUserInfoContainerDiv = style(
-      marginLeft(11.5.%%),
-      marginRight(11.6.%%),
-      backgroundColor.white
+      //      marginLeft(11.2.%%),
+      //      marginRight(11.2.%%),
+      paddingLeft.`0`.important,
+      paddingRight.`0`.important,
+      backgroundColor(c"#FFFFFF")
+    )
+    val postedUserInfoNavModal = style(
+      //      marginLeft(11.2.%%),
+      //      marginRight(11.2.%%),
+      paddingLeft.`0`.important,
+      paddingRight.`0`.important,
+      backgroundColor(c"#FFFFFF"),
+      margin(0.px, -15.px),
+      zIndex(3)
     )
     val postedUserAvatarDiv = style(
 
     )
-    val postedUserActionDiv = style(
-      textAlign.center,
-      paddingTop(20.px)
+    val smallLiContainerUserActions = style(
+      float.right.important
     )
     val postHeadlineContainerDiv = style(
       marginTop(60.px),
