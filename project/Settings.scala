@@ -82,8 +82,10 @@ object Settings {
     "org.querki" %%% "querki-jsext" % "0.6",
  //   "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5",
-    "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1"
+    "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
    /*,"com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
+    "com.github.nscala-time" %% "nscala-time" % "2.12.0",
+    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */

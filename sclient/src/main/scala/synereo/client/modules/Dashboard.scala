@@ -6,21 +6,21 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.handlers.{PostMessages, RefreshConnections, RefreshMessages}
+import synereo.client.handlers.{TestDispatch, PostMessages, RefreshConnections, RefreshMessages}
 import shared.models.{MessagePost, MessagesModel}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 import synereo.client.modalpopups.FullPostViewModal
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import scala.scalajs.js
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
 import scala.scalajs.js.timers._
 import synereo.client.components.{Icon}
 import scala.language.reflectiveCalls
-import scala.concurrent.ExecutionContext.Implicits.global
+
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -35,7 +35,6 @@ object Dashboard {
   val FeedTimeOut = 1500
   val loginLoader: js.Object = "#loginLoader"
   val loadingScreen: js.Object = "#loadingScreen"
-
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
   case class State(postMessage:MessagePost,ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView:Boolean = true)
@@ -45,7 +44,8 @@ object Dashboard {
       e.preventDefault()
       val state = t.state.runNow()
       println(state.postMessage.content)
-      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
+     SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
+     // SYNEREOCircuit.dispatch(TestDispatch())
       t.modState(s => s.copy(isMessagePosted = true))
     }
 
@@ -150,7 +150,7 @@ object Dashboard {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
                 <.form(^.onSubmit ==> submitForm)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
+                  <.input(^.id:="ContributeThoughtsID",^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
                   <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton/*, ^.onClick == submitForm*/ )(Icon.camera)
                 )
@@ -166,7 +166,7 @@ object Dashboard {
                     ),
                     p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
                     )
-                  ),
+                  )/*,
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
@@ -263,7 +263,7 @@ object Dashboard {
                         )
                       }
                     }
-                  )
+                  )*/
                 )
               )
             )
@@ -304,7 +304,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span("just now")
+                  <.span(message.created)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )

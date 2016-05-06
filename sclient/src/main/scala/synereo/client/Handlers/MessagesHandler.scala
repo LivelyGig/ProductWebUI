@@ -14,7 +14,7 @@ import synereo.client.services.CoreApi
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom._
 import synereo.client.utils.Utils
-
+import org.widok.moment._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
@@ -39,7 +39,11 @@ object MessagesModelHandler {
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
     //      println(model(0).content.pageOfPosts(0))
     //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
+
+
+
     var model = Seq[MessagesModel]()
+
     for (projectFromBackend <- messagesFromBackend) {
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       try {
@@ -49,13 +53,20 @@ object MessagesModelHandler {
         case e: Exception =>
           println(e)
       }
+
       if (!projectFromBackend.content.pageOfPosts.isEmpty)
         model :+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
+
+//      for (modelSort <- model) {
+//        modelSort.created.sortBy()
+//      }
     }
+//  model.sortBy( e => Moment(e.created).format("YYYY-MM-DD hh:mm:ss"))
+
+    println( model.sortWith( _.created > _.created ))
     //    println(model)
     MessagesRootModel(model)
   }
-
 }
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
