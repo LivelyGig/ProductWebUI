@@ -4,7 +4,7 @@ import diode.data.PotState.PotPending
 import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.{Empty, PotAction, Ready, Pot}
 import shared.models.{JobPost, ProjectsModel, ConnectionsModel}
-import client.rootmodels.ProjectsRootModel
+import shared.RootModels.ProjectsRootModel
 import client.services.CoreApi
 import shared.dtos._
 import scala.concurrent.ExecutionContext.Implicits.global

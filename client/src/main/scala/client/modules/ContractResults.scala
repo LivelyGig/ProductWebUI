@@ -4,7 +4,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{Callback, ReactComponentB}
 import client.components.Icon
 import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{BiddingScreenModal, NewMessage}
+import client.modals.{WorkContractModal, NewMessage}
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -74,7 +74,7 @@ object ContractResults {
                       <.div(/*^.className:="profile-action-buttons"*/)(
                         <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
                         <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
-                        BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.fileTextO, "Manage")),
+                        WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.fileTextO, "Manage")),
                         NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
                       )
                     )

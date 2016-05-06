@@ -84,12 +84,58 @@ object HeaderCSS {
 
     /* css*/
     val middelNaviContainer =style(
+//      marginTop(0.px),
+//      height(44.px),
+//      width(100.%%),
+//      paddingTop(4.px),
+    )
+
+    val connectionsmiddelNaviContainer = style (
       marginTop(0.px),
       height(44.px),
-      backgroundColor(c"#00767C"),
       width(100.%%),
-      paddingTop(4.px)
+      paddingTop(4.px),
+//      addClassName("middelNaviContainer"),
+      backgroundColor(rgb(61,56,90))
     )
+
+    val messagesmiddelNaviContainer = style (
+      marginTop(0.px),
+      height(44.px),
+      width(100.%%),
+      paddingTop(4.px),
+      backgroundColor(rgb(90,56,83))
+    )
+
+    val jobsmiddelNaviContainer = style (
+      marginTop(0.px),
+      height(44.px),
+      width(100.%%),
+      paddingTop(4.px),
+      backgroundColor(rgb( 56, 56, 90))
+    )
+    val offeringsmiddelNaviContainer = style (
+      marginTop(0.px),
+      height(44.px),
+      width(100.%%),
+      paddingTop(4.px),
+      backgroundColor(rgb(48, 94, 125))
+    )
+    val profilessmiddelNaviContainer = style (
+      marginTop(0.px),
+      height(44.px),
+      width(100.%%),
+      paddingTop(4.px),
+      backgroundColor(rgb(49, 49, 49))
+    )
+    val contractssmiddelNaviContainer = style (
+      marginTop(0.px),
+      height(44.px),
+      width(100.%%),
+      paddingTop(4.px),
+      backgroundColor(rgb(88, 48, 48))
+    )
+
       val presetPickBtn= style(
       backgroundColor(rgba(0,0,0,0)),
       color(c"#13EEDD"),

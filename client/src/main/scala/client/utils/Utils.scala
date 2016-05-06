@@ -12,6 +12,12 @@ object Utils {
     Connection(sourceStr,"alias",sourceStr)
   }
 
+  /***
+    * This function is used to return the prolog used by
+    * glosevel to evaluate the subscription requests.
+    * @param labelFamilies This is the seq of label families e.g seq of [parent1,child1ToParent1], [parent2,child1ToParent2]
+    * @return returns the prolog term e.g any([label1,label2])
+    */
   def GetLabelProlog(labelFamilies: Seq[Seq[LabelModel]]) : String = {
     // println("labelFamilies = " + labelFamilies)
     var labelsCount =  labelFamilies.length - 1
@@ -27,8 +33,6 @@ object Utils {
       }
     }
     prolog.append(")")
-    // println(prolog)
     prolog.toString()
-
   }
 }

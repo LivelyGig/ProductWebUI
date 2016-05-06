@@ -20,6 +20,7 @@ import org.querki.jquery._
 import scala.scalajs.js.timers._
 import synereo.client.components.{Icon}
 import scala.language.reflectiveCalls
+import org.scalajs.dom.window
 
 
 /**
@@ -37,10 +38,10 @@ object Dashboard {
   val loadingScreen: js.Object = "#loadingScreen"
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(postMessage:MessagePost,ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView:Boolean = true)
+  case class State(postMessage: MessagePost, ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView: Boolean = true)
 
   class Backend(t: BackendScope[Props, State]) {
-    def submitForm(e: ReactEventI)  =  {
+    def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
@@ -57,7 +58,7 @@ object Dashboard {
       }
     }
 
-    def updateContent(e:ReactEventI) ={
+    def updateContent(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
@@ -92,7 +93,12 @@ object Dashboard {
 
     def handleScroll(e: ReactEvent): Callback = {
       clearScrollPositions
+      val windowHeight = $(window).height()
+      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
+      //      var listOfAllLi = $("li[id^=\"home-feed-card-_\"]")
+      //      listOfAllLi.ma
       Callback.empty
+
     }
 
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
@@ -134,7 +140,7 @@ object Dashboard {
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                   <.input(^.id:="ContributeThoughtsID",^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton/*, ^.onClick == submitForm*/ )(Icon.camera)
+                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
                 )
               ),
               <.div(^.className := "row")(
@@ -148,7 +154,7 @@ object Dashboard {
                     ),
                     p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
                     )
-                  )/*,
+                  ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
@@ -245,7 +251,7 @@ object Dashboard {
                         )
                       }
                     }
-                  )*/
+                  )
                 )
               )
             )

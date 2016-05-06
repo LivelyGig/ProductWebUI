@@ -16,15 +16,23 @@ object Presets {
     def mounted(props: Props): Callback = Callback {
 
     }
+
     def render(p: Props) = {
-      <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
-        <.div(/*^.className := "row"*/)(
-          <.div(^.className := "col-lg-1")(),
-          <.div(^.className := "col-md-12 col-lg-10")(
-            <.div(^.className := "row")(
-              <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                p.view match {
-                  case "talent" => {
+      //      <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
+      //        <.div(/*^.className := "row"*/)(
+      //          <.div(^.className := "col-lg-1")(),
+      //          <.div(^.className := "col-md-12 col-lg-10")(
+      //            <.div(^.className := "row")(
+      //              <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
+
+      p.view match {
+        case "talent" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
@@ -48,11 +56,24 @@ object Presets {
                       )
 
                     )
-                  } //talent
-                  case "projects" => {
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
+              ),
+              <.div(^.className := "col-lg-1")()
+            )
+          )
+        } //talent
+        case "projects" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.jobsmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn,^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
                         <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
@@ -69,8 +90,21 @@ object Presets {
                         NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
                       )
                     )
-                  } //project
-                  case "offerings" => {
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
+              ),
+              <.div(^.className := "col-lg-1")()
+            )
+          )
+        } //project
+        case "offerings" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.offeringsmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
@@ -89,8 +123,21 @@ object Presets {
                         Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
                       )
                     )
-                  } //project
-                  case "contract" => {
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
+              ),
+              <.div(^.className := "col-lg-1")()
+            )
+          )
+        } //project
+        case "contract" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.contractssmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
@@ -105,11 +152,24 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        BiddingScreenModal(BiddingScreenModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
+                        WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
                       )
                     )
-                  }
-                  case "messages" => {
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
+              ),
+              <.div(^.className := "col-lg-1")()
+            )
+          )
+        }
+        case "messages" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.messagesmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
@@ -129,8 +189,21 @@ object Presets {
                         NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message"))
                       )
                     )
-                  }
-                  case "connections" => {
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
+              ),
+              <.div(^.className := "col-lg-1")()
+            )
+          )
+        }
+        case "connections" => {
+          <.div(^.id := "middelNaviContainer", HeaderCSS.Style.connectionsmiddelNaviContainer)(
+            <.div(/*^.className := "row"*/)(
+              <.div(^.className := "col-lg-1")(),
+              <.div(^.className := "col-md-12 col-lg-10")(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
                       <.div(^.className := "btn-group")(
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
@@ -149,15 +222,26 @@ object Presets {
                         NewConnectionModal(NewConnectionModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
                       )
                     )
-                  }
-                } //main switch
+                  ),
+                  <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
+                )
               ),
-              <.div(^.className := "col-md-9 col-sm-9",DashBoardCSS.Style.paddingLeft0px)()
+              <.div(^.className := "col-lg-1")()
             )
-          ),
-          <.div(^.className := "col-lg-1")()
-        )
-      )
+          )
+        }
+      } //main switch
+
+
+      //              ),
+      //              <.div(^.className := "col-md-9 col-sm-9",DashBoardCSS.Style.paddingLeft0px)()
+      //            )
+      //          ),
+      //          <.div(^.className := "col-lg-1")()
+      //        )
+      //      )
+
+
     }
   }
 
