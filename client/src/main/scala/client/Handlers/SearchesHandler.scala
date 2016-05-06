@@ -39,23 +39,40 @@ object SearchesModelHandler {
     labels
   }
   var children = Seq[LabelModel]()
-  var listE = new ListBuffer[LabelModel]() /*Seq[Label]()*/
-  /*var searchLabels = new ListBuffer[Seq[Label]]()*/
+  var labelsBuffer = new ListBuffer[LabelModel]()
+
+  /**
+    * Uses the list buffer to hold children to a particular label
+    * It iterated over label collection and add the children to
+    * the list buffer in recurssion till it reaches the last children.
+    * @param label is the label for which we need children
+    * @param labels is the collection of all labels
+    * @return seq of all children label
+    */
   def GetChildren(label: LabelModel, labels: Seq[LabelModel]):  Seq[LabelModel]={
     children = labels.filter(p=>p.parentUid==label.uid)
     if (!children.isEmpty){
-      listE ++= children
+      labelsBuffer ++= children
       children.map(e => GetChildren(e, labels))
     }
-    listE
+    labelsBuffer
   }
+
+  /**
+    * This function is reverse logic of above function with a small difference
+    * Here the recurssion captures parent from child to root
+    * so forxample
+    * @param label is the label whose parents are required
+    * @param labels is the collection of all labels
+    * @return
+    */
   def GetChildrenToParent(label: LabelModel, labels: Seq[LabelModel]):  Seq[LabelModel]={
     children = labels.filter(p=>p.uid==label.parentUid)
     if (!children.isEmpty){
-      listE ++= children
+      labelsBuffer ++= children
       children.map(e => GetChildrenToParent(e, labels))
     }
-    listE
+    labelsBuffer
   }
   var labelFamilies = new ListBuffer[LabelModel]()
   /*def GetLabelFamilies (label: Label,labels: Seq[Label]) : Seq[Label] = {
@@ -87,18 +104,33 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       } else {
         updated(SearchesModelHandler.GetSearchesModel(Nil))
       }
+
+
+    /**
+      * This is the action to update the label in searches view.
+      * The logic mostly deals with getting the appropriate label from childrent to parent
+      * and parent to label
+      * Label structure is as such that each label consists of parent uri which is the
+      * uri to the parent label.
+      * If a particular label is the root the parent uri is "self"
+      */
     case UpdateLabel(label) =>
-      SearchesModelHandler.listE.clear()
+      SearchesModelHandler.labelsBuffer.clear()
       val children = SearchesModelHandler.GetChildren(label,value.searchesModel)
       if (!children.isEmpty){
-        val test = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else e)
-        updated(SearchesRootModel(test))
+        /*set the state of all children same as the label in argument*/
+        val updatedChildren = value.searchesModel.map(e=> if (children.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked) else e)
+        updated(SearchesRootModel(updatedChildren))
       }
+      /*Subsequent process is aimed at selecting the proper state to all labels from children to parent
+      * This is repeated in recurssion so if the parent has other children which are selected its state is
+      * kept at true otherwise changed to false
+      * */
       val childrenToParent = SearchesModelHandler.GetChildrenToParent(label,value.searchesModel)
       val modelModified = value.searchesModel.map(e=> if (childrenToParent.exists(p =>p.uid == e.uid)|| e.uid==label.uid) e.copy(isChecked = label.isChecked)
         else e)
       val modelToUpdate = modelModified.map(e=>if (e.parentUid=="self" && childrenToParent.exists(p=>p.uid == e.uid)){
-        SearchesModelHandler.listE.clear()
+        SearchesModelHandler.labelsBuffer.clear()
         val childList = SearchesModelHandler.GetChildren(e,modelModified)
         val selectedChildList = childList.filter(p=>p.isChecked == true)
         if (!selectedChildList.isEmpty){
@@ -112,7 +144,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       val selectedRootParents = value.searchesModel.filter(e=>e.isChecked==true && e.parentUid== "self")
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
       selectedRootParents.foreach{selectedRootParent=>
-        SearchesModelHandler.listE.clear()
+        SearchesModelHandler.labelsBuffer.clear()
           val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent,value.searchesModel).filter(e=>e.isChecked==true)
         val family = (selectedChildren:+selectedRootParent)
         labelFamilies.append(family)

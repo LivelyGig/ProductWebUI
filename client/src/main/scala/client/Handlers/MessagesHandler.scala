@@ -28,12 +28,8 @@ object MessagesModelHandler{
         println(e)
     }
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
-
-    //      println(model(0).content.pageOfPosts(0))
-    //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
     var model = Seq[MessagesModel]()
     for(projectFromBackend <- messagesFromBackend){
-      //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
       try {
         if (!projectFromBackend.content.pageOfPosts.isEmpty){
           val project = upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
@@ -41,12 +37,8 @@ object MessagesModelHandler{
         }
       } catch {
         case e: Exception =>
-//          println(projectFromBackend.content.pageOfPosts(0))
       }
-      //      if (!projectFromBackend.content.pageOfPosts.isEmpty)
-
     }
-    //        println(model)
     MessagesRootModel(model)
   }
 
@@ -55,12 +47,9 @@ object MessagesModelHandler{
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action : RefreshMessages =>
-      // todo investigate calling of this method due to callback
-      //      println("in refresh messages")
       val labels = window.sessionStorage.getItem("currentSearchLabel")
       val updateF =  action.effectWithRetry(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
-      if (labels!=null)
-      {
+      if (labels!=null){
         action.handleWith(this,updateF)(PotActionRetriable.handler())
       } else {
         updated(Empty)

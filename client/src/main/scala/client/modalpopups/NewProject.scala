@@ -98,7 +98,7 @@ object NewProjectForm {
       $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)*/
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       val post = new VersionedPost(uid,new Date().toUTCString(),new Date().toUTCString(), "","", Nil,state.projectPost)
-      println(selectedConnections)
+//      println(selectedConnections)
       LGCircuit.dispatch(PostContent(post, selectedConnections, CoreApi.JOBS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))
     }
