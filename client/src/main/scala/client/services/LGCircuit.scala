@@ -2,7 +2,7 @@ package client.services
 
 import autowire._
 import client.handlers._
-import client.rootmodels._
+import shared.RootModels._
 import upickle.default._
 import diode._
 import diode.data._

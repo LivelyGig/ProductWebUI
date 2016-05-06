@@ -5,7 +5,7 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
-import client.rootmodels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
+import shared.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
 import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -20,18 +20,18 @@ import scalacss.ScalaCssReact._
 import org.querki.jquery._
 
 object MessagesResults {
-  case class Props (proxy : ModelProxy[Pot[MessagesRootModel]])
+
+  case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
+
   case class State(selectedItem: Option[MessagesModel] = None)
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) = {
-      if (props.proxy().isEmpty){
-//          LGCircuit.dispatch(SubscribeSearch())
+      if (props.proxy().isEmpty) {
+        //          LGCircuit.dispatch(SubscribeSearch())
         LGCircuit.dispatch(RefreshConnections())
-          props.proxy.dispatch(RefreshMessages())
-
-//        props.proxy.dispatch(RefreshMessages())
-
+        props.proxy.dispatch(RefreshMessages())
+        //        props.proxy.dispatch(RefreshMessages())
       } else {
         Callback.empty
       }
@@ -40,7 +40,7 @@ object MessagesResults {
 
   val component = ReactComponentB[Props]("Messages")
     .backend(new Backend(_))
-    .renderPS((B, P, S ) => {
+    .renderPS((B, P, S) => {
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -57,7 +57,7 @@ object MessagesResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-                <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -80,28 +80,30 @@ object MessagesResults {
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
-         <.div( ^.id := "resultsContainer")(
-            P.proxy().render(messagesRootModel =>
-                         MessagesList(messagesRootModel.messagesModelList)
-            ),
-            P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-            P.proxy().renderPending(ex => <.div()(
-              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)))
+        <.div(^.id := "resultsContainer")(
+          P.proxy().render(messagesRootModel =>
+            MessagesList(messagesRootModel.messagesModelList)
+          ),
+          P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
+          P.proxy().renderPending(ex => <.div()(
+            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)))
         )
-     )
+      )
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
+
   def apply(proxy: ModelProxy[Pot[MessagesRootModel]]) = component(Props(proxy))
 }
 
 object MessagesList {
+
   case class Props(messages: Seq[MessagesModel])
 
   private val MessagesList = ReactComponentB[Props]("ProjectList")
@@ -114,16 +116,17 @@ object MessagesList {
           <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
           <.div(^.className := "media-body")(
             message.text,
-            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/")(
+            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/)(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
               //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
               //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
               //NewMessage(NewMessage.Props("Forward",Seq(HeaderCSS.Style.createNewProjectBtn),"","Forward")),
               //NewMessage(NewMessage.Props("Reply",Seq(HeaderCSS.Style.createNewProjectBtn),"","Reply"))
-              NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailForward,"Forward")),
-              NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.mailReply,"Reply" ))
-              /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
+
+                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailForward, "Forward")),
+                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailReply, "Reply"))
+                /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
             )
           ) //media-body
         ) //li

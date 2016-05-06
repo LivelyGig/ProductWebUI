@@ -29,7 +29,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       if (temp!=null) {
         modelFromStore = UserModel(email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-        imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
       }
       updated(modelFromStore)
     case CreateSessions(userModel2) =>
@@ -41,13 +41,13 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         }
       }
 
-        noChange
+      noChange
 
     case PostMessage(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))
       val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,"[1111]",upickle.default.write(value),uid)))).onComplete{
+      CoreApi.postMessage(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,"[1111]",upickle.default.write(value),uid))), CoreApi.MESSAGES_SESSION_URI).onComplete{
         case Success(response) => {println("success")
           println("Responce = "+response)
           //          t.modState(s => s.copy(postNewMessage = true))
@@ -59,8 +59,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
     case PostContent(value: Post,connectionStringSeq: Seq[String], sessionUri: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-","")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))
-//      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,"[1111]",upickle.default.write(value),uid)))).onComplete{
+      //      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
+      val labelToPost = sessionUri match {
+        case CoreApi.MESSAGES_SESSION_URI => "MESSAGEPOST"
+        case CoreApi.JOBS_SESSION_URI => "JOBPOST"
+      }
+      CoreApi.postMessage(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,s"[$labelToPost]",upickle.default.write(value),uid))), CoreApi.JOBS_SESSION_URI).onComplete{
         case Success(response) => {println("success")
           println("Responce = "+response)
           //          t.modState(s => s.copy(postNewMessage = true))

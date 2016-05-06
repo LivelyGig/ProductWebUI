@@ -1,6 +1,6 @@
 package client.components
 
-import client.rootmodels.ConnectionsRootModel
+import shared.RootModels.ConnectionsRootModel
 import diode.data.Pot
 import diode.react.ReactPot._
 import diode.react.ModelProxy

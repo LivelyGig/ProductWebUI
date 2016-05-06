@@ -105,10 +105,10 @@ object CoreApi {
     }
   }
 
-  def postMessage (subscribeRequest: SubscribeRequest) : Future[String] = {
+  def postMessage (subscribeRequest: SubscribeRequest, sessionUri: String) : Future[String] = {
     for {
       newSubscription <- evalSubscribeRequest(subscribeRequest)
-      messages <-  sessionPing(MESSAGES_SESSION_URI)
+      messages <-  sessionPing(sessionUri)
     } yield messages
   }
   def cancelPreviousSubsForLabelSearch() = {

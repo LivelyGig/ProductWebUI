@@ -12,7 +12,7 @@ object AppCSS {
       CreateAgentCSS.Style,
       MessagesCSS.Style,
       ProjectCSS.Style,
-      BiddingScreenCSS.Style,
+      WorkContractCSS.Style,
       PresetsCSS.Style
       )
 //    GlobalRegistry.onRegistration(_.addToDocument()(s))
