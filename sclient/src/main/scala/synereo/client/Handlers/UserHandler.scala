@@ -46,40 +46,19 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
                 val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
                 window.sessionStorage.setItem(sessionURI,response.content.sessionURI)
               })
-      //      val futures = sessionURISeq.map {
-      //        sessionURI => CoreApi.agentLogin(userModel2).onComplete {
-      //          case Success(response) => {
-      //            println("success")
-      //            println("Responce = " + response)
-      //            val responseStr = upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
-      //            window.sessionStorage.setItem(sessionURI, responseStr.content.sessionURI)
-      //          }
-      //          case Failure(response) => println("failure")
-      //        }
-      //      }
-      /*for (sessionURI <- sessionURISeq) {
-        CoreApi.agentLogin(userModel2).map{responseStr=>
-          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-          window.sessionStorage.setItem(sessionURI,response.content.sessionURI)
-        }
-      }*/
-
       noChange
 
     case PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
-      val creattedDateTime = Moment().format("YYYY-MM-DD hh:mm:ss")
-      println(creattedDateTime)
+      val createdDateTime = Moment().format("YYYY-MM-DD hh:mm:ss")
+//      println(createdDateTime)
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
-      val value = ExpressionContentValue(uid.toString, "TEXT", creattedDateTime  , creattedDateTime ,Map[Label, String]().empty, connectionsSeq, content)
+      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime  , createdDateTime ,Map[Label, String]().empty, connectionsSeq, content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {
-//          val ContributeThoughtsID : js.Object = "#ContributeThoughtsID"
-//          $(ContributeThoughtsID).value(" ")
-          println("success")
-          println("Responce = " + response)
+          val ContributeThoughtsID : js.Object = "#ContributeThoughtsID"
+          $(ContributeThoughtsID).value(" ")
           SYNEREOCircuit.dispatch(RefreshMessages())
-          //          t.modState(s => s.copy(postNewMessage = true))
         }
         case Failure(response) => println("failure")
       }

@@ -16,7 +16,10 @@ import org.scalajs.dom._
 import synereo.client.utils.Utils
 import org.widok.moment._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
 import scala.scalajs.js.JSON
+import org.querki.jquery._
+import japgolly.scalajs.react._
 
 /**
   * Created by shubham.k on 1/25/2016.
@@ -30,41 +33,11 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends Po
 
 object MessagesModelHandler {
   def GetMessagesModel(response: String): MessagesRootModel = {
-    try {
-      upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
-    } catch {
-      case e: Exception =>
-        println(e)
-    }
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
-    //      println(model(0).content.pageOfPosts(0))
-    //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
-
-
-
-    var model = Seq[MessagesModel]()
-
-    for (projectFromBackend <- messagesFromBackend) {
-      //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
-      try {
-        if (!projectFromBackend.content.pageOfPosts.isEmpty)
-          upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
-      } catch {
-        case e: Exception =>
-          println(e)
-      }
-
-      if (!projectFromBackend.content.pageOfPosts.isEmpty)
-        model :+= upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
-
-//      for (modelSort <- model) {
-//        modelSort.created.sortBy()
-//      }
-    }
-//  model.sortBy( e => Moment(e.created).format("YYYY-MM-DD hh:mm:ss"))
-
-    println( model.sortWith( _.created > _.created ))
-    //    println(model)
+    val model = messagesFromBackend
+      .filterNot(_.content.pageOfPosts.isEmpty)
+      .map(message =>upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
+      .sortWith((x,y) =>  Moment(x.created).isAfter(Moment(y.created)))
     MessagesRootModel(model)
   }
 }
@@ -72,15 +45,8 @@ object MessagesModelHandler {
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action: RefreshMessages =>
-      // todo investigate calling of this method due to callback
-      //      println("in refresh messages")
-      // temporarily setting labels to prolog any()
-      // later it has to be modified according to the seleted labels
-      println("In Refreshmessages")
       val labels = Utils.GetLabelProlog(Nil)
       window.sessionStorage.setItem("currentSearchLabel", labels)
-
-      println("labels = " + labels)
       if (labels != null) {
         val updateF = action.effect(CoreApi.getMessages())(messages => MessagesModelHandler.GetMessagesModel(messages))
         action.handleWith(this, updateF)(PotAction.handler())

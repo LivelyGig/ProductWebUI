@@ -43,10 +43,8 @@ object Dashboard {
     def submitForm(e: ReactEventI)  =  {
       e.preventDefault()
       val state = t.state.runNow()
-      println(state.postMessage.content)
      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
-     // SYNEREOCircuit.dispatch(TestDispatch())
-      t.modState(s => s.copy(isMessagePosted = true))
+      t.modState(s => s.copy(isMessagePosted = true,postMessage = s.postMessage.copy(content = "")))
     }
 
     def mounted(props: Props) = {
@@ -97,32 +95,16 @@ object Dashboard {
       Callback.empty
     }
 
-    def modifyCardSize(e: ReactEvent): Callback = {
-      var clickedElement = e.target
-      Callback.empty
-    }
-
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
       val targetLi = e.target
       val collapsiblePost: js.Object = $(targetLi).find(".collapse")
       setTimeout(FeedTimeOut) {
         if (!$(collapsiblePost).hasClass("in")) {
-          //          $(targetLi).find(".glance-view-button").addClass("hide")
           $(collapsiblePost).addClass("in")
-          //          $(collapsiblePost).addClass("collapsing-transition")
         }
       }
       Callback.empty
     }
-
-    //    def handleMouseLeaveEvent(e: ReactEvent): Callback = {
-    //      val Li = e.target
-    //      setTimeout(1500) {
-    //        //        println("completed 1500ms")
-    //        $(Li).find(".glance-view-button").trigger("click")
-    //      }
-    //      CallbackTo.pure(Nil)
-    //    }
 
     def render(s: State, p: Props) = {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain, ^.onScroll ==> handleScroll)(
