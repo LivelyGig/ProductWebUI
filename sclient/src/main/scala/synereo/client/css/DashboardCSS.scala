@@ -57,7 +57,11 @@ object DashboardCSS {
     )
     val homeFeedContainer = style(
       marginTop(30.px),
-      marginBottom(90.px)
+      marginBottom(90.px)/*,
+      height(730.px),
+      marginRight(-30.px),
+      overflowY.scroll.important,
+      overflowX.hidden.important*/
     )
     val homeFeedMainContainer = style(
       //      width(762.px),
