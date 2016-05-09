@@ -6,23 +6,22 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import synereo.client.handlers.{TestDispatch, PostMessages, RefreshConnections, RefreshMessages}
 import org.scalajs.dom
-import synereo.client.handlers.{PostMessages, RefreshConnections, RefreshMessages}
 import shared.models.{MessagePost, MessagesModel}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 import synereo.client.modalpopups.FullPostViewModal
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
 import scala.scalajs.js.timers._
 import synereo.client.components.{Icon}
 import scala.language.reflectiveCalls
-import scala.concurrent.ExecutionContext.Implicits.global
 import org.scalajs.dom.window
+
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -49,9 +48,8 @@ object Dashboard {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      println(state.postMessage.content)
-      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content, Seq[String](), CoreApi.MESSAGES_SESSION_URI))
-      t.modState(s => s.copy(isMessagePosted = true))
+     SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
+      t.modState(s => s.copy(isMessagePosted = true,postMessage = s.postMessage.copy(content = "")))
     }
 
     def mounted(props: Props) = {
@@ -114,32 +112,16 @@ object Dashboard {
 
     }
 
-    def modifyCardSize(e: ReactEvent): Callback = {
-      var clickedElement = e.target
-      Callback.empty
-    }
-
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
       val targetLi = e.target
       val collapsiblePost: js.Object = $(targetLi).find(".collapse")
       setTimeout(FeedTimeOut) {
         if (!$(collapsiblePost).hasClass("in")) {
-          //          $(targetLi).find(".glance-view-button").addClass("hide")
           $(collapsiblePost).addClass("in")
-          //          $(collapsiblePost).addClass("collapsing-transition")
         }
       }
       Callback.empty
     }
-
-    //    def handleMouseLeaveEvent(e: ReactEvent): Callback = {
-    //      val Li = e.target
-    //      setTimeout(1500) {
-    //        //        println("completed 1500ms")
-    //        $(Li).find(".glance-view-button").trigger("click")
-    //      }
-    //      CallbackTo.pure(Nil)
-    //    }
 
     def render(s: State, p: Props) = {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
@@ -167,23 +149,23 @@ object Dashboard {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
                 <.form(^.onSubmit ==> submitForm)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.content, ^.onChange ==> updateContent),
+                  <.input(^.id:="ContributeThoughtsID",^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
                   <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
-                  //                  <.div(
-                  //                    p.proxy().render(
-                  //                      messagesRootModel =>
-                  //                        HomeFeedList(messagesRootModel.messagesModelList)
-                  //                    ),
-                  //                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-                  //                    ),
-                  //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-                  //                    )
-                  //                  ),
+                  <.div(
+                    p.proxy().render(
+                      messagesRootModel =>
+                        HomeFeedList(messagesRootModel.messagesModelList)
+                    ),
+                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
+                    ),
+                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
+                    )
+                  ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
@@ -321,7 +303,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span("just now")
+                  <.span(message.created)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )

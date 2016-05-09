@@ -79,24 +79,14 @@ object CoreApi {
   }
 
   def getMessages(): Future[String] = {
-    /*val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(MESSAGES_SESSION_URI))))*/
-    try {
-      upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList"))
-    } catch {
-      case e: Exception =>
-        println(e.getMessage)
-    }
     val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.GetSelfConnnection(MESSAGES_SESSION_URI))
-    //    println(connectionsList)
     val currentLabels = window.sessionStorage.getItem("currentSearchLabel")
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
-    //    val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)
     val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), connectionsList, previousLabels)
     //    todo move the logic from button click messages subscription to messages feed
     val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
     if (messageSearchClick != null) {
-      //      Searches.initializeTagsInput()
       window.sessionStorage.setItem("previousSearchLabel", currentLabels)
       for {
         cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
@@ -107,7 +97,6 @@ object CoreApi {
       window.sessionStorage.setItem("messageSearchClick", "true")
       window.sessionStorage.setItem("previousSearchLabel", currentLabels)
       for {
-      //        cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
         newSubscription <- evalSubscribeRequest(getMessagesSubscription)
         messages <- sessionPing(MESSAGES_SESSION_URI)
       } yield messages
