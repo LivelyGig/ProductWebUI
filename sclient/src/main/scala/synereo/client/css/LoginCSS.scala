@@ -285,6 +285,7 @@ object LoginCSS {
     val loginModalTextStyle = style(
       fontFamily :=! "karla",
       color(c"#000"),
+      fontWeight.normal.important,
       fontSize(20.px)
     )
     val loginModalTextActionContainer = style(

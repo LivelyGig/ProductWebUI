@@ -96,7 +96,7 @@ object MainMenu {
                 )
               ),
               <.li(^.className := "")(
-                <.a(^.href := "/#userprofileview")(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                <.a(^.href := "/#userprofileview",SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
               )
             )
           } else {

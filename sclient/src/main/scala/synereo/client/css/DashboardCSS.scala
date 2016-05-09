@@ -16,10 +16,6 @@ object DashboardCSS {
       /*      minHeight(60.px),
             minWidth(100.px)*/
     )
-    /*   val navBackgroundImage = style(
-         width(100.%%),
-         height(70.px)
-       )*/
     val dashboardContainerMain = style(
       height(100.vh),
       overflowY.scroll.important,
@@ -57,11 +53,11 @@ object DashboardCSS {
     )
     val homeFeedContainer = style(
       marginTop(30.px),
-      marginBottom(90.px)/*,
-      height(730.px),
-      marginRight(-30.px),
-      overflowY.scroll.important,
-      overflowX.hidden.important*/
+      marginBottom(90.px)
+      //      height(730.px),
+      //      marginRight(-30.px),
+      //      overflowY.scroll.important,
+      //      overflowX.hidden.important
     )
     val homeFeedMainContainer = style(
       //      width(762.px),
@@ -85,7 +81,6 @@ object DashboardCSS {
       width(110.px),
       border(1.px, solid, transparent),
       borderBottomLeftRadius(9.em),
-      //      borderColor.transparent.important,
       backgroundColor(c"#1B76A3"),
       position.absolute,
       right.`0`,
@@ -111,10 +106,9 @@ object DashboardCSS {
       display.inlineBlock
     )
     val userPost = style(
-      //      marginTop(5.%%),
       marginLeft.auto.important,
       marginRight.auto.important,
-      width(762.px),
+      maxWidth(762.px),
       backgroundColor(c"#FFFFFF"),
       borderRadius(5.px),
       paddingTop(5.px),
@@ -128,7 +122,7 @@ object DashboardCSS {
       paddingBottom(5.px),
       marginLeft.auto,
       marginRight.auto,
-      width(762.px)
+      maxWidth(762.px)
     )
     val userPostRight = style(
       marginTop(5.%%),
@@ -155,12 +149,13 @@ object DashboardCSS {
     val UserInput = style(
       border.none.important,
       fontWeight._700,
-      width(85.%%),
+      width(89.%%),
       height(40.px),
       display.inlineBlock,
       paddingLeft(6.px),
       &.focus(
         outline.none.important
+
       )
     )
     val userNameDescription = style(
@@ -187,7 +182,10 @@ object DashboardCSS {
       backgroundColor.transparent,
       border.none, fontSize(22.px),
       marginTop(9.px),
-      color.white
+      color(c"#FFFFFF"),
+      &.hover(
+        backgroundColor(c"#1FB6F1")
+      )
     )
     val cardHeading = style(
       fontWeight.bold,

@@ -2,7 +2,7 @@ package synereo.client
 
 //import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
+import synereo.client.css.{DemoCSS, SynereoCommanStylesCSS, AppCSS}
 import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit

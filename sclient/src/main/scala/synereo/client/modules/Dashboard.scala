@@ -6,6 +6,7 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom
 import synereo.client.handlers.{PostMessages, RefreshConnections, RefreshMessages}
 import shared.models.{MessagePost, MessagesModel}
 import shared.RootModels.MessagesRootModel
@@ -27,6 +28,7 @@ import org.scalajs.dom.window
   * Created by Mandar on 3/11/2016.
   */
 object Dashboard {
+  val document = js.Dynamic.global.document
   var lastPos: Double = 50
   var newPos: Double = 50
   var timer: js.Any = 0
@@ -36,6 +38,8 @@ object Dashboard {
   val FeedTimeOut = 1500
   val loginLoader: js.Object = "#loginLoader"
   val loadingScreen: js.Object = "#loadingScreen"
+  val homeFeedMediaList: js.Object = "#homeFeedMediaList"
+  var homeFeedMediaListHeight = 0
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
@@ -94,11 +98,18 @@ object Dashboard {
     }
 
     def handleScroll(e: ReactEvent): Callback = {
-      clearScrollPositions
-      val windowHeight = $(window).height()
-      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
+      //      clearScrollPositions
+      //      val windowHeight = $(window).height()
+      //      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
       //      var listOfAllLi = $("li[id^=\"home-feed-card-_\"]")
       //      listOfAllLi.ma
+      homeFeedMediaListHeight = $(homeFeedMediaList).height().toInt
+      var numberOfLi = $(homeFeedMediaList).children("li").length
+      val lis = $(homeFeedMediaList).children("li")
+//      lis.each(({ (li: dom.html.Html) =>
+//
+//      }: js.ThisFunction0))
+
       Callback.empty
 
     }
@@ -131,7 +142,7 @@ object Dashboard {
     //    }
 
     def render(s: State, p: Props) = {
-      <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain, ^.onScroll ==> handleScroll)(
+      <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
@@ -163,17 +174,17 @@ object Dashboard {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
-//                  <.div(
-//                    p.proxy().render(
-//                      messagesRootModel =>
-//                        HomeFeedList(messagesRootModel.messagesModelList)
-//                    ),
-//                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-//                    ),
-//                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-//                    )
-//                  ),
-                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer)(
+                  //                  <.div(
+                  //                    p.proxy().render(
+                  //                      messagesRootModel =>
+                  //                        HomeFeedList(messagesRootModel.messagesModelList)
+                  //                    ),
+                  //                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
+                  //                    ),
+                  //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
+                  //                    )
+                  //                  ),
+                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(

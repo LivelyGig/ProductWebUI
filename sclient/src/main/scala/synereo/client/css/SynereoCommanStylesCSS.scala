@@ -15,16 +15,15 @@ object SynereoCommanStylesCSS {
 
 
     val naviContainer = style(
-      // backgroundColor(c"#00131D"),
-      //minHeight(85.px),
-      /*borderBottom(2.px, solid, c"#67EAF2"),*/
       paddingLeft(0.%%),
       paddingRight(0.%%),
       marginBottom(0.px),
+      position.initial,
+      zIndex(0),
+      backgroundColor(rgba(48,134,161,0.6)),
       media.maxWidth(820.px) -
         paddingTop(4.px)
-      //media.minWidth(821.px) -
-      // paddingTop(8.px)
+
     )
     val loadingScreen = style(
       height(100.vh),
@@ -239,6 +238,15 @@ object SynereoCommanStylesCSS {
       borderRadius(50.%%),
       display.inlineBlock
     )
+    val userAvatarAnchor = style(
+      backgroundColor.transparent.important,
+      &.hover(
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important
+      )
+    )
     val inlineBlock = style(
       display.inlineBlock
     )
@@ -273,7 +281,7 @@ object SynereoCommanStylesCSS {
       //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
 
-    val marginRight15px = style (
+    val marginRight15px = style(
       marginRight(15.px)
     )
 

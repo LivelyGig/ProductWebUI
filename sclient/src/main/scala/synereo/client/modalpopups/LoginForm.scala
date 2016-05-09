@@ -105,11 +105,11 @@ object LoginForm {
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "row")(
-                  <.div(^.className := "col-md-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
                     // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
                     <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
                   ),
-                  <.div(^.className := "col-md-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
                     <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
                   )
                 ),
