@@ -1,4 +1,4 @@
-object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions
+object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions with JsVersions
 {
   val scala = "2.11.8"
 

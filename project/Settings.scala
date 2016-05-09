@@ -51,7 +51,7 @@ object Settings {
     * the special %%% function selects the correct version for each project
     */
   val sharedDependencies = Def.setting(Seq(
-    "com.lihaoyi" %%% "autowire" % versions.autowire,
+    "com.lihaoyi" %%% "autowire" % Versions.autowire,
     "me.chrons" %%% "boopickle" % versions.booPickle,
     "com.lihaoyi" %%% "utest" % versions.uTest,
 	  "com.lihaoyi" %%% "upickle" % "0.3.8"
