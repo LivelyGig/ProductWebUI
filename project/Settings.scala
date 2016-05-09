@@ -73,17 +73,12 @@ object Settings {
     "com.github.japgolly.scalajs-react" %%% "extra" % versions.scalajsReact,
     "com.github.japgolly.scalacss" %%% "ext-react" % versions.scalaCSS,
     "org.scala-js" %%% "scalajs-dom" % versions.scalaDom,
-//    "com.lihaoyi" %%% "scalarx" % versions.scalaRx,
     "me.chrons" %%% "diode" % versions.diode,
     "me.chrons" %%% "diode-react" % versions.diode,
-    //"org.querki" %%% "jquery-facade" % "0.10",
     "org.querki" %%% "jquery-facade" % "1.0-RC3",
-//    "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "querki-jsext" % "0.6",
- //   "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5",
     "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
-   /*,"com.github.karasiq" %%% "scalajs-bootstrap" % "1.0.2"*/
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
     "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
   ))
@@ -93,15 +88,10 @@ object Settings {
     "org.webjars.npm" % "react" % versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
     "org.webjars.npm" % "react-dom" % versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
     "org.webjars" % "jquery" % versions.jQuery / "2.2.3/jquery.js" minified "jquery.min.js",
-   // "org.webjars" % "jquery" % "2.1.3" / "2.1.3/jquery.js",
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "2.2.3/jquery.js",
-    //  "org.webjars.bower" % "split-pane" % "0.5.1",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "2.2.3/jquery.js",
-   // "org.webjars.bower" % "perfect-scrollbar" % versions.perfectScrollbar / "js/perfect-scrollbar.js"  minified "js/min/perfect-scrollbar.min.js",
     "org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
     "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "2.2.3/jquery.js"
-    //"org.webjars" % "bootstrap-sidebar" % "0.2.2"
-    //"org.webjars" % "bootstrapvalidator" % "0.5.3" / "js/validator.js"
   ))
 }

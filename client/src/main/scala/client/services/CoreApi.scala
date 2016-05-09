@@ -38,7 +38,6 @@ object CoreApi {
 
   def getConnections () : Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING,SessionPing(window.sessionStorage.getItem(CONNECTIONS_SESSION_URI))))
-//    AjaxClient[Api].getMock(requestContent,"connectionsMock").call()
         AjaxClient[Api].queryApiBackend(requestContent).call()
   }
   def getProjects () : Future[String] = {
@@ -51,21 +50,15 @@ object CoreApi {
       Map("name" -> signUpModel.name), true)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
-  /*def postMessage(messagesData: PostMessage) : Future[String] = {
-    val connections = upickle.default.read[Seq[Connection]](messagesData.recipients)
-    val requestContent = upickle.default.write(ApiRequest(INSERT_CONTENT,PostMessageValue("","" ,"" ,"",Nil ,connections,messagesData.content)))
-    AjaxClient[Api].queryApiBackend(requestContent).call()
-  }*/
+
   def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(CONFIRM_EMAIL_MSG,ConfirmEmail(emailValidationModel.token)))
-//    println("emailvalidation token : " + requestContent)
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
   def agentLogin(userModel: UserModel): Future[/*ApiResponse[InitializeSessionResponse]*/String] = {
     val requestContent = upickle.default.write(ApiRequest(INITIALIZE_SESSION_MSG,InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")))
-//    println("login data : " + requestContent)
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
@@ -76,46 +69,30 @@ object CoreApi {
   }
 
   def getMessages () : Future[String] = {
-    /*val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(MESSAGES_SESSION_URI))))*/
     val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.GetSelfConnnection(MESSAGES_SESSION_URI))
-//    println(connectionsList)
     val currentLabels = window.sessionStorage.getItem("currentSearchLabel")
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
-//    val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)
     val getMessagesSubscription = SubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), connectionsList, previousLabels)
-    //    todo move the logic from button click messages subscription to messages feed
     val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
     if (messageSearchClick != null) {
-//      Searches.initializeTagsInput()
       window.sessionStorage.setItem("previousSearchLabel",currentLabels)
       for {
-        cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
-        newSubscription <- evalSubscribeRequest(getMessagesSubscription)
-        messages <-  sessionPing(MESSAGES_SESSION_URI)
+        cancel <- cancelSubscriptionRequestAndSessionPing(cancelPreviousRequest)
+        messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
       } yield messages
     } else {
       window.sessionStorage.setItem("messageSearchClick", "true")
       window.sessionStorage.setItem("previousSearchLabel",currentLabels)
-      for {
-//        cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
-        newSubscription <- evalSubscribeRequest(getMessagesSubscription)
-        messages <-  sessionPing(MESSAGES_SESSION_URI)
-      } yield messages
+      evalSubscribeRequestAndSessionPing(getMessagesSubscription)
     }
   }
 
-  def postMessage (subscribeRequest: SubscribeRequest, sessionUri: String) : Future[String] = {
-    for {
-      newSubscription <- evalSubscribeRequest(subscribeRequest)
-      messages <-  sessionPing(sessionUri)
-    } yield messages
-  }
   def cancelPreviousSubsForLabelSearch() = {
     val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
     val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Seq(selfConnection), previousLabels)
-    cancelSubscriptionRequest(cancelPreviousRequest)
+    cancelSubscriptionRequestAndSessionPing(cancelPreviousRequest)
   }
 
 
@@ -123,9 +100,25 @@ object CoreApi {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST,subscribeRequest))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
+
+  def evalSubscribeRequestAndSessionPing(subscribeRequest: SubscribeRequest): Future[String] = {
+    for {
+      subscription <- evalSubscribeRequest(subscribeRequest)
+      response <-  sessionPing(subscribeRequest.sessionURI)
+    } yield response
+  }
+
+  def cancelSubscriptionRequestAndSessionPing(cancelSubscribeRequest: CancelSubscribeRequest) :Future[String] = {
+    for {
+      cancelRequest <- cancelSubscriptionRequest(cancelSubscribeRequest)
+      response <- sessionPing(cancelSubscribeRequest.sessionURI)
+    } yield response
+  }
+
   def cancelSubscriptionRequest(cancelSubscribeRequest: CancelSubscribeRequest) :Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_CANCEL_REQUEST, cancelSubscribeRequest))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
+
 
 }

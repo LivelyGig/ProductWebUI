@@ -10,6 +10,7 @@ import shared.dtos._
 import client.utils.Utils
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom._
+import org.widok.moment.Moment
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
@@ -21,24 +22,11 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
 
 object MessagesModelHandler{
   def GetMessagesModel(response: String): MessagesRootModel = {
-    try {
-      upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
-    } catch {
-      case e: Exception =>
-        println(e)
-    }
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
-    var model = Seq[MessagesModel]()
-    for(projectFromBackend <- messagesFromBackend){
-      try {
-        if (!projectFromBackend.content.pageOfPosts.isEmpty){
-          val project = upickle.default.read[MessagesModel](projectFromBackend.content.pageOfPosts(0))
-          model:+= project
-        }
-      } catch {
-        case e: Exception =>
-      }
-    }
+    val model = messagesFromBackend
+      .filterNot(_.content.pageOfPosts.isEmpty)
+      .map(message =>upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
+      .sortWith((x,y) =>  Moment(x.created).isAfter(Moment(y.created)))
     MessagesRootModel(model)
   }
 

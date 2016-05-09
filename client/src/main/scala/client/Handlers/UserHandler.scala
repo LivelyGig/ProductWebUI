@@ -3,12 +3,14 @@ package client.handlers
 import java.util.UUID
 import javax.annotation.PostConstruct
 
+import client.logger
 import diode.{ActionHandler, Effect, ModelRW}
 import shared.dtos.{Expression, ExpressionContent, Label, SubscribeRequest, _}
 import shared.models.{Post, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import client.utils.Utils
 import org.scalajs.dom.window
+import org.widok.moment.Moment
 
 import concurrent._
 import ExecutionContext.Implicits._
@@ -45,14 +47,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case PostMessage(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-","")
+      val createdDateTime = Moment().format("YYYY-MM-DD hh:mm:ss")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))
-      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
-      CoreApi.postMessage(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,"[1111]",upickle.default.write(value),uid))), CoreApi.MESSAGES_SESSION_URI).onComplete{
-        case Success(response) => {println("success")
-          println("Responce = "+response)
-          //          t.modState(s => s.copy(postNewMessage = true))
-        }
-        case Failure(response) => println("failure")
+      val value =  ExpressionContentValue(uid.toString,"TEXT",createdDateTime,createdDateTime,Map[Label, String]().empty,connectionsSeq,content)
+      CoreApi.evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value),uid)))).onComplete{
+        case Success(response) => logger.log.debug("Message Post Successful")
+        case Failure(response) => logger.log.error(s"Message Post Failure Message: ${response.getMessage}")
       }
       noChange
 
@@ -64,12 +64,9 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         case CoreApi.MESSAGES_SESSION_URI => "MESSAGEPOST"
         case CoreApi.JOBS_SESSION_URI => "JOBPOST"
       }
-      CoreApi.postMessage(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,s"[$labelToPost]",upickle.default.write(value),uid))), CoreApi.JOBS_SESSION_URI).onComplete{
-        case Success(response) => {println("success")
-          println("Responce = "+response)
-          //          t.modState(s => s.copy(postNewMessage = true))
-        }
-        case Failure(response) => println("failure")
+      CoreApi.evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq,s"[$labelToPost]",upickle.default.write(value),uid)))).onComplete{
+        case Success(response) => logger.log.debug("Content Post Successful")
+        case Failure(response) => logger.log.error(s"Contetnt Post Failure Message: ${response.getMessage}")
       }
       noChange
 
