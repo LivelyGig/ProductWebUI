@@ -33,7 +33,7 @@ object Settings {
     val scalaCSS = "0.4.1"
     val log4js = "1.4.13-1"
     val autowire = "0.2.5"
-    val booPickle = "1.1.2"
+    val booPickle = "1.1.3"
     val diode = "0.5.1"
     val uTest = "0.3.1"
     val react = "15.0.1"
@@ -60,8 +60,8 @@ object Settings {
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
     "com.vmunier" %% "play-scalajs-scripts" % versions.playScripts,
-    "com.typesafe.play" %% "play-ws" %  "2.4.3",
-    "org.webjars" % "font-awesome" %"4.5.0"  % Provided,
+    "com.typesafe.play" %% "play-ws" %  "2.5.3",
+    "org.webjars" % "font-awesome" %"4.6.2"  % Provided,
     "org.webjars" % "bootstrap" % versions.bootstrap % Provided,
     "org.json4s" %% "json4s-jackson" % 	"3.3.0" ,
     "org.scalaj" %% "scalaj-http" %  "2.3.0"
@@ -91,7 +91,7 @@ object Settings {
     "org.webjars" % "bootstrap" % versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "2.2.3/jquery.js",
     "org.webjars" % "chartjs" % versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "2.2.3/jquery.js",
-    "org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
+    //"org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
     "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "2.2.3/jquery.js"
   ))
 }
