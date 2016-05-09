@@ -54,7 +54,8 @@ object Settings {
     "com.lihaoyi" %%% "autowire" % Versions.autowire,
     "me.chrons" %%% "boopickle" % versions.booPickle,
     "com.lihaoyi" %%% "utest" % versions.uTest,
-	  "com.lihaoyi" %%% "upickle" % "0.3.8"
+	  "com.lihaoyi" %%% "upickle" % "0.3.8",
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies only used by the JVM project */

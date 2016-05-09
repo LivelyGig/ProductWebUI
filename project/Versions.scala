@@ -26,6 +26,7 @@ trait SharedVersions
   val scalatest = "3.0.0-M15"
   val autowire = "0.2.5"
   val booPickle = "1.1.2"
+  val scalaTest = "3.0.0-M15"
 
 }
 
