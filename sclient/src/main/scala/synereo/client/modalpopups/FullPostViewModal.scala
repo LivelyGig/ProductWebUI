@@ -128,8 +128,13 @@ object FullPostViewModal {
                         ),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsEditorsDiv)(
-                            <.div("editable area for tags to add and remove tags "),
-                            <.span(MIcon.modeEdit)
+                            <.div(^.className := "btn-group",
+                              <.button(^.`type` := "button", PostFullViewCSS.Style.tagsButtons, ^.className := "btn btn-default text-uppercase", <.span("256+",PostFullViewCSS.Style.tagsCount), <.span("SXSW")),
+                              <.button(^.`type` := "button", PostFullViewCSS.Style.tagsButtons, ^.className := "btn btn-default text-uppercase", <.span("50-",PostFullViewCSS.Style.tagsCount), <.span("TRAVEL")),
+                              <.button(^.`type` := "button", PostFullViewCSS.Style.tagsButtons, ^.className := "btn btn-default text-uppercase", <.span("10+",PostFullViewCSS.Style.tagsCount), <.span("gena Rowlands")),
+                              <.button(^.`type` := "button", PostFullViewCSS.Style.tagsButtons, ^.className := "btn btn-default text-uppercase", <.span("256",PostFullViewCSS.Style.tagsCount), <.span("Photography")),
+                              <.button(^.`type` := "button", PostFullViewCSS.Style.tagsButtonsEdit, ^.className := "btn btn-default pull-right", (MIcon.modeEdit))
+                            )
                           )
                         ),
                         <.div(^.className := "row")(
@@ -137,7 +142,7 @@ object FullPostViewModal {
                             <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsResponseHeadingSmall)(
                               "Responses"
                             ),
-                            <.div(^.className := "col-md-12", DashboardCSS.Style.userPost)(
+                            <.div(^.className := "", DashboardCSS.Style.userPost)(
                               <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                               <.input(DashboardCSS.Style.UserInput, ^.placeholder := "Write a response")
                             ),

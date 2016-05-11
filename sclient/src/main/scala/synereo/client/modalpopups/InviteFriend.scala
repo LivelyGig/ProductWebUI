@@ -87,10 +87,6 @@ object InviteNewFriend {
 
     }
 
-    def hideModal = {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
-
     def mounted(props: Props): Callback = Callback {
 
     }
@@ -140,7 +136,7 @@ object InviteNewFriend {
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postMessage) {
-        scope.$.backend.hideModal
+        scope.$.backend.hide
       }
     })
     .build
