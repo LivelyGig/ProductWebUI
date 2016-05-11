@@ -10,7 +10,7 @@ import java.util.Date
 //case class Post (val id: String, postContent: PostContent)
 
 sealed trait Post {
-  def id : String
+  def uid : String
   def createdDate : String
   def modifiedDate: String
   def spliciousType: String
@@ -19,22 +19,26 @@ sealed trait Post {
   def postType : String
 
 }
-case class MessagePost (id: String, spliciousType: String, createdDate: String, modifiedDate: String, labels: String, connections: Seq[String], message: String, recipients: String = "", subject : String="", content : String="") extends Post{
-  override def postType = "MessagePost"
+case class MessagePost (uid: String, spliciousType: String, createdDate: String, modifiedDate: String,
+                        labels: String, connections: Seq[String], message: String, recipients: String = "", subject : String="", content : String="") extends Post{
+  override def postType: String = "MessagePost"
 }
-case class VersionedPost (id: String , createdDate : String,modifiedDate: String, spliciousType: String,labels: String, connections: Seq[String], versionedPostContent: VersionedPostContent)extends Post{
-  override def postType = "VersionedPost"
+case class VersionedPost (uid: String, createdDate : String, modifiedDate: String, spliciousType: String, labels: String,
+                          connections: Seq[String], versionedPostContent: VersionedPostContent)extends Post{
+  override def postType: String = "VersionedPost"
 }
 sealed trait VersionedPostContent {
   def versionedPostType : String
   def versionNumber: Int
 }
-case class ProjectPost (name : String, startDate: String, endDate: String, budget: String, contractType: String, workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean, versionNumber: Int, message: String) extends VersionedPostContent {
-  override def versionedPostType = "ProjectPost"
+case class ProjectPost (name : String, startDate: String, endDate: String, budget: String, contractType: String,
+                        workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean,
+                        versionNumber: Int, message: String) extends VersionedPostContent {
+  override def versionedPostType: String = "ProjectPost"
 }
 
 case class TalentPost (versionNumber: Int, talentProfile: Person, employerProfile: EmployerProfile, moderatorProfile: Person) extends VersionedPostContent{
-  override def versionedPostType = "TalentPost"
+  override def versionedPostType: String = "TalentPost"
 }
 
 sealed trait Person {

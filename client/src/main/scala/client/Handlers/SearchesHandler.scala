@@ -1,19 +1,20 @@
 package client.handlers
 
-import diode.{Effect, ActionHandler, ModelRW}
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
 import shared.RootModels.{MessagesRootModel, SearchesRootModel}
-import client.services.{LGCircuit, CoreApi}
-import client.utils.{Utils, PrologParser}
+import client.services.{CoreApi, LGCircuit}
+import client.utils.{PrologParser, Utils}
 import org.scalajs.dom._
+
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
 import scala.util.Success
-
+// scalastyle:off
 object SearchesModelHandler {
   def GetSearchesModel(listOfLabels :Seq[String]): SearchesRootModel ={
     if (listOfLabels != Nil) {
@@ -45,6 +46,7 @@ object SearchesModelHandler {
     * Uses the list buffer to hold children to a particular label
     * It iterated over label collection and add the children to
     * the list buffer in recurssion till it reaches the last children.
+ *
     * @param label is the label for which we need children
     * @param labels is the collection of all labels
     * @return seq of all children label
@@ -62,6 +64,7 @@ object SearchesModelHandler {
     * This function is reverse logic of above function with a small difference
     * Here the recurssion captures parent from child to root
     * so forxample
+ *
     * @param label is the label whose parents are required
     * @param labels is the collection of all labels
     * @return
@@ -83,18 +86,18 @@ object SearchesModelHandler {
 
 case class CreateLabels()
 case class UpdateLabel(label: LabelModel)
-case class SubscribeSearch()
+case class StoreMessagesSearchLabel()
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW){
-  override def handle = {
+  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
       //      println("listOfLabelFromStore"+listOfLabelFromStore)
       if (listOfLabelFromStore != null){
-        try {
+        /*try {
           upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         } catch {
           case e: Exception =>
-        }
+        }*/
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         //        println("listOfLabels"+listOfLabels)
         if (value.searchesModel.isEmpty)
@@ -140,7 +143,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       }else e)
       updated(SearchesRootModel(modelToUpdate))
 
-    case SubscribeSearch() =>
+    case StoreMessagesSearchLabel() =>
       val selectedRootParents = value.searchesModel.filter(e=>e.isChecked==true && e.parentUid== "self")
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
       selectedRootParents.foreach{selectedRootParent=>
