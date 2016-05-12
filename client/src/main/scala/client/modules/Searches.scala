@@ -115,13 +115,11 @@ object Searches {
                     <.div("Profile Type")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Talent"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"),  " Talent"),
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Client"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Moderator")
                   )
                 ),
@@ -179,10 +177,9 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                      <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
@@ -202,16 +199,13 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended by Me"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 ),
@@ -256,27 +250,24 @@ object Searches {
                     <.div("Job Type")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"
                       ),
-                      <.br(),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"
                       )
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Contest"
                     ),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Part-Time"
                     ),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Full-Time"
                     )
                   )
@@ -395,10 +386,9 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
@@ -418,38 +408,33 @@ object Searches {
                     <.div("Status")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Initiating offer"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to me"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to other"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Rejected by other"
                       ),
-                      <.br(),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Rejected by me"
                       ),
-                      <.br(),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel)(
+                      <.div(LftcontainerCSS.Style.subcheckboxlabel)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Expired"
                       )
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Escrow"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " In Progress"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Feedback"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Completed")
                   )
                 ),
@@ -482,10 +467,9 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
@@ -601,10 +585,9 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 )
@@ -624,28 +607,21 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Available for Chat"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended by Me"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " with Talent Profile"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " with Employer Profile"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " with Moderator Profile"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Favorited"),
-                    <.br(),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
                       <.input(^.`type` := "checkbox"), " Include Hidden")
                   )
                 ),
