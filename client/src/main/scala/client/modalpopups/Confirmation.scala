@@ -7,8 +7,8 @@ import client.components.Bootstrap._
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS,ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -16,22 +16,22 @@ import org.querki.jquery._
 
 object Confirmation {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
   case class State(showConfirmationForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showConfirmationForm = true))
     }
-    def addConfirmationForm() : Callback = {
+    def addConfirmationForm(): Callback = {
       t.modState(s => s.copy(showConfirmationForm = true))
     }
     def addConfirmation(postConfirmation: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postConfirmation){
+      if (!postConfirmation) {
         t.modState(s => s.copy(showConfirmationForm = false))
       } else {
         t.modState(s => s.copy(showConfirmationForm = true))
@@ -43,8 +43,8 @@ object Confirmation {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(ProjectCSS.Style.displayInitialbtn/*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, P.addStyles,"",""),P.buttonName),
+      <.div(ProjectCSS.Style.displayInitialbtn /*, ^.onMouseOver --> B.displayBtn*/ )(
+        Button(Button.Props(B.addConfirmationForm(), CommonStyle.default, P.addStyles, "", ""), P.buttonName),
         if (S.showConfirmationForm) ConfirmationForm(ConfirmationForm.Props(B.addConfirmation, "New Message"))
         else
           Seq.empty[ReactElement]
@@ -66,7 +66,7 @@ object ConfirmationForm {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def hideModal =  {
+    def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
 
@@ -87,14 +87,16 @@ object ConfirmationForm {
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
         <.form(^.onSubmit ==> submitForm)(
 
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
@@ -102,8 +104,8 @@ object ConfirmationForm {
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postConfirmation){
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postConfirmation) {
         scope.$.backend.hideModal
       }
     })

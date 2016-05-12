@@ -17,7 +17,7 @@ import scala.scalajs.js.JSON
 
 // Actions
 case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3))
-  extends PotActionRetriable[MessagesRootModel, RefreshMessages] {
+    extends PotActionRetriable[MessagesRootModel, RefreshMessages] {
   override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy): RefreshMessages = RefreshMessages(value, newRetryPolicy)
 }
 
@@ -54,7 +54,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case _ =>
           updated(Empty)
       }
-     /* if (labels != null) {
+    /* if (labels != null) {
         action.handleWith(this, updateF)(PotActionRetriable.handler())
       } else {
         updated(Empty)

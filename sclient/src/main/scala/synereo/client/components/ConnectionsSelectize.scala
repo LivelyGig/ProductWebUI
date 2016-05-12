@@ -1,4 +1,4 @@
-package client.components
+package synereo.client.components
 
 import shared.RootModels.ConnectionsRootModel
 import diode.data.Pot
@@ -65,7 +65,7 @@ object ConnectionsSelectize {
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := "selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           props.proxy().render(connectionsRootModel =>
             for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection), ^.key := connection.connection.target)(connection.name))

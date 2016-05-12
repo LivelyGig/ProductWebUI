@@ -5,18 +5,18 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.{MIcon, Icon}
-import synereo.client.css.{PostFullViewCSS, SynereoCommanStylesCSS, DashboardCSS}
+import synereo.client.components.{ MIcon, Icon }
+import synereo.client.css.{ PostFullViewCSS, SynereoCommanStylesCSS, DashboardCSS }
 
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 3/22/2016.
-  */
+ * Created by Mandar on 3/22/2016.
+ */
 object PostFullView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid",PostFullViewCSS.Style.fullPostViewContainer)(
+      <.div(^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
@@ -127,14 +127,12 @@ object PostFullView {
                                   <.span("19 Mins Ago")
                                 ),
                                 <.div(^.className := " col-md-2 text-center")(
-                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post"
-                                    , PostFullViewCSS.Style.collapsePostsButton)(
+                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post", PostFullViewCSS.Style.collapsePostsButton)(
                                     <.span(MIcon.moreHoriz)
                                   )
                                 )
                               ),
-                              <.div(^.id := "collapse-post", ^.className := "collapse")
-                              ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+                              <.div(^.id := "collapse-post", ^.className := "collapse")("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
                                 "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
                                 "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
                                 " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
@@ -158,14 +156,12 @@ object PostFullView {
                                   <.span("19 Mins Ago")
                                 ),
                                 <.div(^.className := " col-md-2 text-center")(
-                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1"
-                                    , PostFullViewCSS.Style.collapsePostsButton)(
+                                  <.button(^.className := "btn btn-primary", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#collapse-post1", PostFullViewCSS.Style.collapsePostsButton)(
                                     <.span(MIcon.moreHoriz)
                                   )
                                 )
                               ),
-                              <.div(^.id := "collapse-post1", ^.className := "collapse")
-                              ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+                              <.div(^.id := "collapse-post1", ^.className := "collapse")("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
                                 "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
                                 "\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat." +
                                 " Duis aute irure dolor in reprehenderit in voluptate velit esse\ncillum dolore eu fugiat nulla pariatur. " +
@@ -229,7 +225,6 @@ object PostFullView {
                             )
 
                           )
-
 
                         )
                       )

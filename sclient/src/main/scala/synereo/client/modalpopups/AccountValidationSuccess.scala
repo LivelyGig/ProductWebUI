@@ -1,19 +1,19 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.{Icon, GlobalStyles}
+import synereo.client.components.{ Icon, GlobalStyles }
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS}
-import scala.util.{Failure, Success}
+import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 
 /**
-  * Created by bhagyashree.b on 4/19/2016.
-  */
+ * Created by bhagyashree.b on 4/19/2016.
+ */
 object AccountValidationSuccess {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -21,7 +21,7 @@ object AccountValidationSuccess {
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback{
+    def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
     def formClosed(state: State, props: Props): Callback = {
@@ -32,19 +32,21 @@ object AccountValidationSuccess {
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Account Validation Success"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span( <.div(SignupCSS.Style.signUpHeading)(headerText)),
-        closed = () => formClosed(s, p)),
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className:="row")(
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.div(SignupCSS.Style.signUpHeading)(headerText)),
+          closed = () => formClosed(s, p)
+        ),
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
               <.div()(
-                <.div()("Account Validation Successful!"   ),
-                 // <.div(/*DashBoardCSS.Style.modalContentFont*/)(<.button(^.tpe := "button",^.className:="btn",^.onClick --> hide)("Login"))
-                  <.div(^.className := "pull-right")(
-                    <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick-->hide, "Login")
-                  )
+                <.div()("Account Validation Successful!"),
+                // <.div(/*DashBoardCSS.Style.modalContentFont*/)(<.button(^.tpe := "button",^.className:="btn",^.onClick --> hide)("Login"))
+                <.div(^.className := "pull-right")(
+                  <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hide, "Login")
+                )
               )
             )
           )

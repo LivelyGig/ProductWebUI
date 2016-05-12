@@ -5,8 +5,8 @@ import shared.dtos.Connection
 import shared.models.LabelModel
 
 /**
-  * Created by shubham.k on 3/4/2016.
-  */
+ * Created by shubham.k on 3/4/2016.
+ */
 object Utils {
   def GetSelfConnnection(uri: String): Connection = {
     val sessionUri = window.sessionStorage.getItem(uri)
@@ -20,9 +20,9 @@ object Utils {
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
     prolog.append("any(")
-    val results = for {labelFamily <- labelFamilies} yield {
+    val results = for { labelFamily <- labelFamilies } yield {
       prolog.append("[")
-      val res = for {label <- labelFamily} yield {
+      val res = for { label <- labelFamily } yield {
         prolog.append(label.text); if (label.parentUid != "self") prolog.append(",")
       }
       prolog.append("]")

@@ -1,8 +1,8 @@
 package client.services
 
 /**
-  * Created by shubham.k on 11-05-2016.
-  */
+ * Created by shubham.k on 11-05-2016.
+ */
 object SessionItemName {
   val CONNECTION_LIST = "CONNECTION_LIST"
   val CURRENT_MESSAGE_LABEL_SEARCH = "CURRENT_MESSAGE_LABEL_SEARCH"

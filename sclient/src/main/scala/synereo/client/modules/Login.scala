@@ -1,30 +1,29 @@
 package synereo.client.modules
 
-
 import japgolly.scalajs.react._
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.UserModel
-import synereo.client.handlers.{CreateLabels, LoginUser, RefreshConnections}
-import synereo.client.components.Bootstrap.{Button, CommonStyle}
-import synereo.client.components.{Icon, MIcon}
+import synereo.client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
+import synereo.client.components.Bootstrap.{ Button, CommonStyle }
+import synereo.client.components.{ Icon, MIcon }
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
 import shared.models.EmailValidationModel
-import synereo.client.services.{ApiResponseMsg, CoreApi, SYNEREOCircuit}
+import synereo.client.services.{ ApiResponseMsg, CoreApi, SYNEREOCircuit }
 import synereo.client.services.CoreApi._
 import scala.concurrent.Future
 import scala.scalajs.js
-import js.{Date, JSON, UndefOr}
-import scala.util.{Failure, Success}
+import js.{ Date, JSON, UndefOr }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.querki.jquery._
 
 /**
-  * Created by Mandar on 3/11/2016.
-  */
+ * Created by Mandar on 3/11/2016.
+ */
 object Login {
   val LOGIN_ERROR = "LOGIN_ERROR"
   val SERVER_ERROR = "SERVER_ERROR"
@@ -36,10 +35,9 @@ object Login {
 
   case class Props()
 
-
   case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
-                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
+    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
+    showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -164,17 +162,17 @@ object Login {
     }
 
     def createSessions(userModel: UserModel) = {
-      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI,CoreApi.JOBS_SESSION_URI)
-      var futureArray =  Seq[Future[String]]()
-      sessionURISeq.map{sessionURI => futureArray :+= CoreApi.agentLogin(userModel)}
-      Future.sequence(futureArray).map{responseArray =>
+      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
+      var futureArray = Seq[Future[String]]()
+      sessionURISeq.map { sessionURI => futureArray :+= CoreApi.agentLogin(userModel) }
+      Future.sequence(futureArray).map { responseArray =>
         println(responseArray)
-        for (responseStr <- responseArray){
+        for (responseStr <- responseArray) {
           val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-//          println(response)
+          //          println(response)
           val index = sessionURISeq(responseArray.indexOf(responseStr))
-//          println()
-          window.sessionStorage.setItem(index,response.content.sessionURI)
+          //          println()
+          window.sessionStorage.setItem(index, response.content.sessionURI)
         }
         println("login successful")
         $(loadingScreen).addClass("hidden")
@@ -183,20 +181,20 @@ object Login {
       }
     }
 
-    def processSuccessfulLogin(responseStr : String, userModel: UserModel): Unit = {
+    def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
       window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI,response.content.sessionURI)
-      val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name",""),
-        imgSrc = response.content.jsonBlob.getOrElse("imgSrc",""), isLoggedIn = true)
-      t.modState(s=>s.copy(showLoginForm = false))
+      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
+        imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
+      t.modState(s => s.copy(showLoginForm = false))
       window.sessionStorage.setItem("userEmail", userModel.email)
-      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name",""))
-      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc",""))
+      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
+      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
       SYNEREOCircuit.dispatch(CreateLabels())
-//      SYNEREOCircuit.dispatch(CreateSessions(userModel))
+      //      SYNEREOCircuit.dispatch(CreateSessions(userModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
       SYNEREOCircuit.dispatch(LoginUser(user))
       createSessions(userModel)
@@ -234,8 +232,7 @@ object Login {
 
         }
         t.modState(s => s.copy(showNewUserForm = false))
-      }
-      else {
+      } else {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }
@@ -248,7 +245,7 @@ object Login {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
               //  log.debug(ApiResponseMsg.CreateUserError)
               showLoginContent = true
-              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
+              t.modState(s => s.copy( /*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
             } catch {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()

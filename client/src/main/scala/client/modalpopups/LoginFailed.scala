@@ -16,36 +16,38 @@ object LoginFailed {
   case class State()
   class Backend(t: BackendScope[Props, State]) {
 
-    def hide = Callback{
+    def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-        props.submitHandler()
+      props.submitHandler()
     }
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Login Failed"
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-             closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
 
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-             <.div(^.className:="row")(
-                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
+              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)(
-                  /*p.loginErrorMessage*/"The username and password combination that you are using is not correct. Please check and try again.",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"))
+                  /*p.loginErrorMessage*/ "The username and password combination that you are using is not correct. Please check and try again.",
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"))
                 )
               )
             )
           )
         ),
-        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop5p, DashBoardCSS.Style.marginLeftRight)()
       )
     }
   }

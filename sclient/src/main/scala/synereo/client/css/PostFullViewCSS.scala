@@ -3,10 +3,9 @@ package synereo.client.css
 import scalacss.Defaults._
 import scala.language.postfixOps
 
-
 /**
-  * Created by Mandar on 3/22/2016.
-  */
+ * Created by Mandar on 3/22/2016.
+ */
 object PostFullViewCSS {
 
   object Style extends StyleSheet.Inline {
@@ -18,7 +17,7 @@ object PostFullViewCSS {
       marginTop(-20.px),
       marginLeft(-15.px),
       overflowY.scroll
-//      height(953.px)
+    //      height(953.px)
     )
     val blogMainImage = style(
       marginLeft.auto,
@@ -31,10 +30,7 @@ object PostFullViewCSS {
       marginLeft(5.px),
       fontSize(1.1.em)
     )
-    val postedImageContainerDiv = style(
-
-
-    )
+    val postedImageContainerDiv = style()
     val modalCloseButton = style(
       fontSize(60.px),
       color(c"#678892"),
@@ -70,9 +66,10 @@ object PostFullViewCSS {
     )
     val tagsEditorsDiv = style(
       marginTop(60.px),
-      marginBottom(60.px),
-      fontSize(24.px),
-      fontWeight._100
+      marginBottom(60.px)
+    //      fontSize(24.px)
+    //      fontWeight._100
+    //      textAlign.center
     )
     val postDescription = style(
       fontSize(1.1.em)
@@ -93,11 +90,31 @@ object PostFullViewCSS {
       margin(0.px, -15.px),
       zIndex(3)
     )
-    val postedUserAvatarDiv = style(
-
-    )
+    val postedUserAvatarDiv = style()
     val smallLiContainerUserActions = style(
       float.right.important
+    )
+    val tagsButtons = style(
+      marginLeft(5.px),
+      marginRight(5.px),
+      borderRadius(20.px).important,
+      borderColor(c"#2EAEE3"),
+      fontSize(18.px),
+      &.hover(
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important
+      )
+    )
+    val tagsCount = style(
+      color(c"#2EAEE3"),
+      marginLeft(2.px),
+      marginRight(2.px)
+    )
+    val tagsButtonsEdit = style(
+      border.`0`.important,
+      &.hover(backgroundColor.transparent.important)
     )
     val postHeadlineContainerDiv = style(
       marginTop(60.px),

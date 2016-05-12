@@ -91,15 +91,22 @@ object LGMain extends js.JSApp {
                   case ContractsLoc => <.span(^.color := "white", ^.float := "right")("Contracts ", "  ", Icon.thList)
                   case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")("Connections ", "  ", Icon.thList)
                   case _ => <.span()
-                })),
-            <.div(^.className := "col-md-4 col-sm-4 col-xs-4 loggedInUserNav", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))),
+                }
+              )
+            ),
+            <.div(^.className := "col-md-4 col-sm-4 col-xs-4 loggedInUserNav", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))
+          ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-            LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))),
-          <.div(^.className := "loggedInUser")(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))),
-        <.div()()),
+            LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+          ),
+          <.div(^.className := "loggedInUser")(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))
+        ),
+        <.div()()
+      ),
       // the vertically center area
       r.render(),
-      Footer(Footer.Props(c, r.page)))
+      Footer(Footer.Props(c, r.page))
+    )
   }
 
   @JSExport
