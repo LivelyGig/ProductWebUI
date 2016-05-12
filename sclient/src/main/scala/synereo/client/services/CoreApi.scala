@@ -72,7 +72,6 @@ object CoreApi {
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
-
   def sessionPing(uri: String): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(uri))))
     AjaxClient[Api].queryApiBackend(requestContent).call()
@@ -116,7 +115,6 @@ object CoreApi {
     val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Seq(selfConnection), previousLabels)
     cancelSubscriptionRequest(cancelPreviousRequest)
   }
-
 
   def evalSubscribeRequest(subscribeRequest: SubscribeRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST, subscribeRequest))

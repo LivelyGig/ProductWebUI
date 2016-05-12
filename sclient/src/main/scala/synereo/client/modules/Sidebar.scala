@@ -1,19 +1,18 @@
 package synereo.client.modules
 
 /**
-  * Created by Mandar on 4/8/2016.
-  */
+ * Created by Mandar on 4/8/2016.
+ */
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.SYNEREOMain.{SynereoLoc, Loc}
+import synereo.client.SYNEREOMain.{ SynereoLoc, Loc }
 import synereo.client.components.GlobalStyles
 import synereo.client.modalpopups.InviteFriend
 import scalacss.ScalaCssReact._
 import synereo.client.components._
 import synereo.client.css.DashboardCSS
-
 
 object Sidebar {
 
@@ -34,11 +33,11 @@ object Sidebar {
       <.div(
         <.ul(^.id := "sidebarNavStyle", ^.className := "nav nav-stacked", DashboardCSS.Style.sidebarNavStyle)(
           <.li()(<.a(^.href := "#")(<.span(Icon.home), "  Stream")),
-          <.li()(<.a(^.href := "#")(<.span(/*MIcon.mailOutline*/ Icon.envelope), " Messages")),
-          <.li()(<.a(^.href := "#")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Profile")),
+          <.li()(<.a(^.href := "#")(<.span( /*MIcon.mailOutline*/ Icon.envelope), " Messages")),
+          <.li()(<.a(^.href := "#")(<.span( /*MIcon.accountCircle*/ Icon.user), "  Profile")),
           <.li()(<.a(^.href := "#")(<.span(Icon.users), "  People")),
           <.li(^.className := "nav-divider")(),
-          <.li()(<.a(^.href := "#")(<.span(/*MIcon.accessTime*/), "  Recents")),
+          <.li()(<.a(^.href := "#")(<.span( /*MIcon.accessTime*/ ), "  Recents")),
           <.li()(<.a(^.href := "#")(<.span(Icon.user), "The DandyMan")),
           <.li()(<.a(^.href := "#")(<.span(Icon.user), "Party crew NYC")),
           <.li()(<.a(^.href := "#")(<.span(Icon.user), "HJ Hubby")),

@@ -10,10 +10,32 @@ window.onload = function() {
       }
     });
   };
+  function checkScrollSpeed(){
+    var lastPos, newPos, timer, delta, 
+        delay =  50; // in "ms" (higher means lower fidelity )
+
+        function clear() {
+          lastPos = null;
+          delta = 0;
+        }
+        clear();
+        function calculateDelta(){
+          newPos = window.scrollY;
+      if ( lastPos != null ){ // && newPos < maxScroll 
+        delta = newPos -  lastPos;
+      }
+      lastPos = newPos;
+      clearTimeout(timer);
+      timer = setTimeout(clear, delay);
+      return delta;
+    };
+    return calculateDelta
+  };
   $(document).ready(function() {
     applyStylingToHomeFeed()
     $("#dashboardContainerMain").scroll(function() {
-      applyStylingToHomeFeed()
-    });
+     // console.log(checkScrollSpeed) 
+     applyStylingToHomeFeed()
+   });
   });
 };

@@ -1,22 +1,21 @@
 package synereo.client.modalpopups
 
-
-import synereo.client.components.{Icon, GlobalStyles}
+import synereo.client.components.{ Icon, GlobalStyles }
 import synereo.client.css.SignupCSS
 import shared.models.EmailValidationModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS}
-import scala.util.{Failure, Success}
+import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 
 /**
-  * Created by Mandar on 4/19/2016.
-  */
+ * Created by Mandar on 4/19/2016.
+ */
 object VerifyEmailModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -50,13 +49,16 @@ object VerifyEmailModal {
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Verify email"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span()(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),
-          <.div(SignupCSS.Style.signUpHeading)(headerText)),
-        closed = () => formClosed(s, p),
-        addStyles = Seq(SignupCSS.Style.signUpModalStyle)
-      ),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span()(
+          <.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),
+          <.div(SignupCSS.Style.signUpHeading)(headerText)
+        ),
+          closed = () => formClosed(s, p),
+          addStyles = Seq(SignupCSS.Style.signUpModalStyle)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
@@ -77,8 +79,7 @@ object VerifyEmailModal {
                 <.div(^.className := "pull-right")(
                   <.button(^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", "Verify")
                 )
-              )
-              ,
+              ),
               <.div(bss.modal.footer)()
             )
           )

@@ -11,8 +11,8 @@ import synereo.client.components.Icon
 import synereo.client.components.Icon.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
-import synereo.client.components.{GlobalStyles}
-import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
+import synereo.client.components.{ GlobalStyles }
+import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
 import synereo.client.components.jQuery._
 import scala.language.reflectiveCalls
 
@@ -20,8 +20,8 @@ import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 4/13/2016.
-  */
+ * Created by Mandar on 4/13/2016.
+ */
 object ServerErrorModal {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -41,11 +41,13 @@ object ServerErrorModal {
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.div()(headerText)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.div()(headerText)),
 
-        closed = () => modalClosed(s, p)),
+          closed = () => modalClosed(s, p)
+        ),
 
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
@@ -74,5 +76,4 @@ object ServerErrorModal {
 
   def apply(props: Props) = component(props)
 }
-
 

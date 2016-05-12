@@ -1,31 +1,29 @@
 package synereo.client.modules
 
-
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.handlers.{TestDispatch, PostMessages, RefreshConnections, RefreshMessages}
+import synereo.client.handlers.{ TestDispatch, PostMessages, RefreshConnections, RefreshMessages }
 import org.scalajs.dom
-import shared.models.{MessagePost, MessagesModel}
+import shared.models.{ MessagePost, MessagesModel }
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
-import synereo.client.modalpopups.FullPostViewModal
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import synereo.client.css.{ SynereoCommanStylesCSS, DashboardCSS }
+import synereo.client.modalpopups.{ NewMessage, FullPostViewModal }
+import synereo.client.services.{ CoreApi, SYNEREOCircuit }
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
 import scala.scalajs.js.timers._
-import synereo.client.components.{Icon}
+import synereo.client.components.{ Icon }
 import scala.language.reflectiveCalls
 import org.scalajs.dom.window
 
-
 /**
-  * Created by Mandar on 3/11/2016.
-  */
+ * Created by Mandar on 3/11/2016.
+ */
 object Dashboard {
   val document = js.Dynamic.global.document
   var lastPos: Double = 50
@@ -48,8 +46,8 @@ object Dashboard {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-     SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content,Seq[String](),CoreApi.MESSAGES_SESSION_URI))
-      t.modState(s => s.copy(isMessagePosted = true,postMessage = s.postMessage.copy(content = "")))
+      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content, Seq[String](), CoreApi.MESSAGES_SESSION_URI))
+      t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(content = "")))
     }
 
     def mounted(props: Props) = {
@@ -104,9 +102,9 @@ object Dashboard {
       homeFeedMediaListHeight = $(homeFeedMediaList).height().toInt
       var numberOfLi = $(homeFeedMediaList).children("li").length
       val lis = $(homeFeedMediaList).children("li")
-//      lis.each(({ (li: dom.html.Html) =>
-//
-//      }: js.ThisFunction0))
+      //      lis.each(({ (li: dom.html.Html) =>
+      //
+      //      }: js.ThisFunction0))
 
       Callback.empty
 
@@ -130,7 +128,8 @@ object Dashboard {
           <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
-          )),
+          )
+        ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
             <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
@@ -149,10 +148,11 @@ object Dashboard {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
                 <.form(^.onSubmit ==> submitForm)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.id:="ContributeThoughtsID",^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value:=s.postMessage.content, ^.onChange ==> updateContent),
+                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
-                )
+                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/ )(Icon.camera)
+                ) /*,
+                <.div(NewMessage(NewMessage.Props("new-message-button", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "Forward")))*/
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
@@ -161,15 +161,13 @@ object Dashboard {
                       messagesRootModel =>
                         HomeFeedList(messagesRootModel.messagesModelList)
                     ),
-                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-                    ),
-                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-                    )
+                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))),
+                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse)))
                   ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ )(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                             <.div(^.className := "", ^.onClick ==> openFullViewModalPopUP)(
                               <.div(^.className := "col-md-1")(
@@ -205,16 +203,15 @@ object Dashboard {
                                   ),
                                   <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                                     "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> preventFullViewModalPopUP)(
-                                    (MIcon.moreHoriz)
-                                  )
+                                      (MIcon.moreHoriz)
+                                    )
                                 )
                               )
                             )
                           )
                         )
-                      }
-                      else {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+                      } else {
+                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ )(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                             <.div(^.className := "", ^.onClick ==> openFullViewModalPopUP)(
                               <.div(^.className := "col-md-1")(
@@ -252,8 +249,8 @@ object Dashboard {
                                     ),
                                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                                       "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> preventFullViewModalPopUP)(
-                                      (MIcon.moreHoriz)
-                                    )
+                                        (MIcon.moreHoriz)
+                                      )
                                   )
                                 )
                               )
@@ -292,7 +289,7 @@ object HomeFeedList {
   private val MessagesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
       def renderMessages(message: MessagesModel) = {
-        <.li(^.id := "home-feed-card", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+        <.li(^.id := "home-feed-card", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/ )(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
             <.div(^.className := "")(
               <.div(^.className := "col-md-1")(
@@ -328,58 +325,57 @@ object HomeFeedList {
       }
       <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer)(
         p.messages map renderMessages
-        /*for (i <- 1 to 50) yield {
-          if (i % 2 != 0) {
-            <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
-              <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                <.div(^.className := "")(
-                  <.div(^.className := "col-md-1")(
-                    <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                  ),
-                  <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                    <.div(DashboardCSS.Style.userNameDescription)(
-                      <.span("James Gosling"),
-                      <.span(MIcon.chevronRight),
-                      <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                      <.span("just now")
-                    ),
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
-                  )
-                ),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12")(
-                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                      <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                      <.div(DashboardCSS.Style.cardText)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                        "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                      <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                        "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button")(
-                        (MIcon.moreHoriz)
-                      ),
-                      <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText /*, ^.onClick ==> openFullViewModalPopUP*/)(
-                        <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+      /*for (i <- 1 to 50) yield {
+                if (i % 2 != 0) {
+                  <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+                    <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
+                      <.div(^.className := "")(
+                        <.div(^.className := "col-md-1")(
+                          <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                         ),
-                        <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                          <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                        <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                          <.div(DashboardCSS.Style.userNameDescription)(
+                            <.span("James Gosling"),
+                            <.span(MIcon.chevronRight),
+                            <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                            <.span("just now")
+                          ),
+                          <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
+                        )
+                      ),
+                      <.div(^.className := "row")(
+                        <.div(^.className := "col-md-12")(
+                          <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                            <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                            <.div(DashboardCSS.Style.cardText)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                              "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
+                            <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                              "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button")(
+                              (MIcon.moreHoriz)
+                            ),
+                            <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText /*, ^.onClick ==> openFullViewModalPopUP*/)(
+                              <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+                              ),
+                              <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                              )
+                            )
+                          )
                         )
                       )
                     )
                   )
-                )
-              )
-            )
-          }
-          else {
-            <.span()
-          }
-        }*/
+                }
+                else {
+                  <.span()
+                }
+              }*/
       )
-
 
     })
     .build

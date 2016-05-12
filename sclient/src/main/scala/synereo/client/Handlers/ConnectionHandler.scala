@@ -1,9 +1,9 @@
 package synereo.client.handlers
 
-import diode.data.{Empty, Pot, PotAction}
-import diode.{ActionHandler, ModelRW}
+import diode.data.{ Empty, Pot, PotAction }
+import diode.{ ActionHandler, ModelRW }
 import shared.RootModels.ConnectionsRootModel
-import shared.dtos.{ApiResponse, ConnectionProfileResponse}
+import shared.dtos.{ ApiResponse, ConnectionProfileResponse }
 import shared.models.ConnectionsModel
 import synereo.client.services.CoreApi
 
@@ -12,16 +12,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
 /**
-  * Created by shubham.k on 1/25/2016.
-  */
+ * Created by shubham.k on 1/25/2016.
+ */
 // Actions
-case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
+case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections] {
   // first ping after user login returns the connections for the user.
   // todo replace the session ping with the connections specific calls to api backend server.
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
-object ConnectionModelHandler{
+object ConnectionModelHandler {
   def GetConnectionsModel(response: String): ConnectionsRootModel = {
 
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
@@ -48,8 +48,8 @@ object ConnectionModelHandler{
 
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
-    case action : RefreshConnections =>
-      val updateF = action.effect(CoreApi.getConnections())(connections=>ConnectionModelHandler.GetConnectionsModel(connections))
+    case action: RefreshConnections =>
+      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.GetConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }

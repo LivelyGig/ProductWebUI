@@ -11,16 +11,16 @@ import synereo.client.components.Icon
 import synereo.client.components.Icon.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
-import synereo.client.components.{GlobalStyles}
-import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
+import synereo.client.components.{ GlobalStyles }
+import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
 import synereo.client.components.jQuery._
 import scala.language.reflectiveCalls
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 4/13/2016.
-  */
+ * Created by Mandar on 4/13/2016.
+ */
 object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -39,11 +39,13 @@ object ErrorModal {
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.h4(headerText)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.h4(headerText)),
 
-        closed = () => modalClosed(s, p)),
+          closed = () => modalClosed(s, p)
+        ),
 
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
@@ -51,11 +53,13 @@ object ErrorModal {
               <.div()(
                 <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(p.loginError)
               ),
-              <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.errorModalFooter)(
+              <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 text-center")(
-                    <.div()(<.h5("Encountering problems in serving request. Please try after sometime!"),
-                      <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                    <.div()(
+                      <.h5("Encountering problems in serving request. Please try after sometime!"),
+                      <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close")
+                    )
                   )
                 )
               )
@@ -73,5 +77,4 @@ object ErrorModal {
 
   def apply(props: Props) = component(props)
 }
-
 
