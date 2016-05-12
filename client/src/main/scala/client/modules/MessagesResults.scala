@@ -4,7 +4,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
+import client.handlers.{RefreshConnections, StoreMessagesSearchLabel, RefreshMessages, RefreshProjects}
 import shared.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
 import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
 import japgolly.scalajs.react._
