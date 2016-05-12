@@ -32,12 +32,14 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty) extends Po
 }
 
 object MessagesModelHandler {
+  var momentTime = ""
   def GetMessagesModel(response: String): MessagesRootModel = {
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
-      .map(message => upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
-      .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+      .map(message =>upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
+      .sortWith((x,y) =>  (Moment(x.created).utc()).isAfter(Moment(x.created).utc()))
+      .map(message => message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString))
     MessagesRootModel(model)
   }
 }
