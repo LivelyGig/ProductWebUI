@@ -1,6 +1,6 @@
 package client.handlers
 
-import diode.data.PotState.{PotFailed, PotPending}
+import diode.data.PotState.{ PotFailed, PotPending }
 import diode._
 import diode.data._
 import shared.models.MessagesModel
@@ -8,7 +8,7 @@ import shared.RootModels.MessagesRootModel
 import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
-import diode.util.{Retry, RetryPolicy}
+import diode.util.{ Retry, RetryPolicy }
 import org.scalajs.dom._
 import org.widok.moment.Moment
 
@@ -16,31 +16,39 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
 // Actions
-case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3)) extends PotActionRetriable[MessagesRootModel, RefreshMessages]{
-  override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy) = RefreshMessages(value, newRetryPolicy)
+case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3))
+    extends PotActionRetriable[MessagesRootModel, RefreshMessages] {
+  override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy): RefreshMessages = RefreshMessages(value, newRetryPolicy)
 }
 
-object MessagesModelHandler{
-  def GetMessagesModel(response: String): MessagesRootModel = {
+object MessagesModelHandler {
+  def getMessagesModel(response: String): MessagesRootModel = {
     val messagesFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
-      .map(message =>upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
-      .sortWith((x,y) =>  Moment(x.created).isAfter(Moment(y.created)))
+      .filterNot(_.content.pageOfPosts(0).contains("[JOBPOSTS]"))
+      .map(message => upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
+      .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
     MessagesRootModel(model)
   }
 
 }
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
-  override def handle = {
-    case action : RefreshMessages =>
+  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
+    case action: RefreshMessages =>
       val labels = window.sessionStorage.getItem("currentSearchLabel")
-      val updateF =  action.effectWithRetry(CoreApi.getMessages())(messages=>MessagesModelHandler.GetMessagesModel(messages))
-      if (labels!=null){
-        action.handleWith(this,updateF)(PotActionRetriable.handler())
+      val updateF = action.effectWithRetry(CoreApi.getMessages())(messages => MessagesModelHandler.getMessagesModel(messages))
+      Option(labels) match {
+        case Some(s) =>
+          action.handleWith(this, updateF)(PotActionRetriable.handler())
+        case _ =>
+          updated(Empty)
+      }
+    /* if (labels != null) {
+        action.handleWith(this, updateF)(PotActionRetriable.handler())
       } else {
         updated(Empty)
-      }
+      }*/
   }
 }

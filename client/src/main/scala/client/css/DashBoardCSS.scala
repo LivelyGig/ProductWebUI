@@ -61,10 +61,10 @@ object DashBoardCSS {
       width(22.px),
       verticalAlign.middle,
       marginTop(-3.px).important,
-      media.maxWidth(1365.px) -(
+      media.maxWidth(1365.px) - (
         height(18.px),
         width(18.px)
-        )
+      )
     )
     val rsltContentBackground = style(
       backgroundColor(c"#D3E7E7"),
@@ -82,11 +82,11 @@ object DashBoardCSS {
       borderLeft(6.px, solid, transparent),
       marginTop(3.px),
 
-      media.maxWidth(1367.px) -(
+      media.maxWidth(1367.px) - (
         width(9.px),
         height(9.px),
         borderTop(5.px, dashed)
-        )
+      )
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
@@ -128,9 +128,9 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-    /*  marginRight(5.px),
+      /*  marginRight(5.px),
       padding(4.px, 9.px),*/
-      margin(1.px ,5.px,1.px,0.px)
+      margin(1.px, 5.px, 1.px, 0.px)
     )
     val inputHeightWidth = style(
       height(25.px),
@@ -145,20 +145,20 @@ object DashBoardCSS {
     val slctInputWidthLabel = style(
       width(170.px),
       paddingLeft(5.%%),
-      media.maxWidth(1130.px) -(
+      media.maxWidth(1130.px) - (
         fontSize(1.em),
         width(135.px),
         paddingLeft(9.%%)
-        )
+      )
     )
 
     val scltInputModalLeftContainerMargin = style(
       marginLeft(180.px),
       marginRight(60.px),
-      media.maxWidth(1130.px) -(
+      media.maxWidth(1130.px) - (
         marginLeft(135.px),
         marginRight(38.px)
-        )
+      )
     )
     val scltInputModalContainerMargin = style(
       marginLeft(150.px),
@@ -247,7 +247,7 @@ object DashBoardCSS {
     val marginLeftCloseBtn = style(
       marginLeft(20.px),
       backgroundColor(orange)
-      // addClassName("btnBackground")
+    // addClassName("btnBackground")
 
     )
     val btnBackground = style(
@@ -420,7 +420,7 @@ object DashBoardCSS {
     val padding0px = style(
       padding(0.px)
     )
-    val DisplayFlex = style (
+    val DisplayFlex = style(
       display.flex
     )
 

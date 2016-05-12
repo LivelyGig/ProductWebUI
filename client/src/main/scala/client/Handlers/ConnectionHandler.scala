@@ -1,30 +1,30 @@
 package client.handlers
 
 import diode.data.PotState.PotPending
-import diode.{Effect, ActionHandler, ModelRW}
-import diode.data.{Empty, PotAction, Ready, Pot}
+import diode.{ Effect, ActionHandler, ModelRW }
+import diode.data.{ Empty, PotAction, Ready, Pot }
 import shared.models.ConnectionsModel
 import shared.RootModels.ConnectionsRootModel
 import client.services.CoreApi
-import shared.dtos.{ConnectionProfileResponse, ApiResponse}
+import shared.dtos.{ ConnectionProfileResponse, ApiResponse }
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
 // Actions
-case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections]{
+case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections] {
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
-object ConnectionModelHandler{
+object ConnectionModelHandler {
   def GetConnectionsModel(response: String): ConnectionsRootModel = {
 
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
-//    println("connections = "+ connections)
+    //    println("connections = "+ connections)
     var model = Seq[ConnectionsModel]()
 
     connections.foreach {
       connection =>
-//        println(connection.content.jsonBlob)
+        //        println(connection.content.jsonBlob)
         val json = JSON.parse(connection.content.jsonBlob)
         val name = json.name.asInstanceOf[String]
         val source = connection.content.connection.source
@@ -34,7 +34,7 @@ object ConnectionModelHandler{
         model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
           name, imgSrc)
     }
-//    model.foreach(temp => println(temp.name))
+    //    model.foreach(temp => println(temp.name))
     ConnectionsRootModel(model)
   }
 
@@ -42,8 +42,8 @@ object ConnectionModelHandler{
 
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
-    case action : RefreshConnections =>
-      val updateF = action.effect(CoreApi.getConnections())(connections=>ConnectionModelHandler.GetConnectionsModel(connections))
+    case action: RefreshConnections =>
+      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.GetConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }

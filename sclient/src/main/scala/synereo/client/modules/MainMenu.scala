@@ -9,12 +9,12 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
-import synereo.client.handlers.{LogoutUser, LoginUser}
+import synereo.client.handlers.{ LogoutUser, LoginUser }
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon
-import synereo.client.components.{MIcon, Bootstrap, GlobalStyles, Icon}
-import synereo.client.css.{SynereoCommanStylesCSS, LoginCSS}
+import synereo.client.components.{ MIcon, Bootstrap, GlobalStyles, Icon }
+import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
@@ -32,7 +32,7 @@ object MainMenu {
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-    //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+      //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
   }
@@ -59,7 +59,7 @@ object MainMenu {
               <.li(
                 <.div(^.className := "dropdown")(
                   <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
-                    ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
+                    ^.onMouseOver ==>$.props.displayMenu*/ )(MIcon.speakerNotes),
                   <.div(^.className := "dropdown-arrow"),
                   <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
                     <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
@@ -69,11 +69,11 @@ object MainMenu {
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
-                      )
-                    ),
+                      )),
                     <.br(),
                     <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("My apps 16"),
-                    <.li(<.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
+                    <.li(
+                      <.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
                       <.ul(^.className := "list-unstyled nav-pills")(
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
                         <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
@@ -87,7 +87,7 @@ object MainMenu {
                   )
                 )
               ),
-              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/)(
+              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/ )(
                 <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
                 <.div(^.className := "dropdown-arrow-small"),
                 <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
@@ -96,7 +96,7 @@ object MainMenu {
                 )
               ),
               <.li(^.className := "")(
-                <.a(^.href := "/#userprofileview",SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
               )
             )
           } else {
@@ -123,8 +123,7 @@ object MainMenu {
               ),
               <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
             )
-          }
-          else {
+          } else {
             <.span()
           }
         )

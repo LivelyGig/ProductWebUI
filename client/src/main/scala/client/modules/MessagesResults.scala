@@ -3,18 +3,18 @@ package client.modules
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{RefreshConnections, SubscribeSearch, RefreshMessages, RefreshProjects}
-import shared.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
-import client.css.{HeaderCSS, DashBoardCSS, LftcontainerCSS}
+import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
+import client.handlers.{ RefreshConnections, StoreMessagesSearchLabel, RefreshMessages, RefreshProjects }
+import shared.RootModels.{ ConnectionsRootModel, MessagesRootModel, ProjectsRootModel }
+import client.css.{ HeaderCSS, DashBoardCSS, LftcontainerCSS }
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{ DashBoardCSS, HeaderCSS }
 import shared.models.MessagesModel
 import client.services.LGCircuit
 import scala.scalajs.js
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import client.modals.NewMessage
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
@@ -76,7 +76,8 @@ object MessagesResults {
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
-                  <.span(Icon.longArrowDown))
+                  <.span(Icon.longArrowDown)
+                )
               )
             ),
             <.div(^.className := "pull-right")(
@@ -88,11 +89,11 @@ object MessagesResults {
         ), //col-12
         <.div(^.id := "resultsContainer")(
           P.proxy().render(messagesRootModel =>
-            MessagesList(messagesRootModel.messagesModelList)
-          ),
+            MessagesList(messagesRootModel.messagesModelList)),
           P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
           P.proxy().renderPending(ex => <.div()(
-            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)))
+            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+          ))
         )
       )
     })
@@ -109,14 +110,14 @@ object MessagesList {
   private val MessagesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
       def renderMessages(message: MessagesModel) = {
-        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/)(
+        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
           <.div(^.className := "media-body")(
             message.text,
-            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/)(
+            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
               //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
@@ -124,9 +125,9 @@ object MessagesList {
               //NewMessage(NewMessage.Props("Forward",Seq(HeaderCSS.Style.createNewProjectBtn),"","Forward")),
               //NewMessage(NewMessage.Props("Reply",Seq(HeaderCSS.Style.createNewProjectBtn),"","Reply"))
 
-                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailForward, "Forward")),
-                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailReply, "Reply"))
-                /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
+              NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailForward, "Forward")),
+              NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailReply, "Reply"))
+            /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
             )
           ) //media-body
         ) //li

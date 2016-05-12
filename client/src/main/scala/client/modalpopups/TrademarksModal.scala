@@ -3,14 +3,14 @@ package client.modals
 import client.components.Bootstrap.Modal
 import client.components.GlobalStyles
 import client.components.Icon
-import client.LGMain.{Loc}
-import scala.util.{Failure, Success}
+import client.LGMain.{ Loc }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS, MessagesCSS}
+import client.css.{ DashBoardCSS, MessagesCSS }
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 
@@ -41,19 +41,20 @@ object TrademarksModal {
     def render(s: State, p: Props) = {
 
       val headerText = "Trademarks and Credits"
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12")(
             <.div(DashBoardCSS.Style.modalHeaderFont, DashBoardCSS.Style.paddingLeftModalHeaderbtn)("Trademarks")
           )
         ), //main row
         <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
-          <.div(DashBoardCSS.Style.marginTop10px)(
-          ),
+          <.div(DashBoardCSS.Style.marginTop10px)(),
           <.div()(
             <.span(^.fontWeight := "bold")("Sofwtare Credits"),
             <.br(),
@@ -97,9 +98,8 @@ object TrademarksModal {
           )
         ),
         <.div()(
-          <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-            //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
-            //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+          <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")( //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Post"),
+          //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
           )
         ),
         <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()

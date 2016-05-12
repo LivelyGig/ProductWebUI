@@ -4,8 +4,8 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 4/1/2016.
-  */
+ * Created by Mandar on 4/1/2016.
+ */
 object MarketPlaceFullCSS {
 
   object Style extends StyleSheet.Inline {
@@ -25,8 +25,7 @@ object MarketPlaceFullCSS {
       fontSize(1.4.em)
 
     )
-    val seeMoreBtn = style(
-      //fontSize(1.4.em)
+    val seeMoreBtn = style( //fontSize(1.4.em)
     )
     val cardsHeading = style(
       fontSize(1.2.em),
@@ -41,9 +40,7 @@ object MarketPlaceFullCSS {
       marginTop(30.px),
       marginBottom(30.px)
     )
-    val headingImageContainerDiv = style(
-
-    )
+    val headingImageContainerDiv = style()
     val appCard = style(
       width(20.%%),
       display.inlineBlock,

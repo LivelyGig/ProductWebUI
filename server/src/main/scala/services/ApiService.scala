@@ -4,7 +4,7 @@ import java.io.PrintWriter
 
 import com.typesafe.config.ConfigFactory
 import shared._
-import mockdata.{ConnectionsMock, JobPostsMock, MessagesMock}
+import mockdata.{ ConnectionsMock, JobPostsMock, MessagesMock }
 import play.api.Play.current
 import play.api.libs.ws._
 
@@ -15,7 +15,7 @@ import org.json4s.jackson.Serialization.write
 class ApiService extends Api {
   implicit val formats = org.json4s.DefaultFormats
   var BASE_URL = ConfigFactory.load().getString("api.baseURL")
-  println ("services.ApiService: loading base URL from application.conf " +BASE_URL)
+  println("services.ApiService: loading base URL from application.conf " + BASE_URL)
 
   /*override def createAgent(requestContent: String): Future[ /*ApiResponse[CreateUserResponse]*/ String] = {
     println(write(requestContent))
@@ -90,17 +90,17 @@ class ApiService extends Api {
     }
   }*/
 
-  override def queryApiBackend (requestContent: String) : Future[String] = {
+  override def queryApiBackend(requestContent: String): Future[String] = {
     println(requestContent)
     //    new PrintWriter("chacha.log") { write(requestContent); close }
-    WS.url(BASE_URL).post(requestContent).map{
+    WS.url(BASE_URL).post(requestContent).map {
       response =>
         println(s"response.body = ${response.body}")
         response.body
     }
   }
-  override def getMock (requestContent: String,  `type`: String): String = {
-    println (write(requestContent))
+  override def getMock(requestContent: String, `type`: String): String = {
+    println(write(requestContent))
     `type` match {
       case "messagesMock" => MessagesMock.content
       case "jobPostsMock" => JobPostsMock.content

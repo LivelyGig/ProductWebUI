@@ -1,13 +1,12 @@
 package synereo.client.modalpopups
 
-
-import shared.dtos.{CreateUserResponse, ApiResponse}
+import shared.dtos.{ CreateUserResponse, ApiResponse }
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
+import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS, LoginCSS }
 import shared.models.UserModel
-import synereo.client.services.{ApiResponseMsg, CoreApi}
-import scala.util.{Failure, Success}
+import synereo.client.services.{ ApiResponseMsg, CoreApi }
+import scala.util.{ Failure, Success }
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -15,13 +14,11 @@ import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
 
-
 /**
-  * Created by Mandar on 4/19/2016.
-  */
+ * Created by Mandar on 4/19/2016.
+ */
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
-
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean)
 
@@ -77,21 +74,22 @@ object LoginForm {
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Log In"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
 
-        header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
+          header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div( /*SignupCSS.Style.signUpHeading*/ )( /*headerText*/ )), /*<.div()(headerText)),*/
 
-        closed = () => formClosed(s, p),
-        addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false),
+          closed = () => formClosed(s, p),
+          addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false
+        ),
         <.form(^.id := "LoginForm", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div()(
                 if (p.isUserVerified) {
                   <.div(^.className := "emailVerifiedContainer")(<.h5("Email address verified."), <.h5("Please login with your credentails "))
-                }
-                else
+                } else
                   <.div(),
                 <.div(SignupCSS.Style.signUpHeading)(headerText),
                 <.div(^.className := "form-group")(
@@ -123,7 +121,7 @@ object LoginForm {
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
           Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), "Dont have an account?"),
           Button(Button.Props(addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
-          //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
+        //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
     }

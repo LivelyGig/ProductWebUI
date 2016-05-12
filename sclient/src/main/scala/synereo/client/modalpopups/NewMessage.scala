@@ -1,138 +1,158 @@
 package synereo.client.modalpopups
 
+import java.util.UUID
+
+import shared.models.MessagePost
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap._
+import synereo.client.components.GlobalStyles
+import synereo.client.components._
 import synereo.client.components.Icon.Icon
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.SynereoCommanStylesCSS
-import synereo.client.components.jQuery
-import scala.language.reflectiveCalls
-
+import synereo.client.handlers.PostMessages
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
+import synereo.client.components.Bootstrap.Modal
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
-
-  case class State(addRequestForm: Boolean = false)
+  case class State(showNewMessageForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
+
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-
-
-    def mounted(props: Props): Callback =  {
-      t.modState(s => s.copy(addRequestForm = true))
+    def mounted(props: Props): Callback = {
+      t.modState(s => s.copy(showNewMessageForm = true))
     }
-    def addNewMessageForm() : Callback = {
-      t.modState(s => s.copy(addRequestForm = true))
+
+    def addNewMessageForm(): Callback = {
+      t.modState(s => s.copy(showNewMessageForm = true))
     }
-    def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${addRequestForm}")
-      if(postMessage){
-        t.modState(s => s.copy(addRequestForm = true))
-      } else {
-        t.modState(s => s.copy(addRequestForm = false))
-      }
+
+    def addMessage(/*postMessage:PostMessage*/): Callback = {
+      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
+      t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
+
   val component = ReactComponentB[Props]("NewMessage")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title,className = "profile-action-buttons"),P.buttonName),
-        if (S.addRequestForm) PostNewMessage(PostNewMessage.Props(B.addMessage, "New Request"))
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/
+        /*, ^.onMouseOver --> B.displayBtn*/)(
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
-          Seq.empty[ReactElement]
-      )
+          Seq.empty[ReactElement])
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
-  def apply(props: Props) = component(props)
 
+  def apply(props: Props) = component(props)
 }
 
-object PostNewMessage {
+object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postMessage: Boolean = false)
+
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
+
+  case class State(postMessage: MessagePost, postNewMessage: Boolean = false, selectizeInputId: String = "postNewMessageSelectizeInput")
+
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
-
     }
-    def hideModal =  {
+
+    def updateSubject(e: ReactEventI) = {
+      val value = e.target.value
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
+    }
+
+    def updateContent(e: ReactEventI) = {
+      val value = e.target.value
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
+    }
+
+    def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
     }
-    def mounted(props: Props): Callback = Callback {
+
+    def mounted(): Callback = Callback {
 
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(postMessage = false))
+      val state = t.state.runNow()
+      SYNEREOCircuit.dispatch(PostMessages(
+        state.postMessage.content,
+        ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
+        CoreApi.MESSAGES_SESSION_URI))
+      t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postMessage)
-      props.submitHandler(state.postMessage)
-
+      props.submitHandler(/*state.postMessage*/)
     }
 
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(SynereoCommanStylesCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div()(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row" , SynereoCommanStylesCSS.Style.MarginLeftchkproduct)(
-            <.div(SynereoCommanStylesCSS.Style.marginTop10px)(
-            ),
-            <.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(SynereoCommanStylesCSS.Style.modalHeaderFont)("To"))
-            ),
+          <.div(^.className := "row")(
+            <.div(),
+            /*<.div(^.className:="row")(
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
+            ),*/
+            /*val selectizeControl : js.Object =*/
+            <.div(^.id := s.selectizeInputId)(
+              //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
+              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))),
             <.div()(
-              <.input(^.`type` := "text")
-            ),
+              <.textarea(^.rows := 6, ^.placeholder := "Subject", ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)),
             <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Subject",SynereoCommanStylesCSS.Style.replyMarginTop )
-             ),
-            <.div()(
-              <.textarea(^.rows:= 6,^.placeholder:="Enter your message here:",SynereoCommanStylesCSS.Style.replyMarginTop )
-            )
-          ),
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.content, ^.onChange ==> updateContent, ^.required := true))),
           <.div()(
-              <.div(SynereoCommanStylesCSS.Style.modalHeaderPadding,SynereoCommanStylesCSS.Style.footTextAlign)(
-              <.button(^.tpe := "submit",^.className:="btn btn-default", SynereoCommanStylesCSS.Style.marginLeftCloseBtn,^.onClick --> hide, "Send"),
-              <.button(^.tpe := "button",^.className:="btn btn-default", SynereoCommanStylesCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ),
-          <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.marginTop10px,SynereoCommanStylesCSS.Style.marginLeftRight)()
+            <.div(^.className := "text-right")(
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> hide, "Cancel")))
+          //                <.div(bss.modal.footer)
         )
       )
     }
   }
+
   private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State())
+    //.initialState_P(p => State(p=> new MessagesData("","","")))
+    .initialState_P(p => State(new MessagePost("", "", "", "", "", Nil, "", "", "", "")))
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-         if(scope.currentState.postMessage){
-           scope.$.backend.hideModal
-         }
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postNewMessage) {
+        scope.$.backend.hideModal
+      }
     })
+    .componentDidMount(scope => scope.backend.mounted())
+    //      .shouldComponentUpdate(scope => false)
     .build
+
   def apply(props: Props) = component(props)
 }

@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 3/17/2016.
-  */
+ * Created by Mandar on 3/17/2016.
+ */
 
 object DashboardCSS {
 
@@ -12,10 +12,8 @@ object DashboardCSS {
 
     import dsl._
 
-    val profileActionContainer = style(
-      /*      minHeight(60.px),
-            minWidth(100.px)*/
-    )
+    val profileActionContainer = style( /*      minHeight(60.px),
+            minWidth(100.px)*/ )
     val dashboardContainerMain = style(
       height(100.vh),
       overflowY.scroll.important,
@@ -54,17 +52,15 @@ object DashboardCSS {
     val homeFeedContainer = style(
       marginTop(30.px),
       marginBottom(90.px)
-      //      height(730.px),
-      //      marginRight(-30.px),
-      //      overflowY.scroll.important,
-      //      overflowX.hidden.important
+    //      height(730.px),
+    //      marginRight(-30.px),
+    //      overflowY.scroll.important,
+    //      overflowX.hidden.important
     )
-    val homeFeedMainContainer = style(
-      //      width(762.px),
-      //      padding(0.px)
+    val homeFeedMainContainer = style( //      width(762.px),
+    //      padding(0.px)
     )
-    val cardImage = style(
-      //      paddingRight(65.px)s
+    val cardImage = style( //      paddingRight(65.px)s
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
@@ -158,6 +154,12 @@ object DashboardCSS {
 
       )
     )
+    val newMessageFormBtn = style(
+      width(100.%%),
+      height(70.px),
+      fontSize(30.px),
+      borderRadius(0.px)
+    )
     val userNameDescription = style(
       //      width(86.%%),
       display.inlineBlock,
@@ -198,7 +200,7 @@ object DashboardCSS {
     )
     val topBarStyle = style(
       fontSize(15.px)
-      //      fontWeight.bold
+    //      fontWeight.bold
     )
     val postActionButton = style(
       border.none.important,

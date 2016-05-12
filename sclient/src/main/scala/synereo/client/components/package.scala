@@ -7,5 +7,3 @@ package object components extends js.GlobalScope {
 
 }
 
-
-

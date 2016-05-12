@@ -10,8 +10,8 @@ import synereo.client.css.UserProfileViewCSS
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 3/28/2016.
-  */
+ * Created by Mandar on 3/28/2016.
+ */
 object UserProfileView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>

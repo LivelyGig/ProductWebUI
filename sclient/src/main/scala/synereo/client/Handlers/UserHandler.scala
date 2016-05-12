@@ -1,17 +1,17 @@
 package synereo.client.handlers
 
 import java.util.UUID
-import diode.{ActionHandler, Effect, ModelRW}
-import shared.dtos.{Expression, ExpressionContent, Label, SubscribeRequest, _}
-import shared.models.{Post, UserModel}
+import diode.{ ActionHandler, Effect, ModelRW }
+import shared.dtos.{ Expression, ExpressionContent, Label, SubscribeRequest, _ }
+import shared.models.{ Post, UserModel }
 import org.scalajs.dom.window
-import synereo.client.services.{SYNEREOCircuit, CoreApi}
+import synereo.client.services.{ SYNEREOCircuit, CoreApi }
 import synereo.client.utils.Utils
 
 import concurrent._
 import ExecutionContext.Implicits._
 import scala.scalajs.js
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import org.widok.moment._
 import org.querki.jquery._
 import japgolly.scalajs.react._
@@ -25,38 +25,38 @@ case class TestDispatch()
 
 case class PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String)
 
-
-
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   override def handle = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
       if (temp != null) {
-        modelFromStore = UserModel(email = window.sessionStorage.getItem("userEmail"),
+        modelFromStore = UserModel(
+          email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true
+        )
       }
       updated(modelFromStore)
-      /*create sessions functionality is moved to a method in login module this case is sporadically used*/
+    /*create sessions functionality is moved to a method in login module this case is sporadically used*/
     case CreateSessions(userModel2) =>
       val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
-            val futures = sessionURISeq.map(sessionURI =>
-              CoreApi.agentLogin(userModel2).map{responseStr=>
-                val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-                window.sessionStorage.setItem(sessionURI,response.content.sessionURI)
-              })
+      val futures = sessionURISeq.map(sessionURI =>
+        CoreApi.agentLogin(userModel2).map { responseStr =>
+          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+          window.sessionStorage.setItem(sessionURI, response.content.sessionURI)
+        })
       noChange
 
     case PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
       val createdDateTime = Moment().utc().format("YYYY-MM-DD hh:mm:ss")
-//      println(createdDateTime)
+      //      println(createdDateTime)
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
-      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime  , createdDateTime ,Map[Label, String]().empty, connectionsSeq, content)
+      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {
-          val ContributeThoughtsID : js.Object = "#ContributeThoughtsID"
+          val ContributeThoughtsID: js.Object = "#ContributeThoughtsID"
           $(ContributeThoughtsID).value(" ")
           SYNEREOCircuit.dispatch(RefreshMessages())
         }
@@ -64,9 +64,9 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
       noChange
 
-    case PostContent(value: Post,connectionStringSeq: Seq[String], sessionUri: String) =>
-      val uid = UUID.randomUUID().toString.replaceAll("-","")
-      val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri))/* ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))*/
+    case PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String) =>
+      val uid = UUID.randomUUID().toString.replaceAll("-", "")
+      val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) /* ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))*/
       //      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {

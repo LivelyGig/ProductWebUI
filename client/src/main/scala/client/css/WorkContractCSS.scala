@@ -6,56 +6,56 @@ object WorkContractCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
 
-  /*  val borderInitiating = style (
+    /*  val borderInitiating = style (
       borderBottom(2.px , solid, black)
     )*/
-    val marginLeftRight = style (
+    val marginLeftRight = style(
       marginLeft(15.px),
       marginRight(15.px),
       padding(4.px)
     )
-    val WorkContractData = style (
+    val WorkContractData = style(
       height(250.px),
-      overflowX.auto/*,
+      overflowX.auto /*,
       marginRight(10.px)*/
     )
-   /* val BiddingScreenResults = style (
+    /* val BiddingScreenResults = style (
       paddingLeft(15.px)
     )*/
-     val slctWorkContractInputWidth = style (
+    val slctWorkContractInputWidth = style(
       width(100.px)
     )
-    val slctWorkContractInputLeftContainerMargin = style (
+    val slctWorkContractInputLeftContainerMargin = style(
       marginLeft(165.px)
     )
-    val createWorkContractBtn=style(
+    val createWorkContractBtn = style(
       backgroundColor(c"#FFA500"),
-      color(rgba(51,51,51,1)),
+      color(rgba(51, 51, 51, 1)),
       marginLeft(10.px),
       marginTop(6.px)
     )
-    val WorkContractImgWidth = style (
+    val WorkContractImgWidth = style(
       width(700.px)
     )
-    val marginHeader = style (
+    val marginHeader = style(
       margin(8.px)
     )
     val tableFont = style(
-      media.minWidth(1701.px)   -
+      media.minWidth(1701.px) -
         fontSize(16.px),
-      media.maxWidth(1700.px).minWidth(1585.px)   -
+      media.maxWidth(1700.px).minWidth(1585.px) -
         fontSize(15.px),
-      media.maxWidth(1584.px).minWidth(1430.px)   -
+      media.maxWidth(1584.px).minWidth(1430.px) -
         fontSize(13.px),
-      media.maxWidth(1430.px).minWidth(1371.px)   -
+      media.maxWidth(1430.px).minWidth(1371.px) -
         fontSize(13.px),
-      media.maxWidth(1370.px).minWidth(1236.px)   -
+      media.maxWidth(1370.px).minWidth(1236.px) -
         fontSize(11.px),
-      media.maxWidth(1235.px).minWidth(1025.px)   -
+      media.maxWidth(1235.px).minWidth(1025.px) -
         fontSize(10.px),
-      media.maxWidth(1024.px)   -
+      media.maxWidth(1024.px) -
         fontSize(9.px),
-      media.maxWidth(1000.px)   -
+      media.maxWidth(1000.px) -
         fontSize(8.px)
     )
 
@@ -77,7 +77,7 @@ object WorkContractCSS {
     val actionsWidth = style(
       width(19.%%)
     )
-    val WorkContractModalHeight = style (
+    val WorkContractModalHeight = style(
       height(845.px)
     )
 
@@ -85,14 +85,14 @@ object WorkContractCSS {
       backgroundColor(c"#d9edf7")
     )
 
-    val capabilitiesItems = style (
+    val capabilitiesItems = style(
       paddingTop(5.px)
     )
 
-     val capabilities = style(
-       paddingTop(12.%%),
-       fontWeight.bold
-     )
+    val capabilities = style(
+      paddingTop(12.%%),
+      fontWeight.bold
+    )
     val notApplicable = style(
       width(15.%%)
     )

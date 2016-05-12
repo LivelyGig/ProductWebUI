@@ -6,14 +6,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.Icon
-import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS, UserTimelineViewCSS}
+import synereo.client.css.{ SynereoCommanStylesCSS, DashboardCSS, UserTimelineViewCSS }
 
 import scalacss.ScalaCssReact._
 
-
 /**
-  * Created by Mandar on 3/28/2016.
-  */
+ * Created by Mandar on 3/28/2016.
+ */
 object TimelineView {
 
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
@@ -41,7 +40,7 @@ object TimelineView {
                       )
                     ),
                     <.div(^.className := "col-md-3 text-center")(
-                      <.button(^.className := "btn",UserTimelineViewCSS.Style.followBtn)("FOLLOWING")
+                      <.button(^.className := "btn", UserTimelineViewCSS.Style.followBtn)("FOLLOWING")
                     )
                   )
                 )
@@ -251,6 +250,5 @@ object TimelineView {
     }.build
 
   def apply(router: RouterCtl[Loc]) = component(router)
-
 
 }

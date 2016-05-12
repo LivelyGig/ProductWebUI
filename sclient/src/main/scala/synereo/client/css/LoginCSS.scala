@@ -4,8 +4,8 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar  on 3/11/2016.
-  */
+ * Created by Mandar  on 3/11/2016.
+ */
 object LoginCSS {
   val zero: Int = 0
 
@@ -47,11 +47,8 @@ object LoginCSS {
     val formPadding = style(
       padding(4.%%)
     )
-    val SignUpBtn = style(
-
-    )
-    val requestInviteModalStyle = style(
-      //      backgroundColor(c"#96989B")
+    val SignUpBtn = style()
+    val requestInviteModalStyle = style( //      backgroundColor(c"#96989B")
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -138,10 +135,10 @@ object LoginCSS {
       fontSize(1.1.em),
       color(c"#FFFFFF"),
       opacity(0.5),
-      & hover(
+      & hover (
         color(c"#FFFFFF"),
         backgroundColor.transparent.important
-        )
+      )
 
     )
     val navLiAIcon = style(
@@ -203,8 +200,7 @@ object LoginCSS {
         color(c"#fff"),
         outline.none.important,
         backgroundColor.transparent.important
-      )
-      ,
+      ),
       &.focus(
         color(c"#fff"),
         outline.none.important,

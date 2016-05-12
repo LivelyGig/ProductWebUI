@@ -16,7 +16,7 @@ object ErrorModal {
   case class Props(submitHandler: () => Callback)
   case class State()
   class Backend(t: BackendScope[Props, State]) {
-    def closeForm = Callback{
+    def closeForm = Callback {
       $(t.getDOMNode()).modal("hide")
     }
 
@@ -26,24 +26,27 @@ object ErrorModal {
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
 
-        closed = () => modalClosed(s, p)),
+        closed = () => modalClosed(s, p)
+      ),
 
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-             <.div(^.className:="row")(
-                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("Encountering problems in serving request. Please try after sometime!",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn btn-default",DashBoardCSS.Style.btnBackground,^.onClick-->closeForm )("Close"))
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
+              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+                <.div(DashBoardCSS.Style.modalBodyText)(
+                  "Encountering problems in serving request. Please try after sometime!",
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.btnBackground, ^.onClick --> closeForm)("Close"))
                 )
               )
             )
           )
         ),
-        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop5p, DashBoardCSS.Style.marginLeftRight)()
       )
     }
   }
@@ -54,5 +57,4 @@ object ErrorModal {
 
   def apply(props: Props) = component(props)
 }
-
 

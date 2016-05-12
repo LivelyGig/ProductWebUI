@@ -1,18 +1,18 @@
 package synereo.client.handlers
 
-import diode.data.{Empty, Pot, PotAction}
-import diode.{ActionHandler, ModelRW}
+import diode.data.{ Empty, Pot, PotAction }
+import diode.{ ActionHandler, ModelRW }
 import shared.RootModels.ProjectsRootModel
-import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
-import shared.models.{JobPost, ProjectsModel}
+import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
+import shared.models.{ JobPost, ProjectsModel }
 import synereo.client.services.CoreApi
 
 //import rx.ops.Timer
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
-  * Created by shubham.k on 1/25/2016.
-  */
+ * Created by shubham.k on 1/25/2016.
+ */
 // Actions
 case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty) extends PotAction[ProjectsRootModel, RefreshProjects] {
   override def next(value: Pot[ProjectsRootModel]) = RefreshProjects(value)
@@ -30,8 +30,10 @@ object ProjectsModelHandler {
     var model = Seq[ProjectsModel]()
     for (projectFromBackend <- projectsFromBackend) {
       //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
-      model :+= ProjectsModel(projectFromBackend.content.sessionURI,
-        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0)))
+      model :+= ProjectsModel(
+        projectFromBackend.content.sessionURI,
+        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0))
+      )
     }
     //    println(model)
     ProjectsRootModel(model)

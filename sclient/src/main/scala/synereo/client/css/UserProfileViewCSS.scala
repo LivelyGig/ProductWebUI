@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 3/28/2016.
-  */
+ * Created by Mandar on 3/28/2016.
+ */
 object UserProfileViewCSS {
 
   object Style extends StyleSheet.Inline {

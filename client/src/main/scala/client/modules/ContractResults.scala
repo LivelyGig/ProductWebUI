@@ -1,10 +1,10 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+import japgolly.scalajs.react.{ Callback, ReactComponentB }
 import client.components.Icon
-import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{WorkContractModal, NewMessage}
+import client.css.{ HeaderCSS, DashBoardCSS }
+import client.modals.{ WorkContractModal, NewMessage }
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -30,7 +30,7 @@ object ContractResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -49,21 +49,22 @@ object ContractResults {
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
-                  <.span(Icon.longArrowDown))
+                  <.span(Icon.longArrowDown)
+                )
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer",DashBoardCSS.Style.padding0px)(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
             <.ul(^.className := "media-list")(
-               for (i <- 1 to 50) yield {
-                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p )(
+              for (i <- 1 to 50) yield {
+                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
                   <.div(^.className := "media-body")(
                     <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                     <.div(DashBoardCSS.Style.profileNameHolder)("Buyer : Pam Seller: Abed Project/Offering: Project One"),
@@ -71,8 +72,8 @@ object ContractResults {
                     <.br(),
                     "Status: Initiating   11:20am 12/08/2015",
                     <.div(^.className := "col-md-12 col-sm-12 ")(
-                      <.div(/*^.className:="profile-action-buttons"*/)(
-                        <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
+                      <.div( /*^.className:="profile-action-buttons"*/ )(
+                        <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.remove),
                         <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
                         WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.fileTextO, "Manage")),
                         NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
@@ -84,8 +85,7 @@ object ContractResults {
             )
           )
         )
-      )
-    )
+      ))
     .build
 }
 

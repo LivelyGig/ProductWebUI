@@ -1,7 +1,7 @@
 package synereo.client.components
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
 import org.scalajs.dom.raw.HTMLCanvasElement
 
 import scala.scalajs.js
@@ -67,18 +67,18 @@ object Chart {
 
   val Chart = ReactComponentB[ChartProps]("Chart")
     .render_P((P) => {
-    <.canvas(^.width := P.width, ^.height := P.height)
-  }).componentDidMount(scope => Callback {
-    // access context of the canvas
-    val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
-    // create the actual chart using the 3rd party component
-    scope.props.style match {
-      case LineChart => new JSChart(ctx).Line(scope.props.data)
-      case BarChart => new JSChart(ctx).Bar(scope.props.data)
-      case PieChart => new JSChart(ctx).Pie(scope.props.data)
-      case _ => throw new IllegalArgumentException
-    }
-  }).build
+      <.canvas(^.width := P.width, ^.height := P.height)
+    }).componentDidMount(scope => Callback {
+      // access context of the canvas
+      val ctx = scope.getDOMNode().asInstanceOf[HTMLCanvasElement].getContext("2d")
+      // create the actual chart using the 3rd party component
+      scope.props.style match {
+        case LineChart => new JSChart(ctx).Line(scope.props.data)
+        case BarChart => new JSChart(ctx).Bar(scope.props.data)
+        case PieChart => new JSChart(ctx).Pie(scope.props.data)
+        case _ => throw new IllegalArgumentException
+      }
+    }).build
 
   def apply(props: ChartProps) = Chart(props)
 }

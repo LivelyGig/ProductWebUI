@@ -7,7 +7,7 @@ object GlobalStyles extends StyleSheet.Inline {
 
   style(unsafeRoot("body")(
     paddingTop(0.px)
-    //backgroundColor(c"#005256")
+  //backgroundColor(c"#005256")
   ))
   // ToDo: temporary hack to hide visible gap underneath footer
   val bootstrapStyles = new BootstrapStyles

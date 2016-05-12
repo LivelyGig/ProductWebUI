@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
-import  org.querki.jquery._
+import org.querki.jquery._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 
@@ -15,7 +15,7 @@ object AccountValidationFailed {
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback{
+    def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
 
@@ -25,24 +25,27 @@ object AccountValidationFailed {
 
     def render(s: State, p: Props) = {
       val headerText = "Error"
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
-        header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+        header = hide => <.span( /*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
 
-        closed = () => modalClosed(s, p)),
+        closed = () => modalClosed(s, p)
+      ),
 
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className:="row")(
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("Validation code you entered is incorrect, please check your email and enter valid code",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn", DashBoardCSS.Style.btnBackground,  ^.onClick-->hide )("Try again"))
+                <.div(DashBoardCSS.Style.modalBodyText)(
+                  "Validation code you entered is incorrect, please check your email and enter valid code",
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"))
                 )
               )
             )
           )
         ),
-        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop5p, DashBoardCSS.Style.marginLeftRight)()
       )
     }
   }
@@ -53,7 +56,4 @@ object AccountValidationFailed {
 
   def apply(props: Props) = component(props)
 }
-
-
-
 

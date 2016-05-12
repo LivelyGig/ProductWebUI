@@ -11,8 +11,8 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,22 +20,22 @@ import org.querki.jquery._
 
 object NewConnectionModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
   case class State(showConnectionsForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showConnectionsForm = true))
     }
-    def addConnectionForm() : Callback = {
+    def addConnectionForm(): Callback = {
       t.modState(s => s.copy(showConnectionsForm = true))
     }
     def addConnections(postConnection: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(!postConnection){
+      if (!postConnection) {
         t.modState(s => s.copy(showConnectionsForm = false))
       } else {
         t.modState(s => s.copy(showConnectionsForm = true))
@@ -47,8 +47,8 @@ object NewConnectionModal {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
-        Button(Button.Props(B.addConnectionForm(), CommonStyle.default,P.addStyles,P.addIcons,P.title),P.buttonName),
+      <.div( /*ProjectCSS.Style.displayInitialbtn*/ )(
+        Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName),
         if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "New Connection"))
         else
           Seq.empty[ReactElement]
@@ -70,7 +70,7 @@ object ConnectionsForm {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def hideModal =  {
+    def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
 
@@ -91,14 +91,16 @@ object ConnectionsForm {
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
         <.form(^.onSubmit ==> submitForm)(
 
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
@@ -106,8 +108,8 @@ object ConnectionsForm {
   private val component = ReactComponentB[Props]("PostConnections")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postConnection){
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postConnection) {
         scope.$.backend.hideModal
       }
     })

@@ -3,7 +3,7 @@ package client.css
 import scalacss.mutable.GlobalRegistry
 
 object AppCSS {
-  def load () {
+  def load() {
     GlobalRegistry.register(
       HeaderCSS.Style,
       LftcontainerCSS.Style,
@@ -14,7 +14,7 @@ object AppCSS {
       ProjectCSS.Style,
       WorkContractCSS.Style,
       PresetsCSS.Style
-      )
-//    GlobalRegistry.onRegistration(_.addToDocument()(s))
+    )
+    //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }
 }

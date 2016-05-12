@@ -1,13 +1,13 @@
 package client.modals
 
-import client.LGMain.{Loc}
-import scala.util.{Failure, Success}
+import client.LGMain.{ Loc }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS}
+import client.css.{ DashBoardCSS }
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 
@@ -17,7 +17,7 @@ object TermsOfServices {
   case class Props(submitHandler: () => Callback)
   case class State()
 
-  case class Backend(t: BackendScope[Props, State]){
+  case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
@@ -36,29 +36,29 @@ object TermsOfServices {
 
     def render(s: State, p: Props) = {
       val headerText = "Terms of Service"
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
-          <.div(^.className:="row")(
-           // <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Terms of Service"))
-          ),//main row
-          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-            <.div(DashBoardCSS.Style.marginTop10px)(
-            ),
-            <.div()(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            )
-          ),
+        closed = () => formClosed(s, p)
+      ),
+        <.div(^.className := "row")( // <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont,MessagesCSS.Style.paddingLeftModalHeaderbtn)("Terms of Service"))
+        ), //main row
+        <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
+          <.div(DashBoardCSS.Style.marginTop10px)(),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-             <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Back")
-              //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
-            )
-          ),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
-        )
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+          )
+        ),
+        <.div()(
+          <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
+            <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Back")
+          //              <.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+          )
+        ),
+        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
+      )
     }
   }
   private val component = ReactComponentB[Props]("TermsofService")
