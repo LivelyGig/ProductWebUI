@@ -106,11 +106,11 @@ object NewAgentForm {
       val headerText = "Sign up with LivelyGig credentials"
       Modal(
         Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hideModal, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)
-      ),
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hideModal, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-6 col-sm-6 col-xs-6")(

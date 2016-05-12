@@ -30,10 +30,10 @@ object LoginFailed {
       val headerText = "Login Failed"
       Modal(
         Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        closed = () => formClosed(s, p)
-      ),
+          // header contains a cancel button (X)
+          header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          closed = () => formClosed(s, p)
+        ),
 
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
