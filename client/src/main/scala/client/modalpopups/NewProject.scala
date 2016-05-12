@@ -14,6 +14,7 @@ import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import client.handlers.PostContent
 import client.services.{CoreApi, LGCircuit}
+import japgolly.scalajs.react
 
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
@@ -89,7 +90,7 @@ object NewProjectForm {
 
     }
 
-    def submitForm(e: ReactEventI) = {
+    def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
       val selectedConnections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)

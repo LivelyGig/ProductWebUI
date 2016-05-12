@@ -13,6 +13,7 @@ import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.handlers.PostMessage
 import client.utils.Utils
+import japgolly.scalajs.react
 import org.querki.jquery._
 import org.scalajs.dom._
 
@@ -77,7 +78,7 @@ object NewMessageForm {
   case class Props(submitHandler: (/*PostMessage*/) => Callback, header: String)
   case class State(postMessage:MessagePost, postNewMessage: Boolean = false, selectizeInputId : String = "postNewMessageSelectizeInput")
   case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
+    def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
     def updateSubject(e:ReactEventI)  = {
@@ -94,7 +95,7 @@ object NewMessageForm {
     def mounted(): Callback = Callback {
 
     }
-    def submitForm(e: ReactEventI) = {
+    def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
       LGCircuit.dispatch(PostMessage(state.postMessage.content,

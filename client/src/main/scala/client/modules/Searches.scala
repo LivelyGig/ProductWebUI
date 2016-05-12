@@ -1,17 +1,19 @@
 package client.modules
 
-import client.components.{Icon}
+import client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handlers.{RefreshMessages, SubscribeSearch, UpdateLabel, CreateLabels}
-import shared.RootModels.{ SearchesRootModel}
+import client.handlers._
+import shared.RootModels.SearchesRootModel
 import client.css._
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
+
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
+
 import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
@@ -41,8 +43,15 @@ object Searches {
       val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
-      LGCircuit.dispatch(SubscribeSearch())
-      LGCircuit.dispatch(RefreshMessages())
+      props.view match {
+        case AppModule.MESSAGES_VIEW =>
+          LGCircuit.dispatch(StoreMessagesSearchLabel())
+          LGCircuit.dispatch(RefreshMessages())
+        case AppModule.PROJECTS_VIEW =>
+          LGCircuit.dispatch(StoreMessagesSearchLabel())
+          LGCircuit.dispatch(RefreshProjects())
+      }
+
     }
 
     /*val ref = RefHolder[ReactTagsInputM]*/
@@ -103,7 +112,7 @@ object Searches {
     def render(s: State, p: Props) = {
 
       p.view match {
-        case "talent" => {
+        case AppModule.TALENTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
@@ -187,7 +196,7 @@ object Searches {
             )
           )
         } //talent
-        case "offerings" => {
+        case AppModule.OFFERINGS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
@@ -238,7 +247,7 @@ object Searches {
             )
           )
         }
-        case "projects" => {
+        case AppModule.PROJECTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
@@ -396,7 +405,7 @@ object Searches {
             )
           )
         } //project
-        case "contract" => {
+        case AppModule.CONTRACTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
@@ -477,7 +486,7 @@ object Searches {
             )
           )
         }
-        case "messages" => {
+        case AppModule.MESSAGES_VIEW => {
           //          @tailrec
           def renderLabel(label: LabelModel): ReactTag = {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
@@ -533,38 +542,7 @@ object Searches {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
-                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                    //                      <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default")
-                    //                                        <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                    //                                          <.option(^.value:="")("Select"),
-                    //                                          <.option(^.value:="LivelyGig")("@LivelyGig"),
-                    //                                          <.option(^.value:="Synereo")("@Synereo"),
-                    //                                          <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                    //                                          <.option(^.value:="Synereo1")("@Synereo1")
-                    //                                        ),
-                    //                    <.div(
-                    //                      try {
-                    //                        CodeExample("code", "Demo")(
-                    //                          <.div(
-                    //                            ReactTagsInput(
-                    //                              value = s.tags,
-                    //                              onChange = onChange
-                    //                            )()
-                    //                          )
-                    //                        )
-                    //                      } catch {
-                    //                         case e: Exception =>
-                    //                          println(e)
-                    //                      }
-                    //                    )
-
-                    //   if ($(selectState).length <= 1)
-                    //                    LGCircuit.connect(_.connections)(conProxy => SearchesConnectionList(SearchesConnectionList.Props(conProxy)))
-
-
-                    //                    )
-                  )
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)()
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
@@ -595,7 +573,7 @@ object Searches {
             )
           )
         }
-        case "connections" => /*MessagesPresets.component(p.ctl)*/ {
+        case AppModule.CONNECTIONS_VIEW =>  {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
