@@ -135,11 +135,11 @@ object WorkContractModalForm {
       val headerText = "Contract - ID: 25688  Title: Videographer Needed... "
       Modal(
         Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)
-      ),
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
           <.ul(^.className := "nav nav-tabs")(
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Agreement")),
