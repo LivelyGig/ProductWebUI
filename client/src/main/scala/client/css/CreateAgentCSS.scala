@@ -5,20 +5,20 @@ import scalacss.Defaults._
 object CreateAgentCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
-    val modalContainer = style (
+    val modalContainer = style(
       height(100.%%),
       width(500.px),
       //  marginLeft(38.%%),
       marginTop(13.%%)
     )
-    val ModalHeader = style (
+    val ModalHeader = style(
       backgroundColor(c"#00767c"),
       height(60.px),
       borderTopRightRadius(2.px),
       borderTopLeftRadius(2.px),
       color(white)
     )
-    val ModalBody = style (
+    val ModalBody = style(
       height(225.px),
       backgroundColor(white),
       paddingLeft(60.px),
@@ -32,16 +32,16 @@ object CreateAgentCSS {
       color(c"#333")
     )
 
-    val closebtn = style (
+    val closebtn = style(
       backgroundColor(transparent),
       border.none,
       fontSize(18.px),
-      &.hover (
+      &.hover(
         backgroundColor(transparent),
         border.none
       )
     )
-    val displayInline = style (
+    val displayInline = style(
       display.inline,
       marginLeft(5.px)
     )
@@ -54,7 +54,7 @@ object CreateAgentCSS {
       textAlign.center
     )*/
 
-    val loginBtn = style (
+    val loginBtn = style(
       width(100.%%),
       backgroundColor(c"#ccccff"),
       margin(3.px)

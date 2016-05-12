@@ -4,19 +4,18 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, BackendScope, ReactComponentB}
+import japgolly.scalajs.react.{ Callback, BackendScope, ReactComponentB }
 import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
 import client.components._
-import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{NewRecommendation, NewMessage, WorkContractModal,RecommendationJobs}
-import shared.models.{ProjectsModel, ModelType}
-import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
+import client.css.{ HeaderCSS, DashBoardCSS }
+import client.modals.{ NewRecommendation, NewMessage, WorkContractModal, RecommendationJobs }
+import shared.models.{ ProjectsModel, ModelType }
+import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
 import scala.scalajs.js
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
-
 
 object ProjectResults {
 
@@ -49,7 +48,7 @@ object ProjectResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -68,36 +67,35 @@ object ProjectResults {
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
-                  <.span(Icon.longArrowDown))
+                  <.span(Icon.longArrowDown)
+                )
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
         <.div(^.id := "resultsContainer")(
-           P.proxy().render(jobPostsRootModel =>
-              ProjectsList(jobPostsRootModel.projectsModelList)
-            ),
-            P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
-            if (P.proxy().isEmpty) {
-              if (!P.proxy().isFailed) {
-                <.div()(
-                  <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-                )
-              } else {
-                <.div()
-              }
+          P.proxy().render(jobPostsRootModel =>
+            ProjectsList(jobPostsRootModel.projectsModelList)),
+          P.proxy().renderFailed(ex => <.div( /*DashBoardCSS.Style.imgc*/ )(<.span(Icon.warning), " Error loading")),
+          if (P.proxy().isEmpty) {
+            if (!P.proxy().isFailed) {
+              <.div()(
+                <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+              )
             } else {
               <.div()
             }
+          } else {
+            <.div()
+          }
 
         ) //gigConversation
-      )
-    )
+      ))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
@@ -118,7 +116,7 @@ object ProjectsList {
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             project.jobPosts.description,
-            <.div(/*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
+            <.div( /*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
               "Job Type: " + project.jobPosts.`type`,
               <.br(),
               "Posted by: @LivelyGig",
@@ -128,15 +126,15 @@ object ProjectsList {
               "Recommended By: @Tom",
               <.br(),
               "Skills: Java, Financial Apps, cryptography"
-              // project.pageOfPosts.skills.toString()
+            // project.pageOfPosts.skills.toString()
             ),
             <.div()(
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,^.title := "Hide", Icon.remove),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
-              RecommendationJobs(RecommendationJobs.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.thumbsOUp,"Recommend Job")),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.remove),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
+              RecommendationJobs(RecommendationJobs.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend Job")),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Find Matching Talent", Icon.users),
-              WorkContractModal(WorkContractModal.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.pencilSquareO,"Apply")),
-              NewMessage(NewMessage.Props("",Seq(HeaderCSS.Style.rsltContainerIconBtn),Icon.envelope,"Message" ))
+              WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.pencilSquareO, "Apply")),
+              NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
             )
           ) //media-body
         ) //li

@@ -47,7 +47,8 @@ object AppModule {
     def render(p: Props) = {
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
-          Presets(Presets.Props(p.view))),
+          Presets(Presets.Props(p.view))
+        ),
         <.div(DashBoardCSS.Style.splitContainer, ^.background := "url(./assets/images/background_texture.jpg)")(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
@@ -57,8 +58,10 @@ object AppModule {
                 //Adding toggle button for sidebar
                 <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left hidden-md hidden-lg", ^.float := "right", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
                   ^.onClick --> showSidebar)(
-                    <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)( /*Icon.chevronCircleLeft*/ )),
-                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))),
+                    <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)( /*Icon.chevronCircleLeft*/ )
+                  ),
+                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
+              ),
               <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
@@ -68,9 +71,14 @@ object AppModule {
                     case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
                     case "offerings" => OfferingResults.component()
                     case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
-                  })))),
-          <.div(^.className := "col-lg-1")()) //row
-          ) // mainContainer
+                  }
+                )
+              )
+            )
+          ),
+          <.div(^.className := "col-lg-1")()
+        ) //row
+      ) // mainContainer
     }
   }
 

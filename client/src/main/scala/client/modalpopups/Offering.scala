@@ -11,8 +11,8 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,23 +20,22 @@ import org.querki.jquery._
 
 object Offering {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
   case class State(showNewOfferingForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
-
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showNewOfferingForm = true))
     }
-    def addNewOfferingForm() : Callback = {
+    def addNewOfferingForm(): Callback = {
       t.modState(s => s.copy(showNewOfferingForm = true))
     }
     def addOffer(postOffer: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postOffer){
+      if (postOffer) {
         t.modState(s => s.copy(showNewOfferingForm = false))
       } else {
         t.modState(s => s.copy(showNewOfferingForm = true))
@@ -48,8 +47,8 @@ object Offering {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
-        Button(Button.Props(B.addNewOfferingForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title,className = "profile-action-buttons"),P.buttonName),
+      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
+        Button(Button.Props(B.addNewOfferingForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         if (S.showNewOfferingForm) OfferingForm(OfferingForm.Props(B.addOffer, "New Offering"))
         else
           Seq.empty[ReactElement]
@@ -70,7 +69,7 @@ object OfferingForm {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def hideModal =  {
+    def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
@@ -90,22 +89,21 @@ object OfferingForm {
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className:="row" , DashBoardCSS.Style.MarginLeftchkproduct)(
-
-          ),
+          <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-              //<.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
-              //<.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")( //<.button(^.tpe := "submit",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
+            //<.button(^.tpe := "button",^.className:="btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
             )
           ),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
@@ -113,8 +111,8 @@ object OfferingForm {
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postOffer){
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postOffer) {
         scope.$.backend.hideModal
       }
     })

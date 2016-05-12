@@ -11,8 +11,8 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,21 +20,21 @@ import org.querki.jquery._
 
 object Dispute {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
   case class State(showDispute: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showDispute = true))
     }
-    def addDisputeForm() : Callback = {
+    def addDisputeForm(): Callback = {
       t.modState(s => s.copy(showDispute = true))
     }
     def addDispute(postDispute: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postDispute){
+      if (postDispute) {
         t.modState(s => s.copy(showDispute = true))
       } else {
         t.modState(s => s.copy(showDispute = false))
@@ -47,7 +47,7 @@ object Dispute {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addDisputeForm(), CommonStyle.default, P.addStyles,"",""),P.buttonName),
+        Button(Button.Props(B.addDisputeForm(), CommonStyle.default, P.addStyles, "", ""), P.buttonName),
         if (S.showDispute) DisputeForm(DisputeForm.Props(B.addDispute, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]
@@ -69,7 +69,7 @@ object DisputeForm {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def hideModal =  {
+    def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
@@ -89,14 +89,16 @@ object DisputeForm {
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
+      Modal(
+        Modal.Props(
         // header contains a cancel button (X)
         header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
         // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+        closed = () => formClosed(s, p)
+      ),
         <.form(^.onSubmit ==> submitForm)(
           <.div()("Accept All Deliverables?", " ... details of payout transaction"),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)("")
         )
       )
     }
@@ -104,8 +106,8 @@ object DisputeForm {
   private val component = ReactComponentB[Props]("PostpostPayoutTransaction")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postDispute){
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postDispute) {
         scope.$.backend.hideModal
       }
     })
