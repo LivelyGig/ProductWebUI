@@ -49,7 +49,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       noChange
 
     case PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
-      val createdDateTime = Moment().format("YYYY-MM-DD hh:mm:ss")
+      val createdDateTime = Moment().utc().format("YYYY-MM-DD hh:mm:ss")
 //      println(createdDateTime)
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
@@ -85,31 +85,8 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
     case TestDispatch() =>
-//      println (new Date().toLocaleDateString()  /*.formatted(java.lang.String.format("DD-MM-YY" , Date("dd")))*/)
-//      println (new Date().toLocaleTimeString()  /*.formatted(java.lang.String.format("DD-MM-YY" , Date("dd")))*/)
-
-
       val momentdate = Moment().format("YYYY-MM-DD HH:MM:SS")
       println("import org.widok.moment._"+momentdate)
-//      val ft = new SimpleDateFormat ("E yyyy.MM.dd 'at' hh:mm:ss a zzz")
-//      println(ft)
-     // val today = Calendar.getInstance().getTime()
-//      import java.util.Calendar
-//      val now = Calendar.getInstance()
-//      now match {
-//        case calendar => println("lucky seven!")
-//        case otherNumber => println("boo, got boring ol' " + otherNumber)
-//      }
-//     val now = DateTime.now
-//      println("datea = " + now)
-//      try {
-////        throw new java.io.IOException("no such file")
-//         val now = Calendar.getInstance()
-//        println(now)
-//      } catch {
-//        // prints out "java.io.IOException: no such file"
-//        case e @ (_ : RuntimeException | _ : java.io.IOException) => println(e)
-//      }
       noChange
   }
 }
