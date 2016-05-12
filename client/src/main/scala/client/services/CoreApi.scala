@@ -59,6 +59,9 @@ object CoreApi {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(uri)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
+  /*def getContent (sessionUri: String): Future[String] = {
+    sessionUri match
+  }*/
 
   def getMessages(): Future[String] = {
     val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.GetSelfConnnection(MESSAGES_SESSION_URI)) // scalastyle:ignore
