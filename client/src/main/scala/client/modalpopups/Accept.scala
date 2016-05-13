@@ -92,11 +92,11 @@ object PayoutTransaction {
       val headerText = p.header
       Modal(
         Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)
-      ),
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div()("Accept All Deliverables?", " ... details of payout transaction"),
           <.div()(

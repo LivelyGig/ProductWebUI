@@ -27,11 +27,11 @@ object AccountValidationFailed {
       val headerText = "Error"
       Modal(
         Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span( /*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // header contains a cancel button (X)
+          header = hide => <.span( /*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
 
-        closed = () => modalClosed(s, p)
-      ),
+          closed = () => modalClosed(s, p)
+        ),
 
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
