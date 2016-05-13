@@ -81,8 +81,8 @@ object Settings {
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5",
     "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
-    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4",
-    "org.webjars.bower" % "moment-timezone" % "0.5.4"
+    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
+//    "org.webjars.bower" % "moment-timezone" % "0.5.4"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
