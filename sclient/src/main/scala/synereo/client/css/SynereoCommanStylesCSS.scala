@@ -22,7 +22,29 @@ object SynereoCommanStylesCSS {
       backgroundColor(rgba(48, 134, 161, 0.6)),
       media.maxWidth(820.px) -
         paddingTop(4.px)
-
+    )
+    val newMessageActionsContainerDiv = style(
+      marginTop(30.px),
+      marginBottom(30.px)
+    )
+    val newMessageSendBtn = style(
+      backgroundColor(c"#ff806c"),
+      fontSize(22.px),
+      fontFamily :=! "karla",
+      marginRight(10.px),
+      &.hover(
+        backgroundColor(c"#ff806c").important
+      )
+    )
+    val newMessageCancelBtn = style(
+      backgroundColor(c"#2EAEE3"),
+      fontSize(22.px),
+      fontFamily :=! "karla",
+      marginRight(10.px),
+      marginLeft(10.px),
+      &.hover(
+        backgroundColor(c"#2EAEE3").important
+      )
     )
     val loadingScreen = style(
       height(100.vh),
@@ -32,6 +54,11 @@ object SynereoCommanStylesCSS {
       top.`0`,
       left.`0`,
       zIndex(100)
+    )
+    val textAreaNewMessage = style(
+      width(100.%%),
+      marginTop(25.px),
+      marginBottom(10.px)
     )
     val userNameTopMenubar = style(
       opacity(0.6),
@@ -188,23 +215,6 @@ object SynereoCommanStylesCSS {
     val modalHeaderBorder = style(
       borderRadius(20.px)
     )
-    val modalHeaderFont = style(
-      fontSize(1.em),
-      paddingBottom(15.px)
-    )
-    val marginLeftCloseBtn = style(
-      marginLeft(20.px)
-    )
-    val footTextAlign = style(
-      textAlign.center
-    )
-
-    val marginLeftRight = style(
-      marginRight(-15.px),
-      marginLeft(-15.px),
-      padding(22.px),
-      backgroundColor(c"#00767c")
-    )
     val modalBodyPadding = style(
       paddingLeft(46.px),
       paddingRight(46.px),
@@ -212,14 +222,6 @@ object SynereoCommanStylesCSS {
       paddingTop(0.px)
     )
 
-    val replyMarginTop = style(
-      marginTop(20.px),
-      width(100.%%)
-    )
-    val inputBtnRadius = style(
-      border.none,
-      padding(0.2.em, 0.6.em, 0.1.em)
-    )
     val loading = style(
       width(50.px),
       height(57.px),

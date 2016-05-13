@@ -9,9 +9,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
+import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.handlers.PostMessages
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import scala.util.{Failure, Success}
+import synereo.client.services.{ CoreApi, SYNEREOCircuit }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -38,7 +39,7 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
 
-    def addMessage(/*postMessage:PostMessage*/): Callback = {
+    def addMessage( /*postMessage:PostMessage*/ ): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
@@ -49,12 +50,12 @@ object NewMessage {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/
-        /*, ^.onMouseOver --> B.displayBtn*/)(
+      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
-          Seq.empty[ReactElement])
+          Seq.empty[ReactElement]
+      )
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
@@ -78,11 +79,13 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
+      //      println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
+      //      println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
 
@@ -100,12 +103,13 @@ object NewMessageForm {
       SYNEREOCircuit.dispatch(PostMessages(
         state.postMessage.content,
         ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        CoreApi.MESSAGES_SESSION_URI))
+        CoreApi.MESSAGES_SESSION_URI
+      ))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      props.submitHandler(/*state.postMessage*/)
+      props.submitHandler( /*state.postMessage*/ )
     }
 
     def render(s: State, p: Props) = {
@@ -116,26 +120,26 @@ object NewMessageForm {
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div()(headerText)),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p)),
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
-            <.div(),
-            /*<.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
-            ),*/
-            /*val selectizeControl : js.Object =*/
             <.div(^.id := s.selectizeInputId)(
-              //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
-              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))),
+              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
+            ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Subject", ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)),
+              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
+            ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.content, ^.onChange ==> updateContent, ^.required := true))),
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.content, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
+            )
+          ),
           <.div()(
-            <.div(^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", /*^.onClick --> hide, */ "Send"),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> hide, "Cancel")))
-          //                <.div(bss.modal.footer)
+            <.div(^.className := "text-right", SynereoCommanStylesCSS.Style.newMessageActionsContainerDiv)(
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", SynereoCommanStylesCSS.Style.newMessageSendBtn, /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", SynereoCommanStylesCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel")
+            )
+          ) //                <.div(bss.modal.footer)
         )
       )
     }
