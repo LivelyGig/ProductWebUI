@@ -6,8 +6,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
 import scala.language.reflectiveCalls
@@ -16,7 +16,7 @@ import org.querki.jquery._
 object UserSkills {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
   case class State(showUserSkillsForm: Boolean = false)
 
@@ -47,8 +47,8 @@ object UserSkills {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
-        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles,P.addIcons,P.title), P.buttonName),
+      <.div( /*ProjectCSS.Style.displayInitialbtn*/ )(
+        Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName),
         if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]
@@ -68,7 +68,6 @@ object UserSkillsForm {
   case class Props(submitHandler: (Boolean) => Callback)
 
   case class State(postUserSkills: Boolean = false)
-
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hide = Callback {
@@ -98,11 +97,13 @@ object UserSkillsForm {
 
     def render(s: State, p: Props) = {
       val headerText = "Talent Profile  |  Employer Profile   |   Moderator Profile"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           //          <.div(^.className:="row")(
           //            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
@@ -218,7 +219,7 @@ object UserSkillsForm {
                 ^.required := true, ^.placeholder := "Enter commission rate, 0% - 2%")
             )
           ),
-          <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
+          <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
             <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Submit"),
             <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
           ),

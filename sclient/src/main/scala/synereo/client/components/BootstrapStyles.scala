@@ -13,8 +13,7 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
   val contextDomain = Domain.ofValues(success, info, warning, danger)
 
   def commonStyle[A](domain: Domain[A], base: String) = styleF(domain)(opt =>
-    styleS(addClassNames(base, s"$base-$opt"))
-  )
+    styleS(addClassNames(base, s"$base-$opt")))
 
   def styleWrap(classNames: String*) = style(addClassNames(classNames: _*))
 

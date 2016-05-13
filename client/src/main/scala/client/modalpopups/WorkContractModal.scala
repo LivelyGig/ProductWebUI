@@ -1,6 +1,5 @@
 package client.modals
 
-
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -16,7 +15,7 @@ import shared.models.UserModel
 import client.services.CoreApi._
 import client.services._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -66,28 +65,24 @@ object WorkContractModal {
     }
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
-                         postDispute: Boolean = false): Callback = {
-//      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
+      postDispute: Boolean = false): Callback = {
+      //      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showWorkContract = false))
       } else if (postMessage) {
         t.modState(s => s.copy(showWorkContract = false, showMessage = true))
-      }
-      else if (postConfirmation) {
+      } else if (postConfirmation) {
         t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = true))
-      }
-      else if (postAcceptDependencies) {
+      } else if (postAcceptDependencies) {
         t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = false, showAcceptDependencies = true))
-      }
-      else if (postDispute) {
+      } else if (postDispute) {
         t.modState(s => s.copy(showWorkContract = false, showMessage = false, showConfirmation = false, showAcceptDependencies = false, showDispute = true))
-      }
-      else {
+      } else {
         t.modState(s => s.copy(showWorkContract = false))
       }
     }
 
-    def hideMessage(/*showMessage: Boolean = false*/): Callback = {
+    def hideMessage( /*showMessage: Boolean = false*/ ): Callback = {
       t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
     }
 
@@ -138,11 +133,13 @@ object WorkContractModalForm {
 
     def render(s: State, p: Props) = {
       val headerText = "Contract - ID: 25688  Title: Videographer Needed... "
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm, ^.className := "biddingscreenModalHeight")(
           <.ul(^.className := "nav nav-tabs")(
             <.li(^.className := "active")(<.a(^.href := "#home", "data-toggle".reactAttr := "tab", "Agreement")),
@@ -207,7 +204,7 @@ object WorkContractModalForm {
                   <.tbody(WorkContractCSS.Style.WorkContractData)(
                     <.tr()(
                       <.td()(
-                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
+                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Contract Template"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12", WorkContractCSS.Style.slctWorkContractInputWidth)(
                             <.div(^.className := "btn-group")(
@@ -233,7 +230,7 @@ object WorkContractModalForm {
                     ),
                     <.tr()(
                       <.td()(
-                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
+                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Rate"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
@@ -264,7 +261,7 @@ object WorkContractModalForm {
                       <.td()(
                         <.div()("Moderator:"),
                         <.div(^.className := "row")(
-                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12",DashBoardCSS.Style.marginTop10px)(
+                          <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.marginTop10px)(
                             //<.input(^.className:="form-control", DashBoardCSS.Style.inputHeightWidth)
                             <.div(^.className := "btn-group")(
                               <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Aaron Wu")(
@@ -285,7 +282,7 @@ object WorkContractModalForm {
                     ),
                     <.tr()(
                       <.td()(
-                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
+                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Completion Date"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
@@ -310,7 +307,7 @@ object WorkContractModalForm {
                 )
               ),
               <.div(WorkContractCSS.Style.marginLeftRight)(
-                <.div(^.className:="pull-right")(
+                <.div(^.className := "pull-right")(
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Apply")(),
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> confirmationForm)("Accept Offer")(),
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Counter  Offer")(),
@@ -384,8 +381,7 @@ object WorkContractModalForm {
                         <.a()("details"),
                         ".",
                         // ToDo: convert this to html.  Currency amounts should be unit-separator-aligned (decimal "." in US locale), so that not all amounts need to show lots of 000s after the decimal, but they can be visually added. See http://stackoverflow.com/questions/1363239/aligning-decimal-points-in-html
-                        <.div()(<.img()(WorkContractCSS.Style.WorkContractImgWidth, ^.src := "./assets/images/escrow_payout_example.png")
-                        )
+                        <.div()(<.img()(WorkContractCSS.Style.WorkContractImgWidth, ^.src := "./assets/images/escrow_payout_example.png"))
                       )
                     )
                   )
@@ -394,16 +390,16 @@ object WorkContractModalForm {
                   <.span(^.fontWeight := "bold")("Status: Funded"), <.br(),
                   // "Funding received", <.br(),
                   "The following deposits were made into this contract:", <.br(),
-                  <.span (^.fontWeight.bold) ("4.34000"), " XBT From: @Pam Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("details"), <.br(),
-                  <.span (^.fontWeight.bold) ("0.38000"), " XBT From: @Abed Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("detials"), <.br(),
-                  <.span (^.fontWeight.bold) ("4.72000"), " XBT Total ($1,945.80)"
+                  <.span(^.fontWeight.bold)("4.34000"), " XBT From: @Pam Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("details"), <.br(),
+                  <.span(^.fontWeight.bold)("0.38000"), " XBT From: @Abed Sent: 2016-03-29 ", <.a(^.href := "https://blockchain.info/tx/98640bd8a7b1db3d3ec3ce8b18fcd0c073001c6452a4d4277646870e455be81c", ^.target := "blank")("detials"), <.br(),
+                  <.span(^.fontWeight.bold)("4.72000"), " XBT Total ($1,945.80)"
                 ),
                 <.div(^.id := "Escrow4", ^.minHeight := "100%")(
                   <.span(^.fontWeight := "bold")("Status: Pay Escrow Setup Commission"), <.br(),
                   "LivelyGig has initiated a payment request of XXX BTC (YYY USD). Your Contract workflow will continue once that payment is received."
                 )
               ),
-              <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
+              <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "pull-right")(
                 <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Next >")(),
                 <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                 <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -591,11 +587,11 @@ object WorkContractModalForm {
                   )
                 )
               ),
-                <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="pull-right")(
-                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
-                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
-                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
-                  <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
+              <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "pull-right")(
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> acceptDependencies)("Accept Deliverables")(),
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> disputeForm)("Dispute")(),
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Contract Message")(),
+                <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
               )
             ),
             <.div(^.id := "menu4", ^.className := "tab-pane fade")(
@@ -703,7 +699,7 @@ object WorkContractModalForm {
                           )
                         ),
                         <.hr(),
-                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/ )(
                           <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilities)("Capabilities"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.table(^.className := "table table-bordered", WorkContractCSS.Style.tableFont)(
@@ -793,7 +789,7 @@ object WorkContractModalForm {
                 )
               ),
               <.div(WorkContractCSS.Style.marginLeftRight)(
-                <.div(^.className:="pull-right")(
+                <.div(^.className := "pull-right")(
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn")("Send Feedback")(),
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick ==> messageForm)("Message")(),
                   <.button(WorkContractCSS.Style.createWorkContractBtn, ^.className := "btn", ^.onClick --> hide)("Close")()
@@ -834,7 +830,7 @@ object WorkContractModalForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-//      println(state.postBiddingScreen)
+      //      println(state.postBiddingScreen)
       props.submitHandler(state.postBiddingScreen, state.postMessage, state.postConfirmation, state.postAcceptDependencies, state.postDispute)
     }
   }

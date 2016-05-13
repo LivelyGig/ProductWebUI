@@ -1,16 +1,15 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+import japgolly.scalajs.react.{ Callback, ReactComponentB }
 import client.components.Icon
-import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{NewRecommendation, NewMessage}
+import client.css.{ HeaderCSS, DashBoardCSS }
+import client.modals.{ NewRecommendation, NewMessage }
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object TalentResults {
-
 
   val component = ReactComponentB[Unit]("Talent")
     .render_P(ctl =>
@@ -30,7 +29,7 @@ object TalentResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -49,21 +48,22 @@ object TalentResults {
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
-                  <.span(Icon.longArrowDown))
+                  <.span(Icon.longArrowDown)
+                )
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div( ^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
-                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p )(
+                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
                   <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                   <.span(^.className := "checkbox-lbl"),
                   <.div(DashBoardCSS.Style.profileNameHolder)("Abed Shome, Videographer"),
@@ -82,14 +82,13 @@ object TalentResults {
                   <.div(^.className := "media-left", ^.paddingLeft := "24px")(
                     <.a(^.href := "https://www.youtube.com/embed/0oHhD3Bk9Uc?rel=0", ^.target := "new", (
                       <.img(DashBoardCSS.Style.profileImg, ^.src := "./assets/images/profile-img2.jpg")
-                      )
-                    )
+                    ))
                   ),
                   <.div(^.className := "media-body")(
                     "lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
                     <.div(^.className := "col-md-12 col-sm-12 ")(
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
-                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.remove),
+                      <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
                       NewRecommendation(NewRecommendation.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend")),
                       <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hire Me", Icon.rocket),
                       NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
@@ -100,8 +99,7 @@ object TalentResults {
             )
           )
         )
-      )
-    )
+      ))
     .build
 }
 

@@ -44,7 +44,7 @@ object HeaderCSS {
         outline(none)
       ),
       /*media queries*/
-      media.maxWidth(1130.px).minWidth(820.px) -(
+      media.maxWidth(1130.px).minWidth(820.px) - (
         fontSize(1.2.em),
         padding(10.px, 10.px)
         ),
@@ -70,7 +70,7 @@ object HeaderCSS {
         fontSize(1.em),
         padding(10.px, 10.px)
         ),
-      media.minWidth(820.px) -(
+      media.minWidth(820.px) - (
         fontSize(1.2.em),
         padding(10.px, 10.px)
         )

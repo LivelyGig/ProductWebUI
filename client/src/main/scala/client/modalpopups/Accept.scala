@@ -11,8 +11,8 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,22 +20,22 @@ import org.querki.jquery._
 
 object Accept {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
   case class State(showPayoutTransactionForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showPayoutTransactionForm = true))
     }
-    def addPayoutTransactionForm() : Callback = {
+    def addPayoutTransactionForm(): Callback = {
       t.modState(s => s.copy(showPayoutTransactionForm = true))
     }
     def addPayoutTransaction(postPayoutTransaction: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if(postPayoutTransaction){
+      if (postPayoutTransaction) {
         t.modState(s => s.copy(showPayoutTransactionForm = true))
       } else {
         t.modState(s => s.copy(showPayoutTransactionForm = false))
@@ -48,7 +48,7 @@ object Accept {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, P.addStyles,"",""),P.buttonName),
+        Button(Button.Props(B.addPayoutTransactionForm(), CommonStyle.default, P.addStyles, "", ""), P.buttonName),
         if (S.showPayoutTransactionForm) PayoutTransaction(PayoutTransaction.Props(B.addPayoutTransaction, "Accept All Deliverables"))
         else
           Seq.empty[ReactElement]
@@ -70,7 +70,7 @@ object PayoutTransaction {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def hideModal =  {
+    def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
     def mounted(props: Props): Callback = Callback {
@@ -90,20 +90,22 @@ object PayoutTransaction {
     def render(s: State, p: Props) = {
 
       val headerText = p.header
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div()("Accept All Deliverables?", " ... details of payout transaction"),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding,^.className:="text-right")(
-              <.button(^.tpe := "submit",^.className:="btn", DashBoardCSS.Style.marginLeftCloseBtn, "Accept"),
-              <.button(^.tpe := "button",^.className:="btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide,"Cancel")
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
+              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, "Accept"),
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)("")
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)("")
         )
       )
     }
@@ -111,8 +113,8 @@ object PayoutTransaction {
   private val component = ReactComponentB[Props]("PostpostPayoutTransaction")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope=> Callback{
-      if(scope.currentState.postPayoutTransaction){
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.postPayoutTransaction) {
         scope.$.backend.hideModal
       }
     })

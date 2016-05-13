@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components.Icon.Icon
-import synereo.client.components.{GlobalStyles, Icon}
+import synereo.client.components.{ GlobalStyles, Icon }
 import synereo.client.css.LoginCSS
 import synereo.client.components.jQuery
 
@@ -15,7 +15,6 @@ import scalacss.ScalaCssReact._
 object RequestInvite {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-
   case class Props(addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
   case class State(showNewInviteForm: Boolean = false)
@@ -24,7 +23,6 @@ object RequestInvite {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-
 
     def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showNewInviteForm = true))
@@ -49,7 +47,7 @@ object RequestInvite {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*//*, ^.onMouseOver --> B.displayBtn*/)(
+      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
         Button(Button.Props(B.addNewRequestForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), "Request invite"),
         if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage))
         else
@@ -98,19 +96,21 @@ object PostNewInvite {
     }
 
     def render(s: State, p: Props) = {
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className := "row",LoginCSS.Style.requestInviteModalStyle)(
+          <.div(^.className := "row", LoginCSS.Style.requestInviteModalStyle)(
             <.div(^.className := "col-md-12")(
               <.div(LoginCSS.Style.requestInviteModalText)(
                 "Invites aren't quite ready, however we're eager for you to join us on this journey!"
               ),
               <.div()(
-                <.input(^.`type` := "text",^.className:="form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
+                <.input(^.`type` := "text", ^.className := "form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
               ),
               <.div()(
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", LoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")

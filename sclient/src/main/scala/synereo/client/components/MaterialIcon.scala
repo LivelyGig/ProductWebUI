@@ -4,13 +4,12 @@ import japgolly.scalajs.react.ReactNode
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 /**
-  * Created by Mandar on 3/16/2016.
-  */
+ * Created by Mandar on 3/16/2016.
+ */
 object MIcon {
   type MIcon = ReactNode
 
   def apply(name: String): MIcon = <.i(^.className := "material-icons md-18")(name)
-
 
   def apply(name: String, size: String): MIcon = {
     <.i(^.className := s"material-icons md-$size")(name)
@@ -77,6 +76,5 @@ object MIcon {
   def accessTime = apply("access time")
 
   def search = apply("search")
-
 
 }

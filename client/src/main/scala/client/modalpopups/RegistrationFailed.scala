@@ -13,15 +13,15 @@ object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback)
-  case class State(registrationFailed : Boolean = false)
+  case class State(registrationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
-    def hide = Callback{
+    def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def login(): Callback  = {
-      t.modState(s=>s.copy(registrationFailed = true))
+    def login(): Callback = {
+      t.modState(s => s.copy(registrationFailed = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
@@ -31,32 +31,35 @@ object RegistrationFailed {
     def render(s: State, p: Props) = {
       val headerText = "Error"
 
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
 
-        closed = () => modalClosed(s, p)),
+          closed = () => modalClosed(s, p)
+        ),
 
-        <.div(^.className:="row")(
-          <.div(^.className:="col-md-12 col-sm-12 col-xs-12")(
-             <.div(^.className:="row")(
-                <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
-                <.div(DashBoardCSS.Style.modalBodyText)("This user already exists. Please try logging in!",
-                  <.div(DashBoardCSS.Style.modalContentFont)( <.button(^.tpe := "button",^.className:="btn",DashBoardCSS.Style.btnBackground,^.onClick-->hide )("Try again"), <.button(^.tpe := "button",DashBoardCSS.Style.MarginLeftchkproduct,^.className:="btn btn-default",  ^.onClick-->login )("Login"))
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
+              <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
+                <.div(DashBoardCSS.Style.modalBodyText)(
+                  "This user already exists. Please try logging in!",
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"), <.button(^.tpe := "button", DashBoardCSS.Style.MarginLeftchkproduct, ^.className := "btn btn-default", ^.onClick --> login)("Login"))
 
                 )
               )
             )
           )
         ),
-        <.div(bss.modal.footer,DashBoardCSS.Style.marginTop5p,DashBoardCSS.Style.marginLeftRight)()
+        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop5p, DashBoardCSS.Style.marginLeftRight)()
       )
     }
   }
   private val component = ReactComponentB[Props]("RegistrationFailed")
     .initialState_P(p => State())
     .renderBackend[Backend]
-    .componentDidUpdate(scope => Callback{
+    .componentDidUpdate(scope => Callback {
       if (scope.currentState.registrationFailed) {
         scope.$.backend.hide
       }

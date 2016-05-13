@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 4/15/2016.
-  */
+ * Created by Mandar on 4/15/2016.
+ */
 object SignupCSS {
 
   object Style extends StyleSheet.Inline {
@@ -34,9 +34,7 @@ object SignupCSS {
     val signUpuserNameContainer = style(
       opacity(0.5)
     )
-    val howAccountsWorkLink = style(
-
-    )
+    val howAccountsWorkLink = style()
     val termsAndCondBtn = style(
       color(c"#000"),
       backgroundColor.transparent.important,
@@ -92,15 +90,15 @@ object SignupCSS {
       marginBottom(20.px),
       color(c"#000"),
       opacity(0.4)
-      //      backgroundColor(c"#022639"),
-      //      borderRadius(5.px),
-      //      border(1.px, solid, c"#3C4346"),
-      //      height(40.px),
-      //      padding(4.%%),
-      //      fontSize(18.px),
-      //      color.white,
-      //      width(70.%%),
-      //      margin.auto.important
+    //      backgroundColor(c"#022639"),
+    //      borderRadius(5.px),
+    //      border(1.px, solid, c"#3C4346"),
+    //      height(40.px),
+    //      padding(4.%%),
+    //      fontSize(18.px),
+    //      color.white,
+    //      width(70.%%),
+    //      margin.auto.important
     )
     val SignupformFooter = style(
       color(c"#35b0e2"),
@@ -125,6 +123,5 @@ object SignupCSS {
       margin(30.px)
     )
   }
-
 
 }

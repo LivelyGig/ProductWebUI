@@ -7,8 +7,8 @@ import client.components.Bootstrap._
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import scala.util.{Failure, Success}
+import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -16,24 +16,24 @@ import org.querki.jquery._
 
 object UserPreferences {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String,addStyles: Seq[StyleA] = Seq() , addIcons : Icon,title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
-  case class State(showUserPreferencesForm: Boolean = false )
+  case class State(showUserPreferencesForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback =  {
+    def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showUserPreferencesForm = true))
     }
-    def addUserPreferencesForm() : Callback = {
+    def addUserPreferencesForm(): Callback = {
       t.modState(s => s.copy(showUserPreferencesForm = true))
     }
 
     def addUserPreferences(postUserPreferences: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showUserPreferencesForm}")
-      if(postUserPreferences){
+      if (postUserPreferences) {
         t.modState(s => s.copy(showUserPreferencesForm = true))
       } else {
         t.modState(s => s.copy(showUserPreferencesForm = false))
@@ -47,7 +47,7 @@ object UserPreferences {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(ProjectCSS.Style.displayInitialbtn)(
-        Button(Button.Props(B.addUserPreferencesForm(), CommonStyle.default, Seq(HeaderCSS.Style.userpreferences),"",""),"Preferences"),
+        Button(Button.Props(B.addUserPreferencesForm(), CommonStyle.default, Seq(HeaderCSS.Style.userpreferences), "", ""), "Preferences"),
         if (S.showUserPreferencesForm) UserPreferencesForm(UserPreferencesForm.Props(B.addUserPreferences))
         else
           Seq.empty[ReactElement]
@@ -65,13 +65,12 @@ object UserPreferencesForm {
   case class Props(submitHandler: (Boolean) => Callback)
   case class State(postUserPreferences: Boolean = false)
 
-
-  case class Backend(t: BackendScope[Props, State])/* extends RxObserver(t)*/ {
+  case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hide = Callback {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
-    def hidemodal ={
+    def hidemodal = {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
@@ -92,16 +91,18 @@ object UserPreferencesForm {
 
     def render(s: State, p: Props) = {
       val headerText = "User Preferences"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className:="row")(
-//            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Preferences"))
-//          ),
-          <.div(bss.modal.footer,DashBoardCSS.Style.marginTop10px,DashBoardCSS.Style.marginLeftRight)()
+          //          <.div(^.className:="row")(
+          //            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Preferences"))
+          //          ),
+          <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )
       )
     }
@@ -110,7 +111,7 @@ object UserPreferencesForm {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
-      if(scope.currentState.postUserPreferences){
+      if (scope.currentState.postUserPreferences) {
         scope.$.backend.hidemodal
       }
     })

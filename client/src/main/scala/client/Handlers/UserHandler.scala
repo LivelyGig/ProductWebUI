@@ -29,9 +29,11 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
       if (temp != null) {
-        modelFromStore = UserModel(email = window.sessionStorage.getItem("userEmail"),
+        modelFromStore = UserModel(
+          email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true)
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true
+        )
       }
       updated(modelFromStore)
     case CreateSessions(userModel2) =>

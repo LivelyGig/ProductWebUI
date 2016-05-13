@@ -5,26 +5,24 @@ import synereo.client.css.DashboardCSS.Style._
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 3/23/2016.
-  */
+ * Created by Mandar on 3/23/2016.
+ */
 object SynereoCommanStylesCSS {
 
   object Style extends StyleSheet.Inline {
 
     import dsl._
 
-
     val naviContainer = style(
-      // backgroundColor(c"#00131D"),
-      //minHeight(85.px),
-      /*borderBottom(2.px, solid, c"#67EAF2"),*/
       paddingLeft(0.%%),
       paddingRight(0.%%),
       marginBottom(0.px),
+      position.initial,
+      zIndex(0),
+      backgroundColor(rgba(48, 134, 161, 0.6)),
       media.maxWidth(820.px) -
         paddingTop(4.px)
-      //media.minWidth(821.px) -
-      // paddingTop(8.px)
+
     )
     val loadingScreen = style(
       height(100.vh),
@@ -91,15 +89,15 @@ object SynereoCommanStylesCSS {
       backgroundColor.transparent,
       border.`0`.important,
       outline.none.important,
-      & focus(
+      & focus (
         outline.none.important,
         backgroundColor.transparent.important
-        ),
-      & hover(
+      ),
+      & hover (
         outline.none.important,
         backgroundColor.transparent.important,
         color(c"#8CBFD7 ")
-        )
+      )
     )
     val dropDownLIHeading = style(
       fontSize(1.7.em),
@@ -215,7 +213,8 @@ object SynereoCommanStylesCSS {
     )
 
     val replyMarginTop = style(
-      marginTop(20.px)
+      marginTop(20.px),
+      width(100.%%)
     )
     val inputBtnRadius = style(
       border.none,
@@ -239,6 +238,15 @@ object SynereoCommanStylesCSS {
       borderRadius(50.%%),
       display.inlineBlock
     )
+    val userAvatarAnchor = style(
+      backgroundColor.transparent.important,
+      &.hover(
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important
+      )
+    )
     val inlineBlock = style(
       display.inlineBlock
     )
@@ -258,25 +266,23 @@ object SynereoCommanStylesCSS {
       )
     )
 
-    val emailVerifiedContainer = style(
-      //      marginTop(-10.%%),
-      //      backgroundColor(c"#9554B0"),
-      //      marginLeft(-46.px),
-      //      marginRight(-46.px),
-      //      borderTopLeftRadius(6.px),
-      //      borderTopRightRadius(6.px),
-      //      textAlign.left,
-      //      padding(10.px),
-      //      color(white),
-      //      marginBottom(5.%%),
-      //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
-      //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
+    val emailVerifiedContainer = style( //      marginTop(-10.%%),
+    //      backgroundColor(c"#9554B0"),
+    //      marginLeft(-46.px),
+    //      marginRight(-46.px),
+    //      borderTopLeftRadius(6.px),
+    //      borderTopRightRadius(6.px),
+    //      textAlign.left,
+    //      padding(10.px),
+    //      color(white),
+    //      marginBottom(5.%%),
+    //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
+    //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
 
-    val marginRight15px = style (
+    val marginRight15px = style(
       marginRight(15.px)
     )
-
 
   }
 

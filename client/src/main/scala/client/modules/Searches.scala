@@ -7,8 +7,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers._
 import shared.RootModels.SearchesRootModel
 import client.css._
-import shared.models.{LabelModel, UserModel}
-import client.services.{CoreApi, LGCircuit}
+import shared.models.{ LabelModel, UserModel }
+import client.services.{ CoreApi, LGCircuit }
 import org.scalajs.dom._
 
 import scalacss.ScalaCssReact._
@@ -17,7 +17,6 @@ import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
-
 
 object Searches {
 
@@ -28,9 +27,9 @@ object Searches {
   def sidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-    if(!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")){
+    if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("sidebarRightContainer")
-    }else{
+    } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
     }
   }
@@ -114,7 +113,7 @@ object Searches {
       p.view match {
         case AppModule.TALENTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -125,11 +124,14 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"),  " Talent"),
+                      <.input(^.`type` := "checkbox"), " Talent"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Client"),
+                      <.input(^.`type` := "checkbox"), " Client"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Moderator")
+                      <.input(^.`type` := "checkbox"), " Moderator"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -141,7 +143,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -153,7 +155,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -168,17 +170,15 @@ object Searches {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
-                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                    //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                    //                      <.option(^.value:="")("Select"),
-                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                    //                      <.option(^.value:="Synereo")("@Synereo"),
-                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                    //                      <.option(^.value:="Synereo1")("@Synereo1")
-                    //                    )
-
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                  //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                  //                      <.option(^.value:="")("Select"),
+                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                  //                      <.option(^.value:="Synereo")("@Synereo"),
+                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                  //                      <.option(^.value:="Synereo1")("@Synereo1")
+                  //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -187,9 +187,11 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
-                      <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
+                    <.div(LftcontainerCSS.Style.checkboxlabel)(
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 )
               )
@@ -198,7 +200,7 @@ object Searches {
         } //talent
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -209,13 +211,17 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -227,7 +233,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
 
                   )
                 ),
@@ -240,7 +246,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 )
               )
@@ -249,7 +255,7 @@ object Searches {
         }
         case AppModule.PROJECTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -299,23 +305,22 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsEndDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Skills Required")
                   ),
-                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
-                    // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                    //                      <.option(^.value:="")("Select"),
-                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                    //                      <.option(^.value:="Synereo")("@Synereo"),
-                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                    //                      <.option(^.value:="Synereo1")("@Synereo1")
-                    //                    )
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)( //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                  // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                  //                      <.option(^.value:="")("Select"),
+                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                  //                      <.option(^.value:="Synereo")("@Synereo"),
+                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                  //                      <.option(^.value:="Synereo1")("@Synereo1")
+                  //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -340,16 +345,15 @@ object Searches {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", LftcontainerCSS.Style.slctInputWidth)(
                     <.div("Posted by")
                   ),
-                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
-                    //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
-                    //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                    //                      <.option(^.value:="")("Select"),
-                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                    //                      <.option(^.value:="Synereo")("@Synereo"),
-                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                    //                      <.option(^.value:="Synereo1")("@Synereo1")
-                    //                    )
+                  <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
+                  //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                  //                      <.option(^.value:="")("Select"),
+                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                  //                      <.option(^.value:="Synereo")("@Synereo"),
+                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                  //                      <.option(^.value:="Synereo1")("@Synereo1")
+                  //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -396,9 +400,11 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 )
               )
@@ -407,7 +413,7 @@ object Searches {
         } //project
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -438,13 +444,17 @@ object Searches {
                       )
                     ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Escrow"),
+                      <.input(^.`type` := "checkbox"), " Escrow"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " In Progress"),
+                      <.input(^.`type` := "checkbox"), " In Progress"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Feedback"),
+                      <.input(^.`type` := "checkbox"), " Feedback"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Completed")
+                      <.input(^.`type` := "checkbox"), " Completed"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -477,9 +487,11 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 )
               )
@@ -496,16 +508,18 @@ object Searches {
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
-                <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel))
+                <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
+              )
             } else {
 
               <.li(LftcontainerCSS.Style.checkboxlabel)(
                 <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
-                  + label.text)
+                  + label.text
+              )
             }
           }
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
               <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
@@ -522,7 +536,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -534,7 +548,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesBeforeDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
 
@@ -552,8 +566,7 @@ object Searches {
                     if (p.proxy().searchesModel != Nil) {
 
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
-                    }
-                    else {
+                    } else {
                       <.div("(none)")
                     }
                   )
@@ -564,18 +577,20 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 )
               )
             )
           )
         }
-        case AppModule.CONNECTIONS_VIEW =>  {
+        case AppModule.CONNECTIONS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -586,21 +601,29 @@ object Searches {
                   ),
                   <.div(LftcontainerCSS.Style.slctMessagesInputLeftContainerMargin)(
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Available for Chat"),
+                      <.input(^.`type` := "checkbox"), " Available for Chat"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Recommended by Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended by Me"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Recommended to Me"),
+                      <.input(^.`type` := "checkbox"), " Recommended to Me"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " with Talent Profile"),
+                      <.input(^.`type` := "checkbox"), " with Talent Profile"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " with Employer Profile"),
+                      <.input(^.`type` := "checkbox"), " with Employer Profile"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " with Moderator Profile"),
+                      <.input(^.`type` := "checkbox"), " with Moderator Profile"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Favorited"),
+                      <.input(^.`type` := "checkbox"), " Favorited"
+                    ),
                     <.div(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Include Hidden")
+                      <.input(^.`type` := "checkbox"), " Include Hidden"
+                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -612,7 +635,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -624,7 +647,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsAfterDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                    // )
+                  // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -650,7 +673,7 @@ object Searches {
       scope.backend.initializeDatepicker
       scope.backend.initializeTagsInput
       LGCircuit.dispatch(CreateLabels())
-    }*/)
+    }*/ )
     .build
 
   def apply(props: Props) = component(props)

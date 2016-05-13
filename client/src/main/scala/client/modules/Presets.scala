@@ -3,7 +3,7 @@ package client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Icon
-import client.css.{DashBoardCSS, MessagesCSS, HeaderCSS, PresetsCSS}
+import client.css.{ DashBoardCSS, MessagesCSS, HeaderCSS, PresetsCSS }
 import client.modals._
 import scalacss.ScalaCssReact._
 
@@ -21,7 +21,7 @@ object Presets {
         p.view match {
         case "talent" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -31,7 +31,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#talent")("Recommended Matches")),
                           <.li()(<.a(^.href := "#talent")("My Profiles")),
                           <.li()(<.a(^.href := "#talent")("Favorited")),
@@ -58,7 +58,7 @@ object Presets {
         } //talent
         case "projects" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.jobsmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -68,7 +68,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#projects")("Recommended Matches")),
                           <.li()(<.a(^.href := "#projects")("Direct from Connection")),
                           <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
@@ -92,7 +92,7 @@ object Presets {
         } //project
         case "offerings" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.offeringsmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -102,7 +102,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
                           <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
                           <.li()(<.a(^.href := "#offerings")("Favorited")),
@@ -125,7 +125,7 @@ object Presets {
         } //project
         case "contract" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.contractssmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -135,7 +135,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#contract")("Active")),
                           <.li()(<.a(^.href := "#contract")("Favorited")),
                           <.li()(<.a(^.href := "#contract")("Hidden")),
@@ -157,7 +157,7 @@ object Presets {
         }
         case "messages" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.messagesmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -167,7 +167,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#messages")("Inbox")),
                           <.li()(<.a(^.href := "#messages")("Sent")),
                           <.li()(<.a(^.href := "#messages")("Unread")),
@@ -191,7 +191,7 @@ object Presets {
         }
         case "connections" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.connectionsmiddelNaviContainer)(
-            <.div(/*^.className := "row"*/)(
+            <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
@@ -201,7 +201,7 @@ object Presets {
                         <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
                           <.span(^.className := "caret")
                         ),
-                        <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
                           <.li()(<.a(^.href := "#connections")("All")),
                           <.li()(<.a(^.href := "#connections")("Available for Chat")),
                           <.li()(<.a(^.href := "#connections")("Favorited")),
@@ -233,5 +233,4 @@ object Presets {
 
   def apply(props: Props) = component(props)
 }
-
 

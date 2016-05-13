@@ -1,15 +1,15 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
 import client.handlers.RefreshConnections
 import shared.RootModels.ConnectionsRootModel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import client.components.Icon
-import client.css.{HeaderCSS, DashBoardCSS}
-import client.modals.{NewMessage, NewRecommendation}
+import client.css.{ HeaderCSS, DashBoardCSS }
+import client.modals.{ NewMessage, NewRecommendation }
 import shared.models.ConnectionsModel
 import org.querki.jquery._
 import scala.scalajs.js
@@ -20,7 +20,6 @@ object ConnectionsResults {
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
-
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =
@@ -48,7 +47,7 @@ object ConnectionsResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown,DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -67,22 +66,22 @@ object ConnectionsResults {
               ),
               <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
-                  <.span(Icon.longArrowDown))
+                  <.span(Icon.longArrowDown)
+                )
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")( <.span(^.className:="icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")( <.span(^.className:="icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")( <.span(^.className:="icon-List3"))
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
             )
           )
         ), //col-12
-         <.div(^.id := "resultsConnectionsContainer")(
+        <.div(^.id := "resultsConnectionsContainer")(
           P.proxy().render(connectionsRootModel =>
-            ConnectionList(connectionsRootModel.connectionsResponse)
-          ),
+            ConnectionList(connectionsRootModel.connectionsResponse)),
           //                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
-          P.proxy().renderFailed(ex => <.div(/*DashBoardCSS.Style.imgc*/)(<.span(Icon.warning), " Error loading")),
+          P.proxy().renderFailed(ex => <.div( /*DashBoardCSS.Style.imgc*/ )(<.span(Icon.warning), " Error loading")),
           if (P.proxy().isEmpty) {
             if (!P.proxy().isFailed) {
               <.div("Loading")
@@ -91,10 +90,9 @@ object ConnectionsResults {
               <.div()
             }
           } else {
-            <.div(/*"data loaded"*/)
+            <.div( /*"data loaded"*/ )
           }
         )
-
 
       ) //mainContainer
     })
@@ -132,14 +130,16 @@ object ConnectionList {
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Software Developer"),
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Profiles: ",
+              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
+                "Profiles: ",
                 <.a()("title".reactAttr := "Videographer")("Videographer"),
                 " | ",
                 <.a()("title".reactAttr := "Web Developer")("Web Developer"),
                 " | ",
                 <.a()("title".reactAttr := "Janal, LLC")("Janal, LLC")
               ),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("In My Groups: ",
+              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
+                "In My Groups: ",
                 <.a()("title".reactAttr := "Film Industry")("Film Industry"),
                 ", ",
                 <.a()("title".reactAttr := "Full Stack Developers")("Full Stack Developers")
@@ -149,9 +149,9 @@ object ConnectionList {
           <.br(),
           <.div(^.className := "media-body")(
             <.div(^.className := "col-md-12 col-sm-12 ")(
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Hide", Icon.remove),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Favorite", Icon.star),
-              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn,  ^.title := "Introduce", Icon.userTimes),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.remove),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
+              <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Introduce", Icon.userTimes),
               NewRecommendation(NewRecommendation.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.thumbsOUp, "Recommend")),
               NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message"))
             )

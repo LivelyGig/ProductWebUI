@@ -63,8 +63,8 @@ object LftcontainerCSS {
       overflowX.auto,
       width(100.%%),
       lineHeight.normal
-      // media.maxWidth(1250.px) -(
-      // width(200.px))
+    // media.maxWidth(1250.px) -(
+    // width(200.px))
     )
 
     val inputHeightWidth = style(
@@ -79,7 +79,7 @@ object LftcontainerCSS {
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
-    //  marginLeft(18.px),
+      //  marginLeft(18.px),
       &.hover(
         fontWeight.bold
       )
@@ -96,9 +96,9 @@ object LftcontainerCSS {
       marginRight(0.px)
     )
 
-  val toggleBtn =style(
-    fontSize(34.px),
-    color(c"#00767c")
-  )
+    val toggleBtn = style(
+      fontSize(34.px),
+      color(c"#00767c")
+    )
   }
 }

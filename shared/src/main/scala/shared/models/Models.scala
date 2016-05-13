@@ -1,7 +1,7 @@
 package shared.models
 
 import java.text.SimpleDateFormat
-import java.util.{Calendar, Date, SimpleTimeZone, TimeZone}
+import java.util.{ Calendar, Date, SimpleTimeZone, TimeZone }
 
 import shared.dtos._
 
@@ -27,14 +27,14 @@ case class Skills(skillId: String, skillName: String)
 //{"source":"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias", "label":"34dceeb1-65d3-4fe8-98db-114ad16c1b31","target":"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias"}
 case class ProjectsModel(sessionURI: String, jobPosts: JobPost)
 //case class Skills (skillId : String, skillName: String)
-case class Referents(referentId: String,referentName: String )
+case class Referents(referentId: String, referentName: String)
 //sealed trait SubscribeResponse
 //case class MessagesModel(uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String, parent: ParentMessageModel = ParentMessageModel("","","","",Nil,Nil,"")) /*extends SubscribeResponse*/
-case class ParentMessageModel (uid : String, `type` : String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
-case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "",ConfirmPassword: String = "")
-case class SignUpModel (email: String = "", password: String = "", confirmPassword:String="", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator:Boolean =false,
-                        isClient:Boolean =false, isFreelancer:Boolean=false, canReceiveEmailUpdates:Boolean=false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
-case class EmailValidationModel (token: String)
+case class ParentMessageModel(uid: String, `type`: String, created: String, modified: String, labels: Seq[LabelResponse], connections: Seq[Connection], text: String)
+case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false, imgSrc: String = "", ConfirmPassword: String = "")
+case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator: Boolean = false,
+  isClient: Boolean = false, isFreelancer: Boolean = false, canReceiveEmailUpdates: Boolean = false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
+case class EmailValidationModel(token: String)
 case class LabelResponse(text: String, color: String, imgSrc: String)
 case class LabelModel(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)
 //{"source":"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias", "label":"34dceeb1-65d3-4fe8-98db-114ad16c1b31","target":"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias"}
@@ -79,9 +79,9 @@ case class LabelModel(uid: String, text: String, color: String, imgSrc: String, 
 //  // isCompleted  a boolean when set to true has the effect of deletion
 //}
 case class JobPost(id: String, `type`: String, description: String, summary: String,
-                    postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
-                    location: String, isPayoutInPieces: String, skills: Seq[Skills], posterId: String, canForward: String,
-                    referents: Seq[Referents], contractType: String, budget: Float)
+  postedDate: String, broadcastDate: String, startDate: String, endDate: String, currency: String,
+  location: String, isPayoutInPieces: String, skills: Seq[Skills], posterId: String, canForward: String,
+  referents: Seq[Referents], contractType: String, budget: Float)
 //  // ToDo: needs to extends VersionedPost.  However, this would then have a large signature that would macro-expand to exceed the 22 fields limit in case classes. http://www.scala-lang.org/old/node/7910
 //  //  override def postKindLabel = "cba62260f2ec4bfc86fb49c180c3987d"
 //  // Ed's notes:
@@ -126,63 +126,63 @@ case class JobPost(id: String, `type`: String, description: String, summary: Str
 //}
 //case class ContractPost(override val id: String, override val spliciousType: String, override val createdDate: String, override val modifiedDate: String, override val labels: String, override val connections: String, override val text: String) extends VersionedPost (id, spliciousType, createdDate, modifiedDate, labels, connections, text) {
 //  override def postKindLabel = "5d11a8528a6b477fb009c0a1028ddc99"
-  // Ed's notes.  See also sample-data-demo.xlsx, "contract blob" tab.  It is quite detailed
-  // originatingPostID
-  // buyerID
-  // sellerID
-  // moderatorID
-  //
-  // ## Contract
-  // status : enum (Initiating | Escrow | InProgress | Feedback | Closed)
-  // escrowStatus: enum (new, waiting on seller, ....)
-  // buyerAgreement : Boolean
-  // sellerAgreement : Boolean
-  // agreementHistory
-  // escrowBuyerPublicKey
-  // escrowSellerPublicKey
-  // escrowModeratorPublicKey
-  // escrowTimeout1
-  // escrowP2SH
-  // sellerProfile
-  // buyerProfile
-  // moderatorProfile
-  // sellableEntity
-  //
-  // ## ContractTerms
-  // name
-  // termType
-  // termValue
-  // termLinks
-  // employerAgreement : Boolean
-  // talentAgreement : Boolean
-  // history
-  //
-  // ## Milestone
-  // plannedFinish
-  // scheduledFinish
-  // title
-  // sellerComplete
-  // buyerComplete
-  //
-  // ## ContractNote
-  //
-  // ## Links
-  // added
-  // by
-  // name
-  //
-  // ## FeedbackItems
-  // feedbackBuyerToSeller
-  // feedbackSellerToBuyer
-  // feedbackBuyerToModerator
-  // feedbackSellerToModerator
-  // feedbackModeratorToBuyer
-  // feedbackModeratorToSeller
-  //
-  // name
-  // type: enum (...)
-  // value
-  // escrowBitcoinTransaction
-  // transactionId
-  // transactionType : enum (buyerFund, sellerFund, payout, unknown)
+// Ed's notes.  See also sample-data-demo.xlsx, "contract blob" tab.  It is quite detailed
+// originatingPostID
+// buyerID
+// sellerID
+// moderatorID
+//
+// ## Contract
+// status : enum (Initiating | Escrow | InProgress | Feedback | Closed)
+// escrowStatus: enum (new, waiting on seller, ....)
+// buyerAgreement : Boolean
+// sellerAgreement : Boolean
+// agreementHistory
+// escrowBuyerPublicKey
+// escrowSellerPublicKey
+// escrowModeratorPublicKey
+// escrowTimeout1
+// escrowP2SH
+// sellerProfile
+// buyerProfile
+// moderatorProfile
+// sellableEntity
+//
+// ## ContractTerms
+// name
+// termType
+// termValue
+// termLinks
+// employerAgreement : Boolean
+// talentAgreement : Boolean
+// history
+//
+// ## Milestone
+// plannedFinish
+// scheduledFinish
+// title
+// sellerComplete
+// buyerComplete
+//
+// ## ContractNote
+//
+// ## Links
+// added
+// by
+// name
+//
+// ## FeedbackItems
+// feedbackBuyerToSeller
+// feedbackSellerToBuyer
+// feedbackBuyerToModerator
+// feedbackSellerToModerator
+// feedbackModeratorToBuyer
+// feedbackModeratorToSeller
+//
+// name
+// type: enum (...)
+// value
+// escrowBitcoinTransaction
+// transactionId
+// transactionType : enum (buyerFund, sellerFund, payout, unknown)
 

@@ -4,9 +4,9 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{FooterCSS, DashBoardCSS}
-import shared.models.{SignUpModel}
-import scala.util.{Failure, Success}
+import client.css.{ FooterCSS, DashBoardCSS }
+import shared.models.{ SignUpModel }
+import scala.util.{ Failure, Success }
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
@@ -104,11 +104,13 @@ object NewAgentForm {
 
     def render(s: State, p: Props) = {
       val headerText = "Sign up with LivelyGig credentials"
-      Modal(Modal.Props(
-        // header contains a cancel button (X)
-        header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hideModal, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-        // this is called after the modal has been hidden (animation is completed)
-        closed = () => formClosed(s, p)),
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hideModal, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => formClosed(s, p)
+        ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -187,7 +189,7 @@ object NewAgentForm {
             )
           ),
           <.div()(
-           // <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a email of code confirming creation of your new account shortly after completing this form"),
+            // <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a email of code confirming creation of your new account shortly after completing this form"),
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
               <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Submit"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Cancel")
@@ -203,10 +205,9 @@ object NewAgentForm {
     .initialState_P(p =>
       if (addNewAgentState)
         State(new SignUpModel(signUpModelUpdate.email, signUpModelUpdate.password, signUpModelUpdate.confirmPassword, signUpModelUpdate.name, signUpModelUpdate.lastName, signUpModelUpdate.createBTCWallet, signUpModelUpdate.isModerator,
-          signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
+        signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
       else
-        State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, ""))
-    )
+        State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm) {

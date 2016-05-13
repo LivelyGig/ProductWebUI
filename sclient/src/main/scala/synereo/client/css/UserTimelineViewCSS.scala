@@ -4,8 +4,8 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 3/28/2016.
-  */
+ * Created by Mandar on 3/28/2016.
+ */
 object UserTimelineViewCSS {
 
   object Style extends StyleSheet.Inline {
