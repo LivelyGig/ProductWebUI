@@ -128,9 +128,9 @@ object DashBoardCSS {
     )
     val btn = style(
       addClassName("btn"),
-    /*  marginRight(5.px),
-      padding(4.px, 9.px),*/
-      margin(1.px ,5.px,1.px,0.px)
+      /*  marginRight(5.px),
+        padding(4.px, 9.px),*/
+      margin(1.px, 5.px, 1.px, 0.px)
     )
     val inputHeightWidth = style(
       height(25.px),
@@ -161,8 +161,14 @@ object DashBoardCSS {
         )
     )
     val scltInputModalContainerMargin = style(
-      marginLeft(150.px),
-      marginRight(150.px)
+      media.maxWidth(768.px) -(
+        marginLeft(0.px),
+        marginRight(0.px)
+        ),
+      media.minWidth(769.px) -(
+        marginLeft(150.px),
+        marginRight(150.px)
+        )
     )
     val slctHeaders = style(
       paddingTop(15.px),
@@ -420,7 +426,7 @@ object DashBoardCSS {
     val padding0px = style(
       padding(0.px)
     )
-    val DisplayFlex = style (
+    val DisplayFlex = style(
       display.flex
     )
 
