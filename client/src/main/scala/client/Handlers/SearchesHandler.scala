@@ -5,7 +5,7 @@ import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
 import shared.RootModels.{ MessagesRootModel, SearchesRootModel }
-import client.services.{ CoreApi, LGCircuit }
+import client.services.{ CoreApi, LGCircuit, SessionItems }
 import client.utils.{ PrologParser, Utils }
 import org.scalajs.dom._
 
@@ -14,21 +14,17 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
 import scala.util.Success
-// scalastyle:off
+
 object SearchesModelHandler {
-  def GetSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {
-    if (listOfLabels != Nil) {
+  def getSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {
+
+    try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
-      try {
-        upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
-      } catch {
-        case e: Exception =>
-          SearchesRootModel(Nil)
-      }
       val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
       SearchesRootModel(model)
-    } else {
-      SearchesRootModel(Nil)
+    } catch {
+      case e: Exception =>
+        SearchesRootModel(Nil)
     }
   }
   def updateModel(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
@@ -50,11 +46,11 @@ object SearchesModelHandler {
    * @param labels is the collection of all labels
    * @return seq of all children label
    */
-  def GetChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
       labelsBuffer ++= children
-      children.map(e => GetChildren(e, labels))
+      children.map(e => getChildren(e, labels))
     }
     labelsBuffer
   }
@@ -68,11 +64,11 @@ object SearchesModelHandler {
    * @param labels is the collection of all labels
    * @return
    */
-  def GetChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.uid == label.parentUid)
     if (!children.isEmpty) {
       labelsBuffer ++= children
-      children.map(e => GetChildrenToParent(e, labels))
+      children.map(e => getChildrenToParent(e, labels))
     }
     labelsBuffer
   }
@@ -86,25 +82,20 @@ object SearchesModelHandler {
 case class CreateLabels()
 case class UpdateLabel(label: LabelModel)
 case class StoreMessagesSearchLabel()
+case class StoreProjectsSearchLabel()
+// scalastyle:off
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case CreateLabels() =>
-      val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
-      //      println("listOfLabelFromStore"+listOfLabelFromStore)
+      val listOfLabelFromStore = window.sessionStorage.getItem(SessionItems.SearchesView.LIST_OF_LABELS)
       if (listOfLabelFromStore != null) {
-        /*try {
-          upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
-        } catch {
-          case e: Exception =>
-        }*/
-        val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
-        //        println("listOfLabels"+listOfLabels)
+        val listOfLabels = upickle.default.read[Seq[String]](listOfLabelFromStore)
         if (value.searchesModel.isEmpty)
-          updated(SearchesModelHandler.GetSearchesModel(listOfLabels))
+          updated(SearchesModelHandler.getSearchesModel(listOfLabels))
         else
           noChange
       } else {
-        updated(SearchesModelHandler.GetSearchesModel(Nil))
+        updated(SearchesModelHandler.getSearchesModel(Nil))
       }
 
     /**
@@ -116,8 +107,9 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
      * If a particular label is the root the parent uri is "self"
      */
     case UpdateLabel(label) =>
+      // todo: refactor this silly!!! :)
       SearchesModelHandler.labelsBuffer.clear()
-      val children = SearchesModelHandler.GetChildren(label, value.searchesModel)
+      val children = SearchesModelHandler.getChildren(label, value.searchesModel)
       if (!children.isEmpty) {
         /*set the state of all children same as the label in argument*/
         val updatedChildren = value.searchesModel.map(e => if (children.exists(p => p.uid == e.uid) || e.uid == label.uid) e.copy(isChecked = label.isChecked) else e)
@@ -127,12 +119,12 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       * This is repeated in recurssion so if the parent has other children which are selected its state is
       * kept at true otherwise changed to false
       * */
-      val childrenToParent = SearchesModelHandler.GetChildrenToParent(label, value.searchesModel)
+      val childrenToParent = SearchesModelHandler.getChildrenToParent(label, value.searchesModel)
       val modelModified = value.searchesModel.map(e => if (childrenToParent.exists(p => p.uid == e.uid) || e.uid == label.uid) e.copy(isChecked = label.isChecked)
       else e)
       val modelToUpdate = modelModified.map(e => if (e.parentUid == "self" && childrenToParent.exists(p => p.uid == e.uid)) {
         SearchesModelHandler.labelsBuffer.clear()
-        val childList = SearchesModelHandler.GetChildren(e, modelModified)
+        val childList = SearchesModelHandler.getChildren(e, modelModified)
         val selectedChildList = childList.filter(p => p.isChecked == true)
         if (!selectedChildList.isEmpty) {
           e.copy(isChecked = true)
@@ -146,12 +138,16 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
       selectedRootParents.foreach { selectedRootParent =>
         SearchesModelHandler.labelsBuffer.clear()
-        val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
+        val selectedChildren = SearchesModelHandler.getChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
-      window.sessionStorage.setItem("currentSearchLabel", Utils.GetLabelProlog(labelFamilies))
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
       labelFamilies.clear()
+      noChange
+
+    case StoreProjectsSearchLabel() =>
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, s"any([${SessionItems.ProjectsViewItems.PROJECT_POST_LABEL}])")
       noChange
   }
 

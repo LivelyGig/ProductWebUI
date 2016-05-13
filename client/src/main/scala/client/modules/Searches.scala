@@ -41,13 +41,13 @@ object Searches {
     def searchClick(props: Props): Unit = {
       val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
+      //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
       props.view match {
         case AppModule.MESSAGES_VIEW =>
           LGCircuit.dispatch(StoreMessagesSearchLabel())
           LGCircuit.dispatch(RefreshMessages())
         case AppModule.PROJECTS_VIEW =>
-          LGCircuit.dispatch(StoreMessagesSearchLabel())
+          LGCircuit.dispatch(StoreProjectsSearchLabel())
           LGCircuit.dispatch(RefreshProjects())
       }
 

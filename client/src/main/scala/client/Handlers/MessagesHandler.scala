@@ -5,11 +5,11 @@ import diode._
 import diode.data._
 import shared.models.MessagesModel
 import shared.RootModels.MessagesRootModel
-import client.services.CoreApi
+import client.services.{ CoreApi, SessionItems }
 import shared.dtos._
 import client.utils.Utils
 import diode.util.{ Retry, RetryPolicy }
-import org.scalajs.dom._
+import org.scalajs.dom.window
 import org.widok.moment.Moment
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -44,8 +44,10 @@ object MessagesModelHandler {
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case action: RefreshMessages =>
-      val labels = window.sessionStorage.getItem("currentSearchLabel")
-      val updateF = action.effectWithRetry(CoreApi.getMessages())(messages => MessagesModelHandler.getMessagesModel(messages))
+      val labels = window.sessionStorage.getItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
+      val updateF = action.effectWithRetry {
+        CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+      }(messages => MessagesModelHandler.getMessagesModel(messages))
       Option(labels) match {
         case Some(s) =>
           action.handleWith(this, updateF)(PotActionRetriable.handler())

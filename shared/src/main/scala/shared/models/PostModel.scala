@@ -10,31 +10,33 @@ import java.util.Date
 
 sealed trait Post {
   def uid: String
-  def createdDate: String
-  def modifiedDate: String
+  def created: String
+  def modified: String
   def spliciousType: String
   def labels: String
   def connections: Seq[String]
   def postType: String
-
 }
-case class MessagePost(uid: String, spliciousType: String, createdDate: String, modifiedDate: String,
+sealed trait VersionedPost {
+  def versionedPostType: String
+  def versionNumber: Int
+}
+case class MessagePost(uid: String, spliciousType: String, created: String, modified: String,
     labels: String, connections: Seq[String], message: String, recipients: String = "", subject: String = "", content: String = "") extends Post {
   override def postType: String = "MessagePost"
 }
-case class VersionedPost(uid: String, createdDate: String, modifiedDate: String, spliciousType: String, labels: String,
-    connections: Seq[String], versionedPostContent: VersionedPostContent) extends Post {
+case class ProjectsPost(uid: String, created: String, modified: String, spliciousType: String, labels: String,
+    connections: Seq[String], projectPostContent: ProjectPostContent, versionNumber: Int = 0) extends Post with VersionedPost {
   override def postType: String = "VersionedPost"
+  override def versionedPostType: String = "ProjectPost"
 }
 sealed trait VersionedPostContent {
   def versionedPostType: String
   def versionNumber: Int
 }
-case class ProjectPost(name: String, startDate: String, endDate: String, budget: String, contractType: String,
-    workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean,
-    versionNumber: Int, message: String) extends VersionedPostContent {
-  override def versionedPostType: String = "ProjectPost"
-}
+case class ProjectPostContent(name: String, startDate: String, endDate: String, budget: String, contractType: String,
+  workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean,
+  versionNumber: Int, message: String)
 
 case class TalentPost(versionNumber: Int, talentProfile: Person, employerProfile: EmployerProfile, moderatorProfile: Person) extends VersionedPostContent {
   override def versionedPostType: String = "TalentPost"

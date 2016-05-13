@@ -18,11 +18,13 @@ object CoreApi {
   val SESSION_PING = "sessionPing"
   val PROJECT_MSG = "projectsRequest"
   val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
-  val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
-  val MESSAGES_SESSION_URI = "messagesSessionUri"
-  val CONNECTIONS_SESSION_URI = "connectionsSessionUri"
-  val JOBS_SESSION_URI = "jobsSessionUri"
   val INSERT_CONTENT = "insertContent"
+  val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
+
+  /*val MESSAGES_SESSION_URI = "MESSAGES_SESSION_URI"
+  val CONNECTIONS_SESSION_URI = "CONNECTIONS_SESSION_URI"
+  val PROJECTS_SESSION_URI = "PROJECTS_SESSION_URI"*/
+
   //  var BASE_URL = "http://52.35.10.219:9876/api"
   //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
   //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
@@ -34,7 +36,7 @@ object CoreApi {
   //  }
 
   def getConnections(): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(CONNECTIONS_SESSION_URI))))
+    val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
@@ -59,12 +61,29 @@ object CoreApi {
     val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(uri)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
-  /*def getContent (sessionUri: String): Future[String] = {
-    sessionUri match
-  }*/
 
-  def getMessages(): Future[String] = {
-    val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.GetSelfConnnection(MESSAGES_SESSION_URI)) // scalastyle:ignore
+  def getContent(sessionUriName: String): Future[String] = {
+    val sessionUri = window.sessionStorage.getItem(sessionUriName)
+    val connectionsList = upickle.default.read[Seq[Connection]](
+      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
+    ) ++ Seq(Utils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+    val (currentSearchLabels, previousSearchLabels) = SessionItems.getCurrentPreviousLabel(sessionUriName)
+    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
+    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
+    Option(previousSearchLabels) match {
+      case Some(s) =>
+        for {
+          cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
+          messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
+        } yield messages
+      case None =>
+        evalSubscribeRequestAndSessionPing(getMessagesSubscription)
+
+    }
+  }
+
+  /*def getMessages(): Future[String] = {
+    val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.getSelfConnnection(MESSAGES_SESSION_URI)) // scalastyle:ignore
     val currentLabels = window.sessionStorage.getItem("currentSearchLabel")
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
     val getMessagesSubscription = SubscribeRequest(
@@ -86,19 +105,19 @@ object CoreApi {
         evalSubscribeRequestAndSessionPing(getMessagesSubscription)
     }
 
-  }
+  }*/
 
   def getProjects(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG, SessionPing(window.sessionStorage.getItem("sessionURI"))))
     AjaxClient[Api].getMock(requestContent, "jobPostsMock").call()
   }
 
-  def cancelPreviousSubsForLabelSearch(): Future[String] = {
-    val selfConnection = Utils.GetSelfConnnection(MESSAGES_SESSION_URI)
+  /* def cancelPreviousSubsForLabelSearch(): Future[String] = {
+    val selfConnection = Utils.getSelfConnnection(MESSAGES_SESSION_URI)
     val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
     val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Seq(selfConnection), previousLabels)
     cancelSubscriptionRequestAndSessionPing(cancelPreviousRequest)
-  }
+  }*/
 
   def evalSubscribeRequest(subscribeRequest: SubscribeRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST, subscribeRequest))

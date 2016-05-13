@@ -4,14 +4,15 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ Callback, BackendScope, ReactComponentB }
+import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
 import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
 import client.components._
-import client.css.{ HeaderCSS, DashBoardCSS }
-import client.modals.{ NewRecommendation, NewMessage, WorkContractModal, RecommendationJobs }
-import shared.models.{ ProjectsModel, ModelType }
+import client.css.{ DashBoardCSS, HeaderCSS }
+import client.modals.{ NewMessage, NewRecommendation, RecommendationJobs, WorkContractModal }
+import shared.models.{ ModelType, ProjectsModel, ProjectsPost }
 import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
+
 import scala.scalajs.js
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
@@ -103,25 +104,25 @@ object ProjectResults {
 }
 
 object ProjectsList {
-  case class Props(projects: Seq[ProjectsModel])
+  case class Props(projects: Seq[ProjectsPost])
 
   private val ProjectsList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
-      def renderJobPosts(project: ProjectsModel) = {
+      def renderJobPosts(project: ProjectsPost) = {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.jobPosts.summary
+            project.projectPostContent.name
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
-            project.jobPosts.description,
+            project.projectPostContent.description,
             <.div( /*^.className := "col-md-4 col-sm-4",*/ DashBoardCSS.Style.marginTop10px)(
-              "Job Type: " + project.jobPosts.`type`,
+              "Job Type: " + project.projectPostContent.contractType,
               <.br(),
               "Posted by: @LivelyGig",
               <.br(),
-              "Posted: " + new Date(project.jobPosts.postedDate).toUTCString(),
+              "Posted: " + new Date(project.created).toUTCString(),
               <.br(),
               "Recommended By: @Tom",
               <.br(),
@@ -145,6 +146,6 @@ object ProjectsList {
     })
     .build
 
-  def apply(jobPosts: Seq[ProjectsModel]) =
+  def apply(jobPosts: Seq[ProjectsPost]) =
     ProjectsList(Props(jobPosts))
 }
