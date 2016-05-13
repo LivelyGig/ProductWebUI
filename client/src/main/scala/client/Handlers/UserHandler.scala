@@ -40,7 +40,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case PostMessage(content: String, connectionStringSeq: Seq[String], sessionUriName: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val createdDateTime = Moment().format("YYYY-MM-DD hh:mm:ss")
+      val createdDateTime = Moment().utc().format("YYYY-MM-DD hh:mm:ss")
       val connectionsSeq = Seq(Utils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName))) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
       val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
       CoreApi.evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {

@@ -82,6 +82,12 @@ object ProjectResults {
         <.div(^.id := "resultsContainer")(
           P.proxy().render(jobPostsRootModel =>
             ProjectsList(jobPostsRootModel.projectsModelList)),
+          P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
+          P.proxy().renderPending(ex => <.div()(
+            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+          ))
+        /* P.proxy().render(jobPostsRootModel =>
+            ProjectsList(jobPostsRootModel.projectsModelList)),
           P.proxy().renderFailed(ex => <.div( /*DashBoardCSS.Style.imgc*/ )(<.span(Icon.warning), " Error loading")),
           if (P.proxy().isEmpty) {
             if (!P.proxy().isFailed) {
@@ -93,7 +99,7 @@ object ProjectResults {
             }
           } else {
             <.div()
-          }
+          }*/
 
         ) //gigConversation
       ))

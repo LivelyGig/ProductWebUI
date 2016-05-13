@@ -35,7 +35,8 @@ object MessagesModelHandler {
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
       .flatMap(filterMessages)
-      .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+      .sortWith((x, y) => (Moment(x.created).utc()).isAfter(Moment(x.created).utc()))
+      .map(message => message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString))
     MessagesRootModel(model)
   }
 

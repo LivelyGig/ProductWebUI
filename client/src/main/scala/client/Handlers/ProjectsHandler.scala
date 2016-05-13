@@ -22,7 +22,7 @@ class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends Ac
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case action: RefreshProjects =>
       val labels = window.sessionStorage.getItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH)
-      val updateF = action.effectWithRetry(CoreApi.getProjects()) { jobPostsResponse =>
+      val updateF = action.effectWithRetry(CoreApi.getContent(SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI)) { jobPostsResponse =>
         ProjectsRootModel(ContentModelHandler
           .getContentModel(jobPostsResponse, AppModule.PROJECTS_VIEW)
           .asInstanceOf[Seq[ProjectsPost]])
