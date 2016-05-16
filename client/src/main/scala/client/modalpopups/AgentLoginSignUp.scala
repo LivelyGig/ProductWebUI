@@ -1,11 +1,11 @@
 package client.modals
 
-import client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
+import client.handlers.{CreateLabels, LoginUser, RefreshConnections}
 import client.components.Bootstrap._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS }
+import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import shared.models.{ EmailValidationModel, SignUpModel, UserModel }
+import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
@@ -13,13 +13,14 @@ import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
 
 import scala.scalajs.js.JSON
 import org.querki.jquery._
+import shared.sessionitems.SessionItems
 
 import scala.concurrent.Future
 
@@ -112,6 +113,7 @@ object AgentLoginSignUp {
         $(dashboardContainer).removeClass("hidden")
         window.location.href = "/#connections"
         log.debug("login successful")
+        LGCircuit.dispatch(LoginUser(userModel))
       }
     }
 
@@ -128,7 +130,6 @@ object AgentLoginSignUp {
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
-      LGCircuit.dispatch(LoginUser(user))
       LGCircuit.dispatch(CreateLabels())
       LGCircuit.dispatch(RefreshConnections())
       createSessions(userModel)

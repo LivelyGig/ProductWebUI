@@ -1,16 +1,17 @@
 package client.handlers
 
-import diode.data.PotState.{ PotFailed, PotPending }
+import diode.data.PotState.{PotFailed, PotPending}
 import diode._
 import diode.data._
 import shared.models.MessagesModel
 import shared.RootModels.MessagesRootModel
-import client.services.{ CoreApi, SessionItems }
+import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
-import diode.util.{ Retry, RetryPolicy }
+import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom.window
 import org.widok.moment.Moment
+import shared.sessionitems.SessionItems
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON

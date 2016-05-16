@@ -2,13 +2,14 @@ package client.handlers
 
 import client.Handlers.ContentModelHandler
 import client.modules.AppModule
-import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data._
 import shared.models.ProjectsPost
 import org.scalajs.dom.window
 import shared.RootModels.ProjectsRootModel
-import client.services.{ CoreApi, SessionItems }
-import diode.util.{ Retry, RetryPolicy }
+import client.services.CoreApi
+import diode.util.{Retry, RetryPolicy}
+import shared.sessionitems.SessionItems
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

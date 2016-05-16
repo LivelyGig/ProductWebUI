@@ -6,10 +6,12 @@ import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
 import upickle.default._
+
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import autowire._
 import boopickle.Default._
+import shared.sessionitems.SessionItems
 
 object CoreApi {
   val CREATE_USER_REQUEST_MSG = "createUserRequest"
@@ -67,7 +69,7 @@ object CoreApi {
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
     ) ++ Seq(Utils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val (currentSearchLabels, previousSearchLabels) = SessionItems.getCurrentPreviousLabel(sessionUriName)
+    val (currentSearchLabels, previousSearchLabels) = Utils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
     Option(previousSearchLabels) match {
@@ -81,31 +83,6 @@ object CoreApi {
 
     }
   }
-
-  /*def getMessages(): Future[String] = {
-    val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.getSelfConnnection(MESSAGES_SESSION_URI)) // scalastyle:ignore
-    val currentLabels = window.sessionStorage.getItem("currentSearchLabel")
-    val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
-    val getMessagesSubscription = SubscribeRequest(
-      window.sessionStorage.getItem(MESSAGES_SESSION_URI),
-      Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentLabels))
-    )
-    val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), connectionsList, previousLabels)
-    val messageSearchClick = window.sessionStorage.getItem("messageSearchClick")
-    Option(messageSearchClick) match {
-      case Some(s) =>
-        window.sessionStorage.setItem("previousSearchLabel", currentLabels)
-        for {
-          cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
-          messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
-        } yield messages
-      case None =>
-        window.sessionStorage.setItem("messageSearchClick", "true")
-        window.sessionStorage.setItem("previousSearchLabel", currentLabels)
-        evalSubscribeRequestAndSessionPing(getMessagesSubscription)
-    }
-
-  }*/
 
   def getProjects(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG, SessionPing(window.sessionStorage.getItem("sessionURI"))))
