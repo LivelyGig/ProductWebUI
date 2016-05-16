@@ -3,7 +3,7 @@ package client.utils
 import shared.dtos.Connection
 import shared.models._
 import org.scalajs.dom._
-import shared.sessionitems.SessionItems.{MessagesViewItems, ProjectsViewItems}
+import shared.sessionitems.SessionItems.{ MessagesViewItems, ProjectsViewItems }
 
 object Utils {
 
@@ -45,12 +45,12 @@ object Utils {
   }
 
   /**
-    * Get the previous and current search labels for the session uri
-    * these labels are then utilised to cancel previous request and create a new
-    * one respectively
-    * @param sessionUriName
-    * @return current and previous search labels for context
-    */
+   * Get the previous and current search labels for the session uri
+   * these labels are then utilised to cancel previous request and create a new
+   * one respectively
+   * @param sessionUriName
+   * @return current and previous search labels for context
+   */
   def getCurrentPreviousLabel(sessionUriName: String): (String, String) = {
     val sessionStorage = window.sessionStorage
     sessionUriName match {

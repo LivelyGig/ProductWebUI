@@ -46,7 +46,7 @@ object MessagesResults {
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
             <.div(^.display := "inline-block")(
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
@@ -57,12 +57,12 @@ object MessagesResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.div(^.display := "inline-block")(
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
@@ -74,7 +74,7 @@ object MessagesResults {
                   <.li()(<.a()("By Projects Completed"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
                   <.span(Icon.longArrowDown)
                 )

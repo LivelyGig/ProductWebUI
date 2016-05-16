@@ -1,6 +1,6 @@
 package client.handlers
 
-import diode.data.PotState.{PotFailed, PotPending}
+import diode.data.PotState.{ PotFailed, PotPending }
 import diode._
 import diode.data._
 import shared.models.MessagesModel
@@ -8,7 +8,7 @@ import shared.RootModels.MessagesRootModel
 import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
-import diode.util.{Retry, RetryPolicy}
+import diode.util.{ Retry, RetryPolicy }
 import org.scalajs.dom.window
 import org.widok.moment.Moment
 import shared.sessionitems.SessionItems
@@ -36,11 +36,10 @@ object MessagesModelHandler {
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
       .flatMap(filterMessages)
-      .sortWith((x, y) => (Moment(x.created).utc()).isAfter(Moment(x.created).utc()))
-      .map(message => message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString))
+      .sortWith((x, y) => ((Moment(x.created).utc()).isAfter(Moment(y.created).utc())))
+      .map(message => (message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString)))
     MessagesRootModel(model)
   }
-
 }
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {

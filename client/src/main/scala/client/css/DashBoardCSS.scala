@@ -71,7 +71,7 @@ object DashBoardCSS {
       paddingLeft(15.px),
       paddingRight(15.px)
     )
-    val rsltGigActionsDropdown = style(
+    val displayInlineText = style(
       display.inline
     )
     val rsltCaretStyle = style(

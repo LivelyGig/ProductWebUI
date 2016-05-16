@@ -3,14 +3,14 @@ package client.modals
 import java.util.UUID
 
 import shared.models.MessagePost
-import client.services.{CoreApi, LGCircuit}
+import client.services.{ CoreApi, LGCircuit }
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{DashBoardCSS, ProjectCSS}
+import client.css.{ DashBoardCSS, ProjectCSS }
 import client.handlers.PostMessage
 import client.utils.Utils
 import japgolly.scalajs.react
@@ -19,7 +19,7 @@ import org.scalajs.dom._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs._
-import scala.util.{Failure, Success}
+import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
