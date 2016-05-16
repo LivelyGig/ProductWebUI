@@ -68,7 +68,12 @@ object SynereoCommanStylesCSS {
       fontWeight._600
     )
     val mainMenuNavbar = style(
-      paddingTop(6.px)
+      position.absolute,
+      paddingTop(6.px),
+      paddingRight(20.px),
+      right.`0`,
+      zIndex(100),
+      backgroundColor(c"#277490")
     )
     val nonLoggedInMenu = style(
       paddingRight(15.px),
@@ -116,15 +121,15 @@ object SynereoCommanStylesCSS {
       backgroundColor.transparent,
       border.`0`.important,
       outline.none.important,
-      & focus (
+      & focus(
         outline.none.important,
         backgroundColor.transparent.important
-      ),
-      & hover (
+        ),
+      & hover(
         outline.none.important,
         backgroundColor.transparent.important,
         color(c"#8CBFD7 ")
-      )
+        )
     )
     val dropDownLIHeading = style(
       fontSize(1.7.em),
@@ -177,9 +182,10 @@ object SynereoCommanStylesCSS {
       margin(0.px, 25.px)
     )
     val searchFormNavbar = style(
-      float.right,
+      //      float.right,
       display.inlineBlock,
-      marginRight(10.%%)
+      position.absolute
+      //      marginRight(10.%%)
     )
     val paddingLeftZero = style(
       paddingLeft(0.px).important
@@ -268,18 +274,18 @@ object SynereoCommanStylesCSS {
       )
     )
 
-    val emailVerifiedContainer = style( //      marginTop(-10.%%),
-    //      backgroundColor(c"#9554B0"),
-    //      marginLeft(-46.px),
-    //      marginRight(-46.px),
-    //      borderTopLeftRadius(6.px),
-    //      borderTopRightRadius(6.px),
-    //      textAlign.left,
-    //      padding(10.px),
-    //      color(white),
-    //      marginBottom(5.%%),
-    //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
-    //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
+    val emailVerifiedContainer = style(//      marginTop(-10.%%),
+      //      backgroundColor(c"#9554B0"),
+      //      marginLeft(-46.px),
+      //      marginRight(-46.px),
+      //      borderTopLeftRadius(6.px),
+      //      borderTopRightRadius(6.px),
+      //      textAlign.left,
+      //      padding(10.px),
+      //      color(white),
+      //      marginBottom(5.%%),
+      //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
+      //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
 
     val marginRight15px = style(

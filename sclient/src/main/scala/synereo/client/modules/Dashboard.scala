@@ -83,10 +83,10 @@ object Dashboard {
       t.modState(s => s.copy(ShowFullPostView = false))
     }
 
-    def toggleTopbar = Callback {
-      val topBtn: js.Object = "#TopbarContainer"
-      $(topBtn).toggleClass("topbar-left topbar-lg-show")
-    }
+//    def toggleTopbar = Callback {
+//      val topBtn: js.Object = "#TopbarContainer"
+//      $(topBtn).toggleClass("topbar-left topbar-lg-show")
+//    }
 
     def clearScrollPositions() = {
       lastPos = 0
@@ -130,18 +130,18 @@ object Dashboard {
             Sidebar(Sidebar.Props())
           )
         ),
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-              <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-                TopMenuBar(TopMenuBar.Props()),
-                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
-                  <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-                )
-              )
-            )
-          )
-        ),
+        //        <.div(^.className := "row")(
+        //          <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
+        //            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+        //              <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+        //                TopMenuBar(TopMenuBar.Props()),
+        //                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
+        //                  <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+        //                )
+        //              )
+        //            )
+        //          )
+        //        ),
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(

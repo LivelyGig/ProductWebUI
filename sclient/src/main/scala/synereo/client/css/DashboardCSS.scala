@@ -71,7 +71,8 @@ object DashboardCSS {
       paddingTop(10.px)
     )
     val cardDescriptionContainerDiv = style(
-      paddingLeft(65.px)
+      paddingLeft(65.px),
+      paddingRight(65.px)
     )
     val profileActionButton = style(
       width(110.px),
