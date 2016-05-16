@@ -18,7 +18,7 @@ object LftcontainerCSS {
       media.maxWidth(767.px) -
         minWidth(200.px),
       media.minWidth(768.px) -
-        minWidth(300.px)
+        minWidth(255.px)
 
     )
     val textareaWidth = style(

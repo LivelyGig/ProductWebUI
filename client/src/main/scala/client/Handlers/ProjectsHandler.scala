@@ -1,43 +1,37 @@
 package client.handlers
 
-import diode.data.PotState.PotPending
+import client.Handlers.ContentModelHandler
+import client.modules.AppModule
 import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
-import diode.data.{ Empty, Pot, PotAction, Ready }
-import shared.models.{ ConnectionsModel, JobPost, ProjectsModel }
+import diode.data._
+import shared.models.ProjectsPost
+import org.scalajs.dom.window
 import shared.RootModels.ProjectsRootModel
-import client.services.CoreApi
-import shared.dtos._
+import client.services.{ CoreApi, SessionItems }
+import diode.util.{ Retry, RetryPolicy }
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs.js
-import upickle._
-
-import scala.scalajs.js.JSON
 
 // Actions
-case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty) extends PotAction[ProjectsRootModel, RefreshProjects] {
-  override def next(value: Pot[ProjectsRootModel]) = RefreshProjects(value)
-}
-
-object ProjectsModelHandler {
-  def getJobPostsModel(jobPostsResponse: String): ProjectsRootModel = {
-    val projectsFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](jobPostsResponse)
-    var model = Seq[ProjectsModel]()
-    for (projectFromBackend <- projectsFromBackend) {
-      model :+= ProjectsModel(
-        projectFromBackend.content.sessionURI,
-        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0))
-      )
-    }
-    ProjectsRootModel(model)
-  }
-
+case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3))
+    extends PotActionRetriable[ProjectsRootModel, RefreshProjects] {
+  override def next(value: Pot[ProjectsRootModel], newRetryPolicy: RetryPolicy) = RefreshProjects(value, newRetryPolicy)
 }
 
 class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case action: RefreshProjects =>
-      val updateF = action.effect(CoreApi.getProjects())(jobPostsResponse => ProjectsModelHandler.getJobPostsModel(jobPostsResponse))
-      action.handleWith(this, updateF)(PotAction.handler())
+      val labels = window.sessionStorage.getItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH)
+      val updateF = action.effectWithRetry(CoreApi.getContent(SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI)) { jobPostsResponse =>
+        ProjectsRootModel(ContentModelHandler
+          .getContentModel(jobPostsResponse, AppModule.PROJECTS_VIEW)
+          .asInstanceOf[Seq[ProjectsPost]])
+      }
+      Option(labels) match {
+        case Some(s) =>
+          action.handleWith(this, updateF)(PotActionRetriable.handler())
+        case _ =>
+          updated(Empty)
+      }
   }
 }

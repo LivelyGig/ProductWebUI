@@ -3,7 +3,7 @@ package client.modals
 import java.util.UUID
 
 import shared.models.MessagePost
-import client.services.{ CoreApi, LGCircuit }
+import client.services.{ CoreApi, LGCircuit, SessionItems }
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -80,15 +80,15 @@ object NewMessageForm {
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def updateSubject(e: ReactEventI) = {
+    def updateSubject(e: ReactEventI): react.Callback = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
-    def updateContent(e: ReactEventI) = {
+    def updateContent(e: ReactEventI): react.Callback = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
-    def hideModal = {
+    def hideModal(): Unit = {
       $(t.getDOMNode()).modal("hide")
     }
     def mounted(): Callback = Callback {
@@ -100,7 +100,7 @@ object NewMessageForm {
       LGCircuit.dispatch(PostMessage(
         state.postMessage.content,
         ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        CoreApi.MESSAGES_SESSION_URI
+        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI
       ))
       t.modState(s => s.copy(postNewMessage = true))
     }

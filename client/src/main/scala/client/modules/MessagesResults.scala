@@ -29,7 +29,7 @@ object MessagesResults {
     def mounted(props: Props) = {
       if (props.proxy().isEmpty) {
         //          LGCircuit.dispatch(SubscribeSearch())
-        LGCircuit.dispatch(RefreshConnections())
+        //        LGCircuit.dispatch(RefreshConnections())
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
       } else {
@@ -114,7 +114,7 @@ object MessagesList {
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
+          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  ${message.created}"),
           <.div(^.className := "media-body")(
             message.text,
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(

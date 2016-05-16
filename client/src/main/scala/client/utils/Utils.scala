@@ -1,12 +1,19 @@
 package client.utils
 
 import shared.dtos.Connection
-import shared.models.LabelModel
+import shared.models._
 import org.scalajs.dom._
 
 object Utils {
-  def GetSelfConnnection(uri: String): Connection = {
-    val sessionUri = window.sessionStorage.getItem(uri)
+
+  /**
+   * Method to get the self connection
+   *
+   * @param sessionUri uri of the session concerned. Look at CoreApi.scala for the
+   *                       possible session uri names.
+   * @return connection with the source and target to the user and label as alias
+   */
+  def getSelfConnnection(sessionUri: String): Connection = {
     val sessionUriSplit = sessionUri.split('/')
     val sourceStr = "agent://" + sessionUriSplit(2)
     Connection(sourceStr, "alias", sourceStr)
@@ -19,14 +26,13 @@ object Utils {
    * @param labelFamilies This is the seq of label families e.g seq of [parent1,child1ToParent1], [parent2,child1ToParent2]
    * @return returns the prolog term e.g any([label1,label2])
    */
-  def GetLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
-    // println("labelFamilies = " + labelFamilies)
+  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
     prolog.append("any(")
-    val results = for { labelFamily <- labelFamilies } yield {
+    for { labelFamily <- labelFamilies } yield {
       prolog.append("[")
-      val res = for { label <- labelFamily } yield { prolog.append(label.text); if (label.parentUid != "self") prolog.append(",") }
+      for { label <- labelFamily } yield { prolog.append(label.text); if (label.parentUid != "self") prolog.append(",") }
       prolog.append("]")
       if (labelsCount != 0) {
         prolog.append(",")
