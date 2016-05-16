@@ -10,9 +10,9 @@ import scalacss.ScalaCssReact._
 
 // scalastyle:off
 object AppModule {
-  val TALENTS_VIEW = "talents"
+  val TALENTS_VIEW = "talent"
   val PROJECTS_VIEW = "projects"
-  val CONTRACTS_VIEW = "contracts"
+  val CONTRACTS_VIEW = "contract"
   val MESSAGES_VIEW = "messages"
   val OFFERINGS_VIEW = "offerings"
   val CONNECTIONS_VIEW = "connections"
@@ -24,11 +24,16 @@ object AppModule {
     val sidebarIcon: js.Object = "#sidebarIcon"
     val rsltScrollContainer: js.Object = "#rsltScrollContainer"
     val middelNaviContainer: js.Object = "#middelNaviContainer"
+    val profiledescription: js.Object = ".profile-description"
+    val profileActionButtons: js.Object =".profile-action-buttons"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("sidebarRightContainer")
+      $(profiledescription).find(".profile-action-buttons").css("pointer-events","none")
     } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
+      $(profiledescription).find(".profile-action-buttons").css("pointer-events","all")
+    //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
@@ -36,14 +41,11 @@ object AppModule {
     $(t2).addClass("fa fa-chevron-circle-left")
     $(t1).removeClass("fa fa-chevron-circle-left")
     $(t1).addClass("fa fa-chevron-circle-right")
-
   }
-
   case class Backend(t: BackendScope[Props, Unit]) {
     def mounted(props: Props) = {
       showSidebar
     }
-
     def render(p: Props) = {
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
