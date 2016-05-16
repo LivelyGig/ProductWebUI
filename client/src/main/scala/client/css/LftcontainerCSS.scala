@@ -14,9 +14,12 @@ object LftcontainerCSS {
     )
     val slctContainer = style(
       display.inlineBlock,
-      minWidth(200.px),
-      width(100.%%),
-      overflow.auto
+      overflow.auto,
+      media.maxWidth(767.px) -
+        minWidth(200.px),
+      media.minWidth(768.px) -
+        minWidth(300.px)
+
     )
     val textareaWidth = style(
       maxWidth(100.%%),

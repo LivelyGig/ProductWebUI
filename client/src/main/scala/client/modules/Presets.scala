@@ -18,7 +18,7 @@ object Presets {
     }
 
     def render(p: Props) = {
-        p.view match {
+      p.view match {
         case "talent" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(

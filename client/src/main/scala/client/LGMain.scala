@@ -80,7 +80,7 @@ object LGMain extends js.JSApp {
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(
             <.div(^.className := "col-md-8 col-sm-8 col-xs-6", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.DisplayFlex)(
-              c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo,HeaderCSS.Style.logoImage, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")),
+              c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, HeaderCSS.Style.logoImage, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")),
               <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", HeaderCSS.Style.navbarToggle, "data-target".reactAttr := "#navi-collapse")(
                 r.page match {
                   case JobPostsLoc => <.span(^.color := "white", ^.float := "right")("Jobs ", "  ", Icon.thList)
@@ -91,8 +91,11 @@ object LGMain extends js.JSApp {
                   case ContractsLoc => <.span(^.color := "white", ^.float := "right")("Contracts ", "  ", Icon.thList)
                   case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")("Connections ", "  ", Icon.thList)
                   case _ => <.span()
-                })),
-            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 loggedInUserNav", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))),
+                }
+              )
+            ),
+            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 loggedInUserNav", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))
+          ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           ),

@@ -161,14 +161,14 @@ object DashBoardCSS {
       )
     )
     val scltInputModalContainerMargin = style(
-      media.maxWidth(768.px) -(
+      media.maxWidth(768.px) - (
         marginLeft(0.px),
         marginRight(0.px)
-        ),
-      media.minWidth(769.px) -(
+      ),
+      media.minWidth(769.px) - (
         marginLeft(150.px),
         marginRight(150.px)
-        )
+      )
     )
     val slctHeaders = style(
       paddingTop(15.px),

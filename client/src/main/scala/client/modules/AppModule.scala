@@ -25,15 +25,15 @@ object AppModule {
     val rsltScrollContainer: js.Object = "#rsltScrollContainer"
     val middelNaviContainer: js.Object = "#middelNaviContainer"
     val profiledescription: js.Object = ".profile-description"
-    val profileActionButtons: js.Object =".profile-action-buttons"
+    val profileActionButtons: js.Object = ".profile-action-buttons"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("sidebarRightContainer")
-      $(profiledescription).find(".profile-action-buttons").css("pointer-events","none")
+      $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
     } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
-      $(profiledescription).find(".profile-action-buttons").css("pointer-events","all")
-    //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
+      $(profiledescription).find(".profile-action-buttons").css("pointer-events", "all")
+      //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"

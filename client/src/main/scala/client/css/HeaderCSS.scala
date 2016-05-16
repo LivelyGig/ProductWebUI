@@ -6,7 +6,6 @@ import scalacss.Defaults._
 import scalacss.LengthUnit.px
 import scala.language.postfixOps
 
-
 object HeaderCSS {
 
   object Style extends StyleSheet.Inline {
@@ -47,11 +46,11 @@ object HeaderCSS {
       media.maxWidth(1130.px).minWidth(820.px) - (
         fontSize(1.2.em),
         padding(10.px, 10.px)
-        ),
-      media.maxWidth(819.px) -(
+      ),
+      media.maxWidth(819.px) - (
         fontSize(1.em),
         padding(10.px, 10.px)
-        )
+      )
     )
 
     val nav = style(
@@ -66,14 +65,14 @@ object HeaderCSS {
       &.hover(
         color(c"#67EAF2")
       ),
-      media.maxWidth(819.px) -(
+      media.maxWidth(819.px) - (
         fontSize(1.em),
         padding(10.px, 10.px)
-        ),
+      ),
       media.minWidth(820.px) - (
         fontSize(1.2.em),
         padding(10.px, 10.px)
-        )
+      )
 
     )
     val imgLogo = style(
@@ -86,19 +85,18 @@ object HeaderCSS {
         marginTop(0.px)
     )
 
-    val logoImage = style (
+    val logoImage = style(
       media.maxWidth(375.px) -
         display.none,
-        media.minWidth(376.px) -
-      display.initial
+      media.minWidth(376.px) -
+        display.initial
     )
 
     /* css*/
-    val middelNaviContainer = style(
-      //      marginTop(0.px),
-      //      height(44.px),
-      //      width(100.%%),
-      //      paddingTop(4.px),
+    val middelNaviContainer = style( //      marginTop(0.px),
+    //      height(44.px),
+    //      width(100.%%),
+    //      paddingTop(4.px),
     )
 
     val connectionsmiddelNaviContainer = style(
@@ -204,10 +202,10 @@ object HeaderCSS {
         border.none,
         color(white)
       ),
-      media.maxWidth(443.px) -(
+      media.maxWidth(443.px) - (
         fontSize(12.px),
-      paddingTop(10.px)
-        )
+        paddingTop(10.px)
+      )
 
     )
     val rsltContainerBtn = style(
