@@ -1,4 +1,4 @@
-package client.Handlers
+package client.handlers
 
 import client.modules.AppModule
 import org.widok.moment.Moment
