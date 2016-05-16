@@ -35,7 +35,22 @@ window.onload = function() {
     applyStylingToHomeFeed()
     $("#dashboardContainerMain").scroll(function() {
      // console.log(checkScrollSpeed) 
-     applyStylingToHomeFeed()
+     applyStylingToHomeFeed();     
+       $("#homeFeedMediaList li").hover(function(){
+        $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
+        $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
+        $(this).css({"opacity":"1","transform": "scale(1.05)"});
+        $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
+        $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
+      },
+      function(){
+        $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
+        $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
+        $(this).css({"opacity":"1","transform": "scale(1.05)"});
+        $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
+        $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
+      }
+      );     
    });
   });
 };

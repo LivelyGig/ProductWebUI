@@ -1,10 +1,13 @@
 package synereo.client.modules
 
+import org.querki.jquery._
 import synereo.client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+
+import scala.scalajs.js
 
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
@@ -14,7 +17,7 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon
 import synereo.client.components.{ MIcon, Bootstrap, GlobalStyles, Icon }
-import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
+import synereo.client.css.{ DashboardCSS, SynereoCommanStylesCSS, LoginCSS }
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
@@ -35,6 +38,11 @@ object MainMenu {
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
+  }
+
+  def toggleTopbar = Callback {
+    val topBtn: js.Object = "#TopbarContainer"
+    $(topBtn).toggleClass("topbar-left topbar-lg-show")
   }
 
   def displayMenu() = {
@@ -117,11 +125,25 @@ object MainMenu {
           }
         ), <.div(
           if (props.proxy().isLoggedIn) {
-            <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
-              <.div(^.className := "form-group")(
-                <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
+            <.div(^.className:="text-center")(
+              <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
+                <.div(^.className := "form-group")(
+                  <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
+                ),
+                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
               ),
-              <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
+              <.div(^.className := "row")(
+                <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
+                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+                      TopMenuBar(TopMenuBar.Props()),
+                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
+                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+                      )
+                    )
+                  )
+                )
+              )
             )
           } else {
             <.span()
