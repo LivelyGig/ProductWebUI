@@ -15,19 +15,13 @@ import scala.scalajs.js.JSON
 import scala.util.Success
 
 object SearchesModelHandler {
-  def GetSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {
-    if (listOfLabels != Nil) {
-      val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
-      try {
-        upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
-      } catch {
-        case e: Exception =>
-          SearchesRootModel(Nil)
-      }
-      val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
+  def getSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {
+    try {
+      val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(PrologParser.StringToLabel(listOfLabels.toJSArray)))
       SearchesRootModel(model)
-    } else {
-      SearchesRootModel(Nil)
+    } catch {
+      case e: Exception =>
+        SearchesRootModel(Nil)
     }
   }
   def updateModel(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
@@ -40,19 +34,19 @@ object SearchesModelHandler {
   var children = Seq[LabelModel]()
   var listE = new ListBuffer[LabelModel]() /*Seq[Label]()*/
   /*var searchLabels = new ListBuffer[Seq[Label]]()*/
-  def GetChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
       listE ++= children
-      children.map(e => GetChildren(e, labels))
+      children.map(e => getChildren(e, labels))
     }
     listE
   }
-  def GetChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.uid == label.parentUid)
     if (!children.isEmpty) {
       listE ++= children
-      children.map(e => GetChildrenToParent(e, labels))
+      children.map(e => getChildrenToParent(e, labels))
     }
     listE
   }
@@ -79,25 +73,25 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         //        println("listOfLabels"+listOfLabels)
         if (value.searchesModel.isEmpty)
-          updated(SearchesModelHandler.GetSearchesModel(listOfLabels))
+          updated(SearchesModelHandler.getSearchesModel(listOfLabels))
         else
           noChange
       } else {
-        updated(SearchesModelHandler.GetSearchesModel(Nil))
+        updated(SearchesModelHandler.getSearchesModel(Nil))
       }
     case UpdateLabel(label) =>
       SearchesModelHandler.listE.clear()
-      val children = SearchesModelHandler.GetChildren(label, value.searchesModel)
+      val children = SearchesModelHandler.getChildren(label, value.searchesModel)
       if (!children.isEmpty) {
         val test = value.searchesModel.map(e => if (children.exists(p => p.uid == e.uid) || e.uid == label.uid) e.copy(isChecked = label.isChecked) else e)
         updated(SearchesRootModel(test))
       }
-      val childrenToParent = SearchesModelHandler.GetChildrenToParent(label, value.searchesModel)
+      val childrenToParent = SearchesModelHandler.getChildrenToParent(label, value.searchesModel)
       val modelModified = value.searchesModel.map(e => if (childrenToParent.exists(p => p.uid == e.uid) || e.uid == label.uid) e.copy(isChecked = label.isChecked)
       else e)
       val modelToUpdate = modelModified.map(e => if (e.parentUid == "self" && childrenToParent.exists(p => p.uid == e.uid)) {
         SearchesModelHandler.listE.clear()
-        val childList = SearchesModelHandler.GetChildren(e, modelModified)
+        val childList = SearchesModelHandler.getChildren(e, modelModified)
         val selectedChildList = childList.filter(p => p.isChecked == true)
         if (!selectedChildList.isEmpty) {
           e.copy(isChecked = true)
@@ -111,7 +105,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
       selectedRootParents.foreach { selectedRootParent =>
         SearchesModelHandler.listE.clear()
-        val selectedChildren = SearchesModelHandler.GetChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
+        val selectedChildren = SearchesModelHandler.getChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }

@@ -86,7 +86,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case TestDispatch() =>
       val momentdate = Moment().format("YYYY-MM-DD HH:MM:SS")
-      println("import org.widok.moment._"+momentdate)
+      println("import org.widok.moment._" + momentdate)
       noChange
   }
 }

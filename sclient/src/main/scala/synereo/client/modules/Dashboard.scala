@@ -151,8 +151,8 @@ object Dashboard {
                   <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.content, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
                   <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/ )(Icon.camera)
-                ) /*,
-                <.div(NewMessage(NewMessage.Props("new-message-button", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "Forward")))*/
+                ),
+                <.div(NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button")))
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
@@ -310,6 +310,7 @@ object HomeFeedList {
                 <.div(^.className := "col-md-12")(
                   //                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+
                     <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
                       message.text,
