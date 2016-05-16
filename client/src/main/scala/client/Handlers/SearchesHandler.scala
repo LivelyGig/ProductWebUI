@@ -147,7 +147,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       noChange
 
     case StoreProjectsSearchLabel() =>
-      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, s"any([${SessionItems.ProjectsViewItems.PROJECT_POST_LABEL}])")
+      window.sessionStorage.setItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH, s"any([${SessionItems.ProjectsViewItems.PROJECT_POST_LABEL}])")
       noChange
   }
 
