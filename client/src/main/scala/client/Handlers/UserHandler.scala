@@ -5,19 +5,20 @@ import javax.annotation.PostConstruct
 
 import client.logger
 import client.logger._
-import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
-import shared.dtos.{ Expression, ExpressionContent, Label, SubscribeRequest, _ }
-import shared.models.{ Post, UserModel }
-import client.services.{ CoreApi, LGCircuit, SessionItems }
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
+import shared.dtos.{Expression, ExpressionContent, Label, SubscribeRequest, _}
+import shared.models.{Post, UserModel}
+import client.services.{CoreApi, LGCircuit}
 import client.utils.Utils
 import org.querki.jquery._
 import org.scalajs.dom.window
 import org.widok.moment.Moment
+import shared.sessionitems.SessionItems
 
 import concurrent._
 import ExecutionContext.Implicits._
 import scala.scalajs.js.JSON
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 // scalastyle:off
 case class LoginUser(userModel: UserModel)
 case class LogoutUser()

@@ -1,29 +1,9 @@
-package client.services
-
-import org.scalajs.dom._
+package shared.sessionitems
 
 /**
  * Created by shubham.k on 11-05-2016.
  */
 object SessionItems {
-
-  /**
-   * Get the previous and current search labels for the session uri
-   * these labels are then utilised to cancel previous request and create a new
-   * one respectively
-   * @param sessionUriName
-   * @return current and previous search labels for context
-   */
-  def getCurrentPreviousLabel(sessionUriName: String): (String, String) = {
-    val sessionStorage = window.sessionStorage
-    sessionUriName match {
-      case ProjectsViewItems.PROJECTS_SESSION_URI =>
-        (sessionStorage.getItem(ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH), sessionStorage.getItem(ProjectsViewItems.PREVIOUS_PROJECTS_LABEL_SEARCH))
-      case MessagesViewItems.MESSAGES_SESSION_URI =>
-        (sessionStorage.getItem(MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH), sessionStorage.getItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH))
-    }
-  }
-
   /**
    * This function returns all the session uri names
    * except fot connection session uri.

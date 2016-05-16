@@ -11,18 +11,19 @@ import client.components.Bootstrap._
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
+import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
 import client.handlers.PostContent
-import client.services.{ CoreApi, LGCircuit, SessionItems }
+import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react
 
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.models.{ ProjectPostContent, ProjectsPost }
+import shared.models.{ProjectPostContent, ProjectsPost}
+import shared.sessionitems.SessionItems
 
 import scala.scalajs.js
 import scala.scalajs.js.Date

@@ -26,12 +26,14 @@ object ConnectionsSelectize {
     selectedConnections
   }
 
-  var getSelectedValue = new ListBuffer[String]() /*Seq[Label]()*/
+  var getSelectedValue = new ListBuffer[String]()
+
+  /*Seq[Label]()*/
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String)
+
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
-      //    println($(selectState).get())
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = "#selectize"
         $(selectizeInput).selectize(SelectizeConfig
@@ -40,23 +42,13 @@ object ConnectionsSelectize {
       }
 
     }
+
     def getSelectedValues = Callback {
       val selectState: js.Object = "#selectize"
       val getSelectedValue = $(selectState).find("option").text()
+      //scalastyle:off
       println(getSelectedValue)
-
-      //       var x = document.getElementById("mySelect").value;
-      //       document.getElementById("demo").innerHTML = "You selected: " + x;
-
-      //     var x =  document.getElementById("#selectize").textContent
-      //       println(x)
     }
-
-    //     def getSelectedValues(e: ReactEventI) = Callback {
-    //       val value = e.target.value
-    //       println(value)
-    //
-    //     }
 
     def mounted(props: Props): Callback = Callback {
       initializeTagsInput(props.parentIdentifier)
@@ -76,6 +68,7 @@ object ConnectionsSelectize {
 
     }
   }
+
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
@@ -83,3 +76,4 @@ object ConnectionsSelectize {
 
   def apply(props: Props) = component(props)
 }
+
