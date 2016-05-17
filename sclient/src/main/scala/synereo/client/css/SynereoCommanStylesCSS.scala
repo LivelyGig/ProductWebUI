@@ -72,8 +72,8 @@ object SynereoCommanStylesCSS {
       paddingTop(6.px),
       paddingRight(20.px),
       right.`0`,
-      zIndex(100),
-      backgroundColor(c"#277490")
+      zIndex(100)
+//      backgroundColor(c"#277490")
     )
     val nonLoggedInMenu = style(
       paddingRight(15.px),

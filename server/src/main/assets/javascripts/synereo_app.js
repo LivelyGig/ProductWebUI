@@ -33,10 +33,9 @@ window.onload = function() {
   };
   $(document).ready(function() {
     applyStylingToHomeFeed()
-    $("#dashboardContainerMain").scroll(function() {
-     // console.log(checkScrollSpeed) 
-     applyStylingToHomeFeed();     
-       $("#homeFeedMediaList li").hover(function(){
+    $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
+    var hoverInterval=  setInterval(function(){
+      $("#homeFeedMediaList li").hover(function(){
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
         $(this).css({"opacity":"1","transform": "scale(1.05)"});
@@ -44,13 +43,26 @@ window.onload = function() {
         $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
       },
       function(){
+      // $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
+      // $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
+      // $(this).css({"opacity":"1","transform": "scale(1.05)"});
+      // $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
+      // $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
+    }); 
+    }, 1000);    
+    setTimeout(function(){
+      clearInterval(hoverInterval)
+    },100000);
+    $(document).bind("DOMSubtreeModified", function() {
+      $("#homeFeedMediaList li").hover(function(){
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
         $(this).css({"opacity":"1","transform": "scale(1.05)"});
         $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
         $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-      }
-      );     
-   });
+      },
+      function(){ })
+    });
+
   });
 };

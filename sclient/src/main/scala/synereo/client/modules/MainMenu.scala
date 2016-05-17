@@ -59,7 +59,7 @@ object MainMenu {
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right", SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+        <.ul(^.className := "nav navbar-nav navbar-right",props.proxy().isLoggedIn ?= (^.backgroundColor:="#277490"),SynereoCommanStylesCSS.Style.mainMenuNavbar)(
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
@@ -137,7 +137,7 @@ object MainMenu {
                   <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
                     <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
                       TopMenuBar(TopMenuBar.Props()),
-                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
+                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
                         <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
                       )
                     )

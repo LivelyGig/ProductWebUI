@@ -74,7 +74,7 @@ object DashboardCSS {
       paddingLeft(65.px),
       paddingRight(65.px)
     )
-    val profileActionButton = style(
+    val ampsDropdownToggleBtn = style(
       width(110.px),
       border(1.px, solid, transparent),
       borderBottomLeftRadius(9.em),
@@ -85,13 +85,13 @@ object DashboardCSS {
       padding(4.px).important,
       color.white,
       &.hover(
-        color.white
+        color(c"#FFFFFF")
       ),
       &.focus(
-        color.white
+        color(c"#FFFFFF")
       ),
       &.visited(
-        color.white
+        color(c"#FFFFFF")
       )
 
     )

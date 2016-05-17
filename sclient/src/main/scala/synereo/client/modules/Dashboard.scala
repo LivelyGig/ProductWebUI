@@ -135,7 +135,7 @@ object Dashboard {
         //            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
         //              <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
         //                TopMenuBar(TopMenuBar.Props()),
-        //                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.profileActionButton, ^.onClick --> toggleTopbar)(
+        //                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
         //                  <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
         //                )
         //              )
