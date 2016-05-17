@@ -1,7 +1,7 @@
 object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions with JsVersions
 {
-  val scala = "2.11.8"
-
+  val scalaVersion = "2.11.8"
+  val appVersion = "1.0.1"
   val akkaHttpExtensions = "0.0.10"
 }
 
@@ -15,6 +15,7 @@ trait ScalaJSVersions {
   val datePickerFacade = "0.5"
   val selectizeFacade = "0.12.1-0.2.1"
   val momentJSFacade = "0.1.4"
+  val jQuery = "2.2.3"
 
 }
 
@@ -46,4 +47,3 @@ trait JsVersions {
   val chartjs = "1.0.1"
   val datePicker = "1.5.0-1"
 }
-
