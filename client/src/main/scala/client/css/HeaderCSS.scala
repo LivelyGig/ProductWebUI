@@ -1,4 +1,5 @@
 package client.css
+
 import client.components
 import client.css.MessagesCSS.Style._
 import scalacss.Defaults._
@@ -6,7 +7,9 @@ import scalacss.LengthUnit.px
 import scala.language.postfixOps
 
 object HeaderCSS {
+
   object Style extends StyleSheet.Inline {
+
     import dsl._
 
     val naviContainer = style(
@@ -80,6 +83,13 @@ object HeaderCSS {
         marginTop(-3.px),
       media.maxWidth(820.px) -
         marginTop(0.px)
+    )
+
+    val logoImage = style(
+      media.maxWidth(375.px) -
+        display.none,
+      media.minWidth(376.px) -
+        display.initial
     )
 
     /* css*/
@@ -191,7 +201,12 @@ object HeaderCSS {
         backgroundColor(transparent),
         border.none,
         color(white)
+      ),
+      media.maxWidth(443.px) - (
+        fontSize(12.px),
+        paddingTop(10.px)
       )
+
     )
     val rsltContainerBtn = style(
       backgroundColor(c"#ffa500"),
@@ -270,4 +285,5 @@ object HeaderCSS {
         display.block
     }
   }
+
 }

@@ -25,6 +25,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import shared.dtos._
 import org.querki.jquery._
+import shared.sessionitems.SessionItems
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -80,15 +81,15 @@ object NewMessageForm {
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
-    def updateSubject(e: ReactEventI) = {
+    def updateSubject(e: ReactEventI): react.Callback = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
-    def updateContent(e: ReactEventI) = {
+    def updateContent(e: ReactEventI): react.Callback = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
     }
-    def hideModal = {
+    def hideModal(): Unit = {
       $(t.getDOMNode()).modal("hide")
     }
     def mounted(): Callback = Callback {
@@ -100,7 +101,7 @@ object NewMessageForm {
       LGCircuit.dispatch(PostMessage(
         state.postMessage.content,
         ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        CoreApi.MESSAGES_SESSION_URI
+        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI
       ))
       t.modState(s => s.copy(postNewMessage = true))
     }

@@ -29,7 +29,7 @@ object MessagesResults {
     def mounted(props: Props) = {
       if (props.proxy().isEmpty) {
         //          LGCircuit.dispatch(SubscribeSearch())
-        LGCircuit.dispatch(RefreshConnections())
+        //        LGCircuit.dispatch(RefreshConnections())
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
       } else {
@@ -46,7 +46,7 @@ object MessagesResults {
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
             <.div(^.display := "inline-block")(
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select Bulk Action ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
@@ -57,12 +57,12 @@ object MessagesResults {
                   <.li()(<.a()("Unfavorite"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
+              <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
           ),
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
             <.div(^.display := "inline-block")(
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("By Date ")(
                   <.span(^.className := "caret", DashBoardCSS.Style.rsltCaretStyle)
                 ),
@@ -74,7 +74,7 @@ object MessagesResults {
                   <.li()(<.a()("By Projects Completed"))
                 )
               ),
-              <.div(DashBoardCSS.Style.rsltGigActionsDropdown, ^.className := "dropdown")(
+              <.div(DashBoardCSS.Style.displayInlineText, ^.className := "dropdown")(
                 <.button(DashBoardCSS.Style.gigMatchButton, DashBoardCSS.Style.padding0px, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Newest ")(
                   <.span(Icon.longArrowDown)
                 )
@@ -114,7 +114,7 @@ object MessagesList {
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  12/04/2015  11:30am"),
+          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  ${message.created}"),
           <.div(^.className := "media-body")(
             message.text,
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(

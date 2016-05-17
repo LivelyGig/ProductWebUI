@@ -18,13 +18,6 @@ object Presets {
     }
 
     def render(p: Props) = {
-      //      <.div(^.id := "middelNaviContainer", HeaderCSS.Style.middelNaviContainer)(
-      //        <.div(/*^.className := "row"*/)(
-      //          <.div(^.className := "col-lg-1")(),
-      //          <.div(^.className := "col-md-12 col-lg-10")(
-      //            <.div(^.className := "row")(
-      //              <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-
       p.view match {
         case "talent" => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
@@ -54,7 +47,6 @@ object Presets {
                       <.div(PresetsCSS.Style.modalBtn)(
                         UserSkills(UserSkills.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.user, "Update Profile"))
                       )
-
                     )
                   ),
                   <.div(^.className := "col-md-9 col-sm-9", DashBoardCSS.Style.paddingLeft0px)()
@@ -231,15 +223,6 @@ object Presets {
           )
         }
       } //main switch
-
-      //              ),
-      //              <.div(^.className := "col-md-9 col-sm-9",DashBoardCSS.Style.paddingLeft0px)()
-      //            )
-      //          ),
-      //          <.div(^.className := "col-lg-1")()
-      //        )
-      //      )
-
     }
   }
 

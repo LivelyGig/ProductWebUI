@@ -16,15 +16,13 @@ case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) exte
 }
 
 object ConnectionModelHandler {
-  def GetConnectionsModel(response: String): ConnectionsRootModel = {
+  def getConnectionsModel(response: String): ConnectionsRootModel = {
 
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
-    //    println("connections = "+ connections)
     var model = Seq[ConnectionsModel]()
 
     connections.foreach {
       connection =>
-        //        println(connection.content.jsonBlob)
         val json = JSON.parse(connection.content.jsonBlob)
         val name = json.name.asInstanceOf[String]
         val source = connection.content.connection.source
@@ -34,7 +32,6 @@ object ConnectionModelHandler {
         model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
           name, imgSrc)
     }
-    //    model.foreach(temp => println(temp.name))
     ConnectionsRootModel(model)
   }
 
@@ -43,7 +40,7 @@ object ConnectionModelHandler {
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action: RefreshConnections =>
-      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.GetConnectionsModel(connections))
+      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.getConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }

@@ -1,7 +1,6 @@
 package client.modals
 
-//import japgolly.scalajs.react.extra.OnUnmount
-import client.handlers.{ CreateLabels, CreateSessions, LoginUser, RefreshConnections }
+import client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
 import client.components.Bootstrap._
 import client.components._
 import client.css.{ DashBoardCSS, HeaderCSS }
@@ -21,6 +20,7 @@ import shared.models.UserModel
 
 import scala.scalajs.js.JSON
 import org.querki.jquery._
+import shared.sessionitems.SessionItems
 
 import scala.concurrent.Future
 
@@ -81,29 +81,28 @@ object AgentLoginSignUp {
     }
     def validateResponse(response: String): String = {
       try {
-        //        println(response)
         upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
         LOGIN_ERROR
-        /*$(loginLoader).addClass("hidden")
-        t.modState(s => s.copy(showLoginFailed = true)).runNow()*/
       } catch {
         case e: Exception =>
           try {
-            //            println(e)
             upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
-            //            println(init)
             SUCCESS
           } catch {
             case p: Exception =>
-              //              println(p)
               SERVER_ERROR
           }
-
       }
     }
-    def createSessions(userModel: UserModel) = {
-      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
-      //      var futureArray =  Seq[Future[String]]()
+
+    /**
+     * Weird creation of sessions?
+     * Look at description of SessionItems.getAllSessionUriExceptCnxs() mate :)
+     *
+     * @param userModel
+     */
+    def createSessions(userModel: UserModel): Unit = {
+      val sessionURISeq = SessionItems.getAllSessionUriNameExceptCnxs()
       val futureArray = for (sessionURI <- sessionURISeq) yield CoreApi.agentLogin(userModel)
       Future.sequence(futureArray).map { responseArray =>
         for (responseStr <- responseArray) {
@@ -114,35 +113,36 @@ object AgentLoginSignUp {
         $(dashboardContainer).removeClass("hidden")
         window.location.href = "/#connections"
         log.debug("login successful")
+        LGCircuit.dispatch(LoginUser(userModel))
       }
     }
 
     def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-      //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
-      window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      //$("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
-      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      window.sessionStorage.setItem(
+        SessionItems.ConnectionViewItems.CONNECTION_LIST,
+        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
+      )
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
         imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-      LGCircuit.dispatch(LoginUser(user))
+      window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
       LGCircuit.dispatch(CreateLabels())
       LGCircuit.dispatch(RefreshConnections())
       createSessions(userModel)
     }
 
-    def processLoginFailed(responseStr: String) = {
+    def processLoginFailed(responseStr: String): Unit = {
       val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       $(loginLoader).addClass("hidden")
       //  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
       println("login error")
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
-    def processServerError() = {
+    def processServerError(): Unit = {
       $(loginLoader).addClass("hidden")
       //  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
       println("internal server error")
@@ -166,25 +166,13 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginForm = false))
     }
 
-    def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
+    def loginUser(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewAgentForm: Boolean = false): Callback = {
       true match {
         case `login` => processLogin(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false, showConfirmAccountCreation = true))
         case `showNewAgentForm` => t.modState(s => s.copy(showLoginForm = false, showNewAgentForm = true))
         case _ => t.modState(s => s.copy(showLoginForm = false))
       }
-      /*if (login){
-        processLogin(userModel)
-      }
-      else if (showConfirmAccountCreation) {
-        t.modState(s => s.copy(showLoginForm = false, showConfirmAccountCreation = true))
-      }
-      else if (showNewAgentForm) {
-        t.modState(s => s.copy(showLoginForm = false, showNewAgentForm = true))
-      }
-      else {
-        t.modState(s => s.copy(showLoginForm = false))
-      }*/
     }
     def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false): Callback = {
       if (confirmAccountCreation) {
@@ -242,21 +230,21 @@ object AgentLoginSignUp {
         Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
         //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
         //          HeaderCSS.Style.SignUpBtn)("Login"),
-        if (S.showNewAgentForm) NewAgentForm(NewAgentForm.Props(B.addNewAgent))
-        else if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
-        else if (S.showLoginForm) LoginForm(LoginForm.Props(B.Login))
-        else if (S.showConfirmAccountCreation) ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation))
-        else if (S.showAccountValidationSuccess) AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess))
-        else if (S.showLoginFailed) LoginFailed(LoginFailed.Props(B.loginFailed, S.loginErrorMessage))
-        else if (S.showRegistrationFailed) RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
-        else if (S.showErrorModal) ErrorModal(ErrorModal.Props(B.serverError))
-        else if (S.showAccountValidationFailed) AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
-        else
+        if (S.showNewAgentForm) { NewAgentForm(NewAgentForm.Props(B.addNewAgent)) }
+        else if (S.showTermsOfServicesForm) { TermsOfServices(TermsOfServices.Props(B.termsOfServices)) }
+        else if (S.showLoginForm) { LoginForm(LoginForm.Props(B.loginUser)) }
+        else if (S.showConfirmAccountCreation) { ConfirmAccountCreation(ConfirmAccountCreation.Props(B.confirmAccountCreation)) }
+        else if (S.showAccountValidationSuccess) { AccountValidationSuccess(AccountValidationSuccess.Props(B.accountValidationSuccess)) }
+        else if (S.showLoginFailed) { LoginFailed(LoginFailed.Props(B.loginFailed, S.loginErrorMessage)) }
+        else if (S.showRegistrationFailed) { RegistrationFailed(RegistrationFailed.Props(B.registrationFailed)) }
+        else if (S.showErrorModal) { ErrorModal(ErrorModal.Props(B.serverError)) }
+        else if (S.showAccountValidationFailed) { AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed)) }
+        else {
           Seq.empty[ReactElement]
+        }
+
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
-    //  .configure(OnUnmount.install)
     .build
   def apply(props: Props) = component(props)
 }

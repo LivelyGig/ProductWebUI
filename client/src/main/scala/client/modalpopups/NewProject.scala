@@ -22,7 +22,8 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.models.{ ProjectPost, VersionedPost }
+import shared.models.{ ProjectPostContent, ProjectsPost }
+import shared.sessionitems.SessionItems
 
 import scala.scalajs.js
 import scala.scalajs.js.Date
@@ -74,7 +75,7 @@ object NewProjectForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback)
 
-  case class State(projectPost: ProjectPost, postProject: Boolean = false, selectizeInputId: String = "postNewJobSelectizeInput")
+  case class State(projectPost: ProjectPostContent, postProject: Boolean = false, selectizeInputId: String = "postNewJobSelectizeInput")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -97,22 +98,19 @@ object NewProjectForm {
 
       $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)*/
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val post = new VersionedPost(uid, new Date().toUTCString(), new Date().toUTCString(), "", "", Nil, state.projectPost)
-      //      println(selectedConnections)
-      LGCircuit.dispatch(PostContent(post, selectedConnections, CoreApi.JOBS_SESSION_URI))
+      val post = new ProjectsPost(uid, new Date().toUTCString(), new Date().toUTCString(), "", "", Nil, state.projectPost)
+      LGCircuit.dispatch(PostContent(post, selectedConnections, SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postProject)
       props.submitHandler(state.postProject)
     }
-    def updateName(event: ReactEventI) = {
+    def updateName(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(name = value)))
     }
-    def updateStartDate(event: ReactEventI) = {
+    def updateStartDate(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(startDate = value)))
     }
@@ -291,7 +289,7 @@ object NewProjectForm {
     }
   }
   private val component = ReactComponentB[Props]("PostAProjectForm")
-    .initialState_P(p => State(new ProjectPost("", "", "", "", "", "", "", "", false, 0, "")))
+    .initialState_P(p => State(new ProjectPostContent("", "", "", "", "", "", "", "", false, 0, "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postProject) {

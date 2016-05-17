@@ -9,8 +9,9 @@ import client.services.CoreApi
 import shared.dtos._
 import client.utils.Utils
 import diode.util.{ Retry, RetryPolicy }
-import org.scalajs.dom._
+import org.scalajs.dom.window
 import org.widok.moment.Moment
+import shared.sessionitems.SessionItems
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
@@ -35,17 +36,19 @@ object MessagesModelHandler {
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
       .flatMap(filterMessages)
-      .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+      .sortWith((x, y) => ((Moment(x.created).utc()).isAfter(Moment(y.created).utc())))
+      .map(message => (message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString)))
     MessagesRootModel(model)
   }
-
 }
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case action: RefreshMessages =>
-      val labels = window.sessionStorage.getItem("currentSearchLabel")
-      val updateF = action.effectWithRetry(CoreApi.getMessages())(messages => MessagesModelHandler.getMessagesModel(messages))
+      val labels = window.sessionStorage.getItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
+      val updateF = action.effectWithRetry {
+        CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+      }(messages => MessagesModelHandler.getMessagesModel(messages))
       Option(labels) match {
         case Some(s) =>
           action.handleWith(this, updateF)(PotActionRetriable.handler())
