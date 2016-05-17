@@ -6,13 +6,14 @@ import shared.models.MessagePost
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.handlers.PostMessages
-import synereo.client.services.{ CoreApi, SYNEREOCircuit }
-import scala.util.{ Failure, Success }
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -39,7 +40,7 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
 
-    def addMessage( /*postMessage:PostMessage*/ ): Callback = {
+    def addMessage(/*postMessage:PostMessage*/): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
@@ -50,7 +51,8 @@ object NewMessage {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/
+        /*, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
@@ -103,13 +105,13 @@ object NewMessageForm {
       SYNEREOCircuit.dispatch(PostMessages(
         state.postMessage.content,
         ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        CoreApi.MESSAGES_SESSION_URI
+        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI
       ))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      props.submitHandler( /*state.postMessage*/ )
+      props.submitHandler(/*state.postMessage*/)
     }
 
     def render(s: State, p: Props) = {

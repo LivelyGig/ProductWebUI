@@ -5,6 +5,7 @@ import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.UserModel
+import shared.sessionitems.SessionItems
 import synereo.client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
 import synereo.client.components.Bootstrap.{ Button, CommonStyle }
 import synereo.client.components.{ Icon, MIcon }
@@ -162,7 +163,7 @@ object Login {
     }
 
     def createSessions(userModel: UserModel) = {
-      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
+      val sessionURISeq = Seq(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
       var futureArray = Seq[Future[String]]()
       sessionURISeq.map { sessionURI => futureArray :+= CoreApi.agentLogin(userModel) }
       Future.sequence(futureArray).map { responseArray =>
@@ -185,7 +186,7 @@ object Login {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
       window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
         imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
       t.modState(s => s.copy(showLoginForm = false))
@@ -227,7 +228,7 @@ object Login {
             }
           case Failure(s) =>
             //            log.debug(s"createUserFailure: ${s}")
-            println(" In faliure = " + s)
+            println(s"In faliure =$s")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
 
         }

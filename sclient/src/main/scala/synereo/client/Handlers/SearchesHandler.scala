@@ -109,7 +109,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
-      window.sessionStorage.setItem("currentSearchLabel", Utils.GetLabelProlog(labelFamilies))
+      window.sessionStorage.setItem("currentSearchLabel", Utils.getLabelProlog(labelFamilies))
       labelFamilies.clear()
       noChange
   }

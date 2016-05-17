@@ -8,14 +8,14 @@ import shared.models.LabelModel
  * Created by shubham.k on 3/4/2016.
  */
 object Utils {
-  def GetSelfConnnection(uri: String): Connection = {
+  def getSelfConnnection(uri: String): Connection = {
     val sessionUri = window.sessionStorage.getItem(uri)
     val sessionUriSplit = sessionUri.split('/')
     val sourceStr = "agent://" + sessionUriSplit(2)
     Connection(sourceStr, "alias", sourceStr)
   }
 
-  def GetLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
+  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
     // println("labelFamilies = " + labelFamilies)
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder

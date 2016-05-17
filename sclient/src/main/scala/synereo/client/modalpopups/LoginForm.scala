@@ -20,7 +20,7 @@ import org.querki.jquery._
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean)
+  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean= false)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false)
 

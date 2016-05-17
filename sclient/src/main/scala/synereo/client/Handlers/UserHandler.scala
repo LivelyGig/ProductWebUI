@@ -5,6 +5,7 @@ import diode.{ ActionHandler, Effect, ModelRW }
 import shared.dtos.{ Expression, ExpressionContent, Label, SubscribeRequest, _ }
 import shared.models.{ Post, UserModel }
 import org.scalajs.dom.window
+import shared.sessionitems.SessionItems
 import synereo.client.services.{ SYNEREOCircuit, CoreApi }
 import synereo.client.utils.Utils
 
@@ -40,7 +41,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(modelFromStore)
     /*create sessions functionality is moved to a method in login module this case is sporadically used*/
     case CreateSessions(userModel2) =>
-      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
+      val sessionURISeq = Seq(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
       val futures = sessionURISeq.map(sessionURI =>
         CoreApi.agentLogin(userModel2).map { responseStr =>
           val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
@@ -52,7 +53,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       val createdDateTime = Moment().utc().format("YYYY-MM-DD hh:mm:ss")
       //      println(createdDateTime)
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
+      val connectionsSeq = Seq(Utils.getSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
       val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {
@@ -66,7 +67,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val connectionsSeq = Seq(Utils.GetSelfConnnection(sessionUri)) /* ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))*/
+      val connectionsSeq = Seq(Utils.getSelfConnnection(sessionUri)) /* ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))*/
       //      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {

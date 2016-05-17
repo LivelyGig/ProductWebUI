@@ -5,6 +5,7 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.sessionitems.SessionItems
 import synereo.client.handlers.{ TestDispatch, PostMessages, RefreshConnections, RefreshMessages }
 import org.scalajs.dom
 import shared.models.{ MessagePost, MessagesModel }
@@ -46,7 +47,7 @@ object Dashboard {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content, Seq[String](), CoreApi.MESSAGES_SESSION_URI))
+      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.content, Seq[String](), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(content = "")))
     }
 

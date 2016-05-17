@@ -38,7 +38,7 @@ object MessagesModelHandler {
     val model = messagesFromBackend
       .filterNot(_.content.pageOfPosts.isEmpty)
       .map(message => upickle.default.read[MessagesModel](message.content.pageOfPosts(0)))
-      .sortWith((x, y) => (Moment(x.created).utc()).isAfter(Moment(x.created).utc()))
+      .sortWith((x, y) => (Moment(x.created).utc()).isAfter(Moment(y.created).utc()))
       .map(message => message.copy(created = Moment(Moment.utc(message.created).toDate()).format("YYYY-MM-DD hh:mm:ss").toString))
     MessagesRootModel(model)
   }
@@ -47,7 +47,7 @@ object MessagesModelHandler {
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action: RefreshMessages =>
-      val labels = Utils.GetLabelProlog(Nil)
+      val labels = Utils.getLabelProlog(Nil)
       window.sessionStorage.setItem("currentSearchLabel", labels)
       if (labels != null) {
         val updateF = action.effect(CoreApi.getMessages())(messages => MessagesModelHandler.GetMessagesModel(messages))

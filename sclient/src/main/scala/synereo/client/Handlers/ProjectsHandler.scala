@@ -36,7 +36,7 @@ object ProjectsModelHandler {
       )
     }
     //    println(model)
-    ProjectsRootModel(model)
+    ProjectsRootModel(Nil)
   }
 
 }
