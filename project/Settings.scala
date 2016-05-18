@@ -29,13 +29,8 @@ object Settings {
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % Versions.autowire,
     "me.chrons" %%% "boopickle" % Versions.booPickle,
-//    "com.lihaoyi" %%% "utest" % Versions.uTest,
 	  "com.lihaoyi" %%% "upickle" % "0.3.8",
-    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"/*,
-    "org.scala-js" %%% "scalajs-dom" % Versions.scalaDom,
-    "me.chrons" %%% "diode" % Versions.diode,
-    "me.chrons" %%% "diode-react" % Versions.diode,
-    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"*/
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies only used by the JVM project */
@@ -62,7 +57,6 @@ object Settings {
     "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
     "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
-//    "org.webjars.bower" % "moment-timezone" % "0.5.4"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
