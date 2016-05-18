@@ -4,7 +4,7 @@ import sbt.Project.projectToRef
 // a special crossProject for configuring a JS/JVM/shared structure
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   .settings(
-    scalaVersion := Settings.versions.scala,
+    scalaVersion := Versions.scalaVersion,
     libraryDependencies ++= Settings.sharedDependencies.value
   )
 
@@ -26,8 +26,8 @@ lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.le
 lazy val client: Project = (project in file(pCompile))
   .settings(
     name := "client",
-    version := Settings.version,
-    scalaVersion := Settings.versions.scala,
+    version := Versions.appVersion,
+    scalaVersion := Versions.scalaVersion,
     scalacOptions ++= Settings.scalacOptions,
     resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
     libraryDependencies ++= Settings.scalajsDependencies.value,
@@ -57,8 +57,8 @@ lazy val clients = Seq(client)
 lazy val server = (project in file("server"))
   .settings(
     name := "server",
-    version := Settings.version,
-    scalaVersion := Settings.versions.scala,
+    version := Versions.appVersion,
+    scalaVersion :=  Versions.scalaVersion,
     scalacOptions ++= Settings.scalacOptions,
     libraryDependencies ++= Settings.jvmDependencies.value,
     commands += ReleaseCmd,

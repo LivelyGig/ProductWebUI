@@ -1,6 +1,5 @@
 package client.handlers
 
-import client.Handlers.ContentModelHandler
 import client.modules.AppModule
 import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
 import diode.data._
