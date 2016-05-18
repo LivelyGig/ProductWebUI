@@ -22,7 +22,7 @@ case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) exte
 }
 
 object ConnectionModelHandler {
-  def GetConnectionsModel(response: String): ConnectionsRootModel = {
+  def getConnectionsModel(response: String): ConnectionsRootModel = {
 
     val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
     //    println("connections = "+ connections)
@@ -49,7 +49,7 @@ object ConnectionModelHandler {
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action: RefreshConnections =>
-      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.GetConnectionsModel(connections))
+      val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.getConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }

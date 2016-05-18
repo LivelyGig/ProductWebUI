@@ -15,8 +15,8 @@ import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 
 /**
- * Created by Shubham.K on 4/6/2016.
- */
+  * Created by Shubham.K on 4/6/2016.
+  */
 object ConnectionsSelectize {
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
     var selectedConnections = Seq[String]()
@@ -47,7 +47,7 @@ object ConnectionsSelectize {
       val selectState: js.Object = "#selectize"
       val getSelectedValue = $(selectState).find("option").text()
       //scalastyle:off
-      println(getSelectedValue)
+      //      println(getSelectedValue)
     }
 
     def mounted(props: Props): Callback = Callback {

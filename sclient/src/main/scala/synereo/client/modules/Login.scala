@@ -142,16 +142,13 @@ object Login {
       t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
     }
 
-    def processLoginFailed(responseStr: String) = {
+    def processLoginFailed(responseStr: String): Unit = {
       println("in processLoginFailed")
       $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
       val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
-      //window.alert("please enter valid credentials")
-      //      println(loginErrorMessage)
       println(loginErrorMessage.content.reason)
       t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
-
     }
 
     def processServerError(responseStr: String): Unit = {
@@ -162,23 +159,21 @@ object Login {
       t.modState(s => s.copy(showServerErrorModal = true)).runNow()
     }
 
-    def createSessions(userModel: UserModel) = {
+    def createSessions(userModel: UserModel): Unit = {
       val sessionURISeq = Seq(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
       var futureArray = Seq[Future[String]]()
       sessionURISeq.map { sessionURI => futureArray :+= CoreApi.agentLogin(userModel) }
       Future.sequence(futureArray).map { responseArray =>
-        println(responseArray)
         for (responseStr <- responseArray) {
           val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-          //          println(response)
           val index = sessionURISeq(responseArray.indexOf(responseStr))
-          //          println()
           window.sessionStorage.setItem(index, response.content.sessionURI)
         }
         println("login successful")
         $(loadingScreen).addClass("hidden")
         $(loginLoader).addClass("hidden")
         window.location.href = "/#dashboard"
+        SYNEREOCircuit.dispatch(LoginUser(userModel))
       }
     }
 
@@ -197,7 +192,6 @@ object Login {
       SYNEREOCircuit.dispatch(CreateLabels())
       //      SYNEREOCircuit.dispatch(CreateSessions(userModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
-      SYNEREOCircuit.dispatch(LoginUser(user))
       createSessions(userModel)
 
     }
