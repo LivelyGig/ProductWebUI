@@ -2,6 +2,8 @@ package shared.models
 
 import java.util.Date
 
+import shared.dtos.{Connection, Label}
+
 /**
  * Created by shubham.k on 27-04-2016.
  */
@@ -12,35 +14,30 @@ sealed trait Post {
   def uid: String
   def created: String
   def modified: String
-  def spliciousType: String
   def labels: String
-  def connections: Seq[String]
+  def connections: Seq[Connection]
   def postType: String
-}
-sealed trait VersionedPost {
-  def versionedPostType: String
   def versionNumber: Int
 }
-case class MessagePost(uid: String, spliciousType: String, created: String, modified: String,
-    labels: String, connections: Seq[String], message: String, recipients: String = "", subject: String = "", content: String = "") extends Post {
+sealed trait PostContent
+case class MessagePost(uid: String = "", created: String = "", modified: String = "",
+ labels: String = "", connections: Seq[Connection] = Nil, messagePostContent:MessagePostContent) extends Post {
   override def postType: String = "MessagePost"
+  override def versionNumber: Int = 0
 }
-case class ProjectsPost(uid: String, created: String, modified: String, spliciousType: String, labels: String,
-    connections: Seq[String], projectPostContent: ProjectPostContent, versionNumber: Int = 0) extends Post with VersionedPost {
+case class MessagePostContent(text: String = "", subject: String = "") extends PostContent
+case class ProjectsPost(uid: String, created: String, modified: String, labels:String = "",
+                        connections: Seq[Connection] = Nil, projectPostContent: ProjectPostContent) extends Post  {
   override def postType: String = "VersionedPost"
-  override def versionedPostType: String = "ProjectPost"
-}
-sealed trait VersionedPostContent {
-  def versionedPostType: String
-  def versionNumber: Int
+  override def versionNumber: Int = 0
 }
 case class ProjectPostContent(name: String, startDate: String, endDate: String, budget: String, contractType: String,
   workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean,
-  versionNumber: Int, message: String)
+  versionNumber: Int, message: String) extends PostContent
 
-case class TalentPost(versionNumber: Int, talentProfile: Person, employerProfile: EmployerProfile, moderatorProfile: Person) extends VersionedPostContent {
+/*case class TalentPost(versionNumber: Int, talentProfile: Person, employerProfile: EmployerProfile, moderatorProfile: Person) extends VersionedPostContent {
   override def versionedPostType: String = "TalentPost"
-}
+}*/
 
 sealed trait Person {
   def name: String

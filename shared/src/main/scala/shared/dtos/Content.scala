@@ -44,7 +44,7 @@ case class Expression(msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
-case class ExpressionContentValue(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Map[Label, String], connections: Seq[Connection] = Nil, text: String = "")
+//case class ExpressionContentValue(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Map[Label, String], connections: Seq[Connection] = Nil, text: String = "")
 case class Label(text: String, color: String, imgSrc: String)
 
 //case class any(labels: Seq[String])

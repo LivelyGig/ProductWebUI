@@ -18,7 +18,7 @@ import client.logger._
 import shared.models.EmailValidationModel
 import shared.models.UserModel
 import shared.models.{ EmailValidationModel, UserModel }
-import client.services.ApiResponseMsg
+import client.services.ApiTypes
 import client.services.CoreApi
 import client.services.CoreApi._
 import client.services.CoreApi._
