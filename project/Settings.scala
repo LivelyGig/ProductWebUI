@@ -29,8 +29,7 @@ object Settings {
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % Versions.autowire,
     "me.chrons" %%% "boopickle" % Versions.booPickle,
-	  "com.lihaoyi" %%% "upickle" % "0.3.8",
-    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
+	  "com.lihaoyi" %%% "upickle" % "0.3.8"
   ))
 
   /** Dependencies only used by the JVM project */
@@ -40,8 +39,7 @@ object Settings {
     "org.webjars" % "font-awesome" %"4.6.2"  % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
     "org.json4s" %% "json4s-jackson" % 	"3.3.0" ,
-    "org.scalaj" %% "scalaj-http" %  "2.3.0",
-    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
+    "org.scalaj" %% "scalaj-http" %  "2.3.0"
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
@@ -57,7 +55,8 @@ object Settings {
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5",
     "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
-    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
+    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4",
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
