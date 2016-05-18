@@ -15,7 +15,7 @@ case class AppModel(modelType: String, connectionsModel: Seq[ConnectionsModel] =
 //case class MessagesModel (count: Int)
 
 //sealed trait SubscribeResponse
-case class MessagesModel(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Seq[LabelResponse] = Nil, connections: Seq[Connection] = Nil, text: String = "", parent: ParentMessageModel = ParentMessageModel("", "", "", "", Nil, Nil, ""))
+case class MessagesModel(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Seq[LabelResponse] = Nil, connections: Seq[Connection] = Nil, text: String = ""/*, parent: ParentMessageModel = ParentMessageModel("", "", "", "", Nil, Nil, "")*/)
 
 case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
 

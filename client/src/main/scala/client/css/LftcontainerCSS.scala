@@ -16,9 +16,9 @@ object LftcontainerCSS {
       display.inlineBlock,
       overflow.auto,
       media.maxWidth(767.px) -
-        minWidth(200.px),
+        width(200.px),
       media.minWidth(768.px) -
-        minWidth(260.px)
+        width(260.px)
 
     )
     val textareaWidth = style(

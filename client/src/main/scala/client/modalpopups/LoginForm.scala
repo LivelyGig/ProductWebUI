@@ -13,6 +13,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 
+
 object LoginForm {
   //TodoForm
   // shorthand fo
@@ -59,8 +60,10 @@ object LoginForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
+    //  LoginValidation(state.userModel)
       props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewAgentForm)
     }
+
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
