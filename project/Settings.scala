@@ -40,7 +40,8 @@ object Settings {
     "org.webjars" % "font-awesome" %"4.6.2"  % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
     "org.json4s" %% "json4s-jackson" % 	"3.3.0" ,
-    "org.scalaj" %% "scalaj-http" %  "2.3.0"
+    "org.scalaj" %% "scalaj-http" %  "2.3.0",
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
@@ -63,11 +64,11 @@ object Settings {
   val jsDependencies = Def.setting(Seq(
     "org.webjars.npm" % "react" % Versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
     "org.webjars.npm" % "react-dom" % Versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
-    "org.webjars" % "jquery" % Versions.jQuery / "2.2.3/jquery.js" minified "jquery.min.js",
-    "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "2.2.3/jquery.js",
+    "org.webjars" % "jquery" % Versions.jQuery / "jquery.js" minified "jquery.min.js",
+    "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
-    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "2.2.3/jquery.js",
+    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
     //"org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
-    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "2.2.3/jquery.js"
+    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
   ))
 }

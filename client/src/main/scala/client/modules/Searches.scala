@@ -105,6 +105,7 @@ object Searches {
     def mounted(): Callback = Callback {
       initializeDatepicker
       initializeTagsInput
+      sidebar
       LGCircuit.dispatch(CreateLabels())
     }
 

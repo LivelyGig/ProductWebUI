@@ -15,7 +15,7 @@ trait ScalaJSVersions {
   val datePickerFacade = "0.5"
   val selectizeFacade = "0.12.1-0.2.1"
   val momentJSFacade = "0.1.4"
-  val jQuery = "2.2.3"
+  val jQuery = "1.11.1"
 
 }
 
