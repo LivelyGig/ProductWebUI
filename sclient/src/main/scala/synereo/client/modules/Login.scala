@@ -6,25 +6,25 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.UserModel
 import shared.sessionitems.SessionItems
-import synereo.client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
-import synereo.client.components.Bootstrap.{ Button, CommonStyle }
-import synereo.client.components.{ Icon, MIcon }
+import synereo.client.handlers.{CreateLabels, LoginUser, RefreshConnections}
+import synereo.client.components.Bootstrap.{Button, CommonStyle}
+import synereo.client.components.{Icon, MIcon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
 import shared.models.EmailValidationModel
-import synereo.client.services.{ ApiResponseMsg, CoreApi, SYNEREOCircuit }
+import synereo.client.services.{ApiResponseMsg, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
 import scala.concurrent.Future
 import scala.scalajs.js
-import js.{ Date, JSON, UndefOr }
-import scala.util.{ Failure, Success }
+import js.{Date, JSON, UndefOr}
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.querki.jquery._
 
 /**
- * Created by Mandar on 3/11/2016.
- */
+  * Created by Mandar on 3/11/2016.
+  */
 object Login {
   val LOGIN_ERROR = "LOGIN_ERROR"
   val SERVER_ERROR = "SERVER_ERROR"
@@ -37,8 +37,9 @@ object Login {
   case class Props()
 
   case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
-    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
-    showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false,
+                   showRegistrationFailed: Boolean = false,
+                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -67,7 +68,7 @@ object Login {
     //    }
 
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
-      println(s"showNewUserForm: $showNewUserForm")
+      //      println(s"showNewUserForm: $showNewUserForm")
       true match {
         case `login` => processLogin(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
@@ -204,8 +205,8 @@ object Login {
       //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      println("usermodal " + userModel + "addNewUser " + addNewUser)
-      println("in add new user methiood")
+      //      println("usermodal " + userModel + "addNewUser " + addNewUser)
+      //      println("in addNewUser method")
       if (addNewUser) {
         CoreApi.createUser(userModel).onComplete {
           case Success(response) =>
@@ -240,7 +241,7 @@ object Login {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
               //  log.debug(ApiResponseMsg.CreateUserError)
               showLoginContent = true
-              t.modState(s => s.copy( /*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
+              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
             } catch {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()

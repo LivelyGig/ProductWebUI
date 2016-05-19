@@ -1,7 +1,7 @@
 package synereo.client.modules
 
 import org.querki.jquery._
-import synereo.client.components.Icon
+import synereo.client.components._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -12,12 +12,10 @@ import scala.scalajs.js
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
-import synereo.client.handlers.{ LogoutUser, LoginUser }
+import synereo.client.handlers.{CreateLabels, LogoutUser, LoginUser}
 import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.components.MIcon
 import synereo.client.components.MIcon.MIcon
-import synereo.client.components.{ MIcon, Bootstrap, GlobalStyles, Icon }
-import synereo.client.css.{ DashboardCSS, SynereoCommanStylesCSS, LoginCSS }
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, LoginCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
@@ -35,31 +33,32 @@ object MainMenu {
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
-      //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
+    //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
+    SYNEREOCircuit.dispatch(CreateLabels())
   }
 
   def toggleTopbar = Callback {
     val topBtn: js.Object = "#TopbarContainer"
     $(topBtn).toggleClass("topbar-left topbar-lg-show")
   }
+//
+//  def displayMenu() = {
+//
+//  }
 
-  def displayMenu() = {
-
-  }
-
-  private val menuItems = Seq(
-    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
-    MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
-    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
-  )
+//  private val menuItems = Seq(
+//    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
+//    MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
+//    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
+//  )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right",props.proxy().isLoggedIn ?= (^.backgroundColor:="#277490"),SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+        <.ul(^.className := "nav navbar-nav navbar-right", props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), SynereoCommanStylesCSS.Style.mainMenuNavbar)(
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
@@ -67,7 +66,7 @@ object MainMenu {
               <.li(
                 <.div(^.className := "dropdown")(
                   <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
-                    ^.onMouseOver ==>$.props.displayMenu*/ )(MIcon.speakerNotes),
+                    ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
                   <.div(^.className := "dropdown-arrow"),
                   <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
                     <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
@@ -95,7 +94,7 @@ object MainMenu {
                   )
                 )
               ),
-              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/ )(
+              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/)(
                 <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
                 <.div(^.className := "dropdown-arrow-small"),
                 <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
@@ -125,12 +124,15 @@ object MainMenu {
           }
         ), <.div(
           if (props.proxy().isLoggedIn) {
-            <.div(^.className:="text-center")(
-              <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
-                <.div(^.className := "form-group")(
-                  <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
-                ),
-                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
+            <.div(^.className := "text-center")(
+              //              <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
+              //                <.div(^.className := "form-group")(
+              //                  <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
+              //                ),
+              //                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
+              //              ),
+              <.div(^.id := "labelsId")(
+                SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsId")))
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
