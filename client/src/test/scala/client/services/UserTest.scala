@@ -7,13 +7,13 @@ import shared.models.UserModel
   */
 class UserTest extends UnitTest("UserModel") {
 
-  "Attributes of Usermodel" should "not be null " in {
-    val usermodel = new UserModel(" "," ","",false," ","")
-    usermodel.name shouldNot be(null)
-    usermodel.password shouldNot  be(null)
-    usermodel.ConfirmPassword shouldNot be(null)
-    usermodel.email shouldNot be(null)
-    usermodel.imgSrc shouldNot be(null)
+    "Attributes of Usermodel" should "not be null " in {
+      val usermodel = new UserModel(" "," ","",false," ","")
+      usermodel.name shouldNot be(null)
+      usermodel.password shouldNot  be(null)
+      usermodel.ConfirmPassword shouldNot be(null)
+      usermodel.email shouldNot be(null)
+      usermodel.imgSrc shouldNot be(null)
   }
 
 }

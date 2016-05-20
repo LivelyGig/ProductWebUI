@@ -41,6 +41,13 @@ object Searches {
     def searchClick(props: Props): Unit = {
       val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+      $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+      if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
+        $(sidebtn).next().addClass("sidebarRightContainer")
+      } else {
+        $(sidebtn).next().removeClass("sidebarRightContainer")
+      }
+
       //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
       props.view match {
         case AppModule.MESSAGES_VIEW =>

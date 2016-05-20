@@ -83,13 +83,13 @@ object LGMain extends js.JSApp {
               c.link(LandingLoc)(^.className := "navbar-header", <.img(HeaderCSS.Style.imgLogo, HeaderCSS.Style.logoImage, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")),
               <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", HeaderCSS.Style.navbarToggle, "data-target".reactAttr := "#navi-collapse")(
                 r.page match {
-                  case JobPostsLoc => <.span(^.color := "white", ^.float := "right")("Jobs ", "  ", Icon.thList)
-                  case DashboardLoc => <.span(^.color := "white", ^.float := "right")("Dashboard ", "  ", Icon.thList)
-                  case MessagesLoc => <.span(^.color := "white", ^.float := "right")("Messages ", "  ", Icon.thList)
-                  case OfferingsLoc => <.span(^.color := "white", ^.float := "right")("Offerings ", "  ", Icon.thList)
-                  case ProfilesLoc => <.span(^.color := "white", ^.float := "right")("Profiles ", "  ", Icon.thList)
-                  case ContractsLoc => <.span(^.color := "white", ^.float := "right")("Contracts ", "  ", Icon.thList)
-                  case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")("Connections ", "  ", Icon.thList)
+                  case JobPostsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Jobs")
+                  case DashboardLoc => <.span(^.color := "white", ^.float := "right")( Icon.navicon,"  "," Dashboard")
+                  case MessagesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon , "  ", " Messages" )
+                  case OfferingsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Offerings")
+                  case ProfilesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Profiles")
+                  case ContractsLoc => <.span(^.color := "white", ^.float := "right")( Icon.navicon, "  "," Contracts")
+                  case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Connections")
                   case _ => <.span()
                 }
               )
