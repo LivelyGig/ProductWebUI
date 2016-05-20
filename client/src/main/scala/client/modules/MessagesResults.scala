@@ -115,7 +115,7 @@ object MessagesList {
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  ${message.created}"),
-          <.div(^.className := "media-body")(s"Subject: ${message.messagePostContent.text}"),
+          <.div(^.className := "media-body")(s"Subject: ${message.messagePostContent.subject}"),
           <.div(^.className := "media-body")(s"Message: ${message.messagePostContent.text}",
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),

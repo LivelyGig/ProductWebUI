@@ -15,8 +15,8 @@ object HeaderCSS {
     val naviContainer = style(
       backgroundColor(c"#005256"),
       minHeight(52.px),
-      position.absolute,
-      zIndex(1),
+//      position.absolute,
+//      zIndex(1),
       borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -102,7 +102,7 @@ object HeaderCSS {
     )
 
     val connectionsmiddelNaviContainer = style(
-      marginTop(52.px),
+    //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
@@ -111,7 +111,7 @@ object HeaderCSS {
     )
 
     val messagesmiddelNaviContainer = style(
-      marginTop(52.px),
+     // marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
@@ -119,28 +119,28 @@ object HeaderCSS {
     )
 
     val jobsmiddelNaviContainer = style(
-      marginTop(52.px),
+     // marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(56, 56, 90))
     )
     val offeringsmiddelNaviContainer = style(
-      marginTop(52.px),
+    //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(48, 94, 125))
     )
     val profilessmiddelNaviContainer = style(
-      marginTop(52.px),
+    //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(49, 49, 49))
     )
     val contractssmiddelNaviContainer = style(
-      marginTop(52.px),
+    //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
