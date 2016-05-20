@@ -29,7 +29,7 @@ object MainMenu {
 
   case class State(isLoggedIn: Boolean = false)
 
-  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
+//  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =

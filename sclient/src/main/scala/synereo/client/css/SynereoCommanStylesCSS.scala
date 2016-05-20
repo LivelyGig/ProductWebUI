@@ -62,10 +62,12 @@ object SynereoCommanStylesCSS {
     )
     val userNameTopMenubar = style(
       opacity(0.6),
-      fontSize(12.px)
+      fontSize(12.px),
+      display.inlineBlock
     )
     val ampsCount = style(
-      fontWeight._600
+      fontWeight._600,
+      display.inlineBlock
     )
     val mainMenuNavbar = style(
       position.absolute,
@@ -245,6 +247,13 @@ object SynereoCommanStylesCSS {
       height(30.px),
       borderRadius(50.%%),
       display.inlineBlock
+    )
+    val userAvatarTopBar= style(
+      width(30.px),
+      height(30.px),
+      borderRadius(50.%%),
+      display.inlineBlock,
+      float.left
     )
     val userAvatarAnchor = style(
       backgroundColor.transparent.important,

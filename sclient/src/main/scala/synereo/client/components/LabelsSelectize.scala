@@ -37,11 +37,11 @@ object LabelsSelectize {
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
-      println(s"element lenth: ${$(selectState).length}")
+      //      println(s"element lenth: ${$(selectState).length}")
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = "#labelsSelectize"
-//        $(selectizeInput).selectize(SelectizeConfig.maxOptions(2)).destroy()
-        println(s"test : ${$(selectizeInput)}")
+        //        $(selectizeInput).selectize(SelectizeConfig.maxOptions(2)).destroy()
+        //        println(s"test : ${$(selectizeInput)}")
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(3)
           .plugins("remove_button"))
@@ -57,20 +57,20 @@ object LabelsSelectize {
     }
 
     def mounted(props: Props): Callback = Callback {
-      println("searches model is = " + props.proxy().searchesModel)
+      //      println("searches model is = " + props.proxy().searchesModel)
       initializeTagsInput(props.parentIdentifier)
     }
 
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
-      println(s"parent div length ${$(parentDiv).length}")
-      if ($(parentDiv).length == 0 ) {
+      //      println(s"parent div length ${$(parentDiv).length}")
+      if ($(parentDiv).length == 0) {
         <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
-//          props.proxy().render(searchesRootModel => searchesRootModel.se)
-            for (label <- props.proxy().searchesModel) yield {
-              <.option(^.value:=label.uid,^.key:=label.uid)(label.text)
-            }
+          //          props.proxy().render(searchesRootModel => searchesRootModel.se)
+          for (label <- props.proxy().searchesModel) yield {
+            <.option(^.value := label.uid, ^.key := label.uid)(label.text)
+          }
         )
       } else {
         <.div()

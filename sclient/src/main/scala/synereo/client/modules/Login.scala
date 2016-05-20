@@ -170,7 +170,7 @@ object Login {
           val index = sessionURISeq(responseArray.indexOf(responseStr))
           window.sessionStorage.setItem(index, response.content.sessionURI)
         }
-        println("login successful")
+        //        println("login successful")
         $(loadingScreen).addClass("hidden")
         $(loginLoader).addClass("hidden")
         window.location.href = "/#dashboard"
@@ -190,7 +190,7 @@ object Login {
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-      SYNEREOCircuit.dispatch(CreateLabels())
+      //      SYNEREOCircuit.dispatch(CreateLabels())
       //      SYNEREOCircuit.dispatch(CreateSessions(userModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
       createSessions(userModel)

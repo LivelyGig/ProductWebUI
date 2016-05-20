@@ -78,7 +78,7 @@ object DashboardCSS {
       width(110.px),
       border(1.px, solid, transparent),
       borderBottomLeftRadius(9.em),
-      backgroundColor(c"#1B76A3"),
+      backgroundColor(c"#1e84b4"),
       position.absolute,
       right.`0`,
       fontSize(13.px),
@@ -96,7 +96,7 @@ object DashboardCSS {
 
     )
     val CardHolderLiElement = style(
-      margin(15.px),
+      margin(15.px,-30.px),
       padding(15.px)
     )
     val glanceViewName = style(

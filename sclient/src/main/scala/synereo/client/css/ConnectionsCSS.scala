@@ -18,7 +18,10 @@ object ConnectionsCSS {
       paddingBottom(60.px)
     )
     val connectionAvatar = style(
-      width(80.px),
+      width(70.px),
+      height(70.px),
+      maxWidth(70.px),
+      maxHeight(70.px),
       margin(15.px)
     )
     val fullUserDescription = style(

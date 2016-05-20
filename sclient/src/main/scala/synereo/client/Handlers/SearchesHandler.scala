@@ -1,12 +1,12 @@
 package synereo.client.handlers
 
-import diode.{ Effect, ActionHandler, ModelRW }
+import diode.{Effect, ActionHandler, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
-import shared.RootModels.{ SearchesRootModel, MessagesRootModel }
-import synereo.client.services.{ SYNEREOCircuit, CoreApi }
-import synereo.client.utils.{ Utils, PrologParser }
+import shared.RootModels.{SearchesRootModel, MessagesRootModel}
+import synereo.client.services.{SYNEREOCircuit, CoreApi}
+import synereo.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -24,6 +24,7 @@ object SearchesModelHandler {
         SearchesRootModel(Nil)
     }
   }
+
   def updateModel(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     val children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
@@ -31,8 +32,11 @@ object SearchesModelHandler {
     }
     labels
   }
+
   var children = Seq[LabelModel]()
-  var listE = new ListBuffer[LabelModel]() /*Seq[Label]()*/
+  var listE = new ListBuffer[LabelModel]()
+
+  /*Seq[Label]()*/
   /*var searchLabels = new ListBuffer[Seq[Label]]()*/
   def getChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.parentUid == label.uid)
@@ -42,6 +46,7 @@ object SearchesModelHandler {
     }
     listE
   }
+
   def getChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.uid == label.parentUid)
     if (!children.isEmpty) {
@@ -50,6 +55,7 @@ object SearchesModelHandler {
     }
     listE
   }
+
   var labelFamilies = new ListBuffer[LabelModel]()
   /*def GetLabelFamilies (label: Label,labels: Seq[Label]) : Seq[Label] = {
     labelFamilies
@@ -57,18 +63,23 @@ object SearchesModelHandler {
 }
 
 case class CreateLabels()
+
 case class UpdateLabel(label: LabelModel)
+
 case class SubscribeSearch()
+
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
+  // scalastyle:off
   override def handle = {
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
-      //      println("listOfLabelFromStore"+listOfLabelFromStore)
+//      println("listOfLabelFromStore:" + listOfLabelFromStore)
       if (listOfLabelFromStore != null) {
         try {
           upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         } catch {
           case e: Exception =>
+            println("")
         }
         val listOfLabels = upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))
         //        println("listOfLabels"+listOfLabels)
