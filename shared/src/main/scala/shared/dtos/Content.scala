@@ -30,8 +30,6 @@ case class ConnectionProfileResponse(sessionURI: String, connection: Connection,
 case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection = Connection(),
   filter: String = "")
 
-//case class JsonBlobModel(name: String, imgSrc: String)
-
 case class Connection(source: String = "", label: String = "", target: String = "") /*extends Content*/
 
 case class SessionPing(sessionURI: String) extends Content
@@ -44,10 +42,7 @@ case class Expression(msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
-//case class ExpressionContentValue(uid: String = "", `type`: String = "", created: String = "", modified: String = "", labels: Map[Label, String], connections: Seq[Connection] = Nil, text: String = "")
 case class Label(text: String, color: String, imgSrc: String)
-
-//case class any(labels: Seq[String])
 
 object Content {
   implicit val requestContentPickler: Pickler[Content] = generatePickler[Content]

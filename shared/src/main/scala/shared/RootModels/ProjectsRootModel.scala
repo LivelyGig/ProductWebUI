@@ -1,6 +1,6 @@
 package shared.RootModels
 
-import shared.models.{ ProjectsModel, ProjectsPost }
+import shared.models.ProjectsPost
 import shared.dtos._
 
 case class ProjectsRootModel(projectsModelList: Seq[ProjectsPost]) {
