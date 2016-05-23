@@ -6,8 +6,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
-import scala.util.{ Failure, Success }
+import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
 import scala.language.reflectiveCalls
@@ -47,7 +47,7 @@ object UserSkills {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div( /*ProjectCSS.Style.displayInitialbtn*/ )(
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
         Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName),
         if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
         else
@@ -96,7 +96,7 @@ object UserSkillsForm {
     }
 
     def render(s: State, p: Props) = {
-      val headerText = "Talent Profile  |  Employer Profile   |   Moderator Profile"
+      val headerText = "New Profile"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -108,6 +108,36 @@ object UserSkillsForm {
           //          <.div(^.className:="row")(
           //            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
           //          ),
+          <.div()(
+            "Your persona currently has the following profiles:", <.br(),
+            "Talent: Videographer ", <.a()("edit"), <.br(),
+            "Talent:   .Net Developer ", <.a()("edit"), <.br(),
+            "Talent Agency: Video Now On-Location News Agency ", <.a()("edit"), <.br()
+          ),
+
+
+          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
+                <.label(^.`for` := "Profile Type", "Create New Profile Type")
+              ),
+              <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+                <.div(^.className := "btn-group")(
+                  <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Talent")(
+                    <.span(^.className := "caret")
+                  ),
+                  <.ul(^.className := "dropdown-menu")(
+                    <.li()(<.a()("Talent")),
+                    <.li()(<.a()("Talent Profile")),
+                    <.li()(<.a()("Client")),
+                    <.li()(<.a()("Moderator"))
+                  )
+                )
+              )
+            )
+          ),
+
+
           "// For Talent:",
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
@@ -136,6 +166,16 @@ object UserSkillsForm {
                 ^.required := true, ^.placeholder := "<Select top 10, ranked>")
             )
           ),
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
+              <.label(^.`for` := "Video2", "Video")
+            ),
+            <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video2",
+                ^.required := false, ^.placeholder := "A link to a video about yourself")
+            )
+          ),
+          "// For Talent Profile:", <.br(),
           "// For Employer:",
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(

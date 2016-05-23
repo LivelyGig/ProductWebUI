@@ -134,6 +134,9 @@ object Searches {
                       <.input(^.`type` := "checkbox"), " Talent"
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                      <.input(^.`type` := "checkbox"), " Talent Agency"
+                    ),
+                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Client"
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
