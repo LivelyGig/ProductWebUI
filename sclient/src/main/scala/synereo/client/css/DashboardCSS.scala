@@ -15,8 +15,9 @@ object DashboardCSS {
     val profileActionContainer = style( /*      minHeight(60.px),
             minWidth(100.px)*/ )
     val dashboardContainerMain = style(
-      height(100.vh),
+      height(97.vh),
       overflowY.scroll.important,
+      overflowX.hidden,
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
     )
     val fullViewModalDilog = style(

@@ -22,6 +22,7 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 // and edit server/src/main/twirl/views/index.scala.html file appropirately
 lazy val pCompile = "sclient"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js")
 lazy val client: Project = (project in file(pCompile))
   .settings(
       name := "client",
@@ -42,7 +43,8 @@ lazy val client: Project = (project in file(pCompile))
       persistLauncher := true,
       persistLauncher in Test := false,
       // use uTest framework for tests
-      testFrameworks += new TestFramework("utest.runner.Framework")
+      testFrameworks += new TestFramework("utest.runner.Framework"),
+      jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJS)
