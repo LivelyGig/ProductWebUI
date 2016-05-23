@@ -86,16 +86,16 @@ object LoginForm {
                 <.div(^.className := "text-center")(
                   <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
-                <.div(^.paddingTop := "10px")(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4", DashBoardCSS.Style.padding0px)(
+                <.div(DashBoardCSS.Style.paddingTop10px)(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",
                       ^.onClick ==> showValidate)
                   ),
-                  <.div(^.className := "col-md-3 col-sm-4 col-xs-3")(
+                  <.div(^.className := "col-md-3 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px,DashBoardCSS.Style.paddingLeft7px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-5")(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px)(
                     <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Forgot My Password",
                       ^.onClick ==> showValidate)
                   )

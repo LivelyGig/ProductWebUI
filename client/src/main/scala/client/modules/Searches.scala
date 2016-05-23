@@ -41,7 +41,6 @@ object Searches {
     def searchClick(props: Props): Unit = {
       val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-      $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
         $(sidebtn).next().addClass("sidebarRightContainer")
       } else {
@@ -127,10 +126,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Profile Type")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Talent"
                     ),
@@ -143,10 +142,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Available from")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
@@ -155,10 +154,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Available to")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
@@ -167,18 +166,18 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Capabilities")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. Web Development")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
                   //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
                   //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                   //                      <.option(^.value:="")("Select"),
@@ -190,10 +189,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
@@ -214,10 +213,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"
                     ),
@@ -233,10 +232,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Added before")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
@@ -246,10 +245,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Added after")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
@@ -269,10 +268,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Job Type")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"
                     ),
@@ -296,19 +295,19 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Start after")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsStartDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Finish before")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsEndDate", ^.placeholder := "date",
@@ -317,10 +316,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Skills Required")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
                   // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
                   //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                   //                      <.option(^.value:="")("Select"),
@@ -332,10 +331,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Job State")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "btn-group")(
                       <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.border := "none", ^.paddingLeft := "0px")("Open ")(
@@ -350,10 +349,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
                   //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
                   //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
                   //                      <.option(^.value:="")("Select"),
@@ -365,10 +364,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Payment Escrow")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "btn-group")(
                       <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.border := "none", ^.paddingLeft := "0px")("Any ")(
@@ -384,10 +383,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Deliverables Escrow")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     //<.input(^.className:="form-control", LftcontainerCSS.Style.inputHeightWidth)
                     <.div(^.className := "btn-group")(
                       <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown", ^.border := "none", ^.paddingLeft := "0px")("Any ")(
@@ -403,10 +402,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
@@ -427,10 +426,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Status")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Initiating offer"
                     ),
@@ -466,34 +465,34 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Job ID")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. 70a48a34-2773-4f4f-9f92-8a261ee59ad7")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Client")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Britta")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Talent")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Abed")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
@@ -513,7 +512,7 @@ object Searches {
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
                 <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+                <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
                 <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
@@ -521,7 +520,7 @@ object Searches {
             } else {
 
               <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+                <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
                   + label.text
               )
             }
@@ -536,10 +535,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("From")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesFromDate", ^.placeholder := "date",
@@ -548,10 +547,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("To")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesBeforeDate", ^.placeholder := "date",
@@ -561,16 +560,16 @@ object Searches {
                 ),
 
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")()
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")()
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Labels")
                   ),
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
 
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -580,10 +579,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-5 col-sm-5 col-xs-12")(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-7 col-xs-12")(
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
@@ -604,10 +603,10 @@ object Searches {
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
                       <.input(^.`type` := "checkbox"), " Available for Chat"
                     ),
@@ -635,10 +634,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Added before")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
@@ -647,10 +646,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Added after")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     // <.div(^.className := "input-group date")(
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsAfterDate", ^.placeholder := "date",
@@ -659,10 +658,10 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                  <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Groups")
                   ),
-                  <.div(^.className := "col-md-8 col-sm-8 col-xs-12")(
+                  <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. Brazil")
                   )
                 )

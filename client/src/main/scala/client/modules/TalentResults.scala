@@ -1,11 +1,12 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ Callback, ReactComponentB }
+import japgolly.scalajs.react._
 import client.components.Icon
-import client.css.{ HeaderCSS, DashBoardCSS }
-import client.modals.{ NewRecommendation, NewMessage }
+import client.css.{DashBoardCSS, HeaderCSS}
+import client.modals.{NewMessage, NewRecommendation}
 import org.querki.jquery._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
