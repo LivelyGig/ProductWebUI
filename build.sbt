@@ -43,6 +43,7 @@ lazy val client: Project = (project in file(pCompile))
       // use Scala.js provided launcher code to start the client app
       persistLauncher := true,
       persistLauncher in Test := false,
+    //client side js deps
       jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
     // use uTest framework for tests
     // testFrameworks += new TestFramework("utest.runner.Framework")

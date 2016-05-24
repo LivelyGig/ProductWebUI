@@ -12,7 +12,7 @@ import synereo.client.components.{Icon, MIcon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
 import shared.models.EmailValidationModel
-import synereo.client.services.{ApiResponseMsg, CoreApi, SYNEREOCircuit}
+import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
 import scala.concurrent.Future
 import scala.scalajs.js
@@ -213,7 +213,7 @@ object Login {
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
             println(" In success value s = " + s)
             //           log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+            if (s.msgType == ApiTypes.CreateUserWaiting) {
               $(loadingScreen).addClass("hidden")
               $(loginLoader).addClass("hidden")
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
@@ -239,7 +239,7 @@ object Login {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              //  log.debug(ApiResponseMsg.CreateUserError)
+              //  log.debug(ApiTypes.CreateUserError)
               showLoginContent = true
               t.modState(s => s.copy(/*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
             } catch {

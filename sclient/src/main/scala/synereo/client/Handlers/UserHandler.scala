@@ -22,10 +22,10 @@ case class LogoutUser()
 
 case class CreateSessions(userModel2: UserModel)
 case class PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String)
-case class TestDispatch()
+//case class TestDispatch()
 
 case class PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String)
-
+//scalastyle:off
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   override def handle = {
     case LoginUser(userModel) =>
@@ -54,7 +54,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       //      println(createdDateTime)
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = Seq(Utils.getSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
-      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
+//      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
       CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
         case Success(response) => {
           val ContributeThoughtsID: js.Object = "#ContributeThoughtsID"
@@ -85,9 +85,9 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       window.location.href = "/"
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
-    case TestDispatch() =>
-      val momentdate = Moment().format("YYYY-MM-DD HH:MM:SS")
-      println("import org.widok.moment._" + momentdate)
-      noChange
+//    case TestDispatch() =>
+//      val momentdate = Moment().format("YYYY-MM-DD HH:MM:SS")
+//      println("import org.widok.moment._" + momentdate)
+//      noChange
   }
 }

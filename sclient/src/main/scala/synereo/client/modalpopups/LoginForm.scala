@@ -5,7 +5,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS, LoginCSS }
 import shared.models.UserModel
-import synereo.client.services.{ ApiResponseMsg, CoreApi }
+import synereo.client.services.{ ApiTypes, CoreApi }
 import scala.util.{ Failure, Success }
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
