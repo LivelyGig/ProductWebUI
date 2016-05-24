@@ -61,7 +61,7 @@ object AgentLoginSignUp {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
             log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+            if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
               log.debug(s"createUser msg : ${s.content}")
@@ -180,7 +180,7 @@ object AgentLoginSignUp {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              log.debug(ApiResponseMsg.CreateUserError)
+              log.debug(ApiTypes.CreateUserError)
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             } catch {
               case e: Exception =>

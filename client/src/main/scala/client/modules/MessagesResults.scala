@@ -3,19 +3,22 @@ package client.modules
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
-import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
-import client.handlers.{ RefreshConnections, StoreMessagesSearchLabel, RefreshMessages, RefreshProjects }
-import shared.RootModels.{ ConnectionsRootModel, MessagesRootModel, ProjectsRootModel }
-import client.css.{ HeaderCSS, DashBoardCSS, LftcontainerCSS }
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import client.handlers.{RefreshConnections, RefreshMessages, RefreshProjects, StoreMessagesSearchLabel}
+import shared.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
+import client.css.{DashBoardCSS, HeaderCSS, LftcontainerCSS}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS }
-import shared.models.MessagesModel
+import client.css.{DashBoardCSS, HeaderCSS}
+import shared.models.MessagePost
 import client.services.LGCircuit
+
 import scala.scalajs.js
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import client.modals.NewMessage
+import japgolly.scalajs.react
+
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
 
@@ -23,15 +26,12 @@ object MessagesResults {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(selectedItem: Option[MessagesModel] = None)
+  case class State(/*selectedItem: Option[MessagesModel] = None*/)
 
   class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props) = {
+    def mounted(props: Props): react.Callback = {
       if (props.proxy().isEmpty) {
-        //          LGCircuit.dispatch(SubscribeSearch())
-        //        LGCircuit.dispatch(RefreshConnections())
         props.proxy.dispatch(RefreshMessages())
-        //        props.proxy.dispatch(RefreshMessages())
       } else {
         Callback.empty
       }
@@ -105,18 +105,18 @@ object MessagesResults {
 
 object MessagesList {
 
-  case class Props(messages: Seq[MessagesModel])
+  case class Props(messages: Seq[MessagePost])
 
   private val MessagesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
-      def renderMessages(message: MessagesModel) = {
+      def renderMessages(message: MessagePost) = {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  ${message.created}"),
-          <.div(^.className := "media-body")(
-            message.text,
+          <.div(^.className := "media-body")(s"Subject: ${message.messagePostContent.subject}"),
+          <.div(^.className := "media-body")(s"Message: ${message.messagePostContent.text}",
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
@@ -138,7 +138,7 @@ object MessagesList {
     })
     .build
 
-  def apply(messages: Seq[MessagesModel]) =
+  def apply(messages: Seq[MessagePost]) =
     MessagesList(Props(messages))
 
 }

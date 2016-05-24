@@ -9,6 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
+import shared.dtos.Connection
 
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
@@ -18,11 +19,11 @@ import scala.scalajs.js
  * Created by Shubham.K on 4/6/2016.
  */
 object ConnectionsSelectize {
-  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
-    var selectedConnections = Seq[String]()
+  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
+    var selectedConnections = Seq[Connection]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)
+    $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
     selectedConnections
   }
 

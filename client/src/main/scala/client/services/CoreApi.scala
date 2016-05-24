@@ -14,21 +14,8 @@ import boopickle.Default._
 import shared.sessionitems.SessionItems
 
 object CoreApi {
-  val CREATE_USER_REQUEST_MSG = "createUserRequest"
-  val CONFIRM_EMAIL_MSG = "confirmEmailToken"
-  val INITIALIZE_SESSION_MSG = "initializeSessionRequest"
-  val SESSION_PING = "sessionPing"
-  val PROJECT_MSG = "projectsRequest"
-  val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
-  val INSERT_CONTENT = "insertContent"
-  val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
-
-  /*val MESSAGES_SESSION_URI = "MESSAGES_SESSION_URI"
-  val CONNECTIONS_SESSION_URI = "CONNECTIONS_SESSION_URI"
-  val PROJECTS_SESSION_URI = "PROJECTS_SESSION_URI"*/
-
   //  var BASE_URL = "http://52.35.10.219:9876/api"
-  //  var CREATE_USER_REQUEST_MSG = "createUserRequest"
+  //  var CREATE_USER_REQUEST = "createUserRequest"
   //  private def ajaxPost(msgType: String, data: RequestContent): Future[String] = {
   //    Ajax.post(
   //      url = BASE_URL,
@@ -38,29 +25,29 @@ object CoreApi {
   //  }
 
   def getConnections(): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
   def createUser(signUpModel: SignUpModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(CREATE_USER_REQUEST_MSG, CreateUser(signUpModel.email, signUpModel.password,
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_REQUEST, CreateUser(signUpModel.email, signUpModel.password,
       Map("name" -> signUpModel.name), true)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
   def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(CONFIRM_EMAIL_MSG, ConfirmEmail(emailValidationModel.token)))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.CONFIRM_EMAIL, ConfirmEmail(emailValidationModel.token)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
   def agentLogin(userModel: UserModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(INITIALIZE_SESSION_MSG, InitializeSession(s"agent://email/${userModel.email}" +
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
       s"?password=${userModel.password}")))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
   def sessionPing(uri: String): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(SESSION_PING, SessionPing(uri)))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(uri)))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
@@ -85,19 +72,12 @@ object CoreApi {
   }
 
   def getProjects(): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(PROJECT_MSG, SessionPing(window.sessionStorage.getItem("sessionURI"))))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.PROJECT_REQUEST, SessionPing(window.sessionStorage.getItem("sessionURI"))))
     AjaxClient[Api].getMock(requestContent, "jobPostsMock").call()
   }
 
-  /* def cancelPreviousSubsForLabelSearch(): Future[String] = {
-    val selfConnection = Utils.getSelfConnnection(MESSAGES_SESSION_URI)
-    val previousLabels = window.sessionStorage.getItem("previousSearchLabel")
-    val cancelPreviousRequest = CancelSubscribeRequest(window.sessionStorage.getItem(MESSAGES_SESSION_URI), Seq(selfConnection), previousLabels)
-    cancelSubscriptionRequestAndSessionPing(cancelPreviousRequest)
-  }*/
-
   def evalSubscribeRequest(subscribeRequest: SubscribeRequest): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_REQUEST, subscribeRequest))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.EVAL_SUBS_REQUEST, subscribeRequest))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 
@@ -116,7 +96,7 @@ object CoreApi {
   }
 
   def cancelSubscriptionRequest(cancelSubscribeRequest: CancelSubscribeRequest): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(EVAL_SUBS_CANCEL_REQUEST, cancelSubscribeRequest))
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.EVAL_SUBS_CANCEL_REQUEST, cancelSubscribeRequest))
     AjaxClient[Api].queryApiBackend(requestContent).call()
   }
 

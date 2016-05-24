@@ -11,18 +11,19 @@ import client.components.Bootstrap._
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
-import client.handlers.PostContent
-import client.services.{ CoreApi, LGCircuit }
+import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import client.handlers.PostData
+import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react
 
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.models.{ ProjectPostContent, ProjectsPost }
+import shared.dtos.Label
+import shared.models.{ProjectPostContent, ProjectsPost}
 import shared.sessionitems.SessionItems
 
 import scala.scalajs.js
@@ -39,15 +40,14 @@ object NewProject {
     def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showNewProjectForm = true))
     }
-    def addProjectForm(): Callback = {
+    /*def addProjectForm(): Callback = {
       t.modState(s => s.copy(showNewProjectForm = true))
-    }
-    def addNewProject(postProject: Boolean = false): Callback = {
-      // log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewProjectForm}")
+    }*/
+    def addNewProjectForm(postProject: Boolean ): Callback = {
       if (postProject) {
-        t.modState(s => s.copy(showNewProjectForm = true))
-      } else {
         t.modState(s => s.copy(showNewProjectForm = false))
+      } else {
+        t.modState(s => s.copy(showNewProjectForm = true))
       }
     }
   }
@@ -58,8 +58,8 @@ object NewProject {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div( /*ProjectCSS.Style.displayInitialbtn*/ )(
-        Button(Button.Props(B.addProjectForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
-        if (S.showNewProjectForm) NewProjectForm(NewProjectForm.Props(B.addNewProject))
+        Button(Button.Props(B.addNewProjectForm(false), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
+        if (S.showNewProjectForm) NewProjectForm(NewProjectForm.Props(B.addNewProjectForm))
         else
           Seq.empty[ReactElement]
       )
@@ -78,11 +78,7 @@ object NewProjectForm {
   case class State(projectPost: ProjectPostContent, postProject: Boolean = false, selectizeInputId: String = "postNewJobSelectizeInput")
 
   case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
-      // instruct Bootstrap to hide the modal
-      $(t.getDOMNode()).modal("hide")
-    }
-    def hidemodal = {
+    def hide: react.Callback = Callback {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
@@ -93,13 +89,7 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      val selectedConnections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      /*val selector : js.Object  = s"#${state.selectizeInputId} > .selectize-control> .selectize-input > div"
-
-      $(selector).each((y: Element) => selectedConnections :+= $(y).attr("data-value").toString)*/
-      val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val post = new ProjectsPost(uid, new Date().toUTCString(), new Date().toUTCString(), "", "", Nil, state.projectPost)
-      LGCircuit.dispatch(PostContent(post, selectedConnections, SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.projectPost,state.selectizeInputId, SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))
     }
 
@@ -114,27 +104,27 @@ object NewProjectForm {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(startDate = value)))
     }
-    def updateBudget(event: ReactEventI) = {
+    def updateBudget(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(budget = value)))
     }
-    def updateDescription(event: ReactEventI) = {
+    def updateDescription(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(description = value)))
     }
-    def updateMessage(event: ReactEventI) = {
+    def updateMessage(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(message = value)))
     }
-    def updateSkillNeeded(event: ReactEventI) = {
+    def updateSkillNeeded(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(skillNeeded = value)))
     }
-    def updateAllowFormatting(event: ReactEventI) = {
+    def updateAllowFormatting(event: ReactEventI): react.Callback = {
       val value = event.target.checked
       t.modState(s => s.copy(projectPost = s.projectPost.copy(allowFormatting = value)))
     }
-
+    // scalastyle:off
     def render(s: State, p: Props) = {
       val headerText = "New Project"
       val model = s.projectPost
@@ -293,7 +283,7 @@ object NewProjectForm {
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postProject) {
-        scope.$.backend.hidemodal
+        scope.$.backend.hide.runNow()
       }
     })
     .build

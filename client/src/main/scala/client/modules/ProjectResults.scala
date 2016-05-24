@@ -9,14 +9,11 @@ import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
 import client.components._
 import client.css.{ DashBoardCSS, HeaderCSS }
-import client.modals.{ NewMessage, NewRecommendation, RecommendationJobs, WorkContractModal }
-import shared.models.{ ModelType, ProjectsModel, ProjectsPost }
-import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
-
-import scala.scalajs.js
+import client.modals.{ NewMessage, RecommendationJobs, WorkContractModal }
+import shared.models.ProjectsPost
+import shared.dtos.EvalSubscribeResponseContent
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
-import org.querki.jquery._
 
 object ProjectResults {
 

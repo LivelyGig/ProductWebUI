@@ -9,7 +9,7 @@ import diode.data._
 import diode.util._
 import diode.react.ReactConnector
 import boopickle.Default._
-import shared.models.{ MessagesModel, UserModel }
+import shared.models.UserModel
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.scalajs.js
 import scala.scalajs.js.JSON

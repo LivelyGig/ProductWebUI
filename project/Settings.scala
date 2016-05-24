@@ -29,13 +29,7 @@ object Settings {
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % Versions.autowire,
     "me.chrons" %%% "boopickle" % Versions.booPickle,
-//    "com.lihaoyi" %%% "utest" % Versions.uTest,
-	  "com.lihaoyi" %%% "upickle" % "0.3.8",
-    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"/*,
-    "org.scala-js" %%% "scalajs-dom" % Versions.scalaDom,
-    "me.chrons" %%% "diode" % Versions.diode,
-    "me.chrons" %%% "diode-react" % Versions.diode,
-    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"*/
+	  "com.lihaoyi" %%% "upickle" % "0.3.8"
   ))
 
   /** Dependencies only used by the JVM project */
@@ -61,19 +55,19 @@ object Settings {
     "org.querki" %%% "bootstrap-datepicker-facade" % "0.5",
     "org.denigma" %%% "selectize-facade" % "0.12.1-0.2.1",
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
-    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4"
-//    "org.webjars.bower" % "moment-timezone" % "0.5.4"
+    "io.github.widok" %%% "scala-js-momentjs" % "0.1.4",
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
   val jsDependencies = Def.setting(Seq(
     "org.webjars.npm" % "react" % Versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
     "org.webjars.npm" % "react-dom" % Versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
-    "org.webjars" % "jquery" % Versions.jQuery / "2.2.3/jquery.js" minified "jquery.min.js",
-    "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "2.2.3/jquery.js",
+    "org.webjars" % "jquery" % Versions.jQuery / "jquery.js" minified "jquery.min.js",
+    "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
-    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "2.2.3/jquery.js",
+    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
     //"org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
-    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "2.2.3/jquery.js"
+    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
   ))
 }

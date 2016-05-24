@@ -1,29 +1,19 @@
 package client.modals
 
-import java.util.UUID
-
-import shared.models.MessagePost
-import client.services.{ CoreApi, LGCircuit }
+import shared.models.MessagePostContent
+import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{ DashBoardCSS, ProjectCSS }
-import client.handlers.PostMessage
-import client.utils.Utils
+import client.css.{DashBoardCSS, ProjectCSS}
+import client.handlers.PostData
 import japgolly.scalajs.react
-import org.querki.jquery._
-import org.scalajs.dom._
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.scalajs._
-import scala.util.{ Failure, Success }
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import shared.dtos._
 import org.querki.jquery._
 import shared.sessionitems.SessionItems
 
@@ -44,14 +34,7 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
     def addMessage( /*postMessage:PostMessage*/ ): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
-
-      /*if(postMessage){
-        t.modState(s => s.copy(showNewMessageForm = true))
-      } else {
-        t.modState(s => s.copy(showNewMessageForm = false))
-      }*/
     }
   }
   val component = ReactComponentB[Props]("NewMessage")
@@ -76,7 +59,7 @@ object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
-  case class State(postMessage: MessagePost, postNewMessage: Boolean = false, selectizeInputId: String = "postNewMessageSelectizeInput")
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, selectizeInputId: String = "postNewMessageSelectizeInput")
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
@@ -87,7 +70,7 @@ object NewMessageForm {
     }
     def updateContent(e: ReactEventI): react.Callback = {
       val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
     def hideModal(): Unit = {
       $(t.getDOMNode()).modal("hide")
@@ -98,18 +81,14 @@ object NewMessageForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostMessage(
-        state.postMessage.content,
-        ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI
-      ))
+      LGCircuit.dispatch(PostData(state.postMessage, state.selectizeInputId, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       props.submitHandler( /*state.postMessage*/ )
     }
-
+    // scalastyle:off
     def render(s: State, p: Props) = {
 
       val headerText = p.header
@@ -135,7 +114,7 @@ object NewMessageForm {
               <.textarea(^.rows := 6, ^.placeholder := "Subject", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.content, ^.onChange ==> updateContent, ^.required := true)
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.text, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
@@ -151,7 +130,7 @@ object NewMessageForm {
   }
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePost("", "", "", "", "", Nil, "", "", "", "")))
+    .initialState_P(p => State(new MessagePostContent()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {

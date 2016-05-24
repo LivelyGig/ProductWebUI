@@ -1,10 +1,9 @@
 package shared.RootModels
 
-import shared.models.MessagesModel
+import shared.models.MessagePost
 
-case class MessagesRootModel(messagesModelList: Seq[MessagesModel]) {
-  def updated(newMessagesResponse: MessagesModel) = {
-    //    println(newConnectionResponse)
+case class MessagesRootModel(messagesModelList: Seq[MessagePost]) {
+  def updated(newMessagesResponse: MessagePost): MessagesRootModel = {
     messagesModelList.indexWhere(_.uid == newMessagesResponse.uid) match {
       case -1 =>
         MessagesRootModel(messagesModelList :+ newMessagesResponse)

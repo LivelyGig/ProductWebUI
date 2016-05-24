@@ -4,9 +4,10 @@ import sbt.Project.projectToRef
 // a special crossProject for configuring a JS/JVM/shared structure
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
   .settings(
-      scalaVersion := Versions.scalaVersion,
-      libraryDependencies ++= Settings.sharedDependencies.value
+    scalaVersion := Versions.scalaVersion,
+    libraryDependencies ++= Settings.sharedDependencies.value
   )
+
   // set up settings specific to the JS project
   .jsConfigure(_ enablePlugins ScalaJSPlay)
 
@@ -42,9 +43,11 @@ lazy val client: Project = (project in file(pCompile))
       // use Scala.js provided launcher code to start the client app
       persistLauncher := true,
       persistLauncher in Test := false,
-      // use uTest framework for tests
-      testFrameworks += new TestFramework("utest.runner.Framework"),
       jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
+    // use uTest framework for tests
+    // testFrameworks += new TestFramework("utest.runner.Framework")
+    // libraryDependencies ++= Seq(
+    // Dependencies.tests.scalajsenvs)
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJS)
