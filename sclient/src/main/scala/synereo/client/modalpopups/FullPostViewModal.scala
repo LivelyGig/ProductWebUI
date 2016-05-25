@@ -49,7 +49,7 @@ object FullPostViewModal {
     def handleScroll(e: ReactEventI): Callback = {
       val fullViewImageHeight = $(fullViewImage).height()
       scrollY = $(fullPostViewContainer).scrollTop()
-      println(scrollY)
+//      println(scrollY)
       if (scrollY > fullViewImageHeight) {
         $(fullViewModalNavBar).addClass("postedUserInfoNavModalScroll").css("top", fullViewImageHeight.toInt + (scrollY - fullViewImageHeight.toInt))
         $(modalCloseButton).css("position", "absolute")

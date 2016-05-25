@@ -4,26 +4,26 @@ import japgolly.scalajs.react._
 import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
-import shared.models.UserModel
-import synereo.client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
-import synereo.client.components.Bootstrap.{ Button, CommonStyle }
-import synereo.client.components.{ Icon, MIcon }
+import shared.models.{SignUpModel, UserModel, EmailValidationModel}
+import shared.sessionitems.SessionItems
+import synereo.client.handlers.{CreateLabels, LoginUser, RefreshConnections}
+import synereo.client.components.Bootstrap.{Button, CommonStyle}
+import synereo.client.components.{Icon, MIcon}
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
-import shared.models.EmailValidationModel
-import synereo.client.services.{ ApiResponseMsg, CoreApi, SYNEREOCircuit }
+import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
 import scala.concurrent.Future
 import scala.scalajs.js
-import js.{ Date, JSON, UndefOr }
-import scala.util.{ Failure, Success }
+import js.{Date, JSON, UndefOr}
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.concurrent.ExecutionContext.Implicits.global
 import org.querki.jquery._
 
 /**
- * Created by Mandar on 3/11/2016.
- */
+  * Created by Mandar on 3/11/2016.
+  */
 object Login {
   val LOGIN_ERROR = "LOGIN_ERROR"
   val SERVER_ERROR = "SERVER_ERROR"
@@ -35,16 +35,22 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
-    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false, showRegistrationFailed: Boolean = false,
-    showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
+  case class State(userModel: UserModel,isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
+                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false,
+                   showRegistrationFailed: Boolean = false,
+                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
 
   class Backend(t: BackendScope[Props, State]) {
 
-    def updateEmail(e: ReactEventI) = {
-      val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
-    }
+//    def updateEmail(e: ReactEventI) = {
+//      val value = e.target.value
+//      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(email = value)))
+//    }
+
+//    def updatePassword(e: ReactEventI) = {
+//      val value = e.target.value
+//      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
+//    }
 
     def closeRequestInvitePopup(postInvite: Boolean): Callback = {
       true match {
@@ -54,19 +60,8 @@ object Login {
       t.modState(s => s.copy(showNewInviteForm = false, showLoginForm = true))
     }
 
-    def updatePassword(e: ReactEventI) = {
-      val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
-    }
-
-    //    def loginUser(e: ReactEventI) = Callback {
-    //      e.preventDefault()
-    //      val user = t.state.runNow().userModel
-    //      processLogin(user)
-    //    }
-
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
-      println(s"showNewUserForm: $showNewUserForm")
+      //      println(s"showNewUserForm: $showNewUserForm")
       true match {
         case `login` => processLogin(userModel)
         case `showConfirmAccountCreation` => t.modState(s => s.copy(showLoginForm = false))
@@ -77,6 +72,8 @@ object Login {
     }
 
     def processLogin(userModel: UserModel): Callback = {
+//      val state = t.state.runNow()
+//      val userModel = state.userModel
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
@@ -93,21 +90,6 @@ object Login {
       }
       t.modState(s => s.copy(showLoginForm = false))
     }
-
-    //    def processLogin(userModel: UserModel): Unit = {
-    //      $(loginLoader).removeClass("hidden")
-    //      CoreApi.agentLogin(userModel).onComplete {
-    //        case Success(responseStr) =>
-    //          validateResponse(responseStr) match {
-    //            case SUCCESS => processSuccessfulLogin(responseStr, userModel)
-    //            case LOGIN_ERROR => processLoginFailed(responseStr)
-    //            case SERVER_ERROR => processServerError(responseStr)
-    //          }
-    //        case Failure(s) =>
-    //          $(loginLoader).addClass("hidden")
-    //          t.modState(s => s.copy(showServerErrorModal = true)).runNow()
-    //      }
-    //    }
 
     def validateResponse(response: String): String = {
       try {
@@ -141,16 +123,13 @@ object Login {
       t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
     }
 
-    def processLoginFailed(responseStr: String) = {
+    def processLoginFailed(responseStr: String): Unit = {
       println("in processLoginFailed")
       $(loadingScreen).addClass("hidden")
       $(loginLoader).addClass("hidden")
       val loginErrorMessage = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
-      //window.alert("please enter valid credentials")
-      //      println(loginErrorMessage)
       println(loginErrorMessage.content.reason)
       t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginErrorMessage.content.reason)).runNow()
-
     }
 
     def processServerError(responseStr: String): Unit = {
@@ -161,31 +140,29 @@ object Login {
       t.modState(s => s.copy(showServerErrorModal = true)).runNow()
     }
 
-    def createSessions(userModel: UserModel) = {
-      val sessionURISeq = Seq(CoreApi.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
+    def createSessions(userModel: UserModel): Unit = {
+      val sessionURISeq = Seq(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
       var futureArray = Seq[Future[String]]()
       sessionURISeq.map { sessionURI => futureArray :+= CoreApi.agentLogin(userModel) }
       Future.sequence(futureArray).map { responseArray =>
-        println(responseArray)
         for (responseStr <- responseArray) {
           val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-          //          println(response)
           val index = sessionURISeq(responseArray.indexOf(responseStr))
-          //          println()
           window.sessionStorage.setItem(index, response.content.sessionURI)
         }
-        println("login successful")
+        //        println("login successful")
         $(loadingScreen).addClass("hidden")
         $(loginLoader).addClass("hidden")
         window.location.href = "/#dashboard"
+        SYNEREOCircuit.dispatch(LoginUser(userModel))
       }
     }
 
     def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       //      response.content.listOfConnections.foreach(e => ListOfConnections.connections:+=e)
-      window.sessionStorage.setItem("connectionsList", upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      window.sessionStorage.setItem(CoreApi.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTION_LIST, upickle.default.write[Seq[Connection]](response.content.listOfConnections))
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
         imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
       t.modState(s => s.copy(showLoginForm = false))
@@ -193,10 +170,9 @@ object Login {
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-      SYNEREOCircuit.dispatch(CreateLabels())
-      //      SYNEREOCircuit.dispatch(CreateSessions(userModel))
+      //      SYNEREOCircuit.dispatch(CreateLabels())
+      //      SYNEREOCircuit.dispatch(CreateSessions(signUpModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
-      SYNEREOCircuit.dispatch(LoginUser(user))
       createSessions(userModel)
 
     }
@@ -205,19 +181,19 @@ object Login {
       t.modState(s => s.copy(showNewUserForm = true))
     }
 
-    def addNewUser(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
-      //  log.debug(s"addNewUser userModel : ${userModel} ,addNewUser: ${addNewUser}")
+    def addNewUser(signUpModel: SignUpModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+      //  log.debug(s"addNewUser signUpModel : ${signUpModel} ,addNewUser: ${addNewUser}")
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      println("usermodal " + userModel + "addNewUser " + addNewUser)
-      println("in add new user methiood")
+      //      println("usermodal " + signUpModel + "addNewUser " + addNewUser)
+      //      println("in addNewUser method")
       if (addNewUser) {
-        CoreApi.createUser(userModel).onComplete {
+        CoreApi.createUser(signUpModel).onComplete {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
             println(" In success value s = " + s)
             //           log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiResponseMsg.CreateUserWaiting) {
+            if (s.msgType == ApiTypes.CreateUserWaiting) {
               $(loadingScreen).addClass("hidden")
               $(loginLoader).addClass("hidden")
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
@@ -227,7 +203,7 @@ object Login {
             }
           case Failure(s) =>
             //            log.debug(s"createUserFailure: ${s}")
-            println(" In faliure = " + s)
+            println(s"In faliure =$s")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
 
         }
@@ -243,9 +219,9 @@ object Login {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              //  log.debug(ApiResponseMsg.CreateUserError)
+              //  log.debug(ApiTypes.CreateUserError)
               showLoginContent = true
-              t.modState(s => s.copy( /*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
+              t.modState(s => s.copy(/*showAccountValidationSuccess = true*/ showLoginForm = true)).runNow()
             } catch {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
@@ -284,10 +260,10 @@ object Login {
         //
         //                      <.form(^.onSubmit ==> loginUser)(
         //                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-        //                          <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.userModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
+        //                          <.input(^.`type` := "text", ^.placeholder := "User Name", ^.required := true, ^.value := s.signUpModel.email, ^.onChange ==> updateEmail, LoginCSS.Style.inputStyleLoginForm), <.br()
         //                        ),
         //                        <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-        //                          <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.userModel.password, ^.onChange ==> updatePassword),
+        //                          <.input(^.`type` := "Password", ^.placeholder := "Password", ^.required := true, LoginCSS.Style.inputStyleLoginForm, ^.value := s.signUpModel.password, ^.onChange ==> updatePassword),
         //                          <.button(^.`type` := "submit")(MIcon.playCircleOutline, LoginCSS.Style.iconStylePasswordInputBox)
         //                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")
         //                          //<.button(^.`type`:="button",^.className:="btn btn-default")("login")

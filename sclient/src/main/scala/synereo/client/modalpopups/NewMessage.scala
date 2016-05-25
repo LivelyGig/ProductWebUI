@@ -2,17 +2,18 @@ package synereo.client.modalpopups
 
 import java.util.UUID
 
-import shared.models.MessagePost
+import shared.models.{MessagePostContent, MessagePost}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.SynereoCommanStylesCSS
-import synereo.client.handlers.PostMessages
-import synereo.client.services.{ CoreApi, SYNEREOCircuit }
-import scala.util.{ Failure, Success }
+import synereo.client.handlers.{PostData}
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -39,8 +40,8 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
 
-    def addMessage( /*postMessage:PostMessage*/ ): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
+    def addMessage(/*postMessage:PostMessage*/): Callback = {
+      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
@@ -50,7 +51,7 @@ object NewMessage {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
+      <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
@@ -79,14 +80,14 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
-      //      println(value)
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
+//            println(value)
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(subject = value))))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      //      println(value)
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(content = value)))
+//            println(value)
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(text = value))))
     }
 
     def hideModal = {
@@ -97,19 +98,15 @@ object NewMessageForm {
 
     }
 
-    def submitForm(e: ReactEventI) = {
+    def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostMessages(
-        state.postMessage.content,
-        ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        CoreApi.MESSAGES_SESSION_URI
-      ))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.messagePostContent,Some(state.selectizeInputId) , SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      props.submitHandler( /*state.postMessage*/ )
+      props.submitHandler(/*state.postMessage*/)
     }
 
     def render(s: State, p: Props) = {
@@ -122,16 +119,16 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.onSubmit ==> postMessage)(
           <.div(^.className := "row")(
             <.div(^.id := s.selectizeInputId)(
               SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
             ),
             <.div()(
-              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
+              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.messagePostContent.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.content, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.messagePostContent.text, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
@@ -147,7 +144,7 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePost("", "", "", "", "", Nil, "", "", "", "")))
+    .initialState_P(p => State(new MessagePost("", "", "", "",Nil,MessagePostContent("",""))))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {

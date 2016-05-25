@@ -56,10 +56,10 @@ a:hover, a:focus {
   position: absolute;
   display: block;
   bottom: 0;
-  top: 55px;
+  top: 58px;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
-  transition: all 1s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 .sidebar-left {
   left: 0;
@@ -114,7 +114,7 @@ a:hover, a:focus {
   -webkit-transition: all 3ms ;
   -moz-transition: all 3ms ;
   -o-transition: all 3ms ;
-  transition: all 1s ease-in-out;
+  transition: all 0.7s ease-in-out;
 }
 
 /* Left panel positioning classes */
@@ -441,14 +441,16 @@ label:hover:before {
   -ms-transform: translate(-100%,0);
   -o-transform: translate(-100%,0);
   //transform: translate(-100%,0);
-  transform: translate(0,566px);
+  transform: translate(0,478px);
 }
 
 .topbar.topbar-left.topbar-open {
 /* -webkit-transform: translate(0,0);
 transform: translate(0,0); */
 }
-
+#Topbarid> li{
+padding-right:10px;
+}
 #Topbarid> li > a {
   color:white;
   padding-right: 0;
@@ -537,10 +539,6 @@ transform: translate(0,0); */
 }
 #homeFeedMediaList li {
   opacity:0.2;
-}
-#homeFeedMediaList li:hover {
-  opacity:1 !important;
-  transform: scale(1.05);
 }
 /*
  * selectize.css
@@ -850,3 +848,8 @@ transform: translate(0,0); */
 /*
  * end of selectize.css
  */
+ #labelsId{
+     width: 480px;
+     height: 36px;
+     margin: 10px auto 0px;
+ }

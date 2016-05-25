@@ -2,6 +2,7 @@ package shared.RootModels
 
 import shared.models.LabelModel
 
+// scalastyle:off
 case class SearchesRootModel(searchesModel: Seq[LabelModel]) {
   def updated(newSearch: LabelModel) = {
     val searchu = searchesModel

@@ -15,7 +15,7 @@ import scalacss.ScalaCssReact._
 object UserProfileView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid")(
+      <.div(^.className := "container-fluid",UserProfileViewCSS.Style.UserProfileContainerMain)(
         <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
           <.div("User Profile View", UserProfileViewCSS.Style.heading)
         )

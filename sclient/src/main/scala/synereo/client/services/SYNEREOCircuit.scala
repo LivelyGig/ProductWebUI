@@ -8,10 +8,6 @@ import shared.RootModels.{ SearchesRootModel, ProjectsRootModel, ConnectionsRoot
 import shared.models.UserModel
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
-/**
- * Created by shubham.k on 3/29/2016.
- */
-
 case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: Pot[MessagesRootModel],
   jobPosts: Pot[ProjectsRootModel], searches: SearchesRootModel)
 

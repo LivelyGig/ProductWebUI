@@ -11,6 +11,11 @@ object UserProfileViewCSS {
 
     import dsl._
 
+    val UserProfileContainerMain = style(
+      height(98.vh),
+      overflowY.scroll
+    )
+
     val userProfileHeadingContainerDiv = style(
       minHeight(500.px),
       display.block,

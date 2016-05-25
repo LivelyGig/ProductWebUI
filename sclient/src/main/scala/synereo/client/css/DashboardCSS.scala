@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
- * Created by Mandar on 3/17/2016.
- */
+  * Created by Mandar on 3/17/2016.
+  */
 
 object DashboardCSS {
 
@@ -12,11 +12,12 @@ object DashboardCSS {
 
     import dsl._
 
-    val profileActionContainer = style( /*      minHeight(60.px),
-            minWidth(100.px)*/ )
+    val profileActionContainer = style(/*      minHeight(60.px),
+            minWidth(100.px)*/)
     val dashboardContainerMain = style(
-      height(100.vh),
+      height(97.vh),
       overflowY.scroll.important,
+      overflowX.hidden,
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
     )
     val fullViewModalDilog = style(
@@ -51,16 +52,15 @@ object DashboardCSS {
     )
     val homeFeedContainer = style(
       marginTop(30.px),
-      marginBottom(90.px)
-    //      height(730.px),
-    //      marginRight(-30.px),
-    //      overflowY.scroll.important,
-    //      overflowX.hidden.important
+      marginBottom(90.px),
+      minHeight(100.px)
     )
-    val homeFeedMainContainer = style( //      width(762.px),
-    //      padding(0.px)
+    val homeFeedMainContainer = style(
+      //      width(762.px),
+      //      padding(0.px)
     )
-    val cardImage = style( //      paddingRight(65.px)s
+    val cardImage = style(
+      //      paddingRight(65.px)s
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
@@ -74,29 +74,29 @@ object DashboardCSS {
       paddingLeft(65.px),
       paddingRight(65.px)
     )
-    val profileActionButton = style(
+    val ampsDropdownToggleBtn = style(
       width(110.px),
       border(1.px, solid, transparent),
       borderBottomLeftRadius(9.em),
-      backgroundColor(c"#1B76A3"),
+      backgroundColor(c"#1e84b4"),
       position.absolute,
       right.`0`,
       fontSize(13.px),
       padding(4.px).important,
       color.white,
       &.hover(
-        color.white
+        color(c"#FFFFFF")
       ),
       &.focus(
-        color.white
+        color(c"#FFFFFF")
       ),
       &.visited(
-        color.white
+        color(c"#FFFFFF")
       )
 
     )
     val CardHolderLiElement = style(
-      margin(15.px),
+      margin(15.px, -30.px),
       padding(15.px)
     )
     val glanceViewName = style(
@@ -201,7 +201,7 @@ object DashboardCSS {
     )
     val topBarStyle = style(
       fontSize(15.px)
-    //      fontWeight.bold
+      //      fontWeight.bold
     )
     val postActionButton = style(
       border.none.important,

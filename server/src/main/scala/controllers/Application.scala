@@ -17,8 +17,8 @@ class Application extends Controller {
   val apiService = new ApiService()
 
   def index = Action {
-    Ok(views.html.index("Welcome to LivelyGig - work from anywhere with anyone"))
-    //    Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
+//    Ok(views.html.index("Welcome to LivelyGig - work from anywhere with anyone"))
+        Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
   }
 
   def indexl = Action {

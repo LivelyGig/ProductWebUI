@@ -43,7 +43,7 @@ object InviteFriend {
     }
 
     def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : t{userModel} ,addNewAgent: t{showNewInviteForm}")
+      //log.debug(s"addNewAgent signUpModel : t{signUpModel} ,addNewAgent: t{showNewInviteForm}")
       if (postMessage) {
         t.modState(s => s.copy(showNewInviteForm = true))
       } else {
