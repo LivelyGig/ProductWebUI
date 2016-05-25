@@ -67,7 +67,7 @@ object LoginForm {
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Sign In and Sign Up"
+      val headerText = "Log In"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -79,24 +79,24 @@ object LoginForm {
             //left
             <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
               <.div( /*DashBoardCSS.Style.scltInputModalContainerMargin */ )(
-                <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with LivelyGig credentials"),
+                <.div(DashBoardCSS.Style.modalHeaderFont)("Log In with LivelyGig credentials"),
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
                   ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                 <.div(^.className := "text-center")(
                   <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
-                <.div(^.paddingTop := "10px")(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-4", DashBoardCSS.Style.padding0px)(
-                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Validate Account",
+                <.div(DashBoardCSS.Style.paddingTop10px)(
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                    <.button(^.tpe := "button", ^.className := "btn-link",/*DashBoardCSS.Style.btnBackground,*/ "Validate Account",
                       ^.onClick ==> showValidate)
                   ),
-                  <.div(^.className := "col-md-3 col-sm-4 col-xs-3")(
-                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Sign Up",
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                    <.button(^.tpe := "button", ^.className := "btn-link",/*DashBoardCSS.Style.btnBackground,*/ "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-5")(
-                    <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Forgot My Password",
+                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                    <.button(^.tpe := "button", ^.className := "btn-link",/*DashBoardCSS.Style.btnBackground,*/ "Forgot My Password",
                       ^.onClick ==> showValidate)
                   )
                 )
@@ -104,7 +104,7 @@ object LoginForm {
             ),
             // right
             <.div(^.className := "col-md-5 col-sm-12 col-xs-12", DashBoardCSS.Style.linksConatiner)(
-              <.div(DashBoardCSS.Style.modalHeaderFont)("Sign in with shared credentials"),
+              <.div(DashBoardCSS.Style.modalHeaderFont)("Log In with shared credentials"),
               <.button(^.tpe := "button", ^.className := "btn", CreateAgentCSS.Style.loginBtn, Icon.githubSquare, " GitHub"),
               <.button(^.tpe := "button", ^.className := "btn", CreateAgentCSS.Style.loginBtn, Icon.googlePlusSquare, " Google+"),
               <.button(^.tpe := "button", ^.className := "btn", CreateAgentCSS.Style.loginBtn, Icon.linkedinSquare, " LinkedIn"),

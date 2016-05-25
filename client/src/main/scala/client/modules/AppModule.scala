@@ -19,7 +19,7 @@ object AppModule {
 
   case class Props(view: String)
 
-  def showSidebar: Callback = Callback {
+  def showSidebar(): Callback = Callback {
     val sidebtn: js.Object = "#searchContainer"
     val sidebarIcon: js.Object = "#sidebarIcon"
     val rsltScrollContainer: js.Object = "#rsltScrollContainer"
@@ -32,7 +32,8 @@ object AppModule {
       $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
     } else {
       $(sidebtn).next().removeClass("sidebarRightContainer")
-      $(profiledescription).find(".profile-action-buttons").css("pointer-events", "all")
+//      e.stopPropagation()
+      $(profileActionButtons).css("pointer-events", "all")
       //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
@@ -42,6 +43,7 @@ object AppModule {
     $(t1).removeClass("fa fa-chevron-circle-left")
     $(t1).addClass("fa fa-chevron-circle-right")
   }
+
   case class Backend(t: BackendScope[Props, Unit]) {
     def mounted(props: Props) = {
       showSidebar
