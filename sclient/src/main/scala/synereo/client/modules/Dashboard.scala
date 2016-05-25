@@ -6,7 +6,7 @@ import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.sessionitems.SessionItems
-import synereo.client.handlers.{PostMessages, RefreshConnections, RefreshMessages}
+import synereo.client.handlers.{PostData, RefreshConnections, RefreshMessages}
 import org.scalajs.dom
 import shared.models.{MessagePostContent, MessagePost}
 import shared.RootModels.MessagesRootModel
@@ -34,6 +34,7 @@ object Dashboard {
   var timer: js.Any = 0
   var delta: Double = 50
   var delay: Double = 50
+  val messageLoader: js.Object = "#messageLoader"
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
   val loginLoader: js.Object = "#loginLoader"
@@ -47,16 +48,21 @@ object Dashboard {
 
   class Backend(t: BackendScope[Props, State]) {
     //scalastyle:off
-    def submitForm(e: ReactEventI) = {
+    def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostMessages(state.postMessage.messagePostContent.text, Seq[String](), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      println(state.postMessage)
+      $(messageLoader).removeClass("hidden")
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.messagePostContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      //      SYNEREOCircuit.dispatch(RefreshMessages())
+      $(messageLoader).addClass("hidden")
       t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(messagePostContent = MessagePostContent("", ""))))
     }
 
     def mounted(props: Props) = {
       if (props.proxy().isEmpty) {
         //        SYNEREOCircuit.dispatch(RefreshConnections())
+        //        val label = window.sessionStorage.getItem("")
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
       } else {
@@ -66,7 +72,8 @@ object Dashboard {
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(modified = "blah blah")))
+      //      t.modState(_.copy(postMessage = postMessage())
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(text = value))))
     }
 
     def closeFullViewModalPopUp(): Callback = {
@@ -154,24 +161,26 @@ object Dashboard {
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
-                <.form(^.onSubmit ==> submitForm)(
+                <.form(^.onSubmit ==> postMessage)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
                   <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.messagePostContent.text, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
+                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == postMessage*/)(Icon.camera)
                 ),
                 <.div(NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button")))
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
+                  <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
                   <.div(
                     p.proxy().render(
                       messagesRootModel =>
                         HomeFeedList(messagesRootModel.messagesModelList)
                     ),
-                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))),
+                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse), <.div("render Failed No messages to Display", ^.fontSize := "50.px"))),
                     p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse)))
-                  )/*,
+                    //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoading, ^.className := "", Icon.spinnerIconPulse)))
+                  ) /*,
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {

@@ -1,6 +1,5 @@
 package synereo.client.services
 
-import client.utils.Utils
 import shared.Api
 import shared.dtos._
 import shared.models._
@@ -63,6 +62,7 @@ object CoreApi {
     Option(previousSearchLabels) match {
       case Some(s) =>
         for {
+//          window.sessionStorage.setItem()
           cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
           messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
         } yield messages

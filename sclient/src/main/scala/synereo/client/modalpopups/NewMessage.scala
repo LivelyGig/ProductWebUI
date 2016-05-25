@@ -11,7 +11,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.SynereoCommanStylesCSS
-import synereo.client.handlers.PostMessages
+import synereo.client.handlers.{PostData}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
@@ -41,7 +41,7 @@ object NewMessage {
     }
 
     def addMessage(/*postMessage:PostMessage*/): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
+      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
@@ -80,13 +80,13 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
-      //      println(value)
+//            println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(subject = value))))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      //      println(value)
+//            println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(text = value))))
     }
 
@@ -98,14 +98,10 @@ object NewMessageForm {
 
     }
 
-    def submitForm(e: ReactEventI) = {
+    def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostMessages(
-        state.postMessage.messagePostContent.text,
-        ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),
-        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI
-      ))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.messagePostContent,Some(state.selectizeInputId) , SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -123,7 +119,7 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.onSubmit ==> postMessage)(
           <.div(^.className := "row")(
             <.div(^.id := s.selectizeInputId)(
               SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))

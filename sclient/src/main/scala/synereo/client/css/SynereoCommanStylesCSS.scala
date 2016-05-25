@@ -77,9 +77,14 @@ object SynereoCommanStylesCSS {
       zIndex(100)
 //      backgroundColor(c"#277490")
     )
+    val renderFailedMessage = style(
+      fontSize(50.px),
+      textAlign.center,
+      color(c"#FFFFFF")
+    )
     val nonLoggedInMenu = style(
-      paddingRight(15.px),
-      paddingTop(28.px)
+      paddingRight(15.px)
+//      paddingTop(28.px)
     )
     val dropdownMenu = style(
       padding(40.px, 20.px)
@@ -235,6 +240,15 @@ object SynereoCommanStylesCSS {
       height(57.px),
       position.absolute,
       top(50.%%),
+      left(50.%%),
+      zIndex(2000),
+      color.grey
+    )
+    val messagesLoading= style(
+      width(50.px),
+      height(57.px),
+      position.fixed,
+      top(22.%%),
       left(50.%%),
       zIndex(2000),
       color.grey

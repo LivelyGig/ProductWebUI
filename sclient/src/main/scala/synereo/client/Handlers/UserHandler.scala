@@ -1,33 +1,30 @@
 package synereo.client.handlers
 
 import java.util.UUID
-import diode.{ ActionHandler, Effect, ModelRW }
-import shared.dtos.{ Expression, ExpressionContent, Label, SubscribeRequest, _ }
-import shared.models.{ Post, UserModel }
+import org.querki.jquery._
+import synereo.client.logger._
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
+import shared.dtos.{Expression, ExpressionContent, Label, SubscribeRequest, _}
+import shared.models._
 import org.scalajs.dom.window
 import shared.sessionitems.SessionItems
-import synereo.client.services.{ SYNEREOCircuit, CoreApi }
+import synereo.client.components.ConnectionsSelectize
+import synereo.client.services.{SYNEREOCircuit, ApiTypes, CoreApi}
 import synereo.client.utils.Utils
-
 import concurrent._
+import scala.scalajs.js.Object
 import ExecutionContext.Implicits._
 import scala.scalajs.js
-import scala.util.{ Failure, Success }
-import org.widok.moment._
-import org.querki.jquery._
-import japgolly.scalajs.react._
-
+import scala.scalajs.js.{Date, JSON}
+import scala.util.{Failure, Success}
+// scalastyle:off
 case class LoginUser(userModel: UserModel)
 case class LogoutUser()
+case class PostData(postContent: PostContent, selectizeInputId: Option[String], sessionUri: String)
 
-case class CreateSessions(userModel2: UserModel)
-case class PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String)
-//case class TestDispatch()
-
-case class PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String)
-//scalastyle:off
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
-  override def handle = {
+  val messageLoader = "#messageLoader"
+  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
@@ -39,55 +36,52 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         )
       }
       updated(modelFromStore)
-    /*create sessions functionality is moved to a method in login module this case is sporadically used*/
-    case CreateSessions(userModel2) =>
-      val sessionURISeq = Seq(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, CoreApi.JOBS_SESSION_URI)
-      val futures = sessionURISeq.map(sessionURI =>
-        CoreApi.agentLogin(userModel2).map { responseStr =>
-          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-          window.sessionStorage.setItem(sessionURI, response.content.sessionURI)
-        })
-      noChange
 
-    case PostMessages(content: String, connectionStringSeq: Seq[String], sessionUri: String) =>
-      val createdDateTime = Moment().utc().format("YYYY-MM-DD hh:mm:ss")
-      //      println(createdDateTime)
+    case PostData(value: PostContent, selectizeInputId: Option[String], sessionUriName: String) =>
+
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val connectionsSeq = Seq(Utils.getSelfConnnection(sessionUri)) ++ connectionStringSeq.map(connectionString => upickle.default.read[Connection](connectionString))
-//      val value = ExpressionContentValue(uid.toString, "TEXT", createdDateTime, createdDateTime, Map[Label, String]().empty, connectionsSeq, content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
-        case Success(response) => {
-          val ContributeThoughtsID: js.Object = "#ContributeThoughtsID"
-          $(ContributeThoughtsID).value(" ")
-          SYNEREOCircuit.dispatch(RefreshMessages())
-        }
-        case Failure(response) => println("failure")
+      val connectionsFromSelectize = selectizeInputId match {
+        case Some(s) => ConnectionsSelectize.getConnectionsFromSelectizeInput(s)
+        case None => Nil
       }
-      noChange
-
-    case PostContent(value: Post, connectionStringSeq: Seq[String], sessionUri: String) =>
-      val uid = UUID.randomUUID().toString.replaceAll("-", "")
-      val connectionsSeq = Seq(Utils.getSelfConnnection(sessionUri)) /* ++ connectionStringSeq.map(connectionString=> upickle.default.read[Connection](connectionString))*/
-      //      val value =  ExpressionContentValue(uid.toString,"TEXT","2016-04-15 16:31:46","2016-04-15 16:31:46",Map[Label, String]().empty,connectionsSeq,content)
-      CoreApi.evalSubscribeRequest(SubscribeRequest(window.sessionStorage.getItem(sessionUri), Expression(CoreApi.INSERT_CONTENT, ExpressionContent(connectionsSeq, "[1111]", upickle.default.write(value), uid)))).onComplete {
+      val connectionsSeq =  Seq(Utils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName)))++  connectionsFromSelectize
+//      connectionsSeq.flatten
+      val (labelToPost, contentToPost) = sessionUriName match {
+        case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
+          (SessionItems.MessagesViewItems.MESSAGE_POST_LABEL,
+            upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(),"" , connectionsSeq, value.asInstanceOf[MessagePostContent])))
+        case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
+          (SessionItems.ProjectsViewItems.PROJECT_POST_LABEL,
+            upickle.default.write(ProjectsPost(uid, new Date().toISOString(), new Date().toISOString(),"" , connectionsSeq, value.asInstanceOf[ProjectPostContent])))
+      }
+      CoreApi.evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName), Expression(ApiTypes.INSERT_CONTENT, ExpressionContent(connectionsSeq, s"[$labelToPost]", contentToPost, uid)))).onComplete {
         case Success(response) => {
-          println("success")
-          println("Responce = " + response)
-          //          t.modState(s => s.copy(postNewMessage = true))
+          sessionUriName match {
+            case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI => SYNEREOCircuit.dispatch(RefreshMessages())
+          }
+          $(messageLoader).addClass("hidden")
+          log.debug("Content Post Successful")
         }
-        case Failure(response) => println("failure")
+        case Failure(response) => log.error(s"Content Post Failure Message: ${response.getMessage}")
       }
       noChange
 
     case LogoutUser() =>
-      CoreApi.cancelPreviousSubsForLabelSearch()
+      // todo: Cancel all subscribe request for all sessions
+      /*val sessionURISeq = SessionItems.getAllSessionUriNameExceptCnxs()
+      val futureArray = for (sessionURI <- sessionURISeq) yield {
+        val connectionsList = upickle.default.read[Seq[Connection]](window.sessionStorage.getItem("connectionsList")) ++ Seq(Utils.getSelfConnnection(window.sessionStorage.getItem(sessionURI))) // scalastyle:ignore
+        val cancelPreviousRequest = CancelSubscribeRequest(sessionURI, connectionsList, previousSearchLabels)
+        CoreApi.agentLogin(signUpModel)
+      }
+      Future.sequence(futureArray).map { responseArray =>
+        for (responseStr <- responseArray) {
+          val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+          window.sessionStorage.setItem(sessionURISeq(responseArray.indexOf(responseStr)), response.content.sessionURI)
+        }
+      }*/
       window.sessionStorage.clear()
       window.location.href = "/"
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
-
-//    case TestDispatch() =>
-//      val momentdate = Moment().format("YYYY-MM-DD HH:MM:SS")
-//      println("import org.widok.moment._" + momentdate)
-//      noChange
   }
 }
