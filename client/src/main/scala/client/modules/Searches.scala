@@ -118,7 +118,7 @@ object Searches {
     def render(s: State, p: Props) = {
 
       p.view match {
-        case AppModule.TALENTS_VIEW => {
+        case AppModule.PROFILES_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)

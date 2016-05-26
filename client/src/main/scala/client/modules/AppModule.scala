@@ -10,12 +10,13 @@ import scalacss.ScalaCssReact._
 
 // scalastyle:off
 object AppModule {
-  val TALENTS_VIEW = "talent"
-  val PROJECTS_VIEW = "projects"
-  val CONTRACTS_VIEW = "contract"
-  val MESSAGES_VIEW = "messages"
-  val OFFERINGS_VIEW = "offerings"
-  val CONNECTIONS_VIEW = "connections"
+  val DASHBOARD_VIEW    = "dashboard"
+  val PROFILES_VIEW     = "profiles"
+  val PROJECTS_VIEW     = "projects"
+  val CONTRACTS_VIEW    = "contract"
+  val MESSAGES_VIEW     = "messages"
+  val OFFERINGS_VIEW    = "offerings"
+  val CONNECTIONS_VIEW  = "connections"
 
   case class Props(view: String)
 
@@ -69,12 +70,12 @@ object AppModule {
               <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
-                    case "talent" => TalentResults.component()
-                    case "projects" => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
-                    case "contract" => ContractResults.component()
-                    case "messages" => LGCircuit.connect(_.messages)(MessagesResults(_))
-                    case "offerings" => OfferingResults.component()
-                    case "connections" => LGCircuit.connect(_.connections)(ConnectionsResults(_))
+                    case PROFILES_VIEW     => LGCircuit.connect(_.profiles)(ProfilesResults(_))
+                    case PROJECTS_VIEW     => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
+                    case CONTRACTS_VIEW    => ContractResults.component()
+                    case MESSAGES_VIEW     => LGCircuit.connect(_.messages)(MessagesResults(_))
+                    case OFFERINGS_VIEW    => OfferingResults.component()
+                    case CONNECTIONS_VIEW  => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                   }
                 )
               )

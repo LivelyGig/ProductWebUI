@@ -32,9 +32,13 @@ sealed trait Person {
   def capabilities: Seq[String]
   def title: String
 }
-case class TalentProfile(name: String, title: String, capabilities: Seq[String]) extends Person
-case class EmployerProfile(employerName: String, website: String, tagline: String, video: String, twitterUserName: String, Logo: String)
-case class ModeratorProfile(name: String, title: String, capabilities: Seq[String], commission: String) extends Person
+case class ProfilesPost(uid: String, created: String, modified: String, labels: String, connections: Seq[Connection], talentProfile: TalentProfile, employerProfile: EmployerProfile, moderatorProfile: ModeratorProfile) extends Post{
+  override def postType: String = "ProfilePost"
+  override def versionNumber: Int = 0
+}
+case class TalentProfile(name: String, title: String, capabilities: Seq[String]) extends Person with PostContent
+case class EmployerProfile(employerName: String, website: String, tagline: String, video: String, twitterUserName: String, Logo: String) extends PostContent
+case class ModeratorProfile(name: String, title: String, capabilities: Seq[String], commission: String) extends Person  with PostContent
 case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
 case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false, imgSrc: String = "", ConfirmPassword: String = "")
 case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator: Boolean = false,

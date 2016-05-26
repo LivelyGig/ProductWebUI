@@ -49,6 +49,15 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  /**
+    * Generic method to get content data from the backend
+    * used to get search results on different views.
+    * @param sessionUriName uri name of the view associated
+    *                       see SessionItems with Session uri
+    *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,
+    *                       SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI,etc
+    * @return Future with the response data
+    */
   def getContent(sessionUriName: String): Future[String] = {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
     val connectionsList = upickle.default.read[Seq[Connection]](
