@@ -177,9 +177,16 @@ object Dashboard {
                       messagesRootModel =>
                         HomeFeedList(messagesRootModel.messagesModelList)
                     ),
-                    p.proxy().renderFailed(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse), <.div("render Failed No messages to Display", ^.fontSize := "50.px"))),
-                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse)))
-                    //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoading, ^.className := "", Icon.spinnerIconPulse)))
+                    p.proxy().renderFailed(ex => <.div(
+//                      <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse),
+                      <.div(SynereoCommanStylesCSS.Style.renderFailedMessage)("We are encountering problems with serving the request!")
+                    )
+                    ),
+                    p.proxy().renderPending(ex => <.div(
+                      <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
+                    )
+                    )
+                    //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)))
                   ) /*,
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {

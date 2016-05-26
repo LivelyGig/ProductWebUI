@@ -33,7 +33,7 @@ object Utils {
     prolog.append("any(")
     for { labelFamily <- labelFamilies } yield {
       prolog.append("[")
-      for { label <- labelFamily } yield { prolog.append(label.text); if (label.parentUid != "self") prolog.append(",") }
+      for { label <- labelFamily } yield { prolog.append(label.text); /*if (label.parentUid != "self") prolog.append(",")*/ }
       prolog.append("]")
       if (labelsCount != 0) {
         prolog.append(",")

@@ -21,11 +21,12 @@ import scala.scalajs.js
   */
 object LabelsSelectize {
 
-  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
+  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
     var selectedLabels = Seq[String]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
     $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
+//    println(selectedLabels)
     selectedLabels
   }
 
@@ -45,6 +46,7 @@ object LabelsSelectize {
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(3)
           .plugins("remove_button"))
+//        $(selectizeInput).selectize(SelectizePlugin.plugins.)
       }
 
     }
@@ -69,7 +71,7 @@ object LabelsSelectize {
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel) yield {
-            <.option(^.value := label.uid, ^.key := label.uid)(label.text)
+            <.option(^.value := label.text, ^.key := label.uid)(label.text)
           }
         )
       } else {

@@ -19,13 +19,23 @@ object SynereoCommanStylesCSS {
       marginBottom(0.px),
       position.initial,
       zIndex(0),
-      backgroundColor(rgba(48, 134, 161, 0.6)),
+//      backgroundColor(rgba(48, 134, 161, 0.6)),
+      backgroundColor(rgb(39, 116, 144)),
       media.maxWidth(820.px) -
         paddingTop(4.px)
+    )
+    val labelSelectizeContainer = style(
+
     )
     val newMessageActionsContainerDiv = style(
       marginTop(30.px),
       marginBottom(30.px)
+    )
+    val labelSelectizeNavbar = style(
+      width(480.px),
+      display.inlineBlock,
+//      height(36.px),
+      margin(12.px,0.px,0.px,0.px)
     )
     val newMessageSendBtn = style(
       backgroundColor(c"#ff806c"),
@@ -78,7 +88,8 @@ object SynereoCommanStylesCSS {
 //      backgroundColor(c"#277490")
     )
     val renderFailedMessage = style(
-      fontSize(50.px),
+      marginTop(40.px),
+      fontSize(20.px),
       textAlign.center,
       color(c"#FFFFFF")
     )
@@ -244,11 +255,11 @@ object SynereoCommanStylesCSS {
       zIndex(2000),
       color.grey
     )
-    val messagesLoading= style(
+    val messagesLoadingWaitCursor= style(
       width(50.px),
       height(57.px),
       position.fixed,
-      top(22.%%),
+      top(29.%%),
       left(50.%%),
       zIndex(2000),
       color.grey

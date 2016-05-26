@@ -12,7 +12,7 @@ import scala.scalajs.js
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
-import synereo.client.handlers.{CreateLabels, LogoutUser, LoginUser}
+import synereo.client.handlers._
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, LoginCSS}
@@ -23,36 +23,42 @@ import scalacss.ScalaCssReact._
 
 object MainMenu {
   // shorthand for styles
+  val labelSelectizeId: String = "labelSelectizeId"
+
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
   case class State(isLoggedIn: Boolean = false)
 
-//  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
+  //  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
-  class Backend($: BackendScope[Props, _]) {
+  class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) =
-    //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
-    SYNEREOCircuit.dispatch(CreateLabels())
+      SYNEREOCircuit.dispatch(CreateLabels())
   }
-
+  def searchWithLabels(e: ReactEventI)= Callback {
+    SYNEREOCircuit.dispatch(SearchMessagesOnLabels(Some(labelSelectizeId)))
+    SYNEREOCircuit.dispatch(RefreshMessages())
+  }
   def toggleTopbar = Callback {
     val topBtn: js.Object = "#TopbarContainer"
     $(topBtn).toggleClass("topbar-left topbar-lg-show")
   }
-//
-//  def displayMenu() = {
-//
-//  }
 
-//  private val menuItems = Seq(
-//    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
-//    MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
-//    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
-//  )
+
+  //
+  //  def displayMenu() = {
+  //
+  //  }
+
+  //  private val menuItems = Seq(
+  //    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
+  //    MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
+  //    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
+  //  )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
@@ -131,8 +137,11 @@ object MainMenu {
               //                ),
               //                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
               //              ),
-              <.div(^.id := "labelsId")(
-                SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsId")))
+              <.div( SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+                <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
+                ),
+                <.button(^.className := "btn btn-primary",^.marginTop:="-25.px",^.onClick ==> searchWithLabels)(MIcon.search)
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(

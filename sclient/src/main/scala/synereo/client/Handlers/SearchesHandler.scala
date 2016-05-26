@@ -5,6 +5,8 @@ import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
 import shared.RootModels.{SearchesRootModel, MessagesRootModel}
+import shared.sessionitems.SessionItems
+import synereo.client.components.LabelsSelectize
 import synereo.client.services.{SYNEREOCircuit, CoreApi}
 import synereo.client.utils.{Utils, PrologParser}
 import org.scalajs.dom._
@@ -68,12 +70,15 @@ case class UpdateLabel(label: LabelModel)
 
 case class SubscribeSearch()
 
+
+
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   // scalastyle:off
   override def handle = {
+
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem("listOfLabels")
-//      println("listOfLabelFromStore:" + listOfLabelFromStore)
+      //      println("listOfLabelFromStore:" + listOfLabelFromStore)
       if (listOfLabelFromStore != null) {
         try {
           upickle.default.read[Seq[String]](window.sessionStorage.getItem("listOfLabels"))

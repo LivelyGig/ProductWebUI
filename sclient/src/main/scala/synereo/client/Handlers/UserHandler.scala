@@ -23,9 +23,9 @@ case class LogoutUser()
 case class PostData(postContent: PostContent, selectizeInputId: Option[String], sessionUri: String)
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
-  val messageLoader = "#messageLoader"
+//  val messageLoader = "#messageLoader"
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
-    case LoginUser(userModel) =>
+      case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
       if (temp != null) {
@@ -59,7 +59,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
           sessionUriName match {
             case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI => SYNEREOCircuit.dispatch(RefreshMessages())
           }
-          $(messageLoader).addClass("hidden")
+//          $(messageLoader).addClass("hidden")
           log.debug("Content Post Successful")
         }
         case Failure(response) => log.error(s"Content Post Failure Message: ${response.getMessage}")

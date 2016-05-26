@@ -170,6 +170,7 @@ object Login {
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
+//      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH,"Any()")
       //      SYNEREOCircuit.dispatch(CreateLabels())
       //      SYNEREOCircuit.dispatch(CreateSessions(signUpModel))
       SYNEREOCircuit.dispatch(RefreshConnections())
