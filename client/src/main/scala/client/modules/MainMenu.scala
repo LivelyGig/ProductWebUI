@@ -76,7 +76,8 @@ object MainMenu {
       /*var test = LGCircuit.wrap(_.user)(p => Data)
       println(props.proxy.value.isLoggedIn)*/
       <.div(
-        <.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
+        //<.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
+        <.ul(/*^.id := "headerNavUl",*/ ^.className := "nav", HeaderCSS.Style.navbarNav)(
           // build a list of menu items
           for (item <- menuItems) yield {
             if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc, ConnectionsLoc, DashboardLoc).contains(item.location)) {
@@ -178,7 +179,7 @@ object LoggedInUser {
                 <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
                   <.div(^.className := "modal-dialog", DashBoardCSS.Style.verticalAlignCenter)(
                     <.div(^.className := "modal-content", DashBoardCSS.Style.modalBorderRadius)(
-                      <.div(^.className := "modal-header modalheader", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding)(
+                      <.div(^.className := "modal-header", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.modalHeader)(
                         <.span(<.button(^.tpe := "button", bss.close, "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
                       ),
                       <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(

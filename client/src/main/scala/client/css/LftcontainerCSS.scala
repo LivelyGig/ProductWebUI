@@ -83,6 +83,8 @@ object LftcontainerCSS {
     )
 
     val checkboxlabel = style(
+      userSelect:="none",   //main.less
+      display.block,     //main.less
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
@@ -92,6 +94,7 @@ object LftcontainerCSS {
       )
     )
     val subcheckboxlabel = style(
+      userSelect:="none",   //main.less
       fontSize(1.em),
       fontWeight.normal,
       marginLeft(18.px)
@@ -107,5 +110,14 @@ object LftcontainerCSS {
       fontSize(34.px),
       color(c"#00767c")
     )
+
+    //main.less styles
+    val  sidebarRightContainer = style (
+      media.maxWidth(991.px)-(
+        background:=rgba(0 ,0 ,0 ,0.5),
+        opacity(0.4)
+        )
+    )
+
   }
 }

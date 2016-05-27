@@ -1,10 +1,12 @@
 package synereo.client.components
 
+import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.ext.KeyCode
 import synereo.client.components.Icon._
 import synereo.client.css.SynereoCommanStylesCSS
+
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -39,7 +41,7 @@ object Bootstrap {
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>
-        <.button(^.className := "btn btn-default ".concat(P.className), P.addStyles, P.addIcons, ^.title := P.title, ^.id := P.id, ^.tpe := "button", ^.onClick --> P.onClick)(C)
+        <.button(^.className := "btn ".concat(P.className), P.addStyles, P.addIcons, ^.title := P.title, ^.id := P.id, ^.tpe := "button", ^.onClick --> P.onClick)(C)
       }.build
 
     def apply(props: Props, children: ReactNode*) = component(props, children: _*)

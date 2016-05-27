@@ -182,7 +182,7 @@ object NewAgentForm {
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
               <.div()(<.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.userModel.createBTCWallet, ^.onChange ==> toggleBTCWallet), " * I understand and agree to the LivelyGig",
-                <.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
+                <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
             ),
             <.div()(
               <.input(^.`type` := "checkbox", ^.id := "updateEmail", ^.checked := s.userModel.canReceiveEmailUpdates, ^.onChange ==> updateCanReceiveEmailUpdates), " Send me occasional email updates from LivelyGig"

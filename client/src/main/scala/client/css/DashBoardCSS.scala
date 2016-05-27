@@ -15,12 +15,19 @@ object DashBoardCSS {
       overflowX.auto,
       height(800.px)
     )
+
     val splitContainer = style(
       position.relative,
       /* height(100.%%),*/
       width(100.%%),
       overflow.hidden
     )
+
+    //      .splitContainer{
+    //        position:relative;
+    //        height:100%;
+    //        overflow:hidden
+    //      }
     /*  val rsltContainer = style(
         display.inlineBlock,
         width(98.2.%%),
@@ -61,10 +68,10 @@ object DashBoardCSS {
       width(22.px),
       verticalAlign.middle,
       marginTop(-3.px).important,
-      media.maxWidth(1365.px) - (
+      media.maxWidth(1365.px) -(
         height(18.px),
         width(18.px)
-      )
+        )
     )
     val rsltContentBackground = style(
       backgroundColor(c"#D3E7E7"),
@@ -82,11 +89,11 @@ object DashBoardCSS {
       borderLeft(6.px, solid, transparent),
       marginTop(3.px),
 
-      media.maxWidth(1367.px) - (
+      media.maxWidth(1367.px) -(
         width(9.px),
         height(9.px),
         borderTop(5.px, dashed)
-      )
+        )
     )
     val gigMatchButton = style(
       backgroundColor(transparent),
@@ -145,30 +152,30 @@ object DashBoardCSS {
     val slctInputWidthLabel = style(
       width(170.px),
       paddingLeft(5.%%),
-      media.maxWidth(1130.px) - (
+      media.maxWidth(1130.px) -(
         fontSize(1.em),
         width(135.px),
         paddingLeft(9.%%)
-      )
+        )
     )
 
     val scltInputModalLeftContainerMargin = style(
       marginLeft(180.px),
       marginRight(60.px),
-      media.maxWidth(1130.px) - (
+      media.maxWidth(1130.px) -(
         marginLeft(135.px),
         marginRight(38.px)
-      )
+        )
     )
     val scltInputModalContainerMargin = style(
-      media.maxWidth(768.px) - (
+      media.maxWidth(768.px) -(
         marginLeft(0.px),
         marginRight(0.px)
-      ),
-      media.minWidth(769.px) - (
+        ),
+      media.minWidth(769.px) -(
         marginLeft(150.px),
         marginRight(150.px)
-      )
+        )
     )
     val slctHeaders = style(
       paddingTop(15.px),
@@ -253,7 +260,7 @@ object DashBoardCSS {
     val marginLeftCloseBtn = style(
       marginLeft(20.px),
       backgroundColor(orange)
-    // addClassName("btnBackground")
+      // addClassName("btnBackground")
 
     )
     val btnBackground = style(
@@ -436,12 +443,12 @@ object DashBoardCSS {
     val paddingLeft0px = style(
       paddingLeft(0.px)
     )
-    val paddingTop10px = style (
+    val paddingTop10px = style(
       paddingTop(10.px)
     )
-    val paddingLeft7px =style (
+    val paddingLeft7px = style(
       media.maxWidth(767.px) -
-      paddingLeft(0.px),
+        paddingLeft(0.px),
       media.minWidth(768.px) -
         paddingLeft(7.px)
     )
@@ -469,6 +476,209 @@ object DashBoardCSS {
     val chatInvisibleIcon = style {
       color(gray)
     }
-  }
 
+    //main.less styles
+
+    val modalHeader = style(
+      backgroundColor(c"#00767c"),
+      color.white
+      // font-size : 1.3em;
+    )
+
+    val btnDefault = style(
+      addClassName("btn-default"),
+      backgroundColor.transparent
+    )
+
+    val profileDescription = style(
+      unsafeChild(".profile-action-buttons")(
+        visibility.hidden
+      ),
+      &.hover(
+        unsafeChild(".profile-action-buttons")(
+          visibility.visible
+        )
+      ),
+      unsafeChild(".profile-action-buttons:active")(
+        visibility.visible
+      )
+    )
+
+
+    val rsltSectionContainer = style(
+      height(100.%%),
+      unsafeChild(".media-list ")(
+        unsafeChild("li:nth-child(odd)")(
+          backgroundColor(c"#EAEAEA")
+        )
+      ),
+      unsafeChild(".media-list ")(
+        unsafeChild("li:nth-child(even)")(
+          backgroundColor(c"#D7E3E3")
+        )
+      )
+    )
+
+    val rowStyle = style(
+      //      .rowStyle  tbody {
+      //      height: 350px;
+      //      overflow-y: auto;
+      //    }
+      //
+      unsafeChild("tbody")(
+        height(350 px),
+        overflowY.auto
+      ),
+      //
+      //      .rowStyle thead, .rowStyle tbody, .rowStyle tr, .rowStyle td, .rowStyle th { display: block; }
+      //
+      unsafeChild("thead")(display.block),
+      unsafeChild("tbody")(display.block),
+      unsafeChild("tr")(display.block),
+      unsafeChild("td")(display.block),
+      unsafeChild("th")(display.block),
+      //      .rowStyle > tbody > tr:nth-child(even) {
+      //      background-color: #D7E3E3;
+      //    }
+      unsafeChild("tbody")(
+        unsafeChild("tr:nth-child(even)")(
+          backgroundColor(c"#D7E3E3")
+        )
+      ),
+      //      .rowStyle > tbody >  tr td:nth-child(1), .rowStyle > thead > tr th:nth-child(1), .rowStyle > tfoot >  tr td:nth-child(1){
+      //      width:30%;
+      //    }
+      unsafeChild("tbody")(
+        unsafeChild("tr td:nth-child(1)")(
+          width(30.%%)
+        )
+      ), unsafeChild("thead")(
+        unsafeChild("tr th:nth-child(1)")(
+          width(30.%%)
+        )
+      ), unsafeChild("tfoot")(
+        unsafeChild("tr td:nth-child(1)")(
+          width(30.%%)
+        )
+      ),
+      //      .rowStyle > tbody >  tr td:nth-child(2), .rowStyle > thead > tr th:nth-child(2), .rowStyle > tfoot >  tr td:nth-child(2){
+      //      width:18%;
+      //      text-align:center;
+      //    }
+
+      unsafeChild("tbody")(
+        unsafeChild("tr td:nth-child(2)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ), unsafeChild("thead")(
+        unsafeChild("tr th:nth-child(2)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ), unsafeChild("tfoot")(
+        unsafeChild("tr td:nth-child(2)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ),
+      //      .rowStyle > tbody >  tr td:nth-child(3), .rowStyle > thead > tr th:nth-child(3), .rowStyle > tfoot >  tr td:nth-child(3){
+      //      width:18%;
+      //      text-align:center;
+      //    }
+      unsafeChild("tbody")(
+        unsafeChild("tr td:nth-child(3)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ), unsafeChild("thead")(
+        unsafeChild("tr th:nth-child(3)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ), unsafeChild("tfoot")(
+        unsafeChild("tr td:nth-child(3)")(
+          width(18.%%),
+          textAlign.center
+        )
+      ),
+      //      .rowStyle > tbody >  tr td:nth-child(4), .rowStyle > thead > tr th:nth-child(4), .rowStyle > tfoot >  tr td:nth-child(4){
+      //      width:34%;
+      //
+      //    }
+      unsafeChild("tbody")(
+        unsafeChild("tr td:nth-child(4)")(
+          width(34.%%)
+        )
+      ), unsafeChild("thead")(
+        unsafeChild("tr th:nth-child(4)")(
+          width(34.%%)
+        )
+      ), unsafeChild("tfoot")(
+        unsafeChild("tr td:nth-child(4)")(
+          width(34.%%)
+        )
+      ),
+
+
+      //      .rowStyle tr:after {
+      //      content: ' ';
+      //      display: block;
+      //      visibility: hidden;
+      //      clear: both;
+      //    }
+      //
+      unsafeChild("tr:after")(
+        content := " ",
+        display.block,
+        visibility.hidden,
+        clear.both
+      ),
+      //    .rowStyle thead th {
+      //      height: 50px;
+      //      /*text-align: left;*/
+      //    }
+      //
+      unsafeChild("thead th")(
+        height(50 px)
+      ),
+
+      //      .rowStyle thead {
+      //      /* fallback */
+      //    }
+      //
+      //      .rowStyle tbody td, .rowStyle thead th, .rowStyle tfoot td {
+      //      width: 25%;
+      //      float: left;
+      //    }
+      unsafeChild("tbody td")(
+        width(25.%%),
+        float.left
+      ),
+      unsafeChild("thead th")(
+        width(25.%%),
+        float.left
+      ),
+      unsafeChild("tfoot td")(
+        width(25.%%),
+        float.left
+      )
+    )
+
+    val inProgress = style(
+      unsafeChild("tbody")(
+        overflowY.auto,
+        height(135 px),
+        position.absolute,
+        width(97.%%)
+      ),
+      unsafeChild("tr")(
+        width(100.%%),
+        display.inlineTable
+      ),
+      unsafeChild("table")(
+        height(190 px)
+      )
+    )
+  }
 }

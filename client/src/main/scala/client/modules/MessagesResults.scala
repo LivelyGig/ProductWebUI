@@ -110,7 +110,8 @@ object MessagesList {
   private val MessagesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
       def renderMessages(message: MessagePost) = {
-        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
+       // <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription,DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
@@ -132,7 +133,8 @@ object MessagesList {
           ) //media-body
         ) //li
       }
-      <.div(^.className := "rsltSectionContainer")(
+
+      <.div(DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.messages map renderMessages)
       )
     })
