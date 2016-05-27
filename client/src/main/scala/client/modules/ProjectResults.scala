@@ -103,13 +103,13 @@ object ProjectsList {
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.projectPostContent.name ,
+            project.postContent.name ,
             <.div(DashBoardCSS.Style.displayInlineText)("  Posted by: @LivelyGig  "),
             "  Posted: " + new Date(project.created).toUTCString()
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
-            "Job Type: " + project.projectPostContent.contractType,
-           <.div( project.projectPostContent.description),
+            "Job Type: " + project.postContent.contractType,
+           <.div( project.postContent.description),
             <.div( /*^.className := "col-md-4 col-sm-4",*/)(
               <.br(),
               "Skills: Java, Financial Apps, cryptography",

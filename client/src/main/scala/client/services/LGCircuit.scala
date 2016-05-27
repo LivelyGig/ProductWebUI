@@ -1,18 +1,11 @@
 package client.services
 
-import client.Handlers.ProfilesHandler
 import client.handlers._
 import shared.RootModels._
-import upickle.default._
 import diode._
 import diode.data._
-import diode.util._
 import diode.react.ReactConnector
 import shared.models.UserModel
-
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import scala.scalajs.js
-import scala.scalajs.js.JSON
 
 case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: Pot[MessagesRootModel],
   jobPosts: Pot[ProjectsRootModel], searches: SearchesRootModel, profiles : Pot[ProfilesRootModel])

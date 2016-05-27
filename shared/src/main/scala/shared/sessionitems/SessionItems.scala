@@ -16,7 +16,7 @@ object SessionItems {
    * @return All session uri except for connections.
    */
   def getAllSessionUriNameExceptCnxs(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI)
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI, ProfilesViewItems.PROFILES_SESSION_URI)
   }
 
   /*def getAllSessionUriExceptCnxs(): Seq[String] = {

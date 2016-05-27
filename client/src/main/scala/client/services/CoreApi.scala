@@ -10,6 +10,7 @@ import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
+import shared.sessionitems.SessionItems.ProfilesViewItems
 
 object CoreApi {
     var BASE_URL = "http://192.168.99.100:8888/api"
@@ -68,6 +69,7 @@ object CoreApi {
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
     Option(previousSearchLabels) match {
       case Some(s) =>
+        window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)
         for {
           cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
           messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)

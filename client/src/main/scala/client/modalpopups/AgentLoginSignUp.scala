@@ -1,3 +1,4 @@
+
 package client.modals
 
 import client.handlers.{ CreateLabels, LoginUser, RefreshConnections }
@@ -96,7 +97,7 @@ object AgentLoginSignUp {
     }
 
     /**
-     * Weird creation of sessions?
+     * For details of  creation of sessions
      * Look at description of SessionItems.getAllSessionUriExceptCnxs() mate :)
      *
      * @param userModel

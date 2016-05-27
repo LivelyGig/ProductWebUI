@@ -2,8 +2,8 @@ package client.handlers
 
 import client.modules.AppModule
 import org.widok.moment.Moment
-import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
-import shared.models.{ MessagePost, Post, ProjectsPost }
+import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
+import shared.models.{MessagePost, Post, ProfilesPost, ProjectsPost}
 
 /**
  * Created by shubham.k on 12-05-2016.
@@ -16,6 +16,8 @@ object ContentModelHandler {
           Some(upickle.default.read[ProjectsPost](messages.content.pageOfPosts(0)))
         case AppModule.MESSAGES_VIEW =>
           Some(upickle.default.read[MessagePost](messages.content.pageOfPosts(0)))
+        case AppModule.PROFILES_VIEW =>
+          Some(upickle.default.read[ProfilesPost](messages.content.pageOfPosts(0)))
       }
     } catch {
       case e: Exception =>

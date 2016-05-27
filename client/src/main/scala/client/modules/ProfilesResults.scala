@@ -1,6 +1,6 @@
 package client.modules
 
-import client.Handlers.RefreshProfiles
+import client.handlers.RefreshProfiles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 import client.components.Icon
@@ -95,11 +95,11 @@ object ProfilesList {
 
   private val ProfilesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
-      def renderProfilePosts(project: ProfilesPost) = {
+      def renderProfilePosts(profile: ProfilesPost) = {
         <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
         <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
         <.span(^.className := "checkbox-lbl"),
-        <.div(DashBoardCSS.Style.profileNameHolder)("Abed Shome, Videographer"),
+        <.div(DashBoardCSS.Style.profileNameHolder)(s"${profile.postContent.talentProfile.name}, Videographer"),
         <.div(^.className := "col-md-12")(
           <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Experience: 8 years"),
           <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Projects Completed: 24"),

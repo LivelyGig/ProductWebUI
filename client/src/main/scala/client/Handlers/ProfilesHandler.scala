@@ -1,6 +1,5 @@
-package client.Handlers
+package client.handlers
 
-import client.handlers.ContentModelHandler
 import diode.data.{Empty, Pot, PotActionRetriable}
 import shared.RootModels.ProfilesRootModel
 import shared.models.{ProfilesPost}

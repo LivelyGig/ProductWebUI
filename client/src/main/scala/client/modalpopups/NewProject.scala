@@ -89,7 +89,7 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.projectPost,state.selectizeInputId, SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.projectPost,Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
       t.modState(s => s.copy(postProject = true))
     }
 
