@@ -13,7 +13,7 @@ object AppModule {
   val DASHBOARD_VIEW    = "dashboard"
   val PROFILES_VIEW     = "profiles"
   val PROJECTS_VIEW     = "projects"
-  val CONTRACTS_VIEW    = "contract"
+  val CONTRACTS_VIEW    = "contracts"
   val MESSAGES_VIEW     = "messages"
   val OFFERINGS_VIEW    = "offerings"
   val CONNECTIONS_VIEW  = "connections"
