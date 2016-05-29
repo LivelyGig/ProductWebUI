@@ -12,7 +12,7 @@ import scalacss.ScalaCssReact._
 object AppModule {
   val DASHBOARD_VIEW    = "dashboard"
   val PROFILES_VIEW     = "profiles"
-  val PROJECTS_VIEW     = "projects"
+  val PROJECTS_VIEW     = "jobs"
   val CONTRACTS_VIEW    = "contracts"
   val MESSAGES_VIEW     = "messages"
   val OFFERINGS_VIEW    = "offerings"

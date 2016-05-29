@@ -126,7 +126,7 @@ object NewProjectForm {
     }
     // scalastyle:off
     def render(s: State, p: Props) = {
-      val headerText = "New Project"
+      val headerText = "New Job"
       val model = s.projectPost
       Modal(
         Modal.Props(

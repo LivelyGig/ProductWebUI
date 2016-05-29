@@ -114,7 +114,8 @@ object MessagesList {
           // if even row  DashBoardCSS.Style.rsltContentBackground
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)(s"From : Pam   To : Abed , RS7851  ${message.created}"),
+          <.div(DashBoardCSS.Style.profileNameHolder)(s"From: Pam   To: Abed"),
+          <.div(^.className := "media-body")(s"Created: ${message.created}"),
           <.div(^.className := "media-body")(s"Subject: ${message.postContent.subject}"),
           <.div(^.className := "media-body")(s"Message: ${message.postContent.text}",
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(
