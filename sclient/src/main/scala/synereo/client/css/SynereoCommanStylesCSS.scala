@@ -5,8 +5,8 @@ import synereo.client.css.DashboardCSS.Style._
 import scalacss.Defaults._
 
 /**
- * Created by Mandar on 3/23/2016.
- */
+  * Created by Mandar on 3/23/2016.
+  */
 object SynereoCommanStylesCSS {
 
   object Style extends StyleSheet.Inline {
@@ -19,8 +19,8 @@ object SynereoCommanStylesCSS {
       marginBottom(0.px),
       position.initial,
       zIndex(0),
-//      backgroundColor(rgba(48, 134, 161, 0.6)),
-      backgroundColor(rgb(39, 116, 144)),
+      //      backgroundColor(rgba(48, 134, 161, 0.6)),
+      //      backgroundColor(rgb(39, 116, 144)),
       media.maxWidth(820.px) -
         paddingTop(4.px)
     )
@@ -34,8 +34,8 @@ object SynereoCommanStylesCSS {
     val labelSelectizeNavbar = style(
       width(480.px),
       display.inlineBlock,
-//      height(36.px),
-      margin(12.px,0.px,0.px,0.px)
+      margin(14.px, 0.px, 0.px, 0.px),
+      borderBottom(1.px,solid,c"#FFFFFF")
     )
     val newMessageSendBtn = style(
       backgroundColor(c"#ff806c"),
@@ -80,12 +80,12 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val mainMenuNavbar = style(
-      position.absolute,
-      paddingTop(6.px),
-      paddingRight(20.px),
-      right.`0`,
-      zIndex(100)
-//      backgroundColor(c"#277490")
+//      position.absolute,
+//      paddingTop(6.px),
+//      paddingRight(20.px),
+      right.`0`
+//      zIndex(100)
+      //      backgroundColor(c"#277490")
     )
     val renderFailedMessage = style(
       marginTop(40.px),
@@ -95,7 +95,7 @@ object SynereoCommanStylesCSS {
     )
     val nonLoggedInMenu = style(
       paddingRight(15.px)
-//      paddingTop(28.px)
+      //      paddingTop(28.px)
     )
     val dropdownMenu = style(
       padding(40.px, 20.px)
@@ -112,12 +112,12 @@ object SynereoCommanStylesCSS {
     val mainMenuUserActionDropdownBtn = style(
       marginTop(5.px),
       backgroundColor.transparent.important,
-      color(c"#69a5bf"),
+      color(c"#FFFFFF"),
       &.hover(
-        color(c"#69a5bf")
+        color(c"#FFFFFF")
       ),
       &.focus(
-        color(c"#69a5bf")
+        color(c"#FFFFFF")
       )
 
     )
@@ -134,19 +134,20 @@ object SynereoCommanStylesCSS {
     )
     val userActionButton = style(
       fontSize(1.5.em),
-      color(c"#8CBFD7 "),
+      color(c"#FFFFFF"),
       padding(8.px, 20.px),
       backgroundColor.transparent,
       border.`0`.important,
       outline.none.important,
       & focus(
+        color(c"#FFFFFF"),
         outline.none.important,
         backgroundColor.transparent.important
         ),
       & hover(
         outline.none.important,
         backgroundColor.transparent.important,
-        color(c"#8CBFD7 ")
+        color(c"#FFFFFF")
         )
     )
     val dropDownLIHeading = style(
@@ -155,9 +156,32 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val userNameNavBar = style(
-      fontSize(1.5.em),
-      color(c"#8CBFD7 "),
-      padding(5.px, 20.px)
+      fontSize(20.px),
+      color(c"#FFFFFF "),
+      padding(5.px, 5.px)
+    )
+    val ampsDropdownToggleBtn = style(
+//      width(110.px),
+//      border(1.px, solid, transparent),
+//      borderBottomLeftRadius(9.em),
+      backgroundColor.transparent.important,
+//      position.absolute,
+//      right.`0`,
+      fontSize(15.px),
+      padding.`0`.important,
+      color(c"#FFFFFF"),
+      &.hover(
+        backgroundColor.transparent.important,
+        color(c"#FFFFFF")
+      ),
+      &.focus(
+        backgroundColor.transparent.important,
+        color(c"#FFFFFF")
+      ),
+      &.visited(
+        backgroundColor.transparent.important,
+        color(c"#FFFFFF")
+      )
     )
     val userActionsMenu = style(
       width.auto.important,
@@ -176,7 +200,7 @@ object SynereoCommanStylesCSS {
     val imgLogoOtherLoc = style(
       marginTop(8.px),
       padding(5.px),
-      maxHeight(48.px)
+      maxHeight(54.px)
     )
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
@@ -255,7 +279,7 @@ object SynereoCommanStylesCSS {
       zIndex(2000),
       color.grey
     )
-    val messagesLoadingWaitCursor= style(
+    val messagesLoadingWaitCursor = style(
       width(50.px),
       height(57.px),
       position.fixed,
@@ -268,12 +292,12 @@ object SynereoCommanStylesCSS {
       backgroundColor(c"#EEEEEE")
     )
     val userAvatar = style(
-      width(30.px),
-      height(30.px),
+      width(45.px),
+      height(45.px),
       borderRadius(50.%%),
       display.inlineBlock
     )
-    val userAvatarTopBar= style(
+    val userAvatarTopBar = style(
       width(30.px),
       height(30.px),
       borderRadius(50.%%),
@@ -282,6 +306,7 @@ object SynereoCommanStylesCSS {
     )
     val userAvatarAnchor = style(
       backgroundColor.transparent.important,
+      paddingLeft.`0`.important,
       &.hover(
         backgroundColor.transparent.important
       ),
@@ -296,15 +321,16 @@ object SynereoCommanStylesCSS {
       backgroundColor.transparent,
       border.none.important,
       borderRadius.`0`.important,
+      marginTop(-20.px),
       paddingTop(3.px),
       paddingBottom(3.px),
       paddingLeft.`0`,
-      paddingRight.`0`,
-      color(c"#8CBFD7").important,
+      paddingRight(6.px),
+      color(c"#FFFFFF").important,
       &.hover(
         backgroundColor.transparent.important,
         border.none.important,
-        color(c"#8CBFD7").important
+        color(c"#FFFFFF").important
       )
     )
 

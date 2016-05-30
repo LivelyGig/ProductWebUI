@@ -17,8 +17,8 @@ object DashboardCSS {
     val dashboardContainerMain = style(
       height(95.vh),
       overflowY.scroll.important,
-      overflowX.hidden,
-      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
+      overflowX.hidden
+      //      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
     )
     val fullViewModalDilog = style(
       width(100.%%)
@@ -73,27 +73,6 @@ object DashboardCSS {
     val cardDescriptionContainerDiv = style(
       paddingLeft(65.px),
       paddingRight(65.px)
-    )
-    val ampsDropdownToggleBtn = style(
-      width(110.px),
-      border(1.px, solid, transparent),
-      borderBottomLeftRadius(9.em),
-      backgroundColor(c"#1e84b4"),
-      position.absolute,
-      right.`0`,
-      fontSize(13.px),
-      padding(4.px).important,
-      color.white,
-      &.hover(
-        color(c"#FFFFFF")
-      ),
-      &.focus(
-        color(c"#FFFFFF")
-      ),
-      &.visited(
-        color(c"#FFFFFF")
-      )
-
     )
     val CardHolderLiElement = style(
       margin(15.px, -30.px),

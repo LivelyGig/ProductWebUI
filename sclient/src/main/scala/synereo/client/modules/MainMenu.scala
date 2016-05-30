@@ -43,6 +43,7 @@ object MainMenu {
     SYNEREOCircuit.dispatch(SearchMessagesOnLabels(Some(labelSelectizeId)))
     SYNEREOCircuit.dispatch(RefreshMessages())
   }
+
   def toggleTopbar = Callback {
     val topBtn: js.Object = "#TopbarContainer"
     $(topBtn).toggleClass("topbar-left topbar-lg-show")
@@ -64,11 +65,10 @@ object MainMenu {
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right", props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+        <.ul(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
           if (props.proxy().isLoggedIn) {
             val model = props.proxy.value
             <.ul(^.className := "nav nav-pills")(
-              <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(<.span(model.name)),
               <.li(
                 <.div(^.className := "dropdown")(
                   <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
@@ -100,12 +100,24 @@ object MainMenu {
                   )
                 )
               ),
-              <.li(^.className := "dropdown" /*,SynereoCommanStylesCSS.Style.*/)(
-                <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
-                <.div(^.className := "dropdown-arrow-small"),
-                <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                  <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
-                  <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+              <.li(/*,SynereoCommanStylesCSS.Style.*/)(
+                <.div(^.className := "dropdown")(
+                  <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
+                  <.div(^.className := "dropdown-arrow-small"),
+                  <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
+                    <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
+                    <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+                  )
+                )
+              ),
+              <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
+                <.div(model.name),
+                <.div(^.className := "text-center")(
+                  <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
+                    /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
+                    <.span(Icon.cogs),
+                    <.span("543")
+                  )
                 )
               ),
               <.li(^.className := "")(
@@ -137,19 +149,20 @@ object MainMenu {
               //                ),
               //                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
               //              ),
-              <.div( SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
                 <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
                   SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
                 ),
-                <.button(^.className := "btn btn-primary",^.marginTop:="-25.px",^.onClick ==> searchWithLabels)(MIcon.search)
-              ),
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-                      TopMenuBar(TopMenuBar.Props()),
-                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
+                ),
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
+                    <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+                      <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+                        TopMenuBar(TopMenuBar.Props())
+                        //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
+                        //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+                        //                      )
                       )
                     )
                   )

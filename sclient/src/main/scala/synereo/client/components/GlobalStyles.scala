@@ -12,7 +12,7 @@ object GlobalStyles extends StyleSheet.Inline {
     paddingTop(0.px),
     DashboardCSS.Style.bodyImg,
     fontFamily :=! "'karla', sans-serif",
-    backgroundColor(c"#242D40"),
+    backgroundColor(c"#277490"),
     height(100.vh),
     overflowY.hidden
   ))
