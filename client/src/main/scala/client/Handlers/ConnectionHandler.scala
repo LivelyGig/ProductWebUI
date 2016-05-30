@@ -33,7 +33,7 @@ object ConnectionModelHandler {
           model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
             name, imgSrc)
       }
-      ConnectionsRootModel(model)
+      ConnectionsRootModel(model.sortBy(_.name))
     } catch {
       case e: Exception  =>
         ConnectionsRootModel(Nil)
