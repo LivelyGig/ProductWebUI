@@ -171,7 +171,7 @@ object LoggedInUser {
                   <.li()(<.a()("Payments")),
                   <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true")("Preferences")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
+                  <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out"))
                 )
               ),
               <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(

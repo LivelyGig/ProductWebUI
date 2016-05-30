@@ -44,7 +44,7 @@ object Dashboard {
               <.div(^.className := "col-md-4 col-sm-4")(
                 <.div(DashBoardCSS.Style.browseforContainer)(
                   <.span(DashBoardCSS.Style.headerFontDashboard)("Browse for"), <.br(),
-                  "New projects", <.br(),
+                  "New jobs", <.br(),
                   "New contensts", <.br(),
                   "New talent", <.br()
                 )
