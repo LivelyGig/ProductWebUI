@@ -116,7 +116,7 @@ object NewProfileForm {
       val value = event.target.value
       t.modState(s => s.copy(profilePost = s.profilePost.copy( talentProfile= s.profilePost.talentProfile.copy(video = value))))
     }
-    def updateEmployerProfileName(event: ReactEventI): react.Callback = {
+    /*def updateEmployerProfileName(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(profilePost = s.profilePost.copy( employerProfile= s.profilePost.employerProfile.copy(name = value))))
     }
@@ -152,7 +152,7 @@ object NewProfileForm {
       val value = event.target.value
       t.modState(s => s.copy(profilePost = s.profilePost.copy( moderatorProfile= s.profilePost.moderatorProfile.copy(commission = value))))
     }
-
+*/
     def render(s: State, p: Props) = {
       val headerText = "New Profile"
       val model = s.profilePost
@@ -241,7 +241,7 @@ object NewProfileForm {
               <.label(^.`for` := "EmployerName", "Employer Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "EmployerName",  ^.value := model.employerProfile.name, ^.onChange ==> updateEmployerProfileName,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "EmployerName", /* ^.value := model.employerProfile.name, ^.onChange ==> updateEmployerProfileName,*/
                 ^.required := true)
             )
           ),
@@ -250,7 +250,7 @@ object NewProfileForm {
               <.label(^.`for` := "Website", "Website")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Website", ^.value := model.employerProfile.website, ^.onChange ==> updateEmployerProfileWebsite,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Website", /*^.value := model.employerProfile.website, ^.onChange ==> updateEmployerProfileWebsite,*/
                 ^.required := false)
             )
           ),
@@ -259,7 +259,7 @@ object NewProfileForm {
               <.label(^.`for` := "Tagline", "Tagline")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Tagline", ^.value := model.employerProfile.tagline, ^.onChange ==> updateEmployerProfileTagline,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Tagline", /*^.value := model.employerProfile.tagline, ^.onChange ==> updateEmployerProfileTagline,*/
                 ^.required := false, ^.placeholder := "Briefly describe your company")
             )
           ),
@@ -268,7 +268,7 @@ object NewProfileForm {
               <.label(^.`for` := "Video", "Video")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video", ^.value := model.employerProfile.video, ^.onChange ==> updateEmployerProfileVideo,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video", /*^.value := model.employerProfile.video, ^.onChange ==> updateEmployerProfileVideo,*/
                 ^.required := false, ^.placeholder := "A link to a video about your company")
             )
           ),
@@ -277,7 +277,7 @@ object NewProfileForm {
               <.label(^.`for` := "Twitter", "Twitter username")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Twitter",^.value := model.employerProfile.twitter, ^.onChange ==> updateEmployerProfileTwitter,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Twitter",/*^.value := model.employerProfile.twitter, ^.onChange ==> updateEmployerProfileTwitter,*/
                 ^.required := false, ^.placeholder := "@yourcompany")
             )
           ),
@@ -286,7 +286,7 @@ object NewProfileForm {
               <.label(^.`for` := "Logo", "Logo")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Logo",^.value := model.employerProfile.logo, ^.onChange ==> updateEmployerProfileLogo,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Logo",/*^.value := model.employerProfile.logo, ^.onChange ==> updateEmployerProfileLogo,*/
                 ^.required := false, ^.placeholder := "<Choose File>")
             )
           ),
@@ -296,7 +296,7 @@ object NewProfileForm {
               <.label(^.`for` := "Name", "Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", ^.value := model.moderatorProfile.name, ^.onChange ==> updateModeratorProfileName,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", /*^.value := model.moderatorProfile.name, ^.onChange ==> updateModeratorProfileName,*/
                 ^.required := true)
             )
           ),
@@ -305,7 +305,7 @@ object NewProfileForm {
               <.label(^.`for` := "Capabilities", "Capabilities *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities", ^.value := model.moderatorProfile.capabilities, ^.onChange ==> updateModeratorProfileCapabilities,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities", /*^.value := model.moderatorProfile.capabilities, ^.onChange ==> updateModeratorProfileCapabilities,*/
                 ^.required := true, ^.placeholder := "<Select top 10, ranked>")
             )
           ),
@@ -314,7 +314,7 @@ object NewProfileForm {
               <.label(^.`for` := "Commission", "Commission *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Commission", ^.value := model.moderatorProfile.commission, ^.onChange ==> updateModeratorProfileCommission,
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Commission", /*^.value := model.moderatorProfile.commission, ^.onChange ==> updateModeratorProfileCommission,*/
                 ^.required := true, ^.placeholder := "Enter commission rate, 0% - 2%")
             )
           ),
