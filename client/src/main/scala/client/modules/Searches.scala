@@ -120,6 +120,25 @@ object Searches {
     }
 
     def render(s: State, p: Props) = {
+      //          @tailrec
+      def renderLabel(label: LabelModel): ReactTag = {
+        val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
+        if (!children.isEmpty) {
+          <.li(LftcontainerCSS.Style.checkboxlabel)(
+            <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
+            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+            "  " + label.text,
+            <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
+            <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
+          )
+        } else {
+
+          <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+              + label.text
+          )
+        }
+      }
 
       p.view match {
         case AppModule.PROFILES_VIEW => {
@@ -170,6 +189,19 @@ object Searches {
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
                   // )
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -249,6 +281,19 @@ object Searches {
                       LftcontainerCSS.Style.slctDate)
                   // )
 
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -410,6 +455,19 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -496,6 +554,19 @@ object Searches {
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-4 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
@@ -513,25 +584,7 @@ object Searches {
           )
         }
         case AppModule.MESSAGES_VIEW => {
-          //          @tailrec
-          def renderLabel(label: LabelModel): ReactTag = {
-            val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
-            if (!children.isEmpty) {
-              <.li(LftcontainerCSS.Style.checkboxlabel)(
-                <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-                <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
-                "  " + label.text,
-                <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
-                <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
-              )
-            } else {
 
-              <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-                <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
-                  + label.text
-              )
-            }
-          }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/

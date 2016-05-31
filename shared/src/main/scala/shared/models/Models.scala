@@ -56,7 +56,7 @@ case class ProfilesPost(uid: String, created: String, modified: String, labels: 
   override def versionNumber: Int = 0
 }
 
-case class ProfilePostContent(talentProfile: TalentProfile = TalentProfile(), employerProfile: EmployerProfile = EmployerProfile(), moderatorProfile: ModeratorProfile = ModeratorProfile()) extends PostContent
+case class ProfilePostContent(talentProfile: TalentProfile = TalentProfile()/*, employerProfile: EmployerProfile = EmployerProfile(), moderatorProfile: ModeratorProfile = ModeratorProfile()*/) extends PostContent
 
 case class TalentProfile(name: String = "", title: String = "", capabilities: String = "", video: String = "") extends Person with PostContent
 
