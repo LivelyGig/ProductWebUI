@@ -12,10 +12,11 @@ object ConnectionsCSS {
     import dsl._
 
     val connectionsContainerMain = style(
-      height(98.vh),
+      height(95.vh),
       overflowY.scroll.important,
       paddingTop(60.px),
-      paddingBottom(60.px)
+      paddingBottom(60.px),
+      overflowX.hidden
     )
     val connectionAvatar = style(
       width(70.px),

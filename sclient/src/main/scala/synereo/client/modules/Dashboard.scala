@@ -53,10 +53,10 @@ object Dashboard {
       val state = t.state.runNow()
       println(state.postMessage)
       $(messageLoader).removeClass("hidden")
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.messagePostContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       //      SYNEREOCircuit.dispatch(RefreshMessages())
       $(messageLoader).addClass("hidden")
-      t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(messagePostContent = MessagePostContent("", ""))))
+      t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(postContent = MessagePostContent("", ""))))
     }
 
     def mounted(props: Props) = {
@@ -73,7 +73,7 @@ object Dashboard {
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
       //      t.modState(_.copy(postMessage = postMessage())
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(text = value))))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
     }
 
     def closeFullViewModalPopUp(): Callback = {
@@ -163,7 +163,7 @@ object Dashboard {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
                 <.form(^.onSubmit ==> postMessage)(
                   <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.messagePostContent.text, ^.onChange ==> updateContent),
+                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
                   <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == postMessage*/)(Icon.camera)
                 ),
@@ -337,7 +337,7 @@ object HomeFeedList {
 
                     <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
-                      message.messagePostContent.text,
+                      message.postContent.text,
                       <.br(),
                       <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
                     )

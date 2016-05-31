@@ -81,13 +81,13 @@ object NewMessageForm {
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
 //            println(value)
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(subject = value))))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(subject = value))))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
 //            println(value)
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(messagePostContent = s.postMessage.messagePostContent.copy(text = value))))
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
     }
 
     def hideModal = {
@@ -101,7 +101,7 @@ object NewMessageForm {
     def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.messagePostContent,Some(state.selectizeInputId) , SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent,Some(state.selectizeInputId) , SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -125,10 +125,10 @@ object NewMessageForm {
               SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
             ),
             <.div()(
-              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.messagePostContent.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
+              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.postContent.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.messagePostContent.text, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.postContent.text, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
