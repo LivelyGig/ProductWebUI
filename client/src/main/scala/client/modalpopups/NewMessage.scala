@@ -81,7 +81,7 @@ object NewMessageForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.postMessage, state.selectizeInputId, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.postMessage, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 

@@ -1,5 +1,6 @@
 package client.modules
 
+import client.handlers.RefreshProfiles
 import client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
@@ -7,8 +8,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers._
 import shared.RootModels.SearchesRootModel
 import client.css._
-import shared.models.{ LabelModel, UserModel }
-import client.services.{ CoreApi, LGCircuit }
+import shared.models.{LabelModel, UserModel}
+import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 
 import scalacss.ScalaCssReact._
@@ -23,8 +24,8 @@ object Searches {
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
   case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
-
-  def sidebar = Callback {
+// scalastyle:off
+  def toggleSidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
@@ -55,6 +56,9 @@ object Searches {
         case AppModule.PROJECTS_VIEW =>
           LGCircuit.dispatch(StoreProjectsSearchLabel())
           LGCircuit.dispatch(RefreshProjects())
+        case AppModule.PROFILES_VIEW =>
+          LGCircuit.dispatch(StoreProfilesSearchLabel())
+          LGCircuit.dispatch(RefreshProfiles())
       }
 
     }
@@ -111,17 +115,17 @@ object Searches {
     def mounted(): Callback = Callback {
       initializeDatepicker
       initializeTagsInput
-      sidebar
+      toggleSidebar
       LGCircuit.dispatch(CreateLabels())
     }
 
     def render(s: State, p: Props) = {
 
       p.view match {
-        case AppModule.TALENTS_VIEW => {
+        case AppModule.PROFILES_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -211,7 +215,7 @@ object Searches {
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -424,7 +428,7 @@ object Searches {
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -601,7 +605,7 @@ object Searches {
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(

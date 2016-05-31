@@ -7,13 +7,19 @@ import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import client.handlers.PostData
+import client.services.LGCircuit
+import japgolly.scalajs.react
+
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import shared.models.ProfilePostContent
+import shared.sessionitems.SessionItems
 
-object UserSkills {
+object NewProfile {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
@@ -49,7 +55,7 @@ object UserSkills {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
         Button(Button.Props(B.addUserSkillsForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName),
-        if (S.showUserSkillsForm) UserSkillsForm(UserSkillsForm.Props(B.addUserSkills))
+        if (S.showUserSkillsForm) NewProfileForm(NewProfileForm.Props(B.addUserSkills))
         else
           Seq.empty[ReactElement]
       )
@@ -61,13 +67,13 @@ object UserSkills {
   def apply(props: Props) = component(props)
 }
 
-object UserSkillsForm {
+object NewProfileForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (Boolean) => Callback)
 
-  case class State(postUserSkills: Boolean = false)
+  case class State(profilePost: ProfilePostContent, postUserSkills: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) /* extends RxObserver(t)*/ {
     def hide = Callback {
@@ -86,17 +92,83 @@ object UserSkillsForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val state = t.state.runNow()
+      LGCircuit.dispatch(PostData(state.profilePost, None, SessionItems.ProfilesViewItems.PROFILES_SESSION_URI))
       t.modState(s => s.copy(postUserSkills = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postUserSkills)
       props.submitHandler(state.postUserSkills)
     }
 
+    def updateTalentProfileName(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(talentProfile = s.profilePost.talentProfile.copy(name = value))))
+    }
+
+    def updateTalentCapabilities(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(talentProfile = s.profilePost.talentProfile.copy(capabilities = value))))
+    }
+
+    def updateTalentProfileTitle(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(talentProfile = s.profilePost.talentProfile.copy(title = value))))
+    }
+
+    def updateTalentProfileVideo(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(talentProfile = s.profilePost.talentProfile.copy(video = value))))
+    }
+
+    def updateEmployerProfileName(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(name = value))))
+    }
+
+    def updateEmployerProfileWebsite(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(website = value))))
+    }
+
+    def updateEmployerProfileTagline(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(tagline = value))))
+    }
+
+    def updateEmployerProfileVideo(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(video = value))))
+    }
+
+    def updateEmployerProfileTwitter(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(twitter = value))))
+    }
+
+    def updateEmployerProfileLogo(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(employerProfile = s.profilePost.employerProfile.copy(logo = value))))
+    }
+
+    def updateModeratorProfileName(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(moderatorProfile = s.profilePost.moderatorProfile.copy(name = value))))
+    }
+
+    def updateModeratorProfileCapabilities(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(moderatorProfile = s.profilePost.moderatorProfile.copy(capabilities = value))))
+    }
+
+    def updateModeratorProfileCommission(event: ReactEventI): react.Callback = {
+      val value = event.target.value
+      t.modState(s => s.copy(profilePost = s.profilePost.copy(moderatorProfile = s.profilePost.moderatorProfile.copy(commission = value))))
+    }
+
     def render(s: State, p: Props) = {
-      val headerText = "New Profile"
+      val headerText = "Manage Profiles"
+      val model = s.profilePost
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -109,42 +181,33 @@ object UserSkillsForm {
           //            <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("User Skills"))
           //          ),
           <.div()(
-            "Your persona currently has the following profiles:", <.br(),
-            "Talent: Videographer ", <.a()("edit"), <.br(),
-            "Talent:   .Net Developer ", <.a()("edit"), <.br(),
-            "Talent Agency: Video Now On-Location News Agency ", <.a()("edit"), <.br()
-          ),
-
-
-          <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-            <.div(^.className := "row")(
-              <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                <.label(^.`for` := "Profile Type", "Create New Profile Type")
-              ),
-              <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                <.div(^.className := "btn-group")(
-                  <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Talent")(
-                    <.span(^.className := "caret")
-                  ),
-                  <.ul(^.className := "dropdown-menu")(
-                    <.li()(<.a()("Talent")),
-                    <.li()(<.a()("Talent Profile")),
-                    <.li()(<.a()("Client")),
-                    <.li()(<.a()("Moderator"))
-                  )
-                )
-              )
+            <.span(^.fontWeight.bold)("View or edit existing profiles:"), <.br(),
+            <.div(^.marginLeft := "10px")(
+              "Talent: ", <.a()("Videographer"), " | ", <.a()("edit"), <.br(),
+              "Talent: ", <.a()(".Net Developer"), " | ", <.a()("edit"), <.br(),
+              "Talent Agency: ", <.a()("Video Now On-Location News Agency "), " | ", <.a()("edit"), <.br()
             )
           ),
-
-
+          <.label(^.`for` := "Profile Type", "Create new profile of type:"),
+          <.div(^.className := "btn-group")(
+            <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("<select type>")(
+              <.span(^.className := "caret")
+            ),
+            <.ul(^.className := "dropdown-menu")(
+              <.li()(<.a()("Talent")),
+              <.li()(<.a()("Talent Profile")),
+              <.li()(<.a()("Client")),
+              <.li()(<.a()("Moderator"))
+            )
+          ),
+          <.br(),
           "// For Talent:",
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
               <.label(^.`for` := "Name", "Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", ^.value := model.talentProfile.name, ^.onChange ==> updateTalentProfileName,
                 ^.required := true)
             )
           ),
@@ -153,7 +216,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Title", "Title *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Title",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Title", ^.value := model.talentProfile.title, ^.onChange ==> updateTalentProfileTitle,
                 ^.required := true)
             )
           ),
@@ -162,7 +225,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Capabilities", "Capabilities *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities", ^.value := model.talentProfile.capabilities, ^.onChange ==> updateTalentCapabilities,
                 ^.required := true, ^.placeholder := "<Select top 10, ranked>")
             )
           ),
@@ -171,7 +234,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Video2", "Video")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video2",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video2", ^.value := model.talentProfile.video, ^.onChange ==> updateTalentProfileVideo,
                 ^.required := false, ^.placeholder := "A link to a video about yourself")
             )
           ),
@@ -182,7 +245,7 @@ object UserSkillsForm {
               <.label(^.`for` := "EmployerName", "Employer Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "EmployerName",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "EmployerName", ^.value := model.employerProfile.name, ^.onChange ==> updateEmployerProfileName,
                 ^.required := true)
             )
           ),
@@ -191,7 +254,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Website", "Website")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Website",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Website", ^.value := model.employerProfile.website, ^.onChange ==> updateEmployerProfileWebsite,
                 ^.required := false)
             )
           ),
@@ -200,7 +263,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Tagline", "Tagline")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Tagline",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Tagline", ^.value := model.employerProfile.tagline, ^.onChange ==> updateEmployerProfileTagline,
                 ^.required := false, ^.placeholder := "Briefly describe your company")
             )
           ),
@@ -209,7 +272,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Video", "Video")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Video", ^.value := model.employerProfile.video, ^.onChange ==> updateEmployerProfileVideo,
                 ^.required := false, ^.placeholder := "A link to a video about your company")
             )
           ),
@@ -218,7 +281,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Twitter", "Twitter username")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Twitter",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Twitter", ^.value := model.employerProfile.twitter, ^.onChange ==> updateEmployerProfileTwitter,
                 ^.required := false, ^.placeholder := "@yourcompany")
             )
           ),
@@ -227,7 +290,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Logo", "Logo")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Logo",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Logo", ^.value := model.employerProfile.logo, ^.onChange ==> updateEmployerProfileLogo,
                 ^.required := false, ^.placeholder := "<Choose File>")
             )
           ),
@@ -237,7 +300,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Name", "Name *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", ^.value := model.moderatorProfile.name, ^.onChange ==> updateModeratorProfileName,
                 ^.required := true)
             )
           ),
@@ -246,7 +309,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Capabilities", "Capabilities *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Capabilities", ^.value := model.moderatorProfile.capabilities, ^.onChange ==> updateModeratorProfileCapabilities,
                 ^.required := true, ^.placeholder := "<Select top 10, ranked>")
             )
           ),
@@ -255,7 +318,7 @@ object UserSkillsForm {
               <.label(^.`for` := "Commission", "Commission *")
             ),
             <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Commission",
+              <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Commission", ^.value := model.moderatorProfile.commission, ^.onChange ==> updateModeratorProfileCommission,
                 ^.required := true, ^.placeholder := "Enter commission rate, 0% - 2%")
             )
           ),
@@ -270,7 +333,7 @@ object UserSkillsForm {
   }
 
   private val component = ReactComponentB[Props]("UserSkillsModal")
-    .initialState_P(p => State())
+    .initialState_P(p => State(new ProfilePostContent()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postUserSkills) {

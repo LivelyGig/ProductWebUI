@@ -4,15 +4,11 @@
 
 # Home page
 GET     /                                 controllers.Application.index
-GET     /l                                 controllers.Application.indexl
-GET     /s                                 controllers.Application.indexs
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/fonts/*file               controllers.Assets.at(path="/public/lib/font-awesome/fonts", file)
 GET     /assets/*file                     controllers.Assets.at(path="/public", file)
 
-# Autowire calls
-POST    /api/*path                        controllers.Application.autowireApi(path: String)
 
 # Logging
 POST /logging                             controllers.Application.logging

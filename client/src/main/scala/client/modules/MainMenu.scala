@@ -60,12 +60,12 @@ object MainMenu {
   }
 
   val menuItems = Seq(
-    MenuItem(1, _ => "Connections", ConnectionsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(2, _ => "Messages", MessagesLoc, buildMenuItem(6), DashboardLoc),
-    MenuItem(3, _ => "Jobs", JobPostsLoc, buildMenuItem(3), DashboardLoc),
-    MenuItem(4, _ => "Offerings", OfferingsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(5, _ => "Profiles", ProfilesLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(6, _ => "Contracts", ContractsLoc, buildMenuItem(0), DashboardLoc)
+    MenuItem(1, _ => AppModule.CONNECTIONS_VIEW.capitalize , ConnectionsLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(2, _ => AppModule.MESSAGES_VIEW.capitalize , MessagesLoc, buildMenuItem(6), DashboardLoc),
+    MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize , JobPostsLoc, buildMenuItem(3), DashboardLoc),
+    MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize , OfferingsLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize , ProfilesLoc, buildMenuItem(0), DashboardLoc),
+    MenuItem(6, _ => AppModule.CONTRACTS_VIEW.capitalize , ContractsLoc, buildMenuItem(0), DashboardLoc)
   // ToDo: Dashboard menu intentionally hidden for now.  EE  2016-04-12
   // MenuItem(7, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc)
   )
@@ -171,7 +171,7 @@ object LoggedInUser {
                   <.li()(<.a()("Payments")),
                   <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#myModal", "aria-haspopup".reactAttr := "true")("Preferences")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Sign Out"))
+                  <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out"))
                 )
               ),
               <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(
