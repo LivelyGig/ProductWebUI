@@ -38,12 +38,12 @@ object ConnectionsResults {
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
             P.proxy().render(connectionsRootModel =>
               ConnectionList(connectionsRootModel.connectionsResponse)),
-            P.proxy().renderFailed(ex => <.div("NO CONNECTIONS FOUND",SynereoCommanStylesCSS.Style.renderFailedMessage)),
+            P.proxy().renderFailed(ex => <.div("NO CONNECTIONS FOUND", SynereoCommanStylesCSS.Style.renderFailedMessage)),
             if (P.proxy().isEmpty) {
               if (!P.proxy().isFailed) {
                 <.div(
-                  <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse)),
-                  <.div("Loading")
+                  <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
+                  //                  <.div("Loading")
                 )
               } else {
                 <.div()
