@@ -33,9 +33,9 @@ object Settings {
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
     "com.vmunier" %% "play-scalajs-scripts" % Versions.playScripts,
-    "org.webjars" % "font-awesome" %"4.6.2"  % Provided,
+    "org.webjars" % "font-awesome" % "4.6.2" % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
-    "org.json4s" %% "json4s-jackson" % 	"3.3.0"
+    "org.json4s" %% "json4s-jackson" % "3.3.0"
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
@@ -53,7 +53,8 @@ object Settings {
     "com.github.nscala-time" %% "nscala-time" % "2.12.0",
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
     "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
-    "com.lihaoyi" %%% "upickle" % Versions.upickle
+    "com.lihaoyi" %%% "upickle" % Versions.upickle,
+    "com.github.japgolly.scalajs-react" %%% "test" % "0.11.1" % "test"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -65,6 +66,10 @@ object Settings {
     "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
     //"org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
-    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
+    "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js",
+    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
+    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
+    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-dom-server.js" minified "react-dom-server.min.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
   ))
+
 }

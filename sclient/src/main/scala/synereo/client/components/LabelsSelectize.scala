@@ -80,7 +80,7 @@ object LabelsSelectize {
     }
   }
 
-  val component = ReactComponentB[Props]("SearchesConnectionList")
+  val component = ReactComponentB[Props]("LabelsSelectize")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

@@ -63,7 +63,7 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
       | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
-      | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl))).notFound(redirectToPage(SynereoLoc)(Redirect.Replace))
+      | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl))).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages

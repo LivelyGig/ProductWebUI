@@ -1,3 +1,4 @@
+import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
 import sbt.Keys._
 import sbt.Project.projectToRef
 
@@ -52,7 +53,11 @@ lazy val client: Project = (project in file(pCompile))
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJS)
-
+//// Indicate that unit tests will access the DOM
+//  requiresDOM := true
+//// Compile tests to JS using fast-optimisation
+//  scalaJSStage in Test := FastOptStage
+//jsEnv in Test := new PhantomJS2Env(scalaJSPhantomJSClassLoader.value)
 // Client projects (just one in this case)
 lazy val clients = Seq(client)
 
