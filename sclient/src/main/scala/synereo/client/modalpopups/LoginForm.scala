@@ -5,7 +5,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS, LoginCSS }
 import shared.models.UserModel
-import synereo.client.services.{ ApiResponseMsg, CoreApi }
+import synereo.client.services.{ ApiTypes, CoreApi }
 import scala.util.{ Failure, Success }
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -20,7 +20,7 @@ import org.querki.jquery._
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean)
+  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean= false)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false)
 

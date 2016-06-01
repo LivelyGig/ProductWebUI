@@ -6,7 +6,7 @@ import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{ SignupCSS, SynereoCommanStylesCSS }
-import shared.models.UserModel
+import shared.models.{SignUpModel, UserModel}
 import scala.scalajs.js
 import scala.util
 import scalacss.ScalaCssReact._
@@ -17,23 +17,19 @@ import org.scalajs.dom._
 
 object NewUserForm {
   var addNewUserState: Boolean = false
-  var userModelUpdate = new UserModel("", "", "", false, "", "")
-  /*case class UserModel(email: String = "", password: String = "", ConfirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = true,
-                       isLoggedIn: Boolean = false, imgSrc: String = "")*/
-  /*case class UserModel (name: String = "",email: String = "", password: String = "",isLoggedIn: Boolean = false, imgSrc: String = "",ConfirmPassword: String = "")*/
-
-  // shorthand for styles
+  var signUpModelUpdate = new SignUpModel("","","","","",false,false, false, false, false, false, "",false)
+    // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
 
-  case class State(userModel: UserModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false, showLoginForm: Boolean = true)
+  case class State(signUpModel: SignUpModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false, showLoginForm: Boolean = true)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = {
       // instruct Bootstrap to hide the modal
       addNewUserState = false
-      userModelUpdate = new UserModel("", "", "", false, "", "")
+      signUpModelUpdate = new SignUpModel("","","","","",false,false, false, false, false, false, "",false)
       t.modState(s => s.copy(showLoginForm = true))
       //jQuery(t.getDOMNode()).modal("hide")
     }
@@ -46,33 +42,33 @@ object NewUserForm {
     def updateName(e: ReactEventI) = {
       val value = e.target.value
       println(value)
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(name = value)))
     }
 
     //    def updateLastName(e: ReactEventI) = {
     //      val value = e.target.value
-    //      t.modState(s => s.copy(userModel = s.userModel.copy(lastName = value)))
+    //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(lastName = value)))
     //    }
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
       println(value)
-      t.modState(s => s.copy(userModel = s.userModel.copy(ConfirmPassword = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(confirmPassword = value)))
     }
 
     def updateEmail(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(email = value)))
     }
 
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
       println(value)
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
     }
 
     //    def toggleBTCWallet(e: ReactEventI) = {
-    //      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+    //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(createBTCWallet = !s.signUpModel.createBTCWallet)))
     //    }
 
     def showTermsOfServices(e: ReactEventI) = {
@@ -96,8 +92,8 @@ object NewUserForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewUser)
-      userModelUpdate = state.userModel
-      props.submitHandler(state.userModel, state.addNewUser, state.showTermsOfServicesForm)
+      signUpModelUpdate = state.signUpModel
+      props.submitHandler(state.signUpModel, state.addNewUser, state.showTermsOfServicesForm)
     }
 
     def render(s: State, p: Props) = {
@@ -115,23 +111,23 @@ object NewUserForm {
         ),
         <.form(^.id := "SignUpForm", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "form-group")(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.userModel.name, ^.className := "form-control", "data-error".reactAttr := "Username is required",
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.signUpModel.name, ^.className := "form-control", "data-error".reactAttr := "Username is required",
               ^.onChange ==> updateName, ^.required := true, ^.placeholder := "Desired user name"),
             <.div(^.className := "help-block with-errors")
           ),
           <.div(^.className := "form-group")(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "email", bss.formControl, ^.id := "Email", ^.value := s.userModel.email, ^.className := "form-control", "data-error".reactAttr := "Email is Invalid",
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "email", bss.formControl, ^.id := "Email", ^.value := s.signUpModel.email, ^.className := "form-control", "data-error".reactAttr := "Email is Invalid",
               ^.onChange ==> updateEmail, ^.required := true, ^.placeholder := "Email address"),
             <.div(^.className := "help-block with-errors")
           ),
           <.div(^.className := "form-group")(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := s.userModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := s.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
               ^.onChange ==> updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6"),
             <.div( /*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ ^.className := "help-block")("Must be 6 characters long and include one or more number or symbol")
           ),
           <.div(^.className := "form-group")(
             //            data-match="#inputPassword" data-match-error="Whoops, these don't match"
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr := "#Password", ^.value := s.userModel.ConfirmPassword, ^.className := "form-control", "data-match-erro".reactAttr := "Whoops, these don't match",
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr := "#Password", ^.value := s.signUpModel.confirmPassword, ^.className := "form-control", "data-match-erro".reactAttr := "Whoops, these don't match",
               ^.onChange ==> updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password"),
             <.div(^.className := "help-block with-errors")
           ),
@@ -145,7 +141,7 @@ object NewUserForm {
           <.div()(
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
               <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
-                <.div(^.className := "text-left")("creating account on node: ", <.span(s.userModel.name)),
+                <.div(^.className := "text-left")("creating account on node: ", <.span(s.signUpModel.name)),
                 <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
@@ -163,9 +159,9 @@ object NewUserForm {
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)
-        State(new UserModel(userModelUpdate.email, userModelUpdate.password, userModelUpdate.ConfirmPassword, false))
+        State(new SignUpModel())
       else
-        State(new UserModel("", "", "", false, "", "")))
+        State(new SignUpModel()))
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
 

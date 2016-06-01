@@ -1,44 +1,42 @@
-package synereo.client.components
+package client.components
 
-import shared.RootModels.ConnectionsRootModel
-import diode.data.Pot
-import diode.react.ReactPot._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
+import shared.RootModels.SearchesRootModel
 
-import scala.language.existentials
 import scala.collection.mutable.ListBuffer
+import scala.language.existentials
 import scala.scalajs.js
-import shared.dtos.Connection
 
-/**
-  * Created by Shubham.K on 4/6/2016.
-  */
-object ConnectionsSelectize {
-  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
-    var selectedConnections = Seq[Connection]()
+object LabelsSelectize {
+
+  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
+    var selectedLabels = Seq[String]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
-    selectedConnections
+    $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
+    selectedLabels
   }
 
   var getSelectedValue = new ListBuffer[String]()
 
   /*Seq[Label]()*/
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String)
+  case class Props(proxy: ModelProxy[SearchesRootModel], parentIdentifier: String)
 
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
+      //      println(s"element lenth: ${$(selectState).length}")
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object = "#selectize"
+        val selectizeInput: js.Object = "#labelsSelectize"
+        //        $(selectizeInput).selectize(SelectizeConfig.maxOptions(2)).destroy()
+        //        println(s"test : ${$(selectizeInput)}")
         $(selectizeInput).selectize(SelectizeConfig
-          .maxItems(30)
+          .maxItems(3)
           .plugins("remove_button"))
       }
 
@@ -52,21 +50,28 @@ object ConnectionsSelectize {
     }
 
     def mounted(props: Props): Callback = Callback {
+      //      println("searches model is = " + props.proxy().searchesModel)
       initializeTagsInput(props.parentIdentifier)
     }
 
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
+      //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
-          props.proxy().render(connectionsRootModel =>
-            for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection), ^.key := connection.connection.target)(connection.name))
+          //          props.proxy().render(searchesRootModel => searchesRootModel.se)
+          for (label <- props.proxy().searchesModel) yield {
+            println("label.parentUid = "+label.parentUid)
+            if(label.parentUid.equals("self"))
+            <.option(^.value := label.uid, ^.key := label.uid)(label.text)
+            else
+            <.option()
+          }
         )
       } else {
         <.div()
       }
-
     }
   }
 
@@ -77,4 +82,3 @@ object ConnectionsSelectize {
 
   def apply(props: Props) = component(props)
 }
-

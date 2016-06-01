@@ -19,7 +19,7 @@ object ProjectResults {
 
   case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
 
-  case class State(selectedItem: Option[EvalSubscribeResponseContent] = None)
+  case class State()
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props) =
@@ -83,20 +83,7 @@ object ProjectResults {
           P.proxy().renderPending(ex => <.div()(
             <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
           ))
-        /* P.proxy().render(jobPostsRootModel =>
-            ProjectsList(jobPostsRootModel.projectsModelList)),
-          P.proxy().renderFailed(ex => <.div( /*DashBoardCSS.Style.imgc*/ )(<.span(Icon.warning), " Error loading")),
-          if (P.proxy().isEmpty) {
-            if (!P.proxy().isFailed) {
-              <.div()(
-                <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-              )
-            } else {
-              <.div()
-            }
-          } else {
-            <.div()
-          }*/
+
 
         ) //gigConversation
       ))
@@ -117,13 +104,13 @@ object ProjectsList {
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.projectPostContent.name ,
+            project.postContent.name ,
             <.div(DashBoardCSS.Style.displayInlineText)("  Posted by: @LivelyGig  "),
             "  Posted: " + new Date(project.created).toUTCString()
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
-            "Job Type: " + project.projectPostContent.contractType,
-           <.div( project.projectPostContent.description),
+            "Job Type: " + project.postContent.contractType,
+           <.div( project.postContent.description),
             <.div( /*^.className := "col-md-4 col-sm-4",*/)(
               <.br(),
               "Skills: Java, Financial Apps, cryptography",

@@ -1,10 +1,5 @@
 package shared.dtos
 
-//import java.beans.Expression
-import java.util.Date
-import boopickle.Default._
-import upickle.Js
-
 /**
  * Represents content within a request/response to API endpoints.
  */
@@ -44,6 +39,3 @@ case class ExpressionContent(cnxns: Seq[Connection], label: String, value: Strin
 
 case class Label(text: String, color: String, imgSrc: String)
 
-object Content {
-  implicit val requestContentPickler: Pickler[Content] = generatePickler[Content]
-}

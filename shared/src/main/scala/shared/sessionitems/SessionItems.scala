@@ -16,7 +16,7 @@ object SessionItems {
    * @return All session uri except for connections.
    */
   def getAllSessionUriNameExceptCnxs(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI)
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI, ProfilesViewItems.PROFILES_SESSION_URI)
   }
 
   /*def getAllSessionUriExceptCnxs(): Seq[String] = {
@@ -40,5 +40,11 @@ object SessionItems {
   }
   object SearchesView {
     val LIST_OF_LABELS = "LIST_OF_LABELS"
+  }
+  object ProfilesViewItems {
+    val PROFILES_SESSION_URI = "PROFILES_SESSION_URI"
+    val CURRENT_PROFILES_LABEL_SEARCH = "CURRENT_PROFILES_LABEL_SEARCH"
+    val PREVIOUS_PROFILES_LABEL_SEARCH = "PREVIOUS_PROFILES_LABEL_SEARCH"
+    val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"
   }
 }

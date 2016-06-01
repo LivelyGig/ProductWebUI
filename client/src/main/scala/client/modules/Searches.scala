@@ -1,5 +1,6 @@
 package client.modules
 
+import client.handlers.RefreshProfiles
 import client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
@@ -7,8 +8,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers._
 import shared.RootModels.SearchesRootModel
 import client.css._
-import shared.models.{ LabelModel, UserModel }
-import client.services.{ CoreApi, LGCircuit }
+import shared.models.{LabelModel, UserModel}
+import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 
 import scalacss.ScalaCssReact._
@@ -23,8 +24,8 @@ object Searches {
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
   case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
-
-  def sidebar = Callback {
+// scalastyle:off
+  def toggleSidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
@@ -55,6 +56,9 @@ object Searches {
         case AppModule.PROJECTS_VIEW =>
           LGCircuit.dispatch(StoreProjectsSearchLabel())
           LGCircuit.dispatch(RefreshProjects())
+        case AppModule.PROFILES_VIEW =>
+          LGCircuit.dispatch(StoreProfilesSearchLabel())
+          LGCircuit.dispatch(RefreshProfiles())
       }
 
     }
@@ -111,17 +115,37 @@ object Searches {
     def mounted(): Callback = Callback {
       initializeDatepicker
       initializeTagsInput
-      sidebar
+      toggleSidebar
       LGCircuit.dispatch(CreateLabels())
     }
 
     def render(s: State, p: Props) = {
+      //          @tailrec
+      def renderLabel(label: LabelModel): ReactTag = {
+        val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
+        if (!children.isEmpty) {
+          <.li(LftcontainerCSS.Style.checkboxlabel)(
+            <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
+            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+            "  " + label.text,
+            <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
+            <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
+          )
+        } else {
+
+          <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+              + label.text
+          )
+        }
+      }
 
       p.view match {
-        case AppModule.TALENTS_VIEW => {
+        case AppModule.PROFILES_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+          
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -170,6 +194,19 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Capabilities")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -211,7 +248,8 @@ object Searches {
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+             
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -245,6 +283,19 @@ object Searches {
                       LftcontainerCSS.Style.slctDate)
                   // )
 
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -406,6 +457,19 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -424,7 +488,8 @@ object Searches {
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+            
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -489,6 +554,19 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
                     <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Abed")
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Labels")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    if (p.proxy().searchesModel != Nil) {
+
+                      <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
+                    } else {
+                      <.div("(none)")
+                    }
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -600,7 +678,8 @@ object Searches {
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> sidebar)
+         
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(

@@ -1,15 +1,15 @@
 package synereo.client
 
 //import japgolly.scalajs.react.{Callback, ReactDOM}
-import synereo.client.components.{ GlobalStyles, Icon }
-import synereo.client.css.{ SynereoCommanStylesCSS, AppCSS }
+import synereo.client.components.{GlobalStyles, Icon}
+import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
 import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-import japgolly.scalajs.react.{ ReactDOM, React }
+import japgolly.scalajs.react.{ReactDOM, React}
 import scala.scalajs.js
-import js.{ Date, UndefOr }
+import js.{Date, UndefOr}
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
@@ -17,12 +17,12 @@ import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import japgolly.scalajs.react.{ ReactDOM, React }
+import japgolly.scalajs.react.{ReactDOM, React}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scala.scalajs.js
-import js.{ Date, UndefOr }
-import shared.models.MessagesModel
+import js.{Date, UndefOr}
+//import shared.models.MessagesModel
 import shared.RootModels.MessagesRootModel
 
 @JSExport("SYNEREOMain")
@@ -45,6 +45,8 @@ object SYNEREOMain extends js.JSApp {
 
   case object SignupLOC extends Loc
 
+  case object PeopleLOC extends Loc
+
   def sidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
@@ -55,7 +57,7 @@ object SYNEREOMain extends js.JSApp {
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard(Dashboard.Props()))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => SYNEREOCircuit.connect(_.connections)(ConnectionsResults(_)))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => SYNEREOCircuit.connect(_.messages)(Dashboard(_)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
@@ -78,8 +80,8 @@ object SYNEREOMain extends js.JSApp {
           } else {
             <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
               ^.onClick --> sidebar)(
-                <.span(Icon.bars)
-              )
+              <.span(Icon.bars)
+            )
           }
         ),
         <.div(^.className := "col-lg-11")(

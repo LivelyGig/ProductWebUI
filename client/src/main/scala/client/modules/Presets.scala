@@ -16,10 +16,10 @@ object Presets {
     def mounted(props: Props): Callback = Callback {
 
     }
-
+// scalastyle:off
     def render(p: Props) = {
       p.view match {
-        case "talent" => {
+        case AppModule.PROFILES_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
@@ -45,7 +45,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        UserSkills(UserSkills.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.user, "Update Profile"))
+                        NewProfile(NewProfile.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.user, "Update Profile"))
                       )
                     )
                   ),
@@ -56,7 +56,7 @@ object Presets {
             )
           )
         } //talent
-        case "projects" => {
+        case AppModule.PROJECTS_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.jobsmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
@@ -90,7 +90,7 @@ object Presets {
             )
           )
         } //project
-        case "offerings" => {
+        case AppModule.OFFERINGS_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.offeringsmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
@@ -123,7 +123,7 @@ object Presets {
             )
           )
         } //project
-        case "contract" => {
+        case AppModule.CONTRACTS_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.contractssmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
@@ -155,7 +155,7 @@ object Presets {
             )
           )
         }
-        case "messages" => {
+        case AppModule.MESSAGES_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.messagesmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),
@@ -189,7 +189,7 @@ object Presets {
             )
           )
         }
-        case "connections" => {
+        case AppModule.CONNECTIONS_VIEW => {
           <.div(^.id := "middelNaviContainer", HeaderCSS.Style.connectionsmiddelNaviContainer)(
             <.div( /*^.className := "row"*/ )(
               <.div(^.className := "col-lg-1")(),

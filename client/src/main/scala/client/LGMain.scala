@@ -62,16 +62,16 @@ object LGMain extends js.JSApp {
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, LandingLoc) ~> renderR(ctl => LandingLocation.component(ctl))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute("#messages", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.MESSAGES_VIEW)))
+      | staticRoute(s"#${AppModule.DASHBOARD_VIEW}", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
+      | staticRoute(s"#${AppModule.MESSAGES_VIEW}", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.MESSAGES_VIEW)))
       // ToDo: the following should be renamed from projects to jobs ?
-      | staticRoute("#projects", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.PROJECTS_VIEW)))
+      | staticRoute(s"#${AppModule.PROJECTS_VIEW}", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.PROJECTS_VIEW)))
       // ToDo: the following should be contracts not contract
-      | staticRoute("#contract", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONTRACTS_VIEW)))
+      | staticRoute(s"#${AppModule.CONTRACTS_VIEW}", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONTRACTS_VIEW)))
       // ToDo: following route should be called Profiles not Talent.
-      | staticRoute("#talent", ProfilesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.TALENTS_VIEW)))
-      | staticRoute("#offerings", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW)))
-      | staticRoute("#connections", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW)))).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
+      | staticRoute(s"#${AppModule.PROFILES_VIEW}", ProfilesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.PROFILES_VIEW)))
+      | staticRoute(s"#${AppModule.OFFERINGS_VIEW}", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW)))
+      | staticRoute(s"#${AppModule.CONNECTIONS_VIEW}", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW)))).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
   // scalastyle:off
   // base layout for all pages

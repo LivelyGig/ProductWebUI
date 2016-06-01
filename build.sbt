@@ -23,29 +23,32 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 // and edit server/src/main/twirl/views/index.scala.html file appropirately
 lazy val pCompile = "client"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js")
 lazy val client: Project = (project in file(pCompile))
   .settings(
-    name := "client",
-    version := Versions.appVersion,
-    scalaVersion := Versions.scalaVersion,
-    scalacOptions ++= Settings.scalacOptions,
-    resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
-    libraryDependencies ++= Settings.scalajsDependencies.value,
-    // by default we do development build, no eliding
-    elideOptions := Seq(),
-    scalacOptions ++= elideOptions.value,
-    jsDependencies ++= Settings.jsDependencies.value,
-    // RuntimeDOM is needed for tests
-    jsDependencies += RuntimeDOM % "test",
-    // yes, we want to package JS dependencies
-    skip in packageJSDependencies := false,
-    // use Scala.js provided launcher code to start the client app
-    persistLauncher := true,
-    persistLauncher in Test := false
+      name := "client",
+      version := Versions.appVersion,
+      scalaVersion := Versions.scalaVersion,
+      scalacOptions ++= Settings.scalacOptions,
+      resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
+      libraryDependencies ++= Settings.scalajsDependencies.value,
+      // by default we do development build, no eliding
+      elideOptions := Seq(),
+      scalacOptions ++= elideOptions.value,
+      jsDependencies ++= Settings.jsDependencies.value,
+      // RuntimeDOM is needed for tests
+      jsDependencies += RuntimeDOM % "test",
+      // yes, we want to package JS dependencies
+      skip in packageJSDependencies := false,
+      // use Scala.js provided launcher code to start the client app
+      persistLauncher := true,
+      persistLauncher in Test := false,
+    //client side js deps
+      jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
     // use uTest framework for tests
-   // testFrameworks += new TestFramework("utest.runner.Framework")
-//      libraryDependencies ++= Seq(
-//      Dependencies.tests.scalajsenvs)
+    // testFrameworks += new TestFramework("utest.runner.Framework")
+    // libraryDependencies ++= Seq(
+    // Dependencies.tests.scalajsenvs)
   )
   .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
   .dependsOn(sharedJS)
@@ -56,18 +59,18 @@ lazy val clients = Seq(client)
 // instantiate the JVM project for SBT with some additional settings
 lazy val server = (project in file("server"))
   .settings(
-    name := "server",
-    version := Versions.appVersion,
-    scalaVersion :=  Versions.scalaVersion,
-    scalacOptions ++= Settings.scalacOptions,
-    libraryDependencies ++= Settings.jvmDependencies.value,
-    commands += ReleaseCmd,
-    // connect to the client project
-    scalaJSProjects := clients,
-    pipelineStages := Seq(scalaJSProd, digest, gzip),
-    // compress CSS
-    LessKeys.compress in Assets := true,
-    includeFilter in(Assets, LessKeys.less) := lessFile
+      name := "server",
+      version := Versions.appVersion,
+      scalaVersion := Versions.scalaVersion,
+      scalacOptions ++= Settings.scalacOptions,
+      libraryDependencies ++= Settings.jvmDependencies.value,
+      commands += ReleaseCmd,
+      // connect to the client project
+      scalaJSProjects := clients,
+      pipelineStages := Seq(scalaJSProd, digest, gzip),
+      // compress CSS
+      LessKeys.compress in Assets := true,
+      includeFilter in (Assets, LessKeys.less) := lessFile
   )
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom
@@ -76,14 +79,14 @@ lazy val server = (project in file("server"))
 
 // Command for building a release
 lazy val ReleaseCmd = Command.command("release") {
-  state => "set elideOptions in client := Seq(\"-Xelide-below\", \"WARNING\")" ::
-    "client/clean" ::
-    "client/test" ::
-    "server/clean" ::
-    "server/test" ::
-    "server/dist" ::
-    "set elideOptions in client := Seq()" ::
-    state
+    state => "set elideOptions in client := Seq(\"-Xelide-below\", \"WARNING\")" ::
+      "client/clean" ::
+      "client/test" ::
+      "server/clean" ::
+      "server/test" ::
+      "server/dist" ::
+      "set elideOptions in client := Seq()" ::
+      state
 }
 
 // lazy val root = (project in file(".")).aggregate(client, server)

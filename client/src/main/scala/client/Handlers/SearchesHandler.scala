@@ -6,7 +6,6 @@ import shared.dtos._
 import shared.models.LabelModel
 import shared.RootModels.{MessagesRootModel, SearchesRootModel}
 import client.services.{CoreApi, LGCircuit}
-import client.utils.Utils.PrologTypes
 import client.utils.{PrologParser, Utils}
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
@@ -85,6 +84,7 @@ case class CreateLabels()
 case class UpdateLabel(label: LabelModel)
 case class StoreMessagesSearchLabel()
 case class StoreProjectsSearchLabel()
+case class StoreProfilesSearchLabel()
 // scalastyle:off
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
@@ -144,14 +144,21 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
+        /*value.searchesModel.find(e => e.text == SessionItems.MessagesViewItems.MESSAGE_POST_LABEL) match {
+          case Some(res) =>
+            labelFamilies.append(Seq(res))
+        }*/
 //    window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
-      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies,PrologTypes.PROLOG_ANY))
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
       labelFamilies.clear()
       noChange
 
     case StoreProjectsSearchLabel() =>
       window.sessionStorage.setItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH, s"any([${SessionItems.ProjectsViewItems.PROJECT_POST_LABEL}])")
       noChange
+    case StoreProfilesSearchLabel() =>
+    window.sessionStorage.setItem(SessionItems.ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH, s"any([${SessionItems.ProfilesViewItems.PROFILES_POST_LABEL}])")
+    noChange
   }
 
 }

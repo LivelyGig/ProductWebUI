@@ -62,22 +62,29 @@ object SynereoCommanStylesCSS {
     )
     val userNameTopMenubar = style(
       opacity(0.6),
-      fontSize(12.px)
+      fontSize(12.px),
+      display.inlineBlock
     )
     val ampsCount = style(
-      fontWeight._600
+      fontWeight._600,
+      display.inlineBlock
     )
     val mainMenuNavbar = style(
       position.absolute,
       paddingTop(6.px),
       paddingRight(20.px),
       right.`0`,
-      zIndex(100),
-      backgroundColor(c"#277490")
+      zIndex(100)
+//      backgroundColor(c"#277490")
+    )
+    val renderFailedMessage = style(
+      fontSize(50.px),
+      textAlign.center,
+      color(c"#FFFFFF")
     )
     val nonLoggedInMenu = style(
-      paddingRight(15.px),
-      paddingTop(28.px)
+      paddingRight(15.px)
+//      paddingTop(28.px)
     )
     val dropdownMenu = style(
       padding(40.px, 20.px)
@@ -237,6 +244,15 @@ object SynereoCommanStylesCSS {
       zIndex(2000),
       color.grey
     )
+    val messagesLoading= style(
+      width(50.px),
+      height(57.px),
+      position.fixed,
+      top(22.%%),
+      left(50.%%),
+      zIndex(2000),
+      color.grey
+    )
     val backgroundColorWhite = style(
       backgroundColor(c"#EEEEEE")
     )
@@ -245,6 +261,13 @@ object SynereoCommanStylesCSS {
       height(30.px),
       borderRadius(50.%%),
       display.inlineBlock
+    )
+    val userAvatarTopBar= style(
+      width(30.px),
+      height(30.px),
+      borderRadius(50.%%),
+      display.inlineBlock,
+      float.left
     )
     val userAvatarAnchor = style(
       backgroundColor.transparent.important,

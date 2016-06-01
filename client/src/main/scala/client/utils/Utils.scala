@@ -3,14 +3,9 @@ package client.utils
 import shared.dtos.Connection
 import shared.models._
 import org.scalajs.dom._
-import shared.sessionitems.SessionItems.{ MessagesViewItems, ProjectsViewItems }
+import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
 
 object Utils {
-
-  object PrologTypes {
-    val PROLOG_ANY = "any("
-    val PROLOG_EACH = "each("
-  }
 
   /**
    * Method to get the self connection
@@ -32,10 +27,10 @@ object Utils {
    * @param labelFamilies This is the seq of label families e.g seq of [parent1,child1ToParent1], [parent2,child1ToParent2]
    * @return returns the prolog term e.g any([label1,label2])
    */
-  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]],prologType:String): String = {
+  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
-    prolog.append(prologType)
+    prolog.append("any(")
     for { labelFamily <- labelFamilies } yield {
       prolog.append("[")
       for { label <- labelFamily } yield { prolog.append(label.text); if (label.parentUid != "self") prolog.append(",") }
@@ -46,7 +41,6 @@ object Utils {
       }
     }
     prolog.append(")")
-    println("prolog.toString() " + prolog.toString())
     prolog.toString()
   }
 
@@ -54,7 +48,10 @@ object Utils {
    * Get the previous and current search labels for the session uri
    * these labels are then utilised to cancel previous request and create a new
    * one respectively
-   * @param sessionUriName
+   * @param sessionUriName ri name of the view associated
+    *                       see SessionItems with Session uri
+    *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,
+    *                       SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI,etc
    * @return current and previous search labels for context
    */
   def getCurrentPreviousLabel(sessionUriName: String): (String, String) = {
@@ -64,6 +61,8 @@ object Utils {
         (sessionStorage.getItem(ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH), sessionStorage.getItem(ProjectsViewItems.PREVIOUS_PROJECTS_LABEL_SEARCH))
       case MessagesViewItems.MESSAGES_SESSION_URI =>
         (sessionStorage.getItem(MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH), sessionStorage.getItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH))
+      case ProfilesViewItems.PROFILES_SESSION_URI =>
+        (sessionStorage.getItem(ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH), sessionStorage.getItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH))
     }
   }
 }

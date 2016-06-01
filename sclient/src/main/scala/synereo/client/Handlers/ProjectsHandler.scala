@@ -4,7 +4,7 @@ import diode.data.{ Empty, Pot, PotAction }
 import diode.{ ActionHandler, ModelRW }
 import shared.RootModels.ProjectsRootModel
 import shared.dtos.{ ApiResponse, EvalSubscribeResponseContent }
-import shared.models.{ JobPost, ProjectsModel }
+import shared.models._
 import synereo.client.services.CoreApi
 
 //import rx.ops.Timer
@@ -23,20 +23,20 @@ case class ProjectsResponseTest(sessionURI: String, pageOfPosts: Seq[String], co
                             filter : String)*/
 
 object ProjectsModelHandler {
-  def GetJobPostsModel(jobPostsResponse: String): ProjectsRootModel = {
-    val projectsFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](jobPostsResponse)
-    //      println(model(0).content.pageOfPosts(0))
-    //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
-    var model = Seq[ProjectsModel]()
-    for (projectFromBackend <- projectsFromBackend) {
-      //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
-      model :+= ProjectsModel(
-        projectFromBackend.content.sessionURI,
-        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0))
-      )
-    }
+  def getJobPostsModel(jobPostsResponse: String): ProjectsRootModel = {
+//    val projectsFromBackend = upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](jobPostsResponse)
+//    //      println(model(0).content.pageOfPosts(0))
+//    //      println(upickle.default.read[PageOfPosts](model(0).content.pageOfPosts(0)))
+//    var model = Seq[ProjectsModel]()
+//    for (projectFromBackend <- projectsFromBackend) {
+//      //      println(upickle.default.read[PageOfPosts](projectFromBackend.content.pageOfPosts(0)))
+//      model :+= ProjectsModel(
+//        projectFromBackend.content.sessionURI,
+//        upickle.default.read[JobPost](projectFromBackend.content.pageOfPosts(0))
+//      )
+//    }
     //    println(model)
-    ProjectsRootModel(model)
+    ProjectsRootModel(Nil)
   }
 
 }
@@ -45,7 +45,7 @@ class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends Ac
   override def handle = {
     case action: RefreshProjects =>
       println("in refreshProjects")
-      val updateF = action.effect(CoreApi.getProjects())(jobPostsResponse => ProjectsModelHandler.GetJobPostsModel(jobPostsResponse))
+      val updateF = action.effect(CoreApi.getProjects())(jobPostsResponse => ProjectsModelHandler.getJobPostsModel(jobPostsResponse))
       action.handleWith(this, updateF)(PotAction.handler())
   }
 }
