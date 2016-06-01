@@ -7,6 +7,11 @@ import shared.sessionitems.SessionItems.{ MessagesViewItems, ProjectsViewItems }
 
 object Utils {
 
+  object PrologTypes {
+    val PROLOG_ANY = "any("
+    val PROLOG_EACH = "each("
+  }
+
   /**
    * Method to get the self connection
    *
@@ -27,10 +32,10 @@ object Utils {
    * @param labelFamilies This is the seq of label families e.g seq of [parent1,child1ToParent1], [parent2,child1ToParent2]
    * @return returns the prolog term e.g any([label1,label2])
    */
-  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
+  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]],prologType:String): String = {
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
-    prolog.append("any(")
+    prolog.append(prologType)
     for { labelFamily <- labelFamilies } yield {
       prolog.append("[")
       for { label <- labelFamily } yield { prolog.append(label.text); if (label.parentUid != "self") prolog.append(",") }
@@ -41,6 +46,7 @@ object Utils {
       }
     }
     prolog.append(")")
+    println("prolog.toString() " + prolog.toString())
     prolog.toString()
   }
 

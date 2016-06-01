@@ -1,12 +1,13 @@
 package client.handlers
 
-import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
-import shared.RootModels.{ MessagesRootModel, SearchesRootModel }
-import client.services.{ CoreApi, LGCircuit }
-import client.utils.{ PrologParser, Utils }
+import shared.RootModels.{MessagesRootModel, SearchesRootModel}
+import client.services.{CoreApi, LGCircuit}
+import client.utils.Utils.PrologTypes
+import client.utils.{PrologParser, Utils}
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 
@@ -143,7 +144,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
-      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
+//    window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies,PrologTypes.PROLOG_ANY))
       labelFamilies.clear()
       noChange
 

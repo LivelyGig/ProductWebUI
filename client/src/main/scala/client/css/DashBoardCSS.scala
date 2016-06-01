@@ -61,7 +61,9 @@ object DashBoardCSS {
       verticalAlign.middle,
       width(100.%%),
       paddingTop(4.px),
-      paddingBottom(4.px)
+      paddingBottom(4.px),
+      media.maxWidth(375.px)-
+      display.none
     )
     val rsltCheckboxStyle = style(
       height(22.px),
