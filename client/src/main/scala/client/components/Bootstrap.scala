@@ -11,6 +11,11 @@ import scalacss.ScalaCssReact._
 import org.scalajs.dom.ext.KeyCode
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import scala.scalajs.js
+import js.{Dynamic, UndefOr, undefined => undef}
+import js.JSConverters._
+import org.querki.jsext._
+import org.querki.jquery._
 
 /**
  * Common Bootstrap components for scalajs-react
@@ -22,7 +27,24 @@ object Bootstrap {
   trait BootstrapJQuery extends JQuery {
     def modal(action: String): BootstrapJQuery = js.native
     def modal(options: js.Any): BootstrapJQuery = js.native
+//    def popover():Any = js.native
+    def popover(options: PopoverOptions):Any = js.native
   }
+
+  @js.native
+  trait PopoverOptions extends js.Object
+  class PopoverOptionBuilder(val dict:OptMap) extends JSOptionBuilder[PopoverOptions, PopoverOptionBuilder](new PopoverOptionBuilder(_)) {
+    def animation(v:Boolean) = jsOpt("animation", v)
+    def html(v:Boolean) = jsOpt("html", v)
+    def selector(v:String) = jsOpt("selector", v)
+    def title(v:String) = jsOpt("title", v)
+    def title(v:js.Function0[String]) = jsOpt("title", v)
+    def content(v:String) = jsOpt("content", v)
+    def delay(v:Int) = jsOpt("delay", v)
+    def container(v:String) = jsOpt("container", v)
+  }
+  object PopoverOptions extends PopoverOptionBuilder(noOpts)
+
 
   implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
 

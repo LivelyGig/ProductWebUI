@@ -1,7 +1,7 @@
 package client.modules
 
 import client.handlers.RefreshProfiles
-import client.components.Icon
+import client.components.{Icon, LabelsSelectize, SearchesLabel}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -11,6 +11,7 @@ import client.css._
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
+import client.components.Bootstrap._
 
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
@@ -18,6 +19,9 @@ import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
+import org.scalajs.dom
+//import client.components.popoverbootstrap
+
 
 object Searches {
 
@@ -79,6 +83,7 @@ object Searches {
       $(selectState).selectize(SelectizeConfig
         .maxItems(10)
         .plugins("remove_button"))
+
     }
 
     def initializeDatepicker(): Unit = {
@@ -194,7 +199,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -287,7 +294,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -457,11 +466,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
-
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                     } else {
                       <.div("(none)")
@@ -558,7 +568,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -648,7 +660,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
