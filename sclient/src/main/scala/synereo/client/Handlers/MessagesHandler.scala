@@ -55,7 +55,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val labelModels: Seq[Seq[LabelModel]] = currentSearchLabelsFromSelectize.map(currentLabel =>
         Seq(LabelModel("", text = currentLabel, "", imgSrc = "", "", false))
       )
-      println("labelModels = " + labelModels)
+//      println("labelModels = " + labelModels)
       val searchLabels = Utils.getLabelProlog(labelModels)
       labelFamily = searchLabels
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)

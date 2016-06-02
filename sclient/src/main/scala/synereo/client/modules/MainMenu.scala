@@ -6,6 +6,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import synereo.client.modalpopups.NewMessage
 
 import scala.scalajs.js
 
@@ -37,7 +38,7 @@ object MainMenu {
     def mounted(props: Props) =
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
-      SYNEREOCircuit.dispatch(CreateLabels())
+    SYNEREOCircuit.dispatch(CreateLabels())
   }
   def searchWithLabels(e: ReactEventI)= Callback {
     SYNEREOCircuit.dispatch(SearchMessagesOnLabels(Some(labelSelectizeId)))
@@ -122,6 +123,9 @@ object MainMenu {
               ),
               <.li(^.className := "")(
                 <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+              ),
+              <.li(
+                NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button","create-post-button",Seq(<.span(^.className:="vertical-text-post-btn","POST"))))
               )
             )
           } else {

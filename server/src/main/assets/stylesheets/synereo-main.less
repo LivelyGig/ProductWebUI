@@ -856,3 +856,28 @@ transform: translate(0,0); */
   border-radius: 0;
   border-bottom: 1px solid #95C9DE;
 }
+.create-post-button{
+  -webkit-transition: All 0.5s ease;
+  -moz-transition: All 0.5s ease;
+  -o-transition: All 0.5s ease;
+  -ms-transition: All 0.5s ease;
+  transition: All 0.5s ease;
+}
+.create-post-button:hover .vertical-text-post-btn,
+.create-post-button:focus .vertical-text-post-btn,{
+  display: none;
+}
+.create-post-button .fa{
+  display: none;
+}
+.vertical-text-post-btn {
+  transform: rotate(270deg);
+  transform-origin: left top 0;
+  background-color: #2283ae;
+  width: 50px;
+  color: #fff;
+  font-size: 13px;
+  margin-top: 9px;
+  display: block;
+  margin-left: -10px;
+}

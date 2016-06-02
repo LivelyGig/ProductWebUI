@@ -24,7 +24,7 @@ import synereo.client.components.Bootstrap._
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: Seq[ReactElement] = Seq.empty[ReactElement])
 
   case class State(showNewMessageForm: Boolean = false)
 
@@ -52,7 +52,7 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName,P.childrenElement),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
@@ -80,13 +80,13 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
-//            println(value)
+      //            println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(subject = value))))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-//            println(value)
+      //            println(value)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
     }
 
@@ -101,7 +101,7 @@ object NewMessageForm {
     def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent,Some(state.selectizeInputId) , SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -144,7 +144,7 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePost("", "", "", "",Nil,MessagePostContent("",""))))
+    .initialState_P(p => State(new MessagePost("", "", "", "", Nil, MessagePostContent("", ""))))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {

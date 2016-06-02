@@ -51,7 +51,7 @@ object Dashboard {
     def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      println(state.postMessage)
+      //      println(state.postMessage)
       $(messageLoader).removeClass("hidden")
       SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       //      SYNEREOCircuit.dispatch(RefreshMessages())
@@ -167,7 +167,7 @@ object Dashboard {
                   //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
                   <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == postMessage*/)(Icon.camera)
                 ),
-                <.div(NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button")))
+                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(

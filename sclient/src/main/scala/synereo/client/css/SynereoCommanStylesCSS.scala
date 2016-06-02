@@ -35,7 +35,7 @@ object SynereoCommanStylesCSS {
       width(480.px),
       display.inlineBlock,
       margin(14.px, 0.px, 0.px, 0.px),
-      borderBottom(1.px,solid,c"#FFFFFF")
+      borderBottom(1.px, solid, c"#FFFFFF")
     )
     val newMessageSendBtn = style(
       backgroundColor(c"#ff806c"),
@@ -75,16 +75,39 @@ object SynereoCommanStylesCSS {
       fontSize(12.px),
       display.inlineBlock
     )
+    val createPostButton = style(
+      backgroundColor(c"#2283AE"),
+      fontSize(18.px),
+      //      position.absolute,
+      marginTop(8.px),
+      marginRight(-20.px),
+      height(50.px),
+      textAlign.left,
+      width(20.px),
+      //      right(-15.px),
+      overflow.hidden,
+      display.block,
+      &.hover(
+        width(135.px),
+        backgroundColor(c"#2283AE"),
+        color(c"#FFFFFF").important
+      ),
+      &.focus(
+        width(135.px),
+        backgroundColor(c"#2283AE"),
+        color(c"#FFFFFF").important
+      )
+    )
     val ampsCount = style(
       fontWeight._600,
       display.inlineBlock
     )
     val mainMenuNavbar = style(
-//      position.absolute,
-//      paddingTop(6.px),
-//      paddingRight(20.px),
+      //      position.absolute,
+      //      paddingTop(6.px),
+      //      paddingRight(20.px),
       right.`0`
-//      zIndex(100)
+      //      zIndex(100)
       //      backgroundColor(c"#277490")
     )
     val renderFailedMessage = style(
@@ -161,12 +184,12 @@ object SynereoCommanStylesCSS {
       padding(5.px, 5.px)
     )
     val ampsDropdownToggleBtn = style(
-//      width(110.px),
-//      border(1.px, solid, transparent),
-//      borderBottomLeftRadius(9.em),
+      //      width(110.px),
+      //      border(1.px, solid, transparent),
+      //      borderBottomLeftRadius(9.em),
       backgroundColor.transparent.important,
-//      position.absolute,
-//      right.`0`,
+      //      position.absolute,
+      //      right.`0`,
       fontSize(15.px),
       padding.`0`.important,
       color(c"#FFFFFF"),
