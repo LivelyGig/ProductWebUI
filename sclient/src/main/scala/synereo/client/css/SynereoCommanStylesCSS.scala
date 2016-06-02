@@ -47,13 +47,20 @@ object SynereoCommanStylesCSS {
       )
     )
     val newMessageCancelBtn = style(
-      backgroundColor(c"#2EAEE3"),
+      backgroundColor.transparent.important,
+      color(c"#242D40"),
       fontSize(22.px),
+      fontWeight._700,
       fontFamily :=! "karla",
       marginRight(10.px),
       marginLeft(10.px),
       &.hover(
-        backgroundColor(c"#2EAEE3").important
+        backgroundColor.transparent.important,
+        color(c"#242D40")
+      ),
+      &.focus(
+        backgroundColor.transparent.important,
+        color(c"#242D40")
       )
     )
     val loadingScreen = style(

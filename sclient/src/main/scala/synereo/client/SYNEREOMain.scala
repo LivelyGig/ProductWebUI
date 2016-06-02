@@ -43,7 +43,7 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceLOC extends Loc
 
-  case object SignupLOC extends Loc
+//  case object SignupLOC extends Loc
 
   case object PeopleLOC extends Loc
 
