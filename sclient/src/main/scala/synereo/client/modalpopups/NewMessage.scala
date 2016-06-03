@@ -141,11 +141,14 @@ object NewMessageForm {
               <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := s.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
-          <.div()(
+          <.div(^.className := "row")(
+            <.div(^.className := "text-left text-muted")(
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight:="4.px")(Icon.infoCircle), "posting shorthand")
+            ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
-              <.div(^.className:="pull-left")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default",^.backgroundColor:="transperant", NewMessageCSS.Style.newMessageCancelBtn,<.span(Icon.camera)),
-                <.button(^.tpe := "button", ^.className := "btn btn-default",^.backgroundColor:="transperant", NewMessageCSS.Style.newMessageCancelBtn,<.span(Icon.paperclip))
+              <.div(^.className := "pull-left")(
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.camera)),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.paperclip))
               ),
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
               <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
