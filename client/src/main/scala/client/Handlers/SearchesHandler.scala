@@ -138,7 +138,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case StoreMessagesSearchLabel() =>
       val selectedRootParents = value.searchesModel.filter(e => e.isChecked == true && e.parentUid == "self")
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
-      labelFamilies.append(Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
+      if (selectedRootParents.isEmpty)
+        labelFamilies.append(Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
       selectedRootParents.foreach { selectedRootParent =>
         SearchesModelHandler.labelsBuffer.clear()
         val selectedChildren = SearchesModelHandler.getChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
