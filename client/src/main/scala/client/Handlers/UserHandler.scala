@@ -23,6 +23,7 @@ import scala.util.{Failure, Success}
 // scalastyle:off
 case class LoginUser(userModel: UserModel)
 case class LogoutUser()
+case class ToggleAvailablity()
 case class PostData(postContent: PostContent, selectizeInputId: Option[String], sessionUriName: String)
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
@@ -34,10 +35,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         modelFromStore = UserModel(
           email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true ,isAvailable = true
         )
       }
       updated(modelFromStore)
+    case ToggleAvailablity() =>
+      updated(value.copy(isAvailable = !value.isAvailable))
 
     case PostData(value: PostContent, selectizeInputId: Option[String], sessionUriName: String) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
@@ -50,7 +53,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       val (labelToPost, contentToPost) = sessionUriName match {
         case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
           (SessionItems.MessagesViewItems.MESSAGE_POST_LABEL,
-          upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(),"" , connectionsSeq, value.asInstanceOf[MessagePostContent])))
+            upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(),"" , connectionsSeq, value.asInstanceOf[MessagePostContent])))
         case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
           (SessionItems.ProjectsViewItems.PROJECT_POST_LABEL,
             upickle.default.write(ProjectsPost(uid, new Date().toISOString(), new Date().toISOString(),"" , connectionsSeq, value.asInstanceOf[ProjectPostContent])))
@@ -80,6 +83,6 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }*/
       window.sessionStorage.clear()
       window.location.href = "/"
-      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
+      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false, isAvailable = false))
   }
 }

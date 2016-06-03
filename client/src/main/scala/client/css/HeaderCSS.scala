@@ -176,8 +176,12 @@ object HeaderCSS {
       marginTop(6.px)
     )
     val LoginInMenuItem = style(
+      media.maxWidth(375.px) -
+        paddingTop(10.px),
+      media.minWidth(376.px) - (
+        paddingTop(3.px)
+        ),
       float.right,
-      paddingTop(3.px),
       display.inlineBlock
     )
 
@@ -307,7 +311,7 @@ object HeaderCSS {
         unsafeChild("li")(
           unsafeChild("a")(
             padding(8.px, 6.px, 11.px)
-          )) ,
+          )),
       media.maxWidth(895.px) -
         unsafeChild("li")(
           unsafeChild("a")(

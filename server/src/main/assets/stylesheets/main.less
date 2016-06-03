@@ -2,8 +2,7 @@
 @import "lib/font-awesome/less/font-awesome.less";
 
 #mainContainer{
- height:calc(~"100vh - 105px");
- width:100%;
+  width:100%;
  overflow:hidden;
  }
 #resultsContainer{
@@ -17,14 +16,27 @@
 #resultsContainer{
  height:calc(~"100vh - 150px");
  }
+ #mainContainer{
+  height:calc(~"100vh - 52px");
+  }
+  .dashboardContainer {
+       height:calc(~"100vh - 59px");
+      }
 }
+
 @media (min-width: 376px) {
 #resultsContainer{
  height:calc(~"100vh - 194px");
  }
+ #mainContainer{
+  height:calc(~"100vh - 105px");
+  }
+  .dashboardContainer {
+      height:calc(~"100vh - 116px");
+      }
 }
+
 .dashboardContainer {
-    height:calc(~"100vh - 116px");
     overflow-y:auto;
     z-index:100
   }
@@ -338,10 +350,20 @@ ol.tree
     display : none;
 }
 
-#navbar.dropdown-menu {
+@media(max-width:375px){
+#navbar.dropdown-menu{
+   left: -665%;
+}
+}
+
+@media(min-width:376px) and (max-width:768px){
+#navbar.dropdown-menu{
+     left: -210%;
+}
+}
+#navbar.dropdown-menu{
             position: absolute;
             top: 100%;
-            left: -160%;
             z-index: 1000;
             float: right;
             min-width: 160px;

@@ -1,37 +1,16 @@
 package client.components
 
 import client.components.Bootstrap.PopoverOptions
-import diode.react.ModelProxy
 import japgolly.scalajs.react.{ReactComponentB, _}
-import japgolly.scalajs.react.vdom.prefix_<^._
-import org.denigma.selectize.SelectizeConfig
-import org.querki.jquery._
-import org.scalajs.dom._
-import shared.RootModels.SearchesRootModel
-
-import scala.collection.mutable.ListBuffer
-import scala.scalajs.js
-import client.handlers.RefreshProfiles
-import client.components.Icon
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handlers._
 import shared.RootModels.SearchesRootModel
-import client.css._
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
-import org.scalajs.dom._
 import client.components.Bootstrap._
-import scalacss.ScalaCssReact._
-import org.querki.facades.bootstrap.datepicker._
-
 import scala.scalajs.js
 import org.querki.jquery._
-import org.denigma.selectize._
-import org.scalajs.dom
-
-//import client.components.popoverbootstrap
 
 /**
   * Created by bhagyashree.b on 2016-06-01.
@@ -47,21 +26,19 @@ object SearchesLabel {
       getlabels += "  <form role=\"form\"> "
       getlabels += " <div class=\"form-group\"> "
       getlabels += " <label for=\"parent\">Parent:</label> "
-      getlabels += "<div class=\"dropdown\">"
-      getlabels += " <button class=\"btn dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Select Parent <span class=\"caret\"></span></button>"
-      getlabels += "  <ul class=\"dropdown-menu\", style=\"width:123px\">"
+
+      getlabels += "  <select>"
       for (label <- props.proxy().searchesModel) yield {
-        getlabels += "<li>" + label.text  + "</li>"
+        getlabels += "<option value=" + label.text + ">" + label.text + "</option>"
       }
-      getlabels += "</div>"
-      getlabels += "   </div> "
+      getlabels += "</select>"
+
       getlabels += "   <div class=\"form-group\"> "
       getlabels += "   <label for=\"Name\">Name:</label> "
       getlabels += "    <input type=\"text\" class=\"form-control\" id=\"Name\"> "
       getlabels += "   </div>  "
         getlabels += " <button type=\"submit\" class=\"btn btn-default\">Submit</button> "
       getlabels += "  </form> "
-      println(" getlabels = " + getlabels)
       return getlabels
     }
 

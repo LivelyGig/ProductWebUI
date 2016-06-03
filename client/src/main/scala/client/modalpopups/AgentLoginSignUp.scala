@@ -126,7 +126,7 @@ object AgentLoginSignUp {
       )
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       val user = UserModel(email = userModel.email, name = response.content.jsonBlob.getOrElse("name", ""),
-        imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true)
+        imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true,isAvailable = true)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))

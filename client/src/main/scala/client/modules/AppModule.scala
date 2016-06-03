@@ -31,11 +31,11 @@ object AppModule {
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
       $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
+      $(profileActionButtons).css("pointer-events", "none")
     } else {
       $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
 //      e.stopPropagation()
       $(profileActionButtons).css("pointer-events", "all")
-      //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"

@@ -131,7 +131,7 @@ object Searches {
         if (!children.isEmpty) {
           <.li(LftcontainerCSS.Style.checkboxlabel)(
             <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
             "  " + label.text,
             <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
             <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
@@ -139,7 +139,7 @@ object Searches {
         } else {
 
           <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
               + label.text
           )
         }
@@ -528,6 +528,7 @@ object Searches {
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Expired"
                       )
                     ),
+                    <.div()(
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Escrow"
                     ),
@@ -539,6 +540,7 @@ object Searches {
                     ),
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Completed"
+                    )
                     )
                   )
                 ),

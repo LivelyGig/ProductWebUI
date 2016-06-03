@@ -11,7 +11,7 @@ class UserTest extends UnitTest("UserModel") {
       val usermodel = new UserModel(" "," ","",false," ","")
       usermodel.name shouldNot be(null)
       usermodel.password shouldNot  be(null)
-      usermodel.ConfirmPassword shouldNot be(null)
+      usermodel.confirmPassword shouldNot be(null)
       usermodel.email shouldNot be(null)
       usermodel.imgSrc shouldNot be(null)
   }
