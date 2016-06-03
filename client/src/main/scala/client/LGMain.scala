@@ -1,23 +1,26 @@
 package client
 
-import client.LGMain.{ ContractsLoc, OfferingsLoc }
+import client.LGMain.{ContractsLoc, OfferingsLoc}
 import japgolly.scalajs.react.extra.router._
-import client.components.{ GlobalStyles, Icon }
-import client.css.{ AppCSS, FooterCSS, HeaderCSS, DashBoardCSS }
+import client.components.{GlobalStyles, Icon}
+import client.css._
 import client.logger._
 import client.modules._
 import org.querki.jquery._
 import org.scalajs.dom
 import client.services.LGCircuit
+
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import japgolly.scalajs.react.{ ReactDOM, React }
+import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+
 import scala.scalajs.js
-import js.{ Date, UndefOr }
+import js.{Date, UndefOr}
+import org.scalajs.dom.raw.HTMLStyleElement
 
 @JSExport("LGMain")
 object LGMain extends js.JSApp {
@@ -75,7 +78,7 @@ object LGMain extends js.JSApp {
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
-      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
+      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer,HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10")(
           <.div(^.className := "navbar-header")(
@@ -118,6 +121,7 @@ object LGMain extends js.JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     AppCSS.load
+    standaloneCSS.render[HTMLStyleElement].outerHTML
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)

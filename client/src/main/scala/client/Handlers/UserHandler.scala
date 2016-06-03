@@ -26,7 +26,7 @@ import scala.util.{Failure, Success}
 case class LoginUser(userModel: UserModel)
 
 case class LogoutUser()
-
+case class ToggleAvailablity()
 case class PostData(postContent: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String])
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
@@ -38,10 +38,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         modelFromStore = UserModel(
           email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true ,isAvailable = true
         )
       }
       updated(modelFromStore)
+    case ToggleAvailablity() =>
+      updated(value.copy(isAvailable = !value.isAvailable))
 
     case PostData(value: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String]) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
@@ -82,6 +84,6 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }*/
       window.sessionStorage.clear()
       window.location.href = "/"
-      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
+      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false, isAvailable = false))
   }
 }

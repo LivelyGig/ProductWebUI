@@ -20,7 +20,7 @@ object NewAgentForm {
 
   case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
 
-  case class State(userModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
+  case class State(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -41,48 +41,48 @@ object NewAgentForm {
 
     def updateName(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(name = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(name = value)))
     }
 
     def updateLastName(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(lastName = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(lastName = value)))
     }
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(confirmPassword = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(confirmPassword = value)))
     }
 
     def updateEmail(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(email = value)))
     }
 
     def updateCanReceiveEmailUpdates(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(canReceiveEmailUpdates = !s.userModel.canReceiveEmailUpdates)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(canReceiveEmailUpdates = !s.signUpModel.canReceiveEmailUpdates)))
 
     }
 
     def updateIsFreelancer(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(isFreelancer = !s.userModel.isFreelancer)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(isFreelancer = !s.signUpModel.isFreelancer)))
     }
 
     def updateIsClient(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(isClient = !s.userModel.isClient)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(isClient = !s.signUpModel.isClient)))
     }
 
     def updateIsModerator(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(isModerator = !s.userModel.isModerator)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(isModerator = !s.signUpModel.isModerator)))
     }
 
     def toggleBTCWallet(e: ReactEventI) = {
-      t.modState(s => s.copy(userModel = s.userModel.copy(createBTCWallet = !s.userModel.createBTCWallet)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(createBTCWallet = !s.signUpModel.createBTCWallet)))
     }
 
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
     }
 
     def showTermsOfServices(e: ReactEventI) = {
@@ -98,8 +98,8 @@ object NewAgentForm {
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(state.addNewAgent)
-      signUpModelUpdate = state.userModel
-      props.submitHandler(state.userModel, state.addNewAgent, state.showTermsOfServicesForm)
+      signUpModelUpdate = state.signUpModel
+      props.submitHandler(state.signUpModel, state.addNewAgent, state.showTermsOfServicesForm)
     }
 
     def render(s: State, p: Props) = {
@@ -119,7 +119,7 @@ object NewAgentForm {
                   <.label(^.`for` := "First name *", "First name *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "First name", ^.value := s.userModel.name,
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "First name", ^.value := s.signUpModel.name,
                     ^.onChange ==> updateName, ^.required := true)
                 )
               ),
@@ -128,7 +128,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Last name *", "Last name *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name", ^.value := s.userModel.lastName,
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name", ^.value := s.signUpModel.lastName,
                     ^.onChange ==> updateLastName)
                 )
               ),
@@ -137,7 +137,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Email *", "Email *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "email", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value := s.userModel.email,
+                  <.input(^.tpe := "email", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value := s.signUpModel.email,
                     ^.onChange ==> updateEmail, ^.required := true)
                 )
               ),
@@ -146,7 +146,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Password *", "Password *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password", ^.value := s.userModel.password,
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password", ^.value := s.signUpModel.password,
                     ^.onChange ==> updatePassword, ^.required := true)
                 )
               ),
@@ -155,7 +155,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Confirm Password *", "Confirm Password *")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.userModel.confirmPassword,
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.signUpModel.confirmPassword,
                     ^.onChange ==> updateConfirmPassword, ^.required := true)
                 )
               )
@@ -167,9 +167,9 @@ object NewAgentForm {
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.div()(
-                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Freelancer", ^.checked := s.userModel.isFreelancer, ^.onChange ==> updateIsFreelancer), " Freelancer"), <.br(),
-                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Client", ^.checked := s.userModel.isClient, ^.onChange ==> updateIsClient), " Client"), <.br(),
-                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Moderator", ^.checked := s.userModel.isModerator, ^.onChange ==> updateIsModerator), " Moderator"), <.br()
+                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Freelancer", ^.checked := s.signUpModel.isFreelancer, ^.onChange ==> updateIsFreelancer), " Freelancer"), <.br(),
+                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Client", ^.checked := s.signUpModel.isClient, ^.onChange ==> updateIsClient), " Client"), <.br(),
+                    <.label()(<.input(^.`type` := "checkbox", ^.id := "Moderator", ^.checked := s.signUpModel.isModerator, ^.onChange ==> updateIsModerator), " Moderator"), <.br()
 
                   ),
                   <.div()(
@@ -181,11 +181,11 @@ object NewAgentForm {
           ), //main row
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.div()(<.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.userModel.createBTCWallet, ^.onChange ==> toggleBTCWallet), " * I understand and agree to the LivelyGig",
-                <.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
+              <.div()(<.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.signUpModel.createBTCWallet, ^.onChange ==> toggleBTCWallet), " * I understand and agree to the LivelyGig",
+                <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
             ),
             <.div()(
-              <.input(^.`type` := "checkbox", ^.id := "updateEmail", ^.checked := s.userModel.canReceiveEmailUpdates, ^.onChange ==> updateCanReceiveEmailUpdates), " Send me occasional email updates from LivelyGig"
+              <.input(^.`type` := "checkbox", ^.id := "updateEmail", ^.checked := s.signUpModel.canReceiveEmailUpdates, ^.onChange ==> updateCanReceiveEmailUpdates), " Send me occasional email updates from LivelyGig"
             )
           ),
           <.div()(

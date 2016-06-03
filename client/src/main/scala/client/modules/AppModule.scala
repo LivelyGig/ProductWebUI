@@ -25,17 +25,17 @@ object AppModule {
     val sidebarIcon: js.Object = "#sidebarIcon"
     val rsltScrollContainer: js.Object = "#rsltScrollContainer"
     val middelNaviContainer: js.Object = "#middelNaviContainer"
-    val profiledescription: js.Object = ".profile-description"
+    val profiledescription: js.Object = "DashBoardCSS_Style-profileDescription" /*".profile-description"*/
     val profileActionButtons: js.Object = ".profile-action-buttons"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-      $(sidebtn).next().addClass("sidebarRightContainer")
+      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
+      $(profileActionButtons).css("pointer-events", "none")
     } else {
-      $(sidebtn).next().removeClass("sidebarRightContainer")
+      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
 //      e.stopPropagation()
       $(profileActionButtons).css("pointer-events", "all")
-      //  $(profileActionButtons).find("#searchContainer").removeClass("sidebar-left sidebar-animate sidebar-md-show")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
@@ -67,7 +67,7 @@ object AppModule {
                   ),
                 LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
               ),
-              <.div(^.className := "main col-md-9 col-md-offset-3 sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
+              <.div(^.className := "main col-md-9 col-md-offset-3 LftcontainerCSS_Style-sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
                     case PROFILES_VIEW     => LGCircuit.connect(_.profiles)(ProfilesResults(_))

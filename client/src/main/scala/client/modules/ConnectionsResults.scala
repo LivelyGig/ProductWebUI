@@ -114,7 +114,8 @@ object ConnectionList {
   val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
-        <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+       // <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription,DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           if (!connection.name.isEmpty) {
@@ -162,7 +163,7 @@ object ConnectionList {
           )
         )
       }
-      <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px", DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })
