@@ -11,6 +11,7 @@ import client.components.Icon
 import client.css.{ HeaderCSS, DashBoardCSS }
 import client.modals.{ NewMessage, NewRecommendation }
 import shared.models.ConnectionsModel
+import client.logger._
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -22,8 +23,11 @@ object ConnectionsResults {
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) =
+    def mounted(props: Props) ={
+      log.debug("connection view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    }
+
   }
 
   // create the React component for Dashboard

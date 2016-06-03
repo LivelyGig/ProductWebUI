@@ -93,7 +93,7 @@ object NewProfileForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.profilePost,None, SessionItems.ProfilesViewItems.PROFILES_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.profilePost,None, SessionItems.ProfilesViewItems.PROFILES_SESSION_URI, None))
       t.modState(s => s.copy(postUserSkills = false))
     }
 

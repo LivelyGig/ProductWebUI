@@ -4,23 +4,18 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{RefreshConnections, RefreshMessages, RefreshProjects, StoreMessagesSearchLabel}
-import shared.RootModels.{ConnectionsRootModel, MessagesRootModel, ProjectsRootModel}
-import client.css.{DashBoardCSS, HeaderCSS, LftcontainerCSS}
+import client.handlers.RefreshMessages
+import shared.RootModels.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
+import client.logger._
 import shared.models.MessagePost
-import client.services.LGCircuit
-
-import scala.scalajs.js
-import scala.util.{Failure, Success}
 import client.modals.NewMessage
 import japgolly.scalajs.react
 
 import scalacss.ScalaCssReact._
-import org.querki.jquery._
 
 object MessagesResults {
 
@@ -29,13 +24,18 @@ object MessagesResults {
   case class State(/*selectedItem: Option[MessagesModel] = None*/)
 
   class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props): react.Callback = {
+    def mounted(props: Props): react.Callback ={
+      log.debug("messages view mounted")
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshMessages()))
+    }
+
+    /*{
       if (props.proxy().isEmpty) {
         props.proxy.dispatch(RefreshMessages())
       } else {
         Callback.empty
       }
-    }
+    }*/
   }
 
   val component = ReactComponentB[Props]("Messages")

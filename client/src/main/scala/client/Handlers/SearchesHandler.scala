@@ -1,12 +1,12 @@
 package client.handlers
 
-import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
-import shared.RootModels.{ MessagesRootModel, SearchesRootModel }
-import client.services.{ CoreApi, LGCircuit }
-import client.utils.{ PrologParser, Utils }
+import shared.RootModels.{MessagesRootModel, SearchesRootModel}
+import client.services.{CoreApi, LGCircuit}
+import client.utils.{LabelsUtils, PrologParser, ConnectionsUtils}
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 
@@ -22,7 +22,7 @@ object SearchesModelHandler {
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
-      SearchesRootModel(model)
+      SearchesRootModel(model.filterNot(e => LabelsUtils.getSystemLabels().contains(e.text)))
     } catch {
       case e: Exception =>
         SearchesRootModel(Nil)
@@ -138,26 +138,25 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case StoreMessagesSearchLabel() =>
       val selectedRootParents = value.searchesModel.filter(e => e.isChecked == true && e.parentUid == "self")
       val labelFamilies = ListBuffer[Seq[LabelModel]]()
+      labelFamilies.append(Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
       selectedRootParents.foreach { selectedRootParent =>
         SearchesModelHandler.labelsBuffer.clear()
         val selectedChildren = SearchesModelHandler.getChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
-        /*value.searchesModel.find(e => e.text == SessionItems.MessagesViewItems.MESSAGE_POST_LABEL) match {
-          case Some(res) =>
-            labelFamilies.append(Seq(res))
-        }*/
-      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, Utils.getLabelProlog(labelFamilies))
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, LabelsUtils.getLabelProlog(labelFamilies))
       labelFamilies.clear()
       noChange
 
     case StoreProjectsSearchLabel() =>
-      window.sessionStorage.setItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH, s"any([${SessionItems.ProjectsViewItems.PROJECT_POST_LABEL}])")
+      window.sessionStorage.setItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH,
+        LabelsUtils.buildProlog(Seq(LabelsUtils.getSystemLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)), LabelsUtils.PrologTypes.Any))
       noChange
     case StoreProfilesSearchLabel() =>
-    window.sessionStorage.setItem(SessionItems.ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH, s"any([${SessionItems.ProfilesViewItems.PROFILES_POST_LABEL}])")
-    noChange
+      window.sessionStorage.setItem(SessionItems.ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH,
+        LabelsUtils.buildProlog(Seq(LabelsUtils.getSystemLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)), LabelsUtils.PrologTypes.Any))
+      noChange
   }
 
 }
