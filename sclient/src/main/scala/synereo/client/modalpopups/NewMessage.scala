@@ -10,7 +10,7 @@ import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
-import synereo.client.css.SynereoCommanStylesCSS
+import synereo.client.css.NewMessageCSS
 import synereo.client.handlers.PostData
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
@@ -104,7 +104,7 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-//      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       t.modState(s => s.copy(postNewMessage = true))
     }
@@ -119,29 +119,36 @@ object NewMessageForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div()(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
         <.form(^.onSubmit ==> submitForm)(
+          <.div(
+            SYNEREOCircuit.connect(_.user)(proxy => UserPersona(UserPersona.Props(proxy)))
+          ),
           <.div(^.className := "row")(
             <.div(^.id := s.selectizeInputId)(
               SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
             ),
-            <.div(SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.id := s.selectizeInputIdLabels)(
+            <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.selectizeInputIdLabels)(
               SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.selectizeInputIdLabels)))
             ),
             <.div()(
-              <.textarea(^.rows := 2, ^.placeholder := "Subject", ^.value := s.postMessage.subject, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
+              <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.value := s.postMessage.text, SynereoCommanStylesCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
+              <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := s.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
-            <.div(^.className := "text-right", SynereoCommanStylesCSS.Style.newMessageActionsContainerDiv)(
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", SynereoCommanStylesCSS.Style.newMessageSendBtn, /*^.onClick --> hide, */ "Send"),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", SynereoCommanStylesCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel")
+            <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+              <.div(^.className:="pull-left")(
+                <.button(^.tpe := "button", ^.className := "btn btn-default",^.backgroundColor:="transperant", NewMessageCSS.Style.newMessageCancelBtn,<.span(Icon.camera)),
+                <.button(^.tpe := "button", ^.className := "btn btn-default",^.backgroundColor:="transperant", NewMessageCSS.Style.newMessageCancelBtn,<.span(Icon.paperclip))
+              ),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
             )
           ) //                <.div(bss.modal.footer)
         )

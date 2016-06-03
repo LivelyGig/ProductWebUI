@@ -1,7 +1,5 @@
 package synereo.client.css
 
-import synereo.client.css.DashboardCSS.Style._
-
 import scalacss.Defaults._
 
 /**
@@ -27,41 +25,12 @@ object SynereoCommanStylesCSS {
     val labelSelectizeContainer = style(
 
     )
-    val newMessageActionsContainerDiv = style(
-      marginTop(30.px),
-      marginBottom(30.px)
-    )
+
     val labelSelectizeNavbar = style(
       width(480.px),
       display.inlineBlock,
       margin(14.px, 0.px, 0.px, 0.px),
       borderBottom(1.px, solid, c"#FFFFFF")
-    )
-    val newMessageSendBtn = style(
-      backgroundColor(c"#ff806c"),
-      fontSize(22.px),
-      fontFamily :=! "karla",
-      marginRight(10.px),
-      &.hover(
-        backgroundColor(c"#ff806c").important
-      )
-    )
-    val newMessageCancelBtn = style(
-      backgroundColor.transparent.important,
-      color(c"#242D40"),
-      fontSize(22.px),
-      fontWeight._700,
-      fontFamily :=! "karla",
-      marginRight(10.px),
-      marginLeft(10.px),
-      &.hover(
-        backgroundColor.transparent.important,
-        color(c"#242D40")
-      ),
-      &.focus(
-        backgroundColor.transparent.important,
-        color(c"#242D40")
-      )
     )
     val loadingScreen = style(
       height(100.vh),
@@ -72,11 +41,7 @@ object SynereoCommanStylesCSS {
       left.`0`,
       zIndex(100)
     )
-    val textAreaNewMessage = style(
-      width(100.%%),
-      marginTop(25.px),
-      marginBottom(10.px)
-    )
+
     val userNameTopMenubar = style(
       opacity(0.6),
       fontSize(12.px),
@@ -251,7 +216,7 @@ object SynereoCommanStylesCSS {
       paddingRight(0.px).important
     )
     val dropdownIcon = style(
-      margin(0.px, 25.px)
+      margin(0 px, 25 px)
     )
     val searchFormNavbar = style(
       //      float.right,
