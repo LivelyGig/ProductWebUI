@@ -11,8 +11,10 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS }
-import scala.util.{ Failure, Success }
+import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import client.services.LGCircuit
+
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -64,7 +66,7 @@ object ConnectionsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postConnection: Boolean = false)
+  case class State(postConnection: Boolean = false, selectizeInputId: String = "postNewConnectionSelectizeInput")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -99,7 +101,34 @@ object ConnectionsForm {
           closed = () => formClosed(s, p)
         ),
         <.form(^.onSubmit ==> submitForm)(
-
+          <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
+            <.div(DashBoardCSS.Style.marginTop10px)(),
+            /*<.div(^.className:="row")(
+              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
+            ),*/
+            /*val selectizeControl : js.Object =*/
+            <.div()(
+              <.div()(<.input(^.`type` := "radio",^.name:="userConnection"/*, ^.checked := s.userModel.isFreelancer, ^.onChange ==> updateIsFreelancer*/), " Introduce yourself to existing user(s)."), <.br(),
+              <.div()(<.input(^.`type` := "radio" ,^.name:="userConnection"/*, ^.checked := s.userModel.isClient, ^.onChange ==> updateIsClient*/), " Invite new user(s) to sign up and  connect with you."), <.br(),
+              <.div()(<.input(^.`type` := "radio" ,^.name:="userConnection"/*, ^.checked := s.userModel.isModerator, ^.onChange ==> updateIsModerator*/), " Invite existing connections to connect with each other." + <.br() +
+        "Note, each pair of connections will be introduced with the message above."), <.br()
+            ),
+            <.div(<.h5("Recipients:")),
+            <.div(^.id := s.selectizeInputId)(
+              //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
+              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
+            ),
+            <.div(<.h5("Introduction:")),
+            <.div()(
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, /*^.value := s.postMessage.text, ^.onChange ==> updateContent, */^.required := true)
+            )
+          ),
+          <.div()(
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
+              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+            )
+          ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )
       )

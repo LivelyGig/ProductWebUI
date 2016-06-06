@@ -15,8 +15,8 @@ object HeaderCSS {
     val naviContainer = style(
       backgroundColor(c"#005256"),
       minHeight(52.px),
-//      position.absolute,
-//      zIndex(1),
+      //      position.absolute,
+      //      zIndex(1),
       borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -45,14 +45,14 @@ object HeaderCSS {
         outline(none)
       ),
       /*media queries*/
-      media.maxWidth(1130.px).minWidth(820.px) - (
+      media.maxWidth(1130.px).minWidth(820.px) -(
         fontSize(1.2.em),
         padding(10.px, 10.px)
-      ),
-      media.maxWidth(819.px) - (
+        ),
+      media.maxWidth(819.px) -(
         fontSize(1.em),
         padding(10.px, 10.px)
-      )
+        )
     )
 
     val nav = style(
@@ -67,14 +67,14 @@ object HeaderCSS {
       &.hover(
         color(c"#67EAF2")
       ),
-      media.maxWidth(819.px) - (
+      media.maxWidth(819.px) -(
         fontSize(1.em),
         padding(10.px, 10.px)
-      ),
-      media.minWidth(820.px) - (
+        ),
+      media.minWidth(820.px) -(
         fontSize(1.2.em),
         padding(10.px, 10.px)
-      )
+        )
 
     )
     val imgLogo = style(
@@ -95,14 +95,14 @@ object HeaderCSS {
     )
 
     /* css*/
-    val middelNaviContainer = style( //      marginTop(0.px),
-    //      height(44.px),
-    //      width(100.%%),
-    //      paddingTop(4.px),
+    val middelNaviContainer = style(//      marginTop(0.px),
+      //      height(44.px),
+      //      width(100.%%),
+      //      paddingTop(4.px),
     )
 
     val connectionsmiddelNaviContainer = style(
-    //  marginTop(52.px),
+      //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
@@ -111,7 +111,7 @@ object HeaderCSS {
     )
 
     val messagesmiddelNaviContainer = style(
-     // marginTop(52.px),
+      // marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
@@ -119,28 +119,28 @@ object HeaderCSS {
     )
 
     val jobsmiddelNaviContainer = style(
-     // marginTop(52.px),
+      // marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(56, 56, 90))
     )
     val offeringsmiddelNaviContainer = style(
-    //  marginTop(52.px),
+      //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(48, 94, 125))
     )
     val profilessmiddelNaviContainer = style(
-    //  marginTop(52.px),
+      //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
       backgroundColor(rgb(49, 49, 49))
     )
     val contractssmiddelNaviContainer = style(
-    //  marginTop(52.px),
+      //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
@@ -176,8 +176,12 @@ object HeaderCSS {
       marginTop(6.px)
     )
     val LoginInMenuItem = style(
+      media.maxWidth(375.px) -
+        paddingTop(10.px),
+      media.minWidth(376.px) - (
+        paddingTop(3.px)
+        ),
       float.right,
-      paddingTop(3.px),
       display.inlineBlock
     )
 
@@ -204,10 +208,10 @@ object HeaderCSS {
         border.none,
         color(white)
       ),
-      media.maxWidth(443.px) - (
+      media.maxWidth(443.px) -(
         fontSize(12.px),
         paddingTop(10.px)
-      )
+        )
 
     )
     val rsltContainerBtn = style(
@@ -286,6 +290,76 @@ object HeaderCSS {
       media.minWidth(769.px) -
         display.block
     }
+
+
+    // main.less styles
+
+    val navbarNav = style(
+      addClassName("navbar-nav"),
+      unsafeChild("li")(
+        unsafeChild("a")(
+          display.inlineFlex,
+          &.hover(
+            backgroundColor(c"#005256")
+          ),
+          &.focus(
+            backgroundColor(c"#005256")
+          )
+        )
+      ),
+      media.maxWidth(1300.px) -
+        unsafeChild("li")(
+          unsafeChild("a")(
+            padding(8.px, 6.px, 11.px)
+          )),
+      media.maxWidth(895.px) -
+        unsafeChild("li")(
+          unsafeChild("a")(
+            padding(8.px, 6.px, 10.px)
+          )),
+      media.minWidth(768.px) -(
+        unsafeChild("li")(
+          unsafeChild("a")(
+            paddingTop(8.px),
+            paddingBottom(11.px),
+            paddingLeft(12.px),
+            paddingRight(12.px)
+          )
+        ),
+        unsafeChild("li")(
+          unsafeChild("a.countBadge")(
+            paddingTop(8.px),
+            paddingBottom(11.px),
+            paddingLeft(6.px),
+            paddingRight(0.px),
+            fontSize(16.px),
+            marginLeft(-9.px)
+          )
+        )
+        ),
+      media.maxWidth(820.px) - (
+        unsafeChild("li")(
+          float.none,
+          unsafeChild("a")(
+            paddingTop(10.px),
+            paddingBottom(10.px)
+          )
+        )
+        )
+    )
+
+    val navbarFixedTop = style(
+      position.initial,
+      right(0.px),
+      left(0.px),
+      zIndex(0),
+      media.maxWidth(820.px) -(
+        top(0.px),
+        borderWidth(0.px, 0.px, 1.px)
+        )
+    )
+
+
   }
 
 }

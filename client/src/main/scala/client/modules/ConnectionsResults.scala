@@ -11,6 +11,7 @@ import client.components.Icon
 import client.css.{ HeaderCSS, DashBoardCSS }
 import client.modals.{ NewMessage, NewRecommendation }
 import shared.models.ConnectionsModel
+import client.logger._
 import org.querki.jquery._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -22,8 +23,11 @@ object ConnectionsResults {
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) =
+    def mounted(props: Props) ={
+      log.debug("connection view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    }
+
   }
 
   // create the React component for Dashboard
@@ -110,7 +114,8 @@ object ConnectionList {
   val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
-        <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+       // <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription,DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           if (!connection.name.isEmpty) {
@@ -158,7 +163,7 @@ object ConnectionList {
           )
         )
       }
-      <.div(^.className := "rsltSectionContainer", ^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px")(
+      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", ^.paddingLeft := "0px", ^.paddingRight := "0px", DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.connections map renderConnections)
       )
     })

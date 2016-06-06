@@ -6,17 +6,11 @@ package shared.sessionitems
 object SessionItems {
   /**
    * This function returns all the session uri names
-   * except fot connection session uri.
-   * Why? Well if you look at its usage in agentlogin.scala
-   * you see its initialising multiple sessions however the session
-   * for connections is already initialised in processlogin function.
-   * Reason behind such a structure is that at this point We really don't
-   * know if we require multiple sessions. Even if we do, We don't want the
-   * user to wait for all the session initialisation. Its more of a background process
-   * @return All session uri except for connections.
+   * @return All session uri.
    */
-  def getAllSessionUriNameExceptCnxs(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI, ProfilesViewItems.PROFILES_SESSION_URI)
+  def getAllSessionUriName(): Seq[String] = {
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI,
+      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI)
   }
 
   /*def getAllSessionUriExceptCnxs(): Seq[String] = {

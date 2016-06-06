@@ -89,7 +89,7 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.projectPost,Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.projectPost,Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
       t.modState(s => s.copy(postProject = true))
     }
 
@@ -268,9 +268,9 @@ object NewProjectForm {
             ),
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Save as Draft"),
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Save as Draft"),
+              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
+              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()

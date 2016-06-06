@@ -70,11 +70,11 @@ object LegalModal { //TodoForm
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.ul()(
-              <.li()(<.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showPrivacyPolicy)),
-              <.li()(<.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "End User Agreement", ^.onClick ==> showEndUserAgreement)),
-              <.li()(<.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices)),
-              <.li()(<.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Trademarks and Credits", ^.onClick ==> showTrademarks)),
-              <.li()(<.button(^.tpe := "button", ^.className := "btn btn-default", FooterCSS.Style.legalModalBtn, "Copyright", ^.onClick ==> showCopyright))
+              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showPrivacyPolicy)),
+              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "End User Agreement", ^.onClick ==> showEndUserAgreement)),
+              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices)),
+              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Trademarks and Credits", ^.onClick ==> showTrademarks)),
+              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Copyright", ^.onClick ==> showCopyright))
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop5p, DashBoardCSS.Style.marginLeftRight)()

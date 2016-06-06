@@ -1,5 +1,6 @@
 package client.components
 
+import client.utils.LabelsUtils
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -7,6 +8,8 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.RootModels.SearchesRootModel
+import shared.models.LabelModel
+import shared.sessionitems.SessionItems
 
 import scala.collection.mutable.ListBuffer
 import scala.language.existentials
@@ -14,11 +17,11 @@ import scala.scalajs.js
 
 object LabelsSelectize {
 
-  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
-    var selectedLabels = Seq[String]()
+  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
+    var selectedLabels = Seq[LabelModel]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
+    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
     selectedLabels
   }
 
@@ -61,12 +64,10 @@ object LabelsSelectize {
         <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-          for (label <- props.proxy().searchesModel) yield {
-            println("label.parentUid = "+label.parentUid)
-            if(label.parentUid.equals("self"))
-            <.option(^.value := label.uid, ^.key := label.uid)(label.text)
-            else
-            <.option()
+          for (label <- props.proxy().searchesModel
+            .filter(e=>e.parentUid=="self")
+            .filterNot(e => e.text == LabelsUtils.getSystemLabels())) yield {
+            <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
           }
         )
       } else {

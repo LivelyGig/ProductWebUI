@@ -1,15 +1,19 @@
 package client.handlers
 
 import diode.data.PotState.PotPending
-import diode.{ Effect, ActionHandler, ModelRW }
-import diode.data.{ Empty, PotAction, Ready, Pot }
+import diode.{ActionHandler, Effect, ModelRW}
+import diode.data.{Empty, Pot, PotAction, Ready}
 import shared.models.ConnectionsModel
 import shared.RootModels.ConnectionsRootModel
 import client.services.CoreApi
-import shared.dtos.{ ConnectionProfileResponse, ApiResponse }
+import org.scalajs.dom._
+import shared.dtos.{ApiResponse, ConnectionProfileResponse}
+import shared.sessionitems.SessionItems
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
+// scalastyle:off
 // Actions
 case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections] {
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
@@ -26,9 +30,6 @@ object ConnectionModelHandler {
         connection =>
           val json = JSON.parse(connection.content.jsonBlob)
           val name = json.name.asInstanceOf[String]
-          val source = connection.content.connection.source
-          val target = connection.content.connection.target
-          val label = connection.content.connection.label
           val imgSrc = if (connection.content.jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
           model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
             name, imgSrc)

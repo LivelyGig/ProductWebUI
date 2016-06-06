@@ -7,7 +7,10 @@ object FooterCSS {
     val footerContainer = style(
       borderTop(2.px, solid, c"#67EAF2"),
       backgroundColor(c"#005256"),
-      minHeight(52.px)
+      minHeight(52.px),
+      media.maxWidth(375.px)-
+      display.none
+
     // paddingLeft(7.%%),
     // paddingRight(7.%%)
     )

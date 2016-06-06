@@ -1,7 +1,7 @@
 package client.modules
 
 import client.handlers.RefreshProfiles
-import client.components.Icon
+import client.components.{Icon, LabelsSelectize, SearchesLabel}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -11,6 +11,7 @@ import client.css._
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
+import client.components.Bootstrap._
 
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
@@ -18,6 +19,9 @@ import org.querki.facades.bootstrap.datepicker._
 import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
+import org.scalajs.dom
+//import client.components.popoverbootstrap
+
 
 object Searches {
 
@@ -29,9 +33,9 @@ object Searches {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-      $(sidebtn).next().addClass("sidebarRightContainer")
+      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
     } else {
-      $(sidebtn).next().removeClass("sidebarRightContainer")
+      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
     }
   }
 
@@ -43,9 +47,9 @@ object Searches {
       val sidebtn: js.Object = "#searchContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-        $(sidebtn).next().addClass("sidebarRightContainer")
+        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       } else {
-        $(sidebtn).next().removeClass("sidebarRightContainer")
+        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
       }
 
       //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
@@ -79,6 +83,7 @@ object Searches {
       $(selectState).selectize(SelectizeConfig
         .maxItems(10)
         .plugins("remove_button"))
+
     }
 
     def initializeDatepicker(): Unit = {
@@ -126,7 +131,7 @@ object Searches {
         if (!children.isEmpty) {
           <.li(LftcontainerCSS.Style.checkboxlabel)(
             <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
             "  " + label.text,
             <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
             <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
@@ -134,7 +139,7 @@ object Searches {
         } else {
 
           <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-            <.input(^.`type` := "checkbox", /*^.marginLeft := "20px",*/ ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
               + label.text
           )
         }
@@ -144,7 +149,8 @@ object Searches {
         case AppModule.PROFILES_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
+          
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -153,16 +159,16 @@ object Searches {
                     <.div("Profile Type")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Talent"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Talent Agency"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Client"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Moderator"
                     )
                   )
@@ -193,7 +199,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -232,10 +240,10 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )
@@ -247,7 +255,8 @@ object Searches {
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+             
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -256,16 +265,16 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Recommended by Me"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )
@@ -285,7 +294,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -315,7 +326,7 @@ object Searches {
         case AppModule.PROJECTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -324,24 +335,24 @@ object Searches {
                     <.div("Job Type")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Project"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Hourly"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Fixed Scope"
                       )
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Contest"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Part-Time"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Full-Time"
                     )
                   )
@@ -455,11 +466,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
-
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                     } else {
                       <.div("(none)")
@@ -471,10 +483,10 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )
@@ -486,7 +498,8 @@ object Searches {
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+            
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -495,37 +508,39 @@ object Searches {
                     <.div("Status")
                   ),
                   <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxProject"), " Initiating offer"
                     ),
                     <.div(DashBoardCSS.Style.slctSubCheckboxesDiv)(
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to me"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Outstanding to other"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxHourly"), " Rejected by other"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Rejected by me"
                       ),
-                      <.label(LftcontainerCSS.Style.subcheckboxlabel, ^.className := "checkboxlabel")(
+                      <.label(LftcontainerCSS.Style.subcheckboxlabel/*, ^.className := "checkboxlabel"*/)(
                         <.input(^.`type` := "checkbox", ^.id := "jobTypeCheckboxFixed"), " Expired"
                       )
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.div()(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Escrow"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " In Progress"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Feedback"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Completed"
+                    )
                     )
                   )
                 ),
@@ -555,7 +570,9 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
@@ -571,10 +588,10 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )
@@ -584,11 +601,29 @@ object Searches {
           )
         }
         case AppModule.MESSAGES_VIEW => {
+          //          @tailrec
+          def renderLabel(label: LabelModel): ReactTag = {
+            val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
+            if (!children.isEmpty) {
+              <.li(LftcontainerCSS.Style.checkboxlabel)(
+                <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+                "  " + label.text,
+                <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
+                <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
+              )
+            } else {
 
+              <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+                  + label.text
+              )
+            }
+          }
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
-              <.button(^.tpe := "button", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
+              <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
             ),
@@ -627,11 +662,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels")
+                    <.div("Labels ",
+                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                    )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     if (p.proxy().searchesModel != Nil) {
-
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                     } else {
                       <.div("(none)")
@@ -643,10 +679,10 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )
@@ -658,7 +694,8 @@ object Searches {
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
             <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+         
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -667,28 +704,28 @@ object Searches {
                     <.div("Flags")
                   ),
                   <.div(^.className := "col-md-8 col-sm-12 col-xs-12")(
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Available for Chat"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Recommended by Me"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Recommended to Me"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " with Talent Profile"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " with Employer Profile"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " with Moderator Profile"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Favorited"
                     ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
+                    <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Include Hidden"
                     )
                   )

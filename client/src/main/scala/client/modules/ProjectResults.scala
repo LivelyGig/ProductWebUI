@@ -4,14 +4,16 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS }
-import client.modals.{ NewMessage, RecommendationJobs, WorkContractModal }
+import client.css.{DashBoardCSS, HeaderCSS}
+import client.logger._
+import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
 import shared.models.ProjectsPost
 import shared.dtos.EvalSubscribeResponseContent
+
 import scala.scalajs.js.Date
 import scalacss.ScalaCssReact._
 
@@ -22,8 +24,11 @@ object ProjectResults {
   case class State()
 
   class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props) =
+    def mounted(props: Props) = {
+      log.debug("projects view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
+    }
+
   }
 
   // create the React component for Dashboard
@@ -99,7 +104,8 @@ object ProjectsList {
   private val ProjectsList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
       def renderJobPosts(project: ProjectsPost) = {
-        <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+      //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media",DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
@@ -128,7 +134,8 @@ object ProjectsList {
           ) //media-body
         ) //li
       }
-      <.div(^.className := "rsltSectionContainer")(
+
+      <.div(DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.projects map renderJobPosts)
       )
     })

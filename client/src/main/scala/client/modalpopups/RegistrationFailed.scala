@@ -45,7 +45,7 @@ object RegistrationFailed {
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)(
                   "This user already exists. Please try logging in!",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"), <.button(^.tpe := "button", DashBoardCSS.Style.MarginLeftchkproduct, ^.className := "btn btn-default", ^.onClick --> login)("Login"))
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"), <.button(^.tpe := "button", DashBoardCSS.Style.MarginLeftchkproduct,DashBoardCSS.Style.btnDefault, ^.className := "btn", ^.onClick --> login)("Login"))
 
                 )
               )

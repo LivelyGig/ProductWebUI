@@ -61,10 +61,11 @@ object ContractResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12 rsltSectionContainer", DashBoardCSS.Style.padding0px)(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.rsltSectionContainer)(
             <.ul(^.className := "media-list")(
               for (i <- 1 to 50) yield {
-                <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+              //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+                <.li(^.className := "media",DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
                   <.div(^.className := "media-body")(
                     <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
                     <.div(DashBoardCSS.Style.profileNameHolder)("Buyer : Pam Seller: Abed Project/Offering: Project One"),

@@ -192,7 +192,7 @@ object WorkContractModalForm {
                   )
                 ),
 
-                <.table(^.className := "table rowStyle")(
+                <.table(^.className := "table rowStyle"/*, DashBoardCSS.Style.rowStyle*/)(
                   <.thead(
                     <.tr()(
                       <.th()("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
@@ -410,7 +410,7 @@ object WorkContractModalForm {
               <.div(^.id := "inProgressDetail", ^.className := "tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div(^.className := "inProgress")(
+                    <.div(/*^.className := "inProgress"*/DashBoardCSS.Style.inProgress)(
                       <.div(WorkContractCSS.Style.marginHeader)("Milestones ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(

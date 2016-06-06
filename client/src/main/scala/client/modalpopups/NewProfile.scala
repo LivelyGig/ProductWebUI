@@ -93,7 +93,7 @@ object NewProfileForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.profilePost,None, SessionItems.ProfilesViewItems.PROFILES_SESSION_URI))
+      LGCircuit.dispatch(PostData(state.profilePost,None, SessionItems.ProfilesViewItems.PROFILES_SESSION_URI, None))
       t.modState(s => s.copy(postUserSkills = false))
     }
 
@@ -319,8 +319,8 @@ object NewProfileForm {
             )
           ),
           <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-            <.button(^.tpe := "submit", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Submit"),
-            <.button(^.tpe := "button", ^.className := "btn btn-default", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+            <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Submit"),
+            <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
         )

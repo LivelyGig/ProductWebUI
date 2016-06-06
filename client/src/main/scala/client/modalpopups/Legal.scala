@@ -96,7 +96,7 @@ object Legal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle), "", ""), "Legal"),
+        Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle), " ", ""), P.buttonName),
         if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
         else if (S.showTrademarksModal) TrademarksModal(TrademarksModal.Props(B.tradeMarks))
         else if (S.showEndUserAgreementModal) EndUserAgreement(EndUserAgreement.Props(B.endUserAgreement))

@@ -66,11 +66,11 @@ case class ModeratorProfile(name: String = "", title: String = "", capabilities:
 
 case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
 
-case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false, imgSrc: String = "", ConfirmPassword: String = "")
+case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false, imgSrc: String = "", confirmPassword: String = "", isAvailable:Boolean=true)
 
 case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator: Boolean = false,
                        isClient: Boolean = false, isFreelancer: Boolean = false, canReceiveEmailUpdates: Boolean = false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
 
 case class EmailValidationModel(token: String)
 
-case class LabelModel(uid: String, text: String, color: String, imgSrc: String, parentUid: String, isChecked: Boolean = false)
+case class LabelModel(uid: String = "", text: String = "", color: String = "", imgSrc: String = "", parentUid: String = "", isChecked: Boolean = false)

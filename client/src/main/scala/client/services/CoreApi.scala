@@ -1,6 +1,6 @@
 package client.services
 
-import client.utils.Utils
+import client.utils.{LabelsUtils, ConnectionsUtils}
 import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
@@ -53,6 +53,7 @@ object CoreApi {
   /**
     * Generic method to get content data from the backend
     * used to get search results on different views.
+ *
     * @param sessionUriName uri name of the view associated
     *                       see SessionItems with Session uri
     *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,
@@ -63,8 +64,8 @@ object CoreApi {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
-    ) ++ Seq(Utils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val (currentSearchLabels, previousSearchLabels) = Utils.getCurrentPreviousLabel(sessionUriName)
+    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+    val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
     Option(previousSearchLabels) match {
