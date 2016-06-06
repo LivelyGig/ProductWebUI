@@ -13,8 +13,10 @@ import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 
 object CoreApi {
-  var BASE_URL = "http://192.168.99.100:8888/api"
+  //  var BASE_URL = "http://192.168.99.100:8888/api"
+  var BASE_URL = "http://localhost:9876/api"
   var CREATE_USER_REQUEST = "createUserRequest"
+
   private def ajaxPost(requestContent: String): Future[String] = {
     Ajax.post(
       url = BASE_URL,
@@ -53,6 +55,7 @@ object CoreApi {
   /**
     * Generic method to get content data from the backend
     * used to get search results on different views.
+    *
     * @param sessionUriName uri name of the view associated
     *                       see SessionItems with Session uri
     *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,

@@ -106,6 +106,7 @@ object NewMessageForm {
       val state = t.state.runNow()
       //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      println(state.postMessage)
       t.modState(s => s.copy(postNewMessage = true))
     }
 

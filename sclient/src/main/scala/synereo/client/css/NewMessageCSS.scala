@@ -1,7 +1,7 @@
 package synereo.client.css
 
 import scalacss.Defaults._
-
+import scala.language.postfixOps
 
 /**
   * Created by a4tech on 6/3/2016.

@@ -38,8 +38,16 @@ object SearchesModelHandler {
   var children = Seq[LabelModel]()
   var listE = new ListBuffer[LabelModel]()
 
-  /*Seq[Label]()*/
-  /*var searchLabels = new ListBuffer[Seq[Label]]()*/
+  /**
+    * Uses the list buffer to hold children to a particular label
+    * It iterated over label collection and add the children to
+    * the list buffer in recurssion till it reaches the last children.
+    *
+    * @param label  is the label for which we need children
+    * @param labels is the collection of all labels
+    * @return seq of all children label
+    */
+
   def getChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
     children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
@@ -69,7 +77,6 @@ case class CreateLabels()
 case class UpdateLabel(label: LabelModel)
 
 case class SubscribeSearch()
-
 
 
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
