@@ -21,35 +21,13 @@ object SearchesLabel {
 
   case class Backend(t: BackendScope[Props, _]) {
 
-    def getAllSearchLabels(props: Props): String = {
-      var getlabels = ""
-      getlabels += "  <form role=\"form\"> "
-      getlabels += " <div class=\"form-group\"> "
-      getlabels += " <label for=\"parent\">Parent:</label> "
-
-      getlabels += "  <select>"
-      for (label <- props.proxy().searchesModel) yield {
-        getlabels += "<option value=" + label.text + ">" + label.text + "</option>"
-      }
-      getlabels += "</select>"
-
-      getlabels += "   <div class=\"form-group\"> "
-      getlabels += "   <label for=\"Name\">Name:</label> "
-      getlabels += "    <input type=\"text\" class=\"form-control\" id=\"Name\"> "
-      getlabels += "   </div>  "
-        getlabels += " <button type=\"submit\" class=\"btn btn-default\">Submit</button> "
-      getlabels += "  </form> "
-      return getlabels
-    }
-
-
     def mounted(props: Props): Callback = Callback {
       val labelPopover: js.Object = ".labelPopover"
       $(labelPopover).popover(PopoverOptions.html(true))
     }
 
     def render(props: Props) = {
-      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr := getAllSearchLabels(props)
+      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(getAllSearchLabels.getLabels(getAllSearchLabels.Props(props.proxy)))
       )(<.span(Icon.plus))
     }
   }
@@ -60,4 +38,37 @@ object SearchesLabel {
     .build
 
   def apply(props: Props) = component(props)
+}
+
+object getAllSearchLabels {
+  case class Props(proxy: ModelProxy[SearchesRootModel])
+  case class State(labelModel: LabelModel)
+  case class Backend(t: BackendScope[Props, _]) {
+    def updateSubject() = Callback {
+      println("In function")
+    }
+
+    def render(props: Props) = {
+      <.div()(
+        <.form(^.role := "form")(
+          <.div(^.className := "form-group")(
+            <.label(^.`for` := "parent")("Parent"),
+            <.select()(
+              for (label <- props.proxy().searchesModel) yield {
+                <.option(^.value := label.text)(label.text)
+              }
+            )
+          ),
+          <.div(^.className := "form-group")(
+            <.label(^.`for` := "name")("Name : "),
+            <.input(^.`type` := "text", ^.className := "form-control" /*,^.value := state.postMessage.subject*/)
+          ),
+          <.button(^.`type` := "submit", ^.className := "btn btn-default", ^.onClick --> updateSubject)("Submit")
+        )
+      )
+    }
+  }
+  val getLabels = ReactComponentB[Props]("getAllSearchLabels")
+    .renderBackend[Backend]
+    .build
 }
