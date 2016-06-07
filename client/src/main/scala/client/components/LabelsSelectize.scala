@@ -61,7 +61,7 @@ object LabelsSelectize {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "select #label(s)", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel
