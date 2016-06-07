@@ -1,22 +1,19 @@
 package synereo.client.services
 
-import synereo.client.utils.Utils
 import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
 import upickle.default._
-
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 object CoreApi {
-  //  var BASE_URL = "http://192.168.99.100:8888/api"
   var BASE_URL = "http://localhost:9876/api"
   var CREATE_USER_REQUEST = "createUserRequest"
-
   private def ajaxPost(requestContent: String): Future[String] = {
     Ajax.post(
       url = BASE_URL,
@@ -66,8 +63,8 @@ object CoreApi {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
-    ) ++ Seq(Utils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val (currentSearchLabels, previousSearchLabels) = Utils.getCurrentPreviousLabel(sessionUriName)
+    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+    val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
     Option(previousSearchLabels) match {

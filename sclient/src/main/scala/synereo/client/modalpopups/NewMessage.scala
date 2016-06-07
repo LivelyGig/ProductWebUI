@@ -72,7 +72,7 @@ object NewMessageForm {
 
   case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, selectizeInputId: String = "postNewMessageSelectizeInput", selectizeInputIdLabels: String = "selectizeInputIdLabels")
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -104,9 +104,10 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.selectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+//      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
       println(state.postMessage)
+      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -129,11 +130,11 @@ object NewMessageForm {
             SYNEREOCircuit.connect(_.user)(proxy => UserPersona(UserPersona.Props(proxy)))
           ),
           <.div(^.className := "row")(
-            <.div(^.id := s.selectizeInputId)(
-              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
+            <.div(^.id := s.connectionsSelectizeInputId)(
+              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
             ),
-            <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.selectizeInputIdLabels)(
-              SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.selectizeInputIdLabels)))
+            <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
+              SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
             ),
             <.div()(
               <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)

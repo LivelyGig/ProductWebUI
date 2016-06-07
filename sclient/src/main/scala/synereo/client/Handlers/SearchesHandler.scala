@@ -1,15 +1,16 @@
 package synereo.client.handlers
 
-import diode.{Effect, ActionHandler, ModelRW}
+import diode.{ActionHandler, Effect, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
 import shared.models.LabelModel
-import shared.RootModels.{SearchesRootModel, MessagesRootModel}
+import shared.RootModels.{MessagesRootModel, SearchesRootModel}
 import shared.sessionitems.SessionItems
 import synereo.client.components.LabelsSelectize
-import synereo.client.services.{SYNEREOCircuit, CoreApi}
-import synereo.client.utils.{Utils, PrologParser}
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import synereo.client.utils.{LabelsUtils, PrologParser}
 import org.scalajs.dom._
+
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters._
@@ -132,7 +133,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         val family = (selectedChildren :+ selectedRootParent)
         labelFamilies.append(family)
       }
-      window.sessionStorage.setItem("currentSearchLabel", Utils.getLabelProlog(labelFamilies))
+      window.sessionStorage.setItem("currentSearchLabel", LabelsUtils.getLabelProlog(labelFamilies))
       labelFamilies.clear()
       noChange
   }

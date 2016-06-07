@@ -41,7 +41,7 @@ object MainMenu {
     SYNEREOCircuit.dispatch(CreateLabels())
   }
   def searchWithLabels(e: ReactEventI)= Callback {
-    SYNEREOCircuit.dispatch(SearchMessagesOnLabels(Some(labelSelectizeId)))
+    SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(labelSelectizeId)))
     SYNEREOCircuit.dispatch(RefreshMessages())
   }
 

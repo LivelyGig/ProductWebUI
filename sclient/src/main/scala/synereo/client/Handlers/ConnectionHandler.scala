@@ -41,7 +41,7 @@ object ConnectionModelHandler {
           name, imgSrc)
     }
 //    model.foreach(temp => println(temp.name))
-    ConnectionsRootModel(model)
+    ConnectionsRootModel(model.sortBy(_.name))
   }
 
 }

@@ -1,6 +1,6 @@
 package synereo.client.components
 
-import shared.RootModels.{SearchesRootModel, ConnectionsRootModel}
+import shared.RootModels.{ConnectionsRootModel, SearchesRootModel}
 import diode.data.Pot
 import diode.react.ReactPot._
 import diode.react.ModelProxy
@@ -9,8 +9,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
+import shared.models.LabelModel
 import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
+import synereo.client.utils.LabelsUtils
 
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
@@ -19,16 +21,13 @@ import scala.scalajs.js
 /**
   * Created by Mandar on 5/17/2016.
   */
-object LabelsSelectize {
+object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
+  var selectedLabels = Seq[LabelModel]()
+  val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[String] = {
-    var selectedLabels = Seq[String]()
-    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
-
-    $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
-//    println(selectedLabels)
-    selectedLabels
-  }
+  $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
+  selectedLabels
+}
 
   var getSelectedValue = new ListBuffer[String]()
 
@@ -46,7 +45,6 @@ object LabelsSelectize {
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(3)
           .plugins("remove_button"))
-//        $(selectizeInput).selectize(SelectizePlugin.plugins.)
       }
 
     }
@@ -70,8 +68,10 @@ object LabelsSelectize {
         <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-          for (label <- props.proxy().searchesModel) yield {
-            <.option(^.value := label.text, ^.key := label.uid)(label.text)
+          for (label <- props.proxy().searchesModel
+            .filter(e=>e.parentUid=="self")
+            .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
+            <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
           }
         )
       } else {
@@ -80,7 +80,7 @@ object LabelsSelectize {
     }
   }
 
-  val component = ReactComponentB[Props]("LabelsSelectize")
+  val component = ReactComponentB[Props]("SearchesConnectionList")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
