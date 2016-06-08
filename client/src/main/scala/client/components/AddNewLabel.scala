@@ -27,7 +27,7 @@ object AddNewLabel {
     }
 
     def render(props: Props) = {
-      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(LabelsList.getLabels(LabelsList.Props(props.proxy)))
+      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(LabelsList(LabelsList.Props(props.proxy)))
       )(<.span(Icon.plus))
     }
   }
@@ -69,9 +69,11 @@ object LabelsList {
       )
     }
   }
-  val getLabels = ReactComponentB[Props]("getAllSearchLabels")
+  val component = ReactComponentB[Props]("getAllSearchLabels")
     .renderBackend[Backend]
     .build
+
+  def apply(props: Props) = component(props)
 
 //  def apply: getAllSearchLabels = new getAllSearchLabels()
 }
