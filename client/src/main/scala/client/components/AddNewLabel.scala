@@ -9,6 +9,8 @@ import shared.RootModels.SearchesRootModel
 import shared.models.{LabelModel, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import client.components.Bootstrap._
+import japgolly.scalajs.react
+
 import scala.scalajs.js
 import org.querki.jquery._
 
@@ -43,13 +45,19 @@ object AddNewLabel {
 object LabelsList {
   case class Props(proxy: ModelProxy[SearchesRootModel])
   case class State(labelModel: LabelModel)
-  case class Backend(t: BackendScope[Props, _]) {
-    def updateLabel() = Callback {
+  case class Backend(t: BackendScope[Props, State]) {
+    def updateLabel(e: ReactEventI): react.Callback =  {
+      val value = e.currentTarget.value
+      t.modState(s => s.copy(labelModel = s.labelModel.copy(text = value)))
 
-//      println("In function")
+    }
+    def postLabel(e: ReactEventI): Callback = Callback {
+        e.preventDefault()
+        val label = t.state.runNow().labelModel
+      println(s"label text: ${label.text}")
     }
 
-    def render(props: Props) = {
+    def render(props: Props, state: State) = {
       <.div()(
         <.form(^.role := "form")(
           <.div(^.className := "form-group")(
@@ -62,14 +70,15 @@ object LabelsList {
           ),
           <.div(^.className := "form-group")(
             <.label(^.`for` := "name")("Name : "),
-            <.input(^.`type` := "text", ^.className := "form-control" /*,^.value := sta*/)
+            <.input(^.`type` := "text", ^.className := "form-control" ,^.value := state.labelModel.text, ^.onChange ==> updateLabel)
           ),
-          <.button(^.`type` := "submit", ^.className := "btn btn-default", ^.onClick --> updateLabel)("Submit")
+          <.button(^.`type` := "", ^.className := "btn btn-default"/*, ^.onClick ==> postLabel*/)("Submit")
         )
       )
     }
   }
   val component = ReactComponentB[Props]("getAllSearchLabels")
+    .initialState(State(LabelModel()))
     .renderBackend[Backend]
     .build
 
