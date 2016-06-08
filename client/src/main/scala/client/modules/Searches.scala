@@ -1,7 +1,7 @@
 package client.modules
 
 import client.handlers.RefreshProfiles
-import client.components.{Icon, LabelsSelectize, SearchesLabel}
+import client.components.{Icon, LabelsSelectize, AddNewLabel}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -200,7 +200,7 @@ object Searches {
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -295,7 +295,7 @@ object Searches {
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -467,7 +467,7 @@ object Searches {
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -571,7 +571,7 @@ object Searches {
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -663,7 +663,7 @@ object Searches {
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
+                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(

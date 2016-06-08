@@ -15,7 +15,7 @@ import org.querki.jquery._
 /**
   * Created by bhagyashree.b on 2016-06-01.
   */
-object SearchesLabel {
+object AddNewLabel {
 
   case class Props(proxy: ModelProxy[SearchesRootModel], parentIdentifier: String)
 
@@ -27,7 +27,7 @@ object SearchesLabel {
     }
 
     def render(props: Props) = {
-      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(getAllSearchLabels.getLabels(getAllSearchLabels.Props(props.proxy)))
+      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(LabelsList.getLabels(LabelsList.Props(props.proxy)))
       )(<.span(Icon.plus))
     }
   }
@@ -40,12 +40,13 @@ object SearchesLabel {
   def apply(props: Props) = component(props)
 }
 
-object getAllSearchLabels {
+object LabelsList {
   case class Props(proxy: ModelProxy[SearchesRootModel])
   case class State(labelModel: LabelModel)
   case class Backend(t: BackendScope[Props, _]) {
     def updateLabel() = Callback {
-      println("In function")
+
+//      println("In function")
     }
 
     def render(props: Props) = {
@@ -61,7 +62,7 @@ object getAllSearchLabels {
           ),
           <.div(^.className := "form-group")(
             <.label(^.`for` := "name")("Name : "),
-            <.input(^.`type` := "text", ^.className := "form-control" /*,^.value := state.postMessage.subject*/)
+            <.input(^.`type` := "text", ^.className := "form-control" /*,^.value := sta*/)
           ),
           <.button(^.`type` := "submit", ^.className := "btn btn-default", ^.onClick --> updateLabel)("Submit")
         )
@@ -71,4 +72,6 @@ object getAllSearchLabels {
   val getLabels = ReactComponentB[Props]("getAllSearchLabels")
     .renderBackend[Backend]
     .build
+
+//  def apply: getAllSearchLabels = new getAllSearchLabels()
 }
