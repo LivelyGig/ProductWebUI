@@ -16,4 +16,6 @@ class UserTest extends UnitTest("UserModel") {
       usermodel.imgSrc shouldNot be(null)
   }
 
+
+
 }
