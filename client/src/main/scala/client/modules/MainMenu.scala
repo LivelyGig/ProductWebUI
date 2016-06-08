@@ -157,7 +157,7 @@ object LoggedInUser {
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "Legal" ))
+                    <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About" ))
                   )
                 ),
                 <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(),
@@ -180,7 +180,7 @@ object LoggedInUser {
                   <.li(^.className := "divider")(),
                   <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "Legal"))
+                  <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About"))
                 )
               ),
               <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(
