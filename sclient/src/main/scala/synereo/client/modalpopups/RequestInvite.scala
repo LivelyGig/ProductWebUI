@@ -5,8 +5,8 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components.Icon.Icon
-import synereo.client.components.{ GlobalStyles, Icon }
-import synereo.client.css.LoginCSS
+import synereo.client.components.{GlobalStyles, Icon}
+import synereo.client.css.{DashboardCSS, LoginCSS}
 import synereo.client.components.jQuery
 
 import scalacss.Defaults._
@@ -15,7 +15,7 @@ import scalacss.ScalaCssReact._
 object RequestInvite {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
+  case class Props(addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String ="Request invite")
 
   case class State(showNewInviteForm: Boolean = false)
 
@@ -33,7 +33,7 @@ object RequestInvite {
     }
 
     def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent signUpModel : t{signUpModel} ,addNewAgent: t{showNewInviteForm}")
+      //log.debug(s"addNewAgent signUpModel : t{signUpModel} ,addNewAgent: t{showConnectionsForm}")
       if (postMessage) {
         t.modState(s => s.copy(showNewInviteForm = true))
       } else {
@@ -47,7 +47,7 @@ object RequestInvite {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div( /*ProjectCSS.Style.displayInitialbtn*/ /*, ^.onMouseOver --> B.displayBtn*/ )(
+      <.div(/*ProjectCSS.Style.displayInitialbtn, ^.onMouseOver --> B.displayBtn*/)(
         Button(Button.Props(B.addNewRequestForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), "Request invite"),
         if (S.showNewInviteForm) PostNewInvite(PostNewInvite.Props(B.addMessage))
         else
@@ -67,7 +67,7 @@ object PostNewInvite {
 
   case class Props(submitHandler: (Boolean) => Callback)
 
-  case class State(postMessage: Boolean = false)
+  case class State(postMessage: Boolean = false,requestInviteModalId: String = "request-invite-modal")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -90,7 +90,7 @@ object PostNewInvite {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postMessage)
+      //      println(state.postMessage)
       props.submitHandler(state.postMessage)
 
     }
@@ -101,7 +101,7 @@ object PostNewInvite {
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p)
+          closed = () => formClosed(s, p),id = s.requestInviteModalId
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row", LoginCSS.Style.requestInviteModalStyle)(
@@ -113,7 +113,7 @@ object PostNewInvite {
                 <.input(^.`type` := "text", ^.className := "form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
               ),
               <.div()(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", LoginCSS.Style.subscribeButton, ^.onClick --> hide, "Subscribe")
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> hide, "Subscribe")
               )
             )
           )

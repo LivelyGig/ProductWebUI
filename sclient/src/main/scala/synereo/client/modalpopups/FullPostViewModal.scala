@@ -35,7 +35,7 @@ object FullPostViewModal {
     var scrollY: Int = 0
 
     def mounted() = Callback {
-      $(fullPostViewContainer).height($(dashboardContainerMain).height() - 2)
+      $(fullPostViewContainer).height($(dashboardContainerMain).height() + 25)
     }
 
     def hide = Callback {

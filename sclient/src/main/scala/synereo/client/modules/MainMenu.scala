@@ -38,9 +38,11 @@ object MainMenu {
     def mounted(props: Props) =
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
+
     SYNEREOCircuit.dispatch(CreateLabels())
   }
-  def searchWithLabels(e: ReactEventI)= Callback {
+
+  def searchWithLabels(e: ReactEventI) = Callback {
     SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(labelSelectizeId)))
     SYNEREOCircuit.dispatch(RefreshMessages())
   }
@@ -125,7 +127,7 @@ object MainMenu {
                 <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
               ),
               <.li(
-                NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button","create-post-button",Seq(<.span(^.className:="vertical-text-post-btn","POST"))))
+                NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
               )
             )
           } else {
@@ -144,31 +146,24 @@ object MainMenu {
               )
             )
           }
-        ), <.div(
+        ),
+        <.div(^.className := "text-center")(
           if (props.proxy().isLoggedIn) {
-            <.div(^.className := "text-center")(
-              //              <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
-              //                <.div(^.className := "form-group")(
-              //                  <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
-              //                ),
-              //                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
-              //              ),
+            <.div(^.className := "row")(
               <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
                 <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
                   SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
                 ),
                 <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                ),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-                    <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-                      <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-                        TopMenuBar(TopMenuBar.Props())
-                        //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-                        //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-                        //                      )
-                      )
-                    )
+                )
+              ),
+              <.div(
+                <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+                  <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+                    TopMenuBar(TopMenuBar.Props())
+                    //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
+                    //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+                    //                      )
                   )
                 )
               )

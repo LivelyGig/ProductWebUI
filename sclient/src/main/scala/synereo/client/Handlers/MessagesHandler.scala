@@ -26,7 +26,7 @@ case class StoreMessagesLabels(selectizeInputId: Option[String])
 
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
-//  var labelFamily = LabelsUtils.getLabelProlog(Nil)
+  //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
 
   override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
     case StoreMessagesLabels(selectizeInputId: Option[String]) =>
@@ -34,22 +34,25 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsFromSelectizeInput(lblSelectizeInputId)
         case None => Nil
       }
+      //      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel =>
+      //        LabelModel(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
       val searchLabels = LabelsUtils.buildProlog(
-        crntSearchLblsFrmSelctize.map(currentLabel =>
-        LabelModel(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
+        Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel =>LabelModel(text = currentLabel.text)
+        ), LabelsUtils.PrologTypes.Each)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
       noChange
 
     case action: RefreshMessages =>
-      println(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
+      //      println(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
       val labels = window.sessionStorage.getItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
-      println(labels)
+      //      println(labels)
       val updateF = action.effectWithRetry {
         CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
-      }{messagesResponse => MessagesRootModel(ContentModelHandler
+      } { messagesResponse => MessagesRootModel(ContentModelHandler
         .getContentModel(messagesResponse, AppModule.MESSAGES_VIEW)
-        .asInstanceOf[Seq[MessagePost]])}
+        .asInstanceOf[Seq[MessagePost]])
+      }
       Option(labels) match {
         case Some(s) =>
           action.handleWith(this, updateF)(PotActionRetriable.handler())
