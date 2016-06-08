@@ -199,7 +199,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels ",
+                    <.div("My Labels ",
                       LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
@@ -294,7 +294,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels ",
+                    <.div("My Labels ",
                       LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
@@ -466,7 +466,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels ",
+                    <.div("My Labels ",
                       LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
@@ -570,7 +570,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels ",
+                    <.div("My Labels ",
                       LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
@@ -662,7 +662,7 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("Labels ",
+                    <.div("My Labels ",
                       LGCircuit.connect(_.searches)(searchesProxy => SearchesLabel(SearchesLabel.Props(searchesProxy, "searcheslabelsId")))
                     )
                   ),
@@ -672,6 +672,15 @@ object Searches {
                     } else {
                       <.div("(none)")
                     }
+                  )
+                ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Tags")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. #tag1, #tag2")
+                    // ToDo: need to provide user feedback so these strings are valid alphanumeric with leading # signs, comma-separated.
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
