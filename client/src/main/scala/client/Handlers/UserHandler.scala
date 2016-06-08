@@ -61,7 +61,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
             upickle.default.write(ProfilesPost(uid, new Date().toISOString(), new Date().toISOString(), "", connectionsSeq, value.asInstanceOf[ProfilePostContent])))
       }
       val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
-      println(s"prolog = $prolog")
+//      println(s"prolog = $prolog")
       CoreApi.evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName), Expression(ApiTypes.INSERT_CONTENT, ExpressionContent(connectionsSeq, prolog, contentToPost, uid)))).onComplete {
         case Success(response) => logger.log.debug("Content Post Successful")
         case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
