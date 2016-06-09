@@ -35,22 +35,22 @@ object Login {
 
   case class Props()
 
-  case class State(userModel: UserModel,isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
+  case class State(userModel: UserModel, isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
                    showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false,
                    showRegistrationFailed: Boolean = false,
                    showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
 
   class Backend(t: BackendScope[Props, State]) {
 
-//    def updateEmail(e: ReactEventI) = {
-//      val value = e.target.value
-//      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(email = value)))
-//    }
+    //    def updateEmail(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(email = value)))
+    //    }
 
-//    def updatePassword(e: ReactEventI) = {
-//      val value = e.target.value
-//      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
-//    }
+    //    def updatePassword(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
+    //    }
 
     def closeRequestInvitePopup(postInvite: Boolean): Callback = {
       true match {
@@ -60,6 +60,7 @@ object Login {
       t.modState(s => s.copy(showNewInviteForm = false, showLoginForm = true))
     }
 
+    //scalastyle:off
     def Login(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
       //      println(s"showNewUserForm: $showNewUserForm")
       true match {
@@ -72,8 +73,6 @@ object Login {
     }
 
     def processLogin(userModel: UserModel): Callback = {
-//      val state = t.state.runNow()
-//      val userModel = state.userModel
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       // $("#bodyBackground").addClass("DashBoardCSS.Style.overlay")
@@ -170,7 +169,7 @@ object Login {
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
       window.sessionStorage.setItem("listOfLabels", JSON.stringify(response.content.listOfLabels))
-//      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH,"Any()")
+      //      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH,"Any()")
       //      SYNEREOCircuit.dispatch(CreateLabels())
       //      SYNEREOCircuit.dispatch(CreateSessions(signUpModel))
       SYNEREOCircuit.dispatch(RefreshConnections())

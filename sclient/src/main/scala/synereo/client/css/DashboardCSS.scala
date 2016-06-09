@@ -53,9 +53,15 @@ object DashboardCSS {
       margin(45.px, 0.px)
     )
     val inviteFrndBtn = style(
-      fontSize(18.px),
-      backgroundColor.transparent,
-      color(c"#FFFFFF")
+      fontSize(24.px),
+      backgroundColor(c"#FFFFFF"),
+      color(c"#000"),
+      width(250.px),
+      height(60.px),
+      marginBottom(30.px),
+      marginLeft.auto,
+      marginRight.auto,
+      display.block
     )
     val bodyImg = style(
       borderImageRepeat.:=(none),

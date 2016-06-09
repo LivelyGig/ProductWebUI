@@ -48,10 +48,9 @@ object Sidebar {
           <.li(^.className := "nav-divider")(),
           <.li()(<.a(^.href := "#")(<.span(Icon.cog), " Settings")),
           <.li()(<.a(^.href := "#")(<.span(Icon.questionCircle), " Help & Feedback"))
-        ),
+        )
         //            <.button(^.`type`:="button",^.className:="sidebarBtn")(<.span(^.float:="left")(Icon.gift), <.span(^.float:="left", ^.marginLeft:="10px")("Invite Friend"))
         //        NewConnectionModal(NewConnectionModal.Props("Invite Friend",Seq(), Icon.mailForward,))
-        NewConnectionModal(NewConnectionModal.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
       )
 
     })

@@ -11,6 +11,8 @@ import synereo.client.components.Icon
 import synereo.client.css._
 import shared.models.ConnectionsModel
 import org.querki.jquery._
+import synereo.client.modalpopups.NewConnectionModal
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
@@ -34,6 +36,11 @@ object ConnectionsResults {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+        <.div(^.className := "row",
+          <.div(^.className := "col-md-12",
+            NewConnectionModal(NewConnectionModal.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
+          )
+        ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
             P.proxy().render(connectionsRootModel =>
