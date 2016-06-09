@@ -162,12 +162,15 @@ object Searches {
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Talent"
                     ),
+                    <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Talent Agency"
                     ),
+                    <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Client"
                     ),
+                    <.br(),
                     <.label(LftcontainerCSS.Style.checkboxlabel/*, ^.className := "checkboxlabel"*/)(
                       <.input(^.`type` := "checkbox"), " Moderator"
                     )
@@ -224,15 +227,9 @@ object Searches {
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags",^.rows := 2, ^.placeholder := "e.g. @LivelyGig")
-                  //<.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                  //                      <.option(^.value:="")("Select"),
-                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                  //                      <.option(^.value:="Synereo")("@Synereo"),
-                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                  //                      <.option(^.value:="Synereo1")("@Synereo1")
-                  //                    )
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    // ToDo: need to selectize this based on connections
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Alice")
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -654,12 +651,31 @@ object Searches {
                   )
                 ),
 
+
+
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")()
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    // ToDo: need to selectize this based on connections
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Alice")
+                  )
                 ),
+                <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
+                  <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
+                    <.div("Posted to")
+                  ),
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    // ToDo: need to selectize this based on connections.
+                    <.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 2, ^.placeholder := "e.g. @Bob, @Carol")
+                  )
+                ),
+
+
+
+
+
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("My Labels ",
