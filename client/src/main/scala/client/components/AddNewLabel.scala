@@ -44,17 +44,19 @@ object AddNewLabel {
 
 object LabelsList {
   case class Props(proxy: ModelProxy[SearchesRootModel])
-  case class State(labelModel: LabelModel)
+  case class State(labelModel: LabelModel, postLabel: Boolean = false)
   case class Backend(t: BackendScope[Props, State]) {
     def updateLabel(e: ReactEventI): react.Callback =  {
+      println("in update label")
       val value = e.currentTarget.value
       t.modState(s => s.copy(labelModel = s.labelModel.copy(text = value)))
 
     }
-    def postLabel(e: ReactEventI): Callback = Callback {
+    def postLabel(e: ReactEventI) = {
         e.preventDefault()
         val label = t.state.runNow().labelModel
       println(s"label text: ${label.text}")
+      t.modState(s => s.copy(postLabel = !s.postLabel))
     }
 
     def render(props: Props, state: State) = {
@@ -72,7 +74,7 @@ object LabelsList {
             <.label(^.`for` := "name")("Name : "),
             <.input(^.`type` := "text", ^.className := "form-control" ,^.value := state.labelModel.text, ^.onChange ==> updateLabel)
           ),
-          <.button(^.`type` := "", ^.className := "btn btn-default"/*, ^.onClick ==> postLabel*/)("Submit")
+          <.button(^.`type` := "", ^.className := "btn btn-default", ^.onClick ==> postLabel)("Submit")
         )
       )
     }
