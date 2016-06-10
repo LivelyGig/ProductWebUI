@@ -105,4 +105,8 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def postIntroduction(introductionModel: IntroductionModel): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INTRODUCTION_REQUEST, introductionModel))
+    ajaxPost(requestContent)
+  }
 }
