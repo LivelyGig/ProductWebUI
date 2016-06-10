@@ -24,7 +24,7 @@ object SynereoCommanStylesCSS {
         paddingTop(4.px)
     )
     val labelSelectizeContainer = style(
-      paddingTop(1.px)
+      marginTop(30.px)
     )
     val labelSelectizeNavbar = style(
       width(480.px),
@@ -173,11 +173,7 @@ object SynereoCommanStylesCSS {
       right.`0`.important
     )
     val imgLogo = style(
-      /*      borderRadius(50.%%),
-            width(40.px),
-            height(40.px),
-            media.maxWidth(820.px)-*/
-      marginTop(34.px),
+      marginTop(5.px),
       padding(5.px),
       maxHeight(48.px)
     )

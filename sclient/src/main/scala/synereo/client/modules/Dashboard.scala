@@ -324,7 +324,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span(message.created)
+                  <.span(message.created.toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )
@@ -337,6 +337,7 @@ object HomeFeedList {
 
                     <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
+                      <.h3(message.postContent.subject),
                       message.postContent.text,
                       <.br(),
                       <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
@@ -349,6 +350,7 @@ object HomeFeedList {
         )
       }
       <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer)(
+        //        p.messages.map(message => message.created.toLocaleString),
         p.messages map renderMessages
         /*for (i <- 1 to 50) yield {
                   if (i % 2 != 0) {

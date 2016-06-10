@@ -16,7 +16,7 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
-      marginTop(-81.px)
+      marginTop(-53.px)
     )
     val loginScreenBgImage = style(
       margin.auto.important,

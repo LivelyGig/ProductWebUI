@@ -38,7 +38,6 @@ object MainMenu {
     def mounted(props: Props) =
       Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
-
     SYNEREOCircuit.dispatch(CreateLabels())
   }
 
