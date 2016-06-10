@@ -1,7 +1,7 @@
 package client.modules
 
 import client.handlers.RefreshProfiles
-import client.components.{Icon, LabelsSelectize, AddNewLabel}
+import client.components.{Icon, LabelsSelectize, LabelsList}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -202,11 +202,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
-                    )
+                    <.div("My Labels ")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.div(
+                    LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                    ),
                     if (p.proxy().searchesModel != Nil) {
 
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -291,11 +292,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
-                    )
+                    <.div("My Labels ")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.div(
+                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                    ),
                     if (p.proxy().searchesModel != Nil) {
 
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -463,11 +465,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
-                    )
+                    <.div("My Labels ")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.div(
+                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                    ),
                     if (p.proxy().searchesModel != Nil) {
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                     } else {
@@ -567,11 +570,12 @@ object Searches {
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
-                    )
+                    <.div("My Labels ")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.div(
+                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                    ),
                     if (p.proxy().searchesModel != Nil) {
 
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -678,11 +682,12 @@ object Searches {
 
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
-                    <.div("My Labels ",
-                      LGCircuit.connect(_.searches)(searchesProxy => AddNewLabel(AddNewLabel.Props(searchesProxy, "searcheslabelsId")))
-                    )
+                    <.div("My Labels ")
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
+                    <.div(
+                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                    ),
                     if (p.proxy().searchesModel != Nil) {
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
                     } else {

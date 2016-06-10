@@ -28,6 +28,7 @@ object ConnectionsResults {
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
 
+
   }
 
   // create the React component for Dashboard
