@@ -11,7 +11,7 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS, MessagesCSS, ProjectCSS}
+import client.css._
 import client.services.LGCircuit
 
 import scala.util.{Failure, Success}
@@ -110,7 +110,7 @@ object ConnectionsForm {
             <.div()(
               <.div()(<.input(^.`type` := "radio",^.name:="userConnection"/*, ^.checked := s.userModel.isFreelancer, ^.onChange ==> updateIsFreelancer*/), " Introduce yourself to existing user(s)."), <.br(),
               <.div()(<.input(^.`type` := "radio" ,^.name:="userConnection"/*, ^.checked := s.userModel.isClient, ^.onChange ==> updateIsClient*/), " Invite new user(s) to sign up and  connect with you."), <.br(),
-              <.div()(<.input(^.`type` := "radio" ,^.name:="userConnection"/*, ^.checked := s.userModel.isModerator, ^.onChange ==> updateIsModerator*/), " Invite existing connections to connect with each other." + <.br() +
+              <.div()(<.input(^.`type` := "radio" ,^.name:="userConnection",^.checked:="true" /*, ^.checked := s.userModel.isModerator, ^.onChange ==> updateIsModerator*/), " Invite existing connections to connect with each other." + <.br() +
         "Note, each pair of connections will be introduced with the message above."), <.br()
             ),
             <.div(<.h5("Recipients:")),
@@ -120,13 +120,13 @@ object ConnectionsForm {
             ),
             <.div(<.h5("Introduction:")),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, /*^.value := s.postMessage.text, ^.onChange ==> updateContent, */^.required := true)
+              <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, /*^.value := s.postMessage.text, ^.onChange ==> updateContent, */^.required := true)
             )
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
-              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+              <.button(^.tpe := "submit", ^.className := "btn",WorkContractCSS.Style.createWorkContractBtn, /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "button", ^.className := "btn",WorkContractCSS.Style.createWorkContractBtn, ^.onClick --> hide, "Cancel")
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()

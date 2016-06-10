@@ -61,6 +61,7 @@ object Settings {
   val jsDependencies = Def.setting(Seq(
     "org.webjars.npm" % "react" % Versions.react / "react-with-addons.js" commonJSName "React" minified "react-with-addons.min.js",
     "org.webjars.npm" % "react-dom" % Versions.react / "react-dom.js" commonJSName "ReactDOM" minified "react-dom.min.js" dependsOn "react-with-addons.js",
+    "org.webjars.npm" % "react-dom" % Versions.react / "react-dom-server.js" commonJSName "ReactDOMServer" ,
     "org.webjars" % "jquery" % Versions.jQuery / "jquery.js" minified "jquery.min.js",
     "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
