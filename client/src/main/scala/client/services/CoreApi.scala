@@ -109,4 +109,10 @@ object CoreApi {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.INTRODUCTION_REQUEST, introductionModel))
     ajaxPost(requestContent)
   }
+
+  def postLabel (labelPost: LabelPost): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_ALIAS_LABEL_REQ, labelPost))
+    println("requestContent = "+ requestContent)
+    ajaxPost(requestContent)
+  }
 }

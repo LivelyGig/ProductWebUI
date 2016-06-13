@@ -10,7 +10,8 @@ object SessionItems {
    */
   def getAllSessionUriName(): Seq[String] = {
     Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI,
-      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI/*,
+      SearchesView.SEARCHES_SESSION_URI*/)
   }
 
   /*def getAllSessionUriExceptCnxs(): Seq[String] = {
@@ -33,6 +34,7 @@ object SessionItems {
     val CONNECTION_LIST = "CONNECTION_LIST"
   }
   object SearchesView {
+    val SEARCHES_SESSION_URI = "SEARCHES_SESSION_URI"
     val LIST_OF_LABELS = "LIST_OF_LABELS"
   }
   object ProfilesViewItems {

@@ -3,7 +3,7 @@ package client.handlers
 import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data.PotAction
 import shared.dtos._
-import shared.models.LabelModel
+import shared.models.Label
 import shared.RootModels.{MessagesRootModel, SearchesRootModel}
 import client.services.{CoreApi, LGCircuit}
 import client.utils.{LabelsUtils, PrologParser, ConnectionsUtils}
@@ -21,22 +21,22 @@ object SearchesModelHandler {
 
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
-      val model = upickle.default.read[Seq[LabelModel]](JSON.stringify(labelsArray))
+      val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
       SearchesRootModel(model.filterNot(e => LabelsUtils.getSystemLabels().contains(e.text)))
     } catch {
       case e: Exception =>
         SearchesRootModel(Nil)
     }
   }
-  def updateModel(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def updateModel(label: Label, labels: Seq[Label]): Seq[Label] = {
     val children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
       children.map(e => updateModel(e, labels))
     }
     labels
   }
-  var children = Seq[LabelModel]()
-  var labelsBuffer = new ListBuffer[LabelModel]()
+  var children = Seq[Label]()
+  var labelsBuffer = new ListBuffer[Label]()
 
   /**
    * Uses the list buffer to hold children to a particular label
@@ -47,7 +47,7 @@ object SearchesModelHandler {
    * @param labels is the collection of all labels
    * @return seq of all children label
    */
-  def getChildren(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildren(label: Label, labels: Seq[Label]): Seq[Label] = {
     children = labels.filter(p => p.parentUid == label.uid)
     if (!children.isEmpty) {
       labelsBuffer ++= children
@@ -65,7 +65,7 @@ object SearchesModelHandler {
    * @param labels is the collection of all labels
    * @return
    */
-  def getChildrenToParent(label: LabelModel, labels: Seq[LabelModel]): Seq[LabelModel] = {
+  def getChildrenToParent(label: Label, labels: Seq[Label]): Seq[Label] = {
     children = labels.filter(p => p.uid == label.parentUid)
     if (!children.isEmpty) {
       labelsBuffer ++= children
@@ -73,7 +73,7 @@ object SearchesModelHandler {
     }
     labelsBuffer
   }
-  var labelFamilies = new ListBuffer[LabelModel]()
+  var labelFamilies = new ListBuffer[Label]()
   /*def GetLabelFamilies (label: Label,labels: Seq[Label]) : Seq[Label] = {
 
     labelFamilies
@@ -81,7 +81,7 @@ object SearchesModelHandler {
 }
 
 case class CreateLabels()
-case class UpdateLabel(label: LabelModel)
+case class UpdateLabel(label: Label)
 case class StoreMessagesSearchLabel()
 case class StoreProjectsSearchLabel()
 case class StoreProfilesSearchLabel()
@@ -137,7 +137,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case StoreMessagesSearchLabel() =>
       val selectedRootParents = value.searchesModel.filter(e => e.isChecked == true && e.parentUid == "self")
-      val labelFamilies = ListBuffer[Seq[LabelModel]]()
+      val labelFamilies = ListBuffer[Seq[Label]]()
 //      if (selectedRootParents.isEmpty)
       labelFamilies.append(Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
       selectedRootParents.foreach { selectedRootParent =>

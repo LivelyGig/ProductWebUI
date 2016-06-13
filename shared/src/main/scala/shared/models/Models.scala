@@ -80,6 +80,6 @@ case class SignUpModel(email: String = "", password: String = "", confirmPasswor
 
 case class EmailValidationModel(token: String)
 
-case class LabelModel(uid: String = "", text: String = "", color: String = "", imgSrc: String = "", parentUid: String = "", isChecked: Boolean = false)
+case class Label(uid: String = "", text: String = "", color: String = "", imgSrc: String = "", parentUid: String = "", isChecked: Boolean = false)
 
 

@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers._
 import shared.RootModels.SearchesRootModel
 import client.css._
-import shared.models.{LabelModel, UserModel}
+import shared.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import client.components.Bootstrap._
@@ -126,7 +126,7 @@ object Searches {
 
     def render(s: State, p: Props) = {
       //          @tailrec
-      def renderLabel(label: LabelModel): ReactTag = {
+      def renderLabel(label: Label): ReactTag = {
         val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
         if (!children.isEmpty) {
           <.li(LftcontainerCSS.Style.checkboxlabel)(
@@ -603,7 +603,7 @@ object Searches {
         }
         case AppModule.MESSAGES_VIEW => {
           //          @tailrec
-          def renderLabel(label: LabelModel): ReactTag = {
+          def renderLabel(label: Label): ReactTag = {
             val children = p.proxy().searchesModel.filter(p => p.parentUid == label.uid)
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(

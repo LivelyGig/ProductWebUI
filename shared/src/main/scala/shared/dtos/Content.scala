@@ -49,3 +49,4 @@ case class Label(text: String, color: String, imgSrc: String)
 
 case class IntroductionModel (sessionURI: String = "", alias: String= "", aConnection: Connection = Connection(),
                               bConnection: Connection = Connection(), aMessage: String = "", bMessage: String = "") extends  Content
+case class LabelPost (sessionURI: String = "", labels: Seq[String] = Nil, alias: String = "") extends Content
