@@ -1,13 +1,12 @@
 package client.components
 
 import client.components.Bootstrap.PopoverOptions
-import japgolly.scalajs.react.{ReactComponentB, _}
+import japgolly.scalajs.react.ReactComponentB
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.RootModels.SearchesRootModel
-import shared.models.{LabelModel, UserModel}
-import client.services.{CoreApi, LGCircuit}
+import shared.models.LabelModel
 import client.components.Bootstrap._
 import client.css.WorkContractCSS
 import japgolly.scalajs.react

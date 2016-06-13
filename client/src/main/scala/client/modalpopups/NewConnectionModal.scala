@@ -12,14 +12,19 @@ import client.components.Icon
 import client.components.Icon._
 import client.components._
 import client.css._
-import client.services.LGCircuit
+import client.services.{CoreApi, LGCircuit}
+import japgolly.scalajs.react
 
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import org.scalajs.dom._
+import shared.dtos.IntroductionModel
+import shared.sessionitems.SessionItems
 
+// scalastyle:off
 object NewConnectionModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
@@ -35,13 +40,8 @@ object NewConnectionModal {
     def addConnectionForm(): Callback = {
       t.modState(s => s.copy(showConnectionsForm = true))
     }
-    def addConnections(postConnection: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if (!postConnection) {
+    def addConnections(): Callback = {
         t.modState(s => s.copy(showConnectionsForm = false))
-      } else {
-        t.modState(s => s.copy(showConnectionsForm = true))
-      }
     }
   }
   val component = ReactComponentB[Props]("Connections")
@@ -65,29 +65,37 @@ object NewConnectionModal {
 object ConnectionsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (Boolean) => Callback, header: String)
-  case class State(postConnection: Boolean = false, selectizeInputId: String = "postNewConnectionSelectizeInput")
+  case class Props(submitHandler: () => Callback, header: String)
+  case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
+                   introductionModel: IntroductionModel = IntroductionModel())
 
   case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
-      $(t.getDOMNode()).modal("hide")
-    }
-    def hideModal = {
+    def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {
 
     }
-    def submitForm(e: ReactEventI) = {
+    def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
+      val state = t.state.runNow()
+      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
+      val introduction = state.introductionModel.copy(aConnection = connections(0), bConnection = connections(1),
+        sessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI), alias = "alias")
+      CoreApi.postIntroduction(introduction)
       t.modState(s => s.copy(postConnection = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postConnection)
-      props.submitHandler(state.postConnection)
+      props.submitHandler()
+    }
+
+    def updateContent(e: ReactEventI): react.Callback = {
+      val value = e.target.value
+      t.modState(s => s.copy(introductionModel = s.introductionModel.copy(bMessage = value, aMessage = value)))
     }
 
     def render(s: State, p: Props) = {
@@ -120,7 +128,7 @@ object ConnectionsForm {
             ),
             <.div(<.h5("Introduction:")),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, /*^.value := s.postMessage.text, ^.onChange ==> updateContent, */^.required := true)
+              <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.introductionModel.aMessage, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
@@ -139,7 +147,7 @@ object ConnectionsForm {
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postConnection) {
-        scope.$.backend.hideModal
+        scope.$.backend.hide.runNow()
       }
     })
     .build

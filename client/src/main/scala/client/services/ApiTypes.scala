@@ -12,4 +12,6 @@ object ApiTypes {
   val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
   val INSERT_CONTENT = "insertContent"
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
+  val FEED_EXPRESSION = "feedExpr"
+  val INTRODUCTION_REQUEST = "beginIntroductionRequest"
 }

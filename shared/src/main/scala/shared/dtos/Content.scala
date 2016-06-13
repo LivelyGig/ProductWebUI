@@ -3,6 +3,14 @@ package shared.dtos
 /**
  * Represents content within a request/response to API endpoints.
  */
+
+/**
+  * Wraps all API requests in a standard format.
+  */
+
+case class ApiRequest(msgType: String, content: Content)
+
+case class ApiResponse[T](msgType: String, content: T)
 sealed trait Content {
 
 }
@@ -39,3 +47,5 @@ case class ExpressionContent(cnxns: Seq[Connection], label: String, value: Strin
 
 case class Label(text: String, color: String, imgSrc: String)
 
+case class IntroductionModel (sessionURI: String = "", alias: String= "", aConnection: Connection = Connection(),
+                              bConnection: Connection = Connection(), aMessage: String = "", bMessage: String = "") extends  Content
