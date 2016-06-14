@@ -84,7 +84,7 @@ object LftcontainerCSS {
 
     val checkboxlabel = style(
       userSelect:="none",   //main.less
-    //  display.block,     //main.less
+      display.block,     //main.less
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
