@@ -85,7 +85,7 @@ object Bootstrap {
   object Modal {
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
-      keyboard: Boolean = true)
+      keyboard: Boolean = true,addStyles: Seq[StyleA] = Seq(), id: String = "", CSSClass: String = "")
 
     val OuterRef = Ref("o")
 
@@ -116,10 +116,10 @@ object Bootstrap {
 
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(^.id := "modal", modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
+        <.div(^.id := P.id, /*^.id := "modal",*/ modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-            <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter)(
-              <.div(modalStyle.content, DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
+            <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter, P.addStyles)(
+              <.div(modalStyle.content, DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose, ^.ref := OuterRef, ^.className := P.CSSClass,
                 <.div(/*^.className := "modalheader",*/ modalStyle.header,DashBoardCSS.Style.modalHeader, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
                 <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)
               //              <.div(modalStyle.footer, P.footer(hide))

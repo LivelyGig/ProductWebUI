@@ -15,7 +15,6 @@ object DashBoardCSS {
       overflowX.auto,
       height(800.px)
     )
-
     val splitContainer = style(
       position.relative,
       /* height(100.%%),*/
@@ -62,8 +61,8 @@ object DashBoardCSS {
       width(100.%%),
       paddingTop(4.px),
       paddingBottom(4.px),
-      media.maxWidth(375.px)-
-      display.none
+      media.maxWidth(375.px) -
+        display.none
     )
     val rsltCheckboxStyle = style(
       height(13.px),
@@ -208,6 +207,12 @@ object DashBoardCSS {
     val modalHeaderText = style(
       fontSize(1.3.em)
     )
+    val padding15px = style(
+      padding(15.px)
+    )
+    val padding5px = style(
+      padding(5.px)
+    )
     val modalBodyText = style(
       fontSize(2.5.em),
       textAlign.center,
@@ -344,6 +349,10 @@ object DashBoardCSS {
     val inputBtnRadius = style(
       border.none,
       padding(0.2.em, 0.6.em, 0.1.em)
+    )
+    val inputBtnRadiusCncx = style(
+      border.none,
+      padding(3.px, 8.px, 3.px, 8.px)
     )
 
     val verticalImg = style(
@@ -682,5 +691,10 @@ object DashBoardCSS {
         height(190 px)
       )
     )
+    val connectionModalWidth = style (
+      paddingLeft(30.%%),
+      paddingRight(30.%%)
+    )
   }
+
 }
