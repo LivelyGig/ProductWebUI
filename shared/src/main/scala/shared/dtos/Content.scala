@@ -47,6 +47,9 @@ case class ExpressionContent(cnxns: Seq[Connection], label: String, value: Strin
 
 case class Label(text: String, color: String, imgSrc: String)
 
-case class IntroductionModel (sessionURI: String = "", alias: String= "", aConnection: Connection = Connection(),
-                              bConnection: Connection = Connection(), aMessage: String = "", bMessage: String = "") extends  Content
+case class IntroConnections(sessionURI: String = "", alias: String= "", aConnection: Connection = Connection(),
+                            bConnection: Connection = Connection(), aMessage: String = "", bMessage: String = "") extends  Content
+
+case class EstablishConnection(sessionURI: String = "", aURI: String="", bURI:String="", label:String="") extends Content
+
 case class LabelPost (sessionURI: String = "", labels: Seq[String] = Nil, alias: String = "") extends Content

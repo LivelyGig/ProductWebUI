@@ -105,9 +105,12 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
-  def postIntroduction(introductionModel: IntroductionModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INTRODUCTION_REQUEST, introductionModel))
-    ajaxPost(requestContent)
+  def postIntroduction(introductionModel: Content): Future[String] = {
+    val msg = introductionModel match {
+      case _ : IntroConnections => ApiTypes.INTRODUCTION_REQUEST
+      case _ : EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+    }
+    ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
 
   def postLabel (labelPost: LabelPost): Future[String] = {

@@ -15,4 +15,5 @@ object ApiTypes {
   val FEED_EXPRESSION = "feedExpr"
   val INTRODUCTION_REQUEST = "beginIntroductionRequest"
   val UPDATE_ALIAS_LABEL_REQ =  "updateAliasLabelsRequest"
+  val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
 }

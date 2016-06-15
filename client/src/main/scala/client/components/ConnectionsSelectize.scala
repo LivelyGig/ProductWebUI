@@ -16,8 +16,8 @@ import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 
 /**
- * Created by Shubham.K on 4/6/2016.
- */
+  * Created by Shubham.K on 4/6/2016.
+  */
 object ConnectionsSelectize {
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     var selectedConnections = Seq[Connection]()
@@ -27,22 +27,26 @@ object ConnectionsSelectize {
     selectedConnections
   }
 
-  var getSelectedValue = new ListBuffer[String]() /*Seq[Label]()*/
+  var getSelectedValue = new ListBuffer[String]()
+
+  /*Seq[Label]()*/
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String)
+
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       //    println($(selectState).get())
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object = "#selectize"
+        val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-sel"
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(30)
           .plugins("remove_button"))
       }
 
     }
+
     def getSelectedValues = Callback {
-      val selectState: js.Object = "#selectize"
+      val selectState: js.Object = s"#${t.props.runNow().parentIdentifier}-sel"
       val getSelectedValue = $(selectState).find("option").text()
       println(getSelectedValue)
 
@@ -59,6 +63,8 @@ object ConnectionsSelectize {
     //
     //     }
 
+
+
     def mounted(props: Props): Callback = Callback {
       initializeTagsInput(props.parentIdentifier)
     }
@@ -66,7 +72,7 @@ object ConnectionsSelectize {
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-sel", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           props.proxy().render(connectionsRootModel =>
             for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection), ^.key := connection.connection.target)(connection.name))
@@ -77,6 +83,7 @@ object ConnectionsSelectize {
 
     }
   }
+
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))

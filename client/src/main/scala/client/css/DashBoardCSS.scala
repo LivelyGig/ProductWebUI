@@ -204,6 +204,10 @@ object DashBoardCSS {
       borderRadius(12.px)
     )
 
+    val hidden = style (
+      display.none
+    )
+
     val modalHeaderText = style(
       fontSize(1.3.em)
     )
