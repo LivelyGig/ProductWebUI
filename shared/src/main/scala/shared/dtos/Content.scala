@@ -18,22 +18,28 @@ case class CreateUser(email: String, password: String, jsonBlob: Map[String, Str
   extends Content
 
 case class CreateUserResponse() /*extends Content*/
+//case class CreateUserResponse()
 
 case class ConfirmEmail(token: String) extends Content
 
-case class ConfirmEmailResponse(agentURI: String) /*extends Content*/
+case class ConfirmEmailResponse(agentURI: String)
+
 case class ErrorResponse(reason: String)
 
 case class InitializeSession(agentURI: String) extends Content
 
-case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String], listOfConnections: Seq[Connection],
-  lastActiveLabel: String, jsonBlob: Map[String, String] /*reason : Option[String]*/ ) /*extends Content*/
+case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String],
+                                     listOfConnections: Seq[Connection],lastActiveLabel: String,
+                                     jsonBlob: Map[String, String] )
+
 case class InitializeSessionErrorResponse(reason: String)
-case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String /* ,name: Option[String]*/ ) /*extends Content*/
+
+case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String )
+
 case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection = Connection(),
   filter: String = "")
 
-case class Connection(source: String = "", label: String = "", target: String = "") /*extends Content*/
+case class Connection(source: String = "", label: String = "", target: String = "")
 
 case class SessionPing(sessionURI: String) extends Content
 
@@ -52,4 +58,11 @@ case class IntroConnections(sessionURI: String = "", alias: String= "", aConnect
 
 case class EstablishConnection(sessionURI: String = "", aURI: String="", bURI:String="", label:String="") extends Content
 
+
 case class LabelPost (sessionURI: String = "", labels: Seq[String] = Nil, alias: String = "") extends Content
+
+case class IntroductionNotification (introSessionId: String = "", correlationId: String = "", connection: Connection,
+                                     message: String = "", introProfile: String = "") extends Content
+
+case class IntroConfirmReq (sessionURI: String = "", alias: String = "", introSessionId: String = "",
+                          correlationId: String = "", accepted: String = "" ) extends Content
