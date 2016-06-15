@@ -19,15 +19,17 @@ import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 
 /**
-  * Created by Mandar on 5/17/2016.
+  * Created by mandar.k on 5/17/2016.
   */
-object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
-  var selectedLabels = Seq[LabelModel]()
-  val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
+//scalastyle:off
+object LabelsSelectize {
+  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
+    var selectedLabels = Seq[LabelModel]()
+    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-  $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
-  selectedLabels
-}
+    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
+    selectedLabels
+  }
 
   var getSelectedValue = new ListBuffer[String]()
 
@@ -37,11 +39,8 @@ object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
-      //      println(s"element lenth: ${$(selectState).length}")
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object = "#labelsSelectize"
-        //        $(selectizeInput).selectize(SelectizeConfig.maxOptions(2)).destroy()
-        //        println(s"test : ${$(selectizeInput)}")
+        val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(3)
           .plugins("remove_button"))
@@ -52,7 +51,6 @@ object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String
     def getSelectedValues = Callback {
       val selectState: js.Object = "#selectize"
       val getSelectedValue = $(selectState).find("option").text()
-      //scalastyle:off
       //      println(getSelectedValue)
     }
 
@@ -65,11 +63,11 @@ object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "labelsSelectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel
-            .filter(e=>e.parentUid=="self")
+            .filter(e => e.parentUid == "self")
             .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
             <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
           }
@@ -80,7 +78,7 @@ object LabelsSelectize {def getLabelsFromSelectizeInput(selectizeInputId: String
     }
   }
 
-  val component = ReactComponentB[Props]("SearchesConnectionList")
+  val component = ReactComponentB[Props]("LabelsSelectize")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

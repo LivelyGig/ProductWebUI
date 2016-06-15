@@ -14,8 +14,10 @@ object DashboardCSS {
 
     import dsl._
 
-    val profileActionContainer = style(/*      minHeight(60.px),
-            minWidth(100.px)*/)
+    val profileActionContainer = style(
+      //            minHeight(60.px),
+      //            minWidth(100.px)
+    )
     val dashboardContainerMain = style(
       height(97.vh),
       overflowY.scroll.important,

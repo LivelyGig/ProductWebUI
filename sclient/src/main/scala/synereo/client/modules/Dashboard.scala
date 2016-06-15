@@ -8,19 +8,23 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.sessionitems.SessionItems
 import synereo.client.handlers.{PostData, RefreshConnections, RefreshMessages}
 import org.scalajs.dom
-import shared.models.{MessagePostContent, MessagePost}
+import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
-import synereo.client.modalpopups.{NewMessage, FullPostViewModal}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
+import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
+
 import scala.scalajs.js.timers._
-import synereo.client.components.{Icon}
+import synereo.client.components.Icon
+
 import scala.language.reflectiveCalls
 import org.scalajs.dom.window
+import org.widok.moment.Moment
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -324,7 +328,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span(message.created.toLocaleString)
+                  <.span(Moment(message.created).toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )

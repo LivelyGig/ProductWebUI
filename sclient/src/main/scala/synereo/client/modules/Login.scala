@@ -92,7 +92,7 @@ object Login {
       } else if (showLoginForm) {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       } else {
-        t.modState(s => s.copy(showLoginForm = true))
+        t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }
 
@@ -114,15 +114,15 @@ object Login {
 
     def setUserDetailsInSession(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+      window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
       window.sessionStorage.setItem(
-        SessionItems.ConnectionViewItems.CONNECTION_LIST,
-        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
+          SessionItems.ConnectionViewItems.CONNECTION_LIST,
+          upickle.default.write[Seq[Connection]](response.content.listOfConnections)
       )
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
     }
 
     def processLogin(userModel: UserModel): Callback = {
@@ -152,13 +152,10 @@ object Login {
     }
 
     def processSuccessfulLogin(responseArray: Seq[String], userModel: UserModel): Unit = {
-
       setSessionsUri(responseArray)
       val responseStr = responseArray(0)
       setUserDetailsInSession(responseStr, userModel)
-      SYNEREOCircuit.dispatch(CreateLabels())
       SYNEREOCircuit.dispatch(RefreshConnections())
-      SYNEREOCircuit.dispatch(LoginUser(userModel))
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
       window.location.href = "/#dashboard"
@@ -174,7 +171,6 @@ object Login {
 
     def processServerError(): Unit = {
       $(loginLoader).addClass("hidden")
-      //  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
       println("internal server error")
       t.modState(s => s.copy(showErrorModal = true)).runNow()
     }

@@ -115,7 +115,7 @@ object ConnectionsForm {
 
     def introducingExistingUsr(e: ReactEvent): Callback = {
       val state = t.state.runNow()
-      println(s"this is ${state.inviteExistingConnections}")
+      //      println(s"this is ${state.inviteExistingConnections}")
       t.modState(s => s.copy(inviteExistingConnections = true))
     }
 

@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{ SignupCSS, SynereoCommanStylesCSS }
+import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 import shared.models.{SignUpModel, UserModel}
 import scala.scalajs.js
 import scala.util
@@ -17,8 +17,9 @@ import org.scalajs.dom._
 
 object NewUserForm {
   var addNewUserState: Boolean = false
-  var signUpModelUpdate = new SignUpModel("","","","","",false,false, false, false, false, false, "",false)
-    // shorthand for styles
+  var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
+
+  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
@@ -29,7 +30,7 @@ object NewUserForm {
     def hideModal = {
       // instruct Bootstrap to hide the modal
       addNewUserState = false
-      signUpModelUpdate = new SignUpModel("","","","","",false,false, false, false, false, false, "",false)
+      signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
       t.modState(s => s.copy(showLoginForm = true))
       //jQuery(t.getDOMNode()).modal("hide")
     }
@@ -76,10 +77,6 @@ object NewUserForm {
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
 
-    def changeCheckBox(e: ReactEventI) = {
-      println(e.target)
-    }
-
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val SignUp: js.Object = "#SignUp"
@@ -93,7 +90,7 @@ object NewUserForm {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.addNewUser)
       signUpModelUpdate = state.signUpModel
-      props.submitHandler(state.signUpModel, state.addNewUser, state.showTermsOfServicesForm)
+      props.submitHandler(state.signUpModel, state.addNewUser, state.showLoginForm)
     }
 
     def render(s: State, p: Props) = {
@@ -102,9 +99,9 @@ object NewUserForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span()(
-          <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-          <.div(SignupCSS.Style.signUpHeading)(headerText)
-        ),
+            <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(SignupCSS.Style.signUpHeading)(headerText)
+          ),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
@@ -123,7 +120,7 @@ object NewUserForm {
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := s.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
               ^.onChange ==> updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6"),
-            <.div( /*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ ^.className := "help-block")("Must be 6 characters long and include one or more number or symbol")
+            <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ ^.className := "help-block")("Must be 6 characters long and include one or more number or symbol")
           ),
           <.div(^.className := "form-group")(
             //            data-match="#inputPassword" data-match-error="Whoops, these don't match"
@@ -147,7 +144,7 @@ object NewUserForm {
               <.div(^.className := "pull-right", ^.className := "form-group")(
                 <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
               )
-            //            <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hideModal, "Cancel")
+              //            <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hideModal, "Cancel")
             )
           ),
           <.div(bss.modal.footer)()

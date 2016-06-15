@@ -37,7 +37,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       //      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel =>
       //        LabelModel(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
       val searchLabels = LabelsUtils.buildProlog(
-        Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel =>LabelModel(text = currentLabel.text)
+        Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => LabelModel(text = currentLabel.text)
         ), LabelsUtils.PrologTypes.Each)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
@@ -57,7 +57,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case Some(s) =>
           action.handleWith(this, updateF)(PotActionRetriable.handler())
         case _ =>
-          println("in empty")
+          //          println("in empty")
           window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH,
             LabelsUtils.buildProlog(Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)), LabelsUtils.PrologTypes.Any))
           action.handleWith(this, updateF)(PotActionRetriable.handler())
