@@ -50,27 +50,36 @@ sealed trait Person {
   def title: String
 }
 
-case class ProfilesPost(uid: String, created: String, modified: String, labels: String, connections: Seq[Connection], postContent: ProfilePostContent) extends Post {
+case class ProfilesPost(uid: String, created: String, modified: String, labels: String,
+                        connections: Seq[Connection], postContent: ProfilePostContent) extends Post {
   override def postType: String = "ProfilePost"
 
   override def versionNumber: Int = 0
 }
 
-case class ProfilePostContent(talentProfile: TalentProfile = TalentProfile()/*, employerProfile: EmployerProfile = EmployerProfile(), moderatorProfile: ModeratorProfile = ModeratorProfile()*/) extends PostContent
+case class ProfilePostContent(talentProfile: TalentProfile = TalentProfile()
+                              /*, employerProfile: EmployerProfile = EmployerProfile(),
+                              moderatorProfile: ModeratorProfile = ModeratorProfile()*/) extends PostContent
 
 case class TalentProfile(name: String = "", title: String = "", capabilities: String = "", video: String = "") extends Person with PostContent
 
-case class EmployerProfile(name: String = "", website: String = "", tagline: String = "", video: String = "", twitter: String = "", logo: String = "") extends PostContent
+case class EmployerProfile(name: String = "", website: String = "", tagline: String = "", video: String = "",
+                           twitter: String = "", logo: String = "") extends PostContent
 
 case class ModeratorProfile(name: String = "", title: String = "", capabilities: String = "", commission: String = "") extends Person with PostContent
 
 case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
 
-case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false, imgSrc: String = "", confirmPassword: String = "", isAvailable:Boolean=true)
+case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false,
+                     imgSrc: String = "", confirmPassword: String = "", isAvailable:Boolean=true)
 
-case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "", name: String = "", lastName: String = "", createBTCWallet: Boolean = false, isModerator: Boolean = false,
-                       isClient: Boolean = false, isFreelancer: Boolean = false, canReceiveEmailUpdates: Boolean = false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
+case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "",
+                       name: String = "", lastName: String = "", createBTCWallet: Boolean = false,
+                       isModerator: Boolean = false, isClient: Boolean = false, isFreelancer: Boolean = false,
+                       canReceiveEmailUpdates: Boolean = false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
 
 case class EmailValidationModel(token: String)
 
-case class LabelModel(uid: String = "", text: String = "", color: String = "", imgSrc: String = "", parentUid: String = "", isChecked: Boolean = false)
+case class Label(uid: String = "", text: String = "", color: String = "", imgSrc: String = "", parentUid: String = "", isChecked: Boolean = false)
+
+

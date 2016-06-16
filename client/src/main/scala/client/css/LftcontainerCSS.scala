@@ -15,14 +15,15 @@ object LftcontainerCSS {
     val slctContainer = style(
       display.inlineBlock,
       overflow.auto,
-      media.maxWidth(767.px) -
-        width(200.px),
-      media.minWidth(768.px).maxWidth(1299.px) -
-        width(260.px),
-      media.minWidth(1300.px).maxWidth(1500.px) -
-        width(280.px),
-      media.minWidth(1501.px) -
-        width(300.px)
+      width(100.%%)
+      // media.maxWidth(767.px) -
+      //  width(200.px),
+      // media.minWidth(768.px).maxWidth(1299.px) -
+        // width(260.px),
+      //media.minWidth(1300.px).maxWidth(1500.px) -
+//        width(280.px),
+//      media.minWidth(1501.px) -
+//        minWidth(300.px)
 
     )
     val textareaWidth = style(
@@ -64,7 +65,7 @@ object LftcontainerCSS {
     val slctsearchpanelabelposition = style(
       paddingTop(0.px),
       paddingBottom(2.px),
-      paddingRight(10.px),
+      // paddingRight(10.px),
       fontWeight.bold,
       overflowY.auto,
       overflowX.auto,
@@ -84,7 +85,7 @@ object LftcontainerCSS {
 
     val checkboxlabel = style(
       userSelect:="none",   //main.less
-    //  display.block,     //main.less
+      display.block,     //main.less
       paddingLeft(0.px),
       fontSize(1.em),
       fontWeight.normal,
@@ -97,7 +98,8 @@ object LftcontainerCSS {
       userSelect:="none",   //main.less
       fontSize(1.em),
       fontWeight.normal,
-      marginLeft(18.px)
+      marginLeft(18.px),
+      display.block
     )
 
     val lftMarginTop = style(

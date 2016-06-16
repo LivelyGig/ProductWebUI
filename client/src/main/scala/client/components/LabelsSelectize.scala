@@ -8,7 +8,7 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.RootModels.SearchesRootModel
-import shared.models.LabelModel
+import shared.models.Label
 import shared.sessionitems.SessionItems
 
 import scala.collection.mutable.ListBuffer
@@ -17,11 +17,11 @@ import scala.scalajs.js
 
 object LabelsSelectize {
 
-  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
-    var selectedLabels = Seq[LabelModel]()
+  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[Label] = {
+    var selectedLabels = Seq[Label]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
+    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[Label]($(y).attr("data-value").toString))
     selectedLabels
   }
 

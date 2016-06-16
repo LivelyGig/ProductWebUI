@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{LoginUser, LogoutUser, ToggleAvailablity}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
-import client.modals.{AgentLoginSignUp, Legal}
+import client.modals.{AgentLoginSignUp, Legal, NewMessage, ConfirmIntroReq}
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
@@ -29,7 +29,7 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(isLoggedIn: Boolean = false)
+  case class State(isLoggedIn: Boolean = false, showNewCnxnReq: Boolean = false)
 
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc, count: ReactElement, locationCount: Loc)
 
@@ -39,26 +39,32 @@ object MainMenu {
       Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))
     }
-  }
 
-  private def buildMenuItem(counter: Int): ReactElement = {
-    var retRE = <.span()
-    if (counter > 0) {
-      retRE = <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter))
+    def newCnxnReq() = {
+      $.modState(s => s.copy(showNewCnxnReq = true))
     }
-    return retRE
+
+    private def buildMenuItem(counter: Int): ReactElement = {
+      var retRE = <.span()
+      if (counter > 0 ) {
+        retRE = <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter))
+      }
+      return retRE
+    }
+
+
+    val menuItems = Seq(
+      MenuItem(1, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(5), DashboardLoc),
+      MenuItem(2, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
+      MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize, JobPostsLoc, buildMenuItem(3), DashboardLoc),
+      MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize, OfferingsLoc, buildMenuItem(0), DashboardLoc),
+      MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize, ProfilesLoc, buildMenuItem(0), DashboardLoc),
+      MenuItem(6, _ => AppModule.CONTRACTS_VIEW.capitalize, ContractsLoc, buildMenuItem(0), DashboardLoc)
+      // ToDo: Dashboard menu intentionally hidden for now.  EE  2016-04-12
+      // MenuItem(7, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc)
+    )
   }
 
-  val menuItems = Seq(
-    MenuItem(1, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(2, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
-    MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize, JobPostsLoc, buildMenuItem(3), DashboardLoc),
-    MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize, OfferingsLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize, ProfilesLoc, buildMenuItem(0), DashboardLoc),
-    MenuItem(6, _ => AppModule.CONTRACTS_VIEW.capitalize, ContractsLoc, buildMenuItem(0), DashboardLoc)
-    // ToDo: Dashboard menu intentionally hidden for now.  EE  2016-04-12
-    // MenuItem(7, _ => "Dashboard",  DashboardLoc , buildMenuItem(0) , DashboardLoc)
-  )
   val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
@@ -69,7 +75,7 @@ object MainMenu {
         //<.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
         <.ul(/*^.id := "headerNavUl",*/ ^.className := "nav", HeaderCSS.Style.navbarNav)(
           // build a list of menu items
-          for (item <- menuItems) yield {
+          for (item <- $.backend.menuItems) yield {
             if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc, ConnectionsLoc, DashboardLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
                 <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
@@ -78,7 +84,11 @@ object MainMenu {
                     (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                     " ", item.label(props)
                   ),
-                  props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
+                  if (item.location == ConnectionsLoc) {
+                    ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx,bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3" , "3"))
+                  }
+                  else
+                    props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
               } else {
                 <.li("data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in")
               }
@@ -89,7 +99,11 @@ object MainMenu {
                   (props.currentLoc == item.location) ?= (HeaderCSS.Style.headerNavLi),
                   " ", item.label(props)
                 ),
-                props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
+                if (item.location == ConnectionsLoc) {
+                  ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx,bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3" , "3"))
+                }
+                else
+                  props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
             }
           }
         )
@@ -157,7 +171,7 @@ object LoggedInUser {
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About" ))
+                    <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About"))
                   )
                 ),
                 <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(),

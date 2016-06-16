@@ -1,10 +1,10 @@
 package shared.RootModels
 
-import shared.models.LabelModel
+import shared.models.Label
 
 // scalastyle:off
-case class SearchesRootModel(searchesModel: Seq[LabelModel]) {
-  def updated(newSearch: LabelModel) = {
+case class SearchesRootModel(searchesModel: Seq[Label]) {
+  def updated(newSearch: Label) = {
     val searchu = searchesModel
     searchesModel.indexWhere(_.uid == newSearch.uid) match {
       case -1 =>
