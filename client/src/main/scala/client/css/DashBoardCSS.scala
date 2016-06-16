@@ -533,6 +533,9 @@ object DashBoardCSS {
         )
       )
     )
+    val error = style (
+      color.red
+    )
 
     val rowStyle = style(
       //      .rowStyle  tbody {
