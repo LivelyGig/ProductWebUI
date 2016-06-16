@@ -25,7 +25,7 @@ import synereo.client.components.Bootstrap._
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: Seq[ReactElement] = Seq.empty[ReactElement])
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
 
   case class State(showNewMessageForm: Boolean = false)
 

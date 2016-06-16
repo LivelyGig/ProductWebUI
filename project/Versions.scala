@@ -46,4 +46,5 @@ trait JsVersions {
   val react =   "15.1.0" //"15.0.1"
   val chartjs = "2.1.3"
   val datePicker = "1.5.0-1"
+  val selectizejs = "0.12.1"
 }

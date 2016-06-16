@@ -37,7 +37,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         modelFromStore = UserModel(
           email = window.sessionStorage.getItem("userEmail"),
           name = window.sessionStorage.getItem("userName"),
-          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true
+          imgSrc = window.sessionStorage.getItem("userImgSrc"), isLoggedIn = true, isAvailable = true
         )
       }
       updated(modelFromStore)
@@ -45,7 +45,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
     case PostData(value: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String]) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnSelectizeInputId, sessionUriName)
-//      println(lblSelectizeInputId.foreach(case Some => ))
+      //      println(lblSelectizeInputId.foreach(case Some => ))
       val (labelToPost, contentToPost) = sessionUriName match {
         case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
           (Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ LabelsUtils.getLabelsSeq(lblSelectizeInputId, sessionUriName),

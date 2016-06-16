@@ -1,5 +1,7 @@
 package synereo.client.css
 
+import synereo.client.css.LoginCSS.Style._
+
 import scalacss.Defaults._
 
 /**
@@ -12,10 +14,12 @@ object DashboardCSS {
 
     import dsl._
 
-    val profileActionContainer = style(/*      minHeight(60.px),
-            minWidth(100.px)*/)
+    val profileActionContainer = style(
+      //            minHeight(60.px),
+      //            minWidth(100.px)
+    )
     val dashboardContainerMain = style(
-      height(95.vh),
+      height(97.vh),
       overflowY.scroll.important,
       overflowX.hidden
       //      backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")"
@@ -43,6 +47,23 @@ object DashboardCSS {
         border(1.px, solid, c"#78D3F5"),
         backgroundColor.transparent.important
       )
+    )
+    val createConnectionBtn = style(
+      backgroundColor(c"#FF6F12 ").important,
+      fontSize(22.px),
+      color.white.important,
+      margin(45.px, 0.px)
+    )
+    val inviteFrndBtn = style(
+      fontSize(24.px),
+      backgroundColor(c"#FFFFFF"),
+      color(c"#000"),
+      width(250.px),
+      height(60.px),
+      marginBottom(30.px),
+      marginLeft.auto,
+      marginRight.auto,
+      display.block
     )
     val bodyImg = style(
       borderImageRepeat.:=(none),

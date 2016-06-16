@@ -33,6 +33,9 @@ object ConnectionsCSS {
     val fullDescUL = style (
       padding(0.%%, 7.%%)
     )
+    val hidden = style (
+      display.none
+    )
 
 
   }

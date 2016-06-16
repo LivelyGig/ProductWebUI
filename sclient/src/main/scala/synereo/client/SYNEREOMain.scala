@@ -22,6 +22,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scala.scalajs.js
 import js.{Date, UndefOr}
+
 //import shared.models.MessagesModel
 import shared.RootModels.MessagesRootModel
 
@@ -43,13 +44,13 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceLOC extends Loc
 
-//  case object SignupLOC extends Loc
+  //  case object SignupLOC extends Loc
 
   case object PeopleLOC extends Loc
 
   def sidebar = Callback {
-    val sidebtn: js.Object = "#searchContainer"
-    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
+    val searchContainer: js.Object = "#searchContainer"
+    $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
   // configure the router

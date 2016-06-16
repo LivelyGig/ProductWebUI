@@ -22,162 +22,171 @@ import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
 
+//scalastyle:off
 object MainMenu {
   // shorthand for styles
-  val labelSelectizeId: String = "labelSelectizeId"
+  //  val labelSelectizeId: String = "labelSelectizeId"
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(isLoggedIn: Boolean = false)
+  case class State(labelSelectizeId: String = "labelSelectizeId")
 
   //  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
   class Backend(t: BackendScope[Props, State]) {
-    def mounted(props: Props) =
-      Callback(SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
-        imgSrc = "", isLoggedIn = false))))
-    SYNEREOCircuit.dispatch(CreateLabels())
+    def mounted(props: Props) = Callback {
+      //            println("main menu mounted")
+      SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
+        imgSrc = "", isLoggedIn = false)))
+      SYNEREOCircuit.dispatch(CreateLabels())
+    }
+
+    def searchWithLabels(e: ReactEventI) = Callback {
+      SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(t.state.runNow().labelSelectizeId)))
+      SYNEREOCircuit.dispatch(RefreshMessages())
+    }
+
+    def toggleTopbar = Callback {
+      val topBtn: js.Object = "#TopbarContainer"
+      $(topBtn).toggleClass("topbar-left topbar-lg-show")
+    }
   }
-  def searchWithLabels(e: ReactEventI)= Callback {
-    SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(labelSelectizeId)))
-    SYNEREOCircuit.dispatch(RefreshMessages())
-  }
 
-  def toggleTopbar = Callback {
-    val topBtn: js.Object = "#TopbarContainer"
-    $(topBtn).toggleClass("topbar-left topbar-lg-show")
-  }
-
-
-  //
-  //  def displayMenu() = {
-  //
-  //  }
-
-  //  private val menuItems = Seq(
-  //    MenuItem(0, _ => "FullBlogPostView", PostFullViewLOC),
-  //    MenuItem(1, _ => "UserProfileView", SynereoUserProfileViewLOC),
-  //    MenuItem(2, _ => "MarketPlaceView", MarketPlaceLOC)
-  //  )
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
+      //      println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
-        <.ul(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
-          if (props.proxy().isLoggedIn) {
-            val model = props.proxy.value
-            <.ul(^.className := "nav nav-pills")(
-              <.li(
-                <.div(^.className := "dropdown")(
-                  <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
+        if (props.proxy().isLoggedIn) {
+          val model = props.proxy.value
+          <.div(
+            <.div(^.className := "label-selectize-container-main")(
+              <.div()(
+                <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+                  <.div(^.id := S.labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+                    SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeId)))
+                  ),
+                  <.button(^.className := "btn btn-primary", ^.onClick ==> $.backend.searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
+                  )
+                )
+                //                <.div(
+                //                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+                //                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+                //                      TopMenuBar(TopMenuBar.Props())
+                //                        <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
+                //                      <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+                //                    )
+                //                  )
+                //                )
+              )
+            ),
+            <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+              <.ul(^.className := "nav nav-pills")(
+                <.li(
+                  <.div(^.className := "dropdown")(
+                    <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
                     ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
-                  <.div(^.className := "dropdown-arrow"),
-                  <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
-                    <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
-                    <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
-                    <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((Icon.connectdevelop))),
-                      <.ul(^.className := "list-unstyled nav-pills")(
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
-                      )),
-                    <.br(),
-                    <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("My apps 16"),
-                    <.li(
-                      <.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
-                      <.ul(^.className := "list-unstyled nav-pills")(
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", SynereoCommanStylesCSS.Style.marginLeftTwentyFive, ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress", SynereoCommanStylesCSS.Style.marginLeftFifteen))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
-                        <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
-                      )
-                    ),
-                    <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
-                  )
-                )
-              ),
-              <.li(/*,SynereoCommanStylesCSS.Style.*/)(
-                <.div(^.className := "dropdown")(
-                  <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
-                  <.div(^.className := "dropdown-arrow-small"),
-                  <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                    <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
-                    <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
-                  )
-                )
-              ),
-              <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                <.div(model.name),
-                <.div(^.className := "text-center")(
-                  <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
-                    /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
-                    <.span(Icon.cogs),
-                    <.span("543")
-                  )
-                )
-              ),
-              <.li(^.className := "")(
-                <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
-              ),
-              <.li(
-                NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button","create-post-button",Seq(<.span(^.className:="vertical-text-post-btn","POST"))))
-              )
-            )
-          } else {
-            <.ul(^.className := "nav nav-pills", SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
-              <.li(
-                <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                  //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
-                  "WHAT IS SYNEREO?"
-                )
-              ),
-              <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
-                <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                  //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
-                  <.span("WATCH THE VIDEO")
-                )
-              )
-            )
-          }
-        ), <.div(
-          if (props.proxy().isLoggedIn) {
-            <.div(^.className := "text-center")(
-              //              <.form(^.className := "navbar-form", SynereoCommanStylesCSS.Style.searchFormNavbar)(
-              //                <.div(^.className := "form-group")(
-              //                  <.input(^.className := "form-control", SynereoCommanStylesCSS.Style.searchFormInputBox)
-              //                ),
-              //                <.button(^.className := "btn btn-default", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24"))
-              //              ),
-              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-                <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
-                ),
-                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                ),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-                    <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-                      <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-                        TopMenuBar(TopMenuBar.Props())
-                        //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-                        //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-                        //                      )
-                      )
+                    <.div(^.className := "dropdown-arrow"),
+                    <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
+                      <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
+                      <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
+                      <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((Icon.connectdevelop))),
+                        <.ul(^.className := "list-unstyled nav-pills")(
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
+                        )),
+                      <.br(),
+                      <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("My apps 16"),
+                      <.li(
+                        <.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
+                        <.ul(^.className := "list-unstyled nav-pills")(
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", SynereoCommanStylesCSS.Style.marginLeftTwentyFive, ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress", SynereoCommanStylesCSS.Style.marginLeftFifteen))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
+                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
+                        )
+                      ),
+                      <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
                     )
                   )
+                ),
+                <.li(/*,SynereoCommanStylesCSS.Style.*/)(
+                  <.div(^.className := "dropdown")(
+                    <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
+                    <.div(^.className := "dropdown-arrow-small"),
+                    <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
+                      <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
+                      <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+                    )
+                  )
+                ),
+                <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
+                  <.div(model.name),
+                  <.div(^.className := "text-center")(
+                    <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
+                      /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
+                      <.span(Icon.cogs),
+                      <.span("543")
+                    )
+                  )
+                ),
+                <.li(^.className := "")(
+                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                ),
+                <.li(
+                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
               )
             )
-          } else {
-            <.span()
-          }
-        )
-
+          )
+        } else {
+          <.ul(^.className := "nav navbar-right nav-pills", SynereoCommanStylesCSS.Style.nonLoggedInMenu)(
+            <.li(
+              <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
+                //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
+                "WHAT IS SYNEREO?"
+              )
+            ),
+            <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
+              <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
+                //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
+                <.span("WATCH THE VIDEO")
+              )
+            )
+          )
+        }
+        //        <.div(^.className := "text-center")(
+        //          if (props.proxy().isLoggedIn) {
+        //            <.div(^.className := "")(
+        //              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+        //                <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
+        //                ),
+        //                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
+        //                )
+        //              ),
+        //              <.div(
+        //                <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
+        //                  <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
+        //                    TopMenuBar(TopMenuBar.Props())
+        //                    //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
+        //                    //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
+        //                    //                      )
+        //                  )
+        //                )
+        //              )
+        //            )
+        //          } else {
+        //            <.span()
+        //          }
+        //        )
+        //      )
       )
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
