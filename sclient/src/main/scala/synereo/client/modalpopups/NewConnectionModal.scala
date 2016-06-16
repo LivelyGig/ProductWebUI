@@ -4,6 +4,7 @@ package synereo.client.modalpopups
   * Created by mandar.k on 4/11/2016.
   */
 
+import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -15,13 +16,17 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import synereo.client.css.{DashboardCSS, NewMessageCSS}
+import org.scalajs.dom._
+import shared.dtos.{EstablishConnection, IntroConnections}
+import shared.sessionitems.SessionItems
+import synereo.client.css.{ConnectionsCSS, DashboardCSS, NewMessageCSS}
 
 //scalastyle:off
 object NewConnectionModal {
@@ -44,13 +49,8 @@ object NewConnectionModal {
       t.modState(s => s.copy(showConnectionsForm = true))
     }
 
-    def addConnections(postConnection: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
-      if (!postConnection) {
-        t.modState(s => s.copy(showConnectionsForm = false))
-      } else {
-        t.modState(s => s.copy(showConnectionsForm = true))
-      }
+    def addConnections(): Callback = {
+      t.modState(s => s.copy(showConnectionsForm = false))
     }
   }
 
@@ -59,14 +59,7 @@ object NewConnectionModal {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      //      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
-      //        Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName), P.title,
-      //        if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "New Connection"))
-      //        else
-      //          Seq.empty[ReactElement]
-      //      )
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/
-        /*, ^.onMouseOver --> B.displayBtn*/)(
+      <.div(
         Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), P.title),
         if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "New Connection"))
         else
@@ -84,39 +77,75 @@ object ConnectionsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean) => Callback, header: String)
+  case class Props(submitHandler: () => Callback, header: String)
 
-  case class State(postConnection: Boolean = false, postNewConnectionSelectizeInput: String = "postNewConnectionSelectizeInput", inviteExistingConnections: Boolean = false)
+  //  case class State(postConnection: Boolean = false, selectizeInputId: String = "selectizeInputId", inviteExistingConnections: Boolean = false)
+  case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
+                   introConnections: IntroConnections =
+                   IntroConnections(aMessage = "Hi , \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>"),
+                   establishConnection: EstablishConnection = EstablishConnection(),
+                   chkCnxnExstandOther: Boolean = false, chkCnxnNewUser: Boolean = false,
+                   chkCnxnExstUser: Boolean = true)
 
   case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
-
-    def hideModal = {
+    def hide: Callback = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
     def mounted(props: Props): Callback = Callback {
-      val state = t.state.runNow()
-      println(s"inviteExistingConnections= ${state.inviteExistingConnections}")
+
     }
 
-    def submitForm(e: ReactEventI) = {
+    def hideModal(): Unit = {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def chkCnxnExstUser(e: ReactEventI): react.Callback = {
+      val state = t.state.runNow()
+      t.modState(s => s.copy(chkCnxnExstUser = true, chkCnxnExstandOther = false, chkCnxnNewUser = false))
+    }
+
+    def chkCnxnNewUser(e: ReactEventI): react.Callback = {
+      val state = t.state.runNow()
+      t.modState(s => s.copy(chkCnxnNewUser = true, chkCnxnExstandOther = false, chkCnxnExstUser = false))
+    }
+
+    def chkCnxnExstandOther(e: ReactEventI): react.Callback = {
+      val state = t.state.runNow()
+      t.modState(s => s.copy(chkCnxnExstandOther = true, chkCnxnNewUser = false, chkCnxnExstUser = false))
+    }
+
+    def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
+      val state = t.state.runNow()
+      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
+      val msg = state.introConnections.aMessage.replaceAll("/", "//")
+      if (state.chkCnxnExstandOther) {
+
+        val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
+          sessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI), alias = "alias", aMessage = msg, bMessage = msg)
+        CoreApi.postIntroduction(content)
+      }
+
+      if (state.chkCnxnExstUser) {
+        val content = state.establishConnection.copy(sessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI),
+          aURI = connections(0).target, bURI = connections(1).target, label = connections(0).label)
+        CoreApi.postIntroduction(content)
+      }
+
+
       t.modState(s => s.copy(postConnection = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       println(state.postConnection)
-      props.submitHandler(state.postConnection)
+      props.submitHandler()
     }
 
-    def introducingExistingUsr(e: ReactEvent): Callback = {
-      val state = t.state.runNow()
-      //      println(s"this is ${state.inviteExistingConnections}")
-      t.modState(s => s.copy(inviteExistingConnections = true))
+    def updateContent(e: ReactEventI): react.Callback = {
+      val value = e.target.value
+      t.modState(s => s.copy(introConnections = s.introConnections.copy(bMessage = value, aMessage = value)))
     }
 
     def render(s: State, p: Props) = {
@@ -131,42 +160,52 @@ object ConnectionsForm {
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
-            /*<.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
-            ),*/
-            /*val selectizeControl : js.Object =*/
             <.div()(
-              <.div(^.className := "radio",
-                <.input(^.`type` := "radio", ^.name := "userConnection", ^.value := "1"), " Introduce yourself to existing user(s)."),
-              <.br(),
-              <.div(^.className := "radio",
-                <.input(^.`type` := "radio", ^.name := "userConnection", ^.value := "2"), " Invite new user(s) to sign up and  connect with you."),
-              <.br(),
-              <.div(^.className := "radio",
-                <.input(^.`type` := "radio", ^.name := "userConnection", ^.value := "3", ^.onChange ==> introducingExistingUsr), " Invite existing connections to connect with each other."),
-              <.br()
+              <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := s.chkCnxnExstUser, ^.onChange ==> chkCnxnExstUser), " Introduce yourself to existing user(s)."), <.br(),
+              <.div(^.className:="hidden")(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser), " Invite new user(s) to sign up and  connect with you."), <.br(),
+              <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnExstandOther), " Invite existing connections to connect with each other.\n Note, each pair of connections will be introduced with the message above."), <.br()
             ),
-            <.div(<.h5("Recipients:")),
-            <.div(^.id := s.postNewConnectionSelectizeInput, ^.display.none, s.inviteExistingConnections ?= (^.display.block))(
-              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.postNewConnectionSelectizeInput)))
+            //            <.div((s.chkCnxnExstandOther) ?= DashBoardCSS.Style.hidden, "yaya"),
+            //            if (s.chkCnxnExstandOther == true){
+            <.div((s.chkCnxnNewUser) ?= ConnectionsCSS.Style.hidden,
+              <.div(<.h5("Recipients:")),
+              <.div(^.id := s"${s.selectizeInputId}")(
+                SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
+              ),
+              <.div((!s.chkCnxnExstandOther) ?= ConnectionsCSS.Style.hidden,
+                <.div(<.h5("Introduction:")),
+                <.div()(
+                  <.textarea(^.rows := 6, ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent, ^.className := "form-control")
+                )
+              )
+
             ),
-            <.div(^.display.block, s.inviteExistingConnections ?= (^.display.none))(
-              <.input(^.tpe := "text", ^.className := "form-control")
-            ),
-            <.div(<.h5("Introduction:")),
+            if (s.chkCnxnNewUser == true) {
+              <.div()(
+                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
+              )
+            }
+
+            /*else if (s.chkCnxnExstUser == true) {
+              <.div(
+                <.div(^.id :=s"${s.selectizeInputId}-1" )(
+                  LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}-1")))
+                ),
+                <.div("")
+                //<.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter USER ID")
+              )
+            }*/
+
+            else
+              <.div(),
             <.div()(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ^.required := true, ^.width := "100%", ^.className := "form-control")
-            )
-          ),
-          <.div()(
-            <.div(^.className := "text-right")(
-              //              <.button(^.tpe := "submit", ^.className := "btn", /*^.onClick --> hide, */ "Send"),
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> hide, "Send"),
-              //              <.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hide, "Cancel")
-              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel")
-            )
-          ),
-          <.div(bss.modal.footer)()
+              <.div(^.className := "text-right")(
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Send"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel")
+              )
+            ),
+            <.div(bss.modal.footer)()
+          )
         )
       )
     }

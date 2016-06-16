@@ -2,7 +2,7 @@ package synereo.client.handlers
 
 import diode._
 import diode.data._
-import shared.models.{LabelModel, MessagePost}
+import shared.models.{Label, MessagePost}
 import shared.RootModels.MessagesRootModel
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom.window
@@ -35,9 +35,9 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case None => Nil
       }
       //      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel =>
-      //        LabelModel(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
+      //        Label(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
       val searchLabels = LabelsUtils.buildProlog(
-        Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => LabelModel(text = currentLabel.text)
+        Seq(Label(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)
         ), LabelsUtils.PrologTypes.Each)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
@@ -59,7 +59,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case _ =>
           //          println("in empty")
           window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH,
-            LabelsUtils.buildProlog(Seq(LabelModel(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)), LabelsUtils.PrologTypes.Any))
+            LabelsUtils.buildProlog(Seq(Label(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)), LabelsUtils.PrologTypes.Any))
           action.handleWith(this, updateF)(PotActionRetriable.handler())
       }
   }

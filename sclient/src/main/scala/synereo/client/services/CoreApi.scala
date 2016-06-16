@@ -4,6 +4,7 @@ import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
 import upickle.default._
+
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
@@ -14,6 +15,7 @@ import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 object CoreApi {
   var BASE_URL = "http://localhost:9876/api"
   var CREATE_USER_REQUEST = "createUserRequest"
+
   private def ajaxPost(requestContent: String): Future[String] = {
     Ajax.post(
       url = BASE_URL,
@@ -104,4 +106,17 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def postIntroduction(introductionModel: Content): Future[String] = {
+    val msg = introductionModel match {
+      case _: IntroConnections => ApiTypes.INTRODUCTION_REQUEST
+      case _: EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+    }
+    ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
+  }
+
+  def postLabel(labelPost: LabelPost): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_ALIAS_LABEL_REQ, labelPost))
+    println("requestContent = " + requestContent)
+    ajaxPost(requestContent)
+  }
 }

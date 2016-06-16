@@ -9,7 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.models.LabelModel
+import shared.models.Label
 import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.LabelsUtils
@@ -23,11 +23,11 @@ import scala.scalajs.js
   */
 //scalastyle:off
 object LabelsSelectize {
-  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[LabelModel] = {
-    var selectedLabels = Seq[LabelModel]()
+  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[Label] = {
+    var selectedLabels = Seq[Label]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[LabelModel]($(y).attr("data-value").toString))
+    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[Label]($(y).attr("data-value").toString))
     selectedLabels
   }
 

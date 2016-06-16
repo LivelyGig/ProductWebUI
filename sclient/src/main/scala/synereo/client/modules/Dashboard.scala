@@ -29,22 +29,14 @@ import org.widok.moment.Moment
 /**
   * Created by Mandar on 3/11/2016.
   */
-
+//scalastyle:off
 object Dashboard {
-  //scalastyle:off
-  //  val document = js.Dynamic.global.document
-  //  var lastPos: Double = 50
-  //  var newPos: Double = 50
-  //  var timer: js.Any = 0
-  //  var delta: Double = 50
-  //  var delay: Double = 50
   val messageLoader: js.Object = "#messageLoader"
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
   val loginLoader: js.Object = "#loginLoader"
   val loadingScreen: js.Object = "#loadingScreen"
   val homeFeedMediaList: js.Object = "#homeFeedMediaList"
-  var homeFeedMediaListHeight = 0
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
@@ -55,9 +47,8 @@ object Dashboard {
     def postMessage(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      //      println(state.submitForm)
       $(messageLoader).removeClass("hidden")
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("")))
+      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
       //      SYNEREOCircuit.dispatch(RefreshMessages())
       $(messageLoader).addClass("hidden")
       t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(postContent = MessagePostContent("", ""))))
@@ -65,8 +56,6 @@ object Dashboard {
 
     def mounted(props: Props) = {
       if (props.proxy().isEmpty) {
-        //        SYNEREOCircuit.dispatch(RefreshConnections())
-        //        val label = window.sessionStorage.getItem("")
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
       } else {
@@ -76,7 +65,6 @@ object Dashboard {
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      //      t.modState(_.copy(submitForm = submitForm())
       t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
     }
 
@@ -114,9 +102,9 @@ object Dashboard {
       //      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
       //      var listOfAllLi = $("li[id^=\"home-feed-card-_\"]")
       //      listOfAllLi.ma
-      homeFeedMediaListHeight = $(homeFeedMediaList).height().toInt
-      var numberOfLi = $(homeFeedMediaList).children("li").length
-      val lis = $(homeFeedMediaList).children("li")
+      //      homeFeedMediaListHeight = $(homeFeedMediaList).height().toInt
+      //      var numberOfLi = $(homeFeedMediaList).children("li").length
+      //      val lis = $(homeFeedMediaList).children("li")
       //      lis.each(({ (li: dom.html.Html) =>
       //
       //      }: js.ThisFunction0))

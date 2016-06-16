@@ -6,7 +6,7 @@ import shared.models.{MessagePost, ProjectsPost, Post}
 import synereo.client.modules.AppModule
 
 /**
-  * Created by a4tech on 5/24/2016.
+  * Created by mandar.k on 5/24/2016.
   */
 object ContentModelHandler {
   def filterContent(messages: ApiResponse[EvalSubscribeResponseContent], viewName: String): Option[Post] = {

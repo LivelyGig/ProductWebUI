@@ -1,8 +1,5 @@
 package synereo.client.services
 
-/**
- * Created by shubham.k on 12/24/2015.
- */
 object ApiTypes {
   val CreateUserError = "createUserError"
   val CreateUserWaiting = "createUserWaiting"
@@ -15,4 +12,8 @@ object ApiTypes {
   val EVAL_SUBS_REQUEST = "evalSubscribeRequest"
   val INSERT_CONTENT = "insertContent"
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
+  val FEED_EXPRESSION = "feedExpr"
+  val INTRODUCTION_REQUEST = "beginIntroductionRequest"
+  val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
+  val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
 }
