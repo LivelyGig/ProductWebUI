@@ -68,9 +68,10 @@ object Settings {
     "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
     //"org.webjars" % "bootstrap-datepicker" % versions.datePicker / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js",
     "org.webjars" % "selectize.js" % "0.12.1" / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js",
-    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
-    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
-    "org.webjars.bower" % "react" % "15.0.2" % "test" / "react-dom-server.js" minified "react-dom-server.min.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
+    "org.webjars.bower" % "react" % "15.1.0" % "test" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
+    "org.webjars.bower" % "react" % "15.1.0" % "test" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
+    "org.webjars.bower" % "react" % "15.1.0" % "test" / "react-dom-server.js" minified "react-dom-server.min.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer",
+    "org.webjars.bower" % "bootstrap-validator" % "0.10.2" / "dist/validator.js" minified "dist/validator.min.js"
   ))
 
 }
