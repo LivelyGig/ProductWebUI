@@ -4,9 +4,9 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{ FooterCSS, DashBoardCSS }
-import shared.models.{ SignUpModel }
-import scala.util.{ Failure, Success }
+import client.css.{FooterCSS, DashBoardCSS}
+import shared.models.{SignUpModel}
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
@@ -181,8 +181,16 @@ object NewAgentForm {
           ), //main row
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(
-              <.div()(<.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.signUpModel.createBTCWallet, ^.onChange ==> toggleBTCWallet), " * I understand and agree to the LivelyGig",
-                <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service ", ^.onClick ==> showTermsOfServices))
+              <.div()(
+                <.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.signUpModel.createBTCWallet, ^.onChange ==> toggleBTCWallet),
+                " * I understand and agree to the LivelyGig",
+                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices),
+                " and ",
+                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showTermsOfServices)
+                "."
+              )
+
+
             ),
             <.div()(
               <.input(^.`type` := "checkbox", ^.id := "updateEmail", ^.checked := s.signUpModel.canReceiveEmailUpdates, ^.onChange ==> updateCanReceiveEmailUpdates), " Send me occasional email updates from LivelyGig"
@@ -205,7 +213,7 @@ object NewAgentForm {
     .initialState_P(p =>
       if (addNewAgentState)
         State(new SignUpModel(signUpModelUpdate.email, signUpModelUpdate.password, signUpModelUpdate.confirmPassword, signUpModelUpdate.name, signUpModelUpdate.lastName, signUpModelUpdate.createBTCWallet, signUpModelUpdate.isModerator,
-        signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
+          signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
       else
         State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
     .renderBackend[Backend]

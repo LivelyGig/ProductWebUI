@@ -72,7 +72,7 @@ object LegalModal { //TodoForm
             <.ul()(
               <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showPrivacyPolicy)),
               <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "End User Agreement", ^.onClick ==> showEndUserAgreement)),
-              <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices)),
+              <.li()(<.button(^.tpe := "button", ^.className := "btn-link",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices)),
               <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Trademarks and Credits", ^.onClick ==> showTrademarks)),
               <.li()(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Copyright", ^.onClick ==> showCopyright))
             )
