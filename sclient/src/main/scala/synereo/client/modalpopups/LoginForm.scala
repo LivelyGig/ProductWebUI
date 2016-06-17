@@ -30,8 +30,8 @@ object LoginForm {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val LoginID: js.Object = "#LoginID"
-      if ($(LoginID).hasClass("disabled"))
+      val LoginBtn: js.Object = "#LoginBtn"
+      if ($(LoginBtn).hasClass("disabled"))
         t.modState(s => s.copy(login = false))
       else
         t.modState(s => s.copy(login = true))
@@ -113,7 +113,7 @@ object LoginForm {
                   )
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
-                  <.button(^.tpe := "submit", ^.id := "LoginID", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
+                  <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
                 )
               )
             )

@@ -11,7 +11,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.PostData
+import synereo.client.handlers.{PostData, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.util.{Failure, Success}
@@ -104,10 +104,9 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
-//      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
-      println(state.postMessage)
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
+      //      println(state.postMessage)
+      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
+      //      SYNEREOCircuit.dispatch(RefreshMessages())
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -145,7 +144,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.className := "text-left text-muted")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight:="4.px")(Icon.infoCircle), "posting shorthand")
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
             ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(

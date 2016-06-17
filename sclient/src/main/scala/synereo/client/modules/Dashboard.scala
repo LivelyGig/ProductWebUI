@@ -152,15 +152,15 @@ object Dashboard {
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
-                <.form(^.onSubmit ==> postMessage)(
-                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
-                  //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
-                ),
-                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
-              ),
+              //              <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
+              //                <.form(^.onSubmit ==> postMessage)(
+              //                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
+              //                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
+              //                  //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
+              //                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
+              //                ),
+              //                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
+              //              ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
@@ -327,9 +327,9 @@ object HomeFeedList {
                   //                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
 
-                    <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                    <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
-                      <.h3(message.postContent.subject),
+                      //                      <.h3(message.postContent.subject),
                       message.postContent.text,
                       <.br(),
                       <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)

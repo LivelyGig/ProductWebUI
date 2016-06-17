@@ -3,16 +3,19 @@ package synereo.client.modalpopups
 /**
   * Created by mandar.k on 6/10/2016.
   */
-import synereo.client.components.{ Icon, GlobalStyles }
+
+import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS }
-import scala.util.{ Failure, Success }
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+
 object LoginFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -45,9 +48,9 @@ object LoginFailed {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()(
-                  /*p.loginErrorMessage*/ "The username and password combination that you are using is not correct. Please check and try again.",
-                  <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hide)("Try again"))
+                <.h3()(
+                  p.loginErrorMessage,/* "The username and password combination that you are using is not correct. Please check and try again."*/
+                  <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> hide, LoginCSS.Style.modalLoginBtn,^.marginBottom:="20.px")("Try again"))
                 )
               )
             )

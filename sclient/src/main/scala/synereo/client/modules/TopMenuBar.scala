@@ -5,7 +5,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain.{SynereoLoc, Loc}
 import synereo.client.components.GlobalStyles
-import synereo.client.modalpopups.NewConnectionModal
+import synereo.client.modalpopups.NewConnection
 import scalacss.ScalaCssReact._
 import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}

@@ -9,7 +9,6 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain.{SynereoLoc, Loc}
 import synereo.client.components.GlobalStyles
-import synereo.client.modalpopups.NewConnectionModal
 import scalacss.ScalaCssReact._
 import synereo.client.components._
 import synereo.client.css.DashboardCSS
@@ -50,7 +49,7 @@ object Sidebar {
           <.li()(<.a(^.href := "#")(<.span(Icon.questionCircle), " Help & Feedback"))
         )
         //            <.button(^.`type`:="button",^.className:="sidebarBtn")(<.span(^.float:="left")(Icon.gift), <.span(^.float:="left", ^.marginLeft:="10px")("Invite Friend"))
-        //        NewConnectionModal(NewConnectionModal.Props("Invite Friend",Seq(), Icon.mailForward,))
+        //        NewConnection(NewConnection.Props("Invite Friend",Seq(), Icon.mailForward,))
       )
 
     })
