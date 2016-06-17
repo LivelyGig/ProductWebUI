@@ -24,7 +24,7 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 // and edit server/src/main/twirl/views/index.scala.html file appropirately
 lazy val pCompile = "client"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
-lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js")
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js","validator.js")
 lazy val client: Project = (project in file(pCompile))
   .settings(
       name := "client",

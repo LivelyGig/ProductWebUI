@@ -88,7 +88,7 @@ object ConnectionsForm {
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(
                      aMessage = "Hi , \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>"),
-                   establishConnection: EstablishConnection = EstablishConnection(), chkCnxnExstandOther: Boolean = false,
+                   establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
                    chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid : String = "")
 
   case class Backend(t: BackendScope[Props, State]) {
@@ -106,34 +106,51 @@ object ConnectionsForm {
 
     def chkCnxnExstUser(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(chkCnxnExstUser = true, chkCnxnExstandOther = false, chkCnxnNewUser = false))
+      t.modState(s => s.copy(chkCnxnExstUser = true, introduceUsers = false, chkCnxnNewUser = false))
     }
 
     def chkCnxnNewUser(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(chkCnxnNewUser = true, chkCnxnExstandOther = false, chkCnxnExstUser = false))
+      t.modState(s => s.copy(chkCnxnNewUser = true, introduceUsers = false, chkCnxnExstUser = false))
     }
 
     def chkCnxnExstandOther(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(chkCnxnExstandOther = true, chkCnxnNewUser = false, chkCnxnExstUser = false))
+      t.modState(s => s.copy(introduceUsers = true, chkCnxnNewUser = false, chkCnxnExstUser = false))
     }
-    def getCnxn (uri: String): Option[ConnectionsModel] = {
+    def getCnxn(uri: String): Option[ConnectionsModel] = {
+      val test = LGCircuit.zoom(_.connections.get.connectionsResponse)
+    //  println(test)
       val connectionsModel = LGCircuit.zoom(_.connections.get.connectionsResponse).value
-      connectionsModel.find(e => e.connection.target.contains(uri))
-    }
-    def establishConnection() = {
-      val state = t.state.runNow()
-      val msg = state.introConnections.aMessage.replaceAll("/", "//")
-      val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
-      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
-        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-      CoreApi.postIntroduction(content)
-      t.modState(s => s.copy(postConnection = true))
+
+      if (!connectionsModel.isEmpty)
+        connectionsModel.find(e => e.connection.target.contains(uri))
+      else
+        None
     }
 
-    def introduceUsers(): react.Callback = {
+    def introduceTwoUsers() = {
+      $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+      val state = t.state.runNow()
+      //      val msg = state.introConnections.aMessage.replaceAll("/", "//")
+      val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
+      //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
+      //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
+      //      println(connections.length)
+      if (connections.length == 2) {
+        val content = state.establishConnection.copy(sessionURI = uri,
+          aURI = connections(0).target,
+          bURI = connections(1).target, label = connections(0).label)
+        CoreApi.postIntroduction(content)
+        t.modState(s => s.copy(postConnection = true))
+      } else {
+        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postConnection = false))
+      }
+    }
+
+    def establishConnection(): react.Callback = {
       val state = t.state.runNow()
       $("#agentFieldError".asInstanceOf[js.Object]).addClass("hidden")
       getCnxn(state.agentUid) match {
@@ -144,26 +161,27 @@ object ConnectionsForm {
           val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection(uri).source,
-            bURI = ConnectionsUtils.getSelfConnnection(state.agentUid).source, label = "869b2062-d97b-42dc-af5d-df28332cdda1")
+            bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
           CoreApi.postIntroduction(content)
           t.modState(s => s.copy(postConnection = true))
       }
     }
 
+
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      if (state.chkCnxnExstandOther) {
-        establishConnection
+      if (state.introduceUsers) {
+        introduceTwoUsers
       }
       else {
-        introduceUsers
+        establishConnection
       }
     }
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postConnection)
+      //println(state.postConnection)
       props.submitHandler()
     }
 
@@ -195,36 +213,40 @@ object ConnectionsForm {
             //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser), " Invite new user(s) to sign up and  connect with you."), <.br(),
               <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnExstandOther), " Invite existing connections to connect with each other.\n Note, each pair of connections will be introduced with the message above."), <.br()
             ),
-            if (s.chkCnxnExstUser == true) {
+            if (s.chkCnxnExstUser == true){
               <.div(
-                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter USER ID",
-                  ^.value := s.agentUid, ^.onChange ==> updateAgentUid),
-                <.div(^.id:= "agentFieldError", DashBoardCSS.Style.error, ^.className := "hidden")
+                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter USER ID",^.value := s.agentUid, ^.onChange ==> updateAgentUid),
+                <.div(^.id := "agentFieldError", ^.className := "hidden")
                 ("User with this uid is already added as your connection")
               )
+            }else
+              <.div(),
 
-            }
-//            else if (s.chkCnxnNewUser == true) {
-//              <.div()(
-//                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
-//              )
-//            }
-            else if (s.chkCnxnExstandOther == true) {
+            //            else if (s.chkCnxnNewUser == true) {
+            //              <.div()(
+            //                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
+            //              )
+            //            }
+            //   else if (s.chkCnxnExstandOther == true) {
+            <.div((!s.introduceUsers == true) ?= DashBoardCSS.Style.hidden)(
               <.div(
                 <.div(<.h5("Recipients:")),
                 <.div(^.id := s"${s.selectizeInputId}")(
                   LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
                 ),
-                <.div((!s.chkCnxnExstandOther) ?= DashBoardCSS.Style.hidden,
+                <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
+                ("Please provide two connections"),
+                <.div((!s.introduceUsers) ?= DashBoardCSS.Style.hidden,
                   <.div(<.h5("Introduction:")),
                   <.div()(
                     <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent /*, ^.required := true*/)
                   )
                 )
               )
-            }
-            else
-              <.div(),
+            ),
+            //  }
+            //            else
+            //              <.div(),
             <.div()(
               <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
                 <.button(^.tpe := "submit", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, /*^.onClick --> hide, */ "Send"),

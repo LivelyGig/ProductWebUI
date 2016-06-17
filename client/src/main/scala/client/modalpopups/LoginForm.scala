@@ -28,7 +28,11 @@ object LoginForm {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(login = true))
+      val LoginID: js.Object = "#LoginID"
+      if ($(LoginID).hasClass("disabled"))
+        t.modState(s => s.copy(login = false))
+      else
+        t.modState(s => s.copy(login = true))
     }
 
     def hide = {
@@ -86,7 +90,7 @@ object LoginForm {
                 <.div(^.className:="form-group")(
                 <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true)),
                 <.div(^.className := "text-center form-group")(
-                  <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
+                  <.button(^.tpe := "submit", ^.id:="LoginID",^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
                 <.div(DashBoardCSS.Style.paddingTop10px)(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
