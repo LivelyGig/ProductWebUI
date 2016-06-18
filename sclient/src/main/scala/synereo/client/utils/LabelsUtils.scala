@@ -1,7 +1,7 @@
 package synereo.client.utils
 
 import org.scalajs.dom._
-import shared.models.LabelModel
+import shared.models.Label
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
 import synereo.client.components.LabelsSelectize
 
@@ -46,12 +46,12 @@ object LabelsUtils {
     * @param queryType
     * @return
     */
-  def buildProlog(labels: Seq[LabelModel], queryType: String): String = {
+  def buildProlog(labels: Seq[Label], queryType: String): String = {
     val labelPrologItems = labels.map(e => if (e != labels.last) s"[${e.text}]," else s"[${e.text}]").mkString
     s"$queryType($labelPrologItems)"
   }
 
-  def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[LabelModel] = {
+  def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[Label] = {
     id match {
       case None =>
         Nil
@@ -60,8 +60,8 @@ object LabelsUtils {
     }
   }
 
-  def getSystemLabelModel(labelName: String): LabelModel = {
-    LabelModel(parentUid = "self", text = labelName)
+  def getSystemLabelModel(labelName: String): Label = {
+    Label(parentUid = "self", text = labelName)
   }
 
   def getSystemLabels(): Seq[String] = {
@@ -76,7 +76,7 @@ object LabelsUtils {
     * @param labelFamilies This is the seq of label families e.g seq of [parent1,child1ToParent1], [parent2,child1ToParent2]
     * @return returns the prolog term e.g any([label1,label2])
     */
-  def getLabelProlog(labelFamilies: Seq[Seq[LabelModel]]): String = {
+  def getLabelProlog(labelFamilies: Seq[Seq[Label]]): String = {
     var labelsCount = labelFamilies.length - 1
     val prolog = StringBuilder.newBuilder
     prolog.append("any(")

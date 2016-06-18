@@ -2,6 +2,7 @@ package synereo.client.css
 
 import scalacss.Defaults._
 import scala.language.postfixOps
+
 /**
   * Created by Mandar on 3/23/2016.
   */
@@ -23,9 +24,8 @@ object SynereoCommanStylesCSS {
         paddingTop(4.px)
     )
     val labelSelectizeContainer = style(
-
+      //      marginTop(30.px)
     )
-
     val labelSelectizeNavbar = style(
       width(480.px),
       display.inlineBlock,
@@ -116,17 +116,6 @@ object SynereoCommanStylesCSS {
       )
 
     )
-    val searchFormInputBox = style(
-      backgroundColor.transparent,
-      borderTop.`0`.important,
-      borderRight.`0`.important,
-      borderLeft.`0`.important,
-      borderRight.`0`.important,
-      borderRadius.`0`.important,
-      borderBottom(1.px, solid),
-      color(c"#95C9DE"),
-      boxShadow.:=(none)
-    )
     val userActionButton = style(
       fontSize(1.5.em),
       color(c"#FFFFFF"),
@@ -184,11 +173,7 @@ object SynereoCommanStylesCSS {
       right.`0`.important
     )
     val imgLogo = style(
-      /*      borderRadius(50.%%),
-            width(40.px),
-            height(40.px),
-            media.maxWidth(820.px)-*/
-      marginTop(34.px),
+      marginTop(5.px),
       padding(5.px),
       maxHeight(48.px)
     )
@@ -217,12 +202,6 @@ object SynereoCommanStylesCSS {
     )
     val dropdownIcon = style(
       margin(0 px, 25 px)
-    )
-    val searchFormNavbar = style(
-      //      float.right,
-      display.inlineBlock,
-      position.absolute
-      //      marginRight(10.%%)
     )
     val paddingLeftZero = style(
       paddingLeft(0.px).important

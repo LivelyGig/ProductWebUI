@@ -18,6 +18,7 @@ import shared.dtos.Connection
 /**
   * Created by Shubham.K on 4/6/2016.
   */
+//scalastyle:off
 object ConnectionsSelectize {
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     var selectedConnections = Seq[Connection]()
@@ -47,8 +48,7 @@ object ConnectionsSelectize {
     def getSelectedValues = Callback {
       val selectState: js.Object = "#selectize"
       val getSelectedValue = $(selectState).find("option").text()
-      //scalastyle:off
-      //      println(getSelectedValue)
+            println(getSelectedValue)
     }
 
     def mounted(props: Props): Callback = Callback {

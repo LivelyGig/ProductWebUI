@@ -28,7 +28,11 @@ object LoginForm {
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(login = true))
+      val LoginID: js.Object = "#LoginID"
+      if ($(LoginID).hasClass("disabled"))
+        t.modState(s => s.copy(login = false))
+      else
+        t.modState(s => s.copy(login = true))
     }
 
     def hide = {
@@ -74,17 +78,19 @@ object LoginForm {
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.id:="loginFormID", "data-toggle".reactAttr := "validator", ^.role:="form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             //left
             <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
               <.div( /*DashBoardCSS.Style.scltInputModalContainerMargin */ )(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Log In with LivelyGig credentials"),
+                <.div(^.className:="form-group")(
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
-                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
-                <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                <.div(^.className := "text-center")(
-                  <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
+                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true)),
+                <.div(^.className:="form-group")(
+                <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true)),
+                <.div(^.className := "text-center form-group")(
+                  <.button(^.tpe := "submit", ^.id:="LoginID",^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
                 <.div(DashBoardCSS.Style.paddingTop10px)(
                   <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px,DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(

@@ -211,7 +211,7 @@ object Presets {
                         )
                       ),
                       <.div(PresetsCSS.Style.modalBtn)(
-                        NewConnectionModal(NewConnectionModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
+                        NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
                       )
                     )
                   ),

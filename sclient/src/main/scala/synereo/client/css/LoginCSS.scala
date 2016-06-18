@@ -4,8 +4,8 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
- * Created by Mandar  on 3/11/2016.
- */
+  * Created by Mandar  on 3/11/2016.
+  */
 object LoginCSS {
   val zero: Int = 0
 
@@ -16,7 +16,7 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
-      marginTop(-81.px)
+      marginTop(-53.px)
     )
     val loginScreenBgImage = style(
       margin.auto.important,
@@ -48,7 +48,8 @@ object LoginCSS {
       padding(4.%%)
     )
     val SignUpBtn = style()
-    val requestInviteModalStyle = style( //      backgroundColor(c"#96989B")
+    val requestInviteModalStyle = style(
+      //      backgroundColor(c"#96989B")
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -135,10 +136,10 @@ object LoginCSS {
       fontSize(1.1.em),
       color(c"#FFFFFF"),
       opacity(0.5),
-      & hover (
+      & hover(
         color(c"#FFFFFF"),
         backgroundColor.transparent.important
-      )
+        )
 
     )
     val navLiAIcon = style(
@@ -254,12 +255,6 @@ object LoginCSS {
     val message = style(
       fontSize(24.px),
       fontWeight.normal
-    )
-    val subscribeButton = style(
-      backgroundColor(c"#FF6F12 ").important,
-      fontSize(22.px),
-      color.white.important,
-      margin(45.px, 0.px)
     )
     val requestInviteModalText = style(
       fontSize(4.em),

@@ -5,7 +5,7 @@ import japgolly.scalajs.react.{ReactComponentB, _}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
 import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
-
+import scala.language.existentials
 import scalacss.ScalaCssReact._
 
 /**

@@ -17,6 +17,7 @@ import org.querki.jquery._
 /**
  * Created by Mandar on 4/19/2016.
  */
+//scalastyle:off
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
