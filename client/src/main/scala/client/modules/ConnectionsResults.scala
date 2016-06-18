@@ -131,7 +131,8 @@ object ConnectionList {
               } else {
                 <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.title := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
               }
-            ),
+            )
+              /*
             <.div()(
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Software Developer"),
               <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
@@ -150,7 +151,7 @@ object ConnectionList {
                 ", ",
                 <.a()("title".reactAttr := "Full Stack Developers")("Full Stack Developers")
               )
-            )
+            )*/
           ),
           <.br(),
           <.div(^.className := "media-body")(

@@ -131,8 +131,9 @@ object DashBoardCSS {
       display.inlineBlock
     )
     val profileImg = style(
-      height(120.px),
-      width(120.px)
+      height(5.em),
+      width(5.em),
+      marginBottom(.5.em)
     )
     val btn = style(
       addClassName("btn"),
