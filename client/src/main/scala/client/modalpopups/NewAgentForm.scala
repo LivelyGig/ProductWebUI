@@ -185,9 +185,8 @@ object NewAgentForm {
                 <.input(^.`type` := "checkbox", ^.id := "createBTCWallet", ^.checked := s.signUpModel.createBTCWallet, ^.onChange ==> toggleBTCWallet),
                 " * I understand and agree to the LivelyGig",
                 <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices),
-                " and ",
-                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showTermsOfServices),
-                "."
+                "and",
+                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showTermsOfServices)
               )
 
 
