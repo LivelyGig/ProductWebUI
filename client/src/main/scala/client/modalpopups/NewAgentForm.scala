@@ -116,7 +116,7 @@ object NewAgentForm {
             <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                  <.label(^.`for` := "First name *", "First name *")
+                  <.label(^.`for` := "First name *", "First name\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "First name", ^.value := s.signUpModel.name,
@@ -125,7 +125,7 @@ object NewAgentForm {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                  <.label(^.`for` := "Last name *", "Last name *")
+                  <.label(^.`for` := "Last name *", "Last name\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name", ^.value := s.signUpModel.lastName,
@@ -134,7 +134,7 @@ object NewAgentForm {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                  <.label(^.`for` := "Email *", "Email *")
+                  <.label(^.`for` := "Email *", "Email\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "email", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value := s.signUpModel.email,
@@ -143,7 +143,7 @@ object NewAgentForm {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                  <.label(^.`for` := "Password *", "Password *")
+                  <.label(^.`for` := "Password *", "Password\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password", ^.value := s.signUpModel.password,
@@ -152,7 +152,7 @@ object NewAgentForm {
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
-                  <.label(^.`for` := "Confirm Password *", "Confirm Password *")
+                  <.label(^.`for` := "Confirm Password *", "Confirm Password\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
                   <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.signUpModel.confirmPassword,
@@ -188,8 +188,6 @@ object NewAgentForm {
                 "and",
                 <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showTermsOfServices)
               )
-
-
             ),
             <.div()(
               <.input(^.`type` := "checkbox", ^.id := "updateEmail", ^.checked := s.signUpModel.canReceiveEmailUpdates, ^.onChange ==> updateCanReceiveEmailUpdates), " Send me occasional email updates from LivelyGig"
