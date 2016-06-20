@@ -123,6 +123,7 @@ window.onload = function() {
 $(document).ready(function() {
     applyStylingToHomeFeed();
     var hoverInterval=  setInterval(function(){
+    $('[data-toggle="tooltip"]').tooltip();
       // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
       var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
 //        console.log('Scroll speed: ' + speedInPxPerMs);
@@ -154,4 +155,3 @@ $(document).ready(function() {
   },100000000);
 });
 };
-

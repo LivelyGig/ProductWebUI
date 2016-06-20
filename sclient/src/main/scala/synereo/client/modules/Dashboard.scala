@@ -14,7 +14,7 @@ import synereo.client.components._
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
@@ -34,9 +34,8 @@ object Dashboard {
   val messageLoader: js.Object = "#messageLoader"
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
-  val loginLoader: js.Object = "#loginLoader"
-  val loadingScreen: js.Object = "#loadingScreen"
-  val homeFeedMediaList: js.Object = "#homeFeedMediaList"
+
+  //  val toolTips: dom.Element= "[data-toggle='tooltip']"
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
@@ -55,6 +54,8 @@ object Dashboard {
     }
 
     def mounted(props: Props) = {
+      //      $("[data-toggle='tooltip']".asInstanceOf[js.Object]).tooltip()
+      //      jQuery("[data-toggle='tooltip']".asInstanceOf[dom.Element]).tooltip()
       if (props.proxy().isEmpty) {
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
@@ -316,7 +317,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span(Moment(message.created).toLocaleString)
+                  <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )
