@@ -6,16 +6,20 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
+import client.components.Validator._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.handlers.PostData
 import japgolly.scalajs.react
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.sessionitems.SessionItems
+
+import scala.scalajs.js
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -64,6 +68,9 @@ object NewMessage {
 // #todo think about better way for getting data from selectize input
 // so that you don't have to pass the parentId explicitly
 object NewMessageForm {
+
+  val messageID :js.Object = "#messageID"
+  $("#a".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -92,7 +99,8 @@ object NewMessageForm {
     }
 
     def mounted(): Callback = Callback {
-
+//      val valID : js.Object = "form[data-toggle=\"validator\"]"
+//      $(valID).validator()
     }
 
     def submitForm(e: ReactEventI): react.Callback = {
@@ -100,7 +108,13 @@ object NewMessageForm {
       val state = t.state.runNow()
       LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
         SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
-      t.modState(s => s.copy(postNewMessage = true))
+
+      val messageID: js.Object = "#messageID"
+      if ($(messageID).hasClass("disabled"))
+        t.modState(s => s.copy(postNewMessage = false))
+      else
+        t.modState(s => s.copy(postNewMessage = true))
+
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -118,7 +132,7 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.id:="a", ^.onSubmit ==> submitForm/*"data-toggle".reactAttr := "validator"*/)(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(),
             /*<.div(^.className:="row")(
@@ -133,15 +147,18 @@ object NewMessageForm {
               LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
             <.div()(
+//              <.div(^.className:="form-group")(
               <.textarea(^.rows := 6, ^.placeholder := "Subject", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
+//              <.div(^.className:="form-group")(
               <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.text, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
+//              <.div(^.className:="form-group")(
+              <.button(^.tpe := "submit", ^.id:="messageID", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
               <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),

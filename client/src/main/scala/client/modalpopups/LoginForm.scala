@@ -1,13 +1,15 @@
 package client.modals
 
-import client.LGMain.{ DashboardLoc, Loc }
+import client.LGMain.{DashboardLoc, Loc}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
+import client.components.Validator._
 import client.components._
-import client.css.{ HeaderCSS, DashBoardCSS, CreateAgentCSS }
+import client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -19,6 +21,7 @@ object LoginForm {
   // shorthand fo
   val modal: js.Object = "#modal"
   @inline private def bss = GlobalStyles.bootstrapStyles
+  $("#loginFormID".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback)
 
@@ -78,7 +81,7 @@ object LoginForm {
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
           closed = () => formClosed(s, p)
         ),
-        <.form(^.id:="loginFormID", "data-toggle".reactAttr := "validator", ^.role:="form", ^.onSubmit ==> submitForm)(
+        <.form(^.id:="loginFormID", /*"data-toggle".reactAttr := "validator",*/ ^.role:="form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             //left
             <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
@@ -86,9 +89,10 @@ object LoginForm {
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Log In with LivelyGig credentials"),
                 <.div(^.className:="form-group")(
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
-                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true)),
+                  ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true)
+                ),
                 <.div(^.className:="form-group")(
-                <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true)),
+                <.input(^.tpe := "password", DashBoardCSS.Style.inputModalMargin,bss.formControl, ^.placeholder := "password", ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true)),
                 <.div(^.className := "text-center form-group")(
                   <.button(^.tpe := "submit", ^.id:="LoginID",^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),

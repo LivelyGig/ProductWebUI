@@ -13,8 +13,8 @@ import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 
 object CoreApi {
-    //var BASE_URL = "http://192.168.99.100:8888/api"
-    var BASE_URL = "http://192.168.2.104:9876/api"
+  var BASE_URL = "http://192.168.99.100:8888/api"
+   // var BASE_URL = "http://192.168.2.104:9876/api"
     var CREATE_USER_REQUEST = "createUserRequest"
     private def ajaxPost(requestContent: String): Future[String] = {
       Ajax.post(
