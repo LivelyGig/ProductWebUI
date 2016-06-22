@@ -205,7 +205,7 @@ object DashBoardCSS {
       borderRadius(12.px)
     )
 
-    val hidden = style (
+    val hidden = style(
       display.none
     )
 
@@ -534,7 +534,7 @@ object DashBoardCSS {
         )
       )
     )
-    val error = style (
+    val error = style(
       color.red
     )
 
@@ -699,9 +699,15 @@ object DashBoardCSS {
         height(190 px)
       )
     )
-    val connectionModalWidth = style (
+    val connectionModalWidth = style(
       paddingLeft(30.%%),
       paddingRight(30.%%)
+    )
+
+    val msgTime = style(
+      color.gray,
+      fontSize.smaller,
+      width(300.px)
     )
   }
 

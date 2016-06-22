@@ -1,20 +1,27 @@
 package client.modules
 
-import diode.react.ReactPot._
-import diode.react._
-import diode.data.Pot
-import japgolly.scalajs.react.vdom.prefix_<^._
+
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handlers.RefreshProjects
 import shared.RootModels.ProjectsRootModel
+import client.css.{DashBoardCSS, HeaderCSS}
+import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
+import shared.models.ProjectsPost
+import client.components.Bootstrap._
+import diode.react.ReactPot._
+import diode.react._
+import diode.data.Pot
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
-import shared.models.ProjectsPost
-import shared.dtos.EvalSubscribeResponseContent
-
-import scala.scalajs.js.Date
+import shared.models.{ConnectionsModel, MessagePost}
+import client.modals.NewMessage
+import org.querki.jquery._
+import org.widok.moment.Moment
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object ProjectResults {
@@ -23,7 +30,7 @@ object ProjectResults {
 
   case class State()
 
-  class Backend($: BackendScope[Props, _]) {
+  class Backend(t: BackendScope[Props, _]) {
     def mounted(props: Props) = {
       log.debug("projects view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
@@ -101,27 +108,33 @@ object ProjectResults {
 object ProjectsList {
   case class Props(projects: Seq[ProjectsPost])
 
-  private val ProjectsList = ReactComponentB[Props]("ProjectList")
-    .render_P(p => {
+  case class Backend(t: BackendScope[Props, _]) {
+    def mounted(props: Props): Callback = Callback {
+      val msgTime: js.Object = ".msgTime"
+      $(msgTime).tooltip(PopoverOptions.html(true))
+    }
+
+    def render (p:Props) = {
       def renderJobPosts(project: ProjectsPost) = {
-      //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+        //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
         <.li(^.className := "media",DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
             project.postContent.name ,
             <.div(DashBoardCSS.Style.displayInlineText)("  Posted by: @LivelyGig  "),
-            "  Posted: " + new Date(project.created).toUTCString()
+            <.div(DashBoardCSS.Style.displayInlineText)("  Posted: ")  ,
+              <.div(DashBoardCSS.Style.displayInlineText,^.className:="msgTime","data-toggle".reactAttr := "tooltip", ^.title := project.created, "data-placement".reactAttr := "right")(Moment(project.created).toLocaleString)
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             "Job Type: " + project.postContent.contractType,
-           <.div( project.postContent.description),
+            <.div( project.postContent.description),
             <.div( /*^.className := "col-md-4 col-sm-4",*/)(
               <.br(),
               "Skills: Java, Financial Apps, cryptography",
               <.br(),
-             "Recommended By: @Tom"
-            // project.pageOfPosts.skills.toString()
+              "Recommended By: @Tom"
+              // project.pageOfPosts.skills.toString()
             ),
             <.div()(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.remove),
@@ -134,13 +147,17 @@ object ProjectsList {
           ) //media-body
         ) //li
       }
-
       <.div(DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.projects map renderJobPosts)
       )
-    })
+    }
+  }
+
+
+  val ProjectsList = ReactComponentB[Props]("ProjectList")
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(jobPosts: Seq[ProjectsPost]) =
-    ProjectsList(Props(jobPosts))
+  def apply(jobPosts: Seq[ProjectsPost]) =   ProjectsList(Props(jobPosts))
 }

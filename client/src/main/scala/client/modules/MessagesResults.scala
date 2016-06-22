@@ -1,5 +1,6 @@
 package client.modules
 
+import client.components.Bootstrap._
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
@@ -14,12 +15,11 @@ import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.NewMessage
 import japgolly.scalajs.react
-import org.joda.time.DateTime
+import org.querki.jquery._
 import shared.sessionitems.SessionItems
 import org.scalajs.dom.window
-
-// import org.joda.time.DateTime
-
+import org.widok.moment.Moment
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object MessagesResults {
@@ -28,7 +28,7 @@ object MessagesResults {
 
   case class State(/*selectedItem: Option[MessagesModel] = None*/)
 
-  class Backend($: BackendScope[Props, _]) {
+  class Backend(t: BackendScope[Props, _]) {
     def mounted(props: Props): react.Callback = {
       log.debug("messages view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshMessages()))
@@ -112,11 +112,15 @@ object MessagesList {
 
   case class Props(messages: Seq[MessagePost])
 
-  private val MessagesList = ReactComponentB[Props]("ProjectList")
-    .render_P(p => {
+  case class Backend(t: BackendScope[Props, _]) {
 
+    def mounted(props: Props): Callback = Callback {
+      val msgTime: js.Object = ".msgTime"
+      $(msgTime).tooltip(PopoverOptions.html(true))
+    }
+
+    def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
-
         // Get data needed to present From and To
         val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
@@ -146,13 +150,14 @@ object MessagesList {
           // <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"${message.postContent.subject}"),
           <.br(),
-          <.div(^.className := "row",^.color := "gray", ^.fontSize := "smaller") (
+          <.div(^.className := "row", ^.color := "gray", ^.fontSize := "smaller")(
             <.div(^.className := "col-md-6 col-sm-12")(s"From: ${fromSender}"),
             <.div(^.className := "col-md-6 col-sm-12")(s"To: ${toReceiver}")
           ),
           // ToDo: need DateTime library for javascript or scala.js, similar to the following?
           // <.div()(s"Created: ${DateTime.parse(message.created).toLocalDateTime}"),
-          <.div(^.color := "gray", ^.fontSize := "smaller")(s"Created: ${message.created}"),
+          // <.div()(s"Created: ${message.created}"),
+          <.div(^.className:="msgTime",DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).toLocaleString),
           // <.div()(s"labels: ${message.labels}"),
           // <.div()(s"uid: ${message.uid}"),
           <.div(^.className := "media-body", ^.paddingTop := "10px")(s"${message.postContent.text}",
@@ -168,10 +173,14 @@ object MessagesList {
       <.div(DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.messages map renderMessages)
       )
-    })
+    }
+  }
+
+  val MessagesList = ReactComponentB[Props]("ProjectList")
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(messages: Seq[MessagePost]) =
-    MessagesList(Props(messages))
+  def apply(messages: Seq[MessagePost]) = MessagesList(Props(messages))
 
 }

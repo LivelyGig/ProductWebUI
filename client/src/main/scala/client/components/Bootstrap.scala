@@ -29,6 +29,8 @@ object Bootstrap {
     def modal(options: js.Any): BootstrapJQuery = js.native
 //    def popover():Any = js.native
     def popover(options: PopoverOptions):Any = js.native
+    def tooltip(options:TooltipOptions):Any = js.native
+
   }
 
   @js.native
@@ -44,6 +46,10 @@ object Bootstrap {
     def container(v:String) = jsOpt("container", v)
   }
   object PopoverOptions extends PopoverOptionBuilder(noOpts)
+
+  @js.native
+  type TooltipOptions = PopoverOptions
+  val TooltipOptions = PopoverOptions
 
 
   implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
