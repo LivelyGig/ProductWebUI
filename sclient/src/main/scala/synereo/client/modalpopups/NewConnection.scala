@@ -207,34 +207,33 @@ object ConnectionsForm {
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
-            <.div()(),
             <.div()(
               <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := s.chkCnxnExstUser, ^.onChange ==> chkCnxnExstUser),
                 " Introduce yourself to existing user(s)."), <.br(),
+              if (s.chkCnxnExstUser == true) {
+                <.div(^.marginLeft := "15px")(
+                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
+                    ^.value := s.agentUid, ^.onChange ==> updateAgentUid),
+                  <.div(^.id := "agentFieldError", ^.className := "hidden")
+                  ("User with this uid is already added as your connection")
+                )
+              }
+              else
+                <.div(),
               //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
               // " Invite new user(s) to sign up and  connect with you."), <.br(),
               <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnExstandOther),
-                " Invite existing connections to connect with each other.\n Note, each pair of connections will be introduced with the message above."), <.br()
+                " Introduce your existing connections."), <.br()
             ),
-            if (s.chkCnxnExstUser == true) {
-              <.div(
-                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter USER ID",
-                  ^.value := s.agentUid, ^.onChange ==> updateAgentUid),
-                <.div(^.id := "agentFieldError", ^.className := "hidden")
-                ("User with this uid is already added as your connection")
-              )
 
-            }
-            else
-              <.div(),
             //            else if (s.chkCnxnNewUser == true) {
             //              <.div()(
             //                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
             //              )
             //            }
             //            else if (s.introduceTwoUsers == true) {
-            <.div((!s.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
-              <.div(<.h5("Recipients:")),
+            <.div(^.marginLeft := "15px",(!s.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
+              <.div(<.h5("Connections:")),
               <.div(^.id := s"${s.selectizeInputId}")(
                 SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
               ),
