@@ -124,7 +124,7 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(^.id := P.id, /*^.id := "modal",*/ modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-            <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter, P.addStyles)(
+            <.div(modalStyle.dialog, if(P.id == "ConfirmIntroReq") P.addStyles else DashBoardCSS.Style.verticalAlignCenter)(
               <.div(modalStyle.content, DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose, ^.ref := OuterRef, ^.className := P.CSSClass,
                 <.div(/*^.className := "modalheader",*/ modalStyle.header,DashBoardCSS.Style.modalHeader, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
                 <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)

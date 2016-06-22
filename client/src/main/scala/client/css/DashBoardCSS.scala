@@ -245,8 +245,8 @@ object DashBoardCSS {
       verticalAlign.middle,
       media.minWidth(927.px) -
         paddingRight(17.%%),
-      media.minWidth(927.px) -
-        paddingLeft(17.%%)
+      paddingLeft(17.%%)
+
     )
     val modalContent = style(
       width.inherit,
@@ -640,24 +640,13 @@ object DashBoardCSS {
       ),
 
 
-      //      .rowStyle tr:after {
-      //      content: ' ';
-      //      display: block;
-      //      visibility: hidden;
-      //      clear: both;
-      //    }
-      //
       unsafeChild("tr:after")(
         content := " ",
         display.block,
         visibility.hidden,
         clear.both
       ),
-      //    .rowStyle thead th {
-      //      height: 50px;
-      //      /*text-align: left;*/
-      //    }
-      //
+
       unsafeChild("thead th")(
         height(50 px)
       ),
@@ -700,6 +689,8 @@ object DashBoardCSS {
       )
     )
     val connectionModalWidth = style(
+      display.tableCell,
+      verticalAlign.middle,
       paddingLeft(30.%%),
       paddingRight(30.%%)
     )
