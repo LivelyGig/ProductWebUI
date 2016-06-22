@@ -87,9 +87,9 @@ object ConnectionsForm {
 
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(
-                     aMessage = "Hi , \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>"),
+                     aMessage = "Hi , \n Here's an introduction for the two of you to connect.\n<Recipient1>,<Recipient2> \n \n Best regards, \n <name>"),
                    establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
-                   chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid: String = "")
+                   chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid: String = "", userName: String = "")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
@@ -97,7 +97,12 @@ object ConnectionsForm {
     }
 
     def mounted(props: Props): Callback = Callback {
-
+      val userName = window.sessionStorage.getItem("userName")
+      println(s"userName:$userName")
+      t.modState(s => s.copy(userName = userName))
+      val introCon: IntroConnections = IntroConnections(aMessage = s"Hi <Recipient 1> and <Recipient 2>, \nHere's an introduction for the two of you to connect. \n \n Best regards, \n $userName")
+      //      t.setState(s = t.modState())
+      println("aMessage =" + t.state.runNow().introConnections.aMessage)
     }
 
     def hideModal(): Unit = {
@@ -138,7 +143,7 @@ object ConnectionsForm {
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
       //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
       //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-      //      println(connections.length)
+      println(connections)
       if (connections.length == 2) {
         val content = state.establishConnection.copy(sessionURI = uri,
           aURI = connections(0).target,
@@ -243,7 +248,7 @@ object ConnectionsForm {
               <.div((!s.introduceUsers) ?= ConnectionsCSS.Style.hidden,
                 <.div(<.h5("Introduction:")),
                 <.div()(
-                  <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>",
+                  <.textarea(^.rows := 6, ^.placeholder := s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${s.userName}",
                     ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent, ^.className := "form-control")
                 )
               )
@@ -264,6 +269,7 @@ object ConnectionsForm {
   private val component = ReactComponentB[Props]("PostConnections")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {
       //println(s"states:chkCnxnExstUser = ${scope.currentState.chkCnxnExstUser}, chkCnxnNewUser = ${scope.currentState.chkCnxnNewUser}, introduceTwoUsers = ${scope.currentState.introduceTwoUsers}")
       if (scope.currentState.postConnection) {

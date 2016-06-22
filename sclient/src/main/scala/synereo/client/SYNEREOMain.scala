@@ -66,7 +66,7 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
       | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl)))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
-      .onPostRender((prev, cur) =>Callback.log(s"Page changing from $prev to $cur."))
+    //      .onPostRender((prev, cur) => Callback.log(s"Page changing from $prev to $cur."))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -92,10 +92,13 @@ object SYNEREOMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
-              <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo
-              else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
-            )
+            if (r.page == DashboardLoc) {
+              <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
+            } else {
+              c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
+                <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
+              )
+            }
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
             SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))

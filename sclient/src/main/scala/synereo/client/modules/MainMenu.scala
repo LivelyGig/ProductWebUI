@@ -26,13 +26,13 @@ import scalacss.ScalaCssReact._
 //scalastyle:off
 object MainMenu {
   // shorthand for styles
-  //  val labelSelectizeId: String = "labelSelectizeId"
+  //  val labelSelectizeInputId: String = "labelSelectizeInputId"
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeId")
+  case class State(labelSelectizeId: String = "labelSelectizeInputId")
 
   //  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
@@ -72,13 +72,14 @@ object MainMenu {
             <.div(^.className := "label-selectize-container-main")(
               <.div()(
                 if (props.currentLoc == DashboardLoc) {
-                  <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-                    <.div(^.id := S.labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-                      SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeId)))
+                  /*<.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+                    <.div(^.id := S.labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+                      SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeInputId)))
                     ),
                     <.button(^.className := "btn btn-primary", ^.onClick ==> $.backend.searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
                     )
-                  )
+                  )*/
+                  SearchComponent(SearchComponent.Props())
                 } else {
                   <.span()
                 }
@@ -175,8 +176,8 @@ object MainMenu {
         //          if (props.proxy().isLoggedIn) {
         //            <.div(^.className := "")(
         //              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-        //                <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
+        //                <.div(^.id := labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeInputId)))
         //                ),
         //                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
         //                )
