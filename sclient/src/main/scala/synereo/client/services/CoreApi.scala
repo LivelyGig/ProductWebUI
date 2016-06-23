@@ -10,6 +10,7 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
+import synereo.client.modules.ConnectionList
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 object CoreApi {
@@ -63,12 +64,17 @@ object CoreApi {
     */
   def getContent(sessionUriName: String): Future[String] = {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
+    val searchConnectionsList = upickle.default.read[Seq[Connection]](
+      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
     ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+    val connectionListTo = if(connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
+
     val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
-    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
-    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
+    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionListTo, currentSearchLabels)))
+    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionListTo, previousSearchLabels)
     Option(previousSearchLabels) match {
       case Some(s) =>
         window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)
@@ -81,6 +87,27 @@ object CoreApi {
 
     }
   }
+
+  //  def getMessages(sessionUriName: String,connectionList:Seq[Connection]): Future[String] = {
+  //    val sessionUri = window.sessionStorage.getItem(sessionUriName)
+  //    val connectionsList = upickle.default.read[Seq[Connection]](
+  //      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
+  //    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+  //    val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
+  //    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
+  //    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
+  //    Option(previousSearchLabels) match {
+  //      case Some(s) =>
+  //        window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)
+  //        for {
+  //          cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
+  //          messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
+  //        } yield messages
+  //      case None =>
+  //        evalSubscribeRequestAndSessionPing(getMessagesSubscription)
+  //
+  //    }
+  //  }
 
   def evalSubscribeRequest(subscribeRequest: SubscribeRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.EVAL_SUBS_REQUEST, subscribeRequest))

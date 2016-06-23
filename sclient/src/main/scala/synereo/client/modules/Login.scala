@@ -116,9 +116,10 @@ object Login {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
       window.sessionStorage.setItem(
-          SessionItems.ConnectionViewItems.CONNECTION_LIST,
-          upickle.default.write[Seq[Connection]](response.content.listOfConnections)
+        SessionItems.ConnectionViewItems.CONNECTION_LIST,
+        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
       )
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST, upickle.default.write[Seq[Connection]](response.content.listOfConnections))
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
