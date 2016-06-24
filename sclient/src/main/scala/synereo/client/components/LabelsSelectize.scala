@@ -28,6 +28,7 @@ object LabelsSelectize {
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
     $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[Label]($(y).attr("data-value").toString))
+    //    println(selectedLabels)
     selectedLabels
   }
 

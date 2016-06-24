@@ -51,10 +51,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         case None => Nil
       }
       //      println(s"crntSearchLblsFrmSelctize :$crntSearchLblsFrmSelctize")
-      val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnslctzId, sessionUriName)
+      val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnslctzId, sessionUriName).toSet.toSeq
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST,
         upickle.default.write[Seq[Connection]](connectionsSeq)
       )
+      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)), LabelsUtils.PrologTypes.Any)
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
       noChange
 
