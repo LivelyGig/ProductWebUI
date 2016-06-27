@@ -146,6 +146,9 @@ object NewMessageForm {
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
               LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
+            <.div(DashBoardCSS.Style.paddingTop10px)(
+              <.input(^.`type`:="file")
+            ),
             <.div()(
 //              <.div(^.className:="form-group")(
               <.textarea(^.rows := 6, ^.placeholder := "Subject", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
