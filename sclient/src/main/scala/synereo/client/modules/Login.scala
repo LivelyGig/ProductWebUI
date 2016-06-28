@@ -26,6 +26,8 @@ import synereo.client.logger._
   * Created by Mandar on 3/11/2016.
   */
 //scalastyle:off
+case class ApiDetails(hostName: String = "", portNumber: String = "")
+
 object Login {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -34,22 +36,18 @@ object Login {
   val loginLoader: js.Object = "#loginLoader"
   val loadingScreen: js.Object = "#loadingScreen"
   var isUserVerified = false
+  val apiDetails = new ApiDetails("localhost", "9876")
+
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props()
 
-  case class State(showNewUserForm: Boolean = false, showLoginForm: Boolean = true, showValidateForm: Boolean = false,
+  case class State(showNewUserForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, inviteMessage: String = "", isloggedIn: Boolean = false)
-
-  //  case class State(isloggedIn: Boolean = false, showLoginForm: Boolean = true, showNewUserForm: Boolean = false,
-  //                   showErrorModal: Boolean = false, loginErrorMessage: String = "", showServerErrorModal: Boolean = false, showConfirmAccountCreation: Boolean = false,
-  //                   showRegistrationFailed: Boolean = false,
-  //                   showAccountValidationSuccess: Boolean = false, showAccountValidationFailed: Boolean = false, showNewInviteForm: Boolean = false, inviteMessage: String = "")
-
+                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, isloggedIn: Boolean = false, hostName: String = "", portNumber: String = "")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -246,11 +244,61 @@ object Login {
       t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
     }
 
+    def submitApiForm(e: ReactEventI) = {
+      e.preventDefault()
+      //      println(s"apiDetails :${apiDetails}")
+      val state = t.state.runNow()
+      //      println(s"temp.hostName = ${apiDetails.hostName},temp.portNumber = ${apiDetails.portNumber}")
+      //      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
+      //      println(s"apiDetails.hostName = ${apiDetails.hostName},apiDetails.portNumber = ${apiDetails.portNumber}")
+      //      println(s"apiDetails.hostName = ${apiDetails.hostName},apiDetails.portNumber = ${apiDetails.portNumber}")
+      apiDetails.copy(hostName = state.hostName, portNumber = state.portNumber)
+      t.modState(s => s.copy(showLoginForm = true))
+    }
+
+    def updateIp(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(hostName = value))
+    }
+
+    def updatePort(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(portNumber = value))
+    }
+
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage),
+            <.div(LoginCSS.Style.loginDilog)(
+              <.div(LoginCSS.Style.formPadding)(
+                <.div(LoginCSS.Style.loginDilogContainerDiv)(
+                  <.div(^.className := "row")(
+                    <.div(^.className := "col-md-12")(
+                      <.div(LoginCSS.Style.loginFormContainerDiv)(
+                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
+                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
+                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                            <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+                              ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true), <.br()
+                          ),
+                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                            <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+                              ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                          ),
+                          <.div(^.className := "col-md-12 text-right")(
+                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
           ),
           <.div()(
             if (s.showNewUserForm) {
@@ -293,6 +341,7 @@ object Login {
 
   val component = ReactComponentB[Props]("SynereoLogin")
     .initialState_P(p => State())
+    //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]
     .build
 

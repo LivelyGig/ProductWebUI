@@ -63,9 +63,9 @@ object ConnectionsSelectize {
     }
 
     def updatedProps(props: Props): Callback = Callback {
-      println("inside updatedProps")
+      //      println("inside updatedProps")
       if (!props.proxy().isEmpty) {
-        println("inside if cond")
+        //        println("inside if cond")
         initializeTagsInput(props.parentIdentifier)
       }
     }

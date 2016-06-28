@@ -10,11 +10,13 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
-import synereo.client.modules.ConnectionList
+import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 object CoreApi {
-  var BASE_URL = "http://localhost:9876/api"
+  val hostDetails = Login.apiDetails
+  //  var BASE_URL = "http://localhost:9876/api"
+  var BASE_URL = s"http://${hostDetails.hostName}:${hostDetails.portNumber}/api"
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
@@ -25,9 +27,9 @@ object CoreApi {
     ).map(_.responseText)
   }
 
-//  val handleApiError: PartialFunction[Throwable, Unit] = {
-//    case t: Throwable => println(t.printStackTrace)
-//  }
+  //  val handleApiError: PartialFunction[Throwable, Unit] = {
+  //    case t: Throwable => println(t.printStackTrace)
+  //  }
 
   def getConnections(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))

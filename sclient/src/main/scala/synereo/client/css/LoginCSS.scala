@@ -35,11 +35,12 @@ object LoginCSS {
         marginTop(30.px)
     )
     val loginDilog = style(
-      width(50.%%),
+      top.`0`,
+      width(100.%%),
       minHeight(500.px),
       marginLeft(auto),
       marginRight(auto),
-      marginTop(50.px)
+      position.absolute.important
     )
     val nodeDecorationImageBackground = style(
       backgroundImage := "url(\"./assets/synereo-images/login_nodeDecoration.png\")"
@@ -75,10 +76,10 @@ object LoginCSS {
     )
     val loginFormContainerDiv = style(
       minHeight(340.px),
-      width(65.%%),
+      width(32.%%),
       border(2.px, solid, c"#35B0E2"),
       position.relative,
-      top(145.px),
+      top(75.px),
       borderRadius(20.px),
       marginLeft.auto,
       marginRight.auto,
@@ -109,7 +110,6 @@ object LoginCSS {
       textAlign.center,
       marginBottom(10.px),
       marginTop(10.px)
-
     )
     val loginFormFooter = style(
       padding(5.%%, 15.%%),
@@ -289,6 +289,14 @@ object LoginCSS {
       fontFamily :=! "karla",
       float.right,
       marginTop(74.px),
+      marginBottom(40.px)
+    )
+    val apiSubmitBtn = style(
+      backgroundColor(c"#ff806c"),
+      height(58.px),
+      fontSize(20.px),
+      fontFamily :=! "karla",
+      marginTop(40.px),
       marginBottom(40.px)
     )
   }
