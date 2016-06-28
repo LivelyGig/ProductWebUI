@@ -25,6 +25,10 @@ object CoreApi {
     ).map(_.responseText)
   }
 
+//  val handleApiError: PartialFunction[Throwable, Unit] = {
+//    case t: Throwable => println(t.printStackTrace)
+//  }
+
   def getConnections(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
     ajaxPost(requestContent)
@@ -70,7 +74,7 @@ object CoreApi {
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
     ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val connectionListTo = if(connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
+    val connectionListTo = if (connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
 
     val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionListTo, currentSearchLabels)))

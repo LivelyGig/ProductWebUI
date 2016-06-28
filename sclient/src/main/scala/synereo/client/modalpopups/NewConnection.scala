@@ -98,11 +98,11 @@ object ConnectionsForm {
 
     def mounted(props: Props): Callback = Callback {
       val userName = window.sessionStorage.getItem("userName")
-      println(s"userName:$userName")
+//      println(s"userName:$userName")
       t.modState(s => s.copy(userName = userName))
       val introCon: IntroConnections = IntroConnections(aMessage = s"Hi <Recipient 1> and <Recipient 2>, \nHere's an introduction for the two of you to connect. \n \n Best regards, \n $userName")
       //      t.setState(s = t.modState())
-      println("aMessage =" + t.state.runNow().introConnections.aMessage)
+//      println("aMessage =" + t.state.runNow().introConnections.aMessage)
     }
 
     def hideModal(): Unit = {
@@ -143,7 +143,7 @@ object ConnectionsForm {
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
       //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
       //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-      println(connections)
+//      println(connections)
       if (connections.length == 2) {
         val content = state.establishConnection.copy(sessionURI = uri,
           aURI = connections(0).target,
