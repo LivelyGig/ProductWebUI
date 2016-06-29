@@ -7,11 +7,12 @@ import shared.RootModels.ConnectionsRootModel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
-import synereo.client.components.Icon
+import synereo.client.components.{Icon, MIcon}
 import synereo.client.css._
 import shared.models.ConnectionsModel
 import org.querki.jquery._
-import synereo.client.modalpopups.NewConnection
+import synereo.client.components.Bootstrap.CommonStyle
+import synereo.client.modalpopups.{ConfirmIntroReq, NewConnection}
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -36,6 +37,7 @@ object ConnectionsResults {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+        ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, "")),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
             NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
