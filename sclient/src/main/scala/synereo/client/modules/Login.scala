@@ -37,7 +37,8 @@ object Login {
   val loadingScreen: js.Object = "#loadingScreen"
   var isUserVerified = false
   val apiDetails = new ApiDetails("localhost", "9876")
-
+  var hostName: String = ""
+  var portNumber: String = ""
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -233,7 +234,9 @@ object Login {
     }
 
     def serverError(): Callback = {
-      t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
+      $(loginLoader).addClass("hidden")
+      $(loadingScreen).addClass("hidden")
+      t.modState(s => s.copy(showErrorModal = false, showLoginForm = false))
     }
 
     def accountValidationFailed(): Callback = {
@@ -246,13 +249,11 @@ object Login {
 
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
-      //      println(s"apiDetails :${apiDetails}")
       val state = t.state.runNow()
-      //      println(s"temp.hostName = ${apiDetails.hostName},temp.portNumber = ${apiDetails.portNumber}")
-      //      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
-      //      println(s"apiDetails.hostName = ${apiDetails.hostName},apiDetails.portNumber = ${apiDetails.portNumber}")
-      //      println(s"apiDetails.hostName = ${apiDetails.hostName},apiDetails.portNumber = ${apiDetails.portNumber}")
-      apiDetails.copy(hostName = state.hostName, portNumber = state.portNumber)
+      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
+      println(s"hostName = ${hostName},portNumber = ${portNumber}")
+      hostName = state.hostName
+      portNumber = state.portNumber
       t.modState(s => s.copy(showLoginForm = true))
     }
 
