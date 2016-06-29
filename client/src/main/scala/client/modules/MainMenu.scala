@@ -146,6 +146,7 @@ object LoggedInUser {
       <.div(HeaderCSS.Style.LoginInMenuItem)(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
+          println("model.imgSrc = "+ model.imgSrc)
           <.div(
             <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
             <.div(HeaderCSS.Style.displayInline)(
@@ -234,8 +235,8 @@ object LoggedInUser {
 
                           <.div()(
                             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-                              <.button(^.tpe := "submit", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, "Send"),
-                              <.button(^.tpe := "button", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, ^.onClick --> t.backend.hide, "Cancel")
+                              <.button(^.tpe := "submit", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn,"data-dismiss".reactAttr := "modal", "Send"),
+                              <.button(^.tpe := "button", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn,"data-dismiss".reactAttr := "modal", ^.onClick --> t.backend.hide, "Cancel")
                             )
                           )
                         ),

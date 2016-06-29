@@ -150,6 +150,7 @@ object MessagesList {
           // <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"${message.postContent.subject}"),
           <.br(),
+//          <.div(DashBoardCSS.Style.profileNameHolder)(s"${<.img(^.src:= message.postContent.imgSrc)}"),
           <.div(^.className := "row", ^.color := "gray", ^.fontSize := "smaller")(
             <.div(^.className := "col-md-6 col-sm-12")(s"From: ${fromSender}"),
             <.div(^.className := "col-md-6 col-sm-12")(s"To: ${toReceiver}")
@@ -157,7 +158,7 @@ object MessagesList {
           // ToDo: need DateTime library for javascript or scala.js, similar to the following?
           // <.div()(s"Created: ${DateTime.parse(message.created).toLocalDateTime}"),
           // <.div()(s"Created: ${message.created}"),
-          <.div(^.className:="msgTime",DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).toLocaleString),
+          <.div(^.className:="msgTime",DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString),
           // <.div()(s"labels: ${message.labels}"),
           // <.div()(s"uid: ${message.uid}"),
           <.div(^.className := "media-body", ^.paddingTop := "10px")(s"${message.postContent.text}",

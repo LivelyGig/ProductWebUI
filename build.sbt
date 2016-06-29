@@ -32,6 +32,7 @@ lazy val client: Project = (project in file(pCompile))
       scalaVersion := Versions.scalaVersion,
       scalacOptions ++= Settings.scalacOptions,
       resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
+//     resolvers += "wasted.io/repo" at "http://repo.wasted.io/mvn",
       libraryDependencies ++= Settings.scalajsDependencies.value,
       // by default we do development build, no eliding
       elideOptions := Seq(),
