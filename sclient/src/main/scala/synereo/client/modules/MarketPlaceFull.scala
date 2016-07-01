@@ -5,22 +5,29 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.{ MIcon, Icon }
-import synereo.client.css.{ MarketPlaceFullCSS, SynereoCommanStylesCSS, LoginCSS }
+import synereo.client.components.{MIcon, Icon}
+import synereo.client.css.{MarketPlaceFullCSS, SynereoCommanStylesCSS, LoginCSS}
 import synereo.client.modalpopups.RequestInvite
 import scala.scalajs.js
-import js.{ Date, UndefOr }
+import js.{Date, UndefOr}
 import org.querki.jquery._
 import scalacss.Color
 import scalacss.ScalaCssReact._
 
 /**
- * Created by Mandar on 4/1/2016.
- */
+  * Created by Mandar on 4/1/2016.
+  */
 object MarketPlaceFull {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
     .render_P { ctr =>
       <.div(^.className := "container-fluid", SynereoCommanStylesCSS.Style.backgroundColorWhite, MarketPlaceFullCSS.Style.mainContainer)(
+        <.div(^.className := "row")(
+          //Left Sidebar
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+            //            Footer(Footer.Props(c, r.page))
+            Sidebar(Sidebar.Props())
+          )
+        ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-2")(
             <.ul(^.className := "nav nav-pills nav-stacked", MarketPlaceFullCSS.Style.marketplaceActionsUL)(

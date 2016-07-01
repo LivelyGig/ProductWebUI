@@ -34,6 +34,7 @@ object Sidebar {
           <.li()(<.a(^.href := "#")(<.span(Icon.home), "  Stream")),
           <.li()(<.a(^.href := "#")(<.span(/*MIcon.mailOutline*/ Icon.envelope), " Messages")),
           <.li()(<.a(^.href := "#")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Profile")),
+          <.li()(<.a(^.href := "/#informationview")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Accounts")),
           <.li()(<.a(^.href := "/#people")(<.span(Icon.users), "  People")),
           <.li(^.className := "nav-divider")(),
           <.li()(<.a(^.href := "#")(<.span(/*MIcon.accessTime*/), "  Recents")),

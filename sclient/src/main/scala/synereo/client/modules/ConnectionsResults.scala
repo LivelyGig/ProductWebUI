@@ -37,6 +37,12 @@ object ConnectionsResults {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+        <.div(^.className := "row")(
+          //Left Sidebar
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+            Sidebar(Sidebar.Props())
+          )
+        ),
         ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, "")),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
