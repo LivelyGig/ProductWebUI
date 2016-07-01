@@ -19,6 +19,13 @@ object TimelineView {
     render_P { ctr =>
       <.div(^.className := "container-fluid")(
         <.div(^.className := "row")(
+          //Left Sidebar
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+            //            Footer(Footer.Props(c, r.page))
+            Sidebar(Sidebar.Props())
+          )
+        ),
+        <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
             <.div(^.className := "container")(
               <.div(^.className := "row", UserTimelineViewCSS.Style.coverHolderDiv)(
