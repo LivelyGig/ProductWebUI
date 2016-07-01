@@ -29,6 +29,13 @@ object UserProfileViewCSS {
       fontSize(3.em)
     )
 
+    val agentUID = style(
+      marginLeft(15.%%),
+      padding(10.px),
+      fontSize(20.px),
+      color.white
+    )
+
   }
 
 }
