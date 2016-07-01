@@ -250,8 +250,8 @@ object Login {
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
-      println(s"hostName = ${hostName},portNumber = ${portNumber}")
+      //      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
+      //      println(s"hostName = ${hostName},portNumber = ${portNumber}")
       hostName = state.hostName
       portNumber = state.portNumber
       t.modState(s => s.copy(showLoginForm = true))

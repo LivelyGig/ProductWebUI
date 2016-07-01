@@ -2,18 +2,22 @@ package synereo.client.modalpopups
 
 import java.util.UUID
 
-import shared.models.{MessagePost, MessagePostContent}
+import diode.react.ModelProxy
+import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom
+import shared.RootModels.SearchesRootModel
+import shared.dtos.LabelPost
 import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.{PostData, RefreshMessages}
+import synereo.client.handlers.{CreateLabels, PostData, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -21,7 +25,9 @@ import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
+import synereo.client.logger
 
+//scalastyle:off
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -54,7 +60,8 @@ object NewMessage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -70,9 +77,10 @@ object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel])
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, labelModel: Label = Label(), postLabel: Boolean = false,
+                   connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -101,12 +109,54 @@ object NewMessageForm {
 
     }
 
+    def leafParser(requireStore: Boolean = false): Seq[String] = {
+      val (props, state) = (t.props.runNow(), t.state.runNow())
+      def leaf(text: String, color: String) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"" + s"${color}" + "\"),image(\"\")))"
+      def leafMod(text: String, color: String) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"" + s"${color}" + "\\\"),image(\\\"\\\")))\""
+
+      if (requireStore)
+        props.proxy().searchesModel.map(e => leafMod(e.text, e.color)) :+ leafMod(state.labelModel.text, "#CC5C64")
+      else
+        props.proxy().searchesModel.map(e => leaf(e.text, e.color)) :+ leaf(state.labelModel.text, "#CC5C64")
+
+    }
+
+    def postLabel() = {
+      /*label posting*/
+      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), leafParser(), "alias")
+      println("labelPost = " + labelPost)
+      CoreApi.postLabel(labelPost).onComplete {
+        case Success(res) =>
+          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${leafParser(true).mkString(",")}]")
+          SYNEREOCircuit.dispatch(CreateLabels())
+        case Failure(res) =>
+          logger.log.debug("Label Post failure")
+
+      }
+      t.modState(s => s.copy(postLabel = !s.postLabel))
+      /*label posting*/
+    }
+
+    def getLabelsFromText(): Seq[String] = {
+      val value = t.state.runNow().postMessage.text.split(" +")
+      val labels = value.filter(
+        _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
+      ).map(_.replace("#", "")).toSeq
+      labels
+    }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      getLabelsFromText.foreach(
+        label => {
+          t.modState(s => s.copy(labelModel = s.labelModel.copy(text = label)))
+          println(label)
+        }
+      )
       val state = t.state.runNow()
-      //      println(state.postMessage)
       SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
-      //      SYNEREOCircuit.dispatch(RefreshMessages())
+      //      postLabel
+      println(state.labelModel.text)
       t.modState(s => s.copy(postNewMessage = true))
     }
 
