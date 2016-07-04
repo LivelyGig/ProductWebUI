@@ -29,7 +29,7 @@ case class MessagePost(uid: String = "", created: String = "", modified: String 
   override def versionNumber: Int = 0
 }
 
-case class MessagePostContent(text: String = "", subject: String = "") extends PostContent
+case class MessagePostContent(text: String = "", subject: String = "",imgSrc : String="") extends PostContent
 
 case class ProjectsPost(uid: String, created: String, modified: String, labels: String = "",
                         connections: Seq[Connection] = Nil, postContent: ProjectPostContent) extends Post {

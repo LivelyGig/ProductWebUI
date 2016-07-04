@@ -1,5 +1,6 @@
 package client.modules
 
+import client.components.Bootstrap._
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
@@ -11,10 +12,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
-import shared.models.MessagePost
+import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.NewMessage
 import japgolly.scalajs.react
-
+import org.querki.jquery._
+import shared.sessionitems.SessionItems
+import org.scalajs.dom.window
+import org.widok.moment.Moment
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object MessagesResults {
@@ -23,8 +28,8 @@ object MessagesResults {
 
   case class State(/*selectedItem: Option[MessagesModel] = None*/)
 
-  class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props): react.Callback ={
+  class Backend(t: BackendScope[Props, _]) {
+    def mounted(props: Props): react.Callback = {
       log.debug("messages view mounted")
       Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshMessages()))
     }
@@ -107,40 +112,76 @@ object MessagesList {
 
   case class Props(messages: Seq[MessagePost])
 
-  private val MessagesList = ReactComponentB[Props]("ProjectList")
-    .render_P(p => {
+  case class Backend(t: BackendScope[Props, _]) {
+
+    def mounted(props: Props): Callback = Callback {
+      val msgTime: js.Object = ".msgTime"
+      $(msgTime).tooltip(PopoverOptions.html(true))
+    }
+
+    def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
-       // <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
-        <.li(^.className := "media", DashBoardCSS.Style.profileDescription,DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/ )(
-          // if even row  DashBoardCSS.Style.rsltContentBackground
+        // Get data needed to present From and To
+        val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
+        var selfConnectionId = message.connections(0).source.split("/")(2)
+        var toReceiver = "unknown"
+        var fromSender = "unknown"
+        if (userId == selfConnectionId) {
+          fromSender = "me"
+          // get other party ID, if there is one
+          if (message.connections.size > 1) {
+            if (message.connections(1).source.split("/")(2) == userId) {
+              toReceiver = message.connections(1).target.split("/")(2)
+            } else {
+              toReceiver = message.connections(1).source.split("/")(2)
+            }
+            // ToDo: look up name of Receiver and use friendly name
+          } else {
+            toReceiver = "self"
+          }
+        } else {
+          fromSender = selfConnectionId
+          // ToDo: Look up name of Sender and use friendly name
+          toReceiver = "me"
+        }
+
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p /*, DashBoardCSS.Style.rsltContentBackground*/)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
-          <.span(^.className := "checkbox-lbl"),
-          <.div(DashBoardCSS.Style.profileNameHolder)(s"From: Pam   To: Abed"),
-          <.div(^.className := "media-body")(s"Created: ${message.created}"),
-          <.div(^.className := "media-body")(s"Subject: ${message.postContent.subject}"),
-          <.div(^.className := "media-body")(s"Message: ${message.postContent.text}",
-            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/ )(
+          // <.span(^.className := "checkbox-lbl"),
+          <.div(DashBoardCSS.Style.profileNameHolder)(s"${message.postContent.subject}"),
+          <.br(),
+//          <.div(DashBoardCSS.Style.profileNameHolder)(s"${<.img(^.src:= message.postContent.imgSrc)}"),
+          <.div(^.className := "row", ^.color := "gray", ^.fontSize := "smaller")(
+            <.div(^.className := "col-md-6 col-sm-12")(s"From: ${fromSender}"),
+            <.div(^.className := "col-md-6 col-sm-12")(s"To: ${toReceiver}")
+          ),
+          // ToDo: need DateTime library for javascript or scala.js, similar to the following?
+          // <.div()(s"Created: ${DateTime.parse(message.created).toLocalDateTime}"),
+          // <.div()(s"Created: ${message.created}"),
+          <.div(^.className:="msgTime",DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString),
+          // <.div()(s"labels: ${message.labels}"),
+          // <.div()(s"uid: ${message.uid}"),
+          <.div(^.className := "media-body", ^.paddingTop := "10px")(s"${message.postContent.text}",
+            <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/)(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),
-              //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Hide")(),
-              //<.button(HeaderCSS.Style.rsltContainerBtn, HeaderCSS.Style.floatBtn, ^.className := "btn profile-action-buttons")("Favorite")(),
-              //NewMessage(NewMessage.Props("Forward",Seq(HeaderCSS.Style.createNewProjectBtn),"","Forward")),
-              //NewMessage(NewMessage.Props("Reply",Seq(HeaderCSS.Style.createNewProjectBtn),"","Reply"))
-
               NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailForward, "Forward")),
               NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.mailReply, "Reply"))
-            /* <.button(HeaderCSS.Style.rsltContainerBtn, ^.className := "btn")("Forward")()*/
             )
-          ) //media-body
-        ) //li
+          )
+        )
       }
       <.div(DashBoardCSS.Style.rsltSectionContainer)(
         <.ul(^.className := "media-list")(p.messages map renderMessages)
       )
-    })
+    }
+  }
+
+  val MessagesList = ReactComponentB[Props]("ProjectList")
+    .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(messages: Seq[MessagePost]) =
-    MessagesList(Props(messages))
+  def apply(messages: Seq[MessagePost]) = MessagesList(Props(messages))
 
 }

@@ -54,7 +54,8 @@ object Settings {
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
     "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
     "com.lihaoyi" %%% "upickle" % Versions.upickle,
-    "com.github.japgolly.scalajs-react" %%% "test" % "0.11.1" % "test"
+    "com.github.japgolly.scalajs-react" %%% "test" % "0.11.1" % "test"/*,
+    "io.wasted" %% "wasted-util" % "0.12.4"*/
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */

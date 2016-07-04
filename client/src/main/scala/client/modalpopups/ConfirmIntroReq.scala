@@ -13,7 +13,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap.{Button, CommonStyle, _}
 import client.components.Icon._
 import client.components.{GlobalStyles, _}
-import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS, WorkContractCSS}
 import client.handlers.PostData
 import client.modals.NewMessage.State
 import japgolly.scalajs.react
@@ -124,7 +124,8 @@ object ConfirmIntroReqForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p),
           CSSClass = "connectionModalBorder",
-          addStyles =  Seq(DashBoardCSS.Style.connectionModalWidth)
+          addStyles =  Seq(DashBoardCSS.Style.connectionModalWidth),
+          id = "ConfirmIntroReq"
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
@@ -136,22 +137,24 @@ object ConfirmIntroReqForm {
             <.div(^.className := "col-md-12")(
               <.div(DashBoardCSS.Style.modalHeaderText)("Introduction Request"),
               <.div(
-                "From : NodeAdmin QueenSpilicious", <.br,
+                "From : NodeAdmin QueenSpilicious         " ,
+                <.div(DashBoardCSS.Style.displayInlineText,DashBoardCSS.Style.marginLeftchk)(<.img(HeaderCSS.Style.imgLogo, HeaderCSS.Style.logoImage, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")), <.br,
                 "Date : Mon June 13 2016 ", <.br
               ),
               <.div(^.className := "col-md-12")(
-                <.div(^.className := "col-md-10")(
+                <.div(^.className := "col-md-12")(
                   <.div(DashBoardCSS.Style.modalContentFont)(" asdfa ")
-                ),
+                )/*,
                 <.div(^.className := "col-md-2")(
                   <.div("test"),
                   <.img(HeaderCSS.Style.imgLogo, HeaderCSS.Style.logoImage, ^.src := "./assets/images/LivelyGig-logo-symbol.svg")
-                )
+                )*/
               )
             ),
+            <.div(^.className:="col-md-12 col-sm-12",DashBoardCSS.Style.modalContentFont)("Accept introduction to \"Frank Howardzo\"?"),
             <.div(^.className := "col-md-12",DashBoardCSS.Style.padding15px)(
-              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Accept"),
-              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Reject")
+              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnDefault,WorkContractCSS.Style.createWorkContractBtn, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Accept"),
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, WorkContractCSS.Style.createWorkContractBtn,DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Reject")
             )
           )
         )

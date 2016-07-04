@@ -29,6 +29,8 @@ object Bootstrap {
     def modal(options: js.Any): BootstrapJQuery = js.native
 //    def popover():Any = js.native
     def popover(options: PopoverOptions):Any = js.native
+    def tooltip(options:TooltipOptions):Any = js.native
+
   }
 
   @js.native
@@ -44,6 +46,10 @@ object Bootstrap {
     def container(v:String) = jsOpt("container", v)
   }
   object PopoverOptions extends PopoverOptionBuilder(noOpts)
+
+  @js.native
+  type TooltipOptions = PopoverOptions
+  val TooltipOptions = PopoverOptions
 
 
   implicit def jq2bootstrap(jq: JQuery): BootstrapJQuery = jq.asInstanceOf[BootstrapJQuery]
@@ -118,7 +124,7 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(^.id := P.id, /*^.id := "modal",*/ modalStyle.modal, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
-            <.div(modalStyle.dialog, DashBoardCSS.Style.verticalAlignCenter, P.addStyles)(
+            <.div(modalStyle.dialog, if(P.id == "ConfirmIntroReq") P.addStyles else DashBoardCSS.Style.verticalAlignCenter)(
               <.div(modalStyle.content, DashBoardCSS.Style.modalBorderRadius, ^.onKeyDown ==> modalClose, ^.ref := OuterRef, ^.className := P.CSSClass,
                 <.div(/*^.className := "modalheader",*/ modalStyle.header,DashBoardCSS.Style.modalHeader, DashBoardCSS.Style.modalHeaderPadding, P.header(hide)),
                 <.div(modalStyle.body, DashBoardCSS.Style.modalBodyPadding, C)

@@ -8,13 +8,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{LoginUser, LogoutUser, ToggleAvailablity}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
-import client.modals.{AgentLoginSignUp, Legal, NewMessage, ConfirmIntroReq}
+import client.modals.{AgentLoginSignUp, ConfirmIntroReq, Legal, NewMessage}
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{DashBoardCSS, HeaderCSS, WorkContractCSS}
 import shared.models.UserModel
 import client.services.LGCircuit
 import shared.dtos._
-
+import client.components.Bootstrap._
 import scala.scalajs.js
 import scala.util._
 import scalacss.ScalaCssReact._
@@ -126,6 +126,10 @@ object LoggedInUser {
 
   class Backend(t: BackendScope[Props, State]) {
 
+    def hide: Callback = Callback {
+      $(t.getDOMNode()).modal("hide")
+    }
+
     def mounted(props: Props) = {
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
@@ -142,6 +146,7 @@ object LoggedInUser {
       <.div(HeaderCSS.Style.LoginInMenuItem)(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
+          println("model.imgSrc = "+ model.imgSrc)
           <.div(
             <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
             <.div(HeaderCSS.Style.displayInline)(
@@ -171,7 +176,7 @@ object LoggedInUser {
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About"))
+                    <.li()(<.a()("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true") ("About"))
                   )
                 ),
                 <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(),
@@ -194,7 +199,7 @@ object LoggedInUser {
                   <.li(^.className := "divider")(),
                   <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a()(/*Legal(Legal.Props("Legal", Seq(), "", ""))*/ "About"))
+                  <.li()(<.a()("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true") ("About"))
                 )
               ),
               <.div(^.className := "modal fade", ^.id := "myModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(
@@ -206,6 +211,35 @@ object LoggedInUser {
                       ),
                       <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(
                         <.h2("hello"),
+                        <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
+                      )
+                    )
+                  )
+                )
+              ),
+              <.div(^.className := "modal fade", ^.id := "accountModal", ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1)(
+                <.div(DashBoardCSS.Style.verticalAlignmentHelper)(
+                  <.div(^.className := "modal-dialog", DashBoardCSS.Style.verticalAlignCenter)(
+                    <.div(^.className := "modal-content", DashBoardCSS.Style.modalBorderRadius)(
+                      <.div(^.className := "modal-header", ^.id := "modalheader", DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.modalHeader)(
+                        <.span(<.button(^.tpe := "button", bss.close, "data-dismiss".reactAttr := "modal", Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)("Preferences"))
+                      ),
+                      <.div(^.className := "modal-body", DashBoardCSS.Style.modalBodyPadding)(
+                        <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
+                          <.div(
+                            <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter USER ID"/*,^.value := s.agentUid, ^.onChange ==> updateAgentUid*/)
+                            //                       ,
+                            //                <.div(^.id := "agentFieldError", ^.className := "hidden")
+                            //                ("User with this uid is already added as your connection")
+                          ),
+
+                          <.div()(
+                            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
+                              <.button(^.tpe := "submit", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn,"data-dismiss".reactAttr := "modal", "Send"),
+                              <.button(^.tpe := "button", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn,"data-dismiss".reactAttr := "modal", ^.onClick --> t.backend.hide, "Cancel")
+                            )
+                          )
+                        ),
                         <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
                       )
                     )

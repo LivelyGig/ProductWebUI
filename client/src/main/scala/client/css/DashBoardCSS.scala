@@ -131,8 +131,9 @@ object DashBoardCSS {
       display.inlineBlock
     )
     val profileImg = style(
-      height(120.px),
-      width(120.px)
+      height(5.em),
+      width(5.em),
+      marginBottom(.5.em)
     )
     val btn = style(
       addClassName("btn"),
@@ -204,7 +205,7 @@ object DashBoardCSS {
       borderRadius(12.px)
     )
 
-    val hidden = style (
+    val hidden = style(
       display.none
     )
 
@@ -244,8 +245,8 @@ object DashBoardCSS {
       verticalAlign.middle,
       media.minWidth(927.px) -
         paddingRight(17.%%),
-      media.minWidth(927.px) -
-        paddingLeft(17.%%)
+      paddingLeft(17.%%)
+
     )
     val modalContent = style(
       width.inherit,
@@ -533,6 +534,9 @@ object DashBoardCSS {
         )
       )
     )
+    val error = style(
+      color.red
+    )
 
     val rowStyle = style(
       //      .rowStyle  tbody {
@@ -636,24 +640,13 @@ object DashBoardCSS {
       ),
 
 
-      //      .rowStyle tr:after {
-      //      content: ' ';
-      //      display: block;
-      //      visibility: hidden;
-      //      clear: both;
-      //    }
-      //
       unsafeChild("tr:after")(
         content := " ",
         display.block,
         visibility.hidden,
         clear.both
       ),
-      //    .rowStyle thead th {
-      //      height: 50px;
-      //      /*text-align: left;*/
-      //    }
-      //
+
       unsafeChild("thead th")(
         height(50 px)
       ),
@@ -695,9 +688,17 @@ object DashBoardCSS {
         height(190 px)
       )
     )
-    val connectionModalWidth = style (
+    val connectionModalWidth = style(
+      display.tableCell,
+      verticalAlign.middle,
       paddingLeft(30.%%),
       paddingRight(30.%%)
+    )
+
+    val msgTime = style(
+      color.gray,
+      fontSize.smaller,
+      width(300.px)
     )
   }
 

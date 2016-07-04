@@ -1,21 +1,35 @@
 package client.modals
 
+
+import java.awt.image.BufferedImage
+import java.io.ByteArrayOutputStream
+import javax.imageio.ImageIO
+
 import shared.models.MessagePostContent
 import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
+import client.components.Validator._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.handlers.PostData
 import japgolly.scalajs.react
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.sessionitems.SessionItems
+
+import scala.scalajs.js
+import sun.misc.BASE64Decoder
+import sun.misc.BASE64Encoder;
+//import java.util.Base64
+//import java.nio.charset.StandardCharsets
+
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -64,6 +78,10 @@ object NewMessage {
 // #todo think about better way for getting data from selectize input
 // so that you don't have to pass the parentId explicitly
 object NewMessageForm {
+
+  val messageID: js.Object = "#messageID"
+  $("#a".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
+
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -73,6 +91,10 @@ object NewMessageForm {
                    cnxsSelectizeParentId: String = "postNewMessageSelectizeInput", labelSelectizeParentId: String = "labelsSelectizeParent")
 
   case class Backend(t: BackendScope[Props, State]) {
+
+//    var a  = new BASE64Encoder()
+
+
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
@@ -87,12 +109,29 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
+    def updateImgSrc(e: ReactEventI): react.Callback = {
+      val value = e.target.value
+      println("Img src = " + value)
+      //      val encodedImgSrc = Base64.getEncoder.encodeToString(value.getBytes(StandardCharsets.UTF_8))
+      //println("encodedImgSrc ="+ encodedImgSrc)
+//      try{
+//        val encodedImgSrc = new sun.misc.BASE64Encoder().encode( "myClearTextPW".getBytes())
+//        println("encodedImgSrc ="+ encodedImgSrc)
+//      }
+//      catch {
+//        case e: Exception => println(e)
+//      }
+
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = value)))
+    }
+
     def hideModal(): Unit = {
       $(t.getDOMNode()).modal("hide")
     }
 
     def mounted(): Callback = Callback {
-
+      //      val valID : js.Object = "form[data-toggle=\"validator\"]"
+      //      $(valID).validator()
     }
 
     def submitForm(e: ReactEventI): react.Callback = {
@@ -100,7 +139,13 @@ object NewMessageForm {
       val state = t.state.runNow()
       LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
         SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
-      t.modState(s => s.copy(postNewMessage = true))
+
+      val messageID: js.Object = "#messageID"
+      if ($(messageID).hasClass("disabled"))
+        t.modState(s => s.copy(postNewMessage = false))
+      else
+        t.modState(s => s.copy(postNewMessage = true))
+
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -118,7 +163,7 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.id := "a", ^.onSubmit ==> submitForm /*"data-toggle".reactAttr := "validator"*/)(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(),
             /*<.div(^.className:="row")(
@@ -132,17 +177,23 @@ object NewMessageForm {
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
               LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
+            <.div(DashBoardCSS.Style.paddingTop10px)(
+              <.input(^.`type` := "file", ^.value := s.postMessage.imgSrc, ^.onChange ==> updateImgSrc)
+            ),
             <.div()(
+              //              <.div(^.className:="form-group")(
               <.textarea(^.rows := 6, ^.placeholder := "Subject", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
             ),
             <.div()(
+              //              <.div(^.className:="form-group")(
               <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.text, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
-              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+              //              <.div(^.className:="form-group")(
+              <.button(^.tpe := "submit", ^.id := "messageID", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()

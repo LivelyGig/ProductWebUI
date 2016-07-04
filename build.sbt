@@ -22,9 +22,9 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 // instantiate the JS project for SBT with some additional settings
 // "client" for livelygig or "sclient" for synereo below
 // and edit server/src/main/twirl/views/index.scala.html file appropirately
-lazy val pCompile = "sclient"
+lazy val pCompile = "client"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
-lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js")
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js","validator.js", "synereo_app.js") else List("prolog_parser.js","validator.js")
 lazy val client: Project = (project in file(pCompile))
   .settings(
       name := "client",
@@ -32,6 +32,7 @@ lazy val client: Project = (project in file(pCompile))
       scalaVersion := Versions.scalaVersion,
       scalacOptions ++= Settings.scalacOptions,
       resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
+//     resolvers += "wasted.io/repo" at "http://repo.wasted.io/mvn",
       libraryDependencies ++= Settings.scalajsDependencies.value,
       // by default we do development build, no eliding
       elideOptions := Seq(),
