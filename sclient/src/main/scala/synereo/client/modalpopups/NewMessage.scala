@@ -60,8 +60,8 @@ object NewMessage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
-        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
+        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        //        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -77,9 +77,9 @@ object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel])
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, labelModel: Label = Label(), postLabel: Boolean = false,
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, postLabel: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
 
   case class Backend(t: BackendScope[Props, State]) {
@@ -109,54 +109,25 @@ object NewMessageForm {
 
     }
 
-    def leafParser(requireStore: Boolean = false): Seq[String] = {
-      val (props, state) = (t.props.runNow(), t.state.runNow())
-      def leaf(text: String, color: String) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"" + s"${color}" + "\"),image(\"\")))"
-      def leafMod(text: String, color: String) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"" + s"${color}" + "\\\"),image(\\\"\\\")))\""
-
-      if (requireStore)
-        props.proxy().searchesModel.map(e => leafMod(e.text, e.color)) :+ leafMod(state.labelModel.text, "#CC5C64")
-      else
-        props.proxy().searchesModel.map(e => leaf(e.text, e.color)) :+ leaf(state.labelModel.text, "#CC5C64")
-
-    }
-
-    def postLabel() = {
-      /*label posting*/
-      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), leafParser(), "alias")
-      println("labelPost = " + labelPost)
-      CoreApi.postLabel(labelPost).onComplete {
-        case Success(res) =>
-          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${leafParser(true).mkString(",")}]")
-          SYNEREOCircuit.dispatch(CreateLabels())
-        case Failure(res) =>
-          logger.log.debug("Label Post failure")
-
-      }
-      t.modState(s => s.copy(postLabel = !s.postLabel))
-      /*label posting*/
-    }
-
     def getLabelsFromText(): Seq[String] = {
       val value = t.state.runNow().postMessage.text.split(" +")
-      val labels = value.filter(
+      val labelStrings = value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).toSeq
-      labels
+      labelStrings
     }
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      getLabelsFromText.foreach(
-        label => {
-          t.modState(s => s.copy(labelModel = s.labelModel.copy(text = label)))
-          println(label)
-        }
-      )
+      //      getLabelsFromText.foreach(
+      //        label => {
+      //          println(s"label:$label")
+      //        }
+      //      )
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
-      //      postLabel
-      println(state.labelModel.text)
+      val labelsFromText = getLabelsFromText
+      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId), labelsFromText))
+      //      println(s"state.labelModel.text : ${}")
       t.modState(s => s.copy(postNewMessage = true))
     }
 

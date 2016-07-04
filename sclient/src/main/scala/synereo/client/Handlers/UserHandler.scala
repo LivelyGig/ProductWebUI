@@ -5,13 +5,14 @@ import java.util.UUID
 import org.querki.jquery._
 import synereo.client.logger._
 import diode.{ActionHandler, ActionResult, Effect, ModelRW}
-import shared.dtos.{Expression, ExpressionContent, Label, SubscribeRequest, _}
-import shared.models._
+import shared.dtos.{Expression, ExpressionContent, SubscribeRequest, _}
+import shared.models.{Label, _}
 import org.scalajs.dom.window
 import shared.sessionitems.SessionItems
 import synereo.client.logger
 import synereo.client.services.{ApiTypes, CoreApi}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
+
 import concurrent._
 import scala.scalajs.js.Object
 import ExecutionContext.Implicits._
@@ -25,7 +26,7 @@ case class LoginUser(userModel: UserModel)
 case class LogoutUser()
 
 //case class PostData(postContent: PostContent, selectizeInputId: Option[String], sessionUriName: String)
-case class PostData(postContent: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String])
+case class PostData(postContent: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String], labelsFromText: Seq[String])
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   //  val messageLoader = "#messageLoader"
@@ -42,13 +43,16 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
       updated(modelFromStore)
 
-    case PostData(value: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String]) =>
+    case PostData(value: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String], labelsFromText: Seq[String]) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnSelectizeInputId, sessionUriName)
-      //      println(lblSelectizeInputId.foreach(case Some => ))
+      val labelModelsFromText: Seq[Label] = labelsFromText.map {
+        label => Label(text = label, color = "#CC5C64", imgSrc = "")
+      }.toSet.toSeq
+      //      if(labelModelsFromText.length == 0)
       val (labelToPost, contentToPost) = sessionUriName match {
         case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
-          (Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ LabelsUtils.getLabelsSeq(lblSelectizeInputId, sessionUriName),
+          (Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ labelModelsFromText ++ LabelsUtils.getLabelsSeq(lblSelectizeInputId, sessionUriName),
             upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(), "", connectionsSeq, value.asInstanceOf[MessagePostContent])))
         case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
           (Seq(LabelsUtils.getSystemLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)),

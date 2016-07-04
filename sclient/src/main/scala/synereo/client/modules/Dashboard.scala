@@ -47,7 +47,7 @@ object Dashboard {
       e.preventDefault()
       val state = t.state.runNow()
       $(messageLoader).removeClass("hidden")
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
+      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
       //      SYNEREOCircuit.dispatch(RefreshMessages())
       $(messageLoader).addClass("hidden")
       t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(postContent = MessagePostContent("", ""))))

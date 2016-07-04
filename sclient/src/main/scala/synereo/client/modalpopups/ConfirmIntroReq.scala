@@ -102,8 +102,8 @@ object ConfirmIntroReqForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
-        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
+      //      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
+      //        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
       t.modState(s => s.copy(postNewMessage = true))
     }
 
