@@ -3,6 +3,7 @@ package synereo.client.modalpopups
 import java.util.UUID
 
 import diode.react.ModelProxy
+import japgolly.scalajs.react
 import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
@@ -17,6 +18,7 @@ import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
 import synereo.client.handlers.{CreateLabels, PostData, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
@@ -26,6 +28,10 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
+
+import scala.scalajs.js
+import org.scalajs.dom.FileReader
+import org.scalajs.dom.raw.UIEvent
 
 //scalastyle:off
 object NewMessage {
@@ -117,6 +123,18 @@ object NewMessageForm {
       labelStrings
     }
 
+    def updateImgSrc(e: ReactEventI): react.Callback = Callback{
+      val value = e.target.files.item(0)
+      println("Img src = " + value)
+      var reader = new FileReader()
+      reader.onload = (e: UIEvent) => {
+        val contents = reader.result.asInstanceOf[String]
+        println(s"in on load $contents")
+        t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
+      }
+      reader.readAsDataURL(value)
+    }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       //      getLabelsFromText.foreach(
@@ -155,6 +173,15 @@ object NewMessageForm {
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
+            ),
+            <.div()(
+              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
+              if (s.postMessage.imgSrc != ""){
+                <.img(^.src := s.postMessage.imgSrc)
+              } else {
+                <.div("")
+              }
+
             ),
             <.div()(
               <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)

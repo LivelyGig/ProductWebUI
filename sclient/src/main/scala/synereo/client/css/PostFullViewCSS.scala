@@ -143,6 +143,10 @@ object PostFullViewCSS {
         borderRadius(50.%%).important
       )
     )
+
+    val marginLeft15PX = style(
+      marginLeft(-15.px)
+    )
   }
 
 }

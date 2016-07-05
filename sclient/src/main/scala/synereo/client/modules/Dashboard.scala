@@ -11,7 +11,7 @@ import org.scalajs.dom
 import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS,PostFullViewCSS}
 import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.scalajs.js
@@ -331,7 +331,18 @@ object HomeFeedList {
                     <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
                       //                      <.h3(message.postContent.subject),
-                      message.postContent.text,
+                      <.div()(
+                       <.div(^.className:="col-md-8",PostFullViewCSS.Style.marginLeft15PX)(
+                         message.postContent.text
+                       ),
+                        <.div(^.className:="col-md-4")(
+                          if (message.postContent.imgSrc != "") {
+                            <.img(^.src := message.postContent.imgSrc)
+                          } else {
+                            <.div("")
+                          }
+                        )
+                      ),
                       <.br(),
                       <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
                     )
