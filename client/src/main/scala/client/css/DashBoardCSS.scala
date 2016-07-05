@@ -545,7 +545,7 @@ object DashBoardCSS {
       //    }
       //
       unsafeChild("tbody")(
-        height(350 px),
+        height(350.px),
         overflowY.auto
       ),
       //
@@ -648,7 +648,7 @@ object DashBoardCSS {
       ),
 
       unsafeChild("thead th")(
-        height(50 px)
+        height(50.px)
       ),
 
       //      .rowStyle thead {
@@ -676,7 +676,7 @@ object DashBoardCSS {
     val inProgress = style(
       unsafeChild("tbody")(
         overflowY.auto,
-        height(135 px),
+        height(135.px),
         position.absolute,
         width(97.%%)
       ),
@@ -685,7 +685,7 @@ object DashBoardCSS {
         display.inlineTable
       ),
       unsafeChild("table")(
-        height(190 px)
+        height(190.px)
       )
     )
     val connectionModalWidth = style(

@@ -146,7 +146,7 @@ object LoggedInUser {
       <.div(HeaderCSS.Style.LoginInMenuItem)(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
-          println("model.imgSrc = "+ model.imgSrc)
+          //println("model.imgSrc = "+ model.imgSrc)
           <.div(
             <.div(HeaderCSS.Style.displayInline)(<.span(Icon.bell)),
             <.div(HeaderCSS.Style.displayInline)(
