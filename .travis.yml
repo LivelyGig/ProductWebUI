@@ -1,3 +1,25 @@
+#https://docs.travis-ci.com/user/languages/scala/
+# use Docker-based container (instead of OpenVZ)
+sudo: false
+cache:
+  directories:
+    - $HOME/.m2/repository
+    - $HOME/.sbt
+    - $HOME/.ivy2
+
+jdk:
+  - oraclejdk8
+  - openjdk8
+
 language: scala
 scala:
    - 2.11.8
+   
+# default command sbt ++$TRAVIS_SCALA_VERSION test   
+script:
+   - sbt ++$TRAVIS_SCALA_VERSION compile stage
+  
+notifications:
+  email:
+    - ns68751+tci@gmail.com
+    - ed@livelygig.com
