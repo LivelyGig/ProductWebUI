@@ -48,7 +48,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnSelectizeInputId, sessionUriName)
       val labelModelsFromText: Seq[Label] = labelsFromText.map {
         label => Label(text = label, color = "#CC5C64", imgSrc = "")
-      }.toSet.toSeq
+      }
       //      if(labelModelsFromText.length == 0)
       val (labelToPost, contentToPost) = sessionUriName match {
         case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>

@@ -33,6 +33,8 @@ import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent
 
+import scala.concurrent.Future
+
 //scalastyle:off
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -66,8 +68,8 @@ object NewMessage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
-        //        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
+        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -83,10 +85,11 @@ object NewMessageForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel])
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, postLabel: Boolean = false,
-                   connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
+                   connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
+                   labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -117,10 +120,29 @@ object NewMessageForm {
 
     def getLabelsFromText(): Seq[String] = {
       val value = t.state.runNow().postMessage.text.split(" +")
-      val labelStrings = value.filter(
+      value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
-      ).map(_.replace("#", "")).toSeq
-      labelStrings
+      ).map(_.replace("#", "")).toSet.toSeq
+    }
+
+    def postLabels(label: String = ""): Future[String] = {
+      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), leafParser(), "alias")
+      //      println("labelPost = " + labelPost)
+      CoreApi.postLabel(labelPost)
+    }
+
+
+    def leafParser(): Seq[String] = {
+      val (props, state) = (t.props.runNow(), t.state.runNow())
+      println(s"state.labelModel: ${state.labelModel}")
+      def leaf(text: String, color: String) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"" + s"${color}" + "\"),image(\"\")))"
+       props.proxy().searchesModel.map(e => leaf(e.text, e.color)) ++ getLabelsFromText.map(e => leaf(e, "#CC5C64"))
+    }
+
+    def getLabelsToStore() : Seq[String] = {
+      val (props, state) = (t.props.runNow(), t.state.runNow())
+      def leafMod(text: String, color: String) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"" + s"${color}" + "\\\"),image(\\\"\\\")))\""
+      props.proxy().searchesModel.map(e => leafMod(e.text, e.color)) ++ getLabelsFromText.map(e => leafMod(e, "#CC5C64"))
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback{
@@ -137,16 +159,19 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      //      getLabelsFromText.foreach(
-      //        label => {
-      //          println(s"label:$label")
-      //        }
-      //      )
       val state = t.state.runNow()
-      val labelsFromText = getLabelsFromText
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId), labelsFromText))
-      //      println(s"state.labelModel.text : ${}")
-      t.modState(s => s.copy(postNewMessage = true))
+      postLabels().onComplete {
+        case Success(responseArray) =>
+          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getLabelsToStore().mkString(",")}]")
+          SYNEREOCircuit.dispatch(PostData(state.postMessage,
+            Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId), getLabelsFromText))
+          SYNEREOCircuit.dispatch(CreateLabels())
+          t.modState(s => s.copy(postNewMessage = true)).runNow()
+        case Failure(res) =>
+          logger.log.debug("Label Post failure")
+          t.modState(s => s.copy(postNewMessage = false))
+      }
+      t.modState(s => s.copy(postNewMessage = false))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -210,7 +235,7 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePostContent()))
+    .initialState_P(p => State(new MessagePostContent(), labelModel = Label()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {

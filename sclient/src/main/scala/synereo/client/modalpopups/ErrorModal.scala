@@ -57,8 +57,7 @@ object ErrorModal {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 text-center")(
                     <.div()(
-                      <.h5("The Api host you provided is unreachable, Please provide a new!"),
-                      <.h5("Encountering problems in serving request. Please try after sometime!"),
+                      <.h5("The Api host you provided is unreachable, Please provide a new one!"),
                       <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close")
                     )
                   )
