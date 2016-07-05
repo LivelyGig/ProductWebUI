@@ -162,17 +162,16 @@ object MessagesList {
           <.div(^.className := "media-body", ^.paddingTop := "10px")(
             <.div(
               <.div(^.className := "col-md-2 col-sm-12")(
-                s"${message.postContent.text}"
-              ),
-              <.div(^.className := "col-md-10 col-sm-12")(
                 <.div(
                   if (message.postContent.imgSrc != "") {
                     <.img(^.src := message.postContent.imgSrc)
                   } else {
                     <.div("")
                   }
-
                 )
+              ),
+              <.div(^.className := "col-md-10 col-sm-12")(
+                s"${message.postContent.text}"
               )
             ),
 
