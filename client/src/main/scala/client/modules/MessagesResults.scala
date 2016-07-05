@@ -161,7 +161,10 @@ object MessagesList {
           // <.div()(s"uid: ${message.uid}"),
           <.div(^.className := "media-body", ^.paddingTop := "10px")(
             <.div(
-              <.div(^.className := "col-md-2 col-sm-12")(
+              <.div(^.className := "col-md-6 col-sm-12")(
+                s"${message.postContent.text}"
+              ),
+              <.div(^.className := "col-md-6 col-sm-12")(
                 <.div(
                   if (message.postContent.imgSrc != "") {
                     <.img(^.src := message.postContent.imgSrc)
@@ -169,9 +172,6 @@ object MessagesList {
                     <.div("")
                   }
                 )
-              ),
-              <.div(^.className := "col-md-10 col-sm-12")(
-                s"${message.postContent.text}"
               )
             ),
 
