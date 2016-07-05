@@ -10,10 +10,13 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
+import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 object CoreApi {
-  var BASE_URL = "http://localhost:9876/api"
+  val hostDetails = Login.apiDetails
+  //  var BASE_URL = "http://localhost:9876/api"
+  var BASE_URL = s"http://${Login.hostName}:${Login.portNumber}/api"
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
@@ -23,6 +26,10 @@ object CoreApi {
       headers = Map("Content-Type" -> "application/json;charset=UTF-8")
     ).map(_.responseText)
   }
+
+  //  val handleApiError: PartialFunction[Throwable, Unit] = {
+  //    case t: Throwable => println(t.printStackTrace)
+  //  }
 
   def getConnections(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
@@ -63,12 +70,17 @@ object CoreApi {
     */
   def getContent(sessionUriName: String): Future[String] = {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
+    val searchConnectionsList = upickle.default.read[Seq[Connection]](
+      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
     val connectionsList = upickle.default.read[Seq[Connection]](
       window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
     ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
+    val connectionListTo = if (connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
+
     val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
-    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
-    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
+    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionListTo, currentSearchLabels)))
+    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionListTo, previousSearchLabels)
     Option(previousSearchLabels) match {
       case Some(s) =>
         window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)

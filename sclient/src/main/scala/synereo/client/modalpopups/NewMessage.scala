@@ -2,18 +2,22 @@ package synereo.client.modalpopups
 
 import java.util.UUID
 
-import shared.models.{MessagePost, MessagePostContent}
+import diode.react.ModelProxy
+import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom
+import shared.RootModels.SearchesRootModel
+import shared.dtos.LabelPost
 import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.PostData
+import synereo.client.handlers.{CreateLabels, PostData, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -21,7 +25,9 @@ import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
+import synereo.client.logger
 
+//scalastyle:off
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -55,6 +61,7 @@ object NewMessage {
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        //        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -72,7 +79,8 @@ object NewMessageForm {
 
   case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
+  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false, postLabel: Boolean = false,
+                   connectionsSelectizeInputId: String = "connectionsSelectizeInputId", labelsSelectizeInputId: String = "labelsSelectizeInputId")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -101,13 +109,25 @@ object NewMessageForm {
 
     }
 
+    def getLabelsFromText(): Seq[String] = {
+      val value = t.state.runNow().postMessage.text.split(" +")
+      val labelStrings = value.filter(
+        _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
+      ).map(_.replace("#", "")).toSeq
+      labelStrings
+    }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      //      getLabelsFromText.foreach(
+      //        label => {
+      //          println(s"label:$label")
+      //        }
+      //      )
       val state = t.state.runNow()
-      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
-//      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
-      println(state.postMessage)
-      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId)))
+      val labelsFromText = getLabelsFromText
+      SYNEREOCircuit.dispatch(PostData(state.postMessage, Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId), labelsFromText))
+      //      println(s"state.labelModel.text : ${}")
       t.modState(s => s.copy(postNewMessage = true))
     }
 
@@ -145,7 +165,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.className := "text-left text-muted")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight:="4.px")(Icon.infoCircle), "posting shorthand")
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
             ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(

@@ -6,11 +6,12 @@ import shared.models.{Label, MessagePost}
 import shared.RootModels.MessagesRootModel
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom.window
+import shared.dtos.Connection
 import shared.sessionitems.SessionItems
 import synereo.client.components.LabelsSelectize
 import synereo.client.modules.AppModule
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import synereo.client.utils.{LabelsUtils}
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -24,6 +25,7 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
 
 case class StoreMessagesLabels(selectizeInputId: Option[String])
 
+case class StoreCnxnAndLabels(lblslctzId: Option[String], cnxnslctzId: Option[String], sessionUriName: String)
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
@@ -39,6 +41,21 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val searchLabels = LabelsUtils.buildProlog(
         Seq(Label(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)
         ), LabelsUtils.PrologTypes.Each)
+      window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
+
+      noChange
+
+    case StoreCnxnAndLabels(lblslctzId: Option[String], cnxnslctzId: Option[String], sessionUriName: String) =>
+      val crntSearchLblsFrmSelctize = lblslctzId match {
+        case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsFromSelectizeInput(lblSelectizeInputId)
+        case None => Nil
+      }
+      //      println(s"crntSearchLblsFrmSelctize :$crntSearchLblsFrmSelctize")
+      val connectionsSeq = ConnectionsUtils.getCnxsSeq(cnxnslctzId, sessionUriName).toSet.toSeq
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST,
+        upickle.default.write[Seq[Connection]](connectionsSeq)
+      )
+      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)), LabelsUtils.PrologTypes.Any)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
       noChange

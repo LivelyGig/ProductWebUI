@@ -28,6 +28,7 @@ object LabelsSelectize {
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
     $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[Label]($(y).attr("data-value").toString))
+    //    println(selectedLabels)
     selectedLabels
   }
 
@@ -63,7 +64,7 @@ object LabelsSelectize {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "search for # or @ ", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag or @ for connection”", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel

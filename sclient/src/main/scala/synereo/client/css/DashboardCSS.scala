@@ -65,6 +65,11 @@ object DashboardCSS {
       marginRight.auto,
       display.block
     )
+    val confirmIntroReqBtn = style(
+      position.absolute,
+      top(69.px),
+      right(37.px)
+    )
     val bodyImg = style(
       borderImageRepeat.:=(none),
       overflow.hidden,

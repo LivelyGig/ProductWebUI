@@ -16,6 +16,13 @@ object UserProfileView {
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
       <.div(^.className := "container-fluid",UserProfileViewCSS.Style.UserProfileContainerMain)(
+        <.div(^.className := "row")(
+          //Left Sidebar
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+            //            Footer(Footer.Props(c, r.page))
+            Sidebar(Sidebar.Props())
+          )
+        ),
         <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
           <.div("User Profile View", UserProfileViewCSS.Style.heading)
         )

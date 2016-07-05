@@ -11,10 +11,8 @@ import synereo.client.services.CoreApi
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 
-/**
- * Created by shubham.k on 1/25/2016.
- */
 // Actions
+//scalastyle:off
 case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) extends PotAction[ConnectionsRootModel, RefreshConnections] {
   // first ping after user login returns the connections for the user.
   // todo replace the session ping with the connections specific calls to api backend server.

@@ -4,8 +4,8 @@ import japgolly.scalajs.react.ReactNode
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 /**
- * Created by Mandar on 3/16/2016.
- */
+  * Created by Mandar on 3/16/2016.
+  */
 object MIcon {
   type MIcon = ReactNode
 
@@ -76,5 +76,7 @@ object MIcon {
   def accessTime = apply("access time")
 
   def search = apply("search")
+
+  def sms = apply("sms")
 
 }

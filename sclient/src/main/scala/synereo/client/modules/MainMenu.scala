@@ -1,5 +1,6 @@
 package synereo.client.modules
 
+import diode.data.Empty
 import org.querki.jquery._
 import synereo.client.components._
 import diode.react.ModelProxy
@@ -25,22 +26,27 @@ import scalacss.ScalaCssReact._
 //scalastyle:off
 object MainMenu {
   // shorthand for styles
-  //  val labelSelectizeId: String = "labelSelectizeId"
+  //  val labelSelectizeInputId: String = "labelSelectizeInputId"
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeId")
+  case class State(labelSelectizeId: String = "labelSelectizeInputId")
 
   //  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
-      //            println("main menu mounted")
-      SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
-        imgSrc = "", isLoggedIn = false)))
+      //      println("main menu mounted")
+      SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
       SYNEREOCircuit.dispatch(CreateLabels())
+
+    }
+
+    def unmounted(props: Props) = Callback {
+      //      println("main menu unmounted")
+      Empty
     }
 
     def searchWithLabels(e: ReactEventI) = Callback {
@@ -65,13 +71,18 @@ object MainMenu {
           <.div(
             <.div(^.className := "label-selectize-container-main")(
               <.div()(
-                <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-                  <.div(^.id := S.labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-                    SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeId)))
-                  ),
-                  <.button(^.className := "btn btn-primary", ^.onClick ==> $.backend.searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                  )
-                )
+                if (props.currentLoc == DashboardLoc) {
+                  /*<.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
+                    <.div(^.id := S.labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+                      SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeInputId)))
+                    ),
+                    <.button(^.className := "btn btn-primary", ^.onClick ==> $.backend.searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
+                    )
+                  )*/
+                  SearchComponent(SearchComponent.Props())
+                } else {
+                  <.span()
+                }
                 //                <.div(
                 //                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
                 //                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
@@ -165,8 +176,8 @@ object MainMenu {
         //          if (props.proxy().isLoggedIn) {
         //            <.div(^.className := "")(
         //              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-        //                <.div(^.id := labelSelectizeId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeId)))
+        //                <.div(^.id := labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
+        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeInputId)))
         //                ),
         //                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
         //                )
@@ -190,6 +201,7 @@ object MainMenu {
       )
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentWillUnmount(scope => scope.backend.unmounted(scope.props))
     .build
 
   def apply(props: Props) = MainMenu(props)

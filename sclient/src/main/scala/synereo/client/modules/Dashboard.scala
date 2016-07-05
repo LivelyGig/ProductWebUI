@@ -14,7 +14,7 @@ import synereo.client.components._
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
@@ -34,9 +34,8 @@ object Dashboard {
   val messageLoader: js.Object = "#messageLoader"
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
-  val loginLoader: js.Object = "#loginLoader"
-  val loadingScreen: js.Object = "#loadingScreen"
-  val homeFeedMediaList: js.Object = "#homeFeedMediaList"
+
+  //  val toolTips: dom.Element= "[data-toggle='tooltip']"
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
@@ -48,13 +47,15 @@ object Dashboard {
       e.preventDefault()
       val state = t.state.runNow()
       $(messageLoader).removeClass("hidden")
-      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
+      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
       //      SYNEREOCircuit.dispatch(RefreshMessages())
       $(messageLoader).addClass("hidden")
       t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(postContent = MessagePostContent("", ""))))
     }
 
     def mounted(props: Props) = {
+      //      $("[data-toggle='tooltip']".asInstanceOf[js.Object]).tooltip()
+      //      jQuery("[data-toggle='tooltip']".asInstanceOf[dom.Element]).tooltip()
       if (props.proxy().isEmpty) {
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
@@ -152,15 +153,15 @@ object Dashboard {
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
-                <.form(^.onSubmit ==> postMessage)(
-                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
-                  //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
-                ),
-                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
-              ),
+              //              <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
+              //                <.form(^.onSubmit ==> postMessage)(
+              //                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
+              //                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
+              //                  //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
+              //                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
+              //                ),
+              //                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
+              //              ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
@@ -316,7 +317,7 @@ object HomeFeedList {
                   <.span("James Gosling"),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                  <.span(Moment(message.created).toLocaleString)
+                  <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
               )
@@ -327,9 +328,9 @@ object HomeFeedList {
                   //                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
 
-                    <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                    <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
-                      <.h3(message.postContent.subject),
+                      //                      <.h3(message.postContent.subject),
                       message.postContent.text,
                       <.br(),
                       <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreHoriz)
