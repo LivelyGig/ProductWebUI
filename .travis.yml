@@ -16,7 +16,16 @@ language: scala
 
 scala:
    - 2.11.8
-   
+
+# blocklist
+branches:
+  except:
+
+# safelist
+branches:
+  only:
+    - synereo
+    
 # default command sbt ++$TRAVIS_SCALA_VERSION test   
 script:
    - sbt ++$TRAVIS_SCALA_VERSION compile stage
