@@ -1,9 +1,15 @@
 #https://docs.travis-ci.com/user/languages/scala/
 # use Docker-based container (instead of OpenVZ)
-sudo: false
 
-cache:
-  directories:
+  sudo: false 
+
+  language: scala
+  
+  scala:
+   - 2.11.8
+  
+  cache:
+    directories:
     - $HOME/.m2/repository
     - $HOME/.sbt
     - $HOME/.ivy2
@@ -12,10 +18,6 @@ jdk:
   - oraclejdk8
 #  - openjdk8
 
-language: scala
-
-scala:
-   - 2.11.8
 
 # blocklist
 branches:
