@@ -96,7 +96,7 @@ case class StoreProfilesSearchLabel()
 
 // scalastyle:off
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
-  override def handle: PartialFunction[Any, ActionResult[M]] = {
+  override def handle/*: PartialFunction[Any, ActionResult[M]]*/ = {
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem(SessionItems.SearchesView.LIST_OF_LABELS)
       //      println(s"listOfLabelFromStore: $listOfLabelFromStore")

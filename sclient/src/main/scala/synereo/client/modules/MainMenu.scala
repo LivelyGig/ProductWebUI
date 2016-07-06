@@ -22,7 +22,7 @@ import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
-import diode.AnyAction._
+//import diode.AnyAction._
 
 //scalastyle:off
 object MainMenu {

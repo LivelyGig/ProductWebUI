@@ -30,7 +30,7 @@ case class StoreCnxnAndLabels(lblslctzId: Option[String], cnxnslctzId: Option[St
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
 
-  override def handle: PartialFunction[Any, ActionResult[M]] = {
+  override def handle/*: PartialFunction[Any, ActionResult[M]]*/ = {
     case StoreMessagesLabels(selectizeInputId: Option[String]) =>
       val crntSearchLblsFrmSelctize = selectizeInputId match {
         case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsFromSelectizeInput(lblSelectizeInputId)
