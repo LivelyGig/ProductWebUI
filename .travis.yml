@@ -1,0 +1,45 @@
+#https://docs.travis-ci.com/user/languages/scala/
+# use Docker-based container (instead of OpenVZ)
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.m2/repository
+    - $HOME/.sbt
+    - $HOME/.ivy2
+
+jdk:
+  - oraclejdk8
+#  - openjdk8
+
+language: scala
+
+scala:
+   - 2.11.8
+   
+# default command sbt ++$TRAVIS_SCALA_VERSION test   
+script:
+   - sbt ++$TRAVIS_SCALA_VERSION compile stage
+
+# server/target/universal/stage/lib
+# server.server-1.0.1-assets.jar
+# server.server-1.0.1-sans-externalized.jar
+# sharedjvm.sharedjvm-0.1-SNAPSHOT.jar
+deploy:
+  provider: releases
+  api_key: "$N10NAPI_TOKEN"
+  file:
+    - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
+    - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
+    - "server/target/universal/stage/lib/sharedjvm.sharedjvm-0.1-SNAPSHOT.jar"
+  skip_cleanup: true
+  on:
+    tags: true
+    
+notifications:
+  email:
+    - ns68751+tci@gmail.com
+    - ed@livelygig.com
+    - shubham.kamthania@afourtech.com
+    - mandar.kawtakwar@afourtech.com
+- bhagyashree.birajdar@afourtech.com
