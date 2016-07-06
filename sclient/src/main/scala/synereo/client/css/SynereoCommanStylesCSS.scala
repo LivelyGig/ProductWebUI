@@ -36,9 +36,18 @@ object SynereoCommanStylesCSS {
       borderBottom(1.px, solid, c"#FFFFFF")
     )
     val selectizeSearchComponent = style(
-      width(240.px),
       display.inlineBlock,
-      margin(14.px, 0.px, 0.px, 0.px)
+      margin(14.px, 0.px, 0.px, 0.px),
+      media.maxWidth(1130.px).minWidth(920.px) -
+        width(180.px),
+      media.maxWidth(919.px).minWidth(820.px) -
+        width(132.px),
+      media.maxWidth(819.px).minWidth(768.px)-
+        width(100.px),
+      media.maxWidth(767.px)-
+        width(230.px),
+      media.minWidth(1131.px) -
+        width(230.px)
     )
     val loadingScreen = style(
       height(100.vh),
@@ -86,7 +95,9 @@ object SynereoCommanStylesCSS {
       //      position.absolute,
       //      paddingTop(6.px),
       //      paddingRight(20.px),
-      right.`0`
+      right.`0`,
+      media.maxWidth(767.px)-
+      marginTop(65.px)
       //      zIndex(100)
       //      backgroundColor(c"#277490")
     )
@@ -148,9 +159,14 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val userNameNavBar = style(
-      fontSize(20.px),
       color(c"#FFFFFF "),
-      padding(5.px, 5.px)
+      padding(5.px, 5.px),
+      media.maxWidth(1250.px) -
+        fontSize(16.px),
+      media.minWidth(1251.px) -
+        fontSize(20.px),
+      media.maxWidth(1050.px) -
+        width(130.px)
     )
     val ampsDropdownToggleBtn = style(
       //      width(110.px),

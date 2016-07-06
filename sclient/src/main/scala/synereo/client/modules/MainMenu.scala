@@ -68,7 +68,7 @@ object MainMenu {
       <.div(^.className := "container-fluid")(
         if (props.proxy().isLoggedIn) {
           val model = props.proxy.value
-          <.div(
+          <.div(^.className:="row")(
             <.div(^.className := "label-selectize-container-main")(
               <.div()(
                 if (props.currentLoc == DashboardLoc) {

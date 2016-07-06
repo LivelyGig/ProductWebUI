@@ -199,15 +199,15 @@ object NewMessageForm {
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
             ),
-            <.div()(
-              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
-              if (s.postMessage.imgSrc != ""){
-                <.img(^.src := s.postMessage.imgSrc)
-              } else {
-                <.div("")
-              }
-
-            ),
+//            <.div()(
+////              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
+//              if (s.postMessage.imgSrc != ""){
+//                <.img(^.src := s.postMessage.imgSrc)
+//              } else {
+//                <.div("")
+//              }
+//
+//            ),
             <.div()(
               <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
             ),
@@ -216,13 +216,23 @@ object NewMessageForm {
             )
           ),
           <.div(^.className := "row")(
+            <.div()(
+              //              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
+              if (s.postMessage.imgSrc != ""){
+                <.img(^.src := s.postMessage.imgSrc)
+              } else {
+                <.div("")
+              }
+
+            ),
             <.div(^.className := "text-left text-muted")(
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
             ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.camera)),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.paperclip))
+              <.label( ^.`for` := "files")(<.span(^.tpe := "button",  ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,Icon.paperclip)),
+                <.input(^.`type` := "file", ^.visibility :="hidden", ^.position:= "absolute" , ^.id:="files", ^.name:="files", ^.onChange ==> updateImgSrc)
               ),
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
               <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
