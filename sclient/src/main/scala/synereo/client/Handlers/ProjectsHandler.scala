@@ -19,7 +19,7 @@ case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty, retryPolic
 }
 
 class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends ActionHandler(modelRW) {
-  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshProjects =>
       val labels = window.sessionStorage.getItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH)
       val updateF = action.effectWithRetry(CoreApi.getContent(SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI)) { jobPostsResponse =>

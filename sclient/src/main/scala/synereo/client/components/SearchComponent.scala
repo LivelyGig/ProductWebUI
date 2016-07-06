@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import diode.AnyAction._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -22,6 +22,9 @@ object SearchComponent {
   case class Props()
 
   case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz")
+
+  val getConnections = SYNEREOCircuit.connect(_.connections)
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
@@ -38,10 +41,10 @@ object SearchComponent {
     def render(s: State, p: Props) = {
       <.div(SynereoCommanStylesCSS.Style.searchBoxContainer)(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
+          getConnections(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
         ),
         <.div(^.id := s.labelSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelSelectizeInputId)))
+          getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelSelectizeInputId)))
         ),
         <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLblAndCnxn, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
         )

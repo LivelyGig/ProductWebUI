@@ -33,9 +33,9 @@ object Settings {
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
     "com.vmunier" %% "play-scalajs-scripts" % Versions.playScripts,
-    "org.webjars" % "font-awesome" % "4.6.2" % Provided,
+    "org.webjars" % "font-awesome" % Versions.fontAwesome  % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
-    "org.json4s" %% "json4s-jackson" % "3.3.0"
+    "org.json4s" %% "json4s-jackson" % Versions.json4s
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */
@@ -47,15 +47,14 @@ object Settings {
     "me.chrons" %%% "diode" % Versions.diode,
     "me.chrons" %%% "diode-react" % Versions.diode,
     "org.querki" %%% "jquery-facade" % Versions.jqueryFacade,
-    "org.querki" %%% "querki-jsext" % "0.6",
+    "org.querki" %%% "querki-jsext" % Versions.querkiJsext ,
     "org.querki" %%% "bootstrap-datepicker-facade" % Versions.datePickerFacade,
     "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
-    "com.github.nscala-time" %% "nscala-time" % "2.12.0",
+    //"com.github.nscala-time" %% "nscala-time" % "2.12.0",
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
     "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
     "com.lihaoyi" %%% "upickle" % Versions.upickle,
-    "com.github.japgolly.scalajs-react" %%% "test" % "0.11.1" % "test"/*,
-    "io.wasted" %% "wasted-util" % "0.12.4"*/
+    "com.github.japgolly.scalajs-react" %%% "test" % Versions.test % "test"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */
@@ -72,7 +71,6 @@ object Settings {
     "org.webjars.bower" % "react" % Versions.react % "test" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React",
     "org.webjars.bower" % "react" % Versions.react % "test" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
     "org.webjars.bower" % "react" % Versions.react % "test" / "react-dom-server.js" minified "react-dom-server.min.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
-
   ))
 
 }
