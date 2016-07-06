@@ -27,7 +27,7 @@ script:
 # sharedjvm.sharedjvm-0.1-SNAPSHOT.jar
 deploy:
   provider: releases
-  api_key: "ec098ab155be412b7a486787ef34e226355e761a"
+  api_key: ""
   file:
     - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
     - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
