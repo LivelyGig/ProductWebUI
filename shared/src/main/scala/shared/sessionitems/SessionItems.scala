@@ -44,4 +44,8 @@ object SessionItems {
     val PREVIOUS_PROFILES_LABEL_SEARCH = "PREVIOUS_PROFILES_LABEL_SEARCH"
     val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"
   }
+  object ApiDetails {
+    val API_HOST = "API_HOST"
+    val API_PORT = "API_PORT"
+  }
 }

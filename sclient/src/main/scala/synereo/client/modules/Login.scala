@@ -36,9 +36,6 @@ object Login {
   val loginLoader: js.Object = "#loginLoader"
   val loadingScreen: js.Object = "#loadingScreen"
   var isUserVerified = false
-  val apiDetails = new ApiDetails("localhost", "9876")
-  var hostName: String = ""
-  var portNumber: String = ""
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -250,10 +247,8 @@ object Login {
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      //      println(s"state.hostName = ${state.hostName},state.portNumber = ${state.portNumber}")
-      //      println(s"hostName = ${hostName},portNumber = ${portNumber}")
-      hostName = state.hostName
-      portNumber = state.portNumber
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       t.modState(s => s.copy(showLoginForm = true))
     }
 

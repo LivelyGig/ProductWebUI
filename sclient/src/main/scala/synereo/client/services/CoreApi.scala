@@ -14,9 +14,7 @@ import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 object CoreApi {
-  val hostDetails = Login.apiDetails
-  //  var BASE_URL = "http://localhost:9876/api"
-  var BASE_URL = s"http://${Login.hostName}:${Login.portNumber}/api"
+  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api" // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
