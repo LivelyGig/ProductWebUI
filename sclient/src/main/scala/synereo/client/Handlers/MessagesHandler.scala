@@ -33,13 +33,13 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case StoreMessagesLabels(selectizeInputId: Option[String]) =>
       val crntSearchLblsFrmSelctize = selectizeInputId match {
-        case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsFromSelectizeInput(lblSelectizeInputId)
+        case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsTxtFromSelectize(lblSelectizeInputId)
         case None => Nil
       }
       //      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel =>
       //        Label(text = currentLabel.text)), LabelsUtils.PrologTypes.Each)
       val searchLabels = LabelsUtils.buildProlog(
-        Seq(Label(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)
+        Seq(Label(text = SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel)
         ), LabelsUtils.PrologTypes.Each)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
@@ -47,7 +47,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
 
     case StoreCnxnAndLabels(lblslctzId: Option[String], cnxnslctzId: Option[String], sessionUriName: String) =>
       val crntSearchLblsFrmSelctize = lblslctzId match {
-        case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsFromSelectizeInput(lblSelectizeInputId)
+        case Some(lblSelectizeInputId) => LabelsSelectize.getLabelsTxtFromSelectize(lblSelectizeInputId)
         case None => Nil
       }
       //      println(s"crntSearchLblsFrmSelctize :$crntSearchLblsFrmSelctize")
@@ -55,7 +55,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST,
         upickle.default.write[Seq[Connection]](connectionsSeq)
       )
-      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(currentLabel => Label(text = currentLabel.text)), LabelsUtils.PrologTypes.Any)
+      val searchLabels = LabelsUtils.buildProlog(crntSearchLblsFrmSelctize.map(e => Label(text = e)), LabelsUtils.PrologTypes.Any)
       window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
 
       noChange

@@ -42,9 +42,8 @@ object MainMenu {
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
       //      println("main menu mounted")
+//      SYNEREOCircuit.dispatch(CreateLabels())
       SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
-      SYNEREOCircuit.dispatch(CreateLabels())
-
     }
 
     def unmounted(props: Props) = Callback {
@@ -52,10 +51,10 @@ object MainMenu {
       Empty
     }
 
-    def searchWithLabels(e: ReactEventI) = Callback {
+    /*def searchWithLabels(e: ReactEventI) = Callback {
       SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(t.state.runNow().labelSelectizeId)))
       SYNEREOCircuit.dispatch(RefreshMessages())
-    }
+    }*/
 
     def toggleTopbar = Callback {
       val topBtn: js.Object = "#TopbarContainer"

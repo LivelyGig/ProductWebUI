@@ -14,6 +14,7 @@ import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 import shared.dtos.Connection
+import synereo.client.handlers.RefreshConnections
 
 
 /**
@@ -39,7 +40,7 @@ object ConnectionsSelectize {
       //      var item: String = ""
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object = "#selectize"
+        val selectizeInput: js.Object =  s"#${t.props.runNow().parentIdentifier}-selectize"
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(30)
           .plugins("remove_button")
@@ -58,14 +59,15 @@ object ConnectionsSelectize {
       println(getSelectedValue)
     }
 
-    def mounted(props: Props): Callback = Callback {
+    def mounted(props: Props)/*: Callback */= {
       initializeTagsInput(props.parentIdentifier)
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
 
-    def updatedProps(props: Props): Callback = Callback {
+    def componentDidUpdate(props: Props): Callback = Callback {
       //      println("inside updatedProps")
       if (!props.proxy().isEmpty) {
-        //        println("inside if cond")
+                println("inside if cond")
         initializeTagsInput(props.parentIdentifier)
       }
     }
@@ -73,7 +75,7 @@ object ConnectionsSelectize {
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := "selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           props.proxy().render(connectionsRootModel =>
             for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
@@ -99,7 +101,8 @@ object ConnectionsSelectize {
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillReceiveProps(scope => scope.$.backend.updatedProps(scope.nextProps))
+//    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build
 
