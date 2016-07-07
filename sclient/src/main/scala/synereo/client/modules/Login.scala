@@ -152,7 +152,6 @@ object Login {
       setSessionsUri(responseArray)
       val responseStr = responseArray(0)
       setUserDetailsInSession(responseStr, userModel)
-      SYNEREOCircuit.dispatch(RefreshConnections())
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
       window.location.href = "/#dashboard"

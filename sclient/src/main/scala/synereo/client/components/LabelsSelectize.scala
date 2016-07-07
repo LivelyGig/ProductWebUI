@@ -64,13 +64,13 @@ object LabelsSelectize {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag or @ for connection”", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-          for (label <- props.proxy().searchesModel
+          for (label <- props.proxy().searchesModel.distinct.toSet.toSeq
             .filter(e => e.parentUid == "self")
             .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
-            <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
+            <.option(^.value := upickle.default.write(label), ^.key := label.uid)(s"#${label.text}")
           }
         )
       } else {
