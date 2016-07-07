@@ -40,6 +40,11 @@ object Info {
   val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
   val agentUID = ConnectionsUtils.getSelfConnnection(response).source
   val newAgentUID = agentUID.substring(8)
+//  println(s"agentUID ${newAgentUID}")
+  val output = newAgentUID.split("\"")
+//  println(s"output ${output.head}")
+//  for(o <- output)yield {  println(o)}
+
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props): Callback = Callback {
@@ -59,7 +64,7 @@ object Info {
             Sidebar(Sidebar.Props())
           )
         ),
-        <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${newAgentUID}"),
+        <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
         <.div(UserProfileViewCSS.Style.agentUID)("Build Number : ")
       ) //connectionsContainerMain
     })

@@ -17,7 +17,19 @@ import synereo.client.utils.LabelsUtils
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
+import diode.data.Pot
+import diode.react.ReactPot._
+import diode.react.ModelProxy
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import org.denigma.selectize._
+import org.querki.jquery._
+import org.scalajs.dom._
 
+import scala.language.existentials
+import scala.collection.mutable.ListBuffer
+import scala.scalajs.js
+import shared.dtos.Connection
 /**
   * Created by mandar.k on 5/17/2016.
   */
@@ -60,6 +72,12 @@ object LabelsSelectize {
       initializeTagsInput(props.parentIdentifier)
     }
 
+    def updatedProps(props: Props): Callback = Callback {
+      if (props.proxy() != null) {
+        initializeTagsInput(props.parentIdentifier)
+      }
+    }
+
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
@@ -82,6 +100,7 @@ object LabelsSelectize {
   val component = ReactComponentB[Props]("LabelsSelectize")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentWillReceiveProps(scope => scope.$.backend.updatedProps(scope.nextProps))
     .build
 
   def apply(props: Props) = component(props)
