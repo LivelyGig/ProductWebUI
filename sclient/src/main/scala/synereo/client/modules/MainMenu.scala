@@ -24,8 +24,7 @@ import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
-
-//import diode.AnyAction._
+import diode.AnyAction._
 
 //scalastyle:off
 object MainMenu {
@@ -43,9 +42,9 @@ object MainMenu {
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
       //      println("main menu mounted")
-      SYNEREOCircuit.dispatch(RefreshConnections())
       SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
       SYNEREOCircuit.dispatch(CreateLabels())
+
     }
 
     def unmounted(props: Props) = Callback {
@@ -70,7 +69,7 @@ object MainMenu {
     .renderPS(($, props, S) => {
       //      println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
-        if (props.proxy().isLoggedIn) {
+        if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
           <.div(^.className := "row")(
             <.div(^.className := "label-selectize-container-main")(
@@ -83,7 +82,6 @@ object MainMenu {
                 } else {
                   <.span()
                 }
-
                 //                <.div(
                 //                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
                 //                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(

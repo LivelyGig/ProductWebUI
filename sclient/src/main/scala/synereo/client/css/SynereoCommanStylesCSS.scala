@@ -69,7 +69,7 @@ object SynereoCommanStylesCSS {
       fontSize(18.px),
       //      position.absolute,
       marginTop(8.px),
-      marginRight(-20.px),
+      marginRight(-2.px),
       height(50.px),
       textAlign.left,
       width(20.px),

@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import shared.sessionitems.SessionItems
-import synereo.client.handlers.{CreateLabels, LoginUser, RefreshConnections}
+import synereo.client.handlers.{CreateLabels, LoginUser, LogoutUser, RefreshConnections}
 import synereo.client.modalpopups._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
@@ -21,6 +21,7 @@ import org.querki.jquery._
 import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
 import synereo.client.logger._
+import diode.AnyAction._
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -45,7 +46,7 @@ object Login {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, isloggedIn: Boolean = false, hostName: String = "", portNumber: String = "")
+                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = "", portNumber: String = "")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -152,6 +153,8 @@ object Login {
       setSessionsUri(responseArray)
       val responseStr = responseArray(0)
       setUserDetailsInSession(responseStr, userModel)
+      SYNEREOCircuit.dispatch(RefreshConnections())
+      SYNEREOCircuit.dispatch(LoginUser(userModel))
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
       window.location.href = "/#dashboard"

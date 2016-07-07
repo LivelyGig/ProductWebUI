@@ -91,7 +91,7 @@ object ConnectionsForm {
                    establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
                    chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid: String = "", userName: String = "")
 
-//  val connectionSelectize =  SYNEREOCircuit.connect(_.connections)
+  val connectionSelectize =  SYNEREOCircuit.connect(_.connections)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
@@ -244,7 +244,7 @@ object ConnectionsForm {
               <.div(^.id := s"${s.selectizeInputId}")(
               //  SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
 
-                SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
+                connectionSelectize(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
               ("Please provide Only 2 Connections... !!!"),

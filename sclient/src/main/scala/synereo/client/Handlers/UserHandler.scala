@@ -30,7 +30,7 @@ case class PostData(postContent: PostContent, cnxnSelectizeInputId: Option[Strin
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   //  val messageLoader = "#messageLoader"
-  override def handle = {
+  override def handle : PartialFunction[Any, ActionResult[M]] = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
