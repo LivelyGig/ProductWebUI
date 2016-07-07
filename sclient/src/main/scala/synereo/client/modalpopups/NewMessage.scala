@@ -1,7 +1,6 @@
 package synereo.client.modalpopups
 
 import java.util.UUID
-
 import diode.react.ModelProxy
 import japgolly.scalajs.react
 import shared.models.{Label, MessagePost, MessagePostContent}
@@ -18,7 +17,6 @@ import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
 import synereo.client.handlers.{CreateLabels, PostData, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
@@ -32,7 +30,7 @@ import diode.AnyAction._
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent
-
+import synereo.client.utils.LabelsUtils
 import scala.concurrent.Future
 
 //scalastyle:off
@@ -43,7 +41,7 @@ object NewMessage {
 
   case class State(showNewMessageForm: Boolean = false)
 
-  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -94,8 +92,8 @@ object NewMessageForm {
                    labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
-  val getConnections =  SYNEREOCircuit.connect(_.connections)
-  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getConnections = SYNEREOCircuit.connect(_.connections)
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
