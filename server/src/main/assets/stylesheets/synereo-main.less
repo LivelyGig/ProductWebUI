@@ -76,7 +76,7 @@ a:hover, a:focus {
 }
 
 @media (min-width: 768px) {
-  .row .sidebar.sidebar-left.sidebar-sm-show {
+  .row .sidebar.sidebar-left.sidebar-md-show {
     left: 0;
     -webkit-transform: translate(0,0);
     -ms-transform: translate(0,0);
@@ -893,9 +893,14 @@ transform: translate(0,0); */
  left: 20%;
  }
  }
- @media (min-width: 1441px) {
+ @media (min-width: 1441px) and (min-width: 1600px) {
 .label-selectize-container-main{
  left: 28%;
+ }
+ }
+ @media (min-width: 1601px) {
+.label-selectize-container-main{
+ left: 33%;
  }
  }
 

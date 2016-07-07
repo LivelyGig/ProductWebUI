@@ -73,12 +73,19 @@ object LabelsSelectize {
     }
 
     def updatedProps(props: Props): Callback = Callback {
-      if (props.proxy() != null) {
-        initializeTagsInput(props.parentIdentifier)
-      }
+      // initializeTagsInput(props.parentIdentifier)
     }
 
     def render(props: Props) = {
+
+      println("Inn render method of labelselectize")
+      for (label <- props.proxy().searchesModel
+        .filter(e => e.parentUid == "self")
+        .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
+         println(upickle.default.write(label))
+        println(label.text)
+      }
+
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
@@ -100,7 +107,7 @@ object LabelsSelectize {
   val component = ReactComponentB[Props]("LabelsSelectize")
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillReceiveProps(scope => scope.$.backend.updatedProps(scope.nextProps))
+//    .componentWillReceiveProps(scope => scope.$.backend.updatedProps(scope.nextProps))
     .build
 
   def apply(props: Props) = component(props)

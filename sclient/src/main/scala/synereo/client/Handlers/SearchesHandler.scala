@@ -23,6 +23,9 @@ object SearchesModelHandler {
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
+      println(s"model text ${
+        for(m <- model){   m.text    }
+      }")
       SearchesRootModel(model.filterNot(e => LabelsUtils.getSystemLabels().contains(e.text)))
     } catch {
       case e: Exception =>
