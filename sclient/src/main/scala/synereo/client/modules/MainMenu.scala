@@ -22,7 +22,7 @@ import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
 
 import scalacss.ScalaCssReact._
-//import diode.AnyAction._
+import diode.AnyAction._
 
 //scalastyle:off
 object MainMenu {
@@ -65,9 +65,9 @@ object MainMenu {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
-      //      println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
+           // println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
-        if (props.proxy().isLoggedIn) {
+        if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
           <.div(^.className:="row")(
             <.div(^.className := "label-selectize-container-main")(

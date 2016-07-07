@@ -28,7 +28,7 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-//import diode.AnyAction._
+import diode.AnyAction._
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent
@@ -43,7 +43,7 @@ object NewMessage {
 
   case class State(showNewMessageForm: Boolean = false)
 
-//  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getSearches =  SYNEREOCircuit.connect(_.searches)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -71,7 +71,7 @@ object NewMessage {
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
         //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
-        if (S.showNewMessageForm) SYNEREOCircuit.connect(_.searches)(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
+        if (S.showNewMessageForm) getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -93,9 +93,9 @@ object NewMessageForm {
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
                    labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
 
-//  val getUsers = SYNEREOCircuit.connect(_.user)
-//  val getConnections =  SYNEREOCircuit.connect(_.connections)
-//  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getUsers = SYNEREOCircuit.connect(_.user)
+  val getConnections =  SYNEREOCircuit.connect(_.connections)
+  val getSearches =  SYNEREOCircuit.connect(_.searches)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -196,14 +196,14 @@ object NewMessageForm {
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(
-            SYNEREOCircuit.connect(_.user)(proxy => UserPersona(UserPersona.Props(proxy)))
+            getUsers(proxy => UserPersona(UserPersona.Props(proxy)))
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
+              getConnections(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
-              SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
+              getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
             ),
 //            <.div()(
 ////              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),

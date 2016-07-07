@@ -54,18 +54,18 @@ object SYNEREOMain extends js.JSApp {
     val searchContainer: js.Object = "#searchContainer"
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
+  val getUsers =       SYNEREOCircuit.connect(_.user)
+  val getConnections = SYNEREOCircuit.connect(_.connections)
+  val getMessages =    SYNEREOCircuit.connect(_.messages)
 
-//  val getConnections = SYNEREOCircuit.connect(_.connections)
-//  val getMessages =    SYNEREOCircuit.connect(_.messages)
-//  val getUsers =       SYNEREOCircuit.connect(_.user)
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#people", PeopleLOC) ~> renderR(ctl =>               SYNEREOCircuit.connect(_.connections)(s => ConnectionsResults(s)))
-      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => SYNEREOCircuit.connect(_.user)(s => Info(s)))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>         SYNEREOCircuit.connect(_.messages)(s => Dashboard(s)))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl =>               getConnections(s => ConnectionsResults(s)))
+      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => getUsers(s => Info(s)))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>         getMessages(s => Dashboard(s)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
@@ -107,7 +107,7 @@ object SYNEREOMain extends js.JSApp {
             }
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-            SYNEREOCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+            getUsers(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
         <.div()()
