@@ -101,7 +101,7 @@ object DashboardCSS {
       paddingRight(65.px)
     )
     val CardHolderLiElement = style(
-      margin(15.px, -30.px),
+//      margin(15.px, -30.px),
       padding(15.px)
     )
     val glanceViewName = style(
@@ -220,6 +220,10 @@ object DashboardCSS {
       lineHeight(1.5.em)
     )
 
+    val imgBorder = style (
+      border(1.px ,  solid  ,gray),
+      borderRadius(6.px)
+    )
   }
 
 }

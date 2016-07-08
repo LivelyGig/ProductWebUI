@@ -106,10 +106,11 @@ object ConnectionsSelectize {
 
         )
       } else {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
-          <.option(^.value := "")("Select"),
-          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
-            ^.key := connection.connection.target)(s"@${connection.name}"))
+//        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
+//          <.option(^.value := "")("Select"),
+//          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+//            ^.key := connection.connection.target)(s"@${connection.name}"))
+        <.div()
       }
 
     }

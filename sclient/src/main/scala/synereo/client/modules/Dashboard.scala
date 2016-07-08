@@ -130,7 +130,7 @@ object Dashboard {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )
@@ -332,15 +332,17 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.cardText)(
                       //                      <.h3(message.postContent.subject),
                       <.div()(
-                       <.div(^.className:="col-md-8",PostFullViewCSS.Style.marginLeft15PX)(
+                       <.div(^.className:="col-md-8 col-sm-8 col-xs-12",PostFullViewCSS.Style.marginLeft15PX)(
                          message.postContent.text
                        ),
-                        <.div(^.className:="col-md-4")(
-                          if (message.postContent.imgSrc != "") {
-                            <.img(^.src := message.postContent.imgSrc)
-                          } else {
-                            <.div("")
-                          }
+                        <.div(^.className:="col-md-4 col-sm-4 col-xs-12")(
+
+                            if (message.postContent.imgSrc != "") {
+                              <.img(^.src := message.postContent.imgSrc,DashboardCSS.Style.imgBorder)
+                            } else {
+                              <.div("")
+                            }
+
                         )
                       ),
                       <.br(),

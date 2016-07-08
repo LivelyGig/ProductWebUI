@@ -82,18 +82,28 @@ object SYNEREOMain extends js.JSApp {
         <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", Icon.spinnerIconPulse)
       ),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
-        <.div(^.className := "col-lg-1")(
-          //Adding toggle button for sidebar
-          if (r.page == SynereoLoc) {
-            <.span()
-          } else {
-            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
-              ^.onClick --> sidebar)(
-              <.span(Icon.bars)
-            )
-          }
-        ),
-        <.div(^.className := "col-lg-11")(
+//        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
+//          //Adding toggle button for sidebar
+//          if (r.page == SynereoLoc) {
+//            <.span()
+//          } else {
+//            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+//              ^.onClick --> sidebar)(
+//              <.span(Icon.bars)
+//            )
+//          }
+//        ),
+        <.div(^.className := "col-lg-12 col-md-12 col-sm-12")(
+          <.div(
+            if (r.page == SynereoLoc) {
+              <.span()
+            } else {
+              <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+                ^.onClick --> sidebar)(
+                <.span(Icon.bars)
+              )
+            }
+          ),
           <.div(^.className := "navbar-header")(
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
