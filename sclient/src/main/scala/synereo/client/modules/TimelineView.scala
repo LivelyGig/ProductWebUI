@@ -17,7 +17,7 @@ object TimelineView {
 
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
-      <.div(^.className := "container-fluid")(
+      <.div(^.className := "container-fluid MainContainer")(
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
