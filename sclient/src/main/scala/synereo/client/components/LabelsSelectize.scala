@@ -10,7 +10,7 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.models.Label
-import synereo.client.handlers.CreateLabels
+import synereo.client.handlers.{CreateLabels, RefreshConnections}
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.LabelsUtils
 
@@ -30,16 +30,21 @@ import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 import shared.dtos.Connection
+import diode.AnyAction._
 /**
   * Created by mandar.k on 5/17/2016.
   */
 //scalastyle:off
 object LabelsSelectize {
-  def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[Label] = {
-    var selectedLabels = Seq[Label]()
+  def getLabelsTxtFromSelectize(selectizeInputId: String): Seq[String] = {
+    var selectedLabels = Seq[String]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
+    if ($(selector).length > 0) {
+      $(selector).each((y: Element) =>  selectedLabels :+= $(y).attr("data-value").toString)
+    } else {
+      selectedLabels = Nil
+    }
 
-    $(selector).each((y: Element) => selectedLabels :+= upickle.default.read[Label]($(y).attr("data-value").toString))
     //    println(selectedLabels)
     selectedLabels
   }
@@ -55,6 +60,7 @@ object LabelsSelectize {
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
         $(selectizeInput).selectize(SelectizeConfig
+          .create(true)
           .maxItems(3)
           .plugins("remove_button"))
       }
@@ -69,6 +75,7 @@ object LabelsSelectize {
 
     def mounted(props: Props): Callback = Callback {
       //      println("searches model is = " + props.proxy().searchesModel)
+      SYNEREOCircuit.dispatch(CreateLabels())
       initializeTagsInput(props.parentIdentifier)
     }
 
@@ -89,13 +96,13 @@ object LabelsSelectize {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       //      println(s"parent div length ${$(parentDiv).length}")
       if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag or @ for connection”", ^.onChange --> getSelectedValues)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-          for (label <- props.proxy().searchesModel
+          for (label <- props.proxy().searchesModel.distinct.toSet.toSeq
             .filter(e => e.parentUid == "self")
             .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
-            <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
+            <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
           }
         )
       } else {

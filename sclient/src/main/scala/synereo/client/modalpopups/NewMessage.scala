@@ -29,9 +29,11 @@ import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
 import diode.AnyAction._
+
 import scala.scalajs.js
-import org.scalajs.dom.FileReader
+import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 import scala.concurrent.Future
 
@@ -43,7 +45,7 @@ object NewMessage {
 
   case class State(showNewMessageForm: Boolean = false)
 
-  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -94,8 +96,8 @@ object NewMessageForm {
                    labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
-  val getConnections =  SYNEREOCircuit.connect(_.connections)
-  val getSearches =  SYNEREOCircuit.connect(_.searches)
+  val getConnections = SYNEREOCircuit.connect(_.connections)
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -104,15 +106,11 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
-      //            println(value)
-      //      t.modState(s => s.copy(submitForm = s.submitForm.copy(postContent = s.submitForm.postContent.copy(subject = value))))
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      //            println(value)
-      //      t.modState(s => s.copy(submitForm = s.submitForm.copy(postContent = s.submitForm.postContent.copy(text = value))))
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
@@ -124,40 +122,39 @@ object NewMessageForm {
 
     }
 
-    def getLabelsFromText(): Seq[String] = {
+    def  labelsTextFromMsg: Seq[String] = {
       val value = t.state.runNow().postMessage.text.split(" +")
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).toSet.toSeq
     }
 
-    def postLabels(label: String = ""): Future[String] = {
-      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), leafParser(), "alias")
-      //      println("labelPost = " + labelPost)
+    def postLabels: Future[String] = {
+//      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
+//      println(s"getAllLabelsText = ${getAllLabelsText}")
+      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), getAllLabelsText.map(leaf), "alias")
       CoreApi.postLabel(labelPost)
     }
+    def labelsToPostMsg: Seq[Label] = {
+      val textSeq = labelsTextFromMsg ++ LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId)
 
-
-    def leafParser(): Seq[String] = {
-      val (props, state) = (t.props.runNow(), t.state.runNow())
-      println(s"state.labelModel: ${state.labelModel}")
-      def leaf(text: String, color: String) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"" + s"${color}" + "\"),image(\"\")))"
-       props.proxy().searchesModel.map(e => leaf(e.text, e.color)) ++ getLabelsFromText.map(e => leaf(e, "#CC5C64"))
+//      println(s"labelsToPostMsg ${textSeq.distinct}")
+      textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
-
-    def getLabelsToStore() : Seq[String] = {
+    def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
-      def leafMod(text: String, color: String) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"" + s"${color}" + "\\\"),image(\\\"\\\")))\""
-      props.proxy().searchesModel.map(e => leafMod(e.text, e.color)) ++ getLabelsFromText.map(e => leafMod(e, "#CC5C64"))
+      val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId)
+      allLabels.distinct
     }
+    def leaf(text: String/*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+    def leafMod(text: String/*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
 
-    def updateImgSrc(e: ReactEventI): react.Callback = Callback{
+    def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      println("Img src = " + value)
-      var reader = new FileReader()
+//      println("Img src = " + value)
+      val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
-        println(s"in on load $contents")
         t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
       }
       reader.readAsDataURL(value)
@@ -166,11 +163,11 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      postLabels().onComplete {
+      postLabels.onComplete {
         case Success(responseArray) =>
-          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getLabelsToStore().mkString(",")}]")
-          SYNEREOCircuit.dispatch(PostData(state.postMessage,
-            Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelsSelectizeInputId), getLabelsFromText))
+          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
+          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+          SYNEREOCircuit.dispatch(PostData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, cnxns,labelsToPostMsg))
           SYNEREOCircuit.dispatch(CreateLabels())
           t.modState(s => s.copy(postNewMessage = true)).runNow()
         case Failure(res) =>
@@ -205,15 +202,6 @@ object NewMessageForm {
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
             ),
-//            <.div()(
-////              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
-//              if (s.postMessage.imgSrc != ""){
-//                <.img(^.src := s.postMessage.imgSrc)
-//              } else {
-//                <.div("")
-//              }
-//
-//            ),
             <.div()(
               <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)
             ),
@@ -223,8 +211,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div()(
-              //              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
-              if (s.postMessage.imgSrc != ""){
+              if (s.postMessage.imgSrc != "") {
                 <.img(^.src := s.postMessage.imgSrc)
               } else {
                 <.div("")
@@ -237,8 +224,8 @@ object NewMessageForm {
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.camera)),
-              <.label( ^.`for` := "files")(<.span(^.tpe := "button",  ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,Icon.paperclip)),
-                <.input(^.`type` := "file", ^.visibility :="hidden", ^.position:= "absolute" , ^.id:="files", ^.name:="files", ^.onChange ==> updateImgSrc)
+                <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
+                <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
               ),
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
               <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")

@@ -7,6 +7,8 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.models.Label
+import shared.models.ConnectionsModel
 import synereo.client.modalpopups.NewMessage
 
 import scala.scalajs.js
@@ -40,9 +42,8 @@ object MainMenu {
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
       //      println("main menu mounted")
+//      SYNEREOCircuit.dispatch(CreateLabels())
       SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
-      SYNEREOCircuit.dispatch(CreateLabels())
-
     }
 
     def unmounted(props: Props) = Callback {
@@ -50,10 +51,10 @@ object MainMenu {
       Empty
     }
 
-    def searchWithLabels(e: ReactEventI) = Callback {
+    /*def searchWithLabels(e: ReactEventI) = Callback {
       SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(t.state.runNow().labelSelectizeId)))
       SYNEREOCircuit.dispatch(RefreshMessages())
-    }
+    }*/
 
     def toggleTopbar = Callback {
       val topBtn: js.Object = "#TopbarContainer"
@@ -65,22 +66,18 @@ object MainMenu {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
-           // println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
+      //      println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
-          <.div(^.className:="row")(
+          <.div(^.className := "row")(
             <.div(^.className := "label-selectize-container-main")(
               <.div()(
                 if (props.currentLoc == DashboardLoc) {
-                  /*<.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-                    <.div(^.id := S.labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-                      SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, S.labelSelectizeInputId)))
-                    ),
-                    <.button(^.className := "btn btn-primary", ^.onClick ==> $.backend.searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                    )
-                  )*/
-                  SearchComponent(SearchComponent.Props())
+                  <.div(
+                    SearchComponent(SearchComponent.Props())
+                    //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
+                  )
                 } else {
                   <.span()
                 }

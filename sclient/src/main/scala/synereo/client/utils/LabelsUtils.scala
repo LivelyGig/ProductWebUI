@@ -51,16 +51,16 @@ object LabelsUtils {
     s"$queryType($labelPrologItems)"
   }
 
-  def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[Label] = {
+  /*def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[Label] = {
     id match {
       case None =>
         Nil
       case Some(res) =>
         LabelsSelectize.getLabelsFromSelectizeInput(res)
     }
-  }
+  }*/
 
-  def getSystemLabelModel(labelName: String): Label = {
+  def getLabelModel(labelName: String): Label = {
     Label(parentUid = "self", text = labelName)
   }
 
