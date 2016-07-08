@@ -14,6 +14,7 @@ import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 import shared.dtos.Connection
+import shared.models.ConnectionsModel
 import synereo.client.handlers.RefreshConnections
 
 
@@ -35,12 +36,16 @@ object ConnectionsSelectize {
   /*Seq[Label]()*/
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String)
 
-  case class Backend(t: BackendScope[Props, _]) {
+  case class State (connections : Seq[ConnectionsModel] = Nil)
+
+  case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(parentIdentifier: String): Unit = {
       //      var item: String = ""
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
+      val selectizeInput: js.Object =  s"#${t.props.runNow().parentIdentifier}-selectize"
+//      $(selectizeInput).selectize()
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object =  s"#${t.props.runNow().parentIdentifier}-selectize"
+
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(30)
           .plugins("remove_button")
@@ -59,24 +64,33 @@ object ConnectionsSelectize {
       println(getSelectedValue)
     }
 
-    def mounted(props: Props)/*: Callback */= {
+    def mounted(props: Props)/*: Callback */= Callback{
       initializeTagsInput(props.parentIdentifier)
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+
     }
+
+    def willMount (props: Props) = Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+
 
     def componentDidUpdate(props: Props): Callback = Callback {
-      //      println("inside updatedProps")
-      if (!props.proxy().isEmpty) {
+            println(s"inside updatedProps ${props.proxy().state}")
+      if (props.proxy().isReady) {
+        println(s"testing the state of the connection root model ${props.proxy().get.connectionsResponse}")
+        t.modState(s => s.copy(connections = props.proxy().get.connectionsResponse))
+      }
+      /*if (!props.proxy().isEmpty) {
                 println("inside if cond")
         initializeTagsInput(props.parentIdentifier)
-      }
+      }*/
     }
 
-    def render(props: Props) = {
+    def render(props: Props, state: State) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
       if ($(parentDiv).length == 0) {
         <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
+          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+            ^.key := connection.connection.target)(s"@${connection.name}"),
           props.proxy().render(connectionsRootModel =>
             for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
               ^.key := connection.connection.target)(s"@${connection.name}")
@@ -92,16 +106,20 @@ object ConnectionsSelectize {
 
         )
       } else {
-        <.div()
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo", ^.onChange --> getSelectedValues)(
+          <.option(^.value := "")("Select"),
+          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+            ^.key := connection.connection.target)(s"@${connection.name}"))
       }
 
     }
   }
 
   val component = ReactComponentB[Props]("SearchesConnectionList")
+    .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    .componentWillMount(scope => scope.backend.willMount(scope.props))
     .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build

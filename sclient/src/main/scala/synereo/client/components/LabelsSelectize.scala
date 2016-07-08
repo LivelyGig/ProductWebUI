@@ -8,7 +8,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
-import org.scalajs.dom._
 import shared.models.Label
 import synereo.client.handlers.{CreateLabels, RefreshConnections}
 import synereo.client.services.SYNEREOCircuit
@@ -31,6 +30,9 @@ import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 import shared.dtos.Connection
 import diode.AnyAction._
+
+import scala.scalajs.js.timers._
+
 /**
   * Created by mandar.k on 5/17/2016.
   */
@@ -40,7 +42,7 @@ object LabelsSelectize {
     var selectedLabels = Seq[String]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
     if ($(selector).length > 0) {
-      $(selector).each((y: Element) =>  selectedLabels :+= $(y).attr("data-value").toString)
+      $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
     } else {
       selectedLabels = Nil
     }
@@ -74,16 +76,24 @@ object LabelsSelectize {
     }
 
     def mounted(props: Props): Callback = Callback {
-      //      println("searches model is = " + props.proxy().searchesModel)
-      SYNEREOCircuit.dispatch(CreateLabels())
+      //      println("inside mounted:" + props.proxy().searchesModel)
+      //      if (props.proxy().searchesModel.length != 0) {
       initializeTagsInput(props.parentIdentifier)
+      //      }
     }
 
-    def updatedProps(props: Props): Callback = Callback {
-      if (props.proxy() != null) {
-        initializeTagsInput(props.parentIdentifier)
-      }
+    def willMount(props: Props): Callback = Callback {
+      //      println("inside willMount method")
+      SYNEREOCircuit.dispatch(CreateLabels())
     }
+
+    //    def WillReceiveProps(props: Props): Callback = Callback {
+    //      println("inside WillReceiveProps")
+    //      println(props.proxy().searchesModel)
+    //      if (props.proxy().searchesModel.length != 0) {
+    //        initializeTagsInput(props.parentIdentifier)
+    //      }
+    //    }
 
     def render(props: Props) = {
       val parentDiv: js.Object = s"#${props.parentIdentifier}"
@@ -106,8 +116,9 @@ object LabelsSelectize {
 
   val component = ReactComponentB[Props]("LabelsSelectize")
     .renderBackend[Backend]
+    .componentWillMount(scope => scope.backend.willMount(scope.props))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillReceiveProps(scope => scope.$.backend.updatedProps(scope.nextProps))
+    //    .componentWillReceiveProps(scope => scope.$.backend.WillReceiveProps(scope.nextProps))
     .build
 
   def apply(props: Props) = component(props)

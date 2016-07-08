@@ -153,7 +153,6 @@ object Login {
       setSessionsUri(responseArray)
       val responseStr = responseArray(0)
       setUserDetailsInSession(responseStr, userModel)
-      SYNEREOCircuit.dispatch(RefreshConnections())
       SYNEREOCircuit.dispatch(LoginUser(userModel))
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
