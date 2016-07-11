@@ -39,7 +39,7 @@ object AgentLoginSignUp {
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
+                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false,
                    loginErrorMessage: String = "")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
@@ -59,7 +59,7 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showNewAgentForm = true))
     }
 
-    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false): Callback = {
       log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
@@ -80,6 +80,8 @@ object AgentLoginSignUp {
         t.modState(s => s.copy(showNewAgentForm = false))
       } else if (showTermsOfServicesForm) {
         t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true))
+      } else if (showPrivacyPolicyModal) {
+        t.modState(s => s.copy(showNewAgentForm = false, showPrivacyPolicyModal = true))
       } else {
         t.modState(s => s.copy(showNewAgentForm = false))
       }
@@ -242,6 +244,11 @@ object AgentLoginSignUp {
     def termsOfServices(): Callback = {
       t.modState(s => s.copy(showTermsOfServicesForm = false, showNewAgentForm = true))
     }
+
+    def privacyPolicy(): Callback = {
+      t.modState(s => s.copy(showPrivacyPolicyModal = false, showNewAgentForm = true))
+    }
+
   }
 
   val component = ReactComponentB[Props]("AddNewAgent")
@@ -259,6 +266,9 @@ object AgentLoginSignUp {
         }
         else if (S.showTermsOfServicesForm) {
           TermsOfServices(TermsOfServices.Props(B.termsOfServices))
+        }
+        else if (S.showPrivacyPolicyModal) {
+          PrivacyPolicyModal(PrivacyPolicyModal.Props(B.privacyPolicy))
         }
         else if (S.showLoginForm) {
           LoginForm(LoginForm.Props(B.loginUser))
