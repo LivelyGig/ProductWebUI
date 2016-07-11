@@ -243,8 +243,7 @@ object ConnectionsForm {
               <.div(<.h5("Connections:")),
               <.div(^.id := s"${s.selectizeInputId}")(
               //  SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
-
-                connectionSelectize(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
+                ConnectionsSelectize(ConnectionsSelectize.Props(s"${s.selectizeInputId}"))
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
               ("Please provide Only 2 Connections... !!!"),
