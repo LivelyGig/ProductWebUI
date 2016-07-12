@@ -1,8 +1,9 @@
 package synereo.client.handlers
 
 import org.widok.moment.Moment
-import shared.dtos.{EvalSubscribeResponseContent, ApiResponse}
-import shared.models.{MessagePost, ProjectsPost, Post}
+import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
+import shared.models.{MessagePost, Post, ProjectsPost}
+import synereo.client.logger
 import synereo.client.modules.AppModule
 
 /**
@@ -19,6 +20,7 @@ object ContentModelHandler {
       }
     } catch {
       case e: Exception =>
+        logger.log.debug(s"Exception in content filtering: ${e.getMessage}")
         None
     }
   }

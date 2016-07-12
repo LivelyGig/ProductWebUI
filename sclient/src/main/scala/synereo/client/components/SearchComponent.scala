@@ -23,7 +23,6 @@ object SearchComponent {
 
   case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz")
 
-  val getConnections = SYNEREOCircuit.connect(_.connections)
   val getSearches =    SYNEREOCircuit.connect(_.searches)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -41,7 +40,7 @@ object SearchComponent {
     def render(s: State, p: Props) = {
       <.div(SynereoCommanStylesCSS.Style.searchBoxContainer)(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          getConnections(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
+          ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
         ),
         <.div(^.id := s.labelSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
           getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelSelectizeInputId)))

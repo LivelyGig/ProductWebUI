@@ -197,7 +197,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              getConnections(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
+              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
