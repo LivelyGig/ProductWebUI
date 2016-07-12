@@ -200,7 +200,7 @@ object NewMessageForm {
               ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
-              getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelsSelectizeInputId)))
+              LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))
             ),
             <.div()(
               <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := s.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateSubject, ^.required := true)

@@ -43,7 +43,7 @@ object SearchComponent {
           ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
         ),
         <.div(^.id := s.labelSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          getSearches(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelSelectizeInputId)))
+          LabelsSelectize(LabelsSelectize.Props(s.labelSelectizeInputId))
         ),
         <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLblAndCnxn, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
         )

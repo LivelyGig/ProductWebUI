@@ -54,10 +54,13 @@ object LabelsSelectize {
   var getSelectedValue = new ListBuffer[String]()
 
   /*Seq[Label]()*/
-  case class Props(proxy: ModelProxy[SearchesRootModel], parentIdentifier: String)
+  case class Props(parentIdentifier: String)
 
-  case class Backend(t: BackendScope[Props, _]) {
-    def initializeTagsInput(parentIdentifier: String): Unit = {
+  case class State(labels: Seq[Label] = Nil)
+
+  case class Backend(t: BackendScope[Props, State]) {
+    def initializeTagsInput(): Unit = {
+      val parentIdentifier = t.props.runNow().parentIdentifier
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
@@ -78,47 +81,42 @@ object LabelsSelectize {
     def mounted(props: Props): Callback = Callback {
       //      println("inside mounted:" + props.proxy().searchesModel)
       //      if (props.proxy().searchesModel.length != 0) {
-      initializeTagsInput(props.parentIdentifier)
+      attachLabels()
+//      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachLabels())
+
+
       //      }
     }
 
-    def willMount(props: Props): Callback = Callback {
-      //      println("inside willMount method")
-      SYNEREOCircuit.dispatch(CreateLabels())
+    def attachLabels() = {
+      val value = SYNEREOCircuit.zoom(_.searches.searchesModel).value
+      t.modState(s => s.copy(labels = value)).runNow()
     }
 
-    //    def WillReceiveProps(props: Props): Callback = Callback {
-    //      println("inside WillReceiveProps")
-    //      println(props.proxy().searchesModel)
-    //      if (props.proxy().searchesModel.length != 0) {
-    //        initializeTagsInput(props.parentIdentifier)
-    //      }
-    //    }
+    def componentDidUpdate(props: Props): Callback = Callback {
+      println("component did update")
+        initializeTagsInput()
+    }
 
-    def render(props: Props) = {
-      val parentDiv: js.Object = s"#${props.parentIdentifier}"
-      //      println(s"parent div length ${$(parentDiv).length}")
-      if ($(parentDiv).length == 0) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
-          <.option(^.value := "")("Select"),
-          //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-          for (label <- props.proxy().searchesModel.distinct.toSet.toSeq
-            .filter(e => e.parentUid == "self")
-            .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
-            <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
-          }
-        )
-      } else {
-        <.div()
-      }
+    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
+
+    def render(props: Props, state: State) = {
+      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
+        <.option(^.value := "")("Select"),
+        //          props.proxy().render(searchesRootModel => searchesRootModel.se)
+        for (label <- state.labels ) yield {
+          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
+        })
+
     }
   }
 
   val component = ReactComponentB[Props]("LabelsSelectize")
+      .initialState(State())
     .renderBackend[Backend]
     .componentWillMount(scope => scope.backend.willMount(scope.props))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    //    .componentWillReceiveProps(scope => scope.$.backend.WillReceiveProps(scope.nextProps))
+    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     .build
 
   def apply(props: Props) = component(props)

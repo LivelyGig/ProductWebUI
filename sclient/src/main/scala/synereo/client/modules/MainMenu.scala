@@ -76,6 +76,12 @@ object MainMenu {
                 if (props.currentLoc == DashboardLoc) {
                   <.div(
                     SearchComponent(SearchComponent.Props())
+                    /*<.div(^.id := "mainmenuselectize")(
+                    ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props("mainmenuselectize"))),
+                      <.div(
+                    <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
+                  ))*/
+
                     //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
                   )
                 } else {
