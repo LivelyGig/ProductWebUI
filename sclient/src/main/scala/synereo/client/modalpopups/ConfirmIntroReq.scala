@@ -12,12 +12,8 @@ import japgolly.scalajs.react
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import org.querki.jquery._
-import shared.sessionitems.SessionItems
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-import synereo.client.handlers.PostData
-import synereo.client.services.SYNEREOCircuit
 
 /**
   * Created by mandar.k on 6/29/2016.

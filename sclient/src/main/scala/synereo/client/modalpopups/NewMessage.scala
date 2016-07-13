@@ -13,10 +13,9 @@ import shared.RootModels.SearchesRootModel
 import shared.dtos.LabelPost
 import shared.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
-import synereo.client.components._
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.{CreateLabels, PostData, RefreshMessages}
+import synereo.client.handlers.{CreateLabels, RefreshMessages}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -122,11 +121,14 @@ object NewMessageForm {
 
     }
 
-    def  labelsTextFromMsg: Seq[String] = {
-      val value = t.state.runNow().postMessage.text.split(" +")
+    def filterLabelStrings (value: Seq[String]): Seq[String] = {
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).toSet.toSeq
+    }
+
+    def  labelsTextFromMsg: Seq[String] = {
+      filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
     }
 
     def postLabels: Future[String] = {
@@ -136,14 +138,14 @@ object NewMessageForm {
       CoreApi.postLabel(labelPost)
     }
     def labelsToPostMsg: Seq[Label] = {
-      val textSeq = labelsTextFromMsg ++ LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId)
+      val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
 
 //      println(s"labelsToPostMsg ${textSeq.distinct}")
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
     def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
-      val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId)
+      val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))
       allLabels.distinct
     }
     def leaf(text: String/*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
@@ -167,7 +169,11 @@ object NewMessageForm {
         case Success(responseArray) =>
           dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
           val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
-          SYNEREOCircuit.dispatch(PostData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, cnxns,labelsToPostMsg))
+          CoreApi.postData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI,
+            cnxns,labelsToPostMsg).onComplete {
+            case Success(response) => SYNEREOCircuit.dispatch(RefreshMessages())
+            case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
+          }
           SYNEREOCircuit.dispatch(CreateLabels())
           t.modState(s => s.copy(postNewMessage = true)).runNow()
         case Failure(res) =>

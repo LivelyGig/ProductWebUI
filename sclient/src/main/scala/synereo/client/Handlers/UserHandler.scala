@@ -21,7 +21,7 @@ case class LoginUser(userModel: UserModel)
 
 case class LogoutUser()
 
-case class PostData(postContent: PostContent, sessionUriName: String,cnnxns : Seq[Connection], labels: Seq[Label])
+//case class PostData(postContent: PostContent, sessionUriName: String,cnnxns : Seq[Connection], labels: Seq[Label])
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   //  val messageLoader = "#messageLoader"
@@ -38,7 +38,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       }
       updated(modelFromStore)
 
-    case PostData(postContent: PostContent, sessionUriName: String,cnnxns : Seq[Connection], labels: Seq[Label]) =>
+    /*case PostData(postContent: PostContent, sessionUriName: String,cnnxns : Seq[Connection], labels: Seq[Label]) =>
       val uid = UUID.randomUUID().toString.replaceAll("-", "")
       val (labelToPost, contentToPost) = sessionUriName match {
         case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
@@ -57,7 +57,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
         case Success(response) => logger.log.debug("Content Post Successful")
         case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
       }
-      noChange
+      noChange*/
 
     case LogoutUser() =>
       // todo: Cancel all subscribe request for all sessions

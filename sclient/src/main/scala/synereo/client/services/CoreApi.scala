@@ -1,7 +1,9 @@
 package synereo.client.services
 
+import java.util.UUID
+
 import shared.dtos._
-import shared.models._
+import shared.models.{Label, _}
 import org.scalajs.dom._
 import upickle.default._
 
@@ -10,11 +12,16 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
+import synereo.client.logger
 import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
+import scala.scalajs.js.Date
+import scala.util.{Failure, Success}
+
 object CoreApi {
-  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api" // scalastyle:ignore
+  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+  // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
@@ -127,5 +134,27 @@ object CoreApi {
   def postLabel(labelPost: LabelPost): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_ALIAS_LABEL_REQ, labelPost))
     ajaxPost(requestContent)
+  }
+
+  def postData(postContent: PostContent, sessionUriName: String, cnnxns: Seq[Connection], labels: Seq[Label]): Future[String] = {
+    val uid = UUID.randomUUID().toString.replaceAll("-", "")
+    val (labelToPost, contentToPost) = sessionUriName match {
+      case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ labels,
+          upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[MessagePostContent])))
+      case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)),
+          upickle.default.write(ProjectsPost(uid, new Date().toISOString(),
+            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProjectPostContent])))
+      case SessionItems.ProfilesViewItems.PROFILES_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)),
+          upickle.default.write(ProfilesPost(uid, new Date().toISOString(),
+            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProfilePostContent])))
+    }
+    val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
+    logger.log.debug(s"prolog = $prolog")
+    evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName),
+      Expression(ApiTypes.INSERT_CONTENT,
+      ExpressionContent(cnnxns, prolog, contentToPost, uid))))
   }
 }
