@@ -38,7 +38,7 @@ object SearchComponent {
     }
 
     def render(s: State, p: Props) = {
-      <.div(SynereoCommanStylesCSS.Style.searchBoxContainer)(
+      <.div(/*SynereoCommanStylesCSS.Style.searchBoxContainer*/)(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
           ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
         ),
