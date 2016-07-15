@@ -22,6 +22,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
 import synereo.client.logger._
 import diode.AnyAction._
+import synereo.client.utils.MessagesUtils
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -112,15 +113,13 @@ object Login {
     def setUserDetailsInSession(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
-      window.sessionStorage.setItem(
-        SessionItems.ConnectionViewItems.CONNECTION_LIST,
-        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
-      )
-      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST, upickle.default.write[Seq[Connection]](response.content.listOfConnections))
+      val listOfConnections = upickle.default.write[Seq[Connection]](response.content.listOfConnections)
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTION_LIST,listOfConnections)
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
+      MessagesUtils.storeCnxnAndLabels(response.content.listOfConnections,Nil)
     }
 
     def processLogin(userModel: UserModel): Callback = {

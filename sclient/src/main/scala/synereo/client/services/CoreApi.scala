@@ -75,14 +75,7 @@ object CoreApi {
     */
   def getContent(sessionUriName: String): Future[String] = {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
-    val searchConnectionsList = upickle.default.read[Seq[Connection]](
-      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
-    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
-    val connectionsList = upickle.default.read[Seq[Connection]](
-      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
-    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val connectionListTo = if (connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
-
+    val connectionListTo = ConnectionsUtils.getCnxnForReq(sessionUri)
     val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionListTo, currentSearchLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionListTo, previousSearchLabels)

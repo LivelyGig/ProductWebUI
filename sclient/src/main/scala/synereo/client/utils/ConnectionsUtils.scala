@@ -7,6 +7,7 @@ package synereo.client.utils
 import shared.dtos.Connection
 import shared.models._
 import org.scalajs.dom._
+import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
 import synereo.client.components.ConnectionsSelectize
 
@@ -31,6 +32,18 @@ object ConnectionsUtils {
         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName)))
       case Some(res) =>
         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName))) ++ ConnectionsSelectize.getConnectionsFromSelectizeInput(res)
+    }
+  }
+
+  def getCnxnForReq(sessionUri: String): Seq[Connection] = {
+    val currentSearch = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+    if ( currentSearch != None){
+      upickle.default.read[Seq[Connection]](currentSearch)  ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+    } else {
+      upickle.default.read[Seq[Connection]](
+        window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST
+        )) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+
     }
   }
 

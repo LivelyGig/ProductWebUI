@@ -13,8 +13,7 @@ import shared.RootModels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS,PostFullViewCSS}
 import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import scala.scalajs.js
+import scala.scalajs.js.timers._
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
@@ -56,6 +55,9 @@ object Dashboard {
     def mounted(props: Props) = {
       //      $("[data-toggle='tooltip']".asInstanceOf[js.Object]).tooltip()
       //      jQuery("[data-toggle='tooltip']".asInstanceOf[dom.Element]).tooltip()
+//      js.timers.setInterval(7000) ("print chacha")
+
+
       if (props.proxy().isEmpty) {
         props.proxy.dispatch(RefreshMessages())
         //        props.proxy.dispatch(RefreshMessages())
