@@ -18,7 +18,7 @@ import synereo.client.css.{DashboardCSS, NewMessageCSS}
 /**
   * Created by mandar.k on 6/29/2016.
   */
-object ConfirmIntroReq {
+object ConfirmIntroReqModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)

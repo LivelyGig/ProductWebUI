@@ -22,13 +22,14 @@ import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
 import synereo.client.logger._
 import diode.AnyAction._
+import org.scalajs.dom
+
+import scala.scalajs.js.timers._
 
 /**
-  * Created by Mandar on 3/11/2016.
+  * Created by mandar.k on 3/11/2016.
   */
 //scalastyle:off
-case class ApiDetails(hostName: String = "", portNumber: String = "")
-
 object Login {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -117,7 +118,7 @@ object Login {
         upickle.default.write[Seq[Connection]](response.content.listOfConnections)
       )
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST, upickle.default.write[Seq[Connection]](response.content.listOfConnections))
-      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+      //      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
@@ -143,11 +144,38 @@ object Login {
 
     def setSessionsUri(responseArray: Seq[String]): Unit = {
       val sessionUriNames = SessionItems.getAllSessionUriName()
+      //      println(s"sessionUriNames= ${sessionUriNames}, responseArray = ${responseArray}")
       for (responseStr <- responseArray) {
         val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+        //        println(s"indexof responseStr = ${responseArray.indexOf(responseStr)}")
         window.sessionStorage.setItem(sessionUriNames(responseArray.indexOf(responseStr)), response.content.sessionURI)
       }
     }
+
+    //    def processIntroductionNotification(response: String = ""): Unit = {
+    //      try {
+    //
+    //        if (response.contains("sessionPong")) {
+    //          println("contains sessionPong")
+    //          upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+    //        }
+    //      } catch {
+    //        case e: Exception => println("into exception for session ping")
+    //      }
+    //    }
+    //
+    //    def checkIntroductionNotification(): Unit = {
+    //      val connectionSessionUri = SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI
+    //      val connectionSessionUriFromStore = window.sessionStorage.getItem(connectionSessionUri)
+    //      setInterval(10000) {
+    //        CoreApi.sessionPing(connectionSessionUriFromStore).onComplete {
+    //          case Success(response) => println(s"response: $response")
+    //            processIntroductionNotification(response)
+    //          case Failure(failureMessage) => println(s"failureMessage: $failureMessage")
+    //          case _ => println("something went wrong in session ping")
+    //        }
+    //      }
+    //    }
 
     def processSuccessfulLogin(responseArray: Seq[String], userModel: UserModel): Unit = {
       setSessionsUri(responseArray)
@@ -157,6 +185,7 @@ object Login {
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
       window.location.href = "/#dashboard"
+      //      checkIntroductionNotification
       log.debug("login successful")
     }
 

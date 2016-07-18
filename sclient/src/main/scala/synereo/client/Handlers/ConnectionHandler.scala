@@ -1,11 +1,12 @@
 package synereo.client.handlers
 
-import diode.data.{ Empty, Pot, PotAction }
-import diode.{ ActionHandler, ModelRW }
+import diode.data.{Empty, Pot, PotAction}
+import diode.{ActionHandler, ModelRW}
 import shared.RootModels.ConnectionsRootModel
-import shared.dtos.{ ApiResponse, ConnectionProfileResponse }
+import shared.dtos.{ApiResponse, ConnectionProfileResponse, IntroConfirmReq, IntroductionNotification}
 import shared.models.ConnectionsModel
 import synereo.client.services.CoreApi
+import synereo.client.utils.ConnectionsUtils
 
 //import rx.ops.Timer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -18,6 +19,8 @@ case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) exte
   // todo replace the session ping with the connections specific calls to api backend server.
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
+
+case class AckIntroductionNotification(introductionNotification: Seq[IntroductionNotification])
 
 object ConnectionModelHandler {
   def getConnectionsModel(response: String): ConnectionsRootModel = {
@@ -38,7 +41,7 @@ object ConnectionModelHandler {
         model :+= new ConnectionsModel(connection.content.sessionURI, connection.content.connection,
           name, imgSrc)
     }
-//    model.foreach(temp => println(temp.name))
+    //    model.foreach(temp => println(temp.name))
     ConnectionsRootModel(model.sortBy(_.name))
   }
 
@@ -47,7 +50,14 @@ object ConnectionModelHandler {
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
   override def handle = {
     case action: RefreshConnections =>
+      ConnectionsUtils.checkIntroductionNotification()
       val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.getConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
+
+    //    case AckIntroductionNotification(introConfirmReq: IntroConfirmReq) =>
+    //      println(s"introConfirmReq :$introConfirmReq")
+    //
+    //      noChange
+
   }
 }

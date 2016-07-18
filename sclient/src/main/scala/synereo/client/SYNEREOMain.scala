@@ -2,24 +2,28 @@ package synereo.client
 
 //import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{SynereoCommanStylesCSS, AppCSS}
+import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.{React, ReactDOM}
+
 import scala.scalajs.js
 import js.{Date, UndefOr}
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
+
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import japgolly.scalajs.react.{ReactDOM, React}
+import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom._
+
 import scala.scalajs.js
 import js.{Date, UndefOr}
 
@@ -140,6 +144,7 @@ object SYNEREOMain extends js.JSApp {
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
+    window.sessionStorage.removeItem("sessionPingTriggered")
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
     ReactDOM.render(router(), dom.document.getElementById("root"))

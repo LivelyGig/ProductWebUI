@@ -16,4 +16,5 @@ object ApiTypes {
   val INTRODUCTION_REQUEST = "beginIntroductionRequest"
   val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
   val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
+  val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
 }

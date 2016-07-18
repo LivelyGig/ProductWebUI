@@ -12,7 +12,7 @@ import synereo.client.css._
 import shared.models.ConnectionsModel
 import org.querki.jquery._
 import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.modalpopups.{ConfirmIntroReq, NewConnection}
+import synereo.client.modalpopups.{ConfirmIntroReqModal, NewConnection}
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -43,7 +43,7 @@ object ConnectionsResults {
             Sidebar(Sidebar.Props())
           )
         ),
-        ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, "")),
+        ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, "")),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
             NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
