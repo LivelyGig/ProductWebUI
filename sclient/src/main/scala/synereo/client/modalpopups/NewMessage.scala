@@ -161,6 +161,7 @@ object NewMessageForm {
       }
       reader.readAsDataURL(value)
     }
+    def fromSelecize() : Callback = Callback{}
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -203,7 +204,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
+              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId,fromSelecize))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))

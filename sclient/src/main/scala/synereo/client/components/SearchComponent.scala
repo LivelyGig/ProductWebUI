@@ -24,6 +24,8 @@ object SearchComponent {
 
     }
 
+    def fromSelecize() : Callback = Callback{}
+
     def searchWithLblAndCnxn(e: ReactEventI) = Callback {
       val cnxnLabels = ConnectionsLabelsSelectize.getCnxnsAndLabelsFromSelectize(t.state.runNow().connectionsSelectizeInputId)
       utils.MessagesUtils.storeCnxnAndLabels(cnxnLabels._1,cnxnLabels._2)

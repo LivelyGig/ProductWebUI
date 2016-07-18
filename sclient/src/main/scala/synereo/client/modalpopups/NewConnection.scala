@@ -12,7 +12,7 @@ import synereo.client.components.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.css._
-import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit, RootModel}
+import synereo.client.services.{ApiTypes, CoreApi, RootModel, SYNEREOCircuit}
 import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
 import synereo.client.utils.ConnectionsUtils
@@ -28,7 +28,7 @@ import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
 import shared.RootModels.ConnectionsRootModel
-import shared.dtos.{EstablishConnection, IntroConnections}
+import shared.dtos.{Connection, EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
 import shared.sessionitems.SessionItems
 
@@ -86,25 +86,32 @@ object ConnectionsForm {
   case class Props(submitHandler: () => Callback, header: String)
 
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
-                   introConnections: IntroConnections = IntroConnections(
-                     aMessage = "Hi , \n Here's an introduction for the two of you to connect.\n<Recipient1>,<Recipient2> \n \n Best regards, \n <name>"),
+                   introConnections: IntroConnections = IntroConnections(),
                    establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
                    chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid: String = "", userName: String = "")
 
-  val connectionSelectize =  SYNEREOCircuit.connect(_.connections)
+  val connectionSelectize = SYNEREOCircuit.connect(_.connections)
+
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(props: Props): Callback = Callback {
-      val userName = window.sessionStorage.getItem("userName")
-//      println(s"userName:$userName")
-      t.modState(s => s.copy(userName = userName))
-      val introCon: IntroConnections = IntroConnections(aMessage = s"Hi <Recipient 1> and <Recipient 2>, \nHere's an introduction for the two of you to connect. \n \n Best regards, \n $userName")
-      //      t.setState(s = t.modState())
-//      println("aMessage =" + t.state.runNow().introConnections.aMessage)
+    def fromSelecize(): Callback = {
+      val cnxns = ConnectionsSelectize.getConnectionNames(t.state.runNow().selectizeInputId)
+      val msg =  if (cnxns.length > 1) {
+        s"Hi ${cnxns(0)} and ${cnxns(1)}, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
+      } else {
+        s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
+      }
+      t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
+    }
+
+    def mounted(props: Props): Callback = {
+      val usr = window.sessionStorage.getItem("userName")
+      val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
+      t.modState(s => s.copy(userName= usr,introConnections =s.introConnections.copy(aMessage = msg)))
     }
 
     def hideModal(): Unit = {
@@ -145,7 +152,7 @@ object ConnectionsForm {
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
       //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
       //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-//      println(connections)
+      //      println(connections)
       if (connections.length == 2) {
         val content = state.establishConnection.copy(sessionURI = uri,
           aURI = connections(0).target,
@@ -239,20 +246,22 @@ object ConnectionsForm {
             //              )
             //            }
             //            else if (s.introduceTwoUsers == true) {
-            <.div(^.marginLeft := "15px",(!s.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
+            <.div(^.marginLeft := "15px", (!s.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
               <.div(<.h5("Connections:")),
               <.div(^.id := s"${s.selectizeInputId}")(
-              //  SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
-                ConnectionsSelectize(ConnectionsSelectize.Props(s"${s.selectizeInputId}"))
+                //  SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
+                ConnectionsSelectize(ConnectionsSelectize.Props(s"${s.selectizeInputId}", fromSelecize))
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
               ("Please provide Only 2 Connections... !!!"),
               <.div((!s.introduceUsers) ?= ConnectionsCSS.Style.hidden,
                 <.div(<.h5("Introduction:")),
                 <.div()(
-                  <.textarea(^.rows := 6, ^.placeholder := s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${s.userName}",
+                  <.textarea(^.rows := 6,
                     ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent, ^.className := "form-control")
+//                  <.div(s.introConnections.aMessage)
                 )
+
               )
             ),
             //            }
@@ -273,7 +282,6 @@ object ConnectionsForm {
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {
-      //println(s"states:chkCnxnExstUser = ${scope.currentState.chkCnxnExstUser}, chkCnxnNewUser = ${scope.currentState.chkCnxnNewUser}, introduceTwoUsers = ${scope.currentState.introduceTwoUsers}")
       if (scope.currentState.postConnection) {
         scope.$.backend.hideModal
       }
