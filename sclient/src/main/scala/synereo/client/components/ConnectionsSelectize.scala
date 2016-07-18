@@ -11,6 +11,7 @@ import scala.scalajs.js
 import shared.dtos.Connection
 import shared.models.ConnectionsModel
 import synereo.client.handlers.RefreshConnections
+import synereo.client.modalpopups.{ConnectionsForm, NewConnection}
 import synereo.client.services.SYNEREOCircuit
 
 
@@ -35,25 +36,35 @@ object ConnectionsSelectize {
       getConnectionsFromSelectizeInput(selectizeInputId)
         .flatMap(e => cnxns.find(_.connection.target == e.target))
         .map(_.name)
+
+
     } else {
       Nil
     }
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback)
+
+  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None)
 
   case class State(connections: Seq[ConnectionsModel] = Nil )
 
+
+
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(props: Props, state: State): Unit = {
-
       val parentIdentifier = t.props.runNow().parentIdentifier
+
+      val count = props.option match  {
+        case Some(a) => a
+        case None => 30
+      }
+
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
       //      $(selectizeInput).selectize()
       $(selectizeInput).selectize(SelectizeConfig
-        .maxItems(30)
+        .maxItems(count)
         .plugins("remove_button")
         .onItemAdd((item: String, value: js.Dynamic) => {
           props.fromSelecize().runNow()

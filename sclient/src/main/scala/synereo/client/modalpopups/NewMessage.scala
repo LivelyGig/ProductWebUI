@@ -193,10 +193,13 @@ object NewMessageForm {
       val headerText = p.header
       Modal(
         Modal.Props(
+
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p)
+
+          closed = () => formClosed(s, p),
+          id = "newMessage"
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(

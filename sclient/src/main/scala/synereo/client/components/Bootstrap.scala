@@ -12,6 +12,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scalacss.StyleA
 
 /**
  * Common Bootstrap components for scalajs-react
@@ -103,8 +104,7 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
-            <.div(
-              modalStyle.dialog,
+            <.div( if(P.id == "newMessage")SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div() ,   modalStyle.dialog )(
               <.div(modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
                 <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
