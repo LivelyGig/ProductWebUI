@@ -12,6 +12,7 @@ import synereo.client.handlers.AckIntroductionNotification
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.Action
 import diode.AnyAction._
+import synereo.client.handlers.GotNotification
 import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -68,16 +69,10 @@ object ConnectionsUtils {
       }
       else if (response.contains("introductionNotification")) {
         try {
-          val introductionNotification = upickle.default.read[Seq[ApiResponse[IntroductionNotification]]](response)
-          var introSeq = Seq[IntroConfirmReq]()
-          println(s"introductionNotification : $introductionNotification")
-          for (intro <- introductionNotification) yield {
-            val temp = IntroConfirmReq(introSessionId = intro.content.introSessionId, correlationId = intro.content.correlationId, alias = "alias", accepted = "false")
-            introSeq = introSeq :+ temp
-          }
-          println(s"introSeq outside yield: $introSeq")
-          SYNEREOCircuit.dispatch(AckIntroductionNotification(introSeq))
-
+          val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+          println(s"intro : $intro")
+          println(s"introSeq outside yield: ${intro(0).content}")
+          SYNEREOCircuit.dispatch(GotNotification(Seq(intro(0).content)))
         } catch {
           case e: Exception =>
             println(s" exception in introductionNotification ${e.getStackTrace}")

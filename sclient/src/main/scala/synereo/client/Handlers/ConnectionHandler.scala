@@ -3,7 +3,7 @@ package synereo.client.handlers
 import diode.data.{Empty, Pot, PotAction}
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.RootModels.ConnectionsRootModel
-import shared.dtos.{ApiResponse, ConnectionProfileResponse, IntroConfirmReq, IntroductionNotification}
+import shared.dtos.{ApiResponse, ConnectionProfileResponse, IntroConfirmReq, Introduction}
 import shared.models.ConnectionsModel
 import synereo.client.services.CoreApi
 import synereo.client.utils.ConnectionsUtils
