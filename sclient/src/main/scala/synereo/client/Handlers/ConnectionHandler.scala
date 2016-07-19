@@ -1,7 +1,7 @@
 package synereo.client.handlers
 
 import diode.data.{Empty, Pot, PotAction}
-import diode.{ActionHandler, ModelRW}
+import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.RootModels.ConnectionsRootModel
 import shared.dtos.{ApiResponse, ConnectionProfileResponse, IntroConfirmReq, IntroductionNotification}
 import shared.models.ConnectionsModel
@@ -20,7 +20,7 @@ case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) exte
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
-case class AckIntroductionNotification(introductionNotification: Seq[IntroductionNotification])
+case class AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq])
 
 object ConnectionModelHandler {
   def getConnectionsModel(response: String): ConnectionsRootModel = {
@@ -48,16 +48,16 @@ object ConnectionModelHandler {
 }
 
 class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) extends ActionHandler(modelRW) {
-  override def handle = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshConnections =>
       ConnectionsUtils.checkIntroductionNotification()
       val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.getConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
 
-    //    case AckIntroductionNotification(introConfirmReq: IntroConfirmReq) =>
-    //      println(s"introConfirmReq :$introConfirmReq")
-    //
-    //      noChange
+    case AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq]) =>
+      println(s"introconfirmSeq :$introconfirmSeq")
+
+      noChange
 
   }
 }

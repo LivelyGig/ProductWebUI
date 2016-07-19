@@ -66,9 +66,9 @@ object DashboardCSS {
       display.block
     )
     val confirmIntroReqBtn = style(
-      position.absolute,
-      top(69.px),
-      right(37.px)
+      //      position.absolute,
+      //      top(69.px),
+      //      right(37.px)
     )
     val bodyImg = style(
       borderImageRepeat.:=(none),

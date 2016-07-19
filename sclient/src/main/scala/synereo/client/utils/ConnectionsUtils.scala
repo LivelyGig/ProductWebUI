@@ -9,10 +9,9 @@ import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
 import synereo.client.handlers.AckIntroductionNotification
-
-//import synereo.client.handlers.{AckIntroductionNotification}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
+import diode.Action
+import diode.AnyAction._
 import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -66,23 +65,19 @@ object ConnectionsUtils {
     try {
       if (response.contains("sessionPong")) {
         val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
-      } else if (response.contains("introductionNotification")) {
+      }
+      else if (response.contains("introductionNotification")) {
         try {
           val introductionNotification = upickle.default.read[Seq[ApiResponse[IntroductionNotification]]](response)
-          val introSeq = introductionNotification.head
+          var introSeq = Seq[IntroConfirmReq]()
           println(s"introductionNotification : $introductionNotification")
-          println(s"introSeq : introSeq")
-          //          val introConfirmReq = IntroConfirmReq()
-          //          introductionNotification.map(
-          //            introduction => introConfirmReq.copy(correlationId = introduction.content.correlationId,
-          //              introSessionId = introduction.content.introSessionId,
-          //              accepted = "true",
-          //              sessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI),
-          //              alias = "alias")
-          //          )
-          //          println(s"introConfirmReq : $introConfirmReq")
-          //          SYNEREOCircuit.dispatch(AckIntroductionNotification(introConfirmReq))
-          //                    SYNEREOCircuit.dispatch(AckIntroductionNotification(introSeq))
+          for (intro <- introductionNotification) yield {
+            val temp = IntroConfirmReq(introSessionId = intro.content.introSessionId, correlationId = intro.content.correlationId, alias = "alias", accepted = "false")
+            introSeq = introSeq :+ temp
+          }
+          println(s"introSeq outside yield: $introSeq")
+          SYNEREOCircuit.dispatch(AckIntroductionNotification(introSeq))
+
         } catch {
           case e: Exception =>
             println(s" exception in introductionNotification ${e.getStackTrace}")
