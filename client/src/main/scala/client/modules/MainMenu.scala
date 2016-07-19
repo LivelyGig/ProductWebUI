@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers.{LoginUser, LogoutUser, ToggleAvailablity}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
-import client.modals.{AgentLoginSignUp, ConfirmIntroReq, Legal, NewMessage}
+import client.modals._
 import client.components._
 import client.css.{DashBoardCSS, FooterCSS, HeaderCSS, WorkContractCSS}
 import shared.models.UserModel
@@ -22,7 +22,8 @@ import scalacss.ScalaCssReact._
 import org.querki.jquery._
 
 import scala.language.reflectiveCalls
-import client.modalpopups.HeaderDropdownDialogs
+import client.modalpopups.{Account, AccountForm, HeaderDropdownDialogs}
+import japgolly.scalajs.react
 
 object MainMenu {
 
@@ -48,7 +49,7 @@ object MainMenu {
 
     private def buildMenuItem(counter: Int): ReactElement = {
       var retRE = <.span()
-      if (counter > 0 ) {
+      if (counter > 0) {
         retRE = <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.inputBtnRadius, counter))
       }
       return retRE
@@ -87,7 +88,7 @@ object MainMenu {
                     " ", item.label(props)
                   ),
                   if (item.location == ConnectionsLoc) {
-                    ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx,bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3" , "3"))
+                    ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
                   }
                   else
                     props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
@@ -102,7 +103,7 @@ object MainMenu {
                   " ", item.label(props)
                 ),
                 if (item.location == ConnectionsLoc) {
-                  ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx,bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3" , "3"))
+                  ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
@@ -124,12 +125,20 @@ object LoggedInUser {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(userModel: UserModel)
+  case class State(userModel: UserModel, showNewMessageForm: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
+    }
+
+    def updateModalState: react.Callback = {
+      t.modState(s => s.copy(showNewMessageForm = true))
+    }
+
+    def addMessage(/*postMessage:PostMessage*/): Callback = {
+      t.modState(s => s.copy(showNewMessageForm = false))
     }
 
     def mounted(props: Props) = {
@@ -170,7 +179,7 @@ object LoggedInUser {
                     <.li(^.className := "divider")(),
                     <.li()(<.a()("Availability Schedule")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true")("Account")),
+                    <.li()(<.a(/*"data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true"*/ ^.onClick --> t.backend.updateModalState)("Account")),
                     <.li()(<.a()("Profiles")),
                     <.li()(<.a()("Notifications")),
                     <.li()(<.a()("Payments")),
@@ -178,7 +187,7 @@ object LoggedInUser {
                     <.li(^.className := "divider")(),
                     <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                     <.li(^.className := "divider")(),
-                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#aboutModal", "aria-haspopup".reactAttr := "true") ("About"))
+                    <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#aboutModal", "aria-haspopup".reactAttr := "true")("About"))
                   )
                 ),
                 <.button(^.className := "btn dropdown-toggle ModalName", HeaderCSS.Style.loginbtn, "data-toggle".reactAttr := "dropdown")(model.name)(),
@@ -193,7 +202,7 @@ object LoggedInUser {
                   <.li(^.className := "divider")(),
                   <.li()(<.a()("Availability Schedule")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true")("Account")),
+                  <.li()(<.a(/*"data-toggle".reactAttr := "modal", "data-target".reactAttr := "#accountModal", "aria-haspopup".reactAttr := "true"*/ ^.onClick --> t.backend.updateModalState)("Account")),
                   <.li()(<.a()("Profiles")),
                   <.li()(<.a()("Notifications")),
                   <.li()(<.a()("Payments")),
@@ -201,9 +210,18 @@ object LoggedInUser {
                   <.li(^.className := "divider")(),
                   <.li()(<.a(^.onClick --> Callback(LGCircuit.dispatch(LogoutUser())))("Log Out")),
                   <.li(^.className := "divider")(),
-                  <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#aboutModal", "aria-haspopup".reactAttr := "true") ("About"))
+                  <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#aboutModal", "aria-haspopup".reactAttr := "true")("About"))
                 ),
-               HeaderDropdownDialogs(HeaderDropdownDialogs.Props())
+                               HeaderDropdownDialogs(HeaderDropdownDialogs.Props()),
+                if (S.showNewMessageForm)
+                  AccountForm(AccountForm.Props(t.backend.addMessage, "Account"))
+                //                  Account(Account.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message",Option(true)))
+                //                  NewMessageForm(NewMessageForm.Props(t.backend.addMessage, "New Message"))
+                //                  NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message",Option(true)))
+                //                  Legal(Legal.Props("Legal", Seq(), "", "",Option(true)))
+
+                else <.div()
+
               )
             )
           )
