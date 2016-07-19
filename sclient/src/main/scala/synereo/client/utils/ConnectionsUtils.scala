@@ -70,8 +70,6 @@ object ConnectionsUtils {
       else if (response.contains("introductionNotification")) {
         try {
           val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
-          println(s"intro : $intro")
-          println(s"introSeq outside yield: ${intro(0).content}")
           SYNEREOCircuit.dispatch(GotNotification(Seq(intro(0).content)))
         } catch {
           case e: Exception =>

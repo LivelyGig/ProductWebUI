@@ -1,5 +1,6 @@
 package synereo.client.modalpopups
 
+import diode.react.ModelProxy
 import shared.models.MessagePostContent
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
@@ -8,18 +9,24 @@ import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
 import synereo.client.components.Icon._
 import synereo.client.components.{GlobalStyles, _}
 import japgolly.scalajs.react
+import shared.RootModels.IntroRootModel
 
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
+import synereo.client.services.SYNEREOCircuit
+
+import scala.scalajs.js.JSON
 
 /**
   * Created by mandar.k on 6/29/2016.
   */
 object ConfirmIntroReqModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
+  val getIntroduction = SYNEREOCircuit.connect(_.introduction)
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)
 
@@ -48,8 +55,10 @@ object ConfirmIntroReqModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
-        if (S.showNewMessageForm) ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message"))
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        if (S.showNewMessageForm)
+        //          ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message"))
+          getIntroduction(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message", proxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -67,7 +76,7 @@ object ConfirmIntroReqForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[IntroRootModel])
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    cnxsSelectizeParentId: String = "postNewMessageSelectizeInput", labelSelectizeParentId: String = "labelsSelectizeParent")
@@ -91,8 +100,7 @@ object ConfirmIntroReqForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(): Callback = Callback {
-
+    def mounted(props: Props): Callback = Callback {
     }
 
     def submitForm(e: ReactEventI): react.Callback = {
@@ -124,9 +132,9 @@ object ConfirmIntroReqForm {
         <.form(^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
-              <.div("Introduction Request"),
+              <.div(p.proxy().introResponse(0).message),
               <.div(
-                "From : NodeAdmin QueenSpilicious", <.br,
+                s"From : ${JSON.parse(p.proxy().introResponse(0).introProfile).name.asInstanceOf[String]}", <.br,
                 "Date : Mon June 13 2016 ", <.br
               ),
               <.div(^.className := "col-md-12")(
@@ -159,7 +167,7 @@ object ConfirmIntroReqForm {
         scope.$.backend.hideModal
       }
     })
-    .componentDidMount(scope => scope.backend.mounted())
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     //      .shouldComponentUpdate(scope => false)
     .build
 

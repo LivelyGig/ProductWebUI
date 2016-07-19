@@ -66,9 +66,9 @@ object DashboardCSS {
       display.block
     )
     val confirmIntroReqBtn = style(
-      //      position.absolute,
-      //      top(69.px),
-      //      right(37.px)
+      backgroundColor.transparent,
+      color(c"#FFFFFF"),
+      marginTop(6.px)
     )
     val bodyImg = style(
       borderImageRepeat.:=(none),
@@ -101,7 +101,7 @@ object DashboardCSS {
       paddingRight(65.px)
     )
     val CardHolderLiElement = style(
-//      margin(15.px, -30.px),
+      //      margin(15.px, -30.px),
       padding(15.px)
     )
     val glanceViewName = style(
@@ -220,8 +220,8 @@ object DashboardCSS {
       lineHeight(1.5.em)
     )
 
-    val imgBorder = style (
-      border(1.px ,  solid  ,gray),
+    val imgBorder = style(
+      border(1.px, solid, gray),
       borderRadius(6.px)
     )
   }

@@ -30,6 +30,7 @@ import diode.AnyAction._
 object MainMenu {
   // shorthand for styles
   //  val labelSelectizeInputId: String = "labelSelectizeInputId"
+  val introductionConnectProxy = SYNEREOCircuit.connect(_.introduction)
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -100,13 +101,17 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
-                if (props.currentLoc == PeopleLOC) {
                   <.li(
-                    ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                    //                    ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                    introductionConnectProxy(introProxy =>
+                      if (introProxy.value.introResponse.length != 0) {
+                        ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                      } else {
+                        <.span()
+                      }
+                    )
                   )
-                } else {
-                  <.li()
-                },
+                ,
                 <.li(
                   <.div(^.className := "dropdown")(
                     <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,

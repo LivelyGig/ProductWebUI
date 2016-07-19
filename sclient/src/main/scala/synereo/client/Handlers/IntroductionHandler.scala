@@ -29,7 +29,7 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
     case GotNotification(introSeq: Seq[Introduction]) =>
-      println(s"newIntroConfirmModel: $introSeq")
+      //      println(s"newIntroConfirmModel: $introSeq")
       updated(IntroRootModel(introSeq))
   }
 
