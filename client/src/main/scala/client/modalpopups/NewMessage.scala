@@ -163,7 +163,7 @@ object NewMessageForm {
             <.div(DashBoardCSS.Style.paddingTop10px)(
               <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
               if (s.postMessage.imgSrc != ""){
-                <.img(^.src := s.postMessage.imgSrc)
+                <.img(DashBoardCSS.Style.imgSize, ^.src := s.postMessage.imgSrc)
               } else {
                 <.div("")
               }
