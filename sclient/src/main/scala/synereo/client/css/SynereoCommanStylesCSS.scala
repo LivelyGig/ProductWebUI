@@ -26,8 +26,8 @@ object SynereoCommanStylesCSS {
     val labelSelectizeContainer = style(
       //      marginTop(30.px)
     )
-    val searchBoxContainer= style(
-           marginTop(20.px),
+    val searchBoxContainer = style(
+      marginTop(20.px),
       display.inlineBlock,
       width(380.px)
     )
@@ -44,9 +44,9 @@ object SynereoCommanStylesCSS {
         width(180.px),
       media.maxWidth(919.px).minWidth(820.px) -
         width(132.px),
-      media.maxWidth(819.px).minWidth(768.px)-
+      media.maxWidth(819.px).minWidth(768.px) -
         width(100.px),
-      media.maxWidth(767.px)-
+      media.maxWidth(767.px) -
         width(230.px),
       media.minWidth(1131.px) -
         width(230.px)
@@ -98,8 +98,8 @@ object SynereoCommanStylesCSS {
       //      paddingTop(6.px),
       //      paddingRight(20.px),
       right.`0`,
-      media.maxWidth(767.px)-
-      marginTop(65.px)
+      media.maxWidth(767.px) -
+        marginTop(65.px)
       //      zIndex(100)
       //      backgroundColor(c"#277490")
     )
@@ -351,8 +351,22 @@ object SynereoCommanStylesCSS {
     val marginRight15px = style(
       marginRight(15.px)
     )
-    val displayInline = style (
+    val displayInline = style(
       display.inlineBlock
+    )
+    //
+    //    val verticalAlignmentHelper = style(
+    //      display.table,
+    //      height(100.%%),
+    //      width(100.%%)
+    //    )
+    val verticalAlignCenter = style(
+      /* To center vertically */
+      display.tableCell,
+      verticalAlign.middle,
+      paddingLeft(30.%%),
+      paddingRight(30.%%)
+
     )
 
   }

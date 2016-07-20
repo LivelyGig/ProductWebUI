@@ -161,6 +161,7 @@ object NewMessageForm {
       }
       reader.readAsDataURL(value)
     }
+    def fromSelecize() : Callback = Callback{}
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -192,10 +193,13 @@ object NewMessageForm {
       val headerText = p.header
       Modal(
         Modal.Props(
+
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p)
+
+          closed = () => formClosed(s, p),
+          id = "newMessage"
         ),
         <.form(^.onSubmit ==> submitForm)(
           <.div(
@@ -203,7 +207,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
+              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId,fromSelecize))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))

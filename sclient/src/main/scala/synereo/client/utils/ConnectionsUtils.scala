@@ -3,11 +3,13 @@ package synereo.client.utils
 /**
   * Created by mandar.k on 6/7/2016.
   */
-
 import shared.dtos._
+import shared.dtos.Connection
+import shared.models._
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
+import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
 import synereo.client.handlers.AckIntroductionNotification
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.Action
@@ -17,7 +19,7 @@ import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
-
+//scalastyle:off
 object ConnectionsUtils {
 
   /**
@@ -42,7 +44,18 @@ object ConnectionsUtils {
     }
   }
 
-  //scalastyle:off
+  def getCnxnForReq(sessionUri: String): Seq[Connection] = {
+    val currentSearch = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+    if ( currentSearch != None){
+      upickle.default.read[Seq[Connection]](currentSearch)  ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+    } else {
+      upickle.default.read[Seq[Connection]](
+        window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST
+        )) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+
+    }
+  }
+
   def checkIntroductionNotification(): Unit = {
     if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
       window.sessionStorage.setItem("sessionPingTriggered", "true")

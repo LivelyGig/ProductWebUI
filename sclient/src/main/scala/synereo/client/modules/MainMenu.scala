@@ -10,9 +10,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.Label
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
-
 import scala.scalajs.js
-
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
@@ -82,7 +80,6 @@ object MainMenu {
                     //                    <.div(SynereoCommanStylesCSS.Style.displayInline)(
                     //                      <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
                     //                      ))
-
                     //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
                   )
                 } else {
