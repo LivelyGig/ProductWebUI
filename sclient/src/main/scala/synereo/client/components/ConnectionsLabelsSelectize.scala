@@ -5,78 +5,64 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
+import shared.dtos.Connection
+import shared.models.ConnectionsModel
+import synereo.client.handlers.{CreateLabels, RefreshConnections}
+import synereo.client.services.SYNEREOCircuit
 
 import scala.language.existentials
 import scala.scalajs.js
-import shared.dtos.Connection
-import shared.models.ConnectionsModel
-import synereo.client.handlers.RefreshConnections
-import synereo.client.modalpopups.{ConnectionsForm, NewConnection}
-import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
 
 
 /**
-  * Created by mandar.k on 4/6/2016.
+  * Created by shubham.k on 4/6/2016.
   */
 //scalastyle:off
-object ConnectionsSelectize {
-
-  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
+object ConnectionsLabelsSelectize {
+  def getCnxnsAndLabelsFromSelectize(selectizeInputId: String): (Seq[Connection], Seq[String]) = {
     var selectedConnections = Seq[Connection]()
+    var selectedLabels = Seq[String]()
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
-    $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
-//    println("selectedConnections" + selectedConnections)
-    selectedConnections
-  }
-
-  def getConnectionNames(selectizeInputId: String): Seq[String] = {
-    if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-      val cnxns = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse).value
-      getConnectionsFromSelectizeInput(selectizeInputId)
-        .flatMap(e => cnxns.find(_.connection.target == e.target))
-        .map(_.name)
-
-
-    } else {
-      Nil
+    $(selector).each((y: Element) => {
+      val dataVal = $(y).attr("data-value").toString
+      try {
+        val cnxn = upickle.default.read[Connection](dataVal)
+        selectedConnections :+= cnxn
+      } catch {
+        case e: Exception =>
+          selectedLabels :+= dataVal
+      }
     }
+    )
+    (selectedConnections, selectedLabels)
   }
 
 
+  def filterLabelStrings(value: Seq[String], character: String): Seq[String] = {
+    value
+      .filter(e => e.charAt(0) == "#" && e.count(_ == character) == 1)
+      .map(_.replace(character, ""))
+      .toSet
+      .toSeq
+  }
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None)
 
-  case class State(connections: Seq[ConnectionsModel] = Nil )
+  case class Props(parentIdentifier: String)
 
-
+  case class State(connections: Seq[ConnectionsModel] = Nil)
 
   case class Backend(t: BackendScope[Props, State]) {
-    def initializeTagsInput(props: Props, state: State): Unit = {
+    def initializeTagsInput(): Unit = {
       val parentIdentifier = t.props.runNow().parentIdentifier
-
-      val count = props.option match  {
-        case Some(a) => a
-        case None => 30
-      }
-
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
       //      $(selectizeInput).selectize()
       $(selectizeInput).selectize(SelectizeConfig
-        .maxItems(count)
+        .maxItems(30)
         .plugins("remove_button")
-        .onItemAdd((item: String, value: js.Dynamic) => {
-          props.fromSelecize().runNow()
-          println("")
-        })
-        .onItemRemove((item: String)=> {
-          props.fromSelecize().runNow()
-          println("")
-        })
-
       )
-
     }
 
     def mounted(props: Props): Callback = Callback {
@@ -94,17 +80,19 @@ object ConnectionsSelectize {
       }
     }
 
-    def willMount(props: Props) = Callback.when(SYNEREOCircuit.zoom(_.connections).value.isEmpty)(Callback {
-      SYNEREOCircuit.dispatch(RefreshConnections())
-    })
+    def willMount(props: Props) = Callback {
+      if (SYNEREOCircuit.zoom(_.connections).value.isEmpty) {
+        SYNEREOCircuit.dispatch(RefreshConnections())
+      }
+      if (SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty) {
+        SYNEREOCircuit.dispatch(CreateLabels())
+      }
+    }
 
 
-    def componentDidUpdate(props: Props, state: State): Callback = Callback {
-//      println("In componentDid  Update")
+    def componentDidUpdate(props: Props): Callback = Callback {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-        initializeTagsInput(props, state)
-
-        // println(state.connections.foreach(a => println(a.name)))
+        initializeTagsInput()
       }
 
     }
@@ -113,20 +101,19 @@ object ConnectionsSelectize {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
         <.option(^.value := "")("Select"),
         for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
-          ^.key := connection.connection.target)(s"@${connection.name}"))
+          ^.key := connection.connection.target)(s"@${connection.name}"),
+        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
+          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
+
     }
   }
-
 
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentWillMount(scope => scope.backend.willMount(scope.props))
-    .componentDidUpdate(scope => {
-
-      scope.$.backend.componentDidUpdate(scope.currentProps, scope.currentState)
-    })
+    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build
 

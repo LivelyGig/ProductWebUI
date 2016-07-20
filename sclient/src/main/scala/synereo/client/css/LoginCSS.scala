@@ -46,7 +46,8 @@ object LoginCSS {
       backgroundImage := "url(\"./assets/synereo-images/login_nodeDecoration.png\")"
     )
     val formPadding = style(
-      padding(4.%%)
+      padding(4.%%),
+      marginRight(28.px)
     )
     val SignUpBtn = style()
     val requestInviteModalStyle = style(
@@ -86,8 +87,8 @@ object LoginCSS {
       marginBottom(150.px),
       marginTop.auto,
       backgroundColor(c"#012E3D"),
-      media.maxWidth(1400.px) -
-        width(100.%%)
+      media.maxWidth(991.px) -
+        width(80.%%)
     )
     val textWhite = style(
       color(c"#FFFFFF"),

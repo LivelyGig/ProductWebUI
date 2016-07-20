@@ -10,12 +10,12 @@ trait ScalaJSVersions {
   val scalajsReact = "0.11.0"
   val scalaCSS = "0.4.1"
   val scalaDom = "0.9.0"
-  val diode = "0.5.2" //"0.5.2"
+  val diode = "1.0.0" //"0.5.2"
   val jqueryFacade = "1.0-RC6"//"1.0-RC3"
   val datePickerFacade = "0.7" //"0.5"
   val selectizeFacade = "0.12.1-0.2.1"
   val momentJSFacade = "0.1.5" //"0.1.4"
-  val jQuery = "2.2.4" //  "3.0.0"
+  val jQuery = "1.11.1" //  "3.0.0"
   val querkiJsext= "0.7"
 
 }

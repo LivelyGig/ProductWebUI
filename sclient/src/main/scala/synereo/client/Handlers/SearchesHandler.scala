@@ -10,6 +10,7 @@ import synereo.client.components.LabelsSelectize
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import synereo.client.utils.{LabelsUtils, PrologParser}
 import org.scalajs.dom._
+import synereo.client.logger
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -23,7 +24,8 @@ object SearchesModelHandler {
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
-      SearchesRootModel(model.filterNot(e => LabelsUtils.getSystemLabels().contains(e.text)))
+      logger.log.debug(s"searchesModel = ${model}")
+      SearchesRootModel(model)
     } catch {
       case e: Exception =>
         SearchesRootModel(Nil)
@@ -96,7 +98,7 @@ case class StoreProfilesSearchLabel()
 
 // scalastyle:off
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
-  override def handle/*: PartialFunction[Any, ActionResult[M]]*/ = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case CreateLabels() =>
       val listOfLabelFromStore = window.sessionStorage.getItem(SessionItems.SearchesView.LIST_OF_LABELS)
       //      println(s"listOfLabelFromStore: $listOfLabelFromStore")
@@ -118,7 +120,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       * uri to the parent label.
       * If a particular label is the root the parent uri is "self"
       */
-    case UpdateLabel(label) =>
+    /*case UpdateLabel(label) =>
       // todo: refactor this silly!!! :)
       SearchesModelHandler.labelsBuffer.clear()
       val children = SearchesModelHandler.getChildren(label, value.searchesModel)
@@ -143,13 +145,13 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
         } else
           e.copy(isChecked = false)
       } else e)
-      updated(SearchesRootModel(modelToUpdate))
+      updated(SearchesRootModel(modelToUpdate))*/
 
     case StoreMessagesSearchLabel() =>
       val selectedRootParents = value.searchesModel.filter(e => e.isChecked == true && e.parentUid == "self")
       val labelFamilies = ListBuffer[Seq[Label]]()
       //      if (selectedRootParents.isEmpty)
-      labelFamilies.append(Seq(LabelsUtils.getSystemLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
+      labelFamilies.append(Seq(LabelsUtils.getLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)))
       selectedRootParents.foreach { selectedRootParent =>
         SearchesModelHandler.labelsBuffer.clear()
         val selectedChildren = SearchesModelHandler.getChildren(selectedRootParent, value.searchesModel).filter(e => e.isChecked == true)
@@ -162,11 +164,11 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case StoreProjectsSearchLabel() =>
       window.sessionStorage.setItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH,
-        LabelsUtils.buildProlog(Seq(LabelsUtils.getSystemLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)), LabelsUtils.PrologTypes.Any))
+        LabelsUtils.buildProlog(Seq(LabelsUtils.getLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)), LabelsUtils.PrologTypes.Any))
       noChange
     case StoreProfilesSearchLabel() =>
       window.sessionStorage.setItem(SessionItems.ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH,
-        LabelsUtils.buildProlog(Seq(LabelsUtils.getSystemLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)), LabelsUtils.PrologTypes.Any))
+        LabelsUtils.buildProlog(Seq(LabelsUtils.getLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)), LabelsUtils.PrologTypes.Any))
       noChange
   }
 

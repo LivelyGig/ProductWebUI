@@ -20,7 +20,6 @@ import shared.RootModels.ConnectionsRootModel
 import shared.sessionitems.SessionItems
 import synereo.client.components.{Icon, MIcon}
 import synereo.client.handlers.RefreshConnections
-import synereo.client.modalpopups.{ConfirmIntroReq, NewConnection}
 import synereo.client.utils.ConnectionsUtils
 
 import scalacss.ScalaCssReact._
@@ -40,6 +39,11 @@ object Info {
   val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
   val agentUID = ConnectionsUtils.getSelfConnnection(response).source
   val newAgentUID = agentUID.substring(8)
+//  println(s"agentUID ${newAgentUID}")
+  val output = newAgentUID.split("\"")
+//  println(s"output ${output.head}")
+//  for(o <- output)yield {  println(o)}
+
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props): Callback = Callback {
@@ -54,12 +58,12 @@ object Info {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain,UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )
         ),
-        <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${newAgentUID}"),
+        <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
         <.div(UserProfileViewCSS.Style.agentUID)("Build Number : ")
       ) //connectionsContainerMain
     })

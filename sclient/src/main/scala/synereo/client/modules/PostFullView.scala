@@ -19,7 +19,7 @@ object PostFullView {
       <.div(^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 col-sm-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )

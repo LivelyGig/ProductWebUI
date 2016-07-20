@@ -1,7 +1,9 @@
 package synereo.client.services
 
+import java.util.UUID
+
 import shared.dtos._
-import shared.models._
+import shared.models.{Label, _}
 import org.scalajs.dom._
 import upickle.default._
 
@@ -10,11 +12,16 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
+import synereo.client.logger
 import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
+import scala.scalajs.js.Date
+import scala.util.{Failure, Success}
+
 object CoreApi {
-  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api" // scalastyle:ignore
+  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+  // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
@@ -68,14 +75,7 @@ object CoreApi {
     */
   def getContent(sessionUriName: String): Future[String] = {
     val sessionUri = window.sessionStorage.getItem(sessionUriName)
-    val searchConnectionsList = upickle.default.read[Seq[Connection]](
-      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
-    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
-    val connectionsList = upickle.default.read[Seq[Connection]](
-      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
-    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val connectionListTo = if (connectionsList == searchConnectionsList) connectionsList else searchConnectionsList
-
+    val connectionListTo = ConnectionsUtils.getCnxnForReq(sessionUri)
     val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
     val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionListTo, currentSearchLabels)))
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionListTo, previousSearchLabels)
@@ -118,15 +118,37 @@ object CoreApi {
 
   def postIntroduction(introductionModel: Content): Future[String] = {
     val msg = introductionModel match {
-      case _: IntroConnections => ApiTypes.INTRODUCTION_REQUEST
+      case _: IntroConnections => ApiTypes.BEGIN_INTRODUCTION_REQUEST
       case _: EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+      case _: IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
 
   def postLabel(labelPost: LabelPost): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_ALIAS_LABEL_REQ, labelPost))
-    //    println("requestContent = " + requestContent)
     ajaxPost(requestContent)
+  }
+
+  def postData(postContent: PostContent, sessionUriName: String, cnnxns: Seq[Connection], labels: Seq[Label]): Future[String] = {
+    val uid = UUID.randomUUID().toString.replaceAll("-", "")
+    val (labelToPost, contentToPost) = sessionUriName match {
+      case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ labels,
+          upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[MessagePostContent])))
+      case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)),
+          upickle.default.write(ProjectsPost(uid, new Date().toISOString(),
+            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProjectPostContent])))
+      case SessionItems.ProfilesViewItems.PROFILES_SESSION_URI =>
+        (Seq(LabelsUtils.getLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)),
+          upickle.default.write(ProfilesPost(uid, new Date().toISOString(),
+            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProfilePostContent])))
+    }
+    val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
+    logger.log.debug(s"prolog = $prolog")
+    evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName),
+      Expression(ApiTypes.INSERT_CONTENT,
+        ExpressionContent(cnnxns, prolog, contentToPost, uid))))
   }
 }

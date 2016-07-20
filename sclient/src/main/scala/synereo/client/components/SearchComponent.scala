@@ -1,19 +1,13 @@
 package synereo.client.components
 
-import japgolly.scalajs.react.{ReactElement, _}
-import synereo.client.handlers.{RefreshMessages, StoreCnxnAndLabels, StoreMessagesLabels}
+import synereo.client.handlers.RefreshMessages
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
 import synereo.client.css.SynereoCommanStylesCSS
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-//import diode.AnyAction._
-import scala.scalajs.js
+import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
 import scalacss.ScalaCssReact._
-import scala.scalajs.js
-import org.querki.jquery._
-import shared.sessionitems.SessionItems
-
+import synereo.client.utils
 import scala.language.reflectiveCalls
 
 //scalastyle:off
@@ -23,31 +17,36 @@ object SearchComponent {
 
   case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz")
 
-//  val getConnections = SYNEREOCircuit.connect(_.connections)
-//  val getSearches =    SYNEREOCircuit.connect(_.searches)
+  val getSearches =    SYNEREOCircuit.connect(_.searches)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
 
     }
 
+    def fromSelecize() : Callback = Callback{}
+
     def searchWithLblAndCnxn(e: ReactEventI) = Callback {
-      SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(t.state.runNow().labelSelectizeInputId)))
-      SYNEREOCircuit.dispatch(StoreCnxnAndLabels(Some(t.state.runNow().labelSelectizeInputId),
-        Some(t.state.runNow().connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI))
+      val cnxnLabels = ConnectionsLabelsSelectize.getCnxnsAndLabelsFromSelectize(t.state.runNow().connectionsSelectizeInputId)
+      utils.MessagesUtils.storeCnxnAndLabels(cnxnLabels._1,cnxnLabels._2)
       SYNEREOCircuit.dispatch(RefreshMessages())
     }
 
     def render(s: State, p: Props) = {
-      <.div(SynereoCommanStylesCSS.Style.searchBoxContainer)(
-        <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.connectionsSelectizeInputId)))
+      <.div(/*SynereoCommanStylesCSS.Style.searchBoxContainer*/)(
+        /*<.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
+          ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId))
         ),
         <.div(^.id := s.labelSelectizeInputId, SynereoCommanStylesCSS.Style.selectizeSearchComponent)(
-          SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, s.labelSelectizeInputId)))
+          LabelsSelectize(LabelsSelectize.Props(s.labelSelectizeInputId))
         ),
         <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLblAndCnxn, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-        )
+        )*/
+        <.div(^.id := s.connectionsSelectizeInputId,SynereoCommanStylesCSS.Style.searchBoxContainer)(
+          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))),
+        <.div(SynereoCommanStylesCSS.Style.displayInline)(
+          <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
+          ))
       )
     }
   }
