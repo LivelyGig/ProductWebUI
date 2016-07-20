@@ -67,7 +67,10 @@ object DashboardCSS {
     )
     val confirmIntroReqBtn = style(
       backgroundColor.transparent,
-      color(c"#FFFFFF"),
+      color.red,
+      &.hover(
+        color.red
+      ),
       marginTop(6.px)
     )
     val bodyImg = style(

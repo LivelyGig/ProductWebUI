@@ -20,7 +20,7 @@ case class RefreshConnections(potResult: Pot[ConnectionsRootModel] = Empty) exte
   override def next(value: Pot[ConnectionsRootModel]) = RefreshConnections(value)
 }
 
-case class AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq])
+//case class AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq])
 
 object ConnectionModelHandler {
   def getConnectionsModel(response: String): ConnectionsRootModel = {
@@ -54,10 +54,10 @@ class ConnectionHandler[M](modelRW: ModelRW[M, Pot[ConnectionsRootModel]]) exten
       val updateF = action.effect(CoreApi.getConnections())(connections => ConnectionModelHandler.getConnectionsModel(connections))
       action.handleWith(this, updateF)(PotAction.handler())
 
-    case AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq]) =>
-      println(s"introconfirmSeq :$introconfirmSeq")
-
-      noChange
+    //    case AckIntroductionNotification(introconfirmSeq: Seq[IntroConfirmReq]) =>
+    //      println(s"introconfirmSeq :$introconfirmSeq")
+    //
+    //      noChange
 
   }
 }

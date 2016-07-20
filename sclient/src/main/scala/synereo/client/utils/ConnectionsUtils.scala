@@ -10,7 +10,6 @@ import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
-import synereo.client.handlers.AckIntroductionNotification
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.Action
 import diode.AnyAction._

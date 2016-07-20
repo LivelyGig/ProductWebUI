@@ -68,7 +68,7 @@ case class LabelPost(sessionURI: String = "", labels: Seq[String] = Nil, alias: 
 case class Introduction(introSessionId: String = "", correlationId: String = "", connection: Connection = Connection(), message: String = "", introProfile: String = "")
 
 case class IntroConfirmReq(sessionURI: String = "", alias: String = "", introSessionId: String = "",
-                           correlationId: String = "", accepted: String = "") extends Content
+                           correlationId: String = "", accepted: Boolean) extends Content
 
 case class SessionPong(sessionURI: String = "")
 
