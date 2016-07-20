@@ -122,7 +122,6 @@ object CoreApi {
       case _: EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
       case _: IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
     }
-    println(s"introductionModel : $introductionModel")
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
 

@@ -124,7 +124,7 @@ object ConfirmIntroReqForm {
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
       CoreApi.postIntroduction(introConfirmReq).onComplete{
         case Success(response) =>
-          println("introRequest sent successfully ")
+          // println("introRequest sent successfully ")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       val state = t.state.runNow()
