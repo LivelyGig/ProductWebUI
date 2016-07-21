@@ -70,6 +70,8 @@ case class Introduction(introSessionId: String = "", correlationId: String = "",
 case class IntroConfirmReq(sessionURI: String = "", alias: String = "", introSessionId: String = "",
                            correlationId: String = "", accepted: Boolean) extends Content
 
+case class IntroductionConfirmationResponse(sessionURI: String = "")
+
 case class SessionPong(sessionURI: String = "")
 
 case class ConnectNotification(connection: Connection, introProfile: String = "")

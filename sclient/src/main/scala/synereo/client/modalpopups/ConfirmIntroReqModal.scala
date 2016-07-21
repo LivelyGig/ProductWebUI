@@ -86,13 +86,14 @@ object ConfirmIntroReqForm {
   case class State(postMessage: MessagePostContent, confirmIntroReq: Boolean = false,
                    cnxsSelectizeParentId: String = "postNewMessageSelectizeInput", labelSelectizeParentId: String = "labelsSelectizeParent")
 
+  //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get target source and modify only accepted field of case class
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
       println(s"introConfirmReq: $introConfirmReq")
-      CoreApi.postIntroduction(introConfirmReq).onComplete{
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => println("introRequest Rejected successfully ")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
@@ -122,7 +123,7 @@ object ConfirmIntroReqForm {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
-      CoreApi.postIntroduction(introConfirmReq).onComplete{
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
           // println("introRequest sent successfully ")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
