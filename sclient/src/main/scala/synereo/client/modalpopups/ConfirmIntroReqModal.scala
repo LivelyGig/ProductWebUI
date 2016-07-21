@@ -91,8 +91,9 @@ object ConfirmIntroReqForm {
     def hide: Callback = Callback {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
-      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      println(s"introConfirmReq: $introConfirmReq")
+      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
+        props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
+      //      println(s"introConfirmReq: $introConfirmReq")
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => println("introRequest Rejected successfully ")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
@@ -122,7 +123,8 @@ object ConfirmIntroReqForm {
       //      e.target.value.
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
-      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
+      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
+        props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
           // println("introRequest sent successfully ")

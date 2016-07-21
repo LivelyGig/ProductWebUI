@@ -14,7 +14,8 @@ import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, P
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.Action
 import diode.AnyAction._
-import synereo.client.handlers.{AcceptConnectNotification, AcceptNotification}
+import diode.data.Empty
+import synereo.client.handlers.{AcceptConnectNotification, AcceptIntroductionConfirmationResponse, AcceptNotification, AddConnection}
 
 import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
@@ -58,20 +59,21 @@ object ConnectionsUtils {
   }
 
   def checkIntroductionNotification(): Unit = {
+    val sessionUri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
     if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
       window.sessionStorage.setItem("sessionPingTriggered", "true")
-      def intervalForCheckNotification(): Unit = {
+      def sessionPing(): Unit = {
         CoreApi.getConnections().onComplete {
           case Success(response) => {
             processIntroductionNotification(response)
-            intervalForCheckNotification()
+            sessionPing()
           }
           case Failure(failureMessage) => println(s"failureMessage: $failureMessage")
           case _ => println("something went wrong in session ping")
         }
       }
       setTimeout(7000) {
-        intervalForCheckNotification()
+        sessionPing()
       }
     }
   }
@@ -84,16 +86,19 @@ object ConnectionsUtils {
       } else if (response.contains("introductionNotification")) {
         val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
         SYNEREOCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
+      } else if (response.contains("introductionConfirmationResponse")) {
+        val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
+        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+        println(s"IntroductionConfirmationResponse: $introductionConfirmationResponse")
       } else if (response.contains("connectNotification")) {
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         SYNEREOCircuit.dispatch(AcceptConnectNotification(connectNotification(0).content))
+        SYNEREOCircuit.dispatch(AddConnection(connectNotification(0).content))
         println(s"connectNotification: $connectNotification")
-      } else if (response.contains("introductionConfirmationResponse")) {
-        val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
-        println(s"connectNotification: $introductionConfirmationResponse")
       }
     } catch {
-      case e: Exception => println("into exception for upickle")
+      case e: Exception => /*println("into exception for upickle read session ping response")*/
+      println("")
     }
   }
 
