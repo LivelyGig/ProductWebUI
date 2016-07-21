@@ -25,10 +25,13 @@ import scala.language.reflectiveCalls
 import client.modalpopups.{Account, AccountForm, HeaderDropdownDialogs}
 import japgolly.scalajs.react
 
+
 object MainMenu {
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
+
+//  val introductionConnectProxy = LGCircuit.connect(_.introduction)
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
@@ -79,7 +82,7 @@ object MainMenu {
         <.ul(/*^.id := "headerNavUl",*/ ^.className := "nav", HeaderCSS.Style.navbarNav)(
           // build a list of menu items
           for (item <- $.backend.menuItems) yield {
-            if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc, ConnectionsLoc, DashboardLoc).contains(item.location)) {
+            if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc,  DashboardLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
                 <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                   props.ctl.link(item.location)(
@@ -88,7 +91,13 @@ object MainMenu {
                     " ", item.label(props)
                   ),
                   if (item.location == ConnectionsLoc) {
-                    ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
+                     LGCircuit.connect(_.introduction)(introProxy =>
+                        if (introProxy.value.introResponse.length != 0) {
+                          <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introProxy.value.introResponse.length}")))
+                        } else {
+                          <.span()
+                        }
+                      )
                   }
                   else
                     props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
@@ -107,6 +116,7 @@ object MainMenu {
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
+//              <.li()
             }
           }
         )

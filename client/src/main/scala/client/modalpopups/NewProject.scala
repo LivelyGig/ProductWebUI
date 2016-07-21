@@ -124,6 +124,7 @@ object NewProjectForm {
       val value = event.target.checked
       t.modState(s => s.copy(projectPost = s.projectPost.copy(allowFormatting = value)))
     }
+    def fromSelecize(): Callback =  Callback{}
     // scalastyle:off
     def render(s: State, p: Props) = {
       val headerText = "New Job"
@@ -255,7 +256,7 @@ object NewProjectForm {
               <.input(^.`type` := "textarea", ProjectCSS.Style.textareaWidth, ^.placeholder := "Skill needed:", ^.lineHeight := 4, ^.value := model.skillNeeded, ^.onChange ==> updateSkillNeeded)
             ),
             <.div(DashBoardCSS.Style.marginTop10px, ^.id := s.selectizeInputId)(
-              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId)))
+              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId,fromSelecize)))
             )
           ),
           <.div()(

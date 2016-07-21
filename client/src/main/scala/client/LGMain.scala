@@ -17,6 +17,7 @@ import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom._
 
 import scala.scalajs.js
 import js.{Date, UndefOr}
@@ -125,6 +126,7 @@ object LGMain extends js.JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     AppCSS.load
+    window.sessionStorage.removeItem("sessionPingTriggered")
 //    standaloneCSS.render[HTMLStyleElement].outerHTML
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router

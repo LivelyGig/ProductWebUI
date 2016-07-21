@@ -60,9 +60,16 @@ case class EstablishConnection(sessionURI: String = "", aURI: String="", bURI:St
 
 
 case class LabelPost (sessionURI: String = "", labels: Seq[String] = Nil, alias: String = "") extends Content
+//
+//case class IntroductionNotification (introSessionId: String = "", correlationId: String = "", connection: Connection,
+//                                     message: String = "", introProfile: String = "") extends Content
 
-case class IntroductionNotification (introSessionId: String = "", correlationId: String = "", connection: Connection,
-                                     message: String = "", introProfile: String = "") extends Content
+case class Introduction(introSessionId: String = "", correlationId: String = "", connection: Connection = Connection(), message: String = "", introProfile: String = "")
 
-case class IntroConfirmReq (sessionURI: String = "", alias: String = "", introSessionId: String = "",
-                          correlationId: String = "", accepted: String = "" ) extends Content
+case class SessionPong(sessionURI: String = "")
+
+case class IntroductionConfirmationResponse(sessionURI: String = "")
+
+case class ConnectNotification(connection: Connection, introProfile: String = "")
+
+case class IntroConfirmReq (sessionURI: String = "", alias: String = "", introSessionId: String = "", correlationId: String = "", accepted: Boolean  ) extends Content

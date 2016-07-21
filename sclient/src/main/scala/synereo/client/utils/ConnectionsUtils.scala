@@ -10,6 +10,8 @@ import org.scalajs.dom._
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
 import synereo.client.components.ConnectionsSelectize
 
+import scala.util.{Failure, Success}
+
 object ConnectionsUtils {
 
   /**
@@ -36,6 +38,47 @@ object ConnectionsUtils {
 
   // #todo think about better structure for the label prolog
   //
+
+
+  def checkIntroductionNotification(): Unit = {
+    if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
+      window.sessionStorage.setItem("sessionPingTriggered", "true")
+      def intervalForCheckNotification(): Unit = {
+        CoreApi.getConnections().onComplete {
+          case Success(response) => {
+            processIntroductionNotification(response)
+            intervalForCheckNotification()
+          }
+          case Failure(failureMessage) => println(s"failureMessage: $failureMessage")
+          case _ => println("something went wrong in session ping")
+        }
+      }
+      setTimeout(7000) {
+        intervalForCheckNotification()
+      }
+    }
+  }
+
+  def processIntroductionNotification(response: String = ""): Unit = {
+    try {
+      if (response.contains("sessionPong")) {
+        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+      }
+      else if (response.contains("introductionNotification")) {
+        try {
+          val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+          SYNEREOCircuit.dispatch(GotNotification(Seq(intro(0).content)))
+        } catch {
+          case e: Exception =>
+            println(s" exception in introductionNotification ${e.getStackTrace}")
+        }
+      }
+    } catch {
+      case e: Exception => println("into exception for upickle")
+    }
+  }
+
+
 
 }
 

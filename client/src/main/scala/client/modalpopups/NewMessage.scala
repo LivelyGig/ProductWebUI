@@ -97,7 +97,9 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
-    def updateImgSrc(e: ReactEventI): react.Callback = Callback{
+    def fromSelecize(): Callback = Callback {}
+
+    def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
       println("Img src = " + value)
       var reader = new FileReader()
@@ -155,14 +157,14 @@ object NewMessageForm {
             /*val selectizeControl : js.Object =*/
             <.div(^.id := s.cnxsSelectizeParentId)(
               //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
-              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.cnxsSelectizeParentId)))
+              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.cnxsSelectizeParentId, fromSelecize)))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
               LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px)(
               <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
-              if (s.postMessage.imgSrc != ""){
+              if (s.postMessage.imgSrc != "") {
                 <.img(^.src := s.postMessage.imgSrc)
               } else {
                 <.div("")

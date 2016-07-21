@@ -9,7 +9,7 @@ object SessionItems {
    * @return All session uri.
    */
   def getAllSessionUriName(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI,
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI,/* ProjectsViewItems.PROJECTS_SESSION_URI,*/
       ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI/*,
       SearchesView.SEARCHES_SESSION_URI*/)
   }
