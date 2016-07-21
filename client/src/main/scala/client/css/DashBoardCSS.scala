@@ -243,9 +243,9 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      media.minWidth(927.px) -
+      media.minWidth(927.px) - (
         paddingRight(17.%%),
-      paddingLeft(17.%%)
+      paddingLeft(17.%%))
 
     )
     val modalContent = style(
@@ -699,6 +699,12 @@ object DashBoardCSS {
       color.gray,
       fontSize.smaller,
       width(300.px)
+    )
+
+    val imgSize = style(
+      paddingTop(2.%%),
+      height(120.px),
+      width(160.px)
     )
   }
 

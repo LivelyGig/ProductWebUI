@@ -97,6 +97,7 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
+
     def fromSelecize(): Callback = Callback {}
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
@@ -165,7 +166,7 @@ object NewMessageForm {
             <.div(DashBoardCSS.Style.paddingTop10px)(
               <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
               if (s.postMessage.imgSrc != "") {
-                <.img(^.src := s.postMessage.imgSrc)
+                <.img(DashBoardCSS.Style.imgSize, ^.src := s.postMessage.imgSrc)
               } else {
                 <.div("")
               }
