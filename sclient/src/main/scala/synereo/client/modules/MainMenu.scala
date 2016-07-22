@@ -11,6 +11,7 @@ import shared.models.Label
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
 import scala.scalajs.js
+
 //import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
@@ -75,12 +76,6 @@ object MainMenu {
                 if (props.currentLoc == DashboardLoc) {
                   <.div(
                     SearchComponent(SearchComponent.Props())
-                    //                    <.div(^.id := "mainmenuselectize",SynereoCommanStylesCSS.Style.searchBoxContainer)(
-                    //                      ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props("mainmenuselectize"))),
-                    //                    <.div(SynereoCommanStylesCSS.Style.displayInline)(
-                    //                      <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                    //                      ))
-                    //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
                   )
                 } else {
                   <.span()
@@ -98,16 +93,15 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
-                  <.li(
-                    //                    ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                    introductionConnectProxy(introProxy =>
-                      if (introProxy.value.introResponse.length != 0) {
-                        ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                      } else {
-                        <.span()
-                      }
-                    )
+                <.li(
+                  introductionConnectProxy(introProxy =>
+                    if (introProxy.value.introResponse.length != 0) {
+                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                    } else {
+                      <.span()
+                    }
                   )
+                )
                 ,
                 <.li(
                   <.div(^.className := "dropdown")(

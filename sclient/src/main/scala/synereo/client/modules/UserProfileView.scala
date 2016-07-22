@@ -1,21 +1,39 @@
 package synereo.client.modules
 
-import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
+import diode.react.ModelProxy
+import shared.models.UserModel
+import synereo.client.components.Icon
 import synereo.client.css.UserProfileViewCSS
+import synereo.client.modalpopups.NewImage
 
+import scalacss.Attrs.color
 import scalacss.ScalaCssReact._
 
 /**
- * Created by Mandar on 3/28/2016.
- */
+  * Created by mandar.k on 3/28/2016.
+  */
 object UserProfileView {
-  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
-    render_P { ctr =>
-      <.div(^.className := "container-fluid",UserProfileViewCSS.Style.UserProfileContainerMain)(
+
+
+  case class Props(proxy: ModelProxy[UserModel])
+
+  case class State()
+
+  class Backend(t: BackendScope[Props, State]) {
+
+    def mounted(props: Props): Callback = Callback {
+      //      t.modState(s => s.copy(showLoginForm = true))
+      println("user profile view mounted")
+    }
+
+    def render(s: State, p: Props) = {
+      val userModel = p.proxy.value
+      <.div(^.className := "container-fluid", UserProfileViewCSS.Style.UserProfileContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
@@ -24,12 +42,30 @@ object UserProfileView {
           )
         ),
         <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-          <.div("User Profile View", UserProfileViewCSS.Style.heading)
+          <.div(^.className := "col-md-12",
+            <.div(^.className := "row",
+              <.div(^.className := "col-md-2"),
+              <.div(^.className := "col-md-4 text-right",
+                <.img(^.alt := "User Image", ^.className := "", ^.src := userModel.imgSrc, UserProfileViewCSS.Style.userImage),
+                NewImage(NewImage.Props("Change Image", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, ""))
+              ),
+              <.div(^.className := "col-md-4",
+                <.h4()(userModel.name)
+              ),
+              <.div(^.className := "col-md-2")
+            )
+          )
         )
       )
-    }.build
+    }
+  }
 
-  def apply(router: RouterCtl[Loc]) = component(router)
+  val component = ReactComponentB[Props]("UserProfileView")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
+    .build
+
+  def apply(props: Props) = component(props)
 
 }
 

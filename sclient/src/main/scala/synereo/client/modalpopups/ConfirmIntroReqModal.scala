@@ -35,22 +35,22 @@ object ConfirmIntroReqModal {
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)
 
-  case class State(showNewMessageForm: Boolean = false)
+  case class State(showNewIntroForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
+      t.modState(s => s.copy(showNewIntroForm = true))
     }
 
-    def addNewMessageForm(): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
+    def addNewIntroForm(): Callback = {
+      t.modState(s => s.copy(showNewIntroForm = true))
     }
 
-    def addMessage(/*postMessage:PostMessage*/): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = false))
+    def introConfirmed(/*postMessage:PostMessage*/): Callback = {
+      t.modState(s => s.copy(showNewIntroForm = false))
     }
   }
 
@@ -60,10 +60,10 @@ object ConfirmIntroReqModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
-        if (S.showNewMessageForm)
-        //          ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message"))
-          getIntroduction(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message", proxy)))
+        Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        if (S.showNewIntroForm)
+        //          ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addImage, "New Message"))
+          getIntroduction(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
         else
           Seq.empty[ReactElement]
       )

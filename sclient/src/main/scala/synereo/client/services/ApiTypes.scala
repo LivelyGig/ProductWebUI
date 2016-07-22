@@ -5,6 +5,7 @@ object ApiTypes {
   val CreateUserWaiting = "createUserWaiting"
   val InitializeSessionResponse = "initializeSessionResponse"
   val CREATE_USER_REQUEST = "createUserRequest"
+  val UPDATE_USER_REQUEST = "updateUserRequest"
   val CONFIRM_EMAIL = "confirmEmailToken"
   val INITIALIZE_SESSION_REQUEST = "initializeSessionRequest"
   val SESSION_PING = "sessionPing"

@@ -59,7 +59,7 @@ object NewMessage {
     }
 
     def addMessage(/*submitForm:PostMessage*/): Callback = {
-      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
+      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewIntroForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
@@ -71,7 +71,7 @@ object NewMessage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
+        //        if (S.showNewIntroForm) NewMessageForm(NewMessageForm.Props(B.introConfirmed, "New Message"))
         if (S.showNewMessageForm) getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
