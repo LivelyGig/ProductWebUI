@@ -6,11 +6,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import diode.react.ModelProxy
+import org.querki.jquery._
 import shared.models.UserModel
 import synereo.client.components.Icon
 import synereo.client.css.UserProfileViewCSS
 import synereo.client.modalpopups.NewImage
 
+import scala.scalajs.js
 import scalacss.Attrs.color
 import scalacss.ScalaCssReact._
 
@@ -18,7 +20,7 @@ import scalacss.ScalaCssReact._
   * Created by mandar.k on 3/28/2016.
   */
 object UserProfileView {
-
+  val searchContainer: js.Object = "#searchContainer"
 
   case class Props(proxy: ModelProxy[UserModel])
 
@@ -36,7 +38,10 @@ object UserProfileView {
       <.div(^.className := "container-fluid", UserProfileViewCSS.Style.UserProfileContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+          )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )
