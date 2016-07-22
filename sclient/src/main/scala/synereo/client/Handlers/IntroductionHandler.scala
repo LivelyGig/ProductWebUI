@@ -32,11 +32,8 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(introSeq))
 
     case UpdateIntroduction(introConfirmReq: IntroConfirmReq) =>
-      if (introConfirmReq.accepted) {
-        updated(IntroRootModel(Nil))
-      }
-      else
-        noChange
+      updated(IntroRootModel(Nil))
+
     case AcceptConnectNotification(connectNotification: ConnectNotification) =>
       updated(IntroRootModel(Nil))
 

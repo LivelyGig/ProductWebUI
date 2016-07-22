@@ -36,7 +36,7 @@ object SYNEREOMain extends js.JSApp {
   // Define the locations (pages) used in this application
   sealed trait Loc
 
-  case object SynereoUserProfileViewLOC extends Loc
+  case object UserProfileViewLOC extends Loc
 
   case object SynereoLoc extends Loc
 
@@ -64,17 +64,21 @@ object SYNEREOMain extends js.JSApp {
   val getConnections = SYNEREOCircuit.connect(_.connections)
   val getMessages =    SYNEREOCircuit.connect(_.messages)
 
+  val userProxy = SYNEREOCircuit.connect(_.user)
+  val connectionProxy = SYNEREOCircuit.connect(_.connections)
+  val messagesProxy = SYNEREOCircuit.connect(_.messages)
+
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#people", PeopleLOC) ~> renderR(ctl =>               getConnections(s => ConnectionsResults(s)))
-      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => getUsers(s => Info(s)))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>         getMessages(s => Dashboard(s)))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => connectionProxy(s => ConnectionsResults(s)))
+      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => userProxy(s => Info(s)))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => messagesProxy(s => Dashboard(s)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
-      | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
+      | staticRoute("#userprofileview", UserProfileViewLOC) ~> renderR(ctl => userProxy(proxy => UserProfileView(UserProfileView.Props(proxy))))
       | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
       | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl)))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
@@ -88,17 +92,17 @@ object SYNEREOMain extends js.JSApp {
         <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", Icon.spinnerIconPulse)
       ),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
-//        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
-//          //Adding toggle button for sidebar
-//          if (r.page == SynereoLoc) {
-//            <.span()
-//          } else {
-//            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
-//              ^.onClick --> sidebar)(
-//              <.span(Icon.bars)
-//            )
-//          }
-//        ),
+        //        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
+        //          //Adding toggle button for sidebar
+        //          if (r.page == SynereoLoc) {
+        //            <.span()
+        //          } else {
+        //            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+        //              ^.onClick --> sidebar)(
+        //              <.span(Icon.bars)
+        //            )
+        //          }
+        //        ),
         <.div(^.className := "col-lg-12 col-md-12 col-sm-12")(
           <.div(
             if (r.page == SynereoLoc) {
@@ -123,7 +127,7 @@ object SYNEREOMain extends js.JSApp {
             }
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-            getUsers(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+            userProxy(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
         <.div()()
