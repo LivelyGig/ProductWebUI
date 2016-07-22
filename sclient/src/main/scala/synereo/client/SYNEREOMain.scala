@@ -58,6 +58,8 @@ object SYNEREOMain extends js.JSApp {
     val searchContainer: js.Object = "#searchContainer"
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
+
+
   val getUsers =       SYNEREOCircuit.connect(_.user)
   val getConnections = SYNEREOCircuit.connect(_.connections)
   val getMessages =    SYNEREOCircuit.connect(_.messages)
