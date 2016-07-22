@@ -27,7 +27,9 @@ import diode.AnyAction._
 import scala.scalajs.js
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
+import shared.dtos.UpdateUserRequest
 import shared.models.UserModel
+import shared.sessionitems.SessionItems
 
 //scalastyle:off
 /**
@@ -83,7 +85,7 @@ object ProfileImageUploaderForm {
 
   case class Props(submitHandler: () => Callback, header: String, proxy: ModelProxy[UserModel])
 
-  case class State(postNewImage: Boolean = false)
+  case class State(postNewImage: Boolean = false, updateUserRequest: UpdateUserRequest)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
 
@@ -101,12 +103,14 @@ object ProfileImageUploaderForm {
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
+      val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
       val value = e.target.files.item(0)
       //      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
-
+        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(jsonBlob = s.updateUserRequest.jsonBlob.copy(imgSrc = contents))))
+        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri)))
       }
       reader.readAsDataURL(value)
     }
@@ -115,6 +119,7 @@ object ProfileImageUploaderForm {
     def submitForm(e: ReactEventI): Callback = Callback {
       e.preventDefault()
       val state = t.state.runNow()
+      println(s"state.updateUserRequest: ${state.updateUserRequest}")
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -159,7 +164,7 @@ object ProfileImageUploaderForm {
   }
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State())
+    .initialState_P(p => State(updateUserRequest = new UpdateUserRequest()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewImage) {
