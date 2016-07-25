@@ -1,5 +1,6 @@
 package client.services
 
+//import client.Handlers.IntroductionHandler
 import client.handlers._
 import shared.RootModels._
 import diode._
@@ -8,11 +9,11 @@ import diode.react.ReactConnector
 import shared.models.UserModel
 
 case class RootModel(connections: Pot[ConnectionsRootModel], user: UserModel, messages: Pot[MessagesRootModel],
-  jobPosts: Pot[ProjectsRootModel], searches: SearchesRootModel, profiles : Pot[ProfilesRootModel])
+  jobPosts: Pot[ProjectsRootModel], searches: SearchesRootModel, profiles : Pot[ProfilesRootModel], introduction: IntroRootModel)
 
 object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
-  override protected def initialModel = RootModel(Empty, UserModel("", "", ""), Empty, Empty, SearchesRootModel(Nil), Empty)
+  override protected def initialModel = RootModel(Empty, UserModel("", "", ""), Empty, Empty, SearchesRootModel(Nil), Empty,IntroRootModel(Nil))
   // combine all handlers into one
   override protected val actionHandler = composeHandlers(
     new ConnectionHandler(zoomRW(_.connections)((m, v) => m.copy(connections = v))),
@@ -20,7 +21,8 @@ object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
     new ProjectsHandler(zoomRW(_.jobPosts)((m, v) => m.copy(jobPosts = v))),
     new SearchesHandler(zoomRW(_.searches)((m, v) => m.copy(searches = v))),
     new MessagesHandler(zoomRW(_.messages)((m, v) => m.copy(messages = v))),
-    new ProfilesHandler(zoomRW(_.profiles)((m, v) => m.copy(profiles = v)))
+    new ProfilesHandler(zoomRW(_.profiles)((m, v) => m.copy(profiles = v))),
+    new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v)))
 
   )
 }

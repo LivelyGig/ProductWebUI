@@ -18,9 +18,9 @@ object NewAgentForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (SignUpModel, Boolean, Boolean, Boolean) => Callback)
 
-  case class State(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false)
+  case class State(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -90,6 +90,11 @@ object NewAgentForm {
       t.modState(s => s.copy(showTermsOfServicesForm = true))
     }
 
+    def showPrivacyPolicy(e: ReactEventI) = {
+      // console.log("in showPrivacyPolicy ")
+      t.modState(s => s.copy(showPrivacyPolicyModal = true))
+    }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(addNewAgent = true))
@@ -99,7 +104,7 @@ object NewAgentForm {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(state.addNewAgent)
       signUpModelUpdate = state.signUpModel
-      props.submitHandler(state.signUpModel, state.addNewAgent, state.showTermsOfServicesForm)
+      props.submitHandler(state.signUpModel, state.addNewAgent, state.showTermsOfServicesForm, state.showPrivacyPolicyModal)
     }
 
     def render(s: State, p: Props) = {
@@ -186,7 +191,7 @@ object NewAgentForm {
                 " * I understand and agree to the LivelyGig",
                 <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Terms of Service", ^.onClick ==> showTermsOfServices),
                 "and",
-                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showTermsOfServices)
+                <.button(^.tpe := "button", ^.className := "btn-link", DashBoardCSS.Style.btnDefault, FooterCSS.Style.legalModalBtn, "Privacy Policy", ^.onClick ==> showPrivacyPolicy)
               )
             ),
             <.div()(
@@ -215,7 +220,7 @@ object NewAgentForm {
         State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
-      if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm) {
+      if (scope.currentState.addNewAgent || scope.currentState.showTermsOfServicesForm || scope.currentState.showPrivacyPolicyModal) {
         scope.$.backend.hideComponent
       }
     })

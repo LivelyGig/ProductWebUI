@@ -1,5 +1,6 @@
 package client.components
 
+import client.services.LGCircuit
 import shared.RootModels.ConnectionsRootModel
 import diode.data.Pot
 import diode.react.ReactPot._
@@ -27,20 +28,40 @@ object ConnectionsSelectize {
     selectedConnections
   }
 
+  def getConnectionNames(selectizeInputId: String): Seq[String] = {
+    if (LGCircuit.zoom(_.connections).value.isReady) {
+      val cnxns = LGCircuit.zoom(_.connections.get.connectionsResponse).value
+      getConnectionsFromSelectizeInput(selectizeInputId)
+        .flatMap(e => cnxns.find(_.connection.target == e.target))
+        .map(_.name)
+    } else {
+      Nil
+    }
+  }
+
   var getSelectedValue = new ListBuffer[String]()
 
   /*Seq[Label]()*/
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String)
+  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String, fromSelectize: () => Callback)
 
   case class Backend(t: BackendScope[Props, _]) {
-    def initializeTagsInput(parentIdentifier: String): Unit = {
+    def initializeTagsInput(props: Props, parentIdentifier: String): Unit = {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       //    println($(selectState).get())
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-sel"
         $(selectizeInput).selectize(SelectizeConfig
           .maxItems(30)
-          .plugins("remove_button"))
+          .plugins("remove_button")
+          .onItemAdd((item: String, value: js.Dynamic) => {
+            props.fromSelectize().runNow()
+            println("")
+          })
+          .onItemRemove((item: String)=> {
+            props.fromSelectize().runNow()
+            println("")
+          })
+        )
       }
 
     }
@@ -64,9 +85,8 @@ object ConnectionsSelectize {
     //     }
 
 
-
     def mounted(props: Props): Callback = Callback {
-      initializeTagsInput(props.parentIdentifier)
+      initializeTagsInput(props, props.parentIdentifier)
     }
 
     def render(props: Props) = {

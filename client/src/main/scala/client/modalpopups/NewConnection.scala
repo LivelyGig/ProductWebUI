@@ -32,6 +32,7 @@ import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
 import shared.sessionitems.SessionItems
 
+
 import scala.scalajs.js
 
 // scalastyle:off
@@ -82,12 +83,11 @@ object NewConnection {
 object ConnectionsForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
-
+  val usr = window.sessionStorage.getItem("userName")
   case class Props(submitHandler: () => Callback, header: String)
 
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
-                   introConnections: IntroConnections = IntroConnections(
-                     aMessage = "Hi , \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>"),
+                   introConnections: IntroConnections = IntroConnections(),
                    establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
                    chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid : String = "")
 
@@ -96,8 +96,10 @@ object ConnectionsForm {
       $(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(props: Props): Callback = Callback {
-
+    def mounted(props: Props): Callback =  {
+      val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
+      println("In mounted  = " + msg)
+      t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
     }
 
     def hideModal(): Unit = {
@@ -129,19 +131,40 @@ object ConnectionsForm {
         None
     }
 
+//    def introduceTwoUsers() = {
+//      $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+//      val state = t.state.runNow()
+//      //      val msg = state.introConnections.aMessage.replaceAll("/", "//")
+//      val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+//      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
+//      //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
+//      //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
+//      //      println(connections.length)
+//      if (connections.length == 2) {
+//        val content = state.establishConnection.copy(sessionURI = uri,
+//          aURI = connections(0).target,
+//          bURI = connections(1).target, label = connections(0).label)
+//        CoreApi.postIntroduction(content)
+//        t.modState(s => s.copy(postConnection = true))
+//      } else {
+//        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+//        t.modState(s => s.copy(postConnection = false))
+//      }
+//    }
+
     def introduceTwoUsers() = {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val state = t.state.runNow()
-      //      val msg = state.introConnections.aMessage.replaceAll("/", "//")
+      val msg = state.introConnections.aMessage.replaceAll("/", "//")
       val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
-      //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-      //      println(connections.length)
+
       if (connections.length == 2) {
-        val content = state.establishConnection.copy(sessionURI = uri,
-          aURI = connections(0).target,
-          bURI = connections(1).target, label = connections(0).label)
+        val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
+          sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
+        //        val content = state.establishConnection.copy(sessionURI = uri,
+        //          aURI = connections(0).target,
+        //          bURI = connections(1).target, label = connections(0).label)
         CoreApi.postIntroduction(content)
         t.modState(s => s.copy(postConnection = true))
       } else {
@@ -149,6 +172,7 @@ object ConnectionsForm {
         t.modState(s => s.copy(postConnection = false))
       }
     }
+
 
     def establishConnection(): react.Callback = {
       val state = t.state.runNow()
@@ -183,6 +207,17 @@ object ConnectionsForm {
       // call parent handler with the new item and whether form was OK or cancelled
       //println(state.postConnection)
       props.submitHandler()
+    }
+
+    def fromSelecize(): Callback = {
+      val cnxns = ConnectionsSelectize.getConnectionNames(t.state.runNow().selectizeInputId)
+      val msg =  if (cnxns.length > 1) {
+        s"Hi ${cnxns(0)} and ${cnxns(1)}, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
+      } else {
+        s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
+      }
+      println("msg " + msg)
+      t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
     }
 
     def updateContent(e: ReactEventI): react.Callback = {
@@ -232,14 +267,14 @@ object ConnectionsForm {
               <.div(
                 <.div(<.h5("Recipients:")),
                 <.div(^.id := s"${s.selectizeInputId}")(
-                  LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
+                  LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}",fromSelecize)))
                 ),
                 <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
                 ("Please provide two connections"),
                 <.div((!s.introduceUsers) ?= DashBoardCSS.Style.hidden,
                   <.div(<.h5("Introduction:")),
                   <.div()(
-                    <.textarea(^.rows := 6, ^.placeholder := "Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n <name>", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent /*, ^.required := true*/)
+                    <.textarea(^.rows := 6, ^.value:=s.introConnections.aMessage, ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent /*, ^.required := true*/)
                   )
                 )
               )
@@ -264,6 +299,7 @@ object ConnectionsForm {
   private val component = ReactComponentB[Props]("PostConnections")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {
       //println(s"states:chkCnxnExstUser = ${scope.currentState.chkCnxnExstUser}, chkCnxnNewUser = ${scope.currentState.chkCnxnNewUser}, chkCnxnExstandOther = ${scope.currentState.chkCnxnExstandOther}")
       if (scope.currentState.postConnection) {

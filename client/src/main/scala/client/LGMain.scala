@@ -17,6 +17,7 @@ import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom._
 
 import scala.scalajs.js
 import js.{Date, UndefOr}
@@ -75,7 +76,7 @@ object LGMain extends js.JSApp {
   }.renderWith(layout)
   // scalastyle:off
   // base layout for all pages
-  def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
+  def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {;
     <.div()(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
       <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer,HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
@@ -100,7 +101,7 @@ object LGMain extends js.JSApp {
                 LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
             )
             ),
-            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 ", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))
+            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 ", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))) )
           ),
           <.div(^.className := "loggedInUserNav")(
             <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
@@ -125,7 +126,8 @@ object LGMain extends js.JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     AppCSS.load
-    standaloneCSS.render[HTMLStyleElement].outerHTML
+    window.sessionStorage.removeItem("sessionPingTriggered")
+//    standaloneCSS.render[HTMLStyleElement].outerHTML
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)

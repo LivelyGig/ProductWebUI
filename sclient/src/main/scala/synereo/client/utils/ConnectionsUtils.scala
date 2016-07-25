@@ -98,7 +98,7 @@ object ConnectionsUtils {
       }
     } catch {
       case e: Exception => /*println("into exception for upickle read session ping response")*/
-      println("")
+        println("")
     }
   }
 

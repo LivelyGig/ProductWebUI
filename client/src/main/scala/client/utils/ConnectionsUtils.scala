@@ -1,10 +1,16 @@
 package client.utils
 
 import client.components.{ConnectionsSelectize, LabelsSelectize}
-import shared.dtos.Connection
+import client.handlers._
+import client.services.{CoreApi, LGCircuit}
+import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.timers._
+import scala.util.{Failure, Success}
 
 object ConnectionsUtils {
 
@@ -27,6 +33,70 @@ object ConnectionsUtils {
         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName)))
       case Some(res) =>
         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName))) ++ ConnectionsSelectize.getConnectionsFromSelectizeInput(res)
+    }
+  }
+
+
+  def checkIntroductionNotification(): Unit = {
+    if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
+      window.sessionStorage.setItem("sessionPingTriggered", "true")
+      def intervalForCheckNotification(): Unit = {
+        CoreApi.getConnections().onComplete {
+          case Success(response) => {
+            processIntroductionNotification(response)
+            intervalForCheckNotification()
+          }
+          case Failure(failureMessage) => println(s"failureMessage: $failureMessage")
+          case _ => println("something went wrong in session ping")
+        }
+      }
+      setTimeout(7000) {
+        intervalForCheckNotification()
+      }
+    }
+  }
+
+//  def processIntroductionNotification(response: String = ""): Unit = {
+//    try {
+//      if (response.contains("sessionPong")) {
+//        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+//      }
+//      else if (response.contains("introductionNotification")) {
+//        try {
+//          val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+//          LGCircuit.dispatch(GotNotification(Seq(intro(0).content)))
+//        } catch {
+//          case e: Exception =>
+//            println(s" exception in introductionNotification ${e.getStackTrace}")
+//        }
+//      }
+//    } catch {
+//      case e: Exception => println("into exception for upickle")
+//    }
+//  }
+
+
+  def processIntroductionNotification(response: String = ""): Unit = {
+    //    toDo: Think of some better logic to identify different responses from session ping
+    try {
+      if (response.contains("sessionPong")) {
+        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+      } else if (response.contains("introductionNotification")) {
+        val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+        LGCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
+      } else if (response.contains("introductionConfirmationResponse")) {
+        val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
+        LGCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+        println(s"IntroductionConfirmationResponse: $introductionConfirmationResponse")
+      } else if (response.contains("connectNotification")) {
+        val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
+        LGCircuit.dispatch(AcceptConnectNotification(connectNotification(0).content))
+        LGCircuit.dispatch(AddConnection(connectNotification(0).content))
+        println(s"connectNotification: $connectNotification")
+      }
+    } catch {
+      case e: Exception => /*println("into exception for upickle read session ping response")*/
+        println("")
     }
   }
 
