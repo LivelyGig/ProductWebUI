@@ -149,7 +149,7 @@ object MainMenu {
                     <.div(model.name)
                   }
                     else{
-                    <.span(^.title:=model.name, model.name.substring(0, 8))
+                    <.span(^.title:=model.name, model.name.substring(0, 8) + "...")
                   },
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
