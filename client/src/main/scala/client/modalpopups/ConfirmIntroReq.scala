@@ -31,13 +31,14 @@ import shared.sessionitems.SessionItems
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
+import diode.AnyAction._
 
 object ConfirmIntroReq {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   //  val getIntroduction = LGCircuit.connect(_.introduction)
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon = "", title: String="")
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon = "", title: String = "")
 
   case class State(showNewMessageForm: Boolean = false)
 
@@ -64,12 +65,13 @@ object ConfirmIntroReq {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
+      val introductionProxy = LGCircuit.connect(_.introduction)
       <.span(^.display.inline)(
-           Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         if (S.showNewMessageForm)
         //ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message"))
-          LGCircuit.connect(_.introduction)(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message", proxy))
-           )
+          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addMessage, "New Message", proxy))
+          )
         else
           Seq.empty[ReactElement]
       )
@@ -98,7 +100,7 @@ object ConfirmIntroReqForm {
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
       println(s"introConfirmReq: $introConfirmReq")
-      CoreApi.postIntroduction(introConfirmReq).onComplete{
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => println("introRequest Rejected successfully ")
           LGCircuit.dispatch(UpdateIntroduction(introConfirmReq))
 
@@ -133,7 +135,7 @@ object ConfirmIntroReqForm {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
-      CoreApi.postIntroduction(introConfirmReq).onComplete{
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
           // println("introRequest sent successfully ")
           LGCircuit.dispatch(UpdateIntroduction(introConfirmReq))

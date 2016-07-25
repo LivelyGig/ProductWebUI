@@ -24,14 +24,14 @@ import org.querki.jquery._
 import scala.language.reflectiveCalls
 import client.modalpopups.{Account, AccountForm, HeaderDropdownDialogs}
 import japgolly.scalajs.react
-
+import diode.AnyAction._
 
 object MainMenu {
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-//  val introductionConnectProxy = LGCircuit.connect(_.introduction)
+  //  val introductionConnectProxy = LGCircuit.connect(_.introduction)
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
@@ -75,14 +75,12 @@ object MainMenu {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, props, S) => {
-      /*var test = LGCircuit.wrap(_.user)(p => Data)
-      println(props.proxy.value.isLoggedIn)*/
+      val introductionProxy = LGCircuit.connect(_.introduction)
       <.div(
-        //<.ul(^.id := "headerNavUl", ^.className := "nav navbar-nav")(
         <.ul(/*^.id := "headerNavUl",*/ ^.className := "nav", HeaderCSS.Style.navbarNav)(
           // build a list of menu items
           for (item <- $.backend.menuItems) yield {
-            if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc,  DashboardLoc).contains(item.location)) {
+            if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc, DashboardLoc).contains(item.location)) {
               if (props.proxy.value.isLoggedIn) {
                 <.li()(^.key := item.idx, "data-toggle".reactAttr := "collapse", "data-target".reactAttr := ".in",
                   props.ctl.link(item.location)(
@@ -91,13 +89,13 @@ object MainMenu {
                     " ", item.label(props)
                   ),
                   if (item.location == ConnectionsLoc) {
-                     LGCircuit.connect(_.introduction)(introProxy =>
-                        if (introProxy.value.introResponse.length != 0) {
-                          <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introProxy.value.introResponse.length}")))
-                        } else {
-                          <.span()
-                        }
-                      )
+                    introductionProxy(introductionProxy =>
+                      if (introductionProxy.value.introResponse.length != 0) {
+                        <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
+                      } else {
+                        <.span()
+                      }
+                    )
                   }
                   else
                     props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
@@ -116,7 +114,7 @@ object MainMenu {
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
-//              <.li()
+              //              <.li()
             }
           }
         )
@@ -222,7 +220,7 @@ object LoggedInUser {
                   <.li(^.className := "divider")(),
                   <.li()(<.a("data-toggle".reactAttr := "modal", "data-target".reactAttr := "#aboutModal", "aria-haspopup".reactAttr := "true")("About"))
                 ),
-                               HeaderDropdownDialogs(HeaderDropdownDialogs.Props()),
+                HeaderDropdownDialogs(HeaderDropdownDialogs.Props()),
                 if (S.showNewMessageForm)
                   AccountForm(AccountForm.Props(t.backend.addMessage, "Account"))
                 //                  Account(Account.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Message",Option(true)))

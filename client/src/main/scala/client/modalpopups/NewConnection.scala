@@ -34,7 +34,7 @@ import shared.sessionitems.SessionItems
 
 
 import scala.scalajs.js
-
+import diode.AnyAction._
 // scalastyle:off
 object NewConnection {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -231,7 +231,7 @@ object ConnectionsForm {
     }
 
     def render(s: State, p: Props) = {
-
+      val connectionsProxy = LGCircuit.connect(_.connections)
       val headerText = p.header
       Modal(
         Modal.Props(
@@ -267,7 +267,7 @@ object ConnectionsForm {
               <.div(
                 <.div(<.h5("Recipients:")),
                 <.div(^.id := s"${s.selectizeInputId}")(
-                  LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}",fromSelecize)))
+                  connectionsProxy(connectionsProxy => ConnectionsSelectize(ConnectionsSelectize.Props(connectionsProxy, s"${s.selectizeInputId}",fromSelecize)))
                 ),
                 <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
                 ("Please provide two connections"),

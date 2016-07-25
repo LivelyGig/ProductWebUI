@@ -20,7 +20,7 @@ import shared.sessionitems.SessionItems
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent
-
+import diode.AnyAction._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -140,7 +140,8 @@ object NewMessageForm {
 
     // scalastyle:off
     def render(s: State, p: Props) = {
-
+      val connectionsProxy = LGCircuit.connect(_.connections)
+      val searchesProxy = LGCircuit.connect(_.searches)
       val headerText = p.header
       Modal(
         Modal.Props(
@@ -158,10 +159,10 @@ object NewMessageForm {
             /*val selectizeControl : js.Object =*/
             <.div(^.id := s.cnxsSelectizeParentId)(
               //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
-              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.cnxsSelectizeParentId, fromSelecize)))
+              connectionsProxy(connectionsProxy => ConnectionsSelectize(ConnectionsSelectize.Props(connectionsProxy, s.cnxsSelectizeParentId, fromSelecize)))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
-              LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
+              searchesProxy(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px)(
               <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),

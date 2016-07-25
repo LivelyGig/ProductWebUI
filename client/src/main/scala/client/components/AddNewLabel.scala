@@ -22,38 +22,11 @@ import shared.sessionitems.SessionItems
 
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
-
+import diode.AnyAction._
 
 /**
   * Created by bhagyashree.b on 2016-06-01.
   */
-
-
-//object AddNewLabel {
-//
-//  case class Props(proxy: ModelProxy[SearchesRootModel], parentIdentifier: String)
-//
-//  case class Backend(t: BackendScope[Props, _]) {
-//
-//    def mounted(props: Props): Callback = Callback {
-//      val labelPopover: js.Object = ".labelPopover"
-//      $(labelPopover).popover(PopoverOptions.html(true))
-//    }
-//
-//    def render(props: Props) = {
-//      <.a(^.className := "labelPopover", "data-toggle".reactAttr := "popover", "data-content".reactAttr :=   ReactDOMServer.renderToStaticMarkup(LabelsList(LabelsList.Props(props.proxy)))
-//      )(<.span(Icon.plus))
-//    }
-//  }
-//
-//  val component = ReactComponentB[Props]("SearchesLabel")
-//    .renderBackend[Backend]
-//    .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .build
-//
-//  def apply(props: Props) = component(props)
-//}
-
 object LabelsList {
   val addBtn : js.Object = "#addBtn"
 

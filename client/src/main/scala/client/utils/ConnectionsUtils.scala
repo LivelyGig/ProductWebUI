@@ -11,6 +11,8 @@ import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, P
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.timers._
 import scala.util.{Failure, Success}
+import diode.AnyAction._
+import shared.sessionitems.SessionItems
 
 object ConnectionsUtils {
 
@@ -36,45 +38,37 @@ object ConnectionsUtils {
     }
   }
 
+  def getCnxnForReq(sessionUri: String): Seq[Connection] = {
+    val currentSearch = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+    if (currentSearch != None) {
+      upickle.default.read[Seq[Connection]](currentSearch) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+    } else {
+      upickle.default.read[Seq[Connection]](
+        window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST
+        )) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri))
+
+    }
+  }
 
   def checkIntroductionNotification(): Unit = {
+    val sessionUri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
     if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
       window.sessionStorage.setItem("sessionPingTriggered", "true")
-      def intervalForCheckNotification(): Unit = {
+      def sessionPing(): Unit = {
         CoreApi.getConnections().onComplete {
           case Success(response) => {
             processIntroductionNotification(response)
-            intervalForCheckNotification()
+            sessionPing()
           }
           case Failure(failureMessage) => println(s"failureMessage: $failureMessage")
           case _ => println("something went wrong in session ping")
         }
       }
       setTimeout(7000) {
-        intervalForCheckNotification()
+        sessionPing()
       }
     }
   }
-
-//  def processIntroductionNotification(response: String = ""): Unit = {
-//    try {
-//      if (response.contains("sessionPong")) {
-//        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
-//      }
-//      else if (response.contains("introductionNotification")) {
-//        try {
-//          val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
-//          LGCircuit.dispatch(GotNotification(Seq(intro(0).content)))
-//        } catch {
-//          case e: Exception =>
-//            println(s" exception in introductionNotification ${e.getStackTrace}")
-//        }
-//      }
-//    } catch {
-//      case e: Exception => println("into exception for upickle")
-//    }
-//  }
-
 
   def processIntroductionNotification(response: String = ""): Unit = {
     //    toDo: Think of some better logic to identify different responses from session ping

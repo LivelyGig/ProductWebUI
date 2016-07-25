@@ -24,6 +24,7 @@ import org.querki.jquery._
 import shared.sessionitems.SessionItems
 
 import scala.concurrent.Future
+import diode.AnyAction._
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"

@@ -28,11 +28,18 @@ import shared.sessionitems.SessionItems
 
 import scala.scalajs.js
 import scala.scalajs.js.Date
+import diode.AnyAction._
 
 object NewProject {
+
+
+
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
+
   case class State(showNewProjectForm: Boolean = false)
+
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
@@ -40,10 +47,11 @@ object NewProject {
     def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showNewProjectForm = true))
     }
+
     /*def addProjectForm(): Callback = {
       t.modState(s => s.copy(showNewProjectForm = true))
     }*/
-    def addNewProjectForm(postProject: Boolean ): Callback = {
+    def addNewProjectForm(postProject: Boolean): Callback = {
       if (postProject) {
         t.modState(s => s.copy(showNewProjectForm = false))
       } else {
@@ -57,7 +65,7 @@ object NewProject {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div( /*ProjectCSS.Style.displayInitialbtn*/ )(
+      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
         Button(Button.Props(B.addNewProjectForm(false), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         if (S.showNewProjectForm) NewProjectForm(NewProjectForm.Props(B.addNewProjectForm))
         else
@@ -67,12 +75,14 @@ object NewProject {
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
+
   def apply(props: Props) = component(props)
 }
 
 object NewProjectForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (Boolean) => Callback)
 
   case class State(projectPost: ProjectPostContent, postProject: Boolean = false, selectizeInputId: String = "postNewJobSelectizeInput")
@@ -82,6 +92,7 @@ object NewProjectForm {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
+
     def mounted(props: Props): Callback = Callback {
 
     }
@@ -89,44 +100,54 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.projectPost,Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
+      LGCircuit.dispatch(PostData(state.projectPost, Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
       t.modState(s => s.copy(postProject = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
       props.submitHandler(state.postProject)
     }
+
     def updateName(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(name = value)))
     }
+
     def updateStartDate(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(startDate = value)))
     }
+
     def updateBudget(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(budget = value)))
     }
+
     def updateDescription(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(description = value)))
     }
+
     def updateMessage(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(message = value)))
     }
+
     def updateSkillNeeded(event: ReactEventI): react.Callback = {
       val value = event.target.value
       t.modState(s => s.copy(projectPost = s.projectPost.copy(skillNeeded = value)))
     }
+
     def updateAllowFormatting(event: ReactEventI): react.Callback = {
       val value = event.target.checked
       t.modState(s => s.copy(projectPost = s.projectPost.copy(allowFormatting = value)))
     }
-    def fromSelecize(): Callback =  Callback{}
+
+    def fromSelecize(): Callback = Callback {}
+
     // scalastyle:off
     def render(s: State, p: Props) = {
+      val connectionsProxy = LGCircuit.connect(_.connections)
       val headerText = "New Job"
       val model = s.projectPost
       Modal(
@@ -256,7 +277,7 @@ object NewProjectForm {
               <.input(^.`type` := "textarea", ProjectCSS.Style.textareaWidth, ^.placeholder := "Skill needed:", ^.lineHeight := 4, ^.value := model.skillNeeded, ^.onChange ==> updateSkillNeeded)
             ),
             <.div(DashBoardCSS.Style.marginTop10px, ^.id := s.selectizeInputId)(
-              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.selectizeInputId,fromSelecize)))
+              connectionsProxy(connectionsProxy => ConnectionsSelectize(ConnectionsSelectize.Props(connectionsProxy, s.selectizeInputId, fromSelecize)))
             )
           ),
           <.div()(
@@ -269,9 +290,9 @@ object NewProjectForm {
             ),
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
-              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Save as Draft"),
-              <.button(^.tpe := "submit", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
-              <.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Save as Draft"),
+              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
+              <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
           <.div(bss.modal.footer, DashBoardCSS.Style.marginTop10px, DashBoardCSS.Style.marginLeftRight)()
@@ -279,6 +300,7 @@ object NewProjectForm {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("PostAProjectForm")
     .initialState_P(p => State(new ProjectPostContent("", "", "", "", "", "", "", "", false, 0, "")))
     .renderBackend[Backend]
@@ -288,5 +310,6 @@ object NewProjectForm {
       }
     })
     .build
+
   def apply(props: Props) = component(props)
 }
