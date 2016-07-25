@@ -40,6 +40,7 @@ object ConnectionModelHandler {
       ConnectionsRootModel(model.sortBy(_.name))
     } catch {
       case e: Exception  =>
+        println("into exception for connection handler ")
         ConnectionsRootModel(Nil)
     }
   }
