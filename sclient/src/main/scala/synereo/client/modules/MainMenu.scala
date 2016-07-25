@@ -145,7 +145,12 @@ object MainMenu {
                   )
                 ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  <.div(model.name),
+                  if(model.name.length()<10){
+                    <.div(model.name)
+                  }
+                    else{
+                    <.span(^.title:=model.name, model.name.substring(0, 8) + "...")
+                  },
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
                       /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
