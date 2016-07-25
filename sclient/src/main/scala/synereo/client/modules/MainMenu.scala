@@ -9,8 +9,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.Label
 import shared.models.ConnectionsModel
-import synereo.client.modalpopups.NewMessage
-
+import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
 import scala.scalajs.js
 
 //import shapeless.Tuple
@@ -30,6 +29,7 @@ import diode.AnyAction._
 object MainMenu {
   // shorthand for styles
   //  val labelSelectizeInputId: String = "labelSelectizeInputId"
+  val introductionConnectProxy = SYNEREOCircuit.connect(_.introduction)
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -42,7 +42,7 @@ object MainMenu {
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
       //      println("main menu mounted")
-//      SYNEREOCircuit.dispatch(CreateLabels())
+      //      SYNEREOCircuit.dispatch(CreateLabels())
       SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
     }
 
@@ -76,13 +76,6 @@ object MainMenu {
                 if (props.currentLoc == DashboardLoc) {
                   <.div(
                     SearchComponent(SearchComponent.Props())
-                    /*<.div(^.id := "mainmenuselectize",SynereoCommanStylesCSS.Style.searchBoxContainer)(
-                      ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props("mainmenuselectize"))),
-                    <.div(SynereoCommanStylesCSS.Style.displayInline)(
-                      <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                      ))*/
-
-                    //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
                   )
                 } else {
                   <.span()
@@ -100,6 +93,16 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
+                <.li(
+                  introductionConnectProxy(introProxy =>
+                    if (introProxy.value.introResponse.length != 0) {
+                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                    } else {
+                      <.span()
+                    }
+                  )
+                )
+                ,
                 <.li(
                   <.div(^.className := "dropdown")(
                     <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,

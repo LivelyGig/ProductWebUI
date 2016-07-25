@@ -6,21 +6,35 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
 import synereo.client.components.Icon
-import synereo.client.css.{ SynereoCommanStylesCSS, DashboardCSS, UserTimelineViewCSS }
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, UserTimelineViewCSS}
 
+import scalacss.ScalaCssReact._
+import org.querki.jquery._
+import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.models.{ConnectionsModel, MessagePost}
+import synereo.client.components.{Icon, MIcon}
+
+import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
  * Created by Mandar on 3/28/2016.
  */
 object TimelineView {
+  val searchContainer: js.Object = "#searchContainer"
 
   val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
     render_P { ctr =>
       <.div(^.className := "container-fluid MainContainer")(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+          )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )

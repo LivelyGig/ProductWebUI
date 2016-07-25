@@ -100,18 +100,18 @@ object ConnectionsForm {
 
     def fromSelecize(): Callback = {
       val cnxns = ConnectionsSelectize.getConnectionNames(t.state.runNow().selectizeInputId)
-      val msg =  if (cnxns.length > 1) {
+      val msg = if (cnxns.length > 1) {
         s"Hi ${cnxns(0)} and ${cnxns(1)}, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
       } else {
         s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
       }
-      t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
+      t.modState(s => s.copy(introConnections = s.introConnections.copy(aMessage = msg)))
     }
 
     def mounted(props: Props): Callback = {
       val usr = window.sessionStorage.getItem("userName")
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
-      t.modState(s => s.copy(userName= usr,introConnections =s.introConnections.copy(aMessage = msg)))
+      t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg)))
     }
 
     def hideModal(): Unit = {
@@ -137,7 +137,6 @@ object ConnectionsForm {
       //      val test = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse)
       //      println(test)
       val connectionsModel = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse).value
-
       if (!connectionsModel.isEmpty)
         connectionsModel.find(e => e.connection.target.contains(uri))
       else
@@ -147,16 +146,16 @@ object ConnectionsForm {
     def introduceTwoUsers() = {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val state = t.state.runNow()
-      //      val msg = state.introConnections.aMessage.replaceAll("/", "//")
+      val msg = state.introConnections.aMessage.replaceAll("/", "//")
       val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      //      val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
-      //        sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-      //      println(connections)
+
       if (connections.length == 2) {
-        val content = state.establishConnection.copy(sessionURI = uri,
-          aURI = connections(0).target,
-          bURI = connections(1).target, label = connections(0).label)
+        val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
+          sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
+        //        val content = state.establishConnection.copy(sessionURI = uri,
+        //          aURI = connections(0).target,
+        //          bURI = connections(1).target, label = connections(0).label)
         CoreApi.postIntroduction(content)
         t.modState(s => s.copy(postConnection = true))
       } else {
@@ -259,7 +258,7 @@ object ConnectionsForm {
                 <.div()(
                   <.textarea(^.rows := 6,
                     ^.value := s.introConnections.aMessage, ^.onChange ==> updateContent, ^.className := "form-control")
-//                  <.div(s.introConnections.aMessage)
+                  //                  <.div(s.introConnections.aMessage)
                 )
 
               )

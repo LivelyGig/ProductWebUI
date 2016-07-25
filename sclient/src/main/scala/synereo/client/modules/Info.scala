@@ -1,29 +1,43 @@
 package synereo.client.modules
 
 
-import japgolly.scalajs.react.ReactComponentB
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
+
 import shared.models.UserModel
-import synereo.client.SYNEREOMain
-import synereo.client.SYNEREOMain.Loc
 import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 import diode.react._
-import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.{ConnectionsModel, MessagePost}
-import japgolly.scalajs.react
 import org.scalajs.dom._
-import shared.RootModels.ConnectionsRootModel
 import shared.sessionitems.SessionItems
 import synereo.client.components.{Icon, MIcon}
-import synereo.client.handlers.RefreshConnections
-import synereo.client.modalpopups.{ConfirmIntroReq, NewConnection}
 import synereo.client.utils.ConnectionsUtils
-
+import japgolly.scalajs.react.{Callback, ReactComponentB}
+import synereo.client.components.{GlobalStyles, Icon}
+import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
+import japgolly.scalajs.react.{React, ReactDOM}
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import japgolly.scalajs.react.{React, ReactDOM}
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import japgolly.scalajs.react.{Callback, ReactComponentB}
+import synereo.client.SYNEREOMain
+import synereo.client.css.UserProfileViewCSS
+import synereo.client.components.{GlobalStyles, Icon}
+import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
+import japgolly.scalajs.react.{React, ReactDOM}
+import scala.scalajs.js
+import js.{Date, UndefOr}
+import org.querki.jquery._
 import scalacss.ScalaCssReact._
+import japgolly.scalajs.react.{React, ReactDOM}
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
+
+import scala.scalajs.js
+import js.{Date, UndefOr}
+
+
 
 
 /**
@@ -33,6 +47,7 @@ import scalacss.ScalaCssReact._
 
 object Info {
 
+  val searchContainer: js.Object = "#searchContainer"
   case class Props(proxy: ModelProxy[UserModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
@@ -55,11 +70,14 @@ object Info {
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS(($, P, S) => {
+    .renderPS((t, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain,UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+          )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )

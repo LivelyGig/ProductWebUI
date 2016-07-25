@@ -32,20 +32,23 @@ object ConnectionsCSS {
       marginTop(0.px),
       marginBottom(6.px),
       media.minWidth(1500.px) -
-      width(450.px),
+        width(450.px),
       media.minWidth(1024.px).maxWidth(1499.px) -
-      width(350.px),
+        width(350.px),
       media.minWidth(769.px).maxWidth(1023.px) -
-      width(314.px),
+        width(314.px),
       media.minWidth(650.px).maxWidth(768.px) -
-      width(252.px),
+        width(252.px),
       media.maxWidth(650.px) -
-      width(100.%%)
+        width(100.%%)
     )
-    val fullDescUL = style (
-      padding(0.%%, 7.%%)
+    val fullDescUL = style(
+      padding(0.%%, 7.%%),
+      media.minWidth(1600.px).maxWidth(1930.px) -
+      margin(10.px, 40.px)
+
     )
-    val hidden = style (
+    val hidden = style(
       display.none
     )
 

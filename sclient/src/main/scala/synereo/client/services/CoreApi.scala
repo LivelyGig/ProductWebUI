@@ -21,15 +21,20 @@ import scala.util.{Failure, Success}
 
 object CoreApi {
   var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+
   // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
+//    window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST,null)
+//    window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT,null)
+
     Ajax.post(
       url = BASE_URL,
       data = requestContent,
       headers = Map("Content-Type" -> "application/json;charset=UTF-8")
     ).map(_.responseText)
+
   }
 
   //  val handleApiError: PartialFunction[Throwable, Unit] = {
@@ -118,8 +123,9 @@ object CoreApi {
 
   def postIntroduction(introductionModel: Content): Future[String] = {
     val msg = introductionModel match {
-      case _: IntroConnections => ApiTypes.INTRODUCTION_REQUEST
+      case _: IntroConnections => ApiTypes.BEGIN_INTRODUCTION_REQUEST
       case _: EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+      case _: IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
@@ -148,6 +154,6 @@ object CoreApi {
     logger.log.debug(s"prolog = $prolog")
     evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName),
       Expression(ApiTypes.INSERT_CONTENT,
-      ExpressionContent(cnnxns, prolog, contentToPost, uid))))
+        ExpressionContent(cnnxns, prolog, contentToPost, uid))))
   }
 }

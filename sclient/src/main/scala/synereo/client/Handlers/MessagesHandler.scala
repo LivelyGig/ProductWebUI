@@ -29,8 +29,6 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
 
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
-
-
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
         CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)

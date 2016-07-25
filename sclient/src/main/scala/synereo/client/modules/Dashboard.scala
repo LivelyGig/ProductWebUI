@@ -11,8 +11,9 @@ import org.scalajs.dom
 import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS,PostFullViewCSS}
+import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
+
 import scala.scalajs.js.timers._
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -31,6 +32,7 @@ import org.widok.moment.Moment
 //scalastyle:off
 object Dashboard {
   val messageLoader: js.Object = "#messageLoader"
+  val searchContainer: js.Object = "#searchContainer"
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
 
@@ -132,7 +134,10 @@ object Dashboard {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+          )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )

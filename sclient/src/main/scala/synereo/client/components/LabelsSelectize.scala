@@ -94,7 +94,7 @@ object LabelsSelectize {
     }
 
     def componentDidUpdate(props: Props): Callback = Callback {
-//      println("component did update")
+      // println("component did update")
         initializeTagsInput()
     }
 

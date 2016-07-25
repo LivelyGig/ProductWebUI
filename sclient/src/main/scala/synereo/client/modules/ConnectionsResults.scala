@@ -1,26 +1,37 @@
 package synereo.client.modules
 
-import japgolly.scalajs.react.vdom.prefix_<^._
+
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import synereo.client.handlers.RefreshConnections
 import shared.RootModels.ConnectionsRootModel
+import synereo.client.components.{Icon, MIcon}
+import synereo.client.modalpopups.{ConfirmIntroReqModal, NewConnection}
+import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.models.{ConnectionsModel, MessagePost}
+import synereo.client.components.{Icon, MIcon}
+import scalacss.ScalaCssReact._
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
-import synereo.client.components.{Icon, MIcon}
-import synereo.client.css._
-import shared.models.ConnectionsModel
-import org.querki.jquery._
-import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.modalpopups.{ConfirmIntroReq, NewConnection}
-
+import japgolly.scalajs.react._
+import synereo.client.handlers.{ RefreshMessages}
+import shared.models.{MessagePost, MessagePostContent}
+import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
+import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
 import scala.scalajs.js
-import scalacss.ScalaCssReact._
+import synereo.client.components.Icon
+import scala.language.reflectiveCalls
+import org.querki.jquery._
+
+
 
 /**
   * Created by Mandar on 5/18/2016.
   */
 object ConnectionsResults {
+  val searchContainer: js.Object = "#searchContainer"
 
   case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
 
@@ -35,15 +46,17 @@ object ConnectionsResults {
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS(($, P, S) => {
+    .renderPS((t, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
         <.div(^.className := "row")(
           //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+          )(
             Sidebar(Sidebar.Props())
           )
         ),
-        ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, "")),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
             NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))

@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
- * Created by Mandar on 3/28/2016.
- */
+  * Created by Mandar on 3/28/2016.
+  */
 object UserProfileViewCSS {
 
   object Style extends StyleSheet.Inline {
@@ -27,6 +27,13 @@ object UserProfileViewCSS {
       textAlign.center,
       marginTop(10.%%),
       fontSize(3.em)
+    )
+    val userImage = style(
+      minWidth(200.px)
+    )
+    val newImageBtn = style(
+      width(200.px),
+      border.`0`.important
     )
 
     val agentUID = style(

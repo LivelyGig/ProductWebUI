@@ -5,6 +5,7 @@ object ApiTypes {
   val CreateUserWaiting = "createUserWaiting"
   val InitializeSessionResponse = "initializeSessionResponse"
   val CREATE_USER_REQUEST = "createUserRequest"
+  val UPDATE_USER_REQUEST = "updateUserRequest"
   val CONFIRM_EMAIL = "confirmEmailToken"
   val INITIALIZE_SESSION_REQUEST = "initializeSessionRequest"
   val SESSION_PING = "sessionPing"
@@ -13,7 +14,8 @@ object ApiTypes {
   val INSERT_CONTENT = "insertContent"
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
   val FEED_EXPRESSION = "feedExpr"
-  val INTRODUCTION_REQUEST = "beginIntroductionRequest"
+  val BEGIN_INTRODUCTION_REQUEST = "beginIntroductionRequest"
   val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
   val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
+  val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
 }
