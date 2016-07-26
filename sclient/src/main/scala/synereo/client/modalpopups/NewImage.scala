@@ -9,6 +9,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -23,6 +24,8 @@ import shared.models.UserModel
 import shared.sessionitems.SessionItems
 import synereo.client.handlers.UpdateUser
 import diode.AnyAction._
+import synereo.client.logger
+import scala.concurrent.ExecutionContext.Implicits.global
 
 //scalastyle:off
 /**
