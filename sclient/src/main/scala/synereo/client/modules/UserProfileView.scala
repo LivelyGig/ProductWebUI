@@ -1,19 +1,15 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
-import SYNEREOMain.Loc
 import diode.react.ModelProxy
 import org.querki.jquery._
 import shared.models.UserModel
 import synereo.client.components.Icon
 import synereo.client.css.UserProfileViewCSS
 import synereo.client.modalpopups.NewImage
-
 import scala.scalajs.js
-import scalacss.Attrs.color
 import scalacss.ScalaCssReact._
 
 /**

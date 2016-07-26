@@ -3,12 +3,8 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.Button
-import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.components.Bootstrap.Modal
-import synereo.client.components.Bootstrap._
+import synereo.client.components.Bootstrap.Button._
 import synereo.client.components.GlobalStyles
-import synereo.client.components.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.css._
@@ -16,18 +12,12 @@ import synereo.client.services.{ApiTypes, CoreApi, RootModel, SYNEREOCircuit}
 import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
 import synereo.client.utils.ConnectionsUtils
-import com.oracle.webservices.internal.api.message.ContentType
-import diode.ModelR
-import diode.data.Pot
-
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import org.scalajs.dom
 import org.scalajs.dom._
-import shared.RootModels.ConnectionsRootModel
 import shared.dtos.{Connection, EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
 import shared.sessionitems.SessionItems

@@ -8,12 +8,9 @@ import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 import shared.models.{SignUpModel, UserModel}
 import scala.scalajs.js
-import scala.util
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
-import synereo.client.utils._
-import org.scalajs.dom._
 
 object NewUserForm {
   var addNewUserState: Boolean = false

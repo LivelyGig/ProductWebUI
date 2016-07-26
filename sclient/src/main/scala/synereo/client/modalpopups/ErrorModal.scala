@@ -1,21 +1,12 @@
 package synereo.client.modalpopups
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.Button
-import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.components.Bootstrap._
-import synereo.client.components.GlobalStyles
-import synereo.client.components.Icon
-import synereo.client.components.Icon.Icon
-import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.components.{ GlobalStyles }
 import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
-import synereo.client.components.jQuery._
 import scala.language.reflectiveCalls
-import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
 /**

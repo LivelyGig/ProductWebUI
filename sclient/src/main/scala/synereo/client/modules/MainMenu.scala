@@ -11,8 +11,6 @@ import shared.models.Label
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
 import scala.scalajs.js
-
-//import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
