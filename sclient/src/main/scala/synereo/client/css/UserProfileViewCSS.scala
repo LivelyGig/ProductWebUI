@@ -29,7 +29,8 @@ object UserProfileViewCSS {
       fontSize(3.em)
     )
     val userImage = style(
-      minWidth(200.px)
+      minWidth(200.px),
+      maxWidth(200.px)
     )
     val newImageBtn = style(
       width(200.px),

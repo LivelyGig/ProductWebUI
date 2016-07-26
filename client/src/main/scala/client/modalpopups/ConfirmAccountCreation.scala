@@ -9,10 +9,13 @@ import shared.models.EmailValidationModel
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
+import diode.AnyAction._
 
 object ConfirmAccountCreation {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
+
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -21,10 +24,12 @@ object ConfirmAccountCreation {
       // mark it as NOT cancelled (which is the default)
       t.modState(s => s.copy(accountValidationFailed = true))
     }
+
     def hide = {
       // instruct Bootstrap to hide the modal
       $(t.getDOMNode()).modal("hide")
     }
+
     def updateToken(e: ReactEventI) = {
       // update TodoItem content
       val value = e.target.value
@@ -62,6 +67,7 @@ object ConfirmAccountCreation {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
     .initialState_P(p => State(new EmailValidationModel("")))
     .renderBackend[Backend]

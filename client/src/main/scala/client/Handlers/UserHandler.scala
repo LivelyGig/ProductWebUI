@@ -30,7 +30,7 @@ case class ToggleAvailablity()
 case class PostData(postContent: PostContent, cnxnSelectizeInputId: Option[String], sessionUriName: String, lblSelectizeInputId: Option[String])
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
-  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")

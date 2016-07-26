@@ -18,7 +18,7 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
   override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy): RefreshMessages = RefreshMessages(value, newRetryPolicy)
 }
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
-  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshMessages =>
       val labels = window.sessionStorage.getItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH)
       val updateF = action.effectWithRetry {

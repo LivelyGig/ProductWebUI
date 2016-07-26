@@ -5,11 +5,9 @@ import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
-import shared.RootModels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.Future
@@ -27,15 +25,18 @@ import diode.AnyAction._
 import scala.scalajs.js
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
-import shared.dtos.UpdateUserRequest
+import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
 import shared.sessionitems.SessionItems
+import synereo.client.handlers.UpdateUser
+import diode.AnyAction._
 
 //scalastyle:off
 /**
   * Created by mandar.k on 7/22/2016.
   */
 object NewImage {
+
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
@@ -85,7 +86,7 @@ object ProfileImageUploaderForm {
 
   case class Props(submitHandler: () => Callback, header: String, proxy: ModelProxy[UserModel])
 
-  case class State(postNewImage: Boolean = false, updateUserRequest: UpdateUserRequest)
+  case class State(updateUserRequest: UpdateUserRequest, postNewImage: Boolean = false)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
 
@@ -99,27 +100,29 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-
+      logger.log.debug("new Image modal mounted")
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
-      val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
       val value = e.target.files.item(0)
-      //      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
-        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(jsonBlob = s.updateUserRequest.jsonBlob.copy(imgSrc = contents))))
-        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri)))
+        val props = t.props.runNow()
+        val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
+        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
     }
 
-
-    def submitForm(e: ReactEventI): Callback = Callback {
+    def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
-      val state = t.state.runNow()
-      println(s"state.updateUserRequest: ${state.updateUserRequest}")
+      CoreApi.updateUserRequest(t.state.runNow().updateUserRequest).onComplete {
+        case Success(response) =>
+          SYNEREOCircuit.dispatch(UpdateUser(t.state.runNow().updateUserRequest))
+        case Failure(response) => println(s"failure : $response")
+      }
+      t.modState(s => s.copy(postNewImage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -142,10 +145,10 @@ object ProfileImageUploaderForm {
                   <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
                 ),
                 <.div(^.className := "col-md-12")(
-                  if (p.proxy.value.imgSrc != "") {
-                    <.img(^.src := p.proxy.value.imgSrc)
+                  if (s.updateUserRequest.jsonBlob.imgSrc.length < 2) {
+                    <.img(^.src := p.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
-                    <.div("")
+                    <.img(^.src := s.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
                   }
 
                 )
@@ -164,7 +167,7 @@ object ProfileImageUploaderForm {
   }
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State(updateUserRequest = new UpdateUserRequest()))
+    .initialState_P(p => State(new UpdateUserRequest()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewImage) {

@@ -115,7 +115,7 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(90, 56, 83))
+      backgroundColor(rgb(61, 56, 90))
     )
 
     val jobsmiddelNaviContainer = style(
@@ -123,34 +123,37 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(56, 56, 90))
+      backgroundColor(rgb(61, 56, 90))
     )
     val offeringsmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(48, 94, 125))
+      backgroundColor(rgb(61, 56, 90))
     )
     val profilessmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(49, 49, 49))
+      backgroundColor(rgb(61, 56, 90))
     )
     val contractssmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(88, 48, 48))
+      backgroundColor(rgb(61, 56, 90))
     )
 
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
       color(c"#13EEDD"),
       fontSize(1.em),
+      &.hover(
+        color(c"#FFFFFF")
+      ),
 
       /*mine*/
       textAlign.left,

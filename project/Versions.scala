@@ -12,7 +12,7 @@ trait ScalaJSVersions {
   val scalaDom = "0.9.0"
   val diode = "1.0.0" //"0.5.2"
   val jqueryFacade = "1.0-RC6"//"1.0-RC3"
-  val datePickerFacade = "0.7" //"0.5"
+  val datePickerFacade =  "0.5" //"0.7"
   val selectizeFacade = "0.12.1-0.2.1"
   val momentJSFacade = "0.1.5" //"0.1.4"
   val jQuery = "1.11.1" //  "3.0.0"

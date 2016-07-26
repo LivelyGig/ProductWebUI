@@ -20,15 +20,18 @@ import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
 import org.scalajs.dom
-//import client.components.popoverbootstrap
+import diode.AnyAction._
 
 
 object Searches {
 
+  val searchesProxy = LGCircuit.connect(_.searches)
+
   case class Props(view: String, proxy: ModelProxy[SearchesRootModel])
 
   case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
-// scalastyle:off
+
+  // scalastyle:off
   def toggleSidebar = Callback {
     val sidebtn: js.Object = "#searchContainer"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
@@ -148,9 +151,11 @@ object Searches {
       p.view match {
         case AppModule.PROFILES_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-          
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+                searchClick(p)
+              })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -182,7 +187,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -194,7 +199,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableToDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableToDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -203,7 +208,7 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.div(
-                    LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                      searchesProxy(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
                     ),
                     if (p.proxy().searchesModel != Nil) {
 
@@ -249,8 +254,8 @@ object Searches {
         } //talent
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -282,7 +287,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
 
                   )
                 ),
@@ -292,7 +297,7 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.div(
-                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                      searchesProxy(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
                     ),
                     if (p.proxy().searchesModel != Nil) {
 
@@ -311,7 +316,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 )
               )
@@ -320,8 +325,10 @@ object Searches {
         }
         case AppModule.PROJECTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback { searchClick(p) })
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+                searchClick(p)
+              })
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -370,22 +377,22 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "projectsEndDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsEndDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Skills Required")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
-                  // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                  //                      <.option(^.value:="")("Select"),
-                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                  //                      <.option(^.value:="Synereo")("@Synereo"),
-                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                  //                      <.option(^.value:="Synereo1")("@Synereo1")
-                  //                    )
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(//<.textarea(LftcontainerCSS.Style.textareaWidth, ^.rows := 4, ^.placeholder := "e.g. Web Development")
+                    // <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -410,15 +417,15 @@ object Searches {
                   <.div(^.className := "col-md-5 col-sm-12 col-xs-12")(
                     <.div("Posted by")
                   ),
-                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")( //<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
-                  //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
-                  //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
-                  //                      <.option(^.value:="")("Select"),
-                  //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
-                  //                      <.option(^.value:="Synereo")("@Synereo"),
-                  //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
-                  //                      <.option(^.value:="Synereo1")("@Synereo1")
-                  //                    )
+                  <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(//<.textarea(LftcontainerCSS.Style.textareaWidth,^.className:="input-tags", ^.rows := 2, ^.placeholder := "e.g. @LivelyGig", ^.className:="ui vertical orange segment-default")
+                    //  <.input(^.`type`:="text",^.className:="input-tags", ^.className:="ui vertical orange segment-default",^.placeholder := "e.g. @LivelyGig")
+                    //                    <.select(^.className:="select-state",^.name:="state[]", ^.className:="demo-default", ^.placeholder:="e.g. @LivelyGig")(
+                    //                      <.option(^.value:="")("Select"),
+                    //                      <.option(^.value:="LivelyGig")("@LivelyGig"),
+                    //                      <.option(^.value:="Synereo")("@Synereo"),
+                    //                      <.option(^.value:="LivelyGig1")("@LivelyGig1"),
+                    //                      <.option(^.value:="Synereo1")("@Synereo1")
+                    //                    )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -465,7 +472,7 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.div(
-                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                      searchesProxy(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
                     ),
                     if (p.proxy().searchesModel != Nil) {
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -493,9 +500,9 @@ object Searches {
         } //project
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-            
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -525,18 +532,18 @@ object Searches {
                       )
                     ),
                     <.div()(
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Escrow"
-                    ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " In Progress"
-                    ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Feedback"
-                    ),
-                    <.label(LftcontainerCSS.Style.checkboxlabel)(
-                      <.input(^.`type` := "checkbox"), " Completed"
-                    )
+                      <.label(LftcontainerCSS.Style.checkboxlabel)(
+                        <.input(^.`type` := "checkbox"), " Escrow"
+                      ),
+                      <.label(LftcontainerCSS.Style.checkboxlabel)(
+                        <.input(^.`type` := "checkbox"), " In Progress"
+                      ),
+                      <.label(LftcontainerCSS.Style.checkboxlabel)(
+                        <.input(^.`type` := "checkbox"), " Feedback"
+                      ),
+                      <.label(LftcontainerCSS.Style.checkboxlabel)(
+                        <.input(^.`type` := "checkbox"), " Completed"
+                      )
                     )
                   )
                 ),
@@ -570,7 +577,7 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.div(
-                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                      searchesProxy(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
                     ),
                     if (p.proxy().searchesModel != Nil) {
 
@@ -618,9 +625,9 @@ object Searches {
             }
           }
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
-              <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+              <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
             ),
@@ -635,7 +642,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesFromDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -647,7 +654,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "messagesBeforeDate", ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "messagesBeforeDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -674,7 +681,7 @@ object Searches {
                   ),
                   <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
                     <.div(
-                      LGCircuit.connect(_.searches)(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
+                      searchesProxy(searchesProxy => LabelsList(LabelsList.Props(searchesProxy)))
                     ),
                     if (p.proxy().searchesModel != Nil) {
                       <.ol(^.className := "tree", LftcontainerCSS.Style.checkboxlabel)(p.proxy().searchesModel.filter(e => e.parentUid == "self").map(p => renderLabel(p)))
@@ -711,8 +718,8 @@ object Searches {
         }
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/ )(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn",DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -756,7 +763,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "availableFromDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -768,7 +775,7 @@ object Searches {
                     // <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", LftcontainerCSS.Style.inputHeightWidth, ^.id := "availableFromDate", ^.value := s.userModel.email, ^.onChange ==> updateDate, ^.placeholder := "date")
                     <.input(^.className := "form-control", "data-provide".reactAttr := "datepicker", ^.id := "projectsAfterDate", ^.placeholder := "date",
                       LftcontainerCSS.Style.slctDate)
-                  // )
+                    // )
                   )
                 ),
                 <.div(^.className := "row", LftcontainerCSS.Style.lftMarginTop)(
@@ -793,8 +800,8 @@ object Searches {
     .componentDidMount(scope => scope.backend.mounted() /*Callback {
       scope.backend.initializeDatepicker
       scope.backend.initializeTagsInput
-      LGCircuit.dispatch(CreateLabels())
-    }*/ )
+      .dispatch(CreateLabels())
+    }*/)
     .build
 
   def apply(props: Props) = component(props)

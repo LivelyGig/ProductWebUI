@@ -1,10 +1,5 @@
 package client.modals
 
-
-import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
-import javax.imageio.ImageIO
-
 import shared.models.MessagePostContent
 import client.services.LGCircuit
 import japgolly.scalajs.react._
@@ -17,19 +12,15 @@ import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.handlers.PostData
 import japgolly.scalajs.react
-
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.sessionitems.SessionItems
-
 import scala.scalajs.js
-import sun.misc.BASE64Decoder
-import sun.misc.BASE64Encoder;
-//import java.util.Base64
-//import java.nio.charset.StandardCharsets
-
+import org.scalajs.dom.FileReader
+import org.scalajs.dom.raw.UIEvent
+import diode.AnyAction._
 
 object NewMessage {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -92,9 +83,6 @@ object NewMessageForm {
 
   case class Backend(t: BackendScope[Props, State]) {
 
-//    var a  = new BASE64Encoder()
-
-
     def hide: Callback = Callback {
       $(t.getDOMNode()).modal("hide")
     }
@@ -109,20 +97,19 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
-    def updateImgSrc(e: ReactEventI): react.Callback = {
-      val value = e.target.value
-      println("Img src = " + value)
-      //      val encodedImgSrc = Base64.getEncoder.encodeToString(value.getBytes(StandardCharsets.UTF_8))
-      //println("encodedImgSrc ="+ encodedImgSrc)
-//      try{
-//        val encodedImgSrc = new sun.misc.BASE64Encoder().encode( "myClearTextPW".getBytes())
-//        println("encodedImgSrc ="+ encodedImgSrc)
-//      }
-//      catch {
-//        case e: Exception => println(e)
-//      }
 
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = value)))
+    def fromSelecize(): Callback = Callback {}
+
+    def updateImgSrc(e: ReactEventI): react.Callback = Callback {
+      val value = e.target.files.item(0)
+      println("Img src = " + value)
+      var reader = new FileReader()
+      reader.onload = (e: UIEvent) => {
+        val contents = reader.result.asInstanceOf[String]
+        println(s"in on load $contents")
+        t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
+      }
+      reader.readAsDataURL(value)
     }
 
     def hideModal(): Unit = {
@@ -130,8 +117,7 @@ object NewMessageForm {
     }
 
     def mounted(): Callback = Callback {
-      //      val valID : js.Object = "form[data-toggle=\"validator\"]"
-      //      $(valID).validator()
+
     }
 
     def submitForm(e: ReactEventI): react.Callback = {
@@ -154,7 +140,8 @@ object NewMessageForm {
 
     // scalastyle:off
     def render(s: State, p: Props) = {
-
+      val connectionsProxy = LGCircuit.connect(_.connections)
+      val searchesProxy = LGCircuit.connect(_.searches)
       val headerText = p.header
       Modal(
         Modal.Props(
@@ -172,13 +159,19 @@ object NewMessageForm {
             /*val selectizeControl : js.Object =*/
             <.div(^.id := s.cnxsSelectizeParentId)(
               //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
-              LGCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s.cnxsSelectizeParentId)))
+              connectionsProxy(connectionsProxy => ConnectionsSelectize(ConnectionsSelectize.Props(connectionsProxy, s.cnxsSelectizeParentId, fromSelecize)))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
-              LGCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
+              searchesProxy(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "labelsSelectizeParent")))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px)(
-              <.input(^.`type` := "file", ^.value := s.postMessage.imgSrc, ^.onChange ==> updateImgSrc)
+              <.input(^.`type` := "file", ^.onChange ==> updateImgSrc),
+              if (s.postMessage.imgSrc != "") {
+                <.img(DashBoardCSS.Style.imgSize, ^.src := s.postMessage.imgSrc)
+              } else {
+                <.div("")
+              }
+
             ),
             <.div()(
               //              <.div(^.className:="form-group")(
