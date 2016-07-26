@@ -5,11 +5,9 @@ import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
-import shared.RootModels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.Future
@@ -30,6 +28,8 @@ import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
 import shared.sessionitems.SessionItems
+import synereo.client.handlers.UpdateUser
+import diode.AnyAction._
 
 //scalastyle:off
 /**
@@ -105,15 +105,12 @@ object ProfileImageUploaderForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      println(s"value : $value")
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
         val props = t.props.runNow()
         val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
-        val temp = UpdateUserRequest(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name))
-        println(s"temp : $temp")
-        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = temp.sessionURI, jsonBlob = temp.jsonBlob))).runNow()
+        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
     }
@@ -121,7 +118,8 @@ object ProfileImageUploaderForm {
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
       CoreApi.updateUserRequest(t.state.runNow().updateUserRequest).onComplete {
-        case Success(response) => println(s"success : $response")
+        case Success(response) =>
+          SYNEREOCircuit.dispatch(UpdateUser(t.state.runNow().updateUserRequest))
         case Failure(response) => println(s"failure : $response")
       }
       t.modState(s => s.copy(postNewImage = true))
@@ -147,10 +145,10 @@ object ProfileImageUploaderForm {
                   <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
                 ),
                 <.div(^.className := "col-md-12")(
-                  if (p.proxy.value.imgSrc != "") {
-                    <.img(^.src := p.proxy.value.imgSrc)
+                  if (s.updateUserRequest.jsonBlob.imgSrc.length < 2) {
+                    <.img(^.src := p.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
-                    <.div("")
+                    <.img(^.src := s.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
                   }
 
                 )
