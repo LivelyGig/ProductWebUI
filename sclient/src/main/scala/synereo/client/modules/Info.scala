@@ -3,41 +3,25 @@ package synereo.client.modules
 
 
 import shared.models.UserModel
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.css.{ConnectionsCSS}
 import diode.react._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import shared.models.{ConnectionsModel, MessagePost}
+import japgolly.scalajs.react.{BackendScope}
+import shared.models.{ConnectionsModel}
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
-import synereo.client.components.{Icon, MIcon}
 import synereo.client.utils.ConnectionsUtils
-import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
 import scala.scalajs.js
-import js.{Date, UndefOr}
-import japgolly.scalajs.react.{React, ReactDOM}
+import japgolly.scalajs.react._
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.SYNEREOMain
 import synereo.client.css.UserProfileViewCSS
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import org.querki.jquery._
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
 import scala.scalajs.js
-import js.{Date, UndefOr}
-
-
 
 
 /**

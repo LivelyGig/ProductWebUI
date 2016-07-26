@@ -25,6 +25,7 @@ import synereo.client.components.Icon
 import scala.language.reflectiveCalls
 import org.scalajs.dom.window
 import org.widok.moment.Moment
+import synereo.client.services.SYNEREOCircuit
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -313,6 +314,56 @@ object HomeFeedList {
   private val MessagesList = ReactComponentB[Props]("ProjectList")
     .render_P(p => {
       def renderMessages(message: MessagePost) = {
+
+        val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
+//        println("UserID = " + userId + "\n")
+//        println("Connections = " + message.connections + "\n")
+        var selfConnectionId = message.connections(0).source.split("/")(2)
+
+//        var selfcnxn = message.connections(1).target.split("/")(2)
+//        println("Connection at 1 = " + message.connections(1))
+
+//        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
+//        println("Connections = " + value)
+
+//        for(a <- value){
+//          if(a.connection.source.split("/")(2) == userId){
+//            println("We are in source of connection  UserID " + a.name+ "\n")
+//          }
+//          if(a.connection.source.split("/")(2) == selfcnxn){
+//            println("We are in source of connection  selfCnxn" + a.name+ "\n")
+//          }
+//          if(a.connection.target.split("/")(2) == selfcnxn ){
+//            println("We are in target of connection " + a.name+ "\n")
+//          }
+//          if(a.connection.target.split("/")(2) == userId){
+//            println("We are in targrt of connection " + a.name+ "\n")
+//          }
+//        }
+
+
+
+        var toReceiver = "unknown"
+        var fromSender = "unknown"
+        if (userId == selfConnectionId) {
+          fromSender = "me"
+          // get other party ID, if there is one
+          if (message.connections.size > 1) {
+            if (message.connections(1).source.split("/")(2) == userId) {
+              toReceiver = message.connections(1).target.split("/")(2)
+            } else {
+              toReceiver = message.connections(1).source.split("/")(2)
+            }
+            // ToDo: look up name of Receiver and use friendly name
+          } else {
+            toReceiver = "self"
+          }
+        } else {
+          fromSender = "me"
+          // ToDo: Look up name of Sender and use friendly name
+          toReceiver = "me"
+        }
+
         <.li(^.id := "home-feed-card", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseEnter ==> handleMouseEnterEvent , ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
             <.div(^.className := "")(
@@ -321,7 +372,7 @@ object HomeFeedList {
               ),
               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                 <.div(DashboardCSS.Style.userNameDescription)(
-                  <.span("James Gosling"),
+                  <.span(fromSender),
                   <.span(MIcon.chevronRight),
                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)

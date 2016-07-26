@@ -5,15 +5,10 @@ import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
-import shared.RootModels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -21,10 +16,6 @@ import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
-import synereo.client.logger
-import diode.AnyAction._
-
-import scala.scalajs.js
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.UpdateUserRequest

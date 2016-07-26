@@ -1,19 +1,16 @@
 package synereo.client.modules
 
-import japgolly.scalajs.react.{Callback, ReactComponentB}
+
 import japgolly.scalajs.react.extra.router.RouterCtl
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.{Icon, MIcon}
-import synereo.client.css.{LoginCSS, MarketPlaceFullCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.css.{ MarketPlaceFullCSS}
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import org.querki.jquery._
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.models.{ConnectionsModel, MessagePost}
 import synereo.client.components.{Icon, MIcon}
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
