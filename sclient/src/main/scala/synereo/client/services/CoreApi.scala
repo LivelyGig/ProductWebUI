@@ -26,8 +26,8 @@ object CoreApi {
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
-//    window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST,null)
-//    window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT,null)
+    //    window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST,null)
+    //    window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT,null)
 
     Ajax.post(
       url = BASE_URL,
@@ -155,5 +155,11 @@ object CoreApi {
     evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName),
       Expression(ApiTypes.INSERT_CONTENT,
         ExpressionContent(cnnxns, prolog, contentToPost, uid))))
+  }
+
+  def updateUserRequest(updateUserRequest: UpdateUserRequest): Future[String] = {
+    println(s"updateUserRequest in core api : $updateUserRequest")
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_USER_REQUEST, updateUserRequest))
+    ajaxPost(requestContent)
   }
 }

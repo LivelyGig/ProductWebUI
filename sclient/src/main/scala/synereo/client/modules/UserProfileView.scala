@@ -19,6 +19,7 @@ import scalacss.ScalaCssReact._
 /**
   * Created by mandar.k on 3/28/2016.
   */
+//scalastyle:off
 object UserProfileView {
   val searchContainer: js.Object = "#searchContainer"
 
@@ -39,8 +40,12 @@ object UserProfileView {
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+            ^.onMouseEnter --> Callback {
+              $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
+            },
+            ^.onMouseLeave --> Callback {
+              $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
+            }
           )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
@@ -55,7 +60,17 @@ object UserProfileView {
                 NewImage(NewImage.Props("Change Image", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, ""))
               ),
               <.div(^.className := "col-md-4",
-                <.h4()(userModel.name)
+                <.h2()(userModel.name)
+              ),
+              <.div(^.className := "col-md-2")
+            ),
+            <.div(^.className := "row",
+              <.div(^.className := "col-md-2"),
+              <.div(^.className := "col-md-4 text-right",
+                <.h2()("email:")
+              ),
+              <.div(^.className := "col-md-4",
+                <.h2()(userModel.email)
               ),
               <.div(^.className := "col-md-2")
             )
