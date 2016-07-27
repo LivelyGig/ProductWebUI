@@ -19,6 +19,8 @@ To run the application, open a command line interface (CLI) follow the step belo
 
     git clone https://github.com/LivelyGig/ProductWebUI.git
     sbt -verbose -Dhttp.port=8080 run
+    or sbt -java-home <JAVA_HOME> -verbose -J-Xmx3G -Dconfig.trace=loads stage
+    for example: sbt -java-home /usr/lib/jvm/java-1.8-openjdk -verbose -J-Xmx3G -Dconfig.trace=loads stage
 
 Then visit the home page at http://localhost:8080/
 
