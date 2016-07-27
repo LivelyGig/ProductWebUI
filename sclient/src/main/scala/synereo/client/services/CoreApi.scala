@@ -11,7 +11,7 @@ import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
-import shared.sessionitems.SessionItems.ProfilesViewItems
+import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems}
 import synereo.client.logger
 import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
@@ -36,10 +36,10 @@ object CoreApi {
   //    case t: Throwable => println(t.printStackTrace)
   //  }
 
-  def getConnections(): Future[String] = {
+  /*def getConnections(): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
     ajaxPost(requestContent)
-  }
+  }*/
 
   def createUser(signUpModel: SignUpModel): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_REQUEST, CreateUser(signUpModel.email, signUpModel.password,
@@ -81,12 +81,19 @@ object CoreApi {
     val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionListTo, previousSearchLabels)
     Option(previousSearchLabels) match {
       case Some(s) =>
-        window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)
-        for {
-          cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
-          messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
-        } yield messages
+        if (s == currentSearchLabels) {
+          sessionPing(sessionUri)
+        }
+        else {
+          window.sessionStorage.setItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH, currentSearchLabels)
+          for {
+            cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
+            messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
+          } yield messages
+        }
+
       case None =>
+        window.sessionStorage.setItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH, currentSearchLabels)
         evalSubscribeRequestAndSessionPing(getMessagesSubscription)
 
     }
@@ -136,14 +143,14 @@ object CoreApi {
       case SessionItems.MessagesViewItems.MESSAGES_SESSION_URI =>
         (Seq(LabelsUtils.getLabelModel(SessionItems.MessagesViewItems.MESSAGE_POST_LABEL)) ++ labels,
           upickle.default.write(MessagePost(uid, new Date().toISOString(), new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[MessagePostContent])))
-      case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
+      /*case SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI =>
         (Seq(LabelsUtils.getLabelModel(SessionItems.ProjectsViewItems.PROJECT_POST_LABEL)),
           upickle.default.write(ProjectsPost(uid, new Date().toISOString(),
             new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProjectPostContent])))
       case SessionItems.ProfilesViewItems.PROFILES_SESSION_URI =>
         (Seq(LabelsUtils.getLabelModel(SessionItems.ProfilesViewItems.PROFILES_POST_LABEL)),
           upickle.default.write(ProfilesPost(uid, new Date().toISOString(),
-            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProfilePostContent])))
+            new Date().toISOString(), "", cnnxns, postContent.asInstanceOf[ProfilePostContent])))*/
     }
     val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
     logger.log.debug(s"prolog = $prolog")

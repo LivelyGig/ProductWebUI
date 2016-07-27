@@ -28,12 +28,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
   //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
 
   override def handle: PartialFunction[Any, ActionResult[M]] = {
-    
+
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
         CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
       } { messagesResponse => MessagesRootModel(ContentModelHandler
-        .getContentModel(messagesResponse, AppModule.MESSAGES_VIEW)
+        .getContentModel(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())

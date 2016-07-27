@@ -7,7 +7,7 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
 import shared.models.ConnectionsModel
-import synereo.client.handlers.{CreateLabels, RefreshConnections}
+import synereo.client.handlers.{CreateLabels}
 import synereo.client.services.SYNEREOCircuit
 
 import scala.language.existentials
@@ -66,14 +66,15 @@ object ConnectionsLabelsSelectize {
     }
 
     def mounted(props: Props): Callback = Callback {
-      if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
+      /*if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
         t.modState(s => s.copy(connections = value)).runNow()
       }
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
+      initializeTagsInput()
     }
 
-    def attachConnections() = {
+    /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
         t.modState(s => s.copy(connections = value)).runNow()
@@ -95,12 +96,12 @@ object ConnectionsLabelsSelectize {
         initializeTagsInput()
       }
 
-    }
+    }*/
 
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
         <.option(^.value := "")("Select"),
-        for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+        for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
         for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
           <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
@@ -112,8 +113,8 @@ object ConnectionsLabelsSelectize {
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillMount(scope => scope.backend.willMount(scope.props))
-    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
+//    .componentWillMount(scope => scope.backend.willMount(scope.props))
+//    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build
 

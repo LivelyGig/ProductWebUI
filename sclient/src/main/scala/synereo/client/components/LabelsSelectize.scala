@@ -9,7 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import shared.models.Label
-import synereo.client.handlers.{CreateLabels, RefreshConnections}
+import synereo.client.handlers.{CreateLabels}
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.LabelsUtils
 

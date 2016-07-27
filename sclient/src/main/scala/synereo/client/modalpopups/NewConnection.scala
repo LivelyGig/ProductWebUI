@@ -136,7 +136,7 @@ object ConnectionsForm {
     def getCnxn(uri: String): Option[ConnectionsModel] = {
       //      val test = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse)
       //      println(test)
-      val connectionsModel = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse).value
+      val connectionsModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
       if (!connectionsModel.isEmpty)
         connectionsModel.find(e => e.connection.target.contains(uri))
       else

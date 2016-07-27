@@ -1,16 +1,12 @@
 package synereo.client
 
-//import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-import japgolly.scalajs.react.{React, ReactDOM}
 
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
@@ -19,16 +15,15 @@ import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import japgolly.scalajs.react.{React, ReactDOM}
+import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom._
+import synereo.client.handlers.RefreshMessages
 
 import scala.scalajs.js
-import js.{Date, UndefOr}
+import scala.scalajs.js.timers._
+import diode.AnyAction._
 
-//import shared.models.MessagesModel
-import shared.RootModels.MessagesRootModel
 
 @JSExport("SYNEREOMain")
 object SYNEREOMain extends js.JSApp {
@@ -58,18 +53,19 @@ object SYNEREOMain extends js.JSApp {
     val searchContainer: js.Object = "#searchContainer"
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
-  val getUsers =       SYNEREOCircuit.connect(_.user)
+
+  val getUsers = SYNEREOCircuit.connect(_.user)
   val getConnections = SYNEREOCircuit.connect(_.connections)
-  val getMessages =    SYNEREOCircuit.connect(_.messages)
+  val getMessages = SYNEREOCircuit.connect(_.messages)
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#people", PeopleLOC) ~> renderR(ctl =>               getConnections(s => ConnectionsResults(s)))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => getConnections(s => ConnectionsResults(s)))
       | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => getUsers(s => Info(s)))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>         getMessages(s => Dashboard(s)))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => getMessages(s => Dashboard(s)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
@@ -86,17 +82,17 @@ object SYNEREOMain extends js.JSApp {
         <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "hidden", Icon.spinnerIconPulse)
       ),
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
-//        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
-//          //Adding toggle button for sidebar
-//          if (r.page == SynereoLoc) {
-//            <.span()
-//          } else {
-//            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
-//              ^.onClick --> sidebar)(
-//              <.span(Icon.bars)
-//            )
-//          }
-//        ),
+        //        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
+        //          //Adding toggle button for sidebar
+        //          if (r.page == SynereoLoc) {
+        //            <.span()
+        //          } else {
+        //            <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left", ^.float := "left", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
+        //              ^.onClick --> sidebar)(
+        //              <.span(Icon.bars)
+        //            )
+        //          }
+        //        ),
         <.div(^.className := "col-lg-12 col-md-12 col-sm-12")(
           <.div(
             if (r.page == SynereoLoc) {
@@ -144,9 +140,10 @@ object SYNEREOMain extends js.JSApp {
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
-    window.sessionStorage.removeItem("sessionPingTriggered")
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
     ReactDOM.render(router(), dom.document.getElementById("root"))
+
+
   }
 }

@@ -10,16 +10,9 @@ import shared.models._
 import org.scalajs.dom._
 import shared.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
-import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import diode.Action
-import diode.AnyAction._
-import diode.data.Empty
-import synereo.client.handlers.{AcceptConnectNotification, AcceptIntroductionConfirmationResponse, AcceptNotification, AddConnection}
+import shared.RootModels.ConnectionsRootModel
 
-import scala.scalajs.js.timers._
-import scala.util.{Failure, Success}
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js.JSON
 
 //scalastyle:off
 object ConnectionsUtils {
@@ -58,7 +51,7 @@ object ConnectionsUtils {
     }
   }
 
-  def checkIntroductionNotification(): Unit = {
+  /*def checkIntroductionNotification(): Unit = {
     val sessionUri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
     if (window.sessionStorage.getItem("sessionPingTriggered") == null) {
       window.sessionStorage.setItem("sessionPingTriggered", "true")
@@ -99,6 +92,24 @@ object ConnectionsUtils {
     } catch {
       case e: Exception => /*println("into exception for upickle read session ping response")*/
       println("")
+    }
+  }*/
+
+  def getConnectionsModel(response: String): Seq[ConnectionsModel] = {
+
+    try {
+      val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
+      connections.map {
+        connection =>
+          val json = JSON.parse(connection.content.jsonBlob)
+          val name = json.name.asInstanceOf[String]
+          val imgSrc = if (connection.content.jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
+          ConnectionsModel(connection.content.sessionURI, connection.content.connection,
+            name, imgSrc)
+      }.sortBy(_.name)
+    } catch {
+      case e:Exception =>
+        Nil
     }
   }
 
