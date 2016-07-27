@@ -1,16 +1,12 @@
 package synereo.client
 
-//import japgolly.scalajs.react.{Callback, ReactDOM}
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import shared.models.UserModel
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-import japgolly.scalajs.react.{React, ReactDOM}
 
 import scala.scalajs.js
-import js.{Date, UndefOr}
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
@@ -19,16 +15,16 @@ import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.mutable.GlobalRegistry
-import japgolly.scalajs.react.{React, ReactDOM}
+import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom._
+import synereo.client.handlers.RefreshMessages
 
 import scala.scalajs.js
-import js.{Date, UndefOr}
+import scala.scalajs.js.timers._
+import diode.AnyAction._
+import synereo.client.sessionitems.SessionItems
 
-//import shared.models.MessagesModel
-import shared.RootModels.MessagesRootModel
 
 @JSExport("SYNEREOMain")
 object SYNEREOMain extends js.JSApp {
@@ -37,6 +33,8 @@ object SYNEREOMain extends js.JSApp {
   sealed trait Loc
 
   case object UserProfileViewLOC extends Loc
+
+  case object SynereoUserProfileViewLOC extends Loc
 
   case object SynereoLoc extends Loc
 
@@ -47,6 +45,8 @@ object SYNEREOMain extends js.JSApp {
   case object PostFullViewLOC extends Loc
 
   case object MarketPlaceLOC extends Loc
+
+  case object InformationLOC extends Loc
 
   case object AccountLOC extends Loc
 
@@ -145,9 +145,13 @@ object SYNEREOMain extends js.JSApp {
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
-    window.sessionStorage.removeItem("sessionPingTriggered")
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
     ReactDOM.render(router(), dom.document.getElementById("root"))
+    /*if (dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
+      dom.window.location.href = "/"
+    }
+*/
+
   }
 }

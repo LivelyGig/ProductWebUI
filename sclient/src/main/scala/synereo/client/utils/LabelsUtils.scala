@@ -2,8 +2,8 @@ package synereo.client.utils
 
 import org.scalajs.dom._
 import shared.models.Label
-import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
-
+import synereo.client.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
+import synereo.client.components.LabelsSelectize
 
 
 /**
@@ -30,12 +30,12 @@ object LabelsUtils {
   def getCurrentPreviousLabel(sessionUriName: String): (String, String) = {
     val sessionStorage = window.sessionStorage
     sessionUriName match {
-      case ProjectsViewItems.PROJECTS_SESSION_URI =>
-        (sessionStorage.getItem(ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH), sessionStorage.getItem(ProjectsViewItems.PREVIOUS_PROJECTS_LABEL_SEARCH))
+//      case ProjectsViewItems.PROJECTS_SESSION_URI =>
+//        (sessionStorage.getItem(ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH), sessionStorage.getItem(ProjectsViewItems.PREVIOUS_PROJECTS_LABEL_SEARCH))
       case MessagesViewItems.MESSAGES_SESSION_URI =>
         (sessionStorage.getItem(MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH), sessionStorage.getItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH))
-      case ProfilesViewItems.PROFILES_SESSION_URI =>
-        (sessionStorage.getItem(ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH), sessionStorage.getItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH))
+//      case ProfilesViewItems.PROFILES_SESSION_URI =>
+//        (sessionStorage.getItem(ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH), sessionStorage.getItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH))
     }
   }
 

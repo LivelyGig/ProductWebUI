@@ -3,15 +3,21 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.Button._
+import synereo.client.components.Bootstrap.Button
+import synereo.client.components.Bootstrap.CommonStyle
+import synereo.client.components.Bootstrap.Modal
 import synereo.client.components.GlobalStyles
+import synereo.client.components.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.css._
-import synereo.client.services.{ApiTypes, CoreApi, RootModel, SYNEREOCircuit}
+import synereo.client.services.{ CoreApi, SYNEREOCircuit}
 import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
 import synereo.client.utils.ConnectionsUtils
+import diode.AnyAction._
+import scala.concurrent.ExecutionContext.Implicits.global
+
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -20,7 +26,8 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.{Connection, EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
+import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages}
 
 import scala.scalajs.js
 
@@ -126,7 +133,7 @@ object ConnectionsForm {
     def getCnxn(uri: String): Option[ConnectionsModel] = {
       //      val test = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse)
       //      println(test)
-      val connectionsModel = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse).value
+      val connectionsModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
       if (!connectionsModel.isEmpty)
         connectionsModel.find(e => e.connection.target.contains(uri))
       else
@@ -146,7 +153,12 @@ object ConnectionsForm {
         //        val content = state.establishConnection.copy(sessionURI = uri,
         //          aURI = connections(0).target,
         //          bURI = connections(1).target, label = connections(0).label)
-        CoreApi.postIntroduction(content)
+        SYNEREOCircuit.dispatch(LockSessionPing())
+        CoreApi.postIntroduction(content).onComplete{
+          case Success(res) =>
+            SYNEREOCircuit.dispatch(OpenSessionPing())
+            SYNEREOCircuit.dispatch(RefreshMessages())
+        }
         t.modState(s => s.copy(postConnection = true))
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -166,7 +178,12 @@ object ConnectionsForm {
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection(uri).source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
-          CoreApi.postIntroduction(content)
+          SYNEREOCircuit.dispatch(LockSessionPing())
+          CoreApi.postIntroduction(content).onComplete{
+            case Success(res) =>
+              SYNEREOCircuit.dispatch(OpenSessionPing())
+              SYNEREOCircuit.dispatch(RefreshMessages())
+          }
           t.modState(s => s.copy(postConnection = true))
       }
     }

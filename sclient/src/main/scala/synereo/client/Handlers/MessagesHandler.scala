@@ -7,7 +7,7 @@ import shared.RootModels.MessagesRootModel
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom.window
 import shared.dtos.Connection
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.{ConnectionsLabelsSelectize, LabelsSelectize}
 import synereo.client.modules.AppModule
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
@@ -33,7 +33,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val updateF = action.effectWithRetry {
         CoreApi.getContent(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
       } { messagesResponse => MessagesRootModel(ContentModelHandler
-        .getContentModel(messagesResponse, AppModule.MESSAGES_VIEW)
+        .getContentModel(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())

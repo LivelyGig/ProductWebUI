@@ -5,8 +5,8 @@ import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import shared.sessionitems.SessionItems
-import synereo.client.handlers.{CreateLabels, LoginUser, LogoutUser, RefreshConnections}
+import synereo.client.sessionitems.SessionItems
+import synereo.client.handlers._
 import synereo.client.modalpopups._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
@@ -23,8 +23,9 @@ import synereo.client.css.LoginCSS
 import synereo.client.logger._
 import diode.AnyAction._
 import org.scalajs.dom
+
 import scala.scalajs.js.timers._
-import synereo.client.utils.MessagesUtils
+import synereo.client.utils.{ConnectionsUtils, MessagesUtils}
 
 /**
   * Created by mandar.k on 3/11/2016.
@@ -116,14 +117,14 @@ object Login {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
       window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
       val listOfConnections = upickle.default.write[Seq[Connection]](response.content.listOfConnections)
-      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTION_LIST,listOfConnections)
+      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTION_LIST, listOfConnections)
       // window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST, upickle.default.write[Seq[Connection]](response.content.listOfConnections))
       //      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      MessagesUtils.storeCnxnAndLabels(response.content.listOfConnections,Nil)
+      MessagesUtils.storeCnxnAndLabels(response.content.listOfConnections, Nil)
     }
 
     def processLogin(userModel: UserModel): Callback = {
@@ -179,14 +180,23 @@ object Login {
 
     def processSuccessfulLogin(responseArray: Seq[String], userModel: UserModel): Unit = {
       setSessionsUri(responseArray)
-      val responseStr = responseArray(0)
-      setUserDetailsInSession(responseStr, userModel)
-      SYNEREOCircuit.dispatch(LoginUser(userModel))
-      $(loginLoader).addClass("hidden")
-      $(loadingScreen).addClass("hidden")
-      window.location.href = "/#dashboard"
-      //      checkIntroductionNotification
-      log.debug("login successful")
+      CoreApi.sessionPing(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)).onComplete {
+        case Success(res) =>
+          SYNEREOCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(res)))
+          val responseStr = responseArray(0)
+          setUserDetailsInSession(responseStr, userModel)
+          SYNEREOCircuit.dispatch(LoginUser(userModel))
+          SYNEREOCircuit.dispatch(CreateLabels())
+          SYNEREOCircuit.dispatch(AttachPinger())
+          $(loginLoader).addClass("hidden")
+          $(loadingScreen).addClass("hidden")
+          window.location.href = "/#dashboard"
+          //      checkIntroductionNotification
+          log.debug("login successful")
+        case Failure(res) =>
+          processServerError()
+      }
+
     }
 
     def processLoginFailed(responseStr: String): Unit = {

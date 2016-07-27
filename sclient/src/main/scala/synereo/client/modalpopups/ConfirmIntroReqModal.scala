@@ -12,15 +12,17 @@ import japgolly.scalajs.react
 import shared.RootModels.IntroRootModel
 import shared.dtos.IntroConfirmReq
 import org.scalajs.dom.window
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import diode.AnyAction._
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-import synereo.client.handlers.UpdateIntroduction
+import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages, UpdateIntroduction}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 import scala.util.Success
@@ -93,9 +95,11 @@ object ConfirmIntroReqForm {
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      //      println(s"introConfirmReq: $introConfirmReq")
+      SYNEREOCircuit.dispatch(LockSessionPing())
       CoreApi.postIntroduction(introConfirmReq).onComplete {
-        case Success(response) => println("introRequest Rejected successfully ")
+        case Success(response) =>
+          SYNEREOCircuit.dispatch(OpenSessionPing())
+          SYNEREOCircuit.dispatch(RefreshMessages())
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       jQuery(t.getDOMNode()).modal("hide")
@@ -125,9 +129,12 @@ object ConfirmIntroReqForm {
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
+      SYNEREOCircuit.dispatch(LockSessionPing())
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
           // println("introRequest sent successfully ")
+          SYNEREOCircuit.dispatch(OpenSessionPing())
+          SYNEREOCircuit.dispatch(RefreshMessages())
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       val state = t.state.runNow()
