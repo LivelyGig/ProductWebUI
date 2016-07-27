@@ -1,20 +1,12 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import synereo.client.handlers.RefreshConnections
+import japgolly.scalajs.react.{BackendScope,ReactComponentB}
 import shared.RootModels.ConnectionsRootModel
-import diode.react.ReactPot._
 import diode.react._
-import diode.data.Pot
-import synereo.client.components.{Icon, MIcon}
 import synereo.client.css._
 import shared.models.ConnectionsModel
-import org.querki.jquery._
-import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.modalpopups.{ConfirmIntroReqModal, NewConnection}
-
-import scala.scalajs.js
+import synereo.client.modalpopups.NewConnection
 import scalacss.ScalaCssReact._
 
 /**
@@ -22,13 +14,13 @@ import scalacss.ScalaCssReact._
   */
 object ConnectionsResults {
 
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
+  case class Props(proxy: ModelProxy[ConnectionsRootModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props): Callback =
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    /*def mounted(props: Props): Callback =
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))*/
   }
 
   // create the React component for user's connections
@@ -50,7 +42,8 @@ object ConnectionsResults {
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
-            P.proxy().render(connectionsRootModel =>
+            ConnectionList(P.proxy().connectionsResponse)
+            /*P.proxy().render(connectionsRootModel =>
               ConnectionList(connectionsRootModel.connectionsResponse)),
             P.proxy().renderFailed(ex => <.div("NO CONNECTIONS FOUND", SynereoCommanStylesCSS.Style.renderFailedMessage)),
             if (P.proxy().isEmpty) {
@@ -64,15 +57,15 @@ object ConnectionsResults {
               }
             } else {
               <.div(/*"data loaded"*/)
-            }
+            }*/
           )
         )
       ) //connectionsContainerMain
     })
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+//    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
+  def apply(proxy: ModelProxy[ConnectionsRootModel]) = component(Props(proxy))
 }
 
 object ConnectionList {

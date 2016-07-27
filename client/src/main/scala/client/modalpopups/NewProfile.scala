@@ -18,6 +18,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.models.ProfilePostContent
 import shared.sessionitems.SessionItems
+import diode.AnyAction._
 
 object NewProfile {
   @inline private def bss = GlobalStyles.bootstrapStyles

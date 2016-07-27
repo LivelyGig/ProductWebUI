@@ -1,16 +1,16 @@
-package shared.sessionitems
+package synereo.client.sessionitems
 
 /**
- * Created by shubham.k on 11-05-2016.
- */
+  * Created by shubham.k on 11-05-2016.
+  */
 object SessionItems {
   /**
-   * This function returns all the session uri names
-   * @return All session uri.
-   */
+    * This function returns all the session uri names
+    * @return All session uri.
+    */
   def getAllSessionUriName(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI,/* ProjectsViewItems.PROJECTS_SESSION_URI,*/
-      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI/*,
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI/*, ProjectsViewItems.PROJECTS_SESSION_URI,
+      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI,
       SearchesView.SEARCHES_SESSION_URI*/)
   }
 
@@ -24,22 +24,22 @@ object SessionItems {
     val MESSAGE_POST_LABEL = "MESSAGEPOSTLABEL"
   }
   object ProjectsViewItems {
-    val PROJECTS_SESSION_URI = "PROJECTS_SESSION_URI"
+    val PROJECTS_SESSION_URI = "MESSAGES_SESSION_URI"
     val CURRENT_PROJECTS_LABEL_SEARCH = "CURRENT_PROJECTS_LABEL_SEARCH"
     val PREVIOUS_PROJECTS_LABEL_SEARCH = "PREVIOUS_PROJECTS_LABEL_SEARCH"
     val PROJECT_POST_LABEL = "PROJECTPOSTLABEL"
   }
   object ConnectionViewItems {
-    val CONNECTIONS_SESSION_URI = "CONNECTIONS_SESSION_URI"
+    val CONNECTIONS_SESSION_URI = "MESSAGES_SESSION_URI"
     val CONNECTION_LIST = "CONNECTION_LIST"
     val CURRENT_SEARCH_CONNECTION_LIST = "CURRENT_SEARCH_CONNECTION_LIST"
   }
   object SearchesView {
-    val SEARCHES_SESSION_URI = "SEARCHES_SESSION_URI"
+    //    val SEARCHES_SESSION_URI = "SEARCHES_SESSION_URI"
     val LIST_OF_LABELS = "LIST_OF_LABELS"
   }
   object ProfilesViewItems {
-    val PROFILES_SESSION_URI = "PROFILES_SESSION_URI"
+    val PROFILES_SESSION_URI = "MESSAGES_SESSION_URI"
     val CURRENT_PROFILES_LABEL_SEARCH = "CURRENT_PROFILES_LABEL_SEARCH"
     val PREVIOUS_PROFILES_LABEL_SEARCH = "PREVIOUS_PROFILES_LABEL_SEARCH"
     val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"

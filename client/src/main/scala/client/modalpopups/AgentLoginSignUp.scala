@@ -24,6 +24,7 @@ import org.querki.jquery._
 import shared.sessionitems.SessionItems
 
 import scala.concurrent.Future
+import diode.AnyAction._
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -39,7 +40,7 @@ object AgentLoginSignUp {
   case class State(showNewAgentForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
+                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false,
                    loginErrorMessage: String = "")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
@@ -59,7 +60,7 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showNewAgentForm = true))
     }
 
-    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false): Callback = {
       log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
@@ -80,6 +81,8 @@ object AgentLoginSignUp {
         t.modState(s => s.copy(showNewAgentForm = false))
       } else if (showTermsOfServicesForm) {
         t.modState(s => s.copy(showNewAgentForm = false, showTermsOfServicesForm = true))
+      } else if (showPrivacyPolicyModal) {
+        t.modState(s => s.copy(showNewAgentForm = false, showPrivacyPolicyModal = true))
       } else {
         t.modState(s => s.copy(showNewAgentForm = false))
       }
@@ -108,7 +111,7 @@ object AgentLoginSignUp {
         SessionItems.ConnectionViewItems.CONNECTION_LIST,
         upickle.default.write[Seq[Connection]](response.content.listOfConnections)
       )
-      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
+//      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
       window.sessionStorage.setItem("userEmail", userModel.email)
       window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
       window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
@@ -242,6 +245,11 @@ object AgentLoginSignUp {
     def termsOfServices(): Callback = {
       t.modState(s => s.copy(showTermsOfServicesForm = false, showNewAgentForm = true))
     }
+
+    def privacyPolicy(): Callback = {
+      t.modState(s => s.copy(showPrivacyPolicyModal = false, showNewAgentForm = true))
+    }
+
   }
 
   val component = ReactComponentB[Props]("AddNewAgent")
@@ -259,6 +267,9 @@ object AgentLoginSignUp {
         }
         else if (S.showTermsOfServicesForm) {
           TermsOfServices(TermsOfServices.Props(B.termsOfServices))
+        }
+        else if (S.showPrivacyPolicyModal) {
+          PrivacyPolicyModal(PrivacyPolicyModal.Props(B.privacyPolicy))
         }
         else if (S.showLoginForm) {
           LoginForm(LoginForm.Props(B.loginUser))

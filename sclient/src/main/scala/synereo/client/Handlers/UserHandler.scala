@@ -2,11 +2,11 @@ package synereo.client.handlers
 
 import java.util.UUID
 
-import diode.{ActionHandler, ActionResult,ModelRW}
+import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.dtos.{Expression, ExpressionContent, SubscribeRequest, _}
 import shared.models.{Label, _}
 import org.scalajs.dom.window
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.logger
 import synereo.client.services.{ApiTypes, CoreApi}
 import synereo.client.utils.LabelsUtils
@@ -21,11 +21,13 @@ case class LoginUser(userModel: UserModel)
 
 case class LogoutUser()
 
+case class UpdateUser(updateUserRequest: UpdateUserRequest)
+
 //case class PostData(postContent: PostContent, sessionUriName: String,cnnxns : Seq[Connection], labels: Seq[Label])
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   //  val messageLoader = "#messageLoader"
-  override def handle : PartialFunction[Any, ActionResult[M]] = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case LoginUser(userModel) =>
       var modelFromStore = userModel
       val temp = window.sessionStorage.getItem("userEmail")
@@ -76,5 +78,9 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       window.sessionStorage.clear()
       window.location.href = "/"
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
+
+    case UpdateUser(updateUserRequest: UpdateUserRequest) =>
+      val updatedUser = value.copy(imgSrc = updateUserRequest.jsonBlob.imgSrc)
+      updated(updatedUser)
   }
 }

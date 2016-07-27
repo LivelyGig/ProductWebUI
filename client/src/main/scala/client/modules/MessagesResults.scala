@@ -21,6 +21,7 @@ import org.scalajs.dom.window
 import org.widok.moment.Moment
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
+import scala.language.existentials
 
 object MessagesResults {
 
@@ -150,18 +151,30 @@ object MessagesList {
           // <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(s"${message.postContent.subject}"),
           <.br(),
-//          <.div(DashBoardCSS.Style.profileNameHolder)(s"${<.img(^.src:= message.postContent.imgSrc)}"),
+          //          <.div(DashBoardCSS.Style.profileNameHolder)(s"${<.img(^.src:= message.postContent.imgSrc)}"),
           <.div(^.className := "row", ^.color := "gray", ^.fontSize := "smaller")(
             <.div(^.className := "col-md-6 col-sm-12")(s"From: ${fromSender}"),
             <.div(^.className := "col-md-6 col-sm-12")(s"To: ${toReceiver}")
           ),
-          // ToDo: need DateTime library for javascript or scala.js, similar to the following?
-          // <.div()(s"Created: ${DateTime.parse(message.created).toLocalDateTime}"),
-          // <.div()(s"Created: ${message.created}"),
-          <.div(^.className:="msgTime",DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString),
+          <.div(^.className := "msgTime", DashBoardCSS.Style.msgTime, "data-toggle".reactAttr := "tooltip", ^.title := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString),
           // <.div()(s"labels: ${message.labels}"),
           // <.div()(s"uid: ${message.uid}"),
-          <.div(^.className := "media-body", ^.paddingTop := "10px")(s"${message.postContent.text}",
+          <.div(^.className := "media-body", ^.paddingTop := "10px")(
+            <.div(
+              <.div(^.className := "col-md-6 col-sm-12")(
+                s"${message.postContent.text}"
+              ),
+              <.div(^.className := "col-md-6 col-sm-12")(
+                <.div(
+                  if (message.postContent.imgSrc != "") {
+                    <.img(^.src := message.postContent.imgSrc)
+                  } else {
+                    <.div("")
+                  }
+                )
+              )
+            ),
+
             <.div(^.className := "col-md-12 col-sm-12 /*profile-action-buttons*/" /*,^.onClick := "sidebartry"*/)(
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Hide", Icon.userTimes),
               <.button(^.tpe := "button", ^.className := "btn profile-action-buttons pull-right", HeaderCSS.Style.rsltContainerIconBtn, ^.title := "Favorite", Icon.star),

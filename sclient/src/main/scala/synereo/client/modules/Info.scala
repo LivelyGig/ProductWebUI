@@ -17,9 +17,8 @@ import shared.models.{ConnectionsModel, MessagePost}
 import japgolly.scalajs.react
 import org.scalajs.dom._
 import shared.RootModels.ConnectionsRootModel
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.{Icon, MIcon}
-import synereo.client.handlers.RefreshConnections
 import synereo.client.utils.ConnectionsUtils
 
 import scalacss.ScalaCssReact._

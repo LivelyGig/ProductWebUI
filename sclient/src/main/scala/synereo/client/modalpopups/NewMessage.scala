@@ -11,11 +11,11 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.RootModels.SearchesRootModel
 import shared.dtos.LabelPost
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.{CreateLabels, RefreshMessages}
+import synereo.client.handlers._
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -27,12 +27,10 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import diode.AnyAction._
-
-import scala.scalajs.js
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
+import diode.AnyAction._
 
 import scala.concurrent.Future
 
@@ -166,17 +164,23 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
+      SYNEREOCircuit.dispatch(LockSessionPing())
       postLabels.onComplete {
         case Success(responseArray) =>
           dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
           val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
           CoreApi.postData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI,
             cnxns,labelsToPostMsg).onComplete {
-            case Success(response) => SYNEREOCircuit.dispatch(RefreshMessages())
+            case Success(response) => {
+              SYNEREOCircuit.dispatch(OpenSessionPing())
+              logger.log.info("message post success")
+              SYNEREOCircuit.dispatch(RefreshMessages())
+              t.modState(s => s.copy(postNewMessage = true)).runNow()
+            }
             case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
           }
           SYNEREOCircuit.dispatch(CreateLabels())
-          t.modState(s => s.copy(postNewMessage = true)).runNow()
+
         case Failure(res) =>
           logger.log.debug("Label Post failure")
           t.modState(s => s.copy(postNewMessage = false))
@@ -222,7 +226,7 @@ object NewMessageForm {
           <.div(^.className := "row")(
             <.div()(
               if (s.postMessage.imgSrc != "") {
-                <.img(^.src := s.postMessage.imgSrc)
+                <.img(^.src := s.postMessage.imgSrc, ^.height:="100.px", ^.width:="100.px")
               } else {
                 <.div("")
               }

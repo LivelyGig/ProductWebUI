@@ -21,7 +21,7 @@ case class RefreshProfiles(potResult: Pot[ProfilesRootModel] = Empty, retryPolic
 }
 
 class ProfilesHandler[M](modelRW: ModelRW[M, Pot[ProfilesRootModel]]) extends ActionHandler(modelRW) {
-  override def handle: PartialFunction[AnyRef, ActionResult[M]] = {
+  override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshProfiles =>
       val labels = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH)
       val updateF = action.effectWithRetry(CoreApi.getContent(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)) { profilesResponse =>
