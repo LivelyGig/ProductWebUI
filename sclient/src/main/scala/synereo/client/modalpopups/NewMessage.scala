@@ -225,7 +225,7 @@ object NewMessageForm {
           <.div(^.className := "row")(
             <.div()(
               if (s.postMessage.imgSrc != "") {
-                <.img(^.src := s.postMessage.imgSrc)
+                <.img(^.src := s.postMessage.imgSrc, ^.height:="100.px", ^.width:="100.px")
               } else {
                 <.div("")
               }
