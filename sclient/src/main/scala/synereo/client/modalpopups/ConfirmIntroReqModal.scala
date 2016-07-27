@@ -1,12 +1,10 @@
 package synereo.client.modalpopups
 
 import diode.react.ModelProxy
-import shared.models.MessagePostContent
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
-import synereo.client.components.Icon._
 import synereo.client.components.{GlobalStyles, _}
 import japgolly.scalajs.react
 import shared.RootModels.IntroRootModel
@@ -14,13 +12,16 @@ import shared.dtos.IntroConfirmReq
 import org.scalajs.dom.window
 import shared.sessionitems.SessionItems
 import diode.AnyAction._
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
 import synereo.client.handlers.UpdateIntroduction
+import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 import scala.util.Success
@@ -31,7 +32,7 @@ import scala.util.Success
 object ConfirmIntroReqModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  val getIntroduction = SYNEREOCircuit.connect(_.introduction)
+  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)
 
@@ -62,53 +63,38 @@ object ConfirmIntroReqModal {
       <.div()(
         Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
         if (S.showNewIntroForm)
-        //          ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.addImage, "New Message"))
-          getIntroduction(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
+          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
         else
           Seq.empty[ReactElement]
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 
   def apply(props: Props) = component(props)
 }
 
-// #todo think about better way for getting data from selectize input
-// so that you don't have to pass the parentId explicitly
 object ConfirmIntroReqForm {
-  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[IntroRootModel])
+  case class Props(submitHandler: () => Callback, header: String, proxy: ModelProxy[IntroRootModel])
 
-  case class State(postMessage: MessagePostContent, confirmIntroReq: Boolean = false,
-                   cnxsSelectizeParentId: String = "postNewMessageSelectizeInput", labelSelectizeParentId: String = "labelsSelectizeParent")
+  case class State(confirmIntroReq: Boolean = false)
 
-  //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get target source and modify only accepted field of case class
+  //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get  event target source and modify only accepted field of case class
   case class Backend(t: BackendScope[Props, State]) {
+
     def hide: Callback = Callback {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      //      println(s"introConfirmReq: $introConfirmReq")
       CoreApi.postIntroduction(introConfirmReq).onComplete {
-        case Success(response) => println("introRequest Rejected successfully ")
+        case Success(response) =>
+          logger.log.info("introRequest rejected successfully ")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       jQuery(t.getDOMNode()).modal("hide")
-    }
-
-    def updateSubject(e: ReactEventI): react.Callback = {
-      val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
-    }
-
-    def updateContent(e: ReactEventI): react.Callback = {
-      val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
     }
 
     def hideModal(): Unit = {
@@ -120,14 +106,13 @@ object ConfirmIntroReqForm {
 
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
-      //      e.target.value.
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
-          // println("introRequest sent successfully ")
+          logger.log.info("introRequest sent successfully")
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       val state = t.state.runNow()
@@ -145,12 +130,9 @@ object ConfirmIntroReqForm {
       val headerText = p.header
       Modal(
         Modal.Props(
-          // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
             <.div("Introduction Request")),
-          // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p),
-          CSSClass = "connectionModalBorder",
           addStyles = Seq()
         ),
         <.form(^.onSubmit ==> submitForm)(
@@ -159,15 +141,7 @@ object ConfirmIntroReqForm {
               <.div(p.proxy().introResponse(0).message),
               <.div(
                 s"From : ${JSON.parse(p.proxy().introResponse(0).introProfile).name.asInstanceOf[String]}", <.br,
-                "Date : Mon June 13 2016 ", <.br
-              ),
-              <.div(^.className := "col-md-12")(
-                <.div(^.className := "col-md-10")(
-                  <.div()(" asdfa ")
-                ),
-                <.div(^.className := "col-md-2")(
-                  <.div("test")
-                )
+                "Date : Mon July 27 2016 ", <.br
               )
             ),
             <.div()(
@@ -183,8 +157,7 @@ object ConfirmIntroReqForm {
   }
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePostContent()))
+    .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.confirmIntroReq) {
@@ -192,7 +165,6 @@ object ConfirmIntroReqForm {
       }
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    //      .shouldComponentUpdate(scope => false)
     .build
 
   def apply(props: Props) = component(props)

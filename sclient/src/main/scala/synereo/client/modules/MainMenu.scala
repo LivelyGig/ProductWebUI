@@ -96,7 +96,8 @@ object MainMenu {
                 <.li(
                   introductionConnectProxy(introProxy =>
                     if (introProxy.value.introResponse.length != 0) {
-                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+//                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn)(MIcon.sms)
                     } else {
                       <.span()
                     }

@@ -17,7 +17,8 @@ object AppCSS {
       UserTimelineViewCSS.Style,
       MarketPlaceFullCSS.Style,
       ConnectionsCSS.Style,
-      NewMessageCSS.Style
+      NewMessageCSS.Style,
+      NotificationViewCSS.Style
     )
     //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }

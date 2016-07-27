@@ -50,7 +50,7 @@ object SYNEREOMain extends js.JSApp {
 
   case object AccountLOC extends Loc
 
-  //  case object SignupLOC extends Loc
+  case object NotificationsLOC extends Loc
 
   case object PeopleLOC extends Loc
 
@@ -59,15 +59,9 @@ object SYNEREOMain extends js.JSApp {
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
-
-  val getUsers =       SYNEREOCircuit.connect(_.user)
-  val getConnections = SYNEREOCircuit.connect(_.connections)
-  val getMessages =    SYNEREOCircuit.connect(_.messages)
-
   val userProxy = SYNEREOCircuit.connect(_.user)
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
-
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
@@ -76,10 +70,10 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#people", PeopleLOC) ~> renderR(ctl => connectionProxy(s => ConnectionsResults(s)))
       | staticRoute("#account", AccountLOC) ~> renderR(ctl => userProxy(s => AccountInfo(s)))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => messagesProxy(s => Dashboard(s)))
-      //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
       | staticRoute("#userprofileview", UserProfileViewLOC) ~> renderR(ctl => userProxy(proxy => UserProfileView(UserProfileView.Props(proxy))))
       | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
+      | staticRoute("#notifications", NotificationsLOC) ~> renderR(ctl => NotificationView(NotificationView.Props()))
       | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl)))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
     //      .onPostRender((prev, cur) => Callback.log(s"Page changing from $prev to $cur."))
