@@ -1,22 +1,16 @@
 package synereo.client.handlers
 
-import diode.{ActionHandler, ActionResult, Effect, ModelRW}
-import diode.data.PotAction
-import shared.dtos._
+import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.Label
-import shared.RootModels.{MessagesRootModel, SearchesRootModel}
-import shared.sessionitems.SessionItems
-import synereo.client.components.LabelsSelectize
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import shared.RootModels.{SearchesRootModel}
+import synereo.client.sessionitems.SessionItems
 import synereo.client.utils.{LabelsUtils, PrologParser}
 import org.scalajs.dom._
 import synereo.client.logger
-
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
-import scala.util.Success
 
 object SearchesModelHandler {
   def getSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {

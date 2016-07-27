@@ -10,18 +10,17 @@ import japgolly.scalajs.react
 import shared.RootModels.IntroRootModel
 import shared.dtos.IntroConfirmReq
 import org.scalajs.dom.window
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import diode.AnyAction._
-
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
+import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages, UpdateIntroduction}
 import synereo.client.handlers.UpdateIntroduction
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSON
 import scala.util.Success
@@ -74,7 +73,10 @@ object ConfirmIntroReqModal {
   def apply(props: Props) = component(props)
 }
 
+// #todo think about better way for getting data from selectize input
+// so that you don't have to pass the parentId explicitly
 object ConfirmIntroReqForm {
+  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback, header: String, proxy: ModelProxy[IntroRootModel])
@@ -83,15 +85,16 @@ object ConfirmIntroReqForm {
 
   //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get  event target source and modify only accepted field of case class
   case class Backend(t: BackendScope[Props, State]) {
-
     def hide: Callback = Callback {
       val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
+      SYNEREOCircuit.dispatch(LockSessionPing())
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
-          logger.log.info("introRequest rejected successfully ")
+          SYNEREOCircuit.dispatch(OpenSessionPing())
+          SYNEREOCircuit.dispatch(RefreshMessages())
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       jQuery(t.getDOMNode()).modal("hide")
@@ -110,9 +113,12 @@ object ConfirmIntroReqForm {
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
         props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
+      SYNEREOCircuit.dispatch(LockSessionPing())
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
-          logger.log.info("introRequest sent successfully")
+          // println("introRequest sent successfully ")
+          SYNEREOCircuit.dispatch(OpenSessionPing())
+          SYNEREOCircuit.dispatch(RefreshMessages())
           SYNEREOCircuit.dispatch(UpdateIntroduction(introConfirmReq))
       }
       val state = t.state.runNow()

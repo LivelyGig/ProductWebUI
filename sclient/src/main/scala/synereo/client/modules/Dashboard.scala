@@ -5,8 +5,8 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.sessionitems.SessionItems
-import synereo.client.handlers.{RefreshConnections, RefreshMessages}
+import synereo.client.sessionitems.SessionItems
+import synereo.client.handlers.{RefreshMessages}
 import org.scalajs.dom
 import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
@@ -58,7 +58,7 @@ object Dashboard {
     def mounted(props: Props) = {
       //      $("[data-toggle='tooltip']".asInstanceOf[js.Object]).tooltip()
       //      jQuery("[data-toggle='tooltip']".asInstanceOf[dom.Element]).tooltip()
-//      js.timers.setInterval(7000) ("print chacha")
+      //      js.timers.setInterval(7000) ("print chacha")
 
 
       if (props.proxy().isEmpty) {
@@ -315,31 +315,31 @@ object HomeFeedList {
     .render_P(p => {
       def renderMessages(message: MessagePost) = {
 
-        val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
-//        println("UserID = " + userId + "\n")
-//        println("Connections = " + message.connections + "\n")
+        val userId = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI).split("/")(2)
+        //        println("UserID = " + userId + "\n")
+        //        println("Connections = " + message.connections + "\n")
         var selfConnectionId = message.connections(0).source.split("/")(2)
 
-//        var selfcnxn = message.connections(1).target.split("/")(2)
-//        println("Connection at 1 = " + message.connections(1))
+        //        var selfcnxn = message.connections(1).target.split("/")(2)
+        //        println("Connection at 1 = " + message.connections(1))
 
-//        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-//        println("Connections = " + value)
+        //        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
+        //        println("Connections = " + value)
 
-//        for(a <- value){
-//          if(a.connection.source.split("/")(2) == userId){
-//            println("We are in source of connection  UserID " + a.name+ "\n")
-//          }
-//          if(a.connection.source.split("/")(2) == selfcnxn){
-//            println("We are in source of connection  selfCnxn" + a.name+ "\n")
-//          }
-//          if(a.connection.target.split("/")(2) == selfcnxn ){
-//            println("We are in target of connection " + a.name+ "\n")
-//          }
-//          if(a.connection.target.split("/")(2) == userId){
-//            println("We are in targrt of connection " + a.name+ "\n")
-//          }
-//        }
+        //        for(a <- value){
+        //          if(a.connection.source.split("/")(2) == userId){
+        //            println("We are in source of connection  UserID " + a.name+ "\n")
+        //          }
+        //          if(a.connection.source.split("/")(2) == selfcnxn){
+        //            println("We are in source of connection  selfCnxn" + a.name+ "\n")
+        //          }
+        //          if(a.connection.target.split("/")(2) == selfcnxn ){
+        //            println("We are in target of connection " + a.name+ "\n")
+        //          }
+        //          if(a.connection.target.split("/")(2) == userId){
+        //            println("We are in targrt of connection " + a.name+ "\n")
+        //          }
+        //        }
 
 
 
@@ -390,16 +390,16 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.cardText)(
                       //                      <.h3(message.postContent.subject),
                       <.div()(
-                       <.div(^.className:="col-md-8 col-sm-8 col-xs-12",PostFullViewCSS.Style.marginLeft15PX)(
-                         message.postContent.text
-                       ),
+                        <.div(^.className:="col-md-8 col-sm-8 col-xs-12",PostFullViewCSS.Style.marginLeft15PX)(
+                          message.postContent.text
+                        ),
                         <.div(^.className:="col-md-4 col-sm-4 col-xs-12")(
 
-                            if (message.postContent.imgSrc != "") {
-                              <.img(^.src := message.postContent.imgSrc,DashboardCSS.Style.imgBorder)
-                            } else {
-                              <.div("")
-                            }
+                          if (message.postContent.imgSrc != "") {
+                            <.img(^.src := message.postContent.imgSrc, ^.height:="100.px" , ^.width:="100.px", DashboardCSS.Style.imgBorder)
+                          } else {
+                            <.div("")
+                          }
 
                         )
                       ),

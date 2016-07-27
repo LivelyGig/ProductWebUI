@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-
+import java.util.UUID
 
 import diode.react.ModelProxy
 import japgolly.scalajs.react
@@ -11,11 +11,11 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.RootModels.SearchesRootModel
 import shared.dtos.LabelPost
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS
-import synereo.client.handlers.{CreateLabels, RefreshMessages}
+import synereo.client.handlers._
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -27,10 +27,10 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import diode.AnyAction._
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
+import diode.AnyAction._
 
 import scala.concurrent.Future
 
@@ -57,7 +57,7 @@ object NewMessage {
     }
 
     def addMessage(/*submitForm:PostMessage*/): Callback = {
-      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewIntroForm}")
+      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
@@ -68,8 +68,8 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, "", P.title, className = P.className), P.buttonName, P.childrenElement),
-        //        if (S.showNewIntroForm) NewMessageForm(NewMessageForm.Props(B.introConfirmed, "New Message"))
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
+        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         if (S.showNewMessageForm) getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
@@ -90,7 +90,7 @@ object NewMessageForm {
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
-                   labelsSelectizeInputId: String = "labelsSelectizeInputId", postLabel: Boolean = false)
+                   labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
   val getConnections = SYNEREOCircuit.connect(_.connections)
@@ -119,43 +119,39 @@ object NewMessageForm {
 
     }
 
-    def filterLabelStrings(value: Seq[String]): Seq[String] = {
+    def filterLabelStrings (value: Seq[String]): Seq[String] = {
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).toSet.toSeq
     }
 
-    def labelsTextFromMsg: Seq[String] = {
+    def  labelsTextFromMsg: Seq[String] = {
       filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
     }
 
     def postLabels: Future[String] = {
-      //      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
-      //      println(s"getAllLabelsText = ${getAllLabelsText}")
+//      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
+//      println(s"getAllLabelsText = ${getAllLabelsText}")
       val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), getAllLabelsText.map(leaf), "alias")
       CoreApi.postLabel(labelPost)
     }
-
     def labelsToPostMsg: Seq[Label] = {
       val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
 
-      //      println(s"labelsToPostMsg ${textSeq.distinct}")
+//      println(s"labelsToPostMsg ${textSeq.distinct}")
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
-
     def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
       val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))
       allLabels.distinct
     }
-
-    def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
-
-    def leafMod(text: String /*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
+    def leaf(text: String/*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+    def leafMod(text: String/*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      //      println("Img src = " + value)
+//      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
@@ -163,23 +159,28 @@ object NewMessageForm {
       }
       reader.readAsDataURL(value)
     }
-
-    def fromSelecize(): Callback = Callback {}
+    def fromSelecize() : Callback = Callback{}
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
+      SYNEREOCircuit.dispatch(LockSessionPing())
       postLabels.onComplete {
         case Success(responseArray) =>
           dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
-          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
           CoreApi.postData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI,
-            cnxns, labelsToPostMsg).onComplete {
-            case Success(response) => SYNEREOCircuit.dispatch(RefreshMessages())
+            cnxns,labelsToPostMsg).onComplete {
+            case Success(response) => {
+              SYNEREOCircuit.dispatch(OpenSessionPing())
+              logger.log.info("message post success")
+              SYNEREOCircuit.dispatch(RefreshMessages())
+              t.modState(s => s.copy(postNewMessage = true)).runNow()
+            }
             case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
           }
           SYNEREOCircuit.dispatch(CreateLabels())
-          t.modState(s => s.copy(postNewMessage = true)).runNow()
+
         case Failure(res) =>
           logger.log.debug("Label Post failure")
           t.modState(s => s.copy(postNewMessage = false))
@@ -210,7 +211,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId, fromSelecize))
+              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId,fromSelecize))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))
@@ -225,7 +226,7 @@ object NewMessageForm {
           <.div(^.className := "row")(
             <.div()(
               if (s.postMessage.imgSrc != "") {
-                <.img(^.src := s.postMessage.imgSrc)
+                <.img(^.src := s.postMessage.imgSrc, ^.height:="100.px", ^.width:="100.px")
               } else {
                 <.div("")
               }
@@ -251,7 +252,7 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePostContent()))
+    .initialState_P(p => State(new MessagePostContent(), labelModel = Label()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
