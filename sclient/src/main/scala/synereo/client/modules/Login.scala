@@ -186,6 +186,7 @@ object Login {
           val responseStr = responseArray(0)
           setUserDetailsInSession(responseStr, userModel)
           SYNEREOCircuit.dispatch(LoginUser(userModel))
+          SYNEREOCircuit.dispatch(CreateLabels())
           SYNEREOCircuit.dispatch(AttachPinger())
           $(loginLoader).addClass("hidden")
           $(loadingScreen).addClass("hidden")

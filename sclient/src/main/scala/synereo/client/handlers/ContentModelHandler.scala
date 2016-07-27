@@ -8,6 +8,7 @@ import synereo.client.modules.AppModule
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
 import shared.RootModels.SessionRootModel
+
 /**
   * Created by mandar.k on 5/24/2016.
   */
@@ -38,7 +39,7 @@ object ContentModelHandler {
       } else if (response.contains("connectNotification")) {
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         SYNEREOCircuit.dispatch(AcceptConnectNotification(connectNotification(0).content))
-//        SYNEREOCircuit.dispatch(AddConnection(connectNotification(0).content))
+        //        SYNEREOCircuit.dispatch(AddConnection(connectNotification(0).content))
         println(s"connectNotification: $connectNotification")
       }
     } catch {
@@ -46,7 +47,17 @@ object ContentModelHandler {
     }
   }
 
-  val responseType = Seq("sessionPong" , "introductionNotification" ,  "introductionConfirmationResponse")
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse")
+
+  def getCurrMsgModel(): Seq[Post] = {
+
+      try {
+        SYNEREOCircuit.zoom(_.messages).value.get.messagesModelList
+      } catch {
+        case e:Exception =>
+          Nil
+      }
+    }
 
   def getContentModel(response: String): Seq[Post] = {
     val value = SYNEREOCircuit.zoom(_.sessionPing).value
@@ -55,18 +66,30 @@ object ContentModelHandler {
     } else {
       SessionRootModel(value.toggleToPing, value.stopPing)
     }
-      SYNEREOCircuit.dispatch(HandleSessionPing())
+    SYNEREOCircuit.dispatch(HandleSessionPing())
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
-      SYNEREOCircuit.zoom(_.messages).value.get.messagesModelList
+      getCurrMsgModel()
     } else {
-      SYNEREOCircuit.zoom(_.messages).value.get.messagesModelList ++
-      upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
-        .filterNot(_.content.pageOfPosts.isEmpty)
-        .flatMap(content => filterContent(content))
-        .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+      /*try {
+        val test = upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
+          .filterNot(_.content.pageOfPosts.isEmpty)
+          .flatMap(content => filterContent(content))
+          .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+        println(s"actual value =$test")
+      } catch {
+        case e: Exception => println("nope not supposrted")
+      }*/
+      val msg = getCurrMsgModel() ++
+        upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
+          .filterNot(_.content.pageOfPosts.isEmpty)
+          .flatMap(content => filterContent(content))
+      msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+
+//        .flatten
     }
   }
+
   /*def getContentModel(response: String):  Seq[Post] = {
 //      SYNEREOCircuit.dispatch(HandleSessionPing())
     val value = SYNEREOCircuit.zoom(_.sessionPing).value

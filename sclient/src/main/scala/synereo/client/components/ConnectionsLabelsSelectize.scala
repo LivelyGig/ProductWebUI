@@ -73,7 +73,7 @@ object ConnectionsLabelsSelectize {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
       initializeTagsInput()
     }
-
+    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
     /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
@@ -113,7 +113,7 @@ object ConnectionsLabelsSelectize {
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    .componentWillMount(scope => scope.backend.willMount(scope.props))
 //    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build

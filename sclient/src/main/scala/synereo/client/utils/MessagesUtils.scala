@@ -5,7 +5,8 @@ import shared.dtos.Connection
 import shared.models.Label
 import shared.sessionitems.SessionItems
 import synereo.client.components.ConnectionsLabelsSelectize
-import synereo.client.handlers.StoreCnxnAndLabels
+import synereo.client.handlers.{RefreshMessages, StoreCnxnAndLabels}
+import synereo.client.services.SYNEREOCircuit
 
 /**
   * Created by shubham.k on 15-07-2016.
@@ -19,5 +20,12 @@ object MessagesUtils {
       ), LabelsUtils.PrologTypes.Each)
     window.sessionStorage.setItem(SessionItems.MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH, searchLabels)
   }
+  /*def AttachPinger(): Unit = {
+    SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.sessionPing.toggleToPing))(_ => ping())
+    def ping() = {
+      SYNEREOCircuit.dispatch(RefreshMessages())
+    }
+  }*/
+
 
 }
