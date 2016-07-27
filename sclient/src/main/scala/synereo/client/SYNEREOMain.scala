@@ -48,7 +48,7 @@ object SYNEREOMain extends js.JSApp {
 
   case object MarketPlaceLOC extends Loc
 
-  case object InformationLOC extends Loc
+  case object AccountLOC extends Loc
 
   //  case object SignupLOC extends Loc
 
@@ -74,7 +74,7 @@ object SYNEREOMain extends js.JSApp {
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#people", PeopleLOC) ~> renderR(ctl => connectionProxy(s => ConnectionsResults(s)))
-      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => userProxy(s => Info(s)))
+      | staticRoute("#account", AccountLOC) ~> renderR(ctl => userProxy(s => AccountInfo(s)))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => messagesProxy(s => Dashboard(s)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))

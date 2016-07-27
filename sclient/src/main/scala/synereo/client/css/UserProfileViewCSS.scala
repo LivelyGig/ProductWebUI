@@ -44,6 +44,16 @@ object UserProfileViewCSS {
       color.white
     )
 
+    val editSaveButton = style(
+      ToStyleAV(marginLeft(1.%%)),
+      marginTop(1.px)
+    )
+
+    val inputText = style(
+      width(200.px),
+      display.inline
+    )
+
   }
 
 }
