@@ -52,7 +52,7 @@ lazy val client: Project = (project in file(pCompile))
     // libraryDependencies ++= Seq(
     // Dependencies.tests.scalajsenvs)
   )
-  .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
+  .enablePlugins(ScalaJSPlugin, ScalaJSPlay , SbtWeb)
   .dependsOn(sharedJS)
 //// Indicate that unit tests will access the DOM
 //  requiresDOM := true
@@ -78,7 +78,7 @@ lazy val server = (project in file("server"))
       LessKeys.compress in Assets := true,
       includeFilter in (Assets, LessKeys.less) := lessFile
   )
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayScala, SbtWeb)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom
   .aggregate(clients.map(projectToRef): _*)
   .dependsOn(sharedJVM)
