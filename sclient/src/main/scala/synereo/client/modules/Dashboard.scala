@@ -396,7 +396,7 @@ object HomeFeedList {
                         <.div(^.className:="col-md-4 col-sm-4 col-xs-12")(
 
                           if (message.postContent.imgSrc != "") {
-                            <.img(^.src := message.postContent.imgSrc,DashboardCSS.Style.imgBorder)
+                            <.img(^.src := message.postContent.imgSrc, ^.height:="100.px" , ^.width:="100.px", DashboardCSS.Style.imgBorder)
                           } else {
                             <.div("")
                           }

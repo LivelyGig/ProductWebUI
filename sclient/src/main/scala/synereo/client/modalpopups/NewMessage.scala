@@ -175,11 +175,12 @@ object NewMessageForm {
               SYNEREOCircuit.dispatch(OpenSessionPing())
               logger.log.info("message post success")
               SYNEREOCircuit.dispatch(RefreshMessages())
+              t.modState(s => s.copy(postNewMessage = true)).runNow()
             }
             case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
           }
           SYNEREOCircuit.dispatch(CreateLabels())
-          t.modState(s => s.copy(postNewMessage = true)).runNow()
+
         case Failure(res) =>
           logger.log.debug("Label Post failure")
           t.modState(s => s.copy(postNewMessage = false))
