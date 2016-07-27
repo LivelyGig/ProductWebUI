@@ -11,7 +11,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.RootModels.SearchesRootModel
 import shared.dtos.LabelPost
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.NewMessageCSS

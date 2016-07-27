@@ -8,7 +8,7 @@ import shared.dtos._
 import shared.dtos.Connection
 import shared.models._
 import org.scalajs.dom._
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
 import shared.RootModels.ConnectionsRootModel
 

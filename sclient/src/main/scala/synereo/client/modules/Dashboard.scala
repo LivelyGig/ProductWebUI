@@ -5,7 +5,7 @@ import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.handlers.{RefreshMessages}
 import org.scalajs.dom
 import shared.models.{MessagePost, MessagePostContent}

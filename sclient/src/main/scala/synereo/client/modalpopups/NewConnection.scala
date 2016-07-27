@@ -26,7 +26,7 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.{Connection, EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages}
 
 import scala.scalajs.js

@@ -7,7 +7,7 @@ import shared.RootModels.MessagesRootModel
 import diode.util.{Retry, RetryPolicy}
 import org.scalajs.dom.window
 import shared.dtos.Connection
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.{ConnectionsLabelsSelectize, LabelsSelectize}
 import synereo.client.modules.AppModule
 import synereo.client.services.{CoreApi, SYNEREOCircuit}

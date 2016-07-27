@@ -23,7 +23,7 @@ import synereo.client.handlers.RefreshMessages
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 
 
 @JSExport("SYNEREOMain")

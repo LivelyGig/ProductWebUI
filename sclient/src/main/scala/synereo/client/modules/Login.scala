@@ -5,7 +5,7 @@ import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.handlers._
 import synereo.client.modalpopups._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}

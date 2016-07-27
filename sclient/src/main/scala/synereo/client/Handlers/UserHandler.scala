@@ -6,7 +6,7 @@ import diode.{ActionHandler, ActionResult,ModelRW}
 import shared.dtos.{Expression, ExpressionContent, SubscribeRequest, _}
 import shared.models.{Label, _}
 import org.scalajs.dom.window
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.logger
 import synereo.client.services.{ApiTypes, CoreApi}
 import synereo.client.utils.LabelsUtils

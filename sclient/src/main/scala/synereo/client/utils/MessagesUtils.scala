@@ -3,7 +3,7 @@ package synereo.client.utils
 import org.scalajs.dom._
 import shared.dtos.Connection
 import shared.models.Label
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.components.ConnectionsLabelsSelectize
 import synereo.client.handlers.{RefreshMessages, StoreCnxnAndLabels}
 import synereo.client.services.SYNEREOCircuit

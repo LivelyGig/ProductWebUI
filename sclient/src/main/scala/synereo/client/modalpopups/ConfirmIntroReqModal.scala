@@ -12,7 +12,7 @@ import japgolly.scalajs.react
 import shared.RootModels.IntroRootModel
 import shared.dtos.IntroConfirmReq
 import org.scalajs.dom.window
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import diode.AnyAction._
 
 import scalacss.Defaults._

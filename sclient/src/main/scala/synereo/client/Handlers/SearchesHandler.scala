@@ -3,7 +3,7 @@ package synereo.client.handlers
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.Label
 import shared.RootModels.{SearchesRootModel}
-import shared.sessionitems.SessionItems
+import synereo.client.sessionitems.SessionItems
 import synereo.client.utils.{LabelsUtils, PrologParser}
 import org.scalajs.dom._
 import synereo.client.logger
