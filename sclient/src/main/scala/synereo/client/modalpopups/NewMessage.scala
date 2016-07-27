@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import java.util.UUID
+
 
 import diode.react.ModelProxy
 import japgolly.scalajs.react
@@ -28,8 +28,6 @@ import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
 import diode.AnyAction._
-
-import scala.scalajs.js
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}

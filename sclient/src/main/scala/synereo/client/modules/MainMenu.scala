@@ -13,8 +13,6 @@ import synereo.client.css.UserProfileViewCSS
 import synereo.client.modalpopups.{ConfirmIntroReqModal, NewImage, NewMessage}
 
 import scala.scalajs.js
-
-//import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._

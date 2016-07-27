@@ -1,25 +1,20 @@
 package synereo.client.modules
 
 
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+
 import synereo.client.handlers.RefreshConnections
 import shared.RootModels.ConnectionsRootModel
-import synereo.client.components.{Icon, MIcon}
-import synereo.client.modalpopups.{ConfirmIntroReqModal, NewConnection}
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.modalpopups.{ NewConnection}
+import synereo.client.css.{ConnectionsCSS}
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.models.{ConnectionsModel, MessagePost}
-import synereo.client.components.{Icon, MIcon}
+import shared.models.{ConnectionsModel}
 import scalacss.ScalaCssReact._
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react._
-import synereo.client.handlers.{ RefreshMessages}
-import shared.models.{MessagePost, MessagePostContent}
-import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
 import scala.scalajs.js
 import synereo.client.components.Icon
 import scala.language.reflectiveCalls

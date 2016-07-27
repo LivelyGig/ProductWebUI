@@ -3,7 +3,7 @@ package synereo.client.utils
 import org.scalajs.dom._
 import shared.models.Label
 import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
-import synereo.client.components.LabelsSelectize
+
 
 
 /**
