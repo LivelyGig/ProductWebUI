@@ -32,6 +32,8 @@ object SYNEREOMain extends js.JSApp {
   // Define the locations (pages) used in this application
   sealed trait Loc
 
+  case object UserProfileViewLOC extends Loc
+
   case object SynereoUserProfileViewLOC extends Loc
 
   case object SynereoLoc extends Loc
@@ -46,6 +48,8 @@ object SYNEREOMain extends js.JSApp {
 
   case object InformationLOC extends Loc
 
+  case object AccountLOC extends Loc
+
   //  case object SignupLOC extends Loc
 
   case object PeopleLOC extends Loc
@@ -55,21 +59,21 @@ object SYNEREOMain extends js.JSApp {
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
-  val getUsers = SYNEREOCircuit.connect(_.user)
-  val getConnections = SYNEREOCircuit.connect(_.connections)
-  val getMessages = SYNEREOCircuit.connect(_.messages)
+  val userProxy = SYNEREOCircuit.connect(_.user)
+  val connectionProxy = SYNEREOCircuit.connect(_.connections)
+  val messagesProxy = SYNEREOCircuit.connect(_.messages)
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => getConnections(s => ConnectionsResults(s)))
-      | staticRoute("#informationview", InformationLOC) ~> renderR(ctl => getUsers(s => Info(s)))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => getMessages(s => Dashboard(s)))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => connectionProxy(s => ConnectionsResults(s)))
+      | staticRoute("#account", AccountLOC) ~> renderR(ctl => userProxy(s => AccountInfo(s)))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => messagesProxy(s => Dashboard(s)))
       //      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl =>SYNEREOCircuit.connect(_.messages)(HomeFeedResults(_)))
       | staticRoute("#postfullview", PostFullViewLOC) ~> renderR(ctl => PostFullView(ctl))
-      | staticRoute("#userprofileview", SynereoUserProfileViewLOC) ~> renderR(ctl => UserProfileView(ctl))
+      | staticRoute("#userprofileview", UserProfileViewLOC) ~> renderR(ctl => userProxy(proxy => UserProfileView(UserProfileView.Props(proxy))))
       | staticRoute("#timelineview", TimelineViewLOC) ~> renderR(ctl => TimelineView(ctl))
       | staticRoute("#marketplacefull", MarketPlaceLOC) ~> renderR(ctl => MarketPlaceFull(ctl)))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
@@ -118,7 +122,7 @@ object SYNEREOMain extends js.JSApp {
             }
           ),
           <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-            getUsers(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+            userProxy(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
         <.div()()
