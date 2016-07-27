@@ -35,7 +35,7 @@ object NewImage {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), icon: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
 
   case class State(showNewImageForm: Boolean = false)
 
@@ -64,7 +64,7 @@ object NewImage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(
-        Button(Button.Props(B.addNewImageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
+        Button(Button.Props(B.addNewImageForm(), CommonStyle.default, P.addStyles, "", P.title, className = P.className), P.buttonName, P.childrenElement),
         if (S.showNewImageForm) userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props(B.addImage, "Profile Image Uploader", userProxy)))
         else
           Seq.empty[ReactElement]
@@ -96,7 +96,7 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-      logger.log.debug("new Image modal mounted")
+      logger.log.info("new Image modal mounted")
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
@@ -138,9 +138,6 @@ object ProfileImageUploaderForm {
             <.div(^.className := "col-md-12")(
               <.div(^.className := "row",
                 <.div(^.className := "col-md-12")(
-                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
-                ),
-                <.div(^.className := "col-md-12")(
                   if (s.updateUserRequest.jsonBlob.imgSrc.length < 2) {
                     <.img(^.src := p.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
@@ -150,7 +147,12 @@ object ProfileImageUploaderForm {
                 )
               ),
               <.div(^.className := "row",
-                <.div(^.className := "col-md-12",
+                <.div(^.className := "col-md-12")(
+                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc,^.marginTop:="40.px")
+                )
+              ),
+              <.div(^.className := "row",
+                <.div(^.className := "col-md-12 text-right",UserProfileViewCSS.Style.newImageSubmitBtnContainer,
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
                   <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
                 )

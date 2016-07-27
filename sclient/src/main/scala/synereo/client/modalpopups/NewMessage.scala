@@ -68,7 +68,7 @@ object NewMessage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
+        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, "", P.title, className = P.className), P.buttonName, P.childrenElement),
         //        if (S.showNewIntroForm) NewMessageForm(NewMessageForm.Props(B.introConfirmed, "New Message"))
         if (S.showNewMessageForm) getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else

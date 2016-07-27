@@ -33,8 +33,19 @@ object UserProfileViewCSS {
       maxWidth(200.px)
     )
     val newImageBtn = style(
-      width(200.px),
-      border.`0`.important
+      backgroundColor.transparent.important,
+      paddingLeft.`0`.important,
+      &.hover(
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important
+      ),
+      border.`0`,
+      borderRadius.`0`,
+      maxWidth(45.px),
+      maxHeight(45.px),
+      marginRight(45.px)
     )
 
     val agentUID = style(
@@ -42,6 +53,10 @@ object UserProfileViewCSS {
       padding(10.px),
       fontSize(20.px),
       color.white
+    )
+    val newImageSubmitBtnContainer = style(
+      marginTop(30.px),
+      marginBottom(30.px)
     )
 
     val editSaveButton = style(

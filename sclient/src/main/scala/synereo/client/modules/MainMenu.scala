@@ -9,7 +9,9 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.Label
 import shared.models.ConnectionsModel
-import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
+import synereo.client.css.UserProfileViewCSS
+import synereo.client.modalpopups.{ConfirmIntroReqModal, NewImage, NewMessage}
+
 import scala.scalajs.js
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
@@ -143,11 +145,11 @@ object MainMenu {
                   )
                 ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  if(model.name.length()<10){
+                  if (model.name.length() < 10) {
                     <.div(model.name)
                   }
-                    else{
-                    <.span(^.title:=model.name, model.name.substring(0, 8) + "...")
+                  else {
+                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
                   },
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
@@ -158,7 +160,8 @@ object MainMenu {
                   )
                 ),
                 <.li(^.className := "")(
-                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                  //                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "","",<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
