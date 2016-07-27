@@ -21,15 +21,20 @@ import scala.util.{Failure, Success}
 
 object CoreApi {
   var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+
   // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {
+    //    window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST,null)
+    //    window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT,null)
+
     Ajax.post(
       url = BASE_URL,
       data = requestContent,
       headers = Map("Content-Type" -> "application/json;charset=UTF-8")
     ).map(_.responseText)
+
   }
 
   //  val handleApiError: PartialFunction[Throwable, Unit] = {
@@ -157,5 +162,10 @@ object CoreApi {
     evalSubscribeRequestAndSessionPing(SubscribeRequest(window.sessionStorage.getItem(sessionUriName),
       Expression(ApiTypes.INSERT_CONTENT,
         ExpressionContent(cnnxns, prolog, contentToPost, uid))))
+  }
+
+  def updateUserRequest(updateUserRequest: UpdateUserRequest): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_USER_REQUEST, updateUserRequest))
+    ajaxPost(requestContent)
   }
 }

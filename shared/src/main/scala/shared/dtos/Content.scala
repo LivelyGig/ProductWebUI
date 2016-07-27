@@ -75,3 +75,7 @@ case class IntroductionConfirmationResponse(sessionURI: String = "")
 case class SessionPong(sessionURI: String = "")
 
 case class ConnectNotification(connection: Connection, introProfile: String = "")
+
+case class JsonBlob(name: String = "", imgSrc: String = "")
+
+case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlob = JsonBlob()) extends Content

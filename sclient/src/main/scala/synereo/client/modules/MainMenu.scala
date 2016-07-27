@@ -9,9 +9,10 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.Label
 import shared.models.ConnectionsModel
-import synereo.client.modalpopups.{ConfirmIntroReqModal, NewMessage}
+import synereo.client.css.UserProfileViewCSS
+import synereo.client.modalpopups.{ConfirmIntroReqModal, NewImage, NewMessage}
+
 import scala.scalajs.js
-//import shapeless.Tuple
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
@@ -75,12 +76,6 @@ object MainMenu {
                 if (props.currentLoc == DashboardLoc) {
                   <.div(
                     SearchComponent(SearchComponent.Props())
-                    //                    <.div(^.id := "mainmenuselectize",SynereoCommanStylesCSS.Style.searchBoxContainer)(
-                    //                      ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props("mainmenuselectize"))),
-                    //                    <.div(SynereoCommanStylesCSS.Style.displayInline)(
-                    //                      <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-                    //                      ))
-                    //                    LabelConnectionSelectize(LabelConnectionSelectize.Props("lblCnxnSlctzId"))
                   )
                 } else {
                   <.span()
@@ -98,16 +93,15 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
-                  <.li(
-                    //                    ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                    introductionConnectProxy(introProxy =>
-                      if (introProxy.value.introResponse.length != 0) {
-                        ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                      } else {
-                        <.span()
-                      }
-                    )
+                <.li(
+                  introductionConnectProxy(introProxy =>
+                    if (introProxy.value.introResponse.length != 0) {
+                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                    } else {
+                      <.span()
+                    }
                   )
+                )
                 ,
                 <.li(
                   <.div(^.className := "dropdown")(
@@ -151,7 +145,12 @@ object MainMenu {
                   )
                 ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  <.div(model.name),
+                  if (model.name.length() < 10) {
+                    <.div(model.name)
+                  }
+                  else {
+                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
+                  },
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
                       /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
@@ -161,7 +160,8 @@ object MainMenu {
                   )
                 ),
                 <.li(^.className := "")(
-                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                  //                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
+                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "","",<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))

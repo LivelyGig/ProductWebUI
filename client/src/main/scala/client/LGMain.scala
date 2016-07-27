@@ -17,6 +17,7 @@ import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.scalajs.dom._
 
 import scala.scalajs.js
 import js.{Date, UndefOr}
@@ -58,6 +59,8 @@ object LGMain extends js.JSApp {
 
   case object LandingLoc extends Loc
 
+  val userProxy = LGCircuit.connect(_.user)
+
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
@@ -73,12 +76,14 @@ object LGMain extends js.JSApp {
       | staticRoute(s"#${AppModule.OFFERINGS_VIEW}", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW)))
       | staticRoute(s"#${AppModule.CONNECTIONS_VIEW}", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW)))).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
+
   // scalastyle:off
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
+    ;
     <.div()(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
-      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer,HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
+      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10")(
           <.div(/*^.className := "navbar-header"*/)(
@@ -87,24 +92,24 @@ object LGMain extends js.JSApp {
               <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", HeaderCSS.Style.navbarToggle, "data-target".reactAttr := "#navi-collapse")(
                 r.page match {
                   case JobPostsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Jobs")
-                  case DashboardLoc => <.span(^.color := "white", ^.float := "right")( Icon.navicon,"  "," Dashboard")
-                  case MessagesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon , "  ", " Messages" )
+                  case DashboardLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Dashboard")
+                  case MessagesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Messages")
                   case OfferingsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Offerings")
                   case ProfilesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Profiles")
-                  case ContractsLoc => <.span(^.color := "white", ^.float := "right")( Icon.navicon, "  "," Contracts")
+                  case ContractsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Contracts")
                   case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Connections")
                   case _ => <.span()
                 }
               ),
-              <.div(^.className:=" loggedInUser")(
-                LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
-            )
+              <.div(^.className := " loggedInUser")(
+                userProxy(userProxy => MainMenu(MainMenu.Props(c, r.page, userProxy)))
+              )
             ),
-            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 ", DashBoardCSS.Style.padding0px)(LGCircuit.connect(_.user)(proxy => LoggedInUser(LoggedInUser.Props(c, r.page, proxy))))
+            <.div(^.className := "col-md-4 col-sm-4 col-xs-6 ", DashBoardCSS.Style.padding0px)(userProxy(userProxy => LoggedInUser(LoggedInUser.Props(c, r.page, userProxy))))
           ),
           <.div(^.className := "loggedInUserNav")(
             <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
-              LGCircuit.connect(_.user)(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
+              userProxy(userProxy => MainMenu(MainMenu.Props(c, r.page, userProxy)))
             )
           )
         ),
@@ -125,7 +130,8 @@ object LGMain extends js.JSApp {
     // create stylesheet
     GlobalStyles.addToDocument()
     AppCSS.load
-    standaloneCSS.render[HTMLStyleElement].outerHTML
+    window.sessionStorage.removeItem("sessionPingTriggered")
+    //    standaloneCSS.render[HTMLStyleElement].outerHTML
     GlobalRegistry.addToDocumentOnRegistration()
     // create the router
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)

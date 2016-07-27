@@ -11,28 +11,33 @@ import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
 import client.components._
-import client.css.{ DashBoardCSS, HeaderCSS, ProjectCSS }
-import scala.util.{ Failure, Success }
+import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import diode.AnyAction._
 
 object Accept {
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
 
   case class State(showPayoutTransactionForm: Boolean = false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
+
   class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
     def mounted(props: Props): Callback = {
       t.modState(s => s.copy(showPayoutTransactionForm = true))
     }
+
     def addPayoutTransactionForm(): Callback = {
       t.modState(s => s.copy(showPayoutTransactionForm = true))
     }
+
     def addPayoutTransaction(postPayoutTransaction: Boolean = false): Callback = {
       //log.debug(s"addNewAgent userModel : ${userModel} ,addNewAgent: ${showNewMessageForm}")
       if (postPayoutTransaction) {
@@ -42,6 +47,7 @@ object Accept {
       }
     }
   }
+
   val component = ReactComponentB[Props]("PayoutTransaction")
     .initialState(State())
     .backend(new Backend(_))
@@ -57,25 +63,31 @@ object Accept {
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
+
   def apply(props: Props) = component(props)
 }
 
 object PayoutTransaction {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
+
   case class Props(submitHandler: (Boolean) => Callback, header: String)
+
   case class State(postPayoutTransaction: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide = Callback {
       $(t.getDOMNode()).modal("hide")
     }
+
     def hideModal = {
       $(t.getDOMNode()).modal("hide")
     }
+
     def mounted(props: Props): Callback = Callback {
 
     }
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       t.modState(s => s.copy(postPayoutTransaction = true))
@@ -110,6 +122,7 @@ object PayoutTransaction {
       )
     }
   }
+
   private val component = ReactComponentB[Props]("PostpostPayoutTransaction")
     .initialState_P(p => State())
     .renderBackend[Backend]
@@ -119,6 +132,7 @@ object PayoutTransaction {
       }
     })
     .build
+
   def apply(props: Props) = component(props)
 }
 

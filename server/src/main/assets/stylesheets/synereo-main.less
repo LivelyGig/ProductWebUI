@@ -13,6 +13,7 @@ a:hover, a:focus {
   cursor: pointer;
 }
 /* sidebar settings */
+
 #sidebarbtn.navbar-header {
   float: none;
 }
@@ -52,7 +53,7 @@ a:hover, a:focus {
 #sidebarbtn.collapse.in{
   display:block !important;
 }
-.sidebar {
+.sidebar , .sidebar:hover {
   position: absolute;
   display: block;
   bottom: 0;
@@ -862,12 +863,11 @@ transform: translate(0,0); */
   -o-transition: All 0.5s ease;
   -ms-transition: All 0.5s ease;
   transition: All 0.5s ease;
+  position:absolute;
+  right:0;
 }
 .create-post-button:hover .vertical-text-post-btn,
 .create-post-button:focus .vertical-text-post-btn,{
-  display: none;
-}
-.create-post-button .fa{
   display: none;
 }
 .vertical-text-post-btn {

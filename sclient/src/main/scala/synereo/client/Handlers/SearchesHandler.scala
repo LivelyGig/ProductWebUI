@@ -18,7 +18,7 @@ object SearchesModelHandler {
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
-      logger.log.debug(s"searchesModel = ${model}")
+      // logger.log.debug(s"searchesModel = ${model}")
       SearchesRootModel(model)
     } catch {
       case e: Exception =>
