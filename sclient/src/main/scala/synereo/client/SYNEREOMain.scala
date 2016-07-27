@@ -23,6 +23,7 @@ import synereo.client.handlers.RefreshMessages
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
+import shared.sessionitems.SessionItems
 
 
 @JSExport("SYNEREOMain")
@@ -143,7 +144,10 @@ object SYNEREOMain extends js.JSApp {
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
     ReactDOM.render(router(), dom.document.getElementById("root"))
-
+    /*if (dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
+      dom.window.location.href = "/"
+    }
+*/
 
   }
 }

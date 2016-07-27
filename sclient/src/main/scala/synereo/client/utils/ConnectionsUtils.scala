@@ -95,18 +95,25 @@ object ConnectionsUtils {
     }
   }*/
 
+  def getNameImgFromJson (jsonBlob: String) :(String, String) = {
+    val json = JSON.parse(jsonBlob)
+    val name = json.name.asInstanceOf[String]
+    val imgSrc = if (jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
+    (name, imgSrc)
+  }
+
+  def getCnxnFromRes (cnxn: ConnectionProfileResponse): ConnectionsModel = {
+    val (name, imgSrc) = getNameImgFromJson(cnxn.jsonBlob)
+    ConnectionsModel(cnxn.sessionURI, cnxn.connection,
+      name, imgSrc)
+  }
+
   def getConnectionsModel(response: String): Seq[ConnectionsModel] = {
 
     try {
       val connections = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](response)
-      connections.map {
-        connection =>
-          val json = JSON.parse(connection.content.jsonBlob)
-          val name = json.name.asInstanceOf[String]
-          val imgSrc = if (connection.content.jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
-          ConnectionsModel(connection.content.sessionURI, connection.content.connection,
-            name, imgSrc)
-      }.sortBy(_.name)
+      connections.map(e => getCnxnFromRes(e.content))
+        .sortBy(_.name)
     } catch {
       case e:Exception =>
         Nil

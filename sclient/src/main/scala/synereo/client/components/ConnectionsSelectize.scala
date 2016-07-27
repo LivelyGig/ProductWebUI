@@ -9,7 +9,7 @@ import org.scalajs.dom._
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
-import shared.models.ConnectionsModel
+import shared.models.{ConnectionsModel, Post}
 import synereo.client.services.SYNEREOCircuit
 
 
@@ -81,6 +81,20 @@ object ConnectionsSelectize {
       initializeTagsInput()
     }
 
+    def getCnxnModel(): Seq[ConnectionsModel] = {
+
+      try {
+        SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
+      } catch {
+        case e: Exception =>
+          Nil
+      }
+    }
+
+    def willMount(props: Props) = {
+      t.modState(s =>s.copy(connections = getCnxnModel()))
+    }
+
     /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
@@ -88,9 +102,7 @@ object ConnectionsSelectize {
       }
     }
 
-    def willMount(props: Props) = Callback.when(SYNEREOCircuit.zoom(_.connections).value.isEmpty)(Callback {
-      SYNEREOCircuit.dispatch(RefreshConnections())
-    })
+
 
 
     def componentDidUpdate(props: Props, state: State): Callback = Callback {
@@ -106,7 +118,7 @@ object ConnectionsSelectize {
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
         <.option(^.value := "")("Select"),
-        for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
+        for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"))
     }
   }
@@ -116,8 +128,8 @@ object ConnectionsSelectize {
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    /*.componentWillMount(scope => scope.backend.willMount(scope.props))
-    .componentDidUpdate(scope => {
+    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    /*.componentDidUpdate(scope => {
 
       scope.$.backend.componentDidUpdate(scope.currentProps, scope.currentState)
     })*/
