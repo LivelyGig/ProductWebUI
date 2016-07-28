@@ -50,7 +50,7 @@ object Login {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.href.substring(7, dom.window.location.href.length - 6), portNumber: String = "9876")
+                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.hostname, portNumber: String = "9876")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
