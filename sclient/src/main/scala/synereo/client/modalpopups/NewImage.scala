@@ -21,10 +21,11 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import shared.sessionitems.SessionItems
-import synereo.client.handlers.UpdateUser
+import synereo.client.sessionitems.SessionItems
+import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages, UpdateUser}
 import diode.AnyAction._
 import synereo.client.logger
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 //scalastyle:off
@@ -105,7 +106,7 @@ object ProfileImageUploaderForm {
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
         val props = t.props.runNow()
-        val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
+        val uri = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
         t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
@@ -113,9 +114,12 @@ object ProfileImageUploaderForm {
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
+//      SYNEREOCircuit.dispatch(LockSessionPing())
       CoreApi.updateUserRequest(t.state.runNow().updateUserRequest).onComplete {
         case Success(response) =>
           SYNEREOCircuit.dispatch(UpdateUser(t.state.runNow().updateUserRequest))
+//          SYNEREOCircuit.dispatch(OpenSessionPing())
+//          SYNEREOCircuit.dispatch(RefreshMessages())
         case Failure(response) => println(s"failure : $response")
       }
       t.modState(s => s.copy(postNewImage = true))
