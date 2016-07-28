@@ -6,11 +6,14 @@ import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
-import shared.models.{SignUpModel}
+import shared.models.SignUpModel
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+import org.scalajs.dom.window
+import synereo.client.sessionitems.SessionItems
 
 object NewUserForm {
   var addNewUserState: Boolean = false
@@ -89,6 +92,7 @@ object NewUserForm {
     }
 
     def render(s: State, p: Props) = {
+      val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)
       val headerText = "Sign up"
       Modal(
         Modal.Props(
@@ -133,7 +137,7 @@ object NewUserForm {
           <.div()(
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
               <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
-                <.div(^.className := "text-left")("creating account on node: ", <.span(s.signUpModel.name)),
+                <.div(^.className := "text-left")("creating account on node: ", <.span(nodeName)),
                 <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
