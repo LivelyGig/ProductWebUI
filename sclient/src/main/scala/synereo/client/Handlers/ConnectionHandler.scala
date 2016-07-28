@@ -7,6 +7,7 @@ import shared.models.ConnectionsModel
 // Actions
 //scalastyle:off
 case class AddConnection(newConnection: ConnectionsModel)
+
 case class UpdateConnection(connections: Seq[ConnectionsModel])
 
 class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends ActionHandler(modelRW) {
@@ -14,7 +15,7 @@ class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends Ac
     case UpdateConnection(connections: Seq[ConnectionsModel]) =>
       updated(ConnectionsRootModel(connections))
     case AddConnection(newConnection: ConnectionsModel) =>
-      updated(ConnectionsRootModel(Seq(newConnection)++value.connectionsResponse))
+      updated(ConnectionsRootModel(Seq(newConnection) ++ value.connectionsResponse))
 
 
   }

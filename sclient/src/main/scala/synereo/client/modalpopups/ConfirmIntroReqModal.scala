@@ -33,7 +33,7 @@ object ConfirmIntroReqModal {
 
   val introductionProxy = SYNEREOCircuit.connect(_.introduction)
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), reactChildElement: ReactTag = <.span(), title: String)
 
   case class State(showNewIntroForm: Boolean = false)
 
@@ -60,7 +60,7 @@ object ConfirmIntroReqModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.reactChildElement, P.title, className = ""), P.buttonName),
         if (S.showNewIntroForm)
           introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
         else
@@ -142,7 +142,7 @@ object ConfirmIntroReqForm {
           addStyles = Seq()
         ),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className := "row")(
+          <.div(^.className := "row",^.fontSize:="0.8.em")(
             <.div(^.className := "col-md-12")(
               <.div(p.proxy().introResponse(0).message),
               <.div(
