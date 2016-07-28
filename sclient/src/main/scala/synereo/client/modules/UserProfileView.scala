@@ -32,8 +32,8 @@ object UserProfileView {
 
     def render(s: State, p: Props) = {
       val userModel = p.proxy.value
-      <.div(^.className := "container-fluid", UserProfileViewCSS.Style.UserProfileContainerMain)(
-        <.div(^.className := "row")(
+      <.div(/*^.className := "container-fluid", UserProfileViewCSS.Style.UserProfileContainerMain*/)(
+    /*    <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
             ^.onMouseEnter --> Callback {
@@ -46,7 +46,7 @@ object UserProfileView {
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )
-        ),
+        ),*/
         <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
           <.div(^.className := "col-md-12",
             <.div(^.className := "row",
@@ -81,7 +81,7 @@ object UserProfileView {
     .renderBackend[Backend]
     .build
 
-  def apply(props: Props) = component(props)
+  def apply(proxy: ModelProxy[UserModel]) = component(Props(proxy))
 
 }
 

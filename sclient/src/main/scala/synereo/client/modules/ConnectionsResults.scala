@@ -13,9 +13,6 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 
-
-
-
 /**
   * Created by Mandar on 5/18/2016.
   */
@@ -36,17 +33,18 @@ object ConnectionsResults {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS((t, P, S) => {
-      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-          )(
-            //            Footer(Footer.Props(c, r.page))
-            Sidebar(Sidebar.Props())
-          )
-        ),
+//      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+//        <.div(^.className := "row")(
+//          //Left Sidebar
+//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+//            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+//            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+//          )(
+//            //            Footer(Footer.Props(c, r.page))
+//            Sidebar(Sidebar.Props())
+//          )
+//        )
+      <.div(
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
             NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
