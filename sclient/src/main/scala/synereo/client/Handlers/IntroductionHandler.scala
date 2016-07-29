@@ -18,7 +18,7 @@ import scala.util.{Failure, Success}
 
 case class AcceptNotification(introconfirmSeq: Seq[Introduction])
 
-case class UpdateIntroduction(introConfirmReq: IntroConfirmReq)
+case class UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq)
 
 case class AcceptConnectNotification(connectNotification: ConnectNotification)
 
@@ -27,12 +27,19 @@ case class AcceptIntroductionConfirmationResponse(introductionConfirmationRespon
 class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
-    case AcceptNotification(introSeq: Seq[Introduction]) =>
-      //      println(s"newIntroConfirmModel: $introSeq")
-      updated(IntroRootModel(introSeq))
+    case AcceptNotification(introconfirmSeq: Seq[Introduction]) =>
+      val temp = value.introResponse ++ introconfirmSeq
+      val newList = temp.groupBy(_.introSessionId).map(_._2.head).toSeq
+      updated(IntroRootModel(newList))
 
-    case UpdateIntroduction(introConfirmReq: IntroConfirmReq) =>
-      updated(IntroRootModel(Nil))
+    case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
+      value.introResponse.foreach(intro => println(s"intro.introSessionId ${intro.introSessionId}"))
+      //      println(s"introConfirmReq.introSessionId : ${introConfirmReq.introSessionId}")
+      val newList = value.introResponse.filterNot(
+        _.introSessionId.equals(introConfirmReq.introSessionId)
+      )
+      println(s"newList : $newList")
+      updated(IntroRootModel(newList))
 
     case AcceptConnectNotification(connectNotification: ConnectNotification) =>
       updated(IntroRootModel(Nil))
@@ -45,3 +52,5 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
   }
 }
 
+
+//groupby fir map

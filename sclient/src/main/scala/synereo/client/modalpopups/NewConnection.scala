@@ -11,7 +11,7 @@ import synereo.client.components.Icon
 import synereo.client.components.Icon._
 import synereo.client.components._
 import synereo.client.css._
-import synereo.client.services.{ CoreApi, SYNEREOCircuit}
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
 import synereo.client.utils.ConnectionsUtils
@@ -153,11 +153,11 @@ object ConnectionsForm {
         //        val content = state.establishConnection.copy(sessionURI = uri,
         //          aURI = connections(0).target,
         //          bURI = connections(1).target, label = connections(0).label)
-        SYNEREOCircuit.dispatch(LockSessionPing())
-        CoreApi.postIntroduction(content).onComplete{
+        //        SYNEREOCircuit.dispatch(LockSessionPing())
+        CoreApi.postIntroduction(content).onComplete {
           case Success(res) =>
-            SYNEREOCircuit.dispatch(OpenSessionPing())
-            SYNEREOCircuit.dispatch(RefreshMessages())
+          //            SYNEREOCircuit.dispatch(OpenSessionPing())
+          //            SYNEREOCircuit.dispatch(RefreshMessages())
         }
         t.modState(s => s.copy(postConnection = true))
       } else {
@@ -178,11 +178,11 @@ object ConnectionsForm {
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection(uri).source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
-          SYNEREOCircuit.dispatch(LockSessionPing())
-          CoreApi.postIntroduction(content).onComplete{
+          //          SYNEREOCircuit.dispatch(LockSessionPing())
+          CoreApi.postIntroduction(content).onComplete {
             case Success(res) =>
-              SYNEREOCircuit.dispatch(OpenSessionPing())
-              SYNEREOCircuit.dispatch(RefreshMessages())
+            //              SYNEREOCircuit.dispatch(OpenSessionPing())
+            //              SYNEREOCircuit.dispatch(RefreshMessages())
           }
           t.modState(s => s.copy(postConnection = true))
       }

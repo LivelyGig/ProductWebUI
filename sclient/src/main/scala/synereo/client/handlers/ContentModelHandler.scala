@@ -14,6 +14,7 @@ import org.scalajs.dom.window
 /**
   * Created by mandar.k on 5/24/2016.
   */
+//scalastyle:off
 object ContentModelHandler {
   def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
     try {
@@ -33,22 +34,25 @@ object ContentModelHandler {
         val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
         //        println(s"sessionPong: $sessionPong")
       } else if (response.contains("introductionNotification")) {
-        val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
-        //        println(s"intro: $intro")
-        SYNEREOCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
+        val introSeq = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+        //        println(s"introSeq: $introSeq")
+        SYNEREOCircuit.dispatch(AcceptNotification(Seq(introSeq(0).content)))
       } else if (response.contains("introductionConfirmationResponse")) {
         val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
         //        println(s"introductionConfirmationResponse: $introductionConfirmationResponse")
-        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+        //        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
       } else if (response.contains("connectNotification")) {
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         val content = connectNotification(0).content
         //        println(s"connectNotification: $connectNotification")
-        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+        //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         val uri = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
         val newConnection = ConnectionsModel(uri, content.connection, name, imgSrc)
         //        println(s"newConnection: $newConnection")
+        val connectionsModel = SYNEREOCircuit.zoom(_.connections).value
+        val newConnectionsModel = connectionsModel.connectionsResponse.filterNot(_.name.equals(newConnection.name))
+        println(s"newConnectionsModel: $newConnectionsModel")
         SYNEREOCircuit.dispatch(AddConnection(newConnection))
       }
     } catch {

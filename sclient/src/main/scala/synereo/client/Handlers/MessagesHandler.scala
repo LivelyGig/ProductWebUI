@@ -24,6 +24,8 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
 
 case class StoreCnxnAndLabels(slctzId: String, sessionUriName: String)
 
+case class DeleteMsgsModel()
+
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
 
@@ -37,5 +39,8 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         .asInstanceOf[Seq[MessagePost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
+
+    case DeleteMsgsModel() =>
+      updated(Empty)
   }
 }

@@ -1,13 +1,15 @@
 package synereo.client.components
 
-import synereo.client.handlers.RefreshMessages
+import synereo.client.handlers.{DeleteMsgsModel, RefreshMessages}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
+
 import scalacss.ScalaCssReact._
 import synereo.client.utils
+
 import scala.language.reflectiveCalls
 
 //scalastyle:off
@@ -29,6 +31,7 @@ object SearchComponent {
     def searchWithLblAndCnxn(e: ReactEventI) = Callback {
       val cnxnLabels = ConnectionsLabelsSelectize.getCnxnsAndLabelsFromSelectize(t.state.runNow().connectionsSelectizeInputId)
       utils.MessagesUtils.storeCnxnAndLabels(cnxnLabels._1,cnxnLabels._2)
+      SYNEREOCircuit.dispatch(DeleteMsgsModel())
       SYNEREOCircuit.dispatch(RefreshMessages())
     }
 

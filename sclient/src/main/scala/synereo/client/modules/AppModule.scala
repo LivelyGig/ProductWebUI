@@ -6,8 +6,12 @@ import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import synereo.client.logger
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
+import org.scalajs.dom.window
+import synereo.client.sessionitems.SessionItems
 
 /**
   * Created by bhagyashree.b on 5/24/2016.
@@ -36,7 +40,10 @@ object AppModule {
 
   case class Backend(t: BackendScope[Props, Unit]) {
     def mounted(props: Props) = Callback {
-
+      logger.log.debug("app module mounted")
+      if (window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
+        window.location.href = "/"
+      }
     }
 
     def render(p: Props) = {
@@ -74,7 +81,7 @@ object AppModule {
   private val component = ReactComponentB[Props]("AppModule")
     .initialState_P(p => ())
     .renderBackend[Backend]
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentWillMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)

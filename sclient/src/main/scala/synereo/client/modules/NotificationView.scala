@@ -5,12 +5,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom._
 import shared.dtos.{IntroConfirmReq, Introduction}
 import synereo.client.css.NotificationViewCSS
-import synereo.client.handlers.UpdateIntroduction
+import synereo.client.handlers.UpdateIntroductionsModel
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
 import diode.react.ModelProxy
 import shared.RootModels.IntroRootModel
 import synereo.client.components.MIcon
+import synereo.client.logger
 import synereo.client.modalpopups.ConfirmIntroReqModal
 
 import scala.scalajs.js
@@ -28,7 +29,8 @@ object NotificationView {
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props): Callback = Callback {
-
+      logger.log.info("notifications view mounted")
+      logger.log.debug(s"notification proxy contains : ${props.proxy().introResponse.toString}")
     }
   }
 
@@ -46,6 +48,7 @@ object NotificationView {
         )
       )
     })
+    .componentDidMount(s => s.backend.mounted(s.props))
     .build
 
   def apply(proxy: ModelProxy[IntroRootModel]) = component(Props(proxy))
@@ -58,6 +61,7 @@ object NotificationList {
   val NotificationList = ReactComponentB[NotificationListProps]("NotificationList")
     .render_P(p => {
       def renderIntroductions(introduction: Introduction) = {
+        println(s"introduction in notification view: $introduction")
         <.li(^.className := "media")(
           <.div(^.className := "card-shadow")(
             <.div(NotificationViewCSS.Style.notificationCard)(

@@ -119,39 +119,43 @@ object NewMessageForm {
 
     }
 
-    def filterLabelStrings (value: Seq[String]): Seq[String] = {
+    def filterLabelStrings(value: Seq[String]): Seq[String] = {
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).toSet.toSeq
     }
 
-    def  labelsTextFromMsg: Seq[String] = {
+    def labelsTextFromMsg: Seq[String] = {
       filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
     }
 
     def postLabels: Future[String] = {
-//      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
-//      println(s"getAllLabelsText = ${getAllLabelsText}")
+      //      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
+      //      println(s"getAllLabelsText = ${getAllLabelsText}")
       val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), getAllLabelsText.map(leaf), "alias")
       CoreApi.postLabel(labelPost)
     }
+
     def labelsToPostMsg: Seq[Label] = {
       val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
 
-//      println(s"labelsToPostMsg ${textSeq.distinct}")
+      //      println(s"labelsToPostMsg ${textSeq.distinct}")
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
+
     def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
       val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))
       allLabels.distinct
     }
-    def leaf(text: String/*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
-    def leafMod(text: String/*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
+
+    def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+
+    def leafMod(text: String /*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-//      println("Img src = " + value)
+      //      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
@@ -159,23 +163,23 @@ object NewMessageForm {
       }
       reader.readAsDataURL(value)
     }
-    def fromSelecize() : Callback = Callback{}
+
+    def fromSelecize(): Callback = Callback {}
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      SYNEREOCircuit.dispatch(LockSessionPing())
+      //      SYNEREOCircuit.dispatch(LockSessionPing())
       postLabels.onComplete {
         case Success(responseArray) =>
           dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
-          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId),SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
           CoreApi.postData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI,
-            cnxns,labelsToPostMsg).onComplete {
+            cnxns, labelsToPostMsg).onComplete {
             case Success(response) => {
-              SYNEREOCircuit.dispatch(OpenSessionPing())
               logger.log.info("message post success")
-              SYNEREOCircuit.dispatch(RefreshMessages())
-              t.modState(s => s.copy(postNewMessage = true)).runNow()
+              //              SYNEREOCircuit.dispatch(OpenSessionPing())
+              //              SYNEREOCircuit.dispatch(RefreshMessages())
             }
             case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
           }
@@ -185,7 +189,8 @@ object NewMessageForm {
           logger.log.debug("Label Post failure")
           t.modState(s => s.copy(postNewMessage = false))
       }
-      t.modState(s => s.copy(postNewMessage = false))
+      //      t.modState(s => s.copy(postNewMessage = false))
+      t.modState(s => s.copy(postNewMessage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -211,7 +216,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := s.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId,fromSelecize))
+              ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId, fromSelecize))
             ),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))
@@ -226,7 +231,7 @@ object NewMessageForm {
           <.div(^.className := "row")(
             <.div()(
               if (s.postMessage.imgSrc != "") {
-                <.img(^.src := s.postMessage.imgSrc, ^.height:="100.px", ^.width:="100.px")
+                <.img(^.src := s.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
               } else {
                 <.div("")
               }
