@@ -1,12 +1,18 @@
 package synereo.client.modules
 
+import diode.react.ModelProxy
 import synereo.client.css.ConnectionsCSS
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.css.{MarketPlaceFullCSS}
+import synereo.client.css.MarketPlaceFullCSS
 import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.RootModels.AppRootModel
+import synereo.client.handlers.ShowServerError
+import diode.AnyAction._
+import synereo.client.modalpopups.LoginErrorModal
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
@@ -31,18 +37,30 @@ object AppModule {
 
   val searchContainer: js.Object = "#searchContainer"
 
-  case class Props(view: String)
+  case class Props(view: String, proxy : ModelProxy[AppRootModel])
+  case class State(showErrorModal : Boolean = false)
 
+  case class Backend(t: BackendScope[Props, State]) {
 
-  case class Backend(t: BackendScope[Props, Unit]) {
+    def serverError(): Callback = {
+      SYNEREOCircuit.dispatch(ShowServerError())
+      t.modState(s => s.copy(showErrorModal = false))
+    }
+
+    def GetErrormodal() : Callback = {
+      SYNEREOCircuit.dispatch(ShowServerError())
+      val getIsServerError = SYNEREOCircuit.zoom(_.appRootModel).value
+      t.modState(s => s.copy(showErrorModal = getIsServerError.isServerError))
+    }
+
     def mounted(props: Props) = Callback {
 
     }
 
-    def render(p: Props) = {
-
+    def render(p: Props,state: State) = {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+          <.div(),
           <.div(^.className := "row")(
             //Left Sidebar
             <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
@@ -52,7 +70,15 @@ object AppModule {
               ^.onMouseLeave --> Callback {
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
-            )(Sidebar(Sidebar.Props()))
+            )(Sidebar(Sidebar.Props()))/*,
+            <.div(^.onClick --> GetErrormodal() )("CLick Me"),
+            // GetErrormodal(),
+            if(state.showErrorModal){
+              LoginErrorModal(LoginErrorModal.Props(serverError))
+            }
+            else
+              {<.div()}*/
+
           ),
           <.div(
             p.view match {
@@ -72,7 +98,7 @@ object AppModule {
   }
 
   private val component = ReactComponentB[Props]("AppModule")
-    .initialState_P(p => ())
+    .initialState_P(p => (State()))
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

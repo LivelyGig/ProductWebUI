@@ -101,21 +101,6 @@ object Dashboard {
 
     //scalastyle:off
     def render(s: State, p: Props) = {
-//      <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid", DashboardCSS.Style.dashboardContainerMain)(
-//        <.div(^.className := "row")(
-//          //Left Sidebar
-//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-//            ^.onMouseEnter --> Callback {
-//              $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
-//            },
-//            ^.onMouseLeave --> Callback {
-//              $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
-//            }
-//          )(
-//            //            Footer(Footer.Props(c, r.page))
-//            Sidebar(Sidebar.Props())
-//          )
-//        ),
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid")(
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
@@ -272,7 +257,6 @@ object HomeFeedList {
 
     }
 
-
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
@@ -313,43 +297,28 @@ object HomeFeedList {
 
 
     def render(props: Props) = {
+      val value = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
+      var getName = ""
+      val userId = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI).split("/")(2)
+
+
 
       def renderMessages(message: MessagePost) = {
-//        val getMessageText = message.postContent.text.split(" ")
-//        println("get = " + getMessageText.)
-//        val getLen = getMessageText.length
-//        println("getLen =" + getLen)
-//        var a = 0
-
-
-        val userId = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI).split("/")(2)
-        //        println("UserID = " + userId + "\n")
-        //        println("Connections = " + message.connections + "\n")
+        val getMessageText = message.postContent.text.split(" ")
+        println("connections = " + message.connections(0) + "\n" + message.connections(1) )
         var selfConnectionId = message.connections(0).source.split("/")(2)
 
-        //        var selfcnxn = message.connections(1).target.split("/")(2)
-        //        println("Connection at 1 = " + message.connections(1))
 
-        //        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-        //        println("Connections = " + value)
+        for(b <- message.connections)
+        for(a <- value){
+          if(a.connection.target.split("/")(2) == b.target.split("/")(2) && a.connection.source.split("/")(2) == b.source.split("/")(2) ){
+            getName = a.name
+          }
+        }
 
-        //        for(a <- value){
-        //          if(a.connection.source.split("/")(2) == userId){
-        //            println("We are in source of connection  UserID " + a.name+ "\n")
-        //          }
-        //          if(a.connection.source.split("/")(2) == selfcnxn){
-        //            println("We are in source of connection  selfCnxn" + a.name+ "\n")
-        //          }
-        //          if(a.connection.target.split("/")(2) == selfcnxn ){
-        //            println("We are in target of connection " + a.name+ "\n")
-        //          }
-        //          if(a.connection.target.split("/")(2) == userId){
-        //            println("We are in targrt of connection " + a.name+ "\n")
-        //          }
-        //        }
-
-        var toReceiver = "unknown"
+        message.connections(0).source.split("/")(2)
         var fromSender = "unknown"
+        var toReceiver = "unknown"
         if (userId == selfConnectionId) {
           fromSender = "me"
           // get other party ID, if there is one
@@ -364,7 +333,9 @@ object HomeFeedList {
             toReceiver = "self"
           }
         } else {
-          fromSender = "me"
+
+         fromSender = getName
+       //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
         }
@@ -392,54 +363,18 @@ object HomeFeedList {
                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                     <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
-
-                        <.div(^.className := "col-md-8 col-sm-8 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                          //                          <.div(message.postContent.text),
-                          //                          for {b <- 1 to getLen} yield {
-                          //                            if (b < (getLen.toInt / 2)) {
-                          //                              <.div(DashboardCSS.Style.cardText, ^.onClick ==> openFullViewModalPopUP)(
-                          //                                <.div(getMessageText(b))
-                          //                              )
-                          //                            }
-                          //                            else {
-                          //                              <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                          //                                <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> openFullViewModalPopUP)(
-                          //                                  <.div(getMessageText(b))
-                          //                                ),
-                          //                                <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                          //                                  <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                          //                                  <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                          //                                  <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                          //                                  <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                          //                                  <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
-                          //                                )
-                          //                              )
-                          //                            }
-                          //                          }
-
+                        <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick ==> openFullViewModalPopUP)(
-//                            if(getMessageText != null){
-//                              for {b <- 1 to getLen} yield {
-//                                if (b < (getLen.toInt / 2)) {
-//                                  getMessageText(b) + " "
-//                                }
-//                                else ""
-//                              }
-//                            }else{
-//                              message.postContent.text
-//                            }
-                            message.postContent.text
+                            if(getMessageText.length == 1){getMessageText(0)} else
+                              for{b <- 1 to getMessageText.length   if  b <= 30} yield {
+                                getMessageText(b) + " "
+                              }
                           ),
                           <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
                             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> openFullViewModalPopUP)(
-//                              for {b <- 1 to getLen} yield {
-//                                if (b > (getLen.toInt / 2)) {
-//                                  getMessageText(b) + " "
-//                                }
-//                                else ""
-//                              }
-
-
+                                for {b <- 1 to getMessageText.length   if b >= 30} yield {
+                                  getMessageText(b) + " "
+                                },
                               <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                                 <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
                                 <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
@@ -448,45 +383,20 @@ object HomeFeedList {
                                 <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
                               )
                             )
-
                           )
-                        ) ,
-                      <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
+                        ),
+                      <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
                         if (message.postContent.imgSrc != "") {
                           <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder)
                         } else {
                           <.div("")
                         }
-
                       )
                     )
-
-                    //                      <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                    //                        <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                    //                        <.div(DashboardCSS.Style.cardText, ^.onClick ==> openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                    //                          "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                    //                        <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                    //                          <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> openFullViewModalPopUP)(
-                    //                            "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
-                    //                          ),
-                    //                          <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                    //                            <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                    //                            <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                    //                            <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                    //                            <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                    //                            <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
-                    //                          )
-                    //                        ),
-                    //                        <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                    //                          "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> preventFullViewModalPopUP)(
-                    //                          (MIcon.moreHoriz)
-                    //                        )
-                    //                      )
                   )
                 )
               )
-            )
-            ,
+            ),
             <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
               <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                 "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> preventFullViewModalPopUP)(
@@ -499,13 +409,10 @@ object HomeFeedList {
       <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
         props.messages map renderMessages
       )
-
-
     }
   }
 
   val MessagesList = ReactComponentB[Props]("ProjectList")
-
 
     // val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State(new MessagePost("", "", "", "", Nil, new MessagePostContent("", ""))))
