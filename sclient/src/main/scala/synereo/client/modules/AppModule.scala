@@ -25,15 +25,16 @@ object AppModule {
   val PEOPLE_VIEW = "people"
   val ACCOUNT_VIEW = "account"
   val DASHBOARD_VIEW = "dashboard"
-  val POSTFULLVIEW_VIEW = "postfullview"
-  val USERPROFILEVIEW_VIEW = "userprofile"
-  val TIMELINEVIEW_VIEW = "timeline"
+  val POSTFULL_VIEW = "postfullview"
+  val USERPROFILE_VIEW = "userprofile"
+  val TIMELINE_VIEW = "timeline"
   val NOTIFICATIONS_VIEW = "notifications"
   val MARKETPLACE_VIEW = "marketplace"
 
   val userProxy = SYNEREOCircuit.connect(_.user)
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
+  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
 
   val searchContainer: js.Object = "#searchContainer"
 
@@ -85,10 +86,10 @@ object AppModule {
               case PEOPLE_VIEW => connectionProxy(s => ConnectionsResults(s))
               case ACCOUNT_VIEW => userProxy(s => AccountInfo(s))
               case DASHBOARD_VIEW => messagesProxy(s => Dashboard(s))
-              case USERPROFILEVIEW_VIEW => userProxy(s => UserProfileView(s))
-              case POSTFULLVIEW_VIEW => PostFullView(PostFullView.Props())
-              case TIMELINEVIEW_VIEW => TimelineView(TimelineView.Props())
-              case NOTIFICATIONS_VIEW => NotificationView(NotificationView.Props())
+              case USERPROFILE_VIEW => userProxy(s => UserProfileView(s))
+              case POSTFULL_VIEW => PostFullView(PostFullView.Props())
+              case TIMELINE_VIEW => TimelineView(TimelineView.Props())
+              case NOTIFICATIONS_VIEW => introductionProxy(s => NotificationView(s))
               case MARKETPLACE_VIEW => MarketPlaceFull(MarketPlaceFull.Props())
             }
           )

@@ -14,14 +14,14 @@ import scalacss.ScalaCssReact._
 
 
 /**
-  * Created by Mandar on 5/18/2016.
+  * Created by mandar.k on 5/18/2016.
   */
 object ConnectionsResults {
   val searchContainer: js.Object = "#searchContainer"
 
   case class Props(proxy: ModelProxy[ConnectionsRootModel])
 
-  case class State(selectedItem: Option[ConnectionsModel] = None)
+  case class State()
 
   class Backend($: BackendScope[Props, State]) {
     /*def mounted(props: Props): Callback =

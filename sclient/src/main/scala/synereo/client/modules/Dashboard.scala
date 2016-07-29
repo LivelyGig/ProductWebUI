@@ -124,7 +124,7 @@ object Dashboard {
                     )
                     //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)))
                   ),
-                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
+                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list ", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
@@ -301,13 +301,11 @@ object HomeFeedList {
       var getName = ""
       val userId = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI).split("/")(2)
 
-
-
       def renderMessages(message: MessagePost) = {
         val getMessageText = message.postContent.text.split(" ")
-        println("connections = " + message.connections(0) + "\n" + message.connections(1) )
+       // println("connections = " + message.connections(0) + "\n" + message.connections(1) )
+  
         var selfConnectionId = message.connections(0).source.split("/")(2)
-
 
         for(b <- message.connections)
         for(a <- value){
@@ -333,7 +331,6 @@ object HomeFeedList {
             toReceiver = "self"
           }
         } else {
-
          fromSender = getName
        //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
@@ -366,7 +363,7 @@ object HomeFeedList {
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick ==> openFullViewModalPopUP)(
                             if(getMessageText.length == 1){getMessageText(0)} else
-                              for{b <- 1 to getMessageText.length   if  b <= 30} yield {
+                              for{b <- 1 to getMessageText.length-1   if  b <= 30} yield {
                                 getMessageText(b) + " "
                               }
                           ),

@@ -12,7 +12,7 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 4/1/2016.
+  * Created by mandar.k on 4/1/2016.
   */
 object MarketPlaceFull {
 

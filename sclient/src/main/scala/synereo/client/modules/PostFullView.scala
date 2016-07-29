@@ -12,7 +12,7 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 3/22/2016.
+  * Created by mandar.k on 3/22/2016.
   */
 object PostFullView {
 
