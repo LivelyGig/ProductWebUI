@@ -10,8 +10,8 @@ import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 /**
- * Created by mandar.k on 4/13/2016.
- */
+  * Created by mandar.k on 2016-07-29.
+  */
 object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -48,7 +48,7 @@ object ErrorModal {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 text-center")(
                     <.div()(
-                      <.h5("The Api host you provided is unreachable, Please provide a new one!"),
+                      <.h5("We are encountering problems in serving your request. Please try after sometime."),
                       <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close")
                     )
                   )

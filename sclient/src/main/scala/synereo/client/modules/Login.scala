@@ -361,7 +361,7 @@ object Login {
               RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             }
             else if (s.showErrorModal) {
-              ErrorModal(ErrorModal.Props(serverError))
+              LoginErrorModal(LoginErrorModal.Props(serverError))
             }
             else if (s.showAccountValidationFailed) {
               AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))
