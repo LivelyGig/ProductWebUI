@@ -2,7 +2,6 @@ package synereo.client.modules
 
 import synereo.client.css.ConnectionsCSS
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.css.{MarketPlaceFullCSS}
 import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
@@ -28,6 +27,7 @@ object AppModule {
   val userProxy = SYNEREOCircuit.connect(_.user)
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
+  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
 
   val searchContainer: js.Object = "#searchContainer"
 
@@ -62,7 +62,7 @@ object AppModule {
               case USERPROFILE_VIEW => userProxy(s => UserProfileView(s))
               case POSTFULL_VIEW => PostFullView(PostFullView.Props())
               case TIMELINE_VIEW => TimelineView(TimelineView.Props())
-              case NOTIFICATIONS_VIEW => NotificationView(NotificationView.Props())
+              case NOTIFICATIONS_VIEW => introductionProxy(s => NotificationView(s))
               case MARKETPLACE_VIEW => MarketPlaceFull(MarketPlaceFull.Props())
             }
           )
