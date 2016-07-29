@@ -363,7 +363,7 @@ object HomeFeedList {
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick ==> openFullViewModalPopUP)(
                             if(getMessageText.length == 1){getMessageText(0)} else
-                              for{b <- 1 to getMessageText.length-1   if  b <= 30} yield {
+                              for{b <- 0 to getMessageText.length-1   if  b <= 30} yield {
                                 getMessageText(b) + " "
                               }
                           ),
