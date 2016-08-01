@@ -9,12 +9,12 @@ import shared.models.{UserModel}
 import synereo.client.handlers.IntroductionHandler
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
-                     searches: SearchesRootModel, introduction: IntroRootModel, sessionPing: SessionRootModel)
+                     searches: SearchesRootModel, introduction: IntroRootModel, sessionPing: SessionRootModel, appRootModel : AppRootModel)
 
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(ConnectionsRootModel(Nil),
-    UserModel("", "", ""), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel())
+    UserModel("", "", ""), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(),AppRootModel())
 
   // combine all handlers into one
   override protected val actionHandler = composeHandlers(
@@ -23,6 +23,7 @@ object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] 
     new SearchesHandler(zoomRW(_.searches)((m, v) => m.copy(searches = v))),
     new MessagesHandler(zoomRW(_.messages)((m, v) => m.copy(messages = v))),
     new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v))),
-    new SessionPingHandler(zoomRW(_.sessionPing)((m, v) => m.copy(sessionPing = v)))
+    new SessionPingHandler(zoomRW(_.sessionPing)((m, v) => m.copy(sessionPing = v))),
+    new AppHandler(zoomRW(_.appRootModel)((m,v) => m.copy(appRootModel = v)))
   )
 }

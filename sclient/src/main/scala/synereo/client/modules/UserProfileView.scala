@@ -81,7 +81,6 @@ object UserProfileView {
     .renderBackend[Backend]
     .build
 
-  def apply(props: Props) = component(props)
-
+  def apply(proxy: ModelProxy[UserModel]) = component(Props(proxy))
 }
 

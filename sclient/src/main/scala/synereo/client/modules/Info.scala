@@ -50,13 +50,13 @@ object Info {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain,UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
-            //            Footer(Footer.Props(c, r.page))
-            Sidebar(Sidebar.Props())
-          )
-        ),
+//        <.div(^.className := "row")(
+//          //Left Sidebar
+//          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+//            //            Footer(Footer.Props(c, r.page))
+//            Sidebar(Sidebar.Props())
+//          )
+//        ),
         <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
         <.div(UserProfileViewCSS.Style.agentUID)("Build Number : ")
       ) //connectionsContainerMain
