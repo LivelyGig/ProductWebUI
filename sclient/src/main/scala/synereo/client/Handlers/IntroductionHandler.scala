@@ -56,11 +56,11 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(newList))
 
     case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
-      value.introResponse.foreach(intro => println(s"intro.introSessionId ${intro.introSessionId}"))
+      //      value.introResponse.foreach(intro => println(s"intro.introSessionId ${intro.introSessionId}"))
       val newList = value.introResponse.filterNot(
         _.introSessionId.equals(introConfirmReq.introSessionId)
       )
-      println(s"newList : $newList")
+      //      println(s"newList : $newList")
       updated(IntroRootModel(newList))
 
     case AcceptConnectNotification(connectNotification: ConnectNotification) =>
@@ -70,6 +70,6 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       //      if (introductionConfirmationResponse.sessionURI.length != 0) {
       //        updated(IntroRootModel(Nil))
       //      } else
-        noChange
+      noChange
   }
 }

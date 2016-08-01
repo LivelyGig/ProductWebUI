@@ -15,6 +15,7 @@ import synereo.client.logger
 import synereo.client.modalpopups.ConfirmIntroReqModal
 
 import scala.scalajs.js
+import scala.scalajs.js.JSON
 import scalacss.ScalaCssReact._
 
 /**
@@ -68,19 +69,26 @@ object NotificationList {
         //        println(s"introduction in notification view: $introduction")
         <.li(^.className := "media")(
           <.div(^.className := "card-shadow")(
-            <.div(NotificationViewCSS.Style.notificationCard)(
-              <.div("you have unseen notification", ^.display.`inline-block`, ^.margin := "20.px"),
-              <.div(^.display.`inline-block`,
-                ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(NotificationViewCSS.Style.acceptBtn), <.span(MIcon.sms), "", introduction))),
-              <.div(^.display.`inline-block`,
-                <.button(^.className := "btn btn-default", ^.color.red, MIcon.close)
+            <.div(^.className := "row", NotificationViewCSS.Style.notificationCard)(
+              <.div(^.className := "col-md-8")(
+                <.div(s"you have introduction request for : ${JSON.parse(introduction.introProfile).name.asInstanceOf[String]}", ^.display.`inline-block`, ^.margin := "20.px")
+              ),
+              <.div(^.className := "col-md-4")(
+                <.div(^.display.`inline-block`,
+                  ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(NotificationViewCSS.Style.acceptBtn), <.span(MIcon.done), "", introduction))),
+                <.div(^.display.`inline-block`,
+                  <.button(^.className := "btn btn-default", ^.color.red, MIcon.close)
+                )
               )
             )
           )
         )
       }
       <.div(^.className := "col-md-12",
-        <.ul(^.className := "media-list")(p.introductions map renderIntroductions)
+        <.h1(s"you have ${p.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
+        <.ul(^.className := "media-list")(
+          p.introductions map renderIntroductions
+        )
       )
     })
     .build

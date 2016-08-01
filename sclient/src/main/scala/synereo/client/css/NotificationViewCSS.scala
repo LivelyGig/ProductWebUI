@@ -19,7 +19,7 @@ object NotificationViewCSS {
     val notificationCard = style(
       paddingTop(15.px),
       paddingBottom(15.px),
-      maxWidth(768.px),
+      maxWidth(1000.px),
       backgroundColor.white,
       borderRadius(25.px),
       fontSize(1.4.em),
@@ -28,7 +28,11 @@ object NotificationViewCSS {
     val acceptBtn = style(
       margin(20.px)
     )
-
+    val notificationCountHeading = style(
+      color.white,
+      textAlign.center,
+      marginBottom(40.px)
+    )
   }
 
 }
