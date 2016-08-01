@@ -76,8 +76,6 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
-
-
   def updateUserRequest(updateUserRequest: UpdateUserRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_USER_REQUEST, updateUserRequest))
     ajaxPost(requestContent)

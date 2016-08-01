@@ -9,6 +9,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import synereo.client.services.SYNEREOCircuit
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -21,7 +22,10 @@ import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
 import synereo.client.handlers.PostUserUpdate
 import diode.AnyAction._
+import org.querki.jquery._
 import synereo.client.logger
+
+import scala.scalajs.js
 
 //scalastyle:off
 /**
@@ -105,12 +109,18 @@ object ProfileImageUploaderForm {
         t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
+      $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
     }
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
-      SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
-      t.modState(s => s.copy(postNewImage = true))
+      if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
+        $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postNewImage = false))
+      } else {
+        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
+        t.modState(s => s.copy(postNewImage = true))
+      }
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -140,11 +150,14 @@ object ProfileImageUploaderForm {
               ),
               <.div(^.className := "row",
                 <.div(^.className := "col-md-12")(
-                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc,^.marginTop:="40.px")
+                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc, ^.marginTop := "40.px"),
+                  <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                    "Please provide Image to upload ... !!!"
+                  )
                 )
               ),
               <.div(^.className := "row",
-                <.div(^.className := "col-md-12 text-right",UserProfileViewCSS.Style.newImageSubmitBtnContainer,
+                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
                   <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
                 )

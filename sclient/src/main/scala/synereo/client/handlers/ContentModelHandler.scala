@@ -41,13 +41,16 @@ object ContentModelHandler {
         SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+      }else if(response.contains("beginIntroductionResponse")) {
+        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+        SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
       }
     } catch {
       case e: Exception => /*println("exception for upickle read session ping response")*/
     }
   }
 
-  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification")
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification","beginIntroductionResponse")
 
   def getCurrMsgModel(): Seq[Post] = {
 
