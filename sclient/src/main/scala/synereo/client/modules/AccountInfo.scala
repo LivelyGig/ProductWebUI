@@ -53,7 +53,7 @@ object AccountInfo {
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
-  val agentUID = ConnectionsUtils.getSelfConnnection(response).source
+  val agentUID = ConnectionsUtils.getSelfConnnection().source
   val newAgentUID = agentUID.substring(8)
 //  println(s"agentUID ${newAgentUID}")
   val output = newAgentUID.split("\"")

@@ -81,13 +81,13 @@ object LabelsSelectize {
     def mounted(props: Props): Callback = Callback {
       //      println("inside mounted:" + props.proxy().searchesModel)
       //      if (props.proxy().searchesModel.length != 0) {
-      attachLabels()
+      initializeTagsInput()
 //      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachLabels())
 
 
       //      }
     }
-
+/*
     def attachLabels() = {
       val value = SYNEREOCircuit.zoom(_.searches.searchesModel).value
       t.modState(s => s.copy(labels = value)).runNow()
@@ -96,15 +96,15 @@ object LabelsSelectize {
     def componentDidUpdate(props: Props): Callback = Callback {
       // println("component did update")
         initializeTagsInput()
-    }
+    }*/
 
-    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
+//    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
 
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
         <.option(^.value := "")("Select"),
         //          props.proxy().render(searchesRootModel => searchesRootModel.se)
-        for (label <- state.labels ) yield {
+        for (label <- SYNEREOCircuit.zoom(_.searches.searchesModel).value ) yield {
           <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
         })
 
@@ -114,9 +114,9 @@ object LabelsSelectize {
   val component = ReactComponentB[Props]("LabelsSelectize")
       .initialState(State())
     .renderBackend[Backend]
-    .componentWillMount(scope => scope.backend.willMount(scope.props))
+//    .componentWillMount(scope => scope.backend.willMount(scope.props))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
+//    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     .build
 
   def apply(props: Props) = component(props)

@@ -2,14 +2,10 @@ package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.RootModels.SessionRootModel
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 
 
-case class HandleSessionPing()
-
-case class LockSessionPing()
-
-case class OpenSessionPing()
+case class TogglePinger()
 
 case class AttachPinger()
 
@@ -18,20 +14,11 @@ case class SessionPing()
 // scalastyle:off
 class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
-    case HandleSessionPing() =>
-      if (!value.stopPing) {
-        updated(SessionRootModel(!value.toggleToPing, value.stopPing))
-      } else {
-        noChange
-      }
-    case LockSessionPing() =>
-      updated(SessionRootModel(value.toggleToPing, true))
-
-    case OpenSessionPing() =>
-      updated(SessionRootModel(value.toggleToPing, false))
+    case TogglePinger() =>
+      updated(value.copy(pinger = !value.pinger))
 
     case AttachPinger() =>
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.sessionPing.toggleToPing))(_ => ping())
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.sessionPing.pinger))(_ => ping())
       def ping() = {
         SYNEREOCircuit.dispatch(RefreshMessages())
       }

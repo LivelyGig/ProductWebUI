@@ -8,9 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
-import scala.util.{Failure, Success}
+import synereo.client.services.SYNEREOCircuit
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -21,12 +19,9 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import synereo.client.sessionitems.SessionItems
-import synereo.client.handlers.{LockSessionPing, OpenSessionPing, RefreshMessages, UpdateUser}
+import synereo.client.handlers.PostUserUpdate
 import diode.AnyAction._
 import synereo.client.logger
-
-import scala.concurrent.ExecutionContext.Implicits.global
 
 //scalastyle:off
 /**
@@ -106,7 +101,7 @@ object ProfileImageUploaderForm {
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
         val props = t.props.runNow()
-        val uri = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
+        val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
         t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
@@ -114,14 +109,7 @@ object ProfileImageUploaderForm {
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
-//      SYNEREOCircuit.dispatch(LockSessionPing())
-      CoreApi.updateUserRequest(t.state.runNow().updateUserRequest).onComplete {
-        case Success(response) =>
-          SYNEREOCircuit.dispatch(UpdateUser(t.state.runNow().updateUserRequest))
-//          SYNEREOCircuit.dispatch(OpenSessionPing())
-//          SYNEREOCircuit.dispatch(RefreshMessages())
-        case Failure(response) => println(s"failure : $response")
-      }
+      SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
       t.modState(s => s.copy(postNewImage = true))
     }
 

@@ -18,7 +18,7 @@ import scala.util.{Failure, Success}
 
 case class AcceptNotification(introconfirmSeq: Seq[Introduction])
 
-case class UpdateIntroduction(introConfirmReq: IntroConfirmReq)
+case class ClearNotifications()
 
 case class AcceptConnectNotification(connectNotification: ConnectNotification)
 
@@ -31,7 +31,7 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       //      println(s"newIntroConfirmModel: $introSeq")
       updated(IntroRootModel(introSeq))
 
-    case UpdateIntroduction(introConfirmReq: IntroConfirmReq) =>
+    case ClearNotifications() =>
       updated(IntroRootModel(Nil))
 
     case AcceptConnectNotification(connectNotification: ConnectNotification) =>

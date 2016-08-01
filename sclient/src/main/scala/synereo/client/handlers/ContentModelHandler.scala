@@ -47,7 +47,7 @@ object ContentModelHandler {
     }
   }
 
-  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse")
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification")
 
   def getCurrMsgModel(): Seq[Post] = {
 
@@ -60,13 +60,7 @@ object ContentModelHandler {
   }
 
   def getContentModel(response: String): Seq[Post] = {
-    val value = SYNEREOCircuit.zoom(_.sessionPing).value
-    if (!value.stopPing) {
-      SessionRootModel(!value.toggleToPing, value.stopPing)
-    } else {
-      SessionRootModel(value.toggleToPing, value.stopPing)
-    }
-    SYNEREOCircuit.dispatch(HandleSessionPing())
+    SYNEREOCircuit.dispatch(TogglePinger())
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
       getCurrMsgModel()

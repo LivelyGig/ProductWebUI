@@ -34,14 +34,9 @@ object Info {
   case class Props(proxy: ModelProxy[UserModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
-
-  val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
-  val agentUID = ConnectionsUtils.getSelfConnnection(response).source
+  val agentUID = ConnectionsUtils.getSelfConnnection().source
   val newAgentUID = agentUID.substring(8)
-//  println(s"agentUID ${newAgentUID}")
   val output = newAgentUID.split("\"")
-//  println(s"output ${output.head}")
-//  for(o <- output)yield {  println(o)}
 
 
   class Backend($: BackendScope[Props, State]) {

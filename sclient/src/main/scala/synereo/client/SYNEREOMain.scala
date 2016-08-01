@@ -79,6 +79,8 @@ object SYNEREOMain extends js.JSApp {
     //      .onPostRender((prev, cur) => Callback.log(s"Page changing from $prev to $cur."))
   }.renderWith(layout)
 
+  // scalastyle:off
+
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     <.div()(

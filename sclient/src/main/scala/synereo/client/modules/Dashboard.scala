@@ -6,15 +6,12 @@ import diode.data.Pot
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.sessionitems.SessionItems
-import synereo.client.handlers.{RefreshMessages}
-import org.scalajs.dom
 import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{FullPostViewModal, NewMessage}
+import synereo.client.modalpopups.FullPostViewModal
 
-import scala.scalajs.js.timers._
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
@@ -23,9 +20,9 @@ import scala.scalajs.js.timers._
 import synereo.client.components.Icon
 
 import scala.language.reflectiveCalls
-import org.scalajs.dom.window
 import org.widok.moment.Moment
 import synereo.client.services.SYNEREOCircuit
+
 
 /**
   * Created by Mandar on 3/11/2016.
@@ -37,7 +34,6 @@ object Dashboard {
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
 
-  //  val toolTips: dom.Element= "[data-toggle='tooltip']"
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
@@ -45,29 +41,10 @@ object Dashboard {
 
   class Backend(t: BackendScope[Props, State]) {
     //scalastyle:off
-    def postMessage(e: ReactEventI) = {
-      e.preventDefault()
-      val state = t.state.runNow()
-      $(messageLoader).removeClass("hidden")
-      //      SYNEREOCircuit.dispatch(PostData(state.postMessage.postContent, None, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Option("labelsSelectizeInputId")))
-      //      SYNEREOCircuit.dispatch(RefreshMessages())
-      $(messageLoader).addClass("hidden")
-      t.modState(s => s.copy(isMessagePosted = true, postMessage = s.postMessage.copy(postContent = MessagePostContent("", ""))))
-    }
 
-    def mounted(props: Props) = {
-      //      $("[data-toggle='tooltip']".asInstanceOf[js.Object]).tooltip()
-      //      jQuery("[data-toggle='tooltip']".asInstanceOf[dom.Element]).tooltip()
-      //      js.timers.setInterval(7000) ("print chacha")
+    /*def mounted(props: Props): Callback = {
 
-
-      if (props.proxy().isEmpty) {
-        props.proxy.dispatch(RefreshMessages())
-        //        props.proxy.dispatch(RefreshMessages())
-      } else {
-        Callback.empty
-      }
-    }
+    }*/
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
@@ -92,31 +69,8 @@ object Dashboard {
       t.modState(s => s.copy(ShowFullPostView = false))
     }
 
-    //    def toggleTopbar = Callback {
-    //      val topBtn: js.Object = "#TopbarContainer"
-    //      $(topBtn).toggleClass("topbar-left topbar-lg-show")
-    //    }
-
-    //    def clearScrollPositions() = {
-    //      lastPos = 0
-    //      delta = 0
-    //    }
-
     def handleScroll(e: ReactEvent): Callback = {
-      //      clearScrollPositions
-      //      val windowHeight = $(window).height()
-      //      var scrollMiddle = $(window).scrollTop() + (windowHeight / 2)
-      //      var listOfAllLi = $("li[id^=\"home-feed-card-_\"]")
-      //      listOfAllLi.ma
-      //      homeFeedMediaListHeight = $(homeFeedMediaList).height().toInt
-      //      var numberOfLi = $(homeFeedMediaList).children("li").length
-      //      val lis = $(homeFeedMediaList).children("li")
-      //      lis.each(({ (li: dom.html.Html) =>
-      //
-      //      }: js.ThisFunction0))
-
       Callback.empty
-
     }
 
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
@@ -136,40 +90,21 @@ object Dashboard {
         <.div(^.className := "row")(
           //Left Sidebar
           <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+            ^.onMouseEnter --> Callback {
+              $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
+            },
+            ^.onMouseLeave --> Callback {
+              $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
+            }
           )(
             //            Footer(Footer.Props(c, r.page))
             Sidebar(Sidebar.Props())
           )
         ),
-        //        <.div(^.className := "row")(
-        //          <.div(^.className := "col-md-12 col-xs-12 col-lg-12")(
-        //            <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-        //              <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-        //                TopMenuBar(TopMenuBar.Props()),
-        //                <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-        //                  <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-        //                )
-        //              )
-        //            )
-        //          )
-        //        ),
-        //        <.div(
-        //          SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, "")))
         //        ),
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
-              //              <.div(^.className := "card-shadow", DashboardCSS.Style.userPostForm)(
-              //                <.form(^.onSubmit ==> postMessage)(
-              //                  <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm),
-              //                  <.input(^.id := "ContributeThoughtsID", ^.tpe := "text", DashboardCSS.Style.UserInput, ^.className := "form-control", ^.placeholder := "contribute your thoughts...", ^.value := s.postMessage.postContent.text, ^.onChange ==> updateContent),
-              //                  //                  <.button(^.tpe := "submit")(<.span()(Icon.camera))
-              //                  <.button(^.tpe := "submit", ^.className := "btn pull-right", DashboardCSS.Style.userInputSubmitButton /*, ^.onClick == submitForm*/)(Icon.camera)
-              //                ),
-              //                <.div(/*NewMessage(NewMessage.Props("Create Message", Seq(DashboardCSS.Style.newMessageFormBtn), Icon.envelope, "new-message-button"))*/)
-              //              ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
@@ -186,8 +121,14 @@ object Dashboard {
                     p.proxy().renderPending(ex => <.div(
                       <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
                     )
+                    ),
+                    <.div(
+                      if (p.proxy().isEmpty){
+                        <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
+                      } else {
+                        <.span()
+                      }
                     )
-                    //                    p.proxy().renderPending(ex => <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)))
                   ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> handleScroll)(
                     for (i <- 1 to 50) yield {
@@ -301,7 +242,7 @@ object Dashboard {
   val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State(new MessagePost("", "", "", "", Nil, new MessagePostContent("", ""))))
     .renderBackend[Backend]
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    //    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(proxy: ModelProxy[Pot[MessagesRootModel]]) = component(Props(proxy))
@@ -315,32 +256,8 @@ object HomeFeedList {
     .render_P(p => {
       def renderMessages(message: MessagePost) = {
 
-        val userId = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI).split("/")(2)
-        //        println("UserID = " + userId + "\n")
-        //        println("Connections = " + message.connections + "\n")
+        val userId = SYNEREOCircuit.zoom(_.user.sessionUri).value.split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
-
-        //        var selfcnxn = message.connections(1).target.split("/")(2)
-        //        println("Connection at 1 = " + message.connections(1))
-
-        //        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-        //        println("Connections = " + value)
-
-        //        for(a <- value){
-        //          if(a.connection.source.split("/")(2) == userId){
-        //            println("We are in source of connection  UserID " + a.name+ "\n")
-        //          }
-        //          if(a.connection.source.split("/")(2) == selfcnxn){
-        //            println("We are in source of connection  selfCnxn" + a.name+ "\n")
-        //          }
-        //          if(a.connection.target.split("/")(2) == selfcnxn ){
-        //            println("We are in target of connection " + a.name+ "\n")
-        //          }
-        //          if(a.connection.target.split("/")(2) == userId){
-        //            println("We are in targrt of connection " + a.name+ "\n")
-        //          }
-        //        }
-
 
 
         var toReceiver = "unknown"
@@ -390,13 +307,13 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.cardText)(
                       //                      <.h3(message.postContent.subject),
                       <.div()(
-                        <.div(^.className:="col-md-8 col-sm-8 col-xs-12",PostFullViewCSS.Style.marginLeft15PX)(
+                        <.div(^.className := "col-md-8 col-sm-8 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           message.postContent.text
                         ),
-                        <.div(^.className:="col-md-4 col-sm-4 col-xs-12")(
+                        <.div(^.className := "col-md-4 col-sm-4 col-xs-12")(
 
                           if (message.postContent.imgSrc != "") {
-                            <.img(^.src := message.postContent.imgSrc, ^.height:="100.px" , ^.width:="100.px", DashboardCSS.Style.imgBorder)
+                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder)
                           } else {
                             <.div("")
                           }
