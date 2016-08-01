@@ -28,7 +28,7 @@ object ConnectionsResults {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+      <.div(^.id := "connectionsContainerMain")(
 //        <.div(^.className := "row")(
 //          //Left Sidebar
 //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
