@@ -32,7 +32,7 @@ object UserProfileView {
 
     def render(s: State, p: Props) = {
       val userModel = p.proxy.value
-      <.div(^.className := "container-fluid", UserProfileViewCSS.Style.UserProfileContainerMain)(
+      <.div(^.className := "container-fluid")(
 //        <.div(^.className := "row")(
 //          //Left Sidebar
 //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",

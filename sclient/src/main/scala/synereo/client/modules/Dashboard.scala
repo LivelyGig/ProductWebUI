@@ -303,6 +303,11 @@ object HomeFeedList {
       Callback.empty
     }
 
+    def filterLabelStrings(value: Seq[String]): Seq[String] = {
+      value.filter(
+        _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
+      ).map(_.replace("#", "")).toSet.toSeq
+    }
 
     def render(props: Props) = {
 
@@ -319,7 +324,6 @@ object HomeFeedList {
         val userId = SYNEREOCircuit.zoom(_.user.sessionUri).value.split("/")(2)
         //  for(a <- value){println(a.connection + a.name)}
 
-
         if (userId == selfConnectionId) {
           fromSender = "me"
           // get other party ID, if there is one
@@ -334,15 +338,8 @@ object HomeFeedList {
             toReceiver = "self"
           }
         } else {
-          for (b <- message.connections) {
-            for (a <- value) {
-              if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2)) {
-                // println(s"${a.name}")
-                fromSender = a.name
-
-              }
-            }
-          }
+          for(b <- message.connections ; a <- value  ; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield
+            fromSender = a.name
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
@@ -357,8 +354,8 @@ object HomeFeedList {
               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                 <.div(DashboardCSS.Style.userNameDescription)(
                   <.span(fromSender),
-                  <.span(MIcon.chevronRight),
-                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                  //<.span(MIcon.chevronRight),
+                //  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
@@ -386,11 +383,9 @@ object HomeFeedList {
                               getMessageText(b) + " "
                             },
                             <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                              for { getLabel <- filterLabelStrings(message.postContent.text.split(" +"))} yield {
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(getLabel)
+                              }
                             )
                           )
                         )

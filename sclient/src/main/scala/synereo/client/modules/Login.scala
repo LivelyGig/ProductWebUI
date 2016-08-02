@@ -50,7 +50,7 @@ object Login {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.href.substring(7, dom.window.location.href.length - 6), portNumber: String = "9876")
+                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.hostname, portNumber: String = "9876")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -121,10 +121,10 @@ object Login {
           validateResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
-            case SERVER_ERROR => processServerError()
+            case SERVER_ERROR => processServerError(response)
           }
         case Failure(res) =>
-          processServerError()
+          processServerError("")
       }
       t.modState(s => s.copy(showLoginForm = false))
     }
@@ -140,14 +140,14 @@ object Login {
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           SYNEREOCircuit.dispatch(AttachPinger())
           SYNEREOCircuit.dispatch(SubsForMsgAndBeginSessionPing())
-//          SYNEREOCircuit.dispatch(RefreshMessages())
+          //          SYNEREOCircuit.dispatch(RefreshMessages())
           $(loginLoader).addClass("hidden")
           $(loadingScreen).addClass("hidden")
           window.location.href = "/#dashboard"
           //      checkIntroductionNotification
           log.debug("login successful")
         case Failure(res) =>
-          processServerError()
+          processServerError("")
       }
 
     }
@@ -159,10 +159,11 @@ object Login {
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
-    def processServerError(): Unit = {
+    def processServerError(responseStr: String): Unit = {
+      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       $(loginLoader).addClass("hidden")
       println("internal server error")
-      t.modState(s => s.copy(showErrorModal = true)).runNow()
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
     def loginUser(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
@@ -271,12 +272,26 @@ object Login {
                         <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
                         <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
                           <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
-                              ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true), <.br()
+                            <.div(^.className := "row")(
+                              <.div(^.className := "col-md-4")(
+                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+                              ),
+                              <.div(^.className := "col-md-8")(
+                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+                              )
+                            )
                           ),
                           <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
-                              ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                            <.div(^.className := "row")(
+                              <.div(^.className := "col-md-4")(
+                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+                              ),
+                              <.div(^.className := "col-md-8")(
+                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                              )
+                            )
                           ),
                           <.div(^.className := "col-md-12 text-right")(
                             <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
@@ -314,7 +329,7 @@ object Login {
               RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             }
             else if (s.showErrorModal) {
-              LoginErrorModal(LoginErrorModal.Props(serverError))
+              LoginErrorModal(LoginErrorModal.Props(serverError,s.loginErrorMessage))
             }
             else if (s.showAccountValidationFailed) {
               AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))

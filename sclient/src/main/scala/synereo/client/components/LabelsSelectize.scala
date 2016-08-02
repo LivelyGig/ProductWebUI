@@ -47,7 +47,6 @@ object LabelsSelectize {
       selectedLabels = Nil
     }
 
-    //    println(selectedLabels)
     selectedLabels
   }
 
