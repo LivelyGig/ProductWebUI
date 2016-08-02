@@ -82,33 +82,79 @@ object AccountInfo {
 //            Sidebar(Sidebar.Props())
 //          )
 //        ),
-        <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
-        <.div(UserProfileViewCSS.Style.agentUID)("Build Number : "),
-        <.div(UserProfileViewCSS.Style.agentUID)("DSLCommLinkClient : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save")))),
-        <.div(UserProfileViewCSS.Style.agentUID)("DSLEvaluator : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save")))),
-        <.div(UserProfileViewCSS.Style.agentUID)("DSLEvaluatorPreferredSupplier : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save")))),
-        <.div(UserProfileViewCSS.Style.agentUID)("BFactoryCommLinkServer : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save")))),
-        <.div(UserProfileViewCSS.Style.agentUID)("BFactoryCommLinkClient : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save")))),
-        <.div(UserProfileViewCSS.Style.agentUID)("BFactoryEvaluator : ")
-        (<.div(<.input(UserProfileViewCSS.Style.inputText, ^.`type`:="text", ^.className:="form-control"),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Edit")),
-          <.button (UserProfileViewCSS.Style.editSaveButton, ^.className :="btn btn-default", ("Save"))))
-      ) //connectionsContainerMain
+        <.div(UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
+          <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
+          <.div(UserProfileViewCSS.Style.agentUID)("Build Number : "),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLCommLinkClient : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
+              )
+            )),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLEvaluator : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
+              )
+            )),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLEvaluatorPreferredSupplier : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
+              )
+            )),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkServer : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
+              )
+            )),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkClient : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
+              )
+            )),
+          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryEvaluator : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
+            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+              <.input(^.`type` := "text"),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button")
+              ),
+              <.span(^.className := "input-group-btn",
+                <.button(^.className := "btn btn-default", Icon.times, ^.`type` := "button")
+              )
+            ))
+        ))   //connectionsContainerMain
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

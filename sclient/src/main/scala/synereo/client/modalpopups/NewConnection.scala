@@ -22,7 +22,7 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import synereo.client.handlers.HandleNewConnection
+import synereo.client.handlers.PostNewConnection
 
 import scala.scalajs.js
 
@@ -144,7 +144,7 @@ object ConnectionsForm {
       if (connections.length == 2) {
         val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
           sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-        SYNEREOCircuit.dispatch(HandleNewConnection(content))
+        SYNEREOCircuit.dispatch(PostNewConnection(content))
         t.modState(s => s.copy(postConnection = true))
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -164,7 +164,7 @@ object ConnectionsForm {
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection().source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
-          SYNEREOCircuit.dispatch(HandleNewConnection(content))
+          SYNEREOCircuit.dispatch(PostNewConnection(content))
           t.modState(s => s.copy(postConnection = true))
       }
     }

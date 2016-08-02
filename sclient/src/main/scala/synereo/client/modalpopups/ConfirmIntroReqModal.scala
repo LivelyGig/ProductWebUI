@@ -1,14 +1,12 @@
 package synereo.client.modalpopups
 
-import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
 import synereo.client.components.{GlobalStyles, _}
 import japgolly.scalajs.react
-import shared.RootModels.IntroRootModel
-import shared.dtos.IntroConfirmReq
+import shared.dtos.{IntroConfirmReq, Introduction}
 import org.scalajs.dom.window
 import synereo.client.sessionitems.SessionItems
 import diode.AnyAction._
@@ -16,9 +14,8 @@ import diode.AnyAction._
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.components.MIcon.MIcon
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-import synereo.client.handlers.{HandleNewConnection, RefreshMessages, ClearNotifications}
+import synereo.client.handlers.UpdateIntroductionsModel
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
@@ -29,12 +26,13 @@ import scala.util.Success
 /**
   * Created by mandar.k on 6/29/2016.
   */
+//scalastyle:off
 object ConfirmIntroReqModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
+  //  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: MIcon, title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), reactChildElement: ReactTag = <.span(), title: String, introduction: Introduction)
 
   case class State(showNewIntroForm: Boolean = false)
 
@@ -61,9 +59,10 @@ object ConfirmIntroReqModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = ""), P.buttonName),
+        Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.reactChildElement, P.title, className = ""), P.buttonName),
         if (S.showNewIntroForm)
-          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
+        //          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
+          ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro Request", P.introduction))
         else
           Seq.empty[ReactElement]
       )
@@ -80,7 +79,7 @@ object ConfirmIntroReqForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, header: String, proxy: ModelProxy[IntroRootModel])
+  case class Props(submitHandler: () => Callback, header: String, introduction: Introduction)
 
   case class State(confirmIntroReq: Boolean = false)
 
@@ -90,8 +89,11 @@ object ConfirmIntroReqForm {
       val connectionSessionURI = SYNEREOCircuit.zoom(_.user.sessionUri).value
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
-        props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      SYNEREOCircuit.dispatch(HandleNewConnection(introConfirmReq) )
+        props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
+        case Success(response) =>
+          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+      }
       jQuery(t.getDOMNode()).modal("hide")
     }
 
@@ -106,11 +108,13 @@ object ConfirmIntroReqForm {
       e.preventDefault()
       val connectionSessionURI = SYNEREOCircuit.zoom(_.user.sessionUri).value
       val props = t.props.runNow()
-      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
-        props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
-      SYNEREOCircuit.dispatch(HandleNewConnection(introConfirmReq))
+      val content = IntroConfirmReq(connectionSessionURI, alias = "alias",
+        props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
+      CoreApi.postIntroduction(content).onComplete {
+        case Success(response) =>
+          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
+      }
       val state = t.state.runNow()
-
       t.modState(s => s.copy(confirmIntroReq = true))
     }
 
@@ -118,7 +122,6 @@ object ConfirmIntroReqForm {
       props.submitHandler(/*state.postMessage*/)
     }
 
-    // scalastyle:off
     def render(s: State, p: Props) = {
 
       val headerText = p.header
@@ -130,11 +133,11 @@ object ConfirmIntroReqForm {
           addStyles = Seq()
         ),
         <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className := "row")(
+          <.div(^.className := "row", ^.fontSize := "0.8.em")(
             <.div(^.className := "col-md-12")(
-              <.div(p.proxy().introResponse(0).message),
+              <.div(p.introduction.message),
               <.div(
-                s"From : ${JSON.parse(p.proxy().introResponse(0).introProfile).name.asInstanceOf[String]}", <.br,
+                s"From : ${JSON.parse(p.introduction.introProfile).name.asInstanceOf[String]}", <.br,
                 "Date : Mon July 27 2016 ", <.br
               )
             ),

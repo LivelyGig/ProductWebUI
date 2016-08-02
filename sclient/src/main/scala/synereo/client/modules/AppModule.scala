@@ -12,7 +12,9 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.RootModels.AppRootModel
 import synereo.client.handlers.ShowServerError
 import diode.AnyAction._
+import synereo.client.logger
 import synereo.client.modalpopups.ErrorModal
+import org.scalajs.dom.window
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -20,7 +22,9 @@ import scala.scalajs.js
 /**
   * Created by a4tech on 5/24/2016.
   */
-object AppModule {val PEOPLE_VIEW = "people"
+//scalastyle:off
+object AppModule {
+  val PEOPLE_VIEW = "people"
   val ACCOUNT_VIEW = "account"
   val DASHBOARD_VIEW = "dashboard"
   val POSTFULL_VIEW = "postfullview"
@@ -36,8 +40,9 @@ object AppModule {val PEOPLE_VIEW = "people"
 
   val searchContainer: js.Object = "#searchContainer"
 
-  case class Props(view: String, proxy : ModelProxy[AppRootModel])
-  case class State(showErrorModal : Boolean = false)
+  case class Props(view: String, proxy: ModelProxy[AppRootModel])
+
+  case class State(showErrorModal: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -46,17 +51,22 @@ object AppModule {val PEOPLE_VIEW = "people"
       t.modState(s => s.copy(showErrorModal = false))
     }
 
-    def GetErrormodal() : Callback = {
+    def GetErrormodal(): Callback = {
       SYNEREOCircuit.dispatch(ShowServerError())
       val getIsServerError = SYNEREOCircuit.zoom(_.appRootModel).value
       t.modState(s => s.copy(showErrorModal = getIsServerError.isServerError))
     }
 
     def mounted(props: Props) = Callback {
+      logger.log.debug("app module mounted")
+      val userHasSessionUri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      if (userHasSessionUri.length < 1) {
+        window.location.href = "/"
+      }
 
     }
 
-    def render(p: Props,state: State) = {
+    def render(p: Props, state: State) = {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
           <.div(),
@@ -70,13 +80,13 @@ object AppModule {val PEOPLE_VIEW = "people"
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
             )(Sidebar(Sidebar.Props()))
-//           , <.div(^.onClick --> GetErrormodal() )("CLick Me"),
-//            // GetErrormodal(),
-//            if(state.showErrorModal){
-//              ErrorModal(ErrorModal.Props(serverError))
-//            }
-//            else
-//              {<.div()}
+            //           , <.div(^.onClick --> GetErrormodal() )("CLick Me"),
+            //            // GetErrormodal(),
+            //            if(state.showErrorModal){
+            //              ErrorModal(ErrorModal.Props(serverError))
+            //            }
+            //            else
+            //              {<.div()}
 
           ),
           <.div(
@@ -87,7 +97,7 @@ object AppModule {val PEOPLE_VIEW = "people"
               case USERPROFILE_VIEW => userProxy(s => UserProfileView(s))
               case POSTFULL_VIEW => PostFullView(PostFullView.Props())
               case TIMELINE_VIEW => TimelineView(TimelineView.Props())
-//              case NOTIFICATIONS_VIEW => introductionProxy(s => NotificationView(s))
+              case NOTIFICATIONS_VIEW => introductionProxy(s => NotificationView(s))
               case MARKETPLACE_VIEW => MarketPlaceFull(MarketPlaceFull.Props())
             }
           )
@@ -99,7 +109,7 @@ object AppModule {val PEOPLE_VIEW = "people"
   private val component = ReactComponentB[Props]("AppModule")
     .initialState_P(p => (State()))
     .renderBackend[Backend]
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentWillMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)

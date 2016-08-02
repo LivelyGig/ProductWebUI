@@ -48,12 +48,7 @@ object UserProfileViewCSS {
       marginRight(45.px)
     )
 
-    val agentUID = style(
-      marginLeft(15.%%),
-      padding(10.px),
-      fontSize(20.px),
-      color.white
-    )
+
     val newImageSubmitBtnContainer = style(
       marginTop(30.px),
       marginBottom(30.px)
@@ -64,9 +59,33 @@ object UserProfileViewCSS {
       marginTop(1.px)
     )
 
+
+
+    val sectionButtons = style(
+      marginLeft(2.%%)
+    )
+
+    val buttonDiv = style(
+      position.absolute,
+      top(0.px),
+      left(300.px),
+      width( 100.%%)
+    )
+
+    val label = style(
+      width(350.px)
+    )
+
+    val agentUID = style(
+      marginLeft(15.%%),
+      padding(10.px),
+      fontSize(20.px),
+      color.white,
+      position.relative
+    )
+
     val inputText = style(
-      width(200.px),
-      display.inline
+      width(200.px)
     )
 
   }
