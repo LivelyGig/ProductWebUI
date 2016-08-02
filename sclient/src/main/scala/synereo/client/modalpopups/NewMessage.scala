@@ -29,7 +29,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.logger
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
-import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
 
 import scala.concurrent.Future
@@ -129,13 +129,6 @@ object NewMessageForm {
       filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
     }
 
-    def postLabels: Future[String] = {
-      //      println(s"labelsTextFromMsg = ${labelsTextFromMsg}")
-      //      println(s"getAllLabelsText = ${getAllLabelsText}")
-      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI), getAllLabelsText.map(leaf), "alias")
-      CoreApi.postLabel(labelPost)
-    }
-
     def labelsToPostMsg: Seq[Label] = {
       val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
 
@@ -149,9 +142,6 @@ object NewMessageForm {
       allLabels.distinct
     }
 
-    def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
-
-    def leafMod(text: String /*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
@@ -169,27 +159,8 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      //      SYNEREOCircuit.dispatch(LockSessionPing())
-      postLabels.onComplete {
-        case Success(responseArray) =>
-          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${getAllLabelsText.map(leafMod).mkString(",")}]")
-          val cnxns = ConnectionsUtils.getCnxsSeq(Some(state.connectionsSelectizeInputId), SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
-          CoreApi.postData(state.postMessage, SessionItems.MessagesViewItems.MESSAGES_SESSION_URI,
-            cnxns, labelsToPostMsg).onComplete {
-            case Success(response) => {
-              logger.log.info("message post success")
-              //              SYNEREOCircuit.dispatch(OpenSessionPing())
-              //              SYNEREOCircuit.dispatch(RefreshMessages())
-            }
-            case Failure(response) => logger.log.error(s"Content Post Failure Message: ${response.getMessage}")
-          }
-          SYNEREOCircuit.dispatch(CreateLabels())
-
-        case Failure(res) =>
-          logger.log.debug("Label Post failure")
-          t.modState(s => s.copy(postNewMessage = false))
-      }
-      //      t.modState(s => s.copy(postNewMessage = false))
+      val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
+      SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
       t.modState(s => s.copy(postNewMessage = true))
     }
 

@@ -3,14 +3,14 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
-import synereo.client.components._
-import synereo.client.components.{ GlobalStyles }
-import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
+import synereo.client.components.{GlobalStyles, _}
+import synereo.client.css.SynereoCommanStylesCSS
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by mandar.k on 2016-07-29.
+  * Created by bhagyashree.b on 2016-07-29.
   */
 object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles

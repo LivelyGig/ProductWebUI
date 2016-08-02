@@ -1,8 +1,12 @@
 package synereo.client.modules
 
 
+import japgolly.scalajs.react.extra.router.RouterCtl
 import synereo.client.SYNEREOMain
+import SYNEREOMain.Loc
 import synereo.client.css.{ MarketPlaceFullCSS}
+import scala.scalajs.js
+import org.querki.jquery._
 import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
@@ -12,7 +16,7 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by mandar.k on 4/1/2016.
+  * Created by Mandar on 4/1/2016.
   */
 object MarketPlaceFull {
 
@@ -26,16 +30,16 @@ object MarketPlaceFull {
 
     def render() = {
       <.div(/*^.className := "container-fluid MainContainer"*/)(
-//        <.div(^.className := "row")(
-//          //Left Sidebar
-//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-//            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-//            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-//          )(
-//            //            Footer(Footer.Props(c, r.page))
-//            Sidebar(Sidebar.Props())
-//          )
-//        ),
+        //        <.div(^.className := "row")(
+        //          //Left Sidebar
+        //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+        //            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
+        //            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
+        //          )(
+        //            //            Footer(Footer.Props(c, r.page))
+        //            Sidebar(Sidebar.Props())
+        //          )
+        //        ),
         //        <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
         //          <.div("User Profile View", UserProfileViewCSS.Style.heading)
         //        )
@@ -203,7 +207,7 @@ object MarketPlaceFull {
   val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State())
     .renderBackend[Backend]
-  .build
+    .build
 
   def apply(props: Props) = component(props)
 

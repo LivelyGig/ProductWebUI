@@ -79,4 +79,6 @@ object MIcon {
 
   def sms = apply("sms")
 
+  def done = apply("done")
+
 }

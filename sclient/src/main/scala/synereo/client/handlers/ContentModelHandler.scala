@@ -7,14 +7,11 @@ import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
 import shared.RootModels.SessionRootModel
-import synereo.client.sessionitems.SessionItems
 import synereo.client.utils.ConnectionsUtils
-import org.scalajs.dom.window
 
 /**
   * Created by mandar.k on 5/24/2016.
   */
-//scalastyle:off
 object ContentModelHandler {
   def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
     try {
@@ -32,35 +29,37 @@ object ContentModelHandler {
     try {
       if (response.contains("sessionPong")) {
         val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
-        //        println(s"sessionPong: $sessionPong")
       } else if (response.contains("introductionNotification")) {
-        val introSeq = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
-        //        println(s"introSeq: $introSeq")
-        SYNEREOCircuit.dispatch(AcceptNotification(Seq(introSeq(0).content)))
+        val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+        SYNEREOCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
       } else if (response.contains("introductionConfirmationResponse")) {
         val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
-        //        println(s"introductionConfirmationResponse: $introductionConfirmationResponse")
-        //        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
       } else if (response.contains("connectNotification")) {
+        var isNew: Boolean = true
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         val content = connectNotification(0).content
-        //        println(s"connectNotification: $connectNotification")
-        //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
-        val uri = window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI)
-        val newConnection = ConnectionsModel(uri, content.connection, name, imgSrc)
-        //        println(s"newConnection: $newConnection")
-        val connectionsModel = SYNEREOCircuit.zoom(_.connections).value
-        val newConnectionsModel = connectionsModel.connectionsResponse.filterNot(_.name.equals(newConnection.name))
-        println(s"newConnectionsModel: $newConnectionsModel")
-        SYNEREOCircuit.dispatch(AddConnection(newConnection))
+        val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+        connections.foreach {
+          connection => if (connection.name.equals(name)){
+            isNew = false
+          }
+        }
+        if (isNew) {
+          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+        }
+      } else if (response.contains("beginIntroductionResponse")) {
+        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+        SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
       }
     } catch {
-      case e: Exception => println("exception for upickle read session ping response")
+      case e: Exception => /*println("exception for upickle read session ping response")*/
     }
   }
 
-  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification")
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
 
   def getCurrMsgModel(): Seq[Post] = {
 
@@ -73,13 +72,7 @@ object ContentModelHandler {
   }
 
   def getContentModel(response: String): Seq[Post] = {
-    val value = SYNEREOCircuit.zoom(_.sessionPing).value
-    if (!value.stopPing) {
-      SessionRootModel(!value.toggleToPing, value.stopPing)
-    } else {
-      SessionRootModel(value.toggleToPing, value.stopPing)
-    }
-    SYNEREOCircuit.dispatch(HandleSessionPing())
+    SYNEREOCircuit.dispatch(TogglePinger())
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
       getCurrMsgModel()

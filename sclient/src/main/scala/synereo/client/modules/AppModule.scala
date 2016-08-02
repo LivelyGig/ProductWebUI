@@ -1,9 +1,10 @@
 package synereo.client.modules
 
+
+import japgolly.scalajs.react.{Callback, ReactComponentB, _}
 import diode.react.ModelProxy
 import synereo.client.css.ConnectionsCSS
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.css.MarketPlaceFullCSS
 import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
@@ -11,18 +12,17 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.RootModels.AppRootModel
 import synereo.client.handlers.ShowServerError
 import diode.AnyAction._
-import synereo.client.modalpopups.LoginErrorModal
 import synereo.client.logger
-import scala.scalajs.js
-import scalacss.ScalaCssReact._
+import synereo.client.modalpopups.ErrorModal
 import org.scalajs.dom.window
-import synereo.client.sessionitems.SessionItems
+
+import scalacss.ScalaCssReact._
+import scala.scalajs.js
 
 /**
-  * Created by bhagyashree.b on 5/24/2016.
+  * Created by a4tech on 5/24/2016.
   */
-
-
+//scalastyle:off
 object AppModule {
   val PEOPLE_VIEW = "people"
   val ACCOUNT_VIEW = "account"
@@ -40,8 +40,9 @@ object AppModule {
 
   val searchContainer: js.Object = "#searchContainer"
 
-  case class Props(view: String, proxy : ModelProxy[AppRootModel])
-  case class State(showErrorModal : Boolean = false)
+  case class Props(view: String, proxy: ModelProxy[AppRootModel])
+
+  case class State(showErrorModal: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
 
@@ -50,7 +51,7 @@ object AppModule {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
-    def GetErrormodal() : Callback = {
+    def GetErrormodal(): Callback = {
       SYNEREOCircuit.dispatch(ShowServerError())
       val getIsServerError = SYNEREOCircuit.zoom(_.appRootModel).value
       t.modState(s => s.copy(showErrorModal = getIsServerError.isServerError))
@@ -58,14 +59,17 @@ object AppModule {
 
     def mounted(props: Props) = Callback {
       logger.log.debug("app module mounted")
-      if (window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
+      val userHasSessionUri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      if (userHasSessionUri.length < 1) {
         window.location.href = "/"
       }
+
     }
 
-    def render(p: Props,state: State) = {
+    def render(p: Props, state: State) = {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+          <.div(),
           <.div(^.className := "row")(
             //Left Sidebar
             <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
@@ -75,14 +79,14 @@ object AppModule {
               ^.onMouseLeave --> Callback {
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
-            )(Sidebar(Sidebar.Props()))/*,
-            <.div(^.onClick --> GetErrormodal() )("CLick Me"),
-            // GetErrormodal(),
-            if(state.showErrorModal){
-              LoginErrorModal(LoginErrorModal.Props(serverError))
-            }
-            else
-              {<.div()}*/
+            )(Sidebar(Sidebar.Props()))
+            //           , <.div(^.onClick --> GetErrormodal() )("CLick Me"),
+            //            // GetErrormodal(),
+            //            if(state.showErrorModal){
+            //              ErrorModal(ErrorModal.Props(serverError))
+            //            }
+            //            else
+            //              {<.div()}
 
           ),
           <.div(
@@ -111,3 +115,4 @@ object AppModule {
   def apply(props: Props) = component(props)
 
 }
+
