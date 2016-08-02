@@ -121,10 +121,10 @@ object Login {
           validateResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
-            case SERVER_ERROR => processServerError()
+            case SERVER_ERROR => processServerError(response)
           }
         case Failure(res) =>
-          processServerError()
+          processServerError("")
       }
       t.modState(s => s.copy(showLoginForm = false))
     }
@@ -147,7 +147,7 @@ object Login {
           //      checkIntroductionNotification
           log.debug("login successful")
         case Failure(res) =>
-          processServerError()
+          processServerError("")
       }
 
     }
@@ -159,10 +159,11 @@ object Login {
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
-    def processServerError(): Unit = {
+    def processServerError(responseStr: String): Unit = {
+      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       $(loginLoader).addClass("hidden")
       println("internal server error")
-      t.modState(s => s.copy(showErrorModal = true)).runNow()
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
     def loginUser(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
@@ -328,7 +329,7 @@ object Login {
               RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             }
             else if (s.showErrorModal) {
-              LoginErrorModal(LoginErrorModal.Props(serverError))
+              LoginErrorModal(LoginErrorModal.Props(serverError,s.loginErrorMessage))
             }
             else if (s.showAccountValidationFailed) {
               AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))

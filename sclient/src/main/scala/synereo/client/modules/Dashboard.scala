@@ -303,6 +303,11 @@ object HomeFeedList {
       Callback.empty
     }
 
+    def filterLabelStrings(value: Seq[String]): Seq[String] = {
+      value.filter(
+        _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
+      ).map(_.replace("#", "")).toSet.toSeq
+    }
 
     def render(props: Props) = {
 
@@ -318,7 +323,6 @@ object HomeFeedList {
         var toReceiver = "unknown"
         val userId = SYNEREOCircuit.zoom(_.user.sessionUri).value.split("/")(2)
         //  for(a <- value){println(a.connection + a.name)}
-
 
         if (userId == selfConnectionId) {
           fromSender = "me"
@@ -379,11 +383,9 @@ object HomeFeedList {
                               getMessageText(b) + " "
                             },
                             <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                              <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                              for { getLabel <- filterLabelStrings(message.postContent.text.split(" +"))} yield {
+                                <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(getLabel)
+                              }
                             )
                           )
                         )
