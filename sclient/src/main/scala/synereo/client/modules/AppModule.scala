@@ -92,7 +92,7 @@ object AppModule {
           <.div(
             p.view match {
               case PEOPLE_VIEW => connectionProxy(s => ConnectionsResults(s))
-              case ACCOUNT_VIEW => userProxy(s => AccountInfo(s))
+              case ACCOUNT_VIEW => userProxy(s => AccountInfo())
               case DASHBOARD_VIEW => messagesProxy(s => Dashboard(s))
               case USERPROFILE_VIEW => userProxy(s => UserProfileView(s))
               case POSTFULL_VIEW => PostFullView(PostFullView.Props())
