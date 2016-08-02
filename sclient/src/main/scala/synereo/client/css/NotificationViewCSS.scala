@@ -11,11 +11,11 @@ object NotificationViewCSS {
 
     import dsl._
 
-    val notificationViewContainerMain = style(
-      height(97.vh),
-      overflowY.scroll.important,
-      overflowX.hidden
-    )
+//    val notificationViewContainerMain = style(
+//      height(97.vh),
+//      overflowY.scroll.important,
+//      overflowX.hidden
+//    )
     val notificationCard = style(
       paddingTop(15.px),
       paddingBottom(15.px),
@@ -32,6 +32,15 @@ object NotificationViewCSS {
       color.white,
       textAlign.center,
       marginBottom(40.px)
+    )
+    val acceptRejectAllBtnContainer = style(
+      maxWidth(1000.px),
+      textAlign.right,
+      marginBottom(40.px)
+    )
+    val acceptAllRejectAllBtns = style(
+      marginLeft(10.px),
+      marginRight(10.px)
     )
   }
 

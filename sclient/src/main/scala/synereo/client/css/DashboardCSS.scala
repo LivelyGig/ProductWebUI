@@ -27,7 +27,10 @@ object DashboardCSS {
     val fullViewModalDilog = style(
       width(100.%%)
     )
-
+    val inputBtnRadius = style(
+      border.none,
+      padding(0.6.em, 1.2.em, 1.em)
+    )
     val cardPostTagBtn = style(
       margin(5.px),
       fontFamily :=! "karla",
@@ -71,7 +74,7 @@ object DashboardCSS {
       &.hover(
         color.red
       ),
-      marginTop(6.px)
+      marginTop.`0`.important
     )
     val bodyImg = style(
       borderImageRepeat.:=(none),

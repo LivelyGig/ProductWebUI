@@ -70,8 +70,10 @@ object MainMenu {
                 <.li(
                   introductionConnectProxy(introProxy =>
                     if (introProxy.value.introResponse.length != 0) {
-//                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn)(MIcon.sms)
+                      //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+                        <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
+                      )
                     } else {
                       <.span()
                     }
@@ -136,7 +138,7 @@ object MainMenu {
                 ),
                 <.li(^.className := "")(
                   //                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
-                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "","",<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
+                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))

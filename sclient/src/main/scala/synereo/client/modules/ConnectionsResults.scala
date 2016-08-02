@@ -37,7 +37,7 @@ object ConnectionsResults {
 //        ),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
-            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
+            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Connections"))
           )
         ),
         <.div(^.className := "row")(

@@ -86,14 +86,14 @@ object ConfirmIntroReqForm {
   //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get  event target source and modify only accepted field of case class
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
-      val connectionSessionURI = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
       val props = t.props.runNow()
-      val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias",
-        props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
-      CoreApi.postIntroduction(introConfirmReq).onComplete {
-        case Success(response) =>
-          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-      }
+      val introConfirmReq = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
+      //      CoreApi.postIntroduction(introConfirmReq).onComplete {
+      //        case Success(response) =>
+      //
+      //      }
+      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
       jQuery(t.getDOMNode()).modal("hide")
     }
 
@@ -106,15 +106,10 @@ object ConfirmIntroReqForm {
 
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
-      val connectionSessionURI = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
       val props = t.props.runNow()
-      val content = IntroConfirmReq(connectionSessionURI, alias = "alias",
-        props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
-      CoreApi.postIntroduction(content).onComplete {
-        case Success(response) =>
-          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
-      }
-      val state = t.state.runNow()
+      val content = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
+      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
       t.modState(s => s.copy(confirmIntroReq = true))
     }
 

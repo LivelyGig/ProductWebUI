@@ -30,19 +30,22 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case PostUserUpdate(req) =>
       var count = 1
+
       post()
       def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
         case Success(response) =>
-          updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
-        case Failure(response) => println(s"failure : $response")
-          if (count == 3 ) {
-            logger.log.debug("user update error")
+          logger.log.debug("user update request sent successfully")
+        case Failure(response) =>
+          if (count == 3) {
+            logger.log.error("user update error")
           } else {
             count = count + 1
             post()
           }
-          noChange
       }
-      noChange
+      if (req.jsonBlob.imgSrc != null) {
+        updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
+      } else noChange
+
   }
 }

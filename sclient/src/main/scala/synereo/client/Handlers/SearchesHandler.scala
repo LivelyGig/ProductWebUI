@@ -67,8 +67,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       post()
       def post(): Unit = CoreApi.postLabel(labelPost).onComplete{
         case Success(res) =>
-          CreateLabels(labelsNames.map(SearchesModelHandler.leafMod))
           SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
+          SYNEREOCircuit.dispatch(CreateLabels(labelsNames.map(SearchesModelHandler.leafMod)))
         case Failure(res) =>
           if (count == 3) {
             logger.log.debug("server error")

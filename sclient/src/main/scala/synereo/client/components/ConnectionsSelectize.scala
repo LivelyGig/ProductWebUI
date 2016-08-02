@@ -24,7 +24,7 @@ object ConnectionsSelectize {
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
     $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
-//    println("selectedConnections" + selectedConnections)
+    //    println("selectedConnections" + selectedConnections)
     selectedConnections
   }
 
@@ -36,11 +36,9 @@ object ConnectionsSelectize {
   }
 
 
-
   case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None)
 
-  case class State(connections: Seq[ConnectionsModel] = Nil )
-
+  case class State(connections: Seq[ConnectionsModel] = Nil)
 
 
   case class Backend(t: BackendScope[Props, State]) {
@@ -48,7 +46,7 @@ object ConnectionsSelectize {
       val props = t.props.runNow()
       val parentIdentifier = props.parentIdentifier
 
-      val count = props.option match  {
+      val count = props.option match {
         case Some(a) => a
         case None => 30
       }
@@ -61,11 +59,11 @@ object ConnectionsSelectize {
         .plugins("remove_button")
         .onItemAdd((item: String, value: js.Dynamic) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
-        .onItemRemove((item: String)=> {
+        .onItemRemove((item: String) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
 
       )
@@ -92,7 +90,7 @@ object ConnectionsSelectize {
     }
 
     def willMount(props: Props) = {
-      t.modState(s =>s.copy(connections = getCnxnModel()))
+      t.modState(s => s.copy(connections = getCnxnModel()))
     }
 
     /*def attachConnections() = {

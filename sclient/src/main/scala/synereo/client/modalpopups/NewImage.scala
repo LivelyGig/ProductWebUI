@@ -96,7 +96,7 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-      logger.log.info("new Image modal mounted")
+      // logger.log.info("new Image modal mounted")
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {

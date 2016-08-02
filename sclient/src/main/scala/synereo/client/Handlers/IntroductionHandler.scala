@@ -36,10 +36,10 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       post()
       def post(): Unit = CoreApi.postIntroduction(content).onComplete {
         case Success(res) =>
-          logger.log.debug("Cnxn Post success")
+          logger.log.debug("Connection request sent successfully")
         case Failure(fail) =>
           if (count == 3) {
-            logger.log.error("Cnxn post failure")
+            logger.log.error("Error sending connection request")
           } else {
             count = count + 1
             post()
@@ -56,11 +56,13 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(newList))
 
     case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
-      //      value.introResponse.foreach(intro => println(s"intro.introSessionId ${intro.introSessionId}"))
+      CoreApi.postIntroduction(introConfirmReq).onComplete {
+        case Success(response) => logger.log.debug("Intro confirm request sent successfully")
+        case Failure(response) => logger.log.error("Error sending intro confirm request")
+      }
       val newList = value.introResponse.filterNot(
         _.introSessionId.equals(introConfirmReq.introSessionId)
       )
-      //      println(s"newList : $newList")
       updated(IntroRootModel(newList))
 
     case AcceptConnectNotification(connectNotification: ConnectNotification) =>
