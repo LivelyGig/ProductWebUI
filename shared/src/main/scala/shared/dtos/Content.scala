@@ -19,6 +19,13 @@ sealed trait Content {
 case class CreateUser(email: String, password: String, jsonBlob: Map[String, String], createBTCWallet: Boolean)
   extends Content
 
+case class CreateUserStep1(email: String) extends Content
+
+case class CreateUserStep2(email: String, jsonBlob: Map[String, String], createBTCWallet: Boolean, salt: String, verifier: String)
+  extends Content
+
+case class CreateUserStep1Response(salt: String)
+
 case class CreateUserResponse()
 
 /*extends Content*/
@@ -36,7 +43,11 @@ case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[Stri
                                      listOfConnections: Seq[Connection], lastActiveLabel: String,
                                      jsonBlob: Map[String, String])
 
+case class InitializeSessionResponseCheck(M2: String)
+
 case class InitializeSessionErrorResponse(reason: String)
+
+case class UserLoginResponse(s: String, B: String)
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String)
 
