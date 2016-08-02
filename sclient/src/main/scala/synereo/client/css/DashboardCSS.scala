@@ -69,10 +69,9 @@ object DashboardCSS {
       display.block
     )
     val confirmIntroReqBtn = style(
-      backgroundColor.transparent.important,
+      backgroundColor.transparent,
       color.red,
       &.hover(
-        backgroundColor.transparent.important,
         color.red
       ),
       marginTop.`0`.important
