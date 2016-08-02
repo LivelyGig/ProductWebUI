@@ -140,7 +140,7 @@ object Login {
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           SYNEREOCircuit.dispatch(AttachPinger())
           SYNEREOCircuit.dispatch(SubsForMsgAndBeginSessionPing())
-//          SYNEREOCircuit.dispatch(RefreshMessages())
+          //          SYNEREOCircuit.dispatch(RefreshMessages())
           $(loginLoader).addClass("hidden")
           $(loadingScreen).addClass("hidden")
           window.location.href = "/#dashboard"
@@ -271,12 +271,26 @@ object Login {
                         <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
                         <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
                           <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
-                              ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true), <.br()
+                            <.div(^.className := "row")(
+                              <.div(^.className := "col-md-4")(
+                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+                              ),
+                              <.div(^.className := "col-md-8")(
+                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+                              )
+                            )
                           ),
                           <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
-                              ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                            <.div(^.className := "row")(
+                              <.div(^.className := "col-md-4")(
+                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+                              ),
+                              <.div(^.className := "col-md-8")(
+                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                              )
+                            )
                           ),
                           <.div(^.className := "col-md-12 text-right")(
                             <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")

@@ -334,15 +334,8 @@ object HomeFeedList {
             toReceiver = "self"
           }
         } else {
-          for (b <- message.connections) {
-            for (a <- value) {
-              if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2)) {
-                // println(s"${a.name}")
-                fromSender = a.name
-
-              }
-            }
-          }
+          for(b <- message.connections ; a <- value  ; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield
+            fromSender = a.name
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
@@ -357,8 +350,8 @@ object HomeFeedList {
               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                 <.div(DashboardCSS.Style.userNameDescription)(
                   <.span(fromSender),
-                  <.span(MIcon.chevronRight),
-                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                  //<.span(MIcon.chevronRight),
+                //  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
