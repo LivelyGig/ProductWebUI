@@ -1,43 +1,19 @@
 package synereo.client.modules
 
 
+import java.util.UUID
 
-import shared.models.UserModel
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
-import diode.react._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import shared.models.{ConnectionsModel, MessagePost}
-import org.scalajs.dom._
-import shared.sessionitems.SessionItems
-import synereo.client.components.{Icon, MIcon}
-import synereo.client.utils.ConnectionsUtils
-import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.SYNEREOMain
-import synereo.client.css.UserProfileViewCSS
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import org.querki.jquery._
-import scalacss.ScalaCssReact._
-import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
+import shared.models.{ConnectionsModel, ServerModel}
+import synereo.client.utils.ConnectionsUtils
+import synereo.client.css.UserProfileViewCSS
+import synereo.client.components.Icon
+import org.querki.jquery.$
+
+import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.scalajs.js
-import js.{Date, UndefOr}
-
-
 
 
 /**
@@ -48,118 +24,233 @@ import js.{Date, UndefOr}
 object AccountInfo {
 
   val searchContainer: js.Object = "#searchContainer"
-  case class Props(proxy: ModelProxy[UserModel])
 
-  case class State(selectedItem: Option[ConnectionsModel] = None)
+  case class Props()
 
-  val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
+  case class State(DSLCommLinkClient: Seq[ServerModel] = Nil, DSLEvaluator: Seq[ServerModel] = Nil,
+                   DSLEvaluatorPreferredSupplier: Seq[ServerModel] = Nil, BFactoryCommLinkServer: Seq[ServerModel] = Nil,
+                   BFactoryCommLinkClient: Seq[ServerModel] = Nil, BFactoryEvaluator: Seq[ServerModel] = Nil)
+
   val agentUID = ConnectionsUtils.getSelfConnnection().source
   val newAgentUID = agentUID.substring(8)
-//  println(s"agentUID ${newAgentUID}")
   val output = newAgentUID.split("\"")
-//  println(s"output ${output.head}")
-//  for(o <- output)yield {  println(o)}
 
 
-  class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props): Callback = Callback {
+  class Backend(t: BackendScope[Props, State]) {
+
+    def getNewServerModel(): ServerModel = {
+      ServerModel(UUID.randomUUID().toString.replaceAll("-", ""), "", true)
     }
+
+    def mounted(props: Props): Callback = {
+      t.modState(s => s.copy(Seq(getNewServerModel()), Seq(getNewServerModel()), Seq(getNewServerModel()), Seq(getNewServerModel()),
+        Seq(getNewServerModel()), Seq(getNewServerModel())))
+    }
+
+    def addNewServer(id: String): Callback = {
+      id match {
+        case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient ++ Seq(getNewServerModel())))
+        case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator ++ Seq(getNewServerModel())))
+        case "DSLEvaluatorPreferredSupplier" => t.modState(s => s.copy(DSLEvaluatorPreferredSupplier = s.DSLEvaluatorPreferredSupplier ++ Seq(getNewServerModel()))) // scalastyle:ignore
+        case "BFactoryCommLinkServer" => t.modState(s => s.copy(BFactoryCommLinkServer = s.BFactoryCommLinkServer ++ Seq(getNewServerModel())))
+        case "BFactoryCommLinkClient" => t.modState(s => s.copy(BFactoryCommLinkClient = s.BFactoryCommLinkClient ++ Seq(getNewServerModel())))
+        case "BFactoryEvaluator" => t.modState(s => s.copy(BFactoryEvaluator = s.BFactoryEvaluator ++ Seq(getNewServerModel())))
+      }
+    }
+
+    def enableTextboxToggle(sectionId: String, inputId: String): Callback = {
+      sectionId match {
+        case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s)))
+        case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s)))
+        case "DSLEvaluatorPreferredSupplier" => t.modState(s => s.copy(DSLEvaluatorPreferredSupplier = s.DSLEvaluatorPreferredSupplier.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s))) // scalastyle:ignore
+        case "BFactoryCommLinkServer" => t.modState(s => s.copy(BFactoryCommLinkServer = s.BFactoryCommLinkServer.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s)))
+        case "BFactoryCommLinkClient" => t.modState(s => s.copy(BFactoryCommLinkClient = s.BFactoryCommLinkClient.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s)))
+        case "BFactoryEvaluator" => t.modState(s => s.copy(BFactoryEvaluator = s.BFactoryEvaluator.map(s => if (s.uid == inputId) s.copy(isEditable = !s.isEditable) else s)))
+      }
+    }
+
+    // scalastyle:off
+    def updateTextbox(e: ReactEventI): Callback = {
+      val currentVal = e.target.value
+      val inputId = e.target.id
+      val sectionId = $(s"#${e.target.id}".asInstanceOf[js.Object]).parent().parent().attr("id").toString
+      sectionId match {
+        case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
+        case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
+        case "DSLEvaluatorPreferredSupplier" => t.modState(s => s.copy(DSLEvaluatorPreferredSupplier = s.DSLEvaluatorPreferredSupplier.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s))) // scalastyle:ignore
+        case "BFactoryCommLinkServer" => t.modState(s => s.copy(BFactoryCommLinkServer = s.BFactoryCommLinkServer.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
+        case "BFactoryCommLinkClient" => t.modState(s => s.copy(BFactoryCommLinkClient = s.BFactoryCommLinkClient.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
+        case "BFactoryEvaluator" => t.modState(s => s.copy(BFactoryEvaluator = s.BFactoryEvaluator.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
+      }
+    }
+
+    def editAll(sectionId: String): Callback = {
+      sectionId match {
+        case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient.map(e => e.copy(isEditable = true))))
+        case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator.map(e => e.copy(isEditable = true))))
+        case "DSLEvaluatorPreferredSupplier" => t.modState(s => s.copy(DSLEvaluatorPreferredSupplier = s.DSLEvaluatorPreferredSupplier.map(e => e.copy(isEditable = true)))) // scalastyle:ignore
+        case "BFactoryCommLinkServer" => t.modState(s => s.copy(BFactoryCommLinkServer = s.BFactoryCommLinkServer.map(e => e.copy(isEditable = true))))
+        case "BFactoryCommLinkClient" => t.modState(s => s.copy(BFactoryCommLinkClient = s.BFactoryCommLinkClient.map(e => e.copy(isEditable = true))))
+        case "BFactoryEvaluator" => t.modState(s => s.copy(BFactoryEvaluator = s.BFactoryEvaluator.map(e => e.copy(isEditable = true))))
+      }
+    }
+
+    def saveAll(sectionId: String): Callback = {
+      sectionId match {
+        case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient.map(e => e.copy(isEditable = false))))
+        case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator.map(e => e.copy(isEditable = false))))
+        case "DSLEvaluatorPreferredSupplier" => t.modState(s => s.copy(DSLEvaluatorPreferredSupplier = s.DSLEvaluatorPreferredSupplier.map(e => e.copy(isEditable = false)))) // scalastyle:ignore
+        case "BFactoryCommLinkServer" => t.modState(s => s.copy(BFactoryCommLinkServer = s.BFactoryCommLinkServer.map(e => e.copy(isEditable = false))))
+        case "BFactoryCommLinkClient" => t.modState(s => s.copy(BFactoryCommLinkClient = s.BFactoryCommLinkClient.map(e => e.copy(isEditable = false))))
+        case "BFactoryEvaluator" => t.modState(s => s.copy(BFactoryEvaluator = s.BFactoryEvaluator.map(e => e.copy(isEditable = false))))
+      }
+    }
+
+    def render(s: State, p: Props) = {
+      <.div()(
+        <.div(UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
+          <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
+          <.div(UserProfileViewCSS.Style.agentUID)("Build Number : "),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLCommLinkClient", ^.id := "DSLCommLinkClient")(<.label(UserProfileViewCSS.Style.label)("DSLCommLinkClient : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLCommLinkClient"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("DSLCommLinkClient"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("DSLCommLinkClient")),
+            for (dsl <- s.DSLCommLinkClient) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLCommLinkClient", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("DSLCommLinkClient", dsl.uid))
+                  )
+                }
+              )
+            }
+          ),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLEvaluator")(<.label(UserProfileViewCSS.Style.label)("DSLEvaluator : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluator"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("DSLEvaluator"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("DSLEvaluator")),
+            for (dsl <- s.DSLEvaluator) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluator", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("DSLEvaluator", dsl.uid))
+                  )
+                }
+              )
+            }
+          ),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLEvaluatorPreferredSupplier")(<.label(UserProfileViewCSS.Style.label)("DSLEvaluatorPreferredSupplier : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluatorPreferredSupplier"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("DSLEvaluatorPreferredSupplier"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("DSLEvaluatorPreferredSupplier")),
+            for (dsl <- s.DSLEvaluatorPreferredSupplier) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid))
+                  )
+                }
+              )
+            }
+          ),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryCommLinkServer")(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkServer : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkServer"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("BFactoryCommLinkServer"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("BFactoryCommLinkServer")),
+            for (dsl <- s.BFactoryCommLinkServer) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkServer", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("BFactoryCommLinkServer", dsl.uid))
+                  )
+                }
+              )
+            }
+          ),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryCommLinkClient")(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkClient : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkClient"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("BFactoryCommLinkClient"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("BFactoryCommLinkClient")),
+            for (dsl <- s.BFactoryCommLinkClient) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkClient", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("BFactoryCommLinkClient", dsl.uid))
+                  )
+                }
+              )
+            }
+          ),
+          <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryEvaluator")(<.label(UserProfileViewCSS.Style.label)("BFactoryEvaluator : "))
+          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
+          (^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryEvaluator"))("Edit All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick--> saveAll("BFactoryEvaluator"))("Save All"),
+            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add"), ^.onClick --> addNewServer("BFactoryEvaluator")),
+            for (dsl <- s.BFactoryEvaluator) yield {
+              <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
+                <.input(^.`type` := "text", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
+                if (dsl.isEditable) {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryEvaluator", dsl.uid))
+
+                  )
+                } else {
+                  <.span(^.className := "input-group-btn",
+                    <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick-->enableTextboxToggle("BFactoryEvaluator", dsl.uid))
+                  )
+                }
+              )
+            }
+          )
+        ))
+    }
+
+
   }
 
   // create the React component for user's connections
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
-    .backend(new Backend(_))
-    .renderPS((t, P, S) => {
-      <.div()(
-//        <.div(^.className := "row")(
-//          //Left Sidebar
-//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-//            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-//            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-//          )(
-//            //            Footer(Footer.Props(c, r.page))
-//            Sidebar(Sidebar.Props())
-//          )
-//        ),
-        <.div(UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-          <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
-          <.div(UserProfileViewCSS.Style.agentUID)("Build Number : "),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLCommLinkClient : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
-              )
-            )),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLEvaluator : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
-              )
-            )),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("DSLEvaluatorPreferredSupplier : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
-              )
-            )),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkServer : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
-              )
-            )),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkClient : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.pencil, ^.`type` := "button")
-              )
-            )),
-          <.div(UserProfileViewCSS.Style.agentUID)(<.label(UserProfileViewCSS.Style.label)("BFactoryEvaluator : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)(<.button(UserProfileViewCSS.Style.sectionButtons)
-          (^.className := "btn btn-default", ^.`type` := "button")("Edit All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Save All"),
-            <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button")("Add")),
-            <.div(UserProfileViewCSS.Style.inputText, ^.className := "input-group",
-              <.input(^.`type` := "text"),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.check, ^.`type` := "button")
-              ),
-              <.span(^.className := "input-group-btn",
-                <.button(^.className := "btn btn-default", Icon.times, ^.`type` := "button")
-              )
-            ))
-        ))   //connectionsContainerMain
-    })
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(proxy: ModelProxy[UserModel]) = component(Props(proxy))
+  def apply() = component(Props())
 }
 
 

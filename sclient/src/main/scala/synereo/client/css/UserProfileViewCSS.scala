@@ -80,7 +80,8 @@ object UserProfileViewCSS {
     )
 
     val inputText = style(
-      width(200.px)
+      width(200.px),
+      color.black
     )
 
   }
