@@ -27,8 +27,7 @@ import diode.AnyAction._
 
 //scalastyle:off
 object MainMenu {
-  // shorthand for styles
-  //  val labelSelectizeInputId: String = "labelSelectizeInputId"
+
   val introductionConnectProxy = SYNEREOCircuit.connect(_.introduction)
 
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -37,24 +36,8 @@ object MainMenu {
 
   case class State(labelSelectizeId: String = "labelSelectizeInputId")
 
-  //  case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc)
 
   class Backend(t: BackendScope[Props, State]) {
-    def mounted(props: Props) = Callback {
-      //      println("main menu mounted")
-      //      SYNEREOCircuit.dispatch(CreateLabels())
-      SYNEREOCircuit.dispatch(LoginUser(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false)))
-    }
-
-    def unmounted(props: Props) = Callback {
-      //      println("main menu unmounted")
-      Empty
-    }
-
-    /*def searchWithLabels(e: ReactEventI) = Callback {
-      SYNEREOCircuit.dispatch(StoreMessagesLabels(Some(t.state.runNow().labelSelectizeId)))
-      SYNEREOCircuit.dispatch(RefreshMessages())
-    }*/
 
     def toggleTopbar = Callback {
       val topBtn: js.Object = "#TopbarContainer"
@@ -80,15 +63,6 @@ object MainMenu {
                 } else {
                   <.span()
                 }
-                //                <.div(
-                //                  <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-                //                    <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-                //                      TopMenuBar(TopMenuBar.Props())
-                //                        <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-                //                      <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-                //                    )
-                //                  )
-                //                )
               )
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
@@ -96,8 +70,10 @@ object MainMenu {
                 <.li(
                   introductionConnectProxy(introProxy =>
                     if (introProxy.value.introResponse.length != 0) {
-//                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn)(MIcon.sms)
+                      //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+                        <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
+                      )
                     } else {
                       <.span()
                     }
@@ -162,7 +138,7 @@ object MainMenu {
                 ),
                 <.li(^.className := "")(
                   //                  <.a(^.href := "/#userprofileview", SynereoCommanStylesCSS.Style.userAvatarAnchor)(<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar))
-                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "","",<.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
+                  NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
@@ -186,36 +162,8 @@ object MainMenu {
             )
           )
         }
-        //        <.div(^.className := "text-center")(
-        //          if (props.proxy().isLoggedIn) {
-        //            <.div(^.className := "")(
-        //              <.div(SynereoCommanStylesCSS.Style.labelSelectizeContainer)(
-        //                <.div(^.id := labelSelectizeInputId, SynereoCommanStylesCSS.Style.labelSelectizeNavbar)(
-        //                  SYNEREOCircuit.connect(_.searches)(searchesProxy => LabelsSelectize(LabelsSelectize.Props(searchesProxy, labelSelectizeInputId)))
-        //                ),
-        //                <.button(^.className := "btn btn-primary", ^.onClick ==> searchWithLabels, SynereoCommanStylesCSS.Style.searchBtn)(MIcon.apply("search", "24")
-        //                )
-        //              ),
-        //              <.div(
-        //                <.div(^.className := "pull-right", DashboardCSS.Style.profileActionContainer)(
-        //                  <.div(^.id := "TopbarContainer", ^.className := "col-md-2 col-sm-2 topbar topbar-animate")(
-        //                    TopMenuBar(TopMenuBar.Props())
-        //                    //                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", DashboardCSS.Style.ampsDropdownToggleBtn, ^.onClick --> toggleTopbar)(
-        //                    //                        <.img(^.src := "./assets/synereo-images/ampsIcon.PNG"), <.span("543")
-        //                    //                      )
-        //                  )
-        //                )
-        //              )
-        //            )
-        //          } else {
-        //            <.span()
-        //          }
-        //        )
-        //      )
       )
     })
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillUnmount(scope => scope.backend.unmounted(scope.props))
     .build
 
   def apply(props: Props) = MainMenu(props)

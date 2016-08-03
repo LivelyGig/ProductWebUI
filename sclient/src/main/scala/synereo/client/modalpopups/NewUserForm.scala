@@ -6,11 +6,14 @@ import org.querki.jquery._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
-import shared.models.{SignUpModel, UserModel}
+import shared.models.SignUpModel
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+import org.scalajs.dom.window
+import synereo.client.sessionitems.SessionItems
 
 object NewUserForm {
   var addNewUserState: Boolean = false
@@ -25,11 +28,9 @@ object NewUserForm {
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = {
-      // instruct Bootstrap to hide the modal
       addNewUserState = false
       signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
       t.modState(s => s.copy(showLoginForm = true))
-      //jQuery(t.getDOMNode()).modal("hide")
     }
 
     def hidecomponent = {
@@ -39,7 +40,7 @@ object NewUserForm {
 
     def updateName(e: ReactEventI) = {
       val value = e.target.value
-      println(value)
+      //      println(value)
       t.modState(s => s.copy(signUpModel = s.signUpModel.copy(name = value)))
     }
 
@@ -50,7 +51,7 @@ object NewUserForm {
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
-      println(value)
+      //      println(value)
       t.modState(s => s.copy(signUpModel = s.signUpModel.copy(confirmPassword = value)))
     }
 
@@ -61,7 +62,7 @@ object NewUserForm {
 
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
-      println(value)
+      //      println(value)
       t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
     }
 
@@ -85,12 +86,13 @@ object NewUserForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.addNewUser)
+      //      println(state.addNewUser)
       signUpModelUpdate = state.signUpModel
       props.submitHandler(state.signUpModel, state.addNewUser, state.showLoginForm)
     }
 
     def render(s: State, p: Props) = {
+      val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)
       val headerText = "Sign up"
       Modal(
         Modal.Props(
@@ -135,7 +137,7 @@ object NewUserForm {
           <.div()(
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
               <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
-                <.div(^.className := "text-left")("creating account on node: ", <.span(s.signUpModel.name)),
+                <.div(^.className := "text-left")("creating account on node: ", <.span(nodeName)),
                 <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(

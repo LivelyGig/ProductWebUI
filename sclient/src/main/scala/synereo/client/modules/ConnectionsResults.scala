@@ -28,16 +28,16 @@ object ConnectionsResults {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
-            Sidebar(Sidebar.Props())
-          )
-        ),
+      <.div(^.id := "connectionsContainerMain")(
+//        <.div(^.className := "row")(
+//          //Left Sidebar
+//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+//            Sidebar(Sidebar.Props())
+//          )
+//        ),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
-            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
+            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Connections"))
           )
         ),
         <.div(^.className := "row")(

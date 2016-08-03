@@ -36,18 +36,30 @@ object ContentModelHandler {
         val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
         SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
       } else if (response.contains("connectNotification")) {
+        var isNew: Boolean = true
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         val content = connectNotification(0).content
         SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
-        SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+        val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+        connections.foreach {
+          connection => if (connection.name.equals(name)){
+            isNew = false
+          }
+        }
+        if (isNew) {
+          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+        }
+      } else if (response.contains("beginIntroductionResponse")) {
+        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+        SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
       }
     } catch {
       case e: Exception => /*println("exception for upickle read session ping response")*/
     }
   }
 
-  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse")
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
 
   def getCurrMsgModel(): Seq[Post] = {
 
@@ -60,13 +72,7 @@ object ContentModelHandler {
   }
 
   def getContentModel(response: String): Seq[Post] = {
-    val value = SYNEREOCircuit.zoom(_.sessionPing).value
-    if (!value.stopPing) {
-      SessionRootModel(!value.toggleToPing, value.stopPing)
-    } else {
-      SessionRootModel(value.toggleToPing, value.stopPing)
-    }
-    SYNEREOCircuit.dispatch(HandleSessionPing())
+    SYNEREOCircuit.dispatch(TogglePinger())
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
       getCurrMsgModel()
