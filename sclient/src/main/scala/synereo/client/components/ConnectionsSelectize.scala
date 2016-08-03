@@ -9,9 +9,7 @@ import org.scalajs.dom._
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
-import shared.models.ConnectionsModel
-import synereo.client.handlers.RefreshConnections
-import synereo.client.modalpopups.{ConnectionsForm, NewConnection}
+import shared.models.{ConnectionsModel, Post}
 import synereo.client.services.SYNEREOCircuit
 
 
@@ -26,36 +24,29 @@ object ConnectionsSelectize {
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
 
     $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
-//    println("selectedConnections" + selectedConnections)
+    //    println("selectedConnections" + selectedConnections)
     selectedConnections
   }
 
   def getConnectionNames(selectizeInputId: String): Seq[String] = {
-    if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-      val cnxns = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse).value
-      getConnectionsFromSelectizeInput(selectizeInputId)
-        .flatMap(e => cnxns.find(_.connection.target == e.target))
-        .map(_.name)
-
-
-    } else {
-      Nil
-    }
+    val cnxns = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+    getConnectionsFromSelectizeInput(selectizeInputId)
+      .flatMap(e => cnxns.find(_.connection.target == e.target))
+      .map(_.name)
   }
-
 
 
   case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None)
 
-  case class State(connections: Seq[ConnectionsModel] = Nil )
-
+  case class State(connections: Seq[ConnectionsModel] = Nil)
 
 
   case class Backend(t: BackendScope[Props, State]) {
-    def initializeTagsInput(props: Props, state: State): Unit = {
-      val parentIdentifier = t.props.runNow().parentIdentifier
+    def initializeTagsInput(): Unit = {
+      val props = t.props.runNow()
+      val parentIdentifier = props.parentIdentifier
 
-      val count = props.option match  {
+      val count = props.option match {
         case Some(a) => a
         case None => 30
       }
@@ -68,11 +59,11 @@ object ConnectionsSelectize {
         .plugins("remove_button")
         .onItemAdd((item: String, value: js.Dynamic) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
-        .onItemRemove((item: String)=> {
+        .onItemRemove((item: String) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
 
       )
@@ -80,23 +71,36 @@ object ConnectionsSelectize {
     }
 
     def mounted(props: Props): Callback = Callback {
+      /*if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
+        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
+        t.modState(s => s.copy(connections = value)).runNow()
+      }
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
+      initializeTagsInput()
+    }
+
+    def getCnxnModel(): Seq[ConnectionsModel] = {
+
+      try {
+        SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
+      } catch {
+        case e: Exception =>
+          Nil
+      }
+    }
+
+    def willMount(props: Props) = {
+      t.modState(s => s.copy(connections = getCnxnModel()))
+    }
+
+    /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
         t.modState(s => s.copy(connections = value)).runNow()
       }
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())
     }
 
-    def attachConnections() = {
-      if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-        t.modState(s => s.copy(connections = value)).runNow()
-      }
-    }
 
-    def willMount(props: Props) = Callback.when(SYNEREOCircuit.zoom(_.connections).value.isEmpty)(Callback {
-      SYNEREOCircuit.dispatch(RefreshConnections())
-    })
 
 
     def componentDidUpdate(props: Props, state: State): Callback = Callback {
@@ -107,7 +111,7 @@ object ConnectionsSelectize {
         // println(state.connections.foreach(a => println(a.name)))
       }
 
-    }
+    }*/
 
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
@@ -123,10 +127,10 @@ object ConnectionsSelectize {
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentWillMount(scope => scope.backend.willMount(scope.props))
-    .componentDidUpdate(scope => {
+    /*.componentDidUpdate(scope => {
 
       scope.$.backend.componentDidUpdate(scope.currentProps, scope.currentState)
-    })
+    })*/
     //    .componentWillUpdate(scope => scope.)
     .build
 

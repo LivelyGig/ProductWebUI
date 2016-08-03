@@ -21,19 +21,29 @@ object PostFullView {
 
   val searchContainer: js.Object = "#searchContainer"
 
-  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
-    render_P { ctr =>
-      <.div(^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-          )(
-            //            Footer(Footer.Props(c, r.page))
-            Sidebar(Sidebar.Props())
-          )
-        ),
+  case class Props()
+
+  case class State()
+
+  class Backend(t: BackendScope[Props, State]) {
+
+    def render(props: Props) = {
+
+      <.div(/*^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer*/)(
+        /*    <.div(^.className := "row")(
+              //Left Sidebar
+              <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+                ^.onMouseEnter --> Callback {
+                  $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
+                },
+                ^.onMouseLeave --> Callback {
+                  $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
+                }
+              )(
+                //            Footer(Footer.Props(c, r.page))
+                Sidebar(Sidebar.Props())
+              )
+            ),*/
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
@@ -237,15 +247,11 @@ object PostFullView {
                                 ),
                                 ("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. " +
                                   "Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat.")
-
                               )
                             )
-
                           )
-
                         )
                       )
-
                     )
                   )
                 )
@@ -255,13 +261,17 @@ object PostFullView {
                 <.span(MIcon.chevronRight, PostFullViewCSS.Style.navigationIcons)
               )
             )
-
           )
-
         )
       )
-    }.build
+    }
+  }
 
-  def apply(router: RouterCtl[Loc]) = component(router)
+  val component = ReactComponentB[Props]("Dashboard")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
+    .build
+
+  def apply(props: Props) = component(props)
 
 }

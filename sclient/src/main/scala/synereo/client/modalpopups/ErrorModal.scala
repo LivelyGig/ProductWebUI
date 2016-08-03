@@ -3,15 +3,15 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
-import synereo.client.components._
-import synereo.client.components.{ GlobalStyles }
-import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
+import synereo.client.components.{GlobalStyles, _}
+import synereo.client.css.SynereoCommanStylesCSS
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 /**
- * Created by Mandar on 4/13/2016.
- */
+  * Created by bhagyashree.b on 2016-07-29.
+  */
 object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -48,7 +48,7 @@ object ErrorModal {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 text-center")(
                     <.div()(
-                      <.h5("The Api host you provided is unreachable, Please provide a new one!"),
+                      <.h5("We are encountering problems in serving your request. Please try after sometime."),
                       <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close")
                     )
                   )

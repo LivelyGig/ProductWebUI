@@ -8,9 +8,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 
-import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -21,11 +20,12 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import shared.sessionitems.SessionItems
-import synereo.client.handlers.UpdateUser
+import synereo.client.handlers.PostUserUpdate
 import diode.AnyAction._
+import org.querki.jquery._
 import synereo.client.logger
-import scala.concurrent.ExecutionContext.Implicits.global
+
+import scala.scalajs.js
 
 //scalastyle:off
 /**
@@ -35,7 +35,7 @@ object NewImage {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), icon: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
 
   case class State(showNewImageForm: Boolean = false)
 
@@ -64,7 +64,7 @@ object NewImage {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div(
-        Button(Button.Props(B.addNewImageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
+        Button(Button.Props(B.addNewImageForm(), CommonStyle.default, P.addStyles, "", P.title, className = P.className), P.buttonName, P.childrenElement),
         if (S.showNewImageForm) userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props(B.addImage, "Profile Image Uploader", userProxy)))
         else
           Seq.empty[ReactElement]
@@ -96,7 +96,7 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-      logger.log.debug("new Image modal mounted")
+      // logger.log.info("new Image modal mounted")
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
@@ -105,20 +105,22 @@ object ProfileImageUploaderForm {
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
         val props = t.props.runNow()
-        val uri = window.sessionStorage.getItem(SessionItems.ProfilesViewItems.PROFILES_SESSION_URI)
+        val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
         t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
+      $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
     }
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
-      CoreApi.updateUserRequest(t.state.runNow().updateUserRequest).onComplete {
-        case Success(response) =>
-          SYNEREOCircuit.dispatch(UpdateUser(t.state.runNow().updateUserRequest))
-        case Failure(response) => println(s"failure : $response")
+      if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
+        $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postNewImage = false))
+      } else {
+        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
+        t.modState(s => s.copy(postNewImage = true))
       }
-      t.modState(s => s.copy(postNewImage = true))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -138,9 +140,6 @@ object ProfileImageUploaderForm {
             <.div(^.className := "col-md-12")(
               <.div(^.className := "row",
                 <.div(^.className := "col-md-12")(
-                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
-                ),
-                <.div(^.className := "col-md-12")(
                   if (s.updateUserRequest.jsonBlob.imgSrc.length < 2) {
                     <.img(^.src := p.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
@@ -150,7 +149,15 @@ object ProfileImageUploaderForm {
                 )
               ),
               <.div(^.className := "row",
-                <.div(^.className := "col-md-12",
+                <.div(^.className := "col-md-12")(
+                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc, ^.marginTop := "40.px"),
+                  <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                    "Please provide Image to upload ... !!!"
+                  )
+                )
+              ),
+              <.div(^.className := "row",
+                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
                   <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
                 )

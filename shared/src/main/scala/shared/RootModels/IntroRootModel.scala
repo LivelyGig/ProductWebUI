@@ -3,7 +3,7 @@ package shared.RootModels
 import shared.dtos.Introduction
 
 /**
-  * Created by a4tech on 7/19/2016.
+  * Created by mandar.k on 7/19/2016.
   */
 case  class IntroRootModel(introResponse:Seq[Introduction]) {
   def updated(newIntroRes: Introduction) = {

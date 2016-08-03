@@ -1,65 +1,49 @@
 package synereo.client.modules
 
-
-
-import synereo.client.handlers.RefreshConnections
-import shared.RootModels.ConnectionsRootModel
-import synereo.client.modalpopups.{ NewConnection}
-import synereo.client.css.{ConnectionsCSS}
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.models.{ConnectionsModel}
-import scalacss.ScalaCssReact._
-import diode.react.ReactPot._
+import japgolly.scalajs.react.{BackendScope,ReactComponentB}
+import shared.RootModels.ConnectionsRootModel
 import diode.react._
-import diode.data.Pot
-import japgolly.scalajs.react._
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
-import scala.scalajs.js
-import synereo.client.components.Icon
-import scala.language.reflectiveCalls
-import org.querki.jquery._
-
-
+import synereo.client.css._
+import shared.models.ConnectionsModel
+import synereo.client.modalpopups.NewConnection
+import scalacss.ScalaCssReact._
 
 /**
   * Created by Mandar on 5/18/2016.
   */
 object ConnectionsResults {
-  val searchContainer: js.Object = "#searchContainer"
 
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
+  case class Props(proxy: ModelProxy[ConnectionsRootModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props): Callback =
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    /*def mounted(props: Props): Callback =
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))*/
   }
 
   // create the React component for user's connections
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS((t, P, S) => {
-      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-          )(
-            Sidebar(Sidebar.Props())
-          )
-        ),
+    .renderPS(($, P, S) => {
+      <.div(^.id := "connectionsContainerMain")(
+//        <.div(^.className := "row")(
+//          //Left Sidebar
+//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+//            Sidebar(Sidebar.Props())
+//          )
+//        ),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
-            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Friend"))
+            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Connections"))
           )
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
-            P.proxy().render(connectionsRootModel =>
+            ConnectionList(P.proxy().connectionsResponse)
+            /*P.proxy().render(connectionsRootModel =>
               ConnectionList(connectionsRootModel.connectionsResponse)),
             P.proxy().renderFailed(ex => <.div("NO CONNECTIONS FOUND", SynereoCommanStylesCSS.Style.renderFailedMessage)),
             if (P.proxy().isEmpty) {
@@ -73,15 +57,15 @@ object ConnectionsResults {
               }
             } else {
               <.div(/*"data loaded"*/)
-            }
+            }*/
           )
         )
       ) //connectionsContainerMain
     })
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+//    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
+  def apply(proxy: ModelProxy[ConnectionsRootModel]) = component(Props(proxy))
 }
 
 object ConnectionList {
