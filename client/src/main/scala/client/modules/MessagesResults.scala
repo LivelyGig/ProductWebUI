@@ -167,7 +167,7 @@ object MessagesList {
               <.div(^.className := "col-md-6 col-sm-12")(
                 <.div(
                   if (message.postContent.imgSrc != "") {
-                    <.img(^.src := message.postContent.imgSrc)
+                    <.img(^.src := message.postContent.imgSrc, ^.height:="100.px" , ^.width:="100.px")
                   } else {
                     <.div("")
                   }

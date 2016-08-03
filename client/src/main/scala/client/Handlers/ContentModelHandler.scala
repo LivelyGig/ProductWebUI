@@ -2,14 +2,14 @@ package client.handlers
 
 import client.modules.AppModule
 import org.widok.moment.Moment
-import shared.dtos.{ApiResponse, EvalSubscribeResponseContent}
+import shared.dtos.{ApiResponse, ResponseContent}
 import shared.models.{MessagePost, Post, ProfilesPost, ProjectsPost}
 
 /**
  * Created by shubham.k on 12-05-2016.
  */
 object ContentModelHandler {
-  def filterContent(messages: ApiResponse[EvalSubscribeResponseContent], viewName: String): Option[Post] = {
+  def filterContent(messages: ApiResponse[ResponseContent], viewName: String): Option[Post] = {
     try {
       viewName match {
         case AppModule.PROJECTS_VIEW =>
@@ -26,7 +26,7 @@ object ContentModelHandler {
   }
 
   def getContentModel(response: String, viewName: String): Seq[Post] = {
-    upickle.default.read[Seq[ApiResponse[EvalSubscribeResponseContent]]](response)
+    upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
       .filterNot(_.content.pageOfPosts.isEmpty)
       .flatMap(content => filterContent(content, viewName))
       .sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
