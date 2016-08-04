@@ -99,11 +99,11 @@ object AppModule {
   private val component = ReactComponentB[Props]("AppModule")
     .initialState_P(p => ())
     .renderBackend[Backend]
-    .componentWillMount(scope => Callback {
-      val userHasSessionUri = LGCircuit.zoom(_.user.sessionUri).value
-      if (userHasSessionUri.length < 1)
-        LGCircuit.dispatch(LogoutUser())
-    })
+//    .componentWillMount(scope => Callback {
+//      val userHasSessionUri = LGCircuit.zoom(_.user.sessionUri).value
+//      if (userHasSessionUri.length < 1)
+//        LGCircuit.dispatch(LogoutUser())
+//    })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
