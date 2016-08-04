@@ -6,6 +6,7 @@ import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
+import client.modalpopups.ApiDetailsForm
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import client.services.CoreApi._
 import client.services._
@@ -25,6 +26,7 @@ import shared.sessionitems.SessionItems
 
 import scala.concurrent.Future
 import diode.AnyAction._
+import shared.sessionitems.SessionItems.ApiDetails
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -41,7 +43,7 @@ object AgentLoginSignUp {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false,
-                   loginErrorMessage: String = "")
+                   loginErrorMessage: String = "",showApiDetailsForm:Boolean =false)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -54,6 +56,14 @@ object AgentLoginSignUp {
 
     def addLoginForm(): Callback = {
       t.modState(s => s.copy(showLoginForm = true))
+    }
+
+    def addApiDetailsForm(): Callback = {
+      t.modState(s => s.copy(showApiDetailsForm = true))
+    }
+
+    def addLoginDetails(showLoginForm : Boolean = true): Callback = {
+      t.modState(s => s.copy(showApiDetailsForm = false, showLoginForm = true))
     }
 
     def addNewAgentForm(): Callback = {
@@ -234,8 +244,8 @@ object AgentLoginSignUp {
       }
     }
 
-    def serverError(): Callback = {
-      t.modState(s => s.copy(showErrorModal = false))
+    def serverError(showApiDetailsForm : Boolean = false): Callback = {
+      t.modState(s => s.copy(showErrorModal = false, showApiDetailsForm = true))
     }
 
     def accountValidationFailed(): Callback = {
@@ -258,11 +268,15 @@ object AgentLoginSignUp {
     .renderPS((t, P, S) => {
       val B = t.backend
       <.div()(
-        Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Log In"),
-        Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
+        Button(Button.Props(B.addApiDetailsForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Api Details"),
+      //  Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Log In"),
+     //   Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
         //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
         //          HeaderCSS.Style.SignUpBtn)("Login"),
-        if (S.showNewAgentForm) {
+        if(S.showApiDetailsForm){
+          ApiDetailsForm(ApiDetailsForm.Props(B.addLoginDetails))
+        }
+        else if (S.showNewAgentForm) {
           NewAgentForm(NewAgentForm.Props(B.addNewAgent))
         }
         else if (S.showTermsOfServicesForm) {

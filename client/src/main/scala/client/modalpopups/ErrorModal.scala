@@ -5,6 +5,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
+import client.modalpopups.ApiDetailsForm
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
@@ -13,15 +15,21 @@ object ErrorModal {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback)
-  case class State()
+  case class Props(submitHandler: (Boolean) => Callback)
+  case class State(showApiDetailsForm:Boolean=false,showLoginForm:Boolean=false)
   class Backend(t: BackendScope[Props, State]) {
-    def closeForm = Callback {
+    def closeForm() =  {
       $(t.getDOMNode()).modal("hide")
+      t.modState(s => s.copy(showApiDetailsForm = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
-      props.submitHandler()
+      props.submitHandler(state.showApiDetailsForm)
+    }
+
+    def addLoginDetails(): Callback = Callback{
+      $(t.getDOMNode()).modal("hide")
+      //t.modState(s => s.copy(showApiDetailsForm = false, showLoginForm = true))
     }
 
     def render(s: State, p: Props) = {
@@ -40,7 +48,11 @@ object ErrorModal {
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)(
                   "Encountering problems in serving request. Please try after sometime!",
-                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault,DashBoardCSS.Style.btnBackground, ^.onClick --> closeForm)("Close"))
+                  <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault,DashBoardCSS.Style.btnBackground, ^.onClick --> closeForm)("Close")
+                   // ApiDetailsForm(ApiDetailsForm.Props(addLoginDetails))
+
+                  )
+//                    ApiDetailsForm(ApiDetailsForm.Props(addLoginDetails))
                 )
               )
             )

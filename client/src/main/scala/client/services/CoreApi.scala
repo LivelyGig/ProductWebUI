@@ -14,12 +14,17 @@ import shared.sessionitems.SessionItems.ProfilesViewItems
 
 
 object CoreApi {
+
+  def getBaseUrl() = {
+    s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+  }
     //var BASE_URL = "http://192.168.99.100:8888/api"
-    var BASE_URL = "http://localhost:9876/api"
+    //var BASE_URL = "http://localhost:9876/api"
+
     var CREATE_USER_REQUEST = "createUserRequest"
     private def ajaxPost(requestContent: String): Future[String] = {
       Ajax.post(
-        url = BASE_URL,
+        url = getBaseUrl,
         data = requestContent,
         headers = Map("Content-Type" -> "application/json;charset=UTF-8")
       ).map(_.responseText)

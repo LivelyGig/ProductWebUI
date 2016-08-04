@@ -706,6 +706,11 @@ object DashBoardCSS {
       height(120.px),
       width(160.px)
     )
+
+    val marginLR = style(
+      marginLeft(10.%%),
+      marginRight(10.%%)
+    )
   }
 
 }
