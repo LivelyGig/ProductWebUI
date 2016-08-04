@@ -62,8 +62,11 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showApiDetailsForm = true))
     }
 
-    def addLoginDetails(showLoginForm : Boolean = true): Callback = {
-      t.modState(s => s.copy(showApiDetailsForm = false, showLoginForm = true))
+    def addLoginDetails(showLoginForm : Boolean = false): Callback = {
+      if(showLoginForm)
+        t.modState(s => s.copy(showApiDetailsForm = false, showLoginForm = true))
+      else
+        t.modState(s => s.copy(showApiDetailsForm = false))
     }
 
     def addNewAgentForm(): Callback = {
@@ -268,7 +271,7 @@ object AgentLoginSignUp {
     .renderPS((t, P, S) => {
       val B = t.backend
       <.div()(
-        Button(Button.Props(B.addApiDetailsForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Api Details"),
+        Button(Button.Props(B.addApiDetailsForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Login"),
       //  Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Log In"),
      //   Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
         //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),

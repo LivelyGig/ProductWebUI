@@ -36,6 +36,7 @@ object ApiDetailsForm {
   case class State( login: Boolean = false, hostName: String = dom.window.location.hostname, portNumber: String = "9876")
 
   class Backend(t: BackendScope[Props, State]) {
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
@@ -44,6 +45,9 @@ object ApiDetailsForm {
       t.modState(s => s.copy(login = true))
     }
 
+    def hideModal = Callback{
+      $(t.getDOMNode()).modal("hide")
+    }
     def hide = {
       $(t.getDOMNode()).modal("hide")
     }
@@ -106,7 +110,8 @@ object ApiDetailsForm {
                   )
                 ),
                 <.div(^.className := "text-center form-group")(
-                  <.button(^.tpe := "submit", ^.id := "LoginID", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Submit")
+                  <.button(^.tpe := "submit", ^.id := "LoginID", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Submit"),
+                  <.button(^.tpe := "button", DashBoardCSS.Style.marginLeftCloseBtn , ^.className := "btn",^.onClick --> hideModal, DashBoardCSS.Style.btnBackground, "Cancel")
                 )
               )
             )
@@ -121,12 +126,12 @@ object ApiDetailsForm {
     .initialState_P(p => State())
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
-      $(modal).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
+//      $(modal).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
+
     })
-    .componentDidUpdate(scope => Callback {
-
+    .componentDidUpdate(scope => Callback{
+      if(scope.currentState.login)
         scope.$.backend.hide
-
     })
     .build
 
