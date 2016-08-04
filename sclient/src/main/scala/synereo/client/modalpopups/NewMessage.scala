@@ -33,6 +33,7 @@ import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
 
 import scala.concurrent.Future
+import scala.collection.mutable.ListBuffer
 
 //scalastyle:off
 object NewMessage {
@@ -90,7 +91,7 @@ object NewMessageForm {
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
-                   labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
+                   labelsSelectizeInputId: String = "labelsSelectizeInputId", tags: Seq[String] = Seq())
 
   val getUsers = SYNEREOCircuit.connect(_.user)
   val getConnections = SYNEREOCircuit.connect(_.connections)
@@ -108,7 +109,15 @@ object NewMessageForm {
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
+      val words: Seq[String] = value.split(" ")
+      var tags: Seq[String] = Seq()
+      words.foreach(
+        word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
+          tags = tags :+ word
+        }
+      )
+      //      println(tags)
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tags))
     }
 
     def hideModal = {
@@ -141,6 +150,17 @@ object NewMessageForm {
       val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))
       allLabels.distinct
     }
+
+    //    def createHashtag(text: String) = {
+    //      val newText: Seq[String] = text.split(" ")
+    //      newText.foreach(
+    //        text => if (text.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
+    //          newText ++ text
+    //        }
+    //      )
+    //      t.modState()
+    //
+    //    }
 
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
@@ -197,7 +217,9 @@ object NewMessageForm {
             ),
             <.div()(
               <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := s.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
-            )
+            ),
+            <.div()
+
           ),
           <.div(^.className := "row")(
             <.div()(
@@ -228,12 +250,13 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePostContent(), labelModel = Label()))
+    .initialState_P(p => State(new MessagePostContent()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal
       }
+      //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted())
     //      .shouldComponentUpdate(scope => false)
