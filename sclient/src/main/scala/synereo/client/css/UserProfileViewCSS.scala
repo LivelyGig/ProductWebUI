@@ -81,7 +81,14 @@ object UserProfileViewCSS {
 
     val inputText = style(
       width(200.px),
-      color.black
+      color.black,
+      marginBottom(1.%%)
+    )
+
+    val deleteButton = style(
+      position.relative,
+      top(-47.px),
+      left(270.px)
     )
 
   }
