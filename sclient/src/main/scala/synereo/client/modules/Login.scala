@@ -84,9 +84,9 @@ object Login {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
-          case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(showErrorModal = true)).runNow()
+          case Failure(res) =>
+            log.debug(s"createUserFailure: ${res}")
+            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewUserForm = false))
@@ -124,7 +124,8 @@ object Login {
             case SERVER_ERROR => processServerError(response)
           }
         case Failure(res) =>
-          processServerError("")
+          println("res = " + res.getMessage)
+          processServerError(res.getMessage)
       }
       t.modState(s => s.copy(showLoginForm = false))
     }
@@ -147,23 +148,25 @@ object Login {
           //      checkIntroductionNotification
           log.debug("login successful")
         case Failure(res) =>
-          processServerError("")
+          println("res = " + res.getMessage)
+          processServerError(res.getMessage)
       }
-
     }
+
 
     def processLoginFailed(responseStr: String): Unit = {
       val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+
       $(loginLoader).addClass("hidden")
       println("login error")
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
     def processServerError(responseStr: String): Unit = {
-      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
+      //      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       $(loginLoader).addClass("hidden")
-      println("internal server error")
-      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = loginError.content.reason)).runNow()
+      println(s"internal server error  ${responseStr}")
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = responseStr)).runNow()
     }
 
     def loginUser(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false): Callback = {
@@ -190,9 +193,9 @@ object Login {
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
             }
 
-          case Failure(s) =>
-            log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
-            t.modState(s => s.copy(showErrorModal = true)).runNow()
+          case Failure(res) =>
+            log.debug(s"ConfirmAccountCreationAPI failure: ${res.getMessage}")
+            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
       } else {
@@ -329,7 +332,7 @@ object Login {
               RegistrationFailed(RegistrationFailed.Props(registrationFailed))
             }
             else if (s.showErrorModal) {
-              LoginErrorModal(LoginErrorModal.Props(serverError,s.loginErrorMessage))
+              LoginErrorModal(LoginErrorModal.Props(serverError, s.loginErrorMessage))
             }
             else if (s.showAccountValidationFailed) {
               AccountValidationFailed(AccountValidationFailed.Props(accountValidationFailed))

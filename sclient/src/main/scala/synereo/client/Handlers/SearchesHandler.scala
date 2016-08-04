@@ -71,7 +71,8 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
           SYNEREOCircuit.dispatch(CreateLabels(labelsNames.map(SearchesModelHandler.leafMod)))
         case Failure(res) =>
           if (count == 3) {
-            logger.log.debug("server error")
+//            logger.log.debug("server error")
+            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
             post()

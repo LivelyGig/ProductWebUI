@@ -5,4 +5,4 @@ package shared.RootModels
   */
 
 
-case class AppRootModel(isServerError : Boolean = false)
+case class AppRootModel(isServerError : Boolean = false, serverErrorMsg: String = "")

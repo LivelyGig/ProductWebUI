@@ -58,18 +58,21 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       subscribe()
       def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
         case Success(res) =>
+          println(s"message post successful ${res}")
           SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
           SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
           SYNEREOCircuit.dispatch(RefreshMessages())
+
         case Failure(res) =>
           if (count == 3) {
-            logger.log.error("Open Error modal Popup")
+          println(s"Failure data = ${res.getMessage}")
+//            logger.log.error("Open Error modal Popup")
+            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
             subscribe()
             logger.log.error("Error in subscription")
           }
-
       }
 
       noChange
@@ -83,13 +86,13 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
         case Failure(res) =>
           if (count == 3) {
-            logger.log.error("Open Error modal Popup")
+//            logger.log.error("Open Error modal Popup")
+            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
             subscribe()
             logger.log.error("Error in subscription")
           }
-
       }
 
       noChange
@@ -108,7 +111,8 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           SYNEREOCircuit.dispatch(SubsForMsg(req))
         case Failure(res) =>
           if (count == 3) {
-            logger.log.error("server error")
+//            logger.log.error("server error")
+            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
             cancelPrevious()
@@ -124,7 +128,8 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           logger.log.debug("message post success")
         case Failure(fail) =>
           if (count == 3) {
-            logger.log.error("server error")
+//            logger.log.error("server error")
+            SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
           } else {
             count = count + 1
             postMsg()

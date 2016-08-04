@@ -10,7 +10,7 @@ import shared.models.{MessagePost, MessagePostContent}
 import shared.RootModels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.FullPostViewModal
+import synereo.client.modalpopups.{FullPostViewModal, ServerErrorModal}
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -22,7 +22,9 @@ import synereo.client.components.Icon
 
 import scala.language.reflectiveCalls
 import org.widok.moment.Moment
+import synereo.client.handlers.ShowServerError
 import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
 
 
 /**
@@ -38,14 +40,17 @@ object Dashboard {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(postMessage: MessagePost, ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView: Boolean = true)
+  case class State(postMessage: MessagePost, ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView: Boolean = true,showErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
     //scalastyle:off
 
-    /*def mounted(props: Props): Callback = {
-
-    }*/
+    def updated(props: Props): Callback = Callback{
+      if (props.proxy().isFailed){
+        SYNEREOCircuit.dispatch(ShowServerError("Failed to connect to the server!"))
+      }
+//
+    }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
@@ -85,8 +90,17 @@ object Dashboard {
       Callback.empty
     }
 
+
+
+    def serverError(): Callback = {
+     // SYNEREOCircuit.dispatch(ShowServerError(""))
+      t.modState(s => s.copy(showErrorModal = false))
+    }
+
     //scalastyle:off
     def render(s: State, p: Props) = {
+      val getServerError =  SYNEREOCircuit.zoom(_.appRootModel).value
+
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid")(
         //        <.div(^.className := "row")(
         //          //Left Sidebar
@@ -110,14 +124,21 @@ object Dashboard {
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
                   <.div(
+
+                    p.proxy().renderFailed(ex => /*<.div(
+                      //                      <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse),
+                      <.div(SynereoCommanStylesCSS.Style.renderFailedMessage)(s"We are encountering problems with serving the request!${ex.getMessage}")
+                    )*/
+
+                        if(!getServerError.isServerError)
+                        ServerErrorModal(ServerErrorModal.Props(serverError))
+                        else
+                          <.div()
+                    ),
+
                     p.proxy().render(
                       messagesRootModel =>
                         HomeFeedList(messagesRootModel.messagesModelList)
-                    ),
-                    p.proxy().renderFailed(ex => <.div(
-                      //                      <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse),
-                      <.div(SynereoCommanStylesCSS.Style.renderFailedMessage)("We are encountering problems with serving the request!")
-                    )
                     ),
                     p.proxy().renderPending(ex => <.div(
                       <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
@@ -204,7 +225,7 @@ object Dashboard {
                                       "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                                     <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
                                       <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> openFullViewModalPopUP)(
-                                        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+                                       // "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
                                       ),
                                       <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
@@ -243,7 +264,7 @@ object Dashboard {
   val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State(new MessagePost("", "", "", "", Nil, new MessagePostContent("", ""))))
     .renderBackend[Backend]
-    //    .componentDidMount(scope => scope.backend.mounted(scope.props))
+//    .componentDidUpdate(scope => scope.$.backend.updated(scope.currentProps))
     .build
 
   def apply(proxy: ModelProxy[Pot[MessagesRootModel]]) = component(Props(proxy))

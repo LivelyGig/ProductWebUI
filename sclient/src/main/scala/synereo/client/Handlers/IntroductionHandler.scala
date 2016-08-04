@@ -5,8 +5,8 @@ import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.dtos._
 import shared.RootModels.IntroRootModel
 import synereo.client.logger
-import synereo.client.services.CoreApi
-
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import diode.AnyAction._
 import concurrent._
 import ExecutionContext.Implicits._
 import scala.util.{Failure, Success}
@@ -39,7 +39,8 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
           logger.log.debug("Connection request sent successfully")
         case Failure(fail) =>
           if (count == 3) {
-            logger.log.error("Error sending connection request")
+//            logger.log.error("Error sending connection request")
+            SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
           } else {
             count = count + 1
             post()
@@ -58,7 +59,7 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
     case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => logger.log.debug("Intro confirm request sent successfully")
-        case Failure(response) => logger.log.error("Error sending intro confirm request")
+        case Failure(response) => /*logger.log.error("Error sending intro confirm request")*/ SYNEREOCircuit.dispatch(ShowServerError(response.getMessage))
       }
       val newList = value.introResponse.filterNot(
         _.introSessionId.equals(introConfirmReq.introSessionId)
