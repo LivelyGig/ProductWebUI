@@ -3,20 +3,23 @@ package client.modules
 import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.css.{ LftcontainerCSS, DashBoardCSS }
+import client.css.{DashBoardCSS, LftcontainerCSS}
+import client.handlers.LogoutUser
 import org.querki.jquery._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
+import diode.AnyAction._
 
 // scalastyle:off
 object AppModule {
-  val DASHBOARD_VIEW    = "dashboard"
-  val PROFILES_VIEW     = "profiles"
-  val PROJECTS_VIEW     = "jobs"
-  val CONTRACTS_VIEW    = "contracts"
-  val MESSAGES_VIEW     = "messages"
-  val OFFERINGS_VIEW    = "offerings"
-  val CONNECTIONS_VIEW  = "connections"
+  val DASHBOARD_VIEW = "dashboard"
+  val PROFILES_VIEW = "profiles"
+  val PROJECTS_VIEW = "jobs"
+  val CONTRACTS_VIEW = "contracts"
+  val MESSAGES_VIEW = "messages"
+  val OFFERINGS_VIEW = "offerings"
+  val CONNECTIONS_VIEW = "connections"
 
   case class Props(view: String)
 
@@ -34,7 +37,7 @@ object AppModule {
       $(profileActionButtons).css("pointer-events", "none")
     } else {
       $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
-//      e.stopPropagation()
+      //      e.stopPropagation()
       $(profileActionButtons).css("pointer-events", "all")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
@@ -49,6 +52,7 @@ object AppModule {
     def mounted(props: Props) = {
       showSidebar
     }
+
     def render(p: Props) = {
       val profilesProxy = LGCircuit.connect(_.profiles)
       val searchesProxy = LGCircuit.connect(_.searches)
@@ -68,19 +72,19 @@ object AppModule {
                 //Adding toggle button for sidebar
                 <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left hidden-md hidden-lg", ^.float := "right", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
                   ^.onClick --> showSidebar)(
-                    <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)( /*Icon.chevronCircleLeft*/ )
-                  ),
+                  <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)(/*Icon.chevronCircleLeft*/)
+                ),
                 searchesProxy(searchesProxy => Searches(Searches.Props(p.view, searchesProxy)))
               ),
               <.div(^.className := "main col-md-9 col-md-offset-3 LftcontainerCSS_Style-sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
-                    case PROFILES_VIEW     => profilesProxy(ProfilesResults(_))
-                    case PROJECTS_VIEW     => jobsProxy(ProjectResults(_))
-                    case MESSAGES_VIEW     => messagesProxy(MessagesResults(_))
-                    case CONNECTIONS_VIEW  => connectionsProxy(ConnectionsResults(_))
-                    case CONTRACTS_VIEW    => ContractResults.component()
-                    case OFFERINGS_VIEW    => OfferingResults.component()
+                    case PROFILES_VIEW => profilesProxy(ProfilesResults(_))
+                    case PROJECTS_VIEW => jobsProxy(ProjectResults(_))
+                    case MESSAGES_VIEW => messagesProxy(MessagesResults(_))
+                    case CONNECTIONS_VIEW => connectionsProxy(ConnectionsResults(_))
+                    case CONTRACTS_VIEW => ContractResults.component()
+                    case OFFERINGS_VIEW => OfferingResults.component()
                   }
                 )
               )
@@ -95,6 +99,11 @@ object AppModule {
   private val component = ReactComponentB[Props]("AppModule")
     .initialState_P(p => ())
     .renderBackend[Backend]
+    .componentWillMount(scope => Callback {
+      val userHasSessionUri = LGCircuit.zoom(_.user.sessionUri).value
+      if (userHasSessionUri.length < 1)
+        LGCircuit.dispatch(LogoutUser())
+    })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
