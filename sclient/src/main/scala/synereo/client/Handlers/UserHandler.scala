@@ -5,7 +5,8 @@ import org.scalajs.dom.window
 import shared.dtos.UpdateUserRequest
 import shared.models.UserModel
 import synereo.client.logger
-import synereo.client.services.CoreApi
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import diode.AnyAction._
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -37,7 +38,8 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
           logger.log.debug("user update request sent successfully")
         case Failure(response) =>
           if (count == 3) {
-            logger.log.error("user update error")
+//            logger.log.error("user update error")
+            SYNEREOCircuit.dispatch(ShowServerError(response.toString))
           } else {
             count = count + 1
             post()
