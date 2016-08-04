@@ -7,12 +7,14 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
 import shared.models.ConnectionsModel
-import synereo.client.handlers.{CreateLabels}
+import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
 
 import scala.language.existentials
 import scala.scalajs.js
 import diode.AnyAction._
+import diode.react.ModelProxy
+import shared.RootModels.SearchesRootModel
 
 
 /**
@@ -49,7 +51,7 @@ object ConnectionsLabelsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String)
+  case class Props(parentIdentifier: String,proxy : ModelProxy[SearchesRootModel])
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
@@ -60,7 +62,7 @@ object ConnectionsLabelsSelectize {
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
       //      $(selectizeInput).selectize()
       $(selectizeInput).selectize(SelectizeConfig
-        .maxItems(30)
+        .maxItems(7)
         .plugins("remove_button")
       )
     }
@@ -73,7 +75,8 @@ object ConnectionsLabelsSelectize {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
       initializeTagsInput()
     }
-//    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
+
+    //    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
     /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
@@ -113,8 +116,12 @@ object ConnectionsLabelsSelectize {
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .componentWillMount(scope => scope.backend.willMount(scope.props))
-//    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
+    //    .componentDidUpdate(scope => Callback {
+    //      println("tags input is did update ")
+    //      scope.$.backend.initializeTagsInput
+    //    })
+    //    .componentWillMount(scope => scope.backend.willMount(scope.props))
+    //    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     //    .componentWillUpdate(scope => scope.)
     .build
 

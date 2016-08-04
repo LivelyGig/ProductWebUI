@@ -38,7 +38,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
           logger.log.debug("user update request sent successfully")
         case Failure(response) =>
           if (count == 3) {
-//            logger.log.error("user update error")
+            //            logger.log.error("user update error")
             SYNEREOCircuit.dispatch(ShowServerError(response.toString))
           } else {
             count = count + 1

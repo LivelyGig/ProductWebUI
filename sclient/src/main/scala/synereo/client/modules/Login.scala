@@ -86,7 +86,7 @@ object Login {
             }
           case Failure(res) =>
             log.debug(s"createUserFailure: ${res}")
-            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
+            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.getMessage)).runNow()
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewUserForm = false))
@@ -159,7 +159,7 @@ object Login {
 
       $(loginLoader).addClass("hidden")
       println("login error")
-      t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
+      t.modState(s => s.copy(showLoginFailed = true)).runNow()
     }
 
     def processServerError(responseStr: String): Unit = {

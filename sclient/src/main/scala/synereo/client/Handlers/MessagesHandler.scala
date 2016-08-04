@@ -16,7 +16,7 @@ import synereo.client.utils.{AppUtils, ConnectionsUtils}
 
 // Actions
 //scalastyle:off
-case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(5))
+case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolicy: RetryPolicy = Retry(3))
   extends PotActionRetriable[MessagesRootModel, RefreshMessages] {
   override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy): RefreshMessages = RefreshMessages(value, newRetryPolicy)
 }
@@ -31,7 +31,7 @@ case class CancelPreviousAndSubscribeNew(req: SubscribeRequest)
 
 case class ClearMessages()
 
-case class PostMessage (req: SubscribeRequest)
+case class PostMessage(req: SubscribeRequest)
 
 case class PendingMsg()
 
@@ -58,15 +58,15 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       subscribe()
       def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
         case Success(res) =>
-          println(s"message post successful ${res}")
+          logger.log.debug(s"eval subscribe complete :${res}")
           SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
           SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
           SYNEREOCircuit.dispatch(RefreshMessages())
 
         case Failure(res) =>
           if (count == 3) {
-          println(s"Failure data = ${res.getMessage}")
-//            logger.log.error("Open Error modal Popup")
+            println(s"Failure data = ${res.getMessage}")
+            //            logger.log.error("Open Error modal Popup")
             SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
@@ -86,7 +86,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
         case Failure(res) =>
           if (count == 3) {
-//            logger.log.error("Open Error modal Popup")
+            //            logger.log.error("Open Error modal Popup")
             SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
@@ -111,7 +111,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           SYNEREOCircuit.dispatch(SubsForMsg(req))
         case Failure(res) =>
           if (count == 3) {
-//            logger.log.error("server error")
+            //            logger.log.error("server error")
             SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
           } else {
             count = count + 1
@@ -123,12 +123,12 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
     case PostMessage(req) =>
       var count = 1
       postMsg()
-      def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete{
+      def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
         case Success(res) =>
           logger.log.debug("message post success")
         case Failure(fail) =>
           if (count == 3) {
-//            logger.log.error("server error")
+            //            logger.log.error("server error")
             SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
           } else {
             count = count + 1

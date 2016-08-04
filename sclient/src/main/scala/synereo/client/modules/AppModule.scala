@@ -10,7 +10,7 @@ import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.RootModels.AppRootModel
-import synereo.client.handlers.ShowServerError
+import synereo.client.handlers.{LogoutUser, ShowServerError}
 import diode.AnyAction._
 import synereo.client.logger
 import synereo.client.modalpopups.{ErrorModal, ServerErrorModal}
@@ -56,7 +56,7 @@ object AppModule {
       logger.log.debug("app module mounted")
       val userHasSessionUri = SYNEREOCircuit.zoom(_.user.sessionUri).value
       if (userHasSessionUri.length < 1) {
-        window.location.href = "/"
+       SYNEREOCircuit.dispatch(LogoutUser())
       }
 
     }

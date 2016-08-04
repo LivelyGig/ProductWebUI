@@ -276,7 +276,7 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top(50.%%),
       left(50.%%),
-      zIndex(2000),
+      //      zIndex(00),
       color.grey
     )
     val messagesLoadingWaitCursor = style(
@@ -285,7 +285,7 @@ object SynereoCommanStylesCSS {
       position.fixed,
       top(29.%%),
       left(50.%%),
-      zIndex(2000),
+      zIndex(100),
       color.grey
     )
     val backgroundColorWhite = style(

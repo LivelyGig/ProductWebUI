@@ -24,7 +24,7 @@ object SearchComponent {
 
   case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz")
 
-  val getSearches = SYNEREOCircuit.connect(_.searches)
+  val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
@@ -34,7 +34,7 @@ object SearchComponent {
     def fromSelecize(): Callback = Callback {}
 
     def searchWithLblAndCnxn(e: ReactEventI) = Callback {
-      val (cnxns,labels) = ConnectionsLabelsSelectize
+      val (cnxns, labels) = ConnectionsLabelsSelectize
         .getCnxnsAndLabelsFromSelectize(t.state.runNow().connectionsSelectizeInputId)
       val cnxnToPost = ConnectionsUtils.getCnxnForReq(cnxns)
       val searchLabels = LabelsUtils.buildProlog(
@@ -47,7 +47,8 @@ object SearchComponent {
     def render(s: State, p: Props) = {
       <.div(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.searchBoxContainer)(
-          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))),
+          searchesProxy(proxy => ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId, proxy)))),
+        //          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))),
         <.div(SynereoCommanStylesCSS.Style.displayInline)(
           <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
           ))
