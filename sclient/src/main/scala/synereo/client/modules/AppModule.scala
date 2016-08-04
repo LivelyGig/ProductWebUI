@@ -13,7 +13,7 @@ import shared.RootModels.AppRootModel
 import synereo.client.handlers.ShowServerError
 import diode.AnyAction._
 import synereo.client.logger
-import synereo.client.modalpopups.ErrorModal
+import synereo.client.modalpopups.{ErrorModal, ServerErrorModal}
 import org.scalajs.dom.window
 
 import scalacss.ScalaCssReact._
@@ -37,6 +37,7 @@ object AppModule {
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
   val introductionProxy = SYNEREOCircuit.connect(_.introduction)
+  val erroProxy = SYNEREOCircuit.connect(_.appRootModel)
 
   val searchContainer: js.Object = "#searchContainer"
 
@@ -47,14 +48,8 @@ object AppModule {
   case class Backend(t: BackendScope[Props, State]) {
 
     def serverError(): Callback = {
-      SYNEREOCircuit.dispatch(ShowServerError())
+      SYNEREOCircuit.dispatch(ShowServerError(""))
       t.modState(s => s.copy(showErrorModal = false))
-    }
-
-    def GetErrormodal(): Callback = {
-      SYNEREOCircuit.dispatch(ShowServerError())
-      val getIsServerError = SYNEREOCircuit.zoom(_.appRootModel).value
-      t.modState(s => s.copy(showErrorModal = getIsServerError.isServerError))
     }
 
     def mounted(props: Props) = Callback {
@@ -79,15 +74,12 @@ object AppModule {
               ^.onMouseLeave --> Callback {
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
-            )(Sidebar(Sidebar.Props()))
-            //           , <.div(^.onClick --> GetErrormodal() )("CLick Me"),
-            //            // GetErrormodal(),
-            //            if(state.showErrorModal){
-            //              ErrorModal(ErrorModal.Props(serverError))
-            //            }
-            //            else
-            //              {<.div()}
-
+            )(Sidebar(Sidebar.Props())),
+            if (p.proxy().isServerError){
+              ServerErrorModal(ServerErrorModal.Props(serverError))
+            } else {
+              <.div()
+            }
           ),
           <.div(
             p.view match {
