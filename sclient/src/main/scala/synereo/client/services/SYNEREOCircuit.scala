@@ -15,7 +15,7 @@ case class RootModel(connections: ConnectionsRootModel, user: UserModel, message
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(ConnectionsRootModel(Nil),
-    UserModel("", "", ""), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(),AppRootModel())
+    UserModel(), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(),AppRootModel())
 
   // combine all handlers into one
   override protected val actionHandler = composeHandlers(
