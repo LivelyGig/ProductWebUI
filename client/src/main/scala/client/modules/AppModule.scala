@@ -4,12 +4,14 @@ import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS, LftcontainerCSS}
-import client.handlers.LogoutUser
+//import client.handlers.{LogoutUser, ShowServerError}
 import org.querki.jquery._
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
+import diode.react.ModelProxy
+import shared.RootModels.AppRootModel
 
 // scalastyle:off
 object AppModule {
@@ -21,7 +23,7 @@ object AppModule {
   val OFFERINGS_VIEW = "offerings"
   val CONNECTIONS_VIEW = "connections"
 
-  case class Props(view: String)
+  case class Props(view: String/*,proxy: ModelProxy[AppRootModel]*/)
 
   def showSidebar(): Callback = Callback {
     val sidebtn: js.Object = "#searchContainer"
@@ -49,8 +51,9 @@ object AppModule {
   }
 
   case class Backend(t: BackendScope[Props, Unit]) {
-    def mounted(props: Props) = {
+    def mounted(props: Props) =  {
       showSidebar
+       //  LGCircuit.dispatch(ShowServerError(""))
     }
 
     def render(p: Props) = {
@@ -59,6 +62,8 @@ object AppModule {
       val jobsProxy = LGCircuit.connect(_.jobPosts)
       val messagesProxy = LGCircuit.connect(_.messages)
       val connectionsProxy = LGCircuit.connect(_.connections)
+     // val appProxy = LGCircuit.connect(_.appRootModel)
+
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
           Presets(Presets.Props(p.view))
@@ -104,7 +109,7 @@ object AppModule {
 //      if (userHasSessionUri.length < 1)
 //        LGCircuit.dispatch(LogoutUser())
 //    })
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentDidMount(scope =>  scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)

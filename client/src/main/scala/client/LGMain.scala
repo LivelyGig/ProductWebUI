@@ -60,21 +60,23 @@ object LGMain extends js.JSApp {
   case object LandingLoc extends Loc
 
   val userProxy = LGCircuit.connect(_.user)
+//  val appProxy = LGCircuit.connect(_.appRootModel)
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, LandingLoc) ~> renderR(ctl => LandingLocation.component(ctl))
       | staticRoute(s"#${AppModule.DASHBOARD_VIEW}", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute(s"#${AppModule.MESSAGES_VIEW}", MessagesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.MESSAGES_VIEW)))
+      | staticRoute(s"#${AppModule.MESSAGES_VIEW}", MessagesLoc) ~> renderR(ctl => /*appProxy(proxy => */AppModule(AppModule.Props(AppModule.MESSAGES_VIEW/*,proxy)*/)))
       // ToDo: the following should be renamed from projects to jobs ?
-      | staticRoute(s"#${AppModule.PROJECTS_VIEW}", JobPostsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.PROJECTS_VIEW)))
+      | staticRoute(s"#${AppModule.PROJECTS_VIEW}", JobPostsLoc) ~> renderR(ctl => /*appProxy(proxy => */AppModule(AppModule.Props(AppModule.PROJECTS_VIEW/*,proxy)*/)))
       // ToDo: the following should be contracts not contract
-      | staticRoute(s"#${AppModule.CONTRACTS_VIEW}", ContractsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONTRACTS_VIEW)))
+      | staticRoute(s"#${AppModule.CONTRACTS_VIEW}", ContractsLoc) ~> renderR(ctl =>/*appProxy(proxy =>*/ AppModule(AppModule.Props(AppModule.CONTRACTS_VIEW/*,proxy)*/)))
       // ToDo: following route should be called Profiles not Talent.
-      | staticRoute(s"#${AppModule.PROFILES_VIEW}", ProfilesLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.PROFILES_VIEW)))
-      | staticRoute(s"#${AppModule.OFFERINGS_VIEW}", OfferingsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW)))
-      | staticRoute(s"#${AppModule.CONNECTIONS_VIEW}", ConnectionsLoc) ~> renderR(ctl => AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW)))).notFound(redirectToPage(LandingLoc)(Redirect.Replace))
+      | staticRoute(s"#${AppModule.PROFILES_VIEW}", ProfilesLoc) ~> renderR(ctl =>/*appProxy(proxy =>*/ AppModule(AppModule.Props(AppModule.PROFILES_VIEW/*,proxy)*/)))
+      | staticRoute(s"#${AppModule.OFFERINGS_VIEW}", OfferingsLoc) ~> renderR(ctl =>/*appProxy(proxy => */AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW/*,proxy)*/)))
+      | staticRoute(s"#${AppModule.CONNECTIONS_VIEW}", ConnectionsLoc) ~> renderR(ctl => /*appProxy(proxy =>*/AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW/*,proxy)*/))))
+      .notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
 
   // scalastyle:off
