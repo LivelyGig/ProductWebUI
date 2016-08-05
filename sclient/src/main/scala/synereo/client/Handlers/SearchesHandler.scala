@@ -2,7 +2,7 @@ package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.Label
-import shared.RootModels.SearchesRootModel
+import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.utils.PrologParser
 import shared.dtos.{Connection, LabelPost, SubscribeRequest}
 import synereo.client.logger

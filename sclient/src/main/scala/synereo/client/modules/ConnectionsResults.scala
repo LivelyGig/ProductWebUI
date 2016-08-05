@@ -2,7 +2,7 @@ package synereo.client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope,ReactComponentB}
-import shared.RootModels.ConnectionsRootModel
+import synereo.client.rootmodels.ConnectionsRootModel
 import diode.react._
 import synereo.client.css._
 import shared.models.ConnectionsModel

@@ -16,7 +16,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.{ConnectionsModel, MessagePost}
 import japgolly.scalajs.react
 import org.scalajs.dom._
-import shared.RootModels.ConnectionsRootModel
+import synereo.client.rootmodels.ConnectionsRootModel
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.{Icon, MIcon}
 import synereo.client.utils.ConnectionsUtils

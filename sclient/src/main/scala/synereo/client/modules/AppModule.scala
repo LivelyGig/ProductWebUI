@@ -9,7 +9,7 @@ import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.RootModels.AppRootModel
+import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers.{LogoutUser, ShowServerError}
 import diode.AnyAction._
 import synereo.client.logger

@@ -1,13 +1,13 @@
 package synereo.client.services
 
 import synereo.client.handlers._
-import shared.RootModels._
 import diode._
 import diode.data._
 import diode.react.ReactConnector
 import shared.models.UserModel
 import synereo.client.handlers.AppHandler
 import synereo.client.handlers.IntroductionHandler
+import synereo.client.rootmodels._
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
                      searches: SearchesRootModel, introduction: IntroRootModel, sessionPing: SessionRootModel, appRootModel : AppRootModel)

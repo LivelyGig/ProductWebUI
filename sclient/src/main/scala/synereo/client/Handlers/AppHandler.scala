@@ -1,7 +1,7 @@
 package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
-import shared.RootModels.AppRootModel
+import synereo.client.rootmodels.AppRootModel
 
 
 /**

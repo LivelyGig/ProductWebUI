@@ -6,15 +6,16 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
-import shared.models.{ConnectionsModel, Label}
 import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
+import synereo.client.rootmodels._
 
 import scala.language.existentials
 import scala.scalajs.js
 import diode.AnyAction._
 import diode.react.ModelProxy
-import shared.RootModels.SearchesRootModel
+import shared.models.Label
+import synereo.client.rootmodels.SearchesRootModel
 
 
 /**
@@ -73,6 +74,8 @@ object ConnectionsLabelsSelectize {
         t.modState(s => s.copy(connections = value)).runNow()
       }
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
+      println("did mount called ")
+      attachLabels()
       initializeTagsInput()
     }
 
@@ -118,9 +121,10 @@ object ConnectionsLabelsSelectize {
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
         //        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
-        //          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
-        for (label <- state.labels) yield
+        for (label <- props.proxy().searchesModel) yield
           <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
+      //        for (label <- state.labels) yield
+      //          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
 
     }
   }

@@ -9,7 +9,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
-import shared.RootModels.SearchesRootModel
+import synereo.client.rootmodels.SearchesRootModel
 import shared.dtos.LabelPost
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles

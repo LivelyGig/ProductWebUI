@@ -9,7 +9,7 @@ import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._
 import diode.react.ModelProxy
 import org.querki.jquery._
-import shared.RootModels.IntroRootModel
+import synereo.client.rootmodels.IntroRootModel
 import synereo.client.components.MIcon
 import synereo.client.handlers.UpdateIntroductionsModel
 import synereo.client.logger

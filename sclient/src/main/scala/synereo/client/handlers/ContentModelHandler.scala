@@ -6,7 +6,7 @@ import shared.models.{ConnectionsModel, MessagePost, Post}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
-import shared.RootModels.SessionRootModel
+import synereo.client.rootmodels.SessionRootModel
 import synereo.client.utils.ConnectionsUtils
 
 /**

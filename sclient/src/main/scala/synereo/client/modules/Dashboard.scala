@@ -7,7 +7,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.sessionitems.SessionItems
 import shared.models.{MessagePost, MessagePostContent}
-import shared.RootModels.MessagesRootModel
+import synereo.client.rootmodels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups.{FullPostViewModal, ServerErrorModal}

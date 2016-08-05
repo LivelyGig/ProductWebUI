@@ -3,7 +3,7 @@ package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.dtos._
-import shared.RootModels.IntroRootModel
+import synereo.client.rootmodels.IntroRootModel
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._

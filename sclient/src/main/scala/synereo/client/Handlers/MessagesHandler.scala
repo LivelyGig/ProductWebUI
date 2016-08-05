@@ -3,7 +3,7 @@ package synereo.client.handlers
 import diode._
 import diode.data._
 import shared.models.MessagePost
-import shared.RootModels.MessagesRootModel
+import synereo.client.rootmodels.MessagesRootModel
 import diode.util.{Retry, RetryPolicy}
 import shared.dtos._
 import synereo.client.logger
