@@ -6,7 +6,7 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
-import shared.models.ConnectionsModel
+import shared.models.{ConnectionsModel, Label}
 import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
 
@@ -51,9 +51,9 @@ object ConnectionsLabelsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String,proxy : ModelProxy[SearchesRootModel])
+  case class Props(parentIdentifier: String, proxy: ModelProxy[SearchesRootModel])
 
-  case class State(connections: Seq[ConnectionsModel] = Nil)
+  case class State(/*connections: Seq[ConnectionsModel] = Nil,*/ labels: Seq[Label] = Nil)
 
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
@@ -77,12 +77,23 @@ object ConnectionsLabelsSelectize {
     }
 
     //    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
+
+    def attachLabels() = {
+      if (SYNEREOCircuit.zoom(_.searches).value.searchesModel != null) {
+        val value = SYNEREOCircuit.zoom(_.searches).value.searchesModel
+        println(s"new Searchesmodel is : $value")
+        t.modState(s => s.copy(labels = value))
+      }
+    }
+
     /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
         t.modState(s => s.copy(connections = value)).runNow()
       }
     }
+
+
 
     def willMount(props: Props) = Callback {
       if (SYNEREOCircuit.zoom(_.connections).value.isEmpty) {
@@ -106,7 +117,9 @@ object ConnectionsLabelsSelectize {
         <.option(^.value := "")("Select"),
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
-        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
+        //        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
+        //          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
+        for (label <- state.labels) yield
           <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
 
     }
@@ -122,7 +135,10 @@ object ConnectionsLabelsSelectize {
     //    })
     //    .componentWillMount(scope => scope.backend.willMount(scope.props))
     //    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
-    //    .componentWillUpdate(scope => scope.)
+    .componentDidUpdate(scope => Callback {
+    SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())
+    //    println(s"newLabels $newLabels")
+  })
     .build
 
   def apply(props: Props) = component(props)
