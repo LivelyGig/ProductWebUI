@@ -74,7 +74,8 @@ object AccountInfo {
     def updateTextbox(e: ReactEventI): Callback = {
       val currentVal = e.target.value
       val inputId = e.target.id
-      val sectionId = $(s"#${e.target.id}".asInstanceOf[js.Object]).parent().parent().attr("id").toString
+      val sectionId = $(s"#${e.target.id}".asInstanceOf[js.Object]).parent().parent().parent().attr("id").toString
+      printf(sectionId)
       sectionId match {
         case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))
         case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator.map(s => if (s.uid == inputId) s.copy(serverAddress = currentVal) else s)))

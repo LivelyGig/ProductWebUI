@@ -29,7 +29,11 @@ object SynereoCommanStylesCSS {
     val searchBoxContainer = style(
       marginTop(20.px),
       display.inlineBlock,
-      width(380.px)
+      width(380.px),
+      media.maxWidth(800.px)-
+        width(40.%%)
+
+
     )
     val labelSelectizeNavbar = style(
       width(480.px),
