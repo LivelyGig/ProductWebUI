@@ -2,12 +2,12 @@ package client.modalpopups
 
 import client.components.Bootstrap.Modal
 import client.components.{GlobalStyles, Icon}
-import client.components.Validator.ValidatorOptions
+//import client.components.Validator.ValidatorOptions
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
-import client.components.Validator._
+//import client.components.Validator._
 import client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
 import scala.scalajs.js
@@ -29,7 +29,7 @@ object ApiDetailsForm {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  $("#loginFormID".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
+ // $("#loginFormID".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
 
   case class Props(submitHandler: (Boolean) => Callback)
 

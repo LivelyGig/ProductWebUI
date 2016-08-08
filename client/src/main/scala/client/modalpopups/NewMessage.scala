@@ -6,7 +6,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
-import client.components.Validator._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, ProjectCSS}
@@ -51,15 +50,13 @@ object NewMessage {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/
-        /*, ^.onMouseOver --> B.displayBtn*/)(
+      <.div()(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = "profile-action-buttons"), P.buttonName),
         if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
         else
           Seq.empty[ReactElement]
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 
@@ -71,12 +68,11 @@ object NewMessage {
 object NewMessageForm {
 
   val messageID: js.Object = "#messageID"
-  $("#a".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String)
+  case class Props(submitHandler: () => Callback, header: String)
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    cnxsSelectizeParentId: String = "postNewMessageSelectizeInput", labelSelectizeParentId: String = "labelsSelectizeParent")
@@ -125,7 +121,6 @@ object NewMessageForm {
       val state = t.state.runNow()
       LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
         SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
-
       val messageID: js.Object = "#messageID"
       if ($(messageID).hasClass("disabled"))
         t.modState(s => s.copy(postNewMessage = false))
@@ -135,7 +130,7 @@ object NewMessageForm {
     }
 
     def formClosed(state: State, props: Props): Callback = {
-      props.submitHandler(/*state.postMessage*/)
+      props.submitHandler()
     }
 
     // scalastyle:off
@@ -150,15 +145,11 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.id := "a", ^.onSubmit ==> submitForm /*"data-toggle".reactAttr := "validator"*/)(
+
+        <.form("data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(),
-            /*<.div(^.className:="row")(
-              <.div(^.className:="col-md-12 col-sm-12")(<.div(DashBoardCSS.Style.modalHeaderFont)("To"))
-            ),*/
-            /*val selectizeControl : js.Object =*/
             <.div(^.id := s.cnxsSelectizeParentId)(
-              //              val to = "{\"source\":\"alias://ff5136ad023a66644c4f4a8e2a495bb34689/alias\", \"label\":\"34dceeb1-65d3-4fe8-98db-114ad16c1b31\",\"target\":\"alias://552ef6be6fd2c6d8c3828d9b2f58118a2296/alias\"}"
               connectionsProxy(connectionsProxy => ConnectionsSelectize(ConnectionsSelectize.Props(connectionsProxy, s.cnxsSelectizeParentId, fromSelecize)))
             ),
             <.div(DashBoardCSS.Style.paddingTop10px, ^.id := s.labelSelectizeParentId)(
@@ -171,21 +162,17 @@ object NewMessageForm {
               } else {
                 <.div("")
               }
-
             ),
-            <.div()(
-              //              <.div(^.className:="form-group")(
-              <.textarea(^.rows := 6, ^.placeholder := "Subject", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
+            <.div(^.className := "form-group")(
+              <.textarea(^.rows := 6, ^.placeholder := "Subject", bss.formControl, ^.className:="form-control",ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.subject, ^.onChange ==> updateSubject, ^.required := true)
             ),
-            <.div()(
-              //              <.div(^.className:="form-group")(
-              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.text, ^.onChange ==> updateContent, ^.required := true)
+            <.div(^.className := "form-group")(
+              <.textarea(^.rows := 6, ^.placeholder := "Enter your message here:", bss.formControl,^.className:="form-control", ProjectCSS.Style.textareaWidth, DashBoardCSS.Style.replyMarginTop, ^.value := s.postMessage.text, ^.onChange ==> updateContent, ^.required := true)
             )
           ),
           <.div()(
-            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              //              <.div(^.className:="form-group")(
-              <.button(^.tpe := "submit", ^.id := "messageID", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right", ^.className := "form-group")(
+              <.button(^.tpe := "submit", ^.id := "messageID", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Send"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
@@ -196,7 +183,6 @@ object NewMessageForm {
   }
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    //.initialState_P(p => State(p=> new MessagesData("","","")))
     .initialState_P(p => State(new MessagePostContent()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
@@ -205,7 +191,6 @@ object NewMessageForm {
       }
     })
     .componentDidMount(scope => scope.backend.mounted())
-    //      .shouldComponentUpdate(scope => false)
     .build
 
   def apply(props: Props) = component(props)
