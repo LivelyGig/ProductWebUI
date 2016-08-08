@@ -1,12 +1,12 @@
 package synereo.client.modalpopups
 
-import shared.dtos.{ CreateUserResponse, ApiResponse }
+import shared.dtos.{CreateUserResponse, ApiResponse}
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
-import synereo.client.css.{ SynereoCommanStylesCSS, SignupCSS, LoginCSS }
+import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
 import shared.models.UserModel
-import synereo.client.services.{ ApiTypes, CoreApi }
-import scala.util.{ Failure, Success }
+import synereo.client.services.{ApiTypes, CoreApi}
+import scala.util.{Failure, Success}
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -15,17 +15,17 @@ import scala.scalajs.js
 import org.querki.jquery._
 
 /**
- * Created by Mandar on 4/19/2016.
- */
+  * Created by Mandar on 4/19/2016.
+  */
 //scalastyle:off
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean= false)
+  case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false)
 
-  val name: js.Object = "#Name"
+  val LoginForm: js.Object = "#LoginForm"
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
@@ -66,6 +66,10 @@ object LoginForm {
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
+    def userNameFocus(): Unit = {
+      $(LoginForm).find("input:first").focus()
+    }
+
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(s"state.showNewAgentForm: ${state.showNewUserForm}")
@@ -78,8 +82,7 @@ object LoginForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-
-          header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div( /*SignupCSS.Style.signUpHeading*/ )( /*headerText*/ )), /*<.div()(headerText)),*/
+          header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
 
           closed = () => formClosed(s, p),
           addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false
@@ -95,7 +98,7 @@ object LoginForm {
                 <.div(SignupCSS.Style.signUpHeading)(headerText),
                 <.div(^.className := "form-group")(
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
-                    ^.placeholder := "username", "data-error".reactAttr := "Username is required", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
+                    ^.placeholder := "username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "form-group")(
@@ -122,7 +125,7 @@ object LoginForm {
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
           Button(Button.Props(addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), "Dont have an account?"),
           Button(Button.Props(addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
-        //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
+          //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
     }
@@ -131,6 +134,9 @@ object LoginForm {
   private val component = ReactComponentB[Props]("AddLoginForm")
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
+    .componentDidMount(scope => Callback {
+      $(scope.getDOMNode()).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewUserForm || scope.currentState.showNewInviteForm) {
         scope.$.backend.hide
