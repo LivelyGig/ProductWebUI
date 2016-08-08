@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
- * Created by Mandar on 4/15/2016.
- */
+  * Created by Mandar on 4/15/2016.
+  */
 object SignupCSS {
 
   object Style extends StyleSheet.Inline {
@@ -88,17 +88,17 @@ object SignupCSS {
       fontFamily :=! "karla",
       height(75.px),
       marginBottom(20.px),
-      color(c"#000"),
-      opacity(0.4)
-    //      backgroundColor(c"#022639"),
-    //      borderRadius(5.px),
-    //      border(1.px, solid, c"#3C4346"),
-    //      height(40.px),
-    //      padding(4.%%),
-    //      fontSize(18.px),
-    //      color.white,
-    //      width(70.%%),
-    //      margin.auto.important
+      color(c"#000") /*,
+      opacity(0.4)*/
+      //      backgroundColor(c"#022639"),
+      //      borderRadius(5.px),
+      //      border(1.px, solid, c"#3C4346"),
+      //      height(40.px),
+      //      padding(4.%%),
+      //      fontSize(18.px),
+      //      color.white,
+      //      width(70.%%),
+      //      margin.auto.important
     )
     val SignupformFooter = style(
       color(c"#35b0e2"),
