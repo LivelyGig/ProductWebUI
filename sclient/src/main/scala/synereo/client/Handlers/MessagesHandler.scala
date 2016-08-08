@@ -121,14 +121,17 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       noChange
 
     case PostMessage(req) =>
+      //println("messages  handler post message")
       var count = 1
       postMsg()
       def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
         case Success(res) =>
+        //  println("messages handler message post success")
           logger.log.debug("message post success")
         case Failure(fail) =>
           if (count == 3) {
             //            logger.log.error("server error")
+          //  println("messages handler message post failure ")
             SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
           } else {
             count = count + 1

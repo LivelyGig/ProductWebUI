@@ -21,9 +21,10 @@ object SearchesModelHandler {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
       // logger.log.debug(s"searchesModel inside getSearchesModel= ${model}")
-      SearchesRootModel(model)
+      SearchesRootModel(searchesModel = model)
     } catch {
       case e: Exception =>
+        println("error in method getsearchesModel ")
         SearchesRootModel(Nil)
     }
   }
@@ -48,9 +49,12 @@ case class PostLabelsAndMsg(labelNames: Seq[String], subscribeReq: SubscribeRequ
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case CreateLabels(labelStrSeq: Seq[String]) =>
+      println("searches handler create labels action")
       try {
-        //        println(s"in Create Label action we have : ${SearchesModelHandler.getSearchesModel(labelStrSeq)}")
-        updated(SearchesModelHandler.getSearchesModel(labelStrSeq))
+        val newmodel = SearchesModelHandler.getSearchesModel(labelStrSeq)
+        //println(s"in Create Label action we have newModel: ${newmodel}")
+        updated(newmodel)
+        //        noChange
       } catch {
         case e: Exception =>
           println(s" exception in Create Label action $e")
@@ -72,9 +76,11 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       post()
       def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
         case Success(res) =>
+         // println("searches handler label post success")
           SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
           SYNEREOCircuit.dispatch(CreateLabels(labelsNames.map(SearchesModelHandler.leaf)))
         case Failure(res) =>
+         // println("searces handler label post failure")
           if (count == 3) {
             //            logger.log.debug("server error")
             SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))

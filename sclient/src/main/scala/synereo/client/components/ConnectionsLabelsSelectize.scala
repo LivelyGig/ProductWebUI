@@ -74,7 +74,7 @@ object ConnectionsLabelsSelectize {
         t.modState(s => s.copy(connections = value)).runNow()
       }
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
-      println("did mount called ")
+      //      println("did mount called ")
       attachLabels()
       initializeTagsInput()
     }
@@ -87,6 +87,12 @@ object ConnectionsLabelsSelectize {
         println(s"new Searchesmodel is : $value")
         t.modState(s => s.copy(labels = value))
       }
+    }
+
+    def updateComponent(): Boolean = {
+      val props = t.props.runNow()
+      println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
+     !props.proxy().searchesModel.isEmpty
     }
 
     /*def attachConnections() = {
@@ -121,8 +127,9 @@ object ConnectionsLabelsSelectize {
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
         //        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
-        for (label <- props.proxy().searchesModel) yield
-          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
+        for (label <- props.proxy().searchesModel if !props.proxy().searchesModel.isEmpty) yield
+          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
+      )
       //        for (label <- state.labels) yield
       //          <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}"))
 
@@ -138,11 +145,14 @@ object ConnectionsLabelsSelectize {
     //      scope.$.backend.initializeTagsInput
     //    })
     //    .componentWillMount(scope => scope.backend.willMount(scope.props))
-    //    .componentDidUpdate(scope => scope.$.backend.componentDidUpdate(scope.currentProps))
     .componentDidUpdate(scope => Callback {
-    SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())
-    //    println(s"newLabels $newLabels")
+    println("ConnectionsLabelsSelectize Component did update ")
   })
+    .shouldComponentUpdate(scope => scope.$.backend.updateComponent())
+    .componentDidUpdate(scope => Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())
+      //    println(s"newLabels $newLabels")
+    })
     .build
 
   def apply(props: Props) = component(props)
