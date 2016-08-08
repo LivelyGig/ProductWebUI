@@ -2,6 +2,7 @@ package synereo.client.services
 
 object ApiTypes {
   val CreateUserError = "createUserError"
+  val InitializeSessionError = "initializeSessionError"
   val CreateUserWaiting = "createUserWaiting"
   val InitializeSessionResponse = "initializeSessionResponse"
   val InitializeSessionStep1Response = "initializeSessionStep1Response"

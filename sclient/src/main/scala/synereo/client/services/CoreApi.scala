@@ -21,6 +21,8 @@ import scala.scalajs.js.Date
 import scala.util.{Failure, Success, Try}
 import scala.language.postfixOps
 
+case class ApiError(response: String) extends Exception
+
 object CoreApi {
   var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
 
@@ -56,7 +58,7 @@ object CoreApi {
       requestContent2 <- ajaxPost(requestContent1).map {
         response =>
           Try(upickle.default.read[ApiResponse[CreateUserStep1Response]](response)) toOption match {
-            case None => throw new Exception(response)
+            case None => throw new ApiError(response)
             case Some(rsp) => upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_STEP2_REQUEST,
                 CreateUserStep2(signUpModel.email, Map("name" -> signUpModel.name),
                                 true, rsp.content.salt, srpc.getVerifierHex(rsp.content.salt))))
@@ -66,7 +68,8 @@ object CoreApi {
     } yield result
 
     futureResponse.recover {
-      case e: Throwable => e.getMessage
+      case ae: ApiError => ae.response
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.CreateUserError, ErrorResponse(e.getMessage)))
     }
   }
 
@@ -84,7 +87,7 @@ object CoreApi {
       requestContent2 <- ajaxPost(requestContent1).map {
         response =>
           Try(upickle.default.read[ApiResponse[UserLoginResponse]](response)) toOption match {
-            case None => throw new Exception(response)
+            case None => throw new ApiError(response)
             case Some(ulr) =>
               val Mval = srpc.getMHex(ulr.content.B, ulr.content.s)
               upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_STEP2_REQUEST,
@@ -94,7 +97,7 @@ object CoreApi {
       result <- ajaxPost(requestContent2).map {
         response =>
           Try(upickle.default.read[ApiResponse[InitializeSessionResponseCheck]](response)) toOption match {
-            case None => throw new Exception(response)
+            case None => throw new ApiError(response)
             case Some(rsp) =>
               if(srpc.matches(rsp.content.M2)) response else throw new Exception("Authentication failed on client")
           }
@@ -102,7 +105,8 @@ object CoreApi {
     } yield result
 
     futureResponse.recover {
-      case e: Throwable => e.getMessage
+      case ae: ApiError => ae.response
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.InitializeSessionError, ErrorResponse(e.getMessage)))
     }
   }
 

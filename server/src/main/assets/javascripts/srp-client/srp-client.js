@@ -103,9 +103,9 @@ SRPClient.prototype = {
         var x = sjcl.bn.fromBits(this.calculateX(salt));
         var S = this.calculateS(B, x, u);
         var M1 = this.calculateM(A, B, S)
-        // Store S and M1 for the further client verification
-        this.S = S;
-        this.M1 = M1;
+        // Calculate and store M2 for the further client verification
+        var M2 = this.calculateM(A, sjcl.bn.fromBits(M1), S);
+        this.M2 = M2;
         return sjcl.codec.hex.fromBits(M1);
     },
 
@@ -123,13 +123,11 @@ SRPClient.prototype = {
         }
 
         var M2 = sjcl.bn.fromBits(sjcl.codec.hex.toBits(M2Hex));
-        var M1 = sjcl.bn.fromBits(this.M1);
 
         if (M2.mod(this.N).toString() == '0') {
             throw 'Illegal parameter.';
         }
-        var clientM2 = this.calculateM(this.A, M1, this.S);
-        return sjcl.bitArray.equal(M2.toBits(), clientM2);
+        return sjcl.bitArray.equal(M2.toBits(), this.M2);
     },
 
     /**

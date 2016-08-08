@@ -35,7 +35,7 @@ case class ConfirmEmail(token: String) extends Content
 
 case class ConfirmEmailResponse(agentURI: String)
 
-case class ErrorResponse(reason: String)
+case class ErrorResponse(reason: String) extends Content
 
 case class InitializeSession(agentURI: String) extends Content
 
