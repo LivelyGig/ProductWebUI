@@ -1,4 +1,4 @@
-package shared.sessionitems
+package client.sessionitems
 
 /**
  * Created by shubham.k on 11-05-2016.
@@ -9,9 +9,8 @@ object SessionItems {
    * @return All session uri.
    */
   def getAllSessionUriName(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI,/* ProjectsViewItems.PROJECTS_SESSION_URI,*/
-      ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI/*,
-      SearchesView.SEARCHES_SESSION_URI*/)
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI,
+      ProfilesViewItems.PROFILES_SESSION_URI)
   }
 
   /*def getAllSessionUriExceptCnxs(): Seq[String] = {
@@ -40,9 +39,9 @@ object SessionItems {
   }
   object ProfilesViewItems {
     val PROFILES_SESSION_URI = "PROFILES_SESSION_URI"
-    val CURRENT_PROFILES_LABEL_SEARCH = "CURRENT_PROFILES_LABEL_SEARCH"
+    /*val CURRENT_PROFILES_LABEL_SEARCH = "CURRENT_PROFILES_LABEL_SEARCH"
     val PREVIOUS_PROFILES_LABEL_SEARCH = "PREVIOUS_PROFILES_LABEL_SEARCH"
-    val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"
+    val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"*/
   }
   object ApiDetails {
     val API_HOST = "API_HOST"

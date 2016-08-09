@@ -1,4 +1,4 @@
-package shared.RootModels
+package client.RootModels
 
 import shared.dtos.Introduction
 

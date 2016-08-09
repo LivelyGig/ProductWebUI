@@ -7,15 +7,27 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.RootModels.SearchesRootModel
+import client.RootModels.SearchesRootModel
 import shared.models.Label
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
 
 import scala.collection.mutable.ListBuffer
 import scala.language.existentials
 import scala.scalajs.js
 
 object LabelsSelectize {
+
+  def getLabelsTxtFromSelectize(selectizeInputId: String): Seq[String] = {
+    var selectedLabels = Seq[String]()
+    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
+    if ($(selector).length > 0) {
+      $(selector).each((y: Element) => selectedLabels :+= $(y).attr("data-value").toString)
+    } else {
+      selectedLabels = Nil
+    }
+
+    selectedLabels
+  }
 
   def getLabelsFromSelectizeInput(selectizeInputId: String): Seq[Label] = {
     var selectedLabels = Seq[Label]()
@@ -66,7 +78,7 @@ object LabelsSelectize {
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel
             .filter(e=>e.parentUid=="self")
-            .filterNot(e => e.text == LabelsUtils.getSystemLabels())) yield {
+            .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
             <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
           }
         )

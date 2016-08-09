@@ -27,10 +27,10 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
-import shared.RootModels.ConnectionsRootModel
+import client.RootModels.ConnectionsRootModel
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
 
 
 import scala.scalajs.js
@@ -121,10 +121,7 @@ object ConnectionsForm {
       t.modState(s => s.copy(introduceUsers = true, chkCnxnNewUser = false, chkCnxnExstUser = false))
     }
     def getCnxn(uri: String): Option[ConnectionsModel] = {
-      val test = LGCircuit.zoom(_.connections.get.connectionsResponse)
-    //  println(test)
-      val connectionsModel = LGCircuit.zoom(_.connections.get.connectionsResponse).value
-
+      val connectionsModel = LGCircuit.zoom(_.connections.connectionsResponse).value
       if (!connectionsModel.isEmpty)
         connectionsModel.find(e => e.connection.target.contains(uri))
       else

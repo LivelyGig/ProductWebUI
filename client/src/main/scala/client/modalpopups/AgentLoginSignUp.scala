@@ -1,32 +1,28 @@
 
 package client.modals
 
-import client.handlers.{CreateLabels, LoginUser, RefreshConnections}
+import client.handlers._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{HeaderCSS}
 import client.logger._
 import client.modalpopups.ApiDetailsForm
-import shared.models.{EmailValidationModel, SignUpModel, UserModel}
+import shared.models.{EmailValidationModel, SignUpModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
 import org.scalajs.dom._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
-
-import scala.scalajs.js.JSON
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
-
+import client.sessionitems.SessionItems
 import scala.concurrent.Future
 import diode.AnyAction._
-import shared.sessionitems.SessionItems.ApiDetails
+import client.utils.ConnectionsUtils
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -47,7 +43,7 @@ object AgentLoginSignUp {
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
-
+  // scalastyle:off
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
@@ -118,17 +114,11 @@ object AgentLoginSignUp {
     }
 
 
-    def setUserDetailsInSession(responseStr: String, userModel: UserModel): Unit = {
-      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-      window.sessionStorage.setItem(
-        SessionItems.ConnectionViewItems.CONNECTION_LIST,
-        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
-      )
-//      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
-      window.sessionStorage.setItem("userEmail", userModel.email)
-      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
-      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
+    def setUserDetails(cnxnResponseStr: String, cnxnModelStr: String): Unit = {
+      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](cnxnResponseStr)
+      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""))))
+      LGCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(cnxnModelStr),response.content.listOfConnections))
+      LGCircuit.dispatch(CreateLabels(response.content.listOfLabels))
     }
 
     def processLogin(userModel: UserModel): Callback = {
@@ -148,24 +138,23 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginForm = false))
     }
 
-    def setSessionsUri(responseArray: Seq[String]): Unit = {
-      val sessionUriNames = SessionItems.getAllSessionUriName()
-      for (responseStr <- responseArray) {
-        val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-        window.sessionStorage.setItem(sessionUriNames(responseArray.indexOf(responseStr)), response.content.sessionURI)
-      }
-    }
-
     def processSuccessfulLogin(responseArray: Seq[String], userModel: UserModel): Unit = {
-      setSessionsUri(responseArray)
-      val responseStr = responseArray(0)
-      setUserDetailsInSession(responseStr, userModel)
-      LGCircuit.dispatch(CreateLabels())
-      LGCircuit.dispatch(LoginUser(userModel))
-      $(loginLoader).addClass("hidden")
-      $(dashboardContainer).removeClass("hidden")
-      window.location.href = "/#connections"
-      log.debug("login successful")
+      val responseSeq = responseArray.map(e => upickle.default.read[ApiResponse[InitializeSessionResponse]](e))
+      LGCircuit.dispatch(SetSessionUri(responseSeq.map(_.content.sessionURI)))
+      // do a session ping to get the connections
+      val futureArray = for (response <- responseSeq) yield CoreApi.sessionPing(response.content.sessionURI)
+      Future.sequence(futureArray).onComplete {
+        case Success(sessionPingResponseStr) =>
+          setUserDetails(responseArray(0), sessionPingResponseStr(0))
+          LGCircuit.dispatch(AttachPingers())
+          $(loginLoader).addClass("hidden")
+          $(dashboardContainer).removeClass("hidden")
+          window.location.href = "/#connections"
+          log.debug("login successful")
+
+        case Failure(res) =>
+          processServerError()
+      }
     }
 
     def processLoginFailed(responseStr: String): Unit = {

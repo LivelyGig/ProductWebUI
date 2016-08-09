@@ -16,7 +16,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
 
 
 /**

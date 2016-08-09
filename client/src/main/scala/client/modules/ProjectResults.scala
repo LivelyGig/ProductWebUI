@@ -2,8 +2,8 @@ package client.modules
 
 
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.RefreshProjects
-import shared.RootModels.ProjectsRootModel
+import client.handlers.{ContentModelHandler, RefreshProjects}
+import client.RootModels.ProjectsRootModel
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
 import shared.models.ProjectsPost
@@ -19,8 +19,10 @@ import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.NewMessage
+import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -32,9 +34,11 @@ object ProjectResults {
   case class State()
 
   class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props) = {
-      log.debug("projects view mounted")
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
+    def mounted(props: Props): react.Callback = Callback {
+      log.debug("project view mounted")
+      if (props.proxy().isEmpty) {
+        ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
+      }
     }
 
   }
@@ -93,9 +97,13 @@ object ProjectResults {
           P.proxy().render(jobPostsRootModel =>
             ProjectsList(jobPostsRootModel.projectsModelList)),
           P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-          P.proxy().renderPending(ex => <.div()(
-            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-          ))
+          if (P.proxy().isEmpty) {
+            <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+            )
+          } else {
+            <.div()
+          }
 
 
         ) //gigConversation

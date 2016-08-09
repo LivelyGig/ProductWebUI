@@ -1,9 +1,7 @@
 package client.components
 
 import client.services.LGCircuit
-import shared.RootModels.ConnectionsRootModel
-import diode.data.Pot
-import diode.react.ReactPot._
+import client.RootModels.ConnectionsRootModel
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -29,20 +27,16 @@ object ConnectionsSelectize {
   }
 
   def getConnectionNames(selectizeInputId: String): Seq[String] = {
-    if (LGCircuit.zoom(_.connections).value.isReady) {
-      val cnxns = LGCircuit.zoom(_.connections.get.connectionsResponse).value
-      getConnectionsFromSelectizeInput(selectizeInputId)
-        .flatMap(e => cnxns.find(_.connection.target == e.target))
-        .map(_.name)
-    } else {
-      Nil
-    }
+    val cnxns = LGCircuit.zoom(_.connections.connectionsResponse).value
+    getConnectionsFromSelectizeInput(selectizeInputId)
+      .flatMap(e => cnxns.find(_.connection.target == e.target))
+      .map(_.name)
   }
 
   var getSelectedValue = new ListBuffer[String]()
 
   /*Seq[Label]()*/
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]], parentIdentifier: String, fromSelectize: () => Callback)
+  case class Props(proxy: ModelProxy[ConnectionsRootModel], parentIdentifier: String, fromSelectize: () => Callback)
 
   case class Backend(t: BackendScope[Props, _]) {
     def initializeTagsInput(props: Props, parentIdentifier: String): Unit = {
@@ -94,9 +88,8 @@ object ConnectionsSelectize {
       if ($(parentDiv).length == 0) {
         <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-sel", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @LivelyGig", ^.onChange --> getSelectedValues)(
           <.option(^.value := "")("Select"),
-          props.proxy().render(connectionsRootModel =>
-            for (connection <- connectionsRootModel.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection), ^.key := connection.connection.target)(connection.name))
-        )
+          for (connection <- props.proxy().connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection), ^.key := connection.connection.target)(connection.name))
+
       } else {
         <.div()
       }
