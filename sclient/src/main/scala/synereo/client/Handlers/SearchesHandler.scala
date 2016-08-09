@@ -49,7 +49,7 @@ case class PostLabelsAndMsg(labelNames: Seq[String], subscribeReq: SubscribeRequ
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case CreateLabels(labelStrSeq: Seq[String]) =>
-      println("searches handler create labels action")
+      //      println("searches handler create labels action")
       try {
         val newmodel = SearchesModelHandler.getSearchesModel(labelStrSeq)
         //println(s"in Create Label action we have newModel: ${newmodel}")
@@ -72,24 +72,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case PostLabelsAndMsg(labelsNames, subscribeReq) =>
       val labelPost = LabelPost(SYNEREOCircuit.zoom(_.user.sessionUri).value, labelsNames.map(SearchesModelHandler.leaf), "alias")
-      var count = 1
-      post()
-      def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
-        case Success(res) =>
-         // println("searches handler label post success")
-          SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
-          SYNEREOCircuit.dispatch(CreateLabels(labelsNames.map(SearchesModelHandler.leaf)))
-        case Failure(res) =>
-         // println("searces handler label post failure")
-          if (count == 3) {
-            //            logger.log.debug("server error")
-            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
-          } else {
-            count = count + 1
-            post()
-          }
-
-      }
+      ContentModelHandler.postLabelsAndMsg(labelPost, subscribeReq)
       noChange
   }
 

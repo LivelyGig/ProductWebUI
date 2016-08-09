@@ -50,51 +50,11 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       action.handleWith(this, updateF)(PotActionRetriable.handler())
 
     case SubsForMsgAndBeginSessionPing() =>
-      val expr = Expression("feedExpr", ExpressionContent(SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(ConnectionsUtils.getSelfConnnection()),
-        s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
-      val req = SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value, expr)
-      SYNEREOCircuit.dispatch(ClearMessages())
-      var count = 1
-      subscribe()
-      def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
-        case Success(res) =>
-          logger.log.debug(s"eval subscribe complete :${res}")
-          SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
-          SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
-          SYNEREOCircuit.dispatch(RefreshMessages())
-
-        case Failure(res) =>
-          if (count == 3) {
-            println(s"Failure data = ${res.getMessage}")
-            //            logger.log.error("Open Error modal Popup")
-            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
-          } else {
-            count = count + 1
-            subscribe()
-            logger.log.error("Error in subscription")
-          }
-      }
-
+      ContentModelHandler.subsForMsgAndBeginSessionPing()
       noChange
 
     case SubsForMsg(req: SubscribeRequest) =>
-      var count = 1
-      subscribe()
-      def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
-        case Success(res) =>
-          SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
-          SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
-        case Failure(res) =>
-          if (count == 3) {
-            //            logger.log.error("Open Error modal Popup")
-            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
-          } else {
-            count = count + 1
-            subscribe()
-            logger.log.error("Error in subscription")
-          }
-      }
-
+      ContentModelHandler.subsForMsg(req)
       noChange
 
     case ClearMessages() =>
@@ -102,42 +62,11 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
 
     case CancelPreviousAndSubscribeNew(req: SubscribeRequest) =>
       SYNEREOCircuit.dispatch(ClearMessages())
-      var count = 1
-      cancelPrevious()
-      def cancelPrevious(): Unit = CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(
-        SYNEREOCircuit.zoom(_.user.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
-        SYNEREOCircuit.zoom(_.searches.previousSearchLabel).value)).onComplete {
-        case Success(res) =>
-          SYNEREOCircuit.dispatch(SubsForMsg(req))
-        case Failure(res) =>
-          if (count == 3) {
-            //            logger.log.error("server error")
-            SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
-          } else {
-            count = count + 1
-            cancelPrevious()
-          }
-      }
+      ContentModelHandler.cancelPreviousAndSubscribeNew(req)
       noChange
 
     case PostMessage(req) =>
-      //println("messages  handler post message")
-      var count = 1
-      postMsg()
-      def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
-        case Success(res) =>
-        //  println("messages handler message post success")
-          logger.log.debug("message post success")
-        case Failure(fail) =>
-          if (count == 3) {
-            //            logger.log.error("server error")
-          //  println("messages handler message post failure ")
-            SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
-          } else {
-            count = count + 1
-            postMsg()
-          }
-      }
+      ContentModelHandler.postMessage(req)
       noChange
 
   }

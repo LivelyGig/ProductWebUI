@@ -4,14 +4,19 @@ import org.widok.moment.Moment
 import shared.dtos._
 import shared.models.{ConnectionsModel, MessagePost, Post}
 import synereo.client.logger
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._
 import synereo.client.rootmodels.SessionRootModel
-import synereo.client.utils.ConnectionsUtils
+import synereo.client.utils.{AppUtils, ConnectionsUtils}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 /**
   * Created by mandar.k on 5/24/2016.
   */
+//scalastyle:off
 object ContentModelHandler {
   def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
     try {
@@ -43,7 +48,7 @@ object ContentModelHandler {
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
         connections.foreach {
-          connection => if (connection.name.equals(name)){
+          connection => if (connection.name.equals(name)) {
             isNew = false
           }
         }
@@ -84,4 +89,158 @@ object ContentModelHandler {
       msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
     }
   }
+
+  def postNewConnection(content: Content) = {
+    var count = 1
+    post()
+    def post(): Unit = CoreApi.postIntroduction(content).onComplete {
+      case Success(res) =>
+        logger.log.debug("Connection request sent successfully")
+      case Failure(fail) =>
+        if (count == 3) {
+          //            logger.log.error("Error sending connection request")
+          SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
+        } else {
+          count = count + 1
+          post()
+        }
+    }
+  }
+
+  def updateIntroductionsModel(introConfirmReq: IntroConfirmReq) = {
+    CoreApi.postIntroduction(introConfirmReq).onComplete {
+      case Success(response) => logger.log.debug("Intro confirm request sent successfully")
+      case Failure(response) => logger.log.error("Error sending intro confirm request")
+        SYNEREOCircuit.dispatch(ShowServerError(response.getMessage))
+    }
+  }
+
+  def subsForMsgAndBeginSessionPing() = {
+    val expr = Expression("feedExpr", ExpressionContent(SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(ConnectionsUtils.getSelfConnnection()),
+      s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
+    val req = SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value, expr)
+    SYNEREOCircuit.dispatch(ClearMessages())
+    var count = 1
+    subscribe()
+    def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
+      case Success(res) =>
+        logger.log.debug(s"eval subscribe complete :${res}")
+        SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
+        SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
+        SYNEREOCircuit.dispatch(RefreshMessages())
+
+      case Failure(res) =>
+        if (count == 3) {
+          println(s"Failure data = ${res.getMessage}")
+          //            logger.log.error("Open Error modal Popup")
+          SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
+        } else {
+          count = count + 1
+          subscribe()
+          logger.log.error("Error in subscription")
+        }
+    }
+  }
+
+  def subsForMsg(req: SubscribeRequest) = {
+    var count = 1
+    subscribe()
+    def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
+      case Success(res) =>
+        SYNEREOCircuit.dispatch(UpdatePrevSearchCnxn(req.expression.content.cnxns))
+        SYNEREOCircuit.dispatch(UpdatePrevSearchLabel(req.expression.content.label))
+      case Failure(res) =>
+        if (count == 3) {
+          //            logger.log.error("Open Error modal Popup")
+          SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
+        } else {
+          count = count + 1
+          subscribe()
+          logger.log.error("Error in subscription")
+        }
+    }
+
+  }
+
+  def cancelPreviousAndSubscribeNew(req: SubscribeRequest) = {
+    var count = 1
+    cancelPrevious()
+    def cancelPrevious(): Unit = CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(
+      SYNEREOCircuit.zoom(_.user.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
+      SYNEREOCircuit.zoom(_.searches.previousSearchLabel).value)).onComplete {
+      case Success(res) =>
+        SYNEREOCircuit.dispatch(SubsForMsg(req))
+      case Failure(res) =>
+        if (count == 3) {
+          //            logger.log.error("server error")
+          SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
+        } else {
+          count = count + 1
+          cancelPrevious()
+        }
+    }
+  }
+
+  def postMessage(req: SubscribeRequest) = {
+    var count = 1
+    postMsg()
+    def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
+      case Success(res) =>
+        //  println("messages handler message post success")
+        logger.log.debug("message post success")
+      case Failure(fail) =>
+        if (count == 3) {
+          //            logger.log.error("server error")
+          //  println("messages handler message post failure ")
+          SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
+        } else {
+          count = count + 1
+          postMsg()
+        }
+    }
+  }
+
+  def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+
+  def postLabelsAndMsg(labelPost: LabelPost, subscribeReq: SubscribeRequest) = {
+
+    var count = 1
+    post()
+    def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
+      case Success(res) =>
+        // println("searches handler label post success")
+        SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
+        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels.map(leaf)))
+      case Failure(res) =>
+        // println("searces handler label post failure")
+        if (count == 3) {
+          //            logger.log.debug("server error")
+          SYNEREOCircuit.dispatch(ShowServerError(res.getMessage))
+        } else {
+          count = count + 1
+          post()
+        }
+
+    }
+  }
+
+  def postUserUpdate(req: UpdateUserRequest) = {
+    var count = 1
+
+    post()
+    def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
+      case Success(response) =>
+        logger.log.debug("user update request sent successfully")
+      case Failure(response) =>
+        if (count == 3) {
+          //            logger.log.error("user update error")
+          SYNEREOCircuit.dispatch(ShowServerError(response.toString))
+        } else {
+          count = count + 1
+          post()
+        }
+    }
+  }
+
+
 }

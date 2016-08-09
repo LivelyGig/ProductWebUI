@@ -84,15 +84,15 @@ object ConnectionsLabelsSelectize {
     def attachLabels() = {
       if (SYNEREOCircuit.zoom(_.searches).value.searchesModel != null) {
         val value = SYNEREOCircuit.zoom(_.searches).value.searchesModel
-        println(s"new Searchesmodel is : $value")
+        // println(s"new Searchesmodel is : $value")
         t.modState(s => s.copy(labels = value))
       }
     }
 
     def updateComponent(): Boolean = {
       val props = t.props.runNow()
-      println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
-     !props.proxy().searchesModel.isEmpty
+      //      println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
+      !props.proxy().searchesModel.isEmpty
     }
 
     /*def attachConnections() = {
@@ -146,7 +146,7 @@ object ConnectionsLabelsSelectize {
     //    })
     //    .componentWillMount(scope => scope.backend.willMount(scope.props))
     .componentDidUpdate(scope => Callback {
-    println("ConnectionsLabelsSelectize Component did update ")
+    //    println("ConnectionsLabelsSelectize Component did update ")
   })
     .shouldComponentUpdate(scope => scope.$.backend.updateComponent())
     .componentDidUpdate(scope => Callback {
