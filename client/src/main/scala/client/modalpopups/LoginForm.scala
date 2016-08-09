@@ -4,6 +4,7 @@ import client.LGMain.{DashboardLoc, Loc}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
+import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
@@ -29,6 +30,7 @@ object LoginForm {
                    showNewAgentForm: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       if ($(LoginID).hasClass("disabled")) {
@@ -84,7 +86,7 @@ object LoginForm {
           closed = () => formClosed(s, p)
         ),
 
-        <.form("data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
+        <.form(^.id := "loginFormID", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-7 col-sm-12 col-xs-12")(
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(

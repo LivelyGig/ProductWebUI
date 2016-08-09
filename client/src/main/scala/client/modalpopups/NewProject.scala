@@ -32,8 +32,6 @@ import diode.AnyAction._
 
 object NewProject {
 
-
-
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
@@ -83,6 +81,9 @@ object NewProjectForm {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
+  val projectID: js.Object = "#projectID"
+  val projectForm: js.Object = "#projectForm"
+
   case class Props(submitHandler: (Boolean) => Callback)
 
   case class State(projectPost: ProjectPostContent, postProject: Boolean = false, selectizeInputId: String = "postNewJobSelectizeInput")
@@ -100,8 +101,14 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.projectPost, Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
-      t.modState(s => s.copy(postProject = true))
+      // LGCircuit.dispatch(PostData(state.projectPost, Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
+      if ($(projectID).hasClass("disabled")) {
+        t.modState(s => s.copy(postProject = false))
+      }
+      else {
+        t.modState(s => s.copy(postProject = true))
+      }
+
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -157,32 +164,37 @@ object NewProjectForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.id := "projectForm", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-6 col-sm-6 col-xs-6")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Project Name", "Project Name")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.name, ^.required := true, ^.onChange ==> updateName)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.className := "form-control", "data-error".reactAttr := "Name is required",
+                    ^.value := model.name, ^.required := true, ^.onChange ==> updateName),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Start Date", "Start Date")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.startDate, ^.onChange ==> updateStartDate, ^.required := true)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.className := "form-control", "data-error".reactAttr := "Start Date is required",
+                    ^.value := model.startDate, ^.onChange ==> updateStartDate, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Budget", "Budget")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.budget,
-                    ^.required := true, ^.onChange ==> updateBudget)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.value := model.budget, ^.className := "form-control", "data-error".reactAttr := "Budget is required",
+                    ^.required := true, ^.onChange ==> updateBudget),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
@@ -194,13 +206,13 @@ object NewProjectForm {
                   // <.input(^.`type` := "radio")(" client")
                   <.div(^.className := "btn-group")(
                     <.button(ProjectCSS.Style.projectdropdownbtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Select One  ")(
-                      <.span(^.className := "caret"),
-                      <.ul(^.className := "dropdown-menu")(
-                        <.li()(<.a()("Item 1")),
-                        <.li()(<.a()("Item 2")),
-                        <.li()(<.a()("Item 3"))
-                      )
+                      <.span(^.className := "caret")),
+                    <.ul(^.className := "dropdown-menu")(
+                      <.li()(<.a()("Item 1")),
+                      <.li()(<.a()("Item 2")),
+                      <.li()(<.a()("Item 3"))
                     )
+
                   )
                 )
               )
@@ -288,10 +300,10 @@ object NewProjectForm {
               )
 
             ),
-            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right", ^.className := "form-group")(
               //<.button(^.tpe := "submit",^.className:="btn btn-default","Submit"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Save as Draft"),
-              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
+              <.button(^.tpe := "submit", ^.id := "projectID", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
@@ -304,6 +316,12 @@ object NewProjectForm {
   private val component = ReactComponentB[Props]("PostAProjectForm")
     .initialState_P(p => State(new ProjectPostContent("", "", "", "", "", "", "", "", false, 0, "")))
     .renderBackend[Backend]
+    .componentWillMount(scope => Callback {
+      $(projectForm).attr("data-toggle", "validator")
+    })
+    .componentDidMount(scope => Callback {
+      $(projectForm).attr("data-toggle", "validator")
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postProject) {
         scope.$.backend.hide.runNow()

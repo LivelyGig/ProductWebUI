@@ -15,7 +15,7 @@ import shared.models.UserModel
 import client.services.CoreApi._
 import client.services._
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -65,7 +65,7 @@ object WorkContractModal {
     }
 
     def addBiddingScreen(postBiddingScreen: Boolean = false, postMessage: Boolean = false, postConfirmation: Boolean = false, postAcceptDependencies: Boolean = false,
-      postDispute: Boolean = false): Callback = {
+                         postDispute: Boolean = false): Callback = {
       //      log.debug(s"postMessage : ${postMessage} ,postBiddingScreen: ${postBiddingScreen}")
       if (postBiddingScreen) {
         t.modState(s => s.copy(showWorkContract = false))
@@ -82,8 +82,12 @@ object WorkContractModal {
       }
     }
 
-    def hideMessage( /*showMessage: Boolean = false*/ ): Callback = {
-      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
+    def hideMessage(showMessage: Boolean = false): Callback = {
+      if (showMessage)
+        t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
+      else
+        t.modState(s => s.copy(showMessage = true, showConfirmation = true, showWorkContract = false))
+
     }
 
     def hideConfirmation(showConfirmation: Boolean = false): Callback = {
@@ -192,7 +196,7 @@ object WorkContractModalForm {
                   )
                 ),
 
-                <.table(^.className := "table rowStyle"/*, DashBoardCSS.Style.rowStyle*/)(
+                <.table(^.className := "table rowStyle" /*, DashBoardCSS.Style.rowStyle*/)(
                   <.thead(
                     <.tr()(
                       <.th()("Term ", <.span(^.paddingLeft := "20px")(), <.a()("add")),
@@ -204,7 +208,7 @@ object WorkContractModalForm {
                   <.tbody(WorkContractCSS.Style.WorkContractData)(
                     <.tr()(
                       <.td()(
-                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Contract Template"),
+                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Contract Template"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12", WorkContractCSS.Style.slctWorkContractInputWidth)(
                             <.div(^.className := "btn-group")(
@@ -230,7 +234,7 @@ object WorkContractModalForm {
                     ),
                     <.tr()(
                       <.td()(
-                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Rate"),
+                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Rate"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             <.div()(<.input(^.className := "form-control", ^.placeholder := "25.30 USD"))
@@ -282,7 +286,7 @@ object WorkContractModalForm {
                     ),
                     <.tr()(
                       <.td()(
-                        <.div( /*DashBoardCSS.Style.slctHeaders*/ )("Completion Date"),
+                        <.div(/*DashBoardCSS.Style.slctHeaders*/)("Completion Date"),
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                             <.div()(<.input(^.className := "form-control", ^.placeholder := "2016-08-15"))
@@ -410,7 +414,7 @@ object WorkContractModalForm {
               <.div(^.id := "inProgressDetail", ^.className := "tab-container")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-                    <.div(/*^.className := "inProgress"*/DashBoardCSS.Style.inProgress)(
+                    <.div(/*^.className := "inProgress"*/ DashBoardCSS.Style.inProgress)(
                       <.div(WorkContractCSS.Style.marginHeader)("Milestones ", <.a("New")),
                       <.table(^.className := "table")(
                         <.thead(
@@ -699,7 +703,7 @@ object WorkContractModalForm {
                           )
                         ),
                         <.hr(),
-                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/ )(
+                        <.div(^.className := "row", WorkContractCSS.Style.marginHeader /*BiddingScreenCSS.Style.capabilities*/)(
                           <.div(^.className := "col-md-4 col-sm-4", WorkContractCSS.Style.capabilities)("Capabilities"),
                           <.div(^.className := "col-md-8 col-sm-8")(
                             <.table(^.className := "table table-bordered", WorkContractCSS.Style.tableFont)(

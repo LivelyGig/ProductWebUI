@@ -4,16 +4,20 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{FooterCSS, DashBoardCSS}
-import shared.models.{SignUpModel}
+import client.css.{DashBoardCSS, FooterCSS}
+import shared.models.SignUpModel
+
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 
+import scala.scalajs.js
+
 object NewAgentForm {
   var addNewAgentState: Boolean = false
   var signUpModelUpdate = new SignUpModel()
+  val SignUp: js.Object = "#SignUp"
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -95,9 +99,15 @@ object NewAgentForm {
       t.modState(s => s.copy(showPrivacyPolicyModal = true))
     }
 
+
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      t.modState(s => s.copy(addNewAgent = true))
+      if ($(SignUp).hasClass("disabled")) {
+        t.modState(s => s.copy(addNewAgent = false))
+      }
+      else {
+        t.modState(s => s.copy(addNewAgent = true))
+      }
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -116,16 +126,17 @@ object NewAgentForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form("data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "First name *", "First name\u00a0*")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "First name", ^.value := s.signUpModel.name,
-                    ^.onChange ==> updateName, ^.required := true)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "FirstName", ^.className := "form-control", "data-error".reactAttr := "First Name is required",
+                    ^.value := s.signUpModel.name, ^.onChange ==> updateName, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
@@ -133,7 +144,7 @@ object NewAgentForm {
                   <.label(^.`for` := "Last name *", "Last name\u00a0*")
                 ),
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Last name", ^.value := s.signUpModel.lastName,
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "LastName", ^.value := s.signUpModel.lastName,
                     ^.onChange ==> updateLastName)
                 )
               ),
@@ -141,27 +152,30 @@ object NewAgentForm {
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Email *", "Email\u00a0*")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "email", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value := s.signUpModel.email,
-                    ^.onChange ==> updateEmail, ^.required := true)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "email", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Email", ^.value := s.signUpModel.email, ^.className := "form-control", "data-error".reactAttr := "Email is required",
+                    ^.onChange ==> updateEmail, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Password *", "Password\u00a0*")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password", ^.value := s.signUpModel.password,
-                    ^.onChange ==> updatePassword, ^.required := true)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Password", ^.value := s.signUpModel.password, ^.className := "form-control", "data-error".reactAttr := "Password is required",
+                    ^.onChange ==> updatePassword, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
                 )
               ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "Confirm Password *", "Confirm Password\u00a0*")
                 ),
-                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin)(
-                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.signUpModel.confirmPassword,
-                    ^.onChange ==> updateConfirmPassword, ^.required := true)
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.signUpModel.confirmPassword, ^.className := "form-control", "data-error".reactAttr := "Confirm Password is required",
+                    ^.onChange ==> updateConfirmPassword, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
                 )
               )
             ), //col-md-8
@@ -200,8 +214,8 @@ object NewAgentForm {
           ),
           <.div()(
             // <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)("You will receive a email of code confirming creation of your new account shortly after completing this form"),
-            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Submit"),
+            <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right", ^.className := "form-group")(
+              <.button(^.tpe := "submit", ^.id := "SignUp", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, "Submit"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hideModal, "Cancel")
             )
           ),
