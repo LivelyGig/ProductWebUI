@@ -81,3 +81,5 @@ case class JsonBlob(name: String = "", imgSrc: String = "")
 case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlob = JsonBlob()) extends Content
 
 case class BeginIntroductionRes(sessionURI: String = "")
+
+case class AddAgentAliasesRequest(sessionURI: String = "", aliases: Seq[String]) extends Content

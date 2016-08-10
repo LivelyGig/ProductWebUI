@@ -210,7 +210,7 @@ object ContentModelHandler {
       case Success(res) =>
         // println("searches handler label post success")
         SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
-        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels.map(leaf)))
+        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
       case Failure(res) =>
         // println("searces handler label post failure")
         if (count == 3) {

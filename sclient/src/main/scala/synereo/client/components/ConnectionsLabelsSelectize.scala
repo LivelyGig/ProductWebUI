@@ -46,13 +46,12 @@ object ConnectionsLabelsSelectize {
   def filterLabelStrings(value: Seq[String], character: String): Seq[String] = {
     value
       .filter(e => e.charAt(0) == "#" && e.count(_ == character) == 1)
-      .map(_.replace(character, ""))
-      .toSet
-      .toSeq
+      .map(_.replace(character, "")).distinct
+
   }
 
 
-  case class Props(parentIdentifier: String, proxy: ModelProxy[SearchesRootModel])
+  case class Props(parentIdentifier: String /*labels: Seq[Label]*/ , proxy: ModelProxy[SearchesRootModel])
 
   case class State(/*connections: Seq[ConnectionsModel] = Nil,*/ labels: Seq[Label] = Nil)
 
@@ -73,8 +72,10 @@ object ConnectionsLabelsSelectize {
         val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
         t.modState(s => s.copy(connections = value)).runNow()
       }
+
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
       //      println("did mount called ")
+      //      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom((_.searches)))(_ => attachLabels())
       attachLabels()
       initializeTagsInput()
     }
@@ -89,11 +90,11 @@ object ConnectionsLabelsSelectize {
       }
     }
 
-    def updateComponent(): Boolean = {
-      val props = t.props.runNow()
-      //      println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
-      !props.proxy().searchesModel.isEmpty
-    }
+    //    def updateComponent(): Boolean = {
+    //      val props = t.props.runNow()
+    //            println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
+    //            !props.proxy().searchesModel.isEmpty
+    //    }
 
     /*def attachConnections() = {
       if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
@@ -122,7 +123,8 @@ object ConnectionsLabelsSelectize {
     }*/
 
     def render(props: Props, state: State) = {
-      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize",
+        ^.className := "demo-default", ^.placeholder := "search e.g. @Synereo or #fun")(
         <.option(^.value := "")("Select"),
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
@@ -148,11 +150,11 @@ object ConnectionsLabelsSelectize {
     .componentDidUpdate(scope => Callback {
     //    println("ConnectionsLabelsSelectize Component did update ")
   })
-    .shouldComponentUpdate(scope => scope.$.backend.updateComponent())
+    //    .shouldComponentUpdate(scope => scope.$.backend.updateComponent())
     .componentDidUpdate(scope => Callback {
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())
-      //    println(s"newLabels $newLabels")
-    })
+    SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())
+    //    println(s"newLabels $newLabels")
+  })
     .build
 
   def apply(props: Props) = component(props)

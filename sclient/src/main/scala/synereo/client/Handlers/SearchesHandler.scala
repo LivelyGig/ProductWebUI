@@ -17,14 +17,12 @@ object SearchesModelHandler {
   def getSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {
 
     try {
-      //      logger.log.debug(s"list of labels in getSearchesModel : ${listOfLabels}")
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
-      // logger.log.debug(s"searchesModel inside getSearchesModel= ${model}")
       SearchesRootModel(searchesModel = model)
     } catch {
       case e: Exception =>
-        println("error in method getsearchesModel ")
+        println("error in method getsearchesModel")
         SearchesRootModel(Nil)
     }
   }
@@ -49,11 +47,8 @@ case class PostLabelsAndMsg(labelNames: Seq[String], subscribeReq: SubscribeRequ
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case CreateLabels(labelStrSeq: Seq[String]) =>
-      //      println("searches handler create labels action")
       try {
-        val newmodel = SearchesModelHandler.getSearchesModel(labelStrSeq)
-        //println(s"in Create Label action we have newModel: ${newmodel}")
-        updated(newmodel)
+        updated(SearchesModelHandler.getSearchesModel(labelStrSeq))
         //        noChange
       } catch {
         case e: Exception =>

@@ -22,13 +22,12 @@ object SearchComponent {
 
   case class Props()
 
-  case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz")
+  case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz" /*, labels: Seq[Label]*/)
 
   val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = Callback {
-
     }
 
     def fromSelecize(): Callback = Callback {}
@@ -47,11 +46,12 @@ object SearchComponent {
     def render(s: State, p: Props) = {
       <.div(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.searchBoxContainer)(
-          searchesProxy(proxy => ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId, proxy)))),
-        //          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))),
-        <.div(SynereoCommanStylesCSS.Style.displayInline)(
-          <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
-          ))
+          searchesProxy(proxy => ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId, proxy)))
+        //          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))
+      ),
+      <.div(SynereoCommanStylesCSS.Style.displayInline)(
+        <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
+        ))
       )
     }
   }
@@ -59,6 +59,7 @@ object SearchComponent {
   val component = ReactComponentB[Props]("SearchComponent")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)
