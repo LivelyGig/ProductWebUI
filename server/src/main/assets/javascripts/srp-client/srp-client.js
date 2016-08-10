@@ -152,6 +152,9 @@ SRPClient.prototype = {
      *  @return {bitArray}
      */
     calculateX: function (salt) {
+        if (!salt) {
+            throw 'Missing parameter.';
+        }
         var inner = this.calculateH(sjcl.codec.utf8String.toBits(this.username + ':' + this.password));
         return this.calculateH(sjcl.bitArray.concat(salt, inner));
     },
@@ -259,7 +262,7 @@ SRPClient.prototype = {
             throw 'Illegal parameter';
         }
 
-        var toHash = sjcl.bitArray.concat(sjcl.bitArray.concat(this._getPadded(A), this._getPadded(B_or_M)),this._getPadded(S));
+        var toHash = sjcl.bitArray.concat(sjcl.bitArray.concat(this._getPadded(A), this._getPadded(B_or_M)), this._getPadded(S));
 
         return this.calculateH(toHash);
 
