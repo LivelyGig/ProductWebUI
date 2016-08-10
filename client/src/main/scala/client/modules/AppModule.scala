@@ -4,6 +4,8 @@ import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS, LftcontainerCSS}
+import client.handlers.ShowServerError
+import client.modals.ServerErrorModal
 
 //import client.handlers.{LogoutUser, ShowServerError}
 import org.querki.jquery._
@@ -24,7 +26,9 @@ object AppModule {
   val OFFERINGS_VIEW = "offerings"
   val CONNECTIONS_VIEW = "connections"
 
-  case class Props(view: String /*,proxy: ModelProxy[AppRootModel]*/)
+  case class Props(view: String ,proxy: ModelProxy[AppRootModel])
+
+  case class State(showErrorModal: Boolean = false)
 
   def showSidebar(): Callback = Callback {
     val sidebtn: js.Object = "#searchContainer"
@@ -51,10 +55,19 @@ object AppModule {
     $(t1).addClass("fa fa-chevron-circle-right")
   }
 
-  case class Backend(t: BackendScope[Props, Unit]) {
+  case class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = {
       showSidebar
       //  LGCircuit.dispatch(ShowServerError(""))
+    }
+
+    def serverError(showErrorModal:Boolean=false): Callback = {
+      LGCircuit.dispatch(ShowServerError(""))
+      if(showErrorModal)
+      t.modState(s => s.copy(showErrorModal = false))
+      else{
+        t.modState(s => s.copy(showErrorModal = false))
+      }
     }
 
     def render(p: Props) = {
@@ -63,7 +76,7 @@ object AppModule {
       val jobsProxy = LGCircuit.connect(_.jobPosts)
       val messagesProxy = LGCircuit.connect(_.messages)
       val connectionsProxy = LGCircuit.connect(_.connections)
-      // val appProxy = LGCircuit.connect(_.appRootModel)
+       val appProxy = LGCircuit.connect(_.appRootModel)
 
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
@@ -82,6 +95,11 @@ object AppModule {
                 ),
                 searchesProxy(searchesProxy => Searches(Searches.Props(p.view, searchesProxy)))
               ),
+              if (p.proxy().isServerError){
+                ServerErrorModal(ServerErrorModal.Props(serverError))
+              } else {
+                <.div()
+              },
               <.div(^.className := "main col-md-9 col-md-offset-3 LftcontainerCSS_Style-sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
@@ -103,7 +121,7 @@ object AppModule {
   }
 
   private val component = ReactComponentB[Props]("AppModule")
-    .initialState_P(p => ())
+    .initialState_P(p => State())
     .renderBackend[Backend]
     //    .componentWillMount(scope => Callback {
     //      val userHasSessionUri = LGCircuit.zoom(_.user.sessionUri).value

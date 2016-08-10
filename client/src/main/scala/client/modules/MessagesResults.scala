@@ -13,7 +13,7 @@ import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
-import client.modals.NewMessage
+import client.modals.{NewMessage, ServerErrorModal}
 import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
@@ -29,9 +29,11 @@ object MessagesResults {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(/*selectedItem: Option[MessagesModel] = None*/)
+  case class State(showErrorModal:Boolean =false)
 
-  class Backend(t: BackendScope[Props, _]) {
+  val getServerError = LGCircuit.zoom(_.appRootModel).value
+
+  class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props): react.Callback = Callback {
 //      log.debug("messages view mounted")
       /*if (props.proxy().isEmpty) {
@@ -46,11 +48,16 @@ object MessagesResults {
         Callback.empty
       }
     }*/
-  }
 
-  val component = ReactComponentB[Props]("Messages")
-    .backend(new Backend(_))
-    .renderPS((B, P, S) => {
+    def serverError(showErrorModal :Boolean = false): Callback = {
+      if(showErrorModal)
+        t.modState(s => s.copy(showErrorModal = false))
+      else
+        t.modState(s => s.copy(showErrorModal = true))
+    }
+
+
+    def render(P:Props,S:State) ={
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -100,7 +107,16 @@ object MessagesResults {
         <.div(^.id := "resultsContainer")(
           P.proxy().render(messagesRootModel =>
             MessagesList(messagesRootModel.messagesModelList)),
-          P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
+          P.proxy().renderFailed(ex => <.div()(
+
+            //<.span(Icon.warning), " Error loading"
+            if(!getServerError.isServerError){
+              ServerErrorModal(ServerErrorModal.Props(serverError))
+            }
+            else
+              <.div()
+
+          )),
           if (P.proxy().isEmpty) {
             <.div()(
               <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
@@ -110,7 +126,14 @@ object MessagesResults {
           }
         )
       )
-    })
+
+    }
+
+  }
+
+  val component = ReactComponentB[Props]("Messages")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 

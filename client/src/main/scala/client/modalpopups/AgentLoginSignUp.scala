@@ -295,7 +295,7 @@ object AgentLoginSignUp {
           RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
         }
         else if (S.showErrorModal) {
-          ErrorModal(ErrorModal.Props(B.serverError))
+          ServerErrorModal(ServerErrorModal.Props(B.serverError))
         }
         else if (S.showAccountValidationFailed) {
           AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
