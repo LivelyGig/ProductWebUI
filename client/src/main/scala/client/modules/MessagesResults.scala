@@ -5,8 +5,8 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.RefreshMessages
-import shared.RootModels.MessagesRootModel
+import client.handlers.ContentModelHandler
+import client.RootModels.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
@@ -14,11 +14,13 @@ import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.NewMessage
+import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
 import org.scalajs.dom.window
 import org.widok.moment.Moment
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -30,9 +32,11 @@ object MessagesResults {
   case class State(/*selectedItem: Option[MessagesModel] = None*/)
 
   class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props): react.Callback = {
-      log.debug("messages view mounted")
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshMessages()))
+    def mounted(props: Props): react.Callback = Callback {
+//      log.debug("messages view mounted")
+      /*if (props.proxy().isEmpty) {
+        ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.MESSAGES_VIEW)
+      }*/
     }
 
     /*{
@@ -97,9 +101,13 @@ object MessagesResults {
           P.proxy().render(messagesRootModel =>
             MessagesList(messagesRootModel.messagesModelList)),
           P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-          P.proxy().renderPending(ex => <.div()(
-            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-          ))
+          if (P.proxy().isEmpty) {
+            <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+            )
+          } else {
+            <.div()
+          }
         )
       )
     })
@@ -123,7 +131,8 @@ object MessagesList {
     def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
         // Get data needed to present From and To
-        val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
+//        println(s"inside render messages: $message")
+        val userId = LGCircuit.zoom(_.session.messagesSessionUri).value.split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
         var toReceiver = "unknown"
         var fromSender = "unknown"
@@ -167,7 +176,7 @@ object MessagesList {
               <.div(^.className := "col-md-6 col-sm-12")(
                 <.div(
                   if (message.postContent.imgSrc != "") {
-                    <.img(^.src := message.postContent.imgSrc, ^.height:="100.px" , ^.width:="100.px")
+                    <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px")
                   } else {
                     <.div("")
                   }

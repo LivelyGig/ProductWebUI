@@ -1,17 +1,18 @@
 package client.modules
 
 import client.handlers.RefreshProfiles
-import client.components.{Icon, LabelsSelectize, LabelsList}
+import client.components.{Icon, LabelsList, LabelsSelectize}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.handlers._
-import shared.RootModels.SearchesRootModel
+import client.RootModels.SearchesRootModel
 import client.css._
 import shared.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import client.components.Bootstrap._
+import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
 
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
@@ -21,6 +22,7 @@ import org.querki.jquery._
 import org.denigma.selectize._
 import org.scalajs.dom
 import diode.AnyAction._
+import shared.dtos.{Expression, ExpressionContent, SubscribeRequest}
 
 
 object Searches {
@@ -55,8 +57,13 @@ object Searches {
         $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
       }
 
+      val searchLabels = LabelsUtils.buildProlog(
+        Seq(LabelsUtils.getSystemLabelModel(props.view)) ++ LGCircuit.zoom(_.searches.searchesModel).value.filter(_.isChecked), LabelsUtils.PrologTypes.Each)
+      val expr = Expression("feedExpr", ExpressionContent(ConnectionsUtils.getCnxnForReq(Nil, props.view), searchLabels))
+      ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr) , props.view)
+
       //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
-      props.view match {
+      /*props.view match {
         case AppModule.MESSAGES_VIEW =>
           LGCircuit.dispatch(StoreMessagesSearchLabel())
           LGCircuit.dispatch(RefreshMessages())
@@ -66,7 +73,7 @@ object Searches {
         case AppModule.PROFILES_VIEW =>
           LGCircuit.dispatch(StoreProfilesSearchLabel())
           LGCircuit.dispatch(RefreshProfiles())
-      }
+      }*/
 
     }
 
@@ -120,11 +127,11 @@ object Searches {
       //    })
     }
 
-    def mounted(): Callback = Callback {
+    def mounted(): Callback =  {
       initializeDatepicker
       initializeTagsInput
       toggleSidebar
-      LGCircuit.dispatch(CreateLabels())
+//      LGCircuit.dispatch(CreateLabels())
     }
 
     def render(s: State, p: Props) = {

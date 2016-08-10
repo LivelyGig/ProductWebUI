@@ -2,8 +2,7 @@ package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
-import client.handlers.RefreshConnections
-import shared.RootModels.ConnectionsRootModel
+import client.RootModels.ConnectionsRootModel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
@@ -18,14 +17,14 @@ import scalacss.ScalaCssReact._
 
 object ConnectionsResults {
 
-  case class Props(proxy: ModelProxy[Pot[ConnectionsRootModel]])
+  case class Props(proxy: ModelProxy[ConnectionsRootModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) ={
-      log.debug("connection view mounted")
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    def mounted(props: Props) =Callback{
+//      log.debug("connection view mounted")
+//      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
 
 
@@ -83,29 +82,14 @@ object ConnectionsResults {
           )
         ), //col-12
         <.div(^.id := "resultsConnectionsContainer")(
-          P.proxy().render(connectionsRootModel =>
-            ConnectionList(connectionsRootModel.connectionsResponse)),
-          //                    P.proxy().renderPending(_ > 5, _ => "Loading..."),
-          P.proxy().renderFailed(ex => <.div( /*DashBoardCSS.Style.imgc*/ )(<.span(Icon.warning), " Error loading")),
-          if (P.proxy().isEmpty) {
-            if (!P.proxy().isFailed) {
-              <.div("Loading")
-              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-            } else {
-              <.div()
-            }
-          } else {
-            <.div( /*"data loaded"*/ )
-          }
-        )
-
+          ConnectionList(P.proxy().connectionsResponse))
       ) //mainContainer
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   /** Returns a function compatible with router location system while using our own props */
-  def apply(proxy: ModelProxy[Pot[ConnectionsRootModel]]) = component(Props(proxy))
+  def apply(proxy: ModelProxy[ConnectionsRootModel]) = component(Props(proxy))
 }
 
 object ConnectionList {

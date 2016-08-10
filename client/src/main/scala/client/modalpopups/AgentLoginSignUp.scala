@@ -1,32 +1,28 @@
 
 package client.modals
 
-import client.handlers.{CreateLabels, LoginUser, RefreshConnections}
+import client.handlers._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{HeaderCSS}
 import client.logger._
 import client.modalpopups.ApiDetailsForm
-import shared.models.{EmailValidationModel, SignUpModel, UserModel}
+import shared.models.{EmailValidationModel, SignUpModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
 import org.scalajs.dom._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
-
-import scala.scalajs.js.JSON
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
-
+import client.sessionitems.SessionItems
 import scala.concurrent.Future
 import diode.AnyAction._
-import shared.sessionitems.SessionItems.ApiDetails
+import client.utils.ConnectionsUtils
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -47,7 +43,7 @@ object AgentLoginSignUp {
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
-
+  // scalastyle:off
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
@@ -74,20 +70,20 @@ object AgentLoginSignUp {
     }
 
     def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
+//      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-            log.debug(s"createUser msg : ${s.msgType}")
+//            log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
-              log.debug(s"createUser msg : ${s.content}")
+             // log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
+           // log.debug(s"createUserFailure: ${s}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
         }
@@ -118,17 +114,12 @@ object AgentLoginSignUp {
     }
 
 
-    def setUserDetailsInSession(responseStr: String, userModel: UserModel): Unit = {
-      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-      window.sessionStorage.setItem(
-        SessionItems.ConnectionViewItems.CONNECTION_LIST,
-        upickle.default.write[Seq[Connection]](response.content.listOfConnections)
-      )
-//      window.sessionStorage.setItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI, response.content.sessionURI)
-      window.sessionStorage.setItem("userEmail", userModel.email)
-      window.sessionStorage.setItem("userName", response.content.jsonBlob.getOrElse("name", ""))
-      window.sessionStorage.setItem("userImgSrc", response.content.jsonBlob.getOrElse("imgSrc", ""))
-      window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, JSON.stringify(response.content.listOfLabels))
+    def setUserDetails(cnxnResponseStr: String, cnxnModelStr: String): Unit = {
+      val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](cnxnResponseStr)
+     // println(s"SetUserDetails initialresponse sessionURI ==== ${response.content.sessionURI}")
+      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", "")/*,sessionUri = response.content.sessionURI*/)))
+      LGCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(cnxnModelStr),response.content.listOfConnections))
+      LGCircuit.dispatch(CreateLabels(response.content.listOfLabels))
     }
 
     def processLogin(userModel: UserModel): Callback = {
@@ -148,24 +139,24 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginForm = false))
     }
 
-    def setSessionsUri(responseArray: Seq[String]): Unit = {
-      val sessionUriNames = SessionItems.getAllSessionUriName()
-      for (responseStr <- responseArray) {
-        val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
-        window.sessionStorage.setItem(sessionUriNames(responseArray.indexOf(responseStr)), response.content.sessionURI)
-      }
-    }
-
     def processSuccessfulLogin(responseArray: Seq[String], userModel: UserModel): Unit = {
-      setSessionsUri(responseArray)
-      val responseStr = responseArray(0)
-      setUserDetailsInSession(responseStr, userModel)
-      LGCircuit.dispatch(CreateLabels())
-      LGCircuit.dispatch(LoginUser(userModel))
-      $(loginLoader).addClass("hidden")
-      $(dashboardContainer).removeClass("hidden")
-      window.location.href = "/#connections"
-      log.debug("login successful")
+      val responseSeq = responseArray.map(e => upickle.default.read[ApiResponse[InitializeSessionResponse]](e))
+      LGCircuit.dispatch(SetSessionUri(responseSeq.map(_.content.sessionURI)))
+      // do a session ping to get the connections
+      val futureArray = for (response <- responseSeq) yield CoreApi.sessionPing(response.content.sessionURI)
+      Future.sequence(futureArray).onComplete {
+        case Success(sessionPingResponseStr) =>
+          setUserDetails(responseArray(0), sessionPingResponseStr(0))
+          LGCircuit.dispatch(AttachPingers())
+          LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())
+          $(loginLoader).addClass("hidden")
+          $(dashboardContainer).removeClass("hidden")
+          window.location.href = "/#messages"
+          log.debug("login successful")
+
+        case Failure(res) =>
+          processServerError()
+      }
     }
 
     def processLoginFailed(responseStr: String): Unit = {
@@ -214,7 +205,7 @@ object AgentLoginSignUp {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              log.debug(ApiTypes.CreateUserError)
+              //log.debug(ApiTypes.CreateUserError)
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             } catch {
               case e: Exception =>
@@ -222,7 +213,7 @@ object AgentLoginSignUp {
             }
 
           case Failure(s) =>
-            log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
+           // log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
