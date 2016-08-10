@@ -21,6 +21,8 @@ case class RefreshProfiles(potResult: Pot[ProfilesRootModel] = Empty, retryPolic
   override def next(value: Pot[ProfilesRootModel], newRetryPolicy: RetryPolicy) = RefreshProfiles(value, newRetryPolicy)
 }
 
+case class ClearProfiles()
+
 class ProfilesHandler[M](modelRW: ModelRW[M, Pot[ProfilesRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshProfiles =>
@@ -30,5 +32,8 @@ class ProfilesHandler[M](modelRW: ModelRW[M, Pot[ProfilesRootModel]]) extends Ac
           .asInstanceOf[Seq[ProfilesPost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
+
+    case ClearProfiles() =>
+      updated(Pot.empty)
   }
 }

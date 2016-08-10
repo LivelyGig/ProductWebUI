@@ -63,7 +63,7 @@ object ConnectionsSelectize {
     def getSelectedValues = Callback {
       val selectState: js.Object = s"#${t.props.runNow().parentIdentifier}-sel"
       val getSelectedValue = $(selectState).find("option").text()
-      println(getSelectedValue)
+//      println(getSelectedValue)
 
       //       var x = document.getElementById("mySelect").value;
       //       document.getElementById("demo").innerHTML = "You selected: " + x;

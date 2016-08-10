@@ -70,20 +70,20 @@ object AgentLoginSignUp {
     }
 
     def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false): Callback = {
-      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
+//      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-            log.debug(s"createUser msg : ${s.msgType}")
+//            log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
             } else {
-              log.debug(s"createUser msg : ${s.content}")
+             // log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(s) =>
-            log.debug(s"createUserFailure: ${s}")
+           // log.debug(s"createUserFailure: ${s}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
           // now you need to refresh the UI
         }
@@ -116,7 +116,8 @@ object AgentLoginSignUp {
 
     def setUserDetails(cnxnResponseStr: String, cnxnModelStr: String): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](cnxnResponseStr)
-      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""))))
+     // println(s"SetUserDetails initialresponse sessionURI ==== ${response.content.sessionURI}")
+      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", "")/*,sessionUri = response.content.sessionURI*/)))
       LGCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(cnxnModelStr),response.content.listOfConnections))
       LGCircuit.dispatch(CreateLabels(response.content.listOfLabels))
     }
@@ -147,9 +148,10 @@ object AgentLoginSignUp {
         case Success(sessionPingResponseStr) =>
           setUserDetails(responseArray(0), sessionPingResponseStr(0))
           LGCircuit.dispatch(AttachPingers())
+          LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())
           $(loginLoader).addClass("hidden")
           $(dashboardContainer).removeClass("hidden")
-          window.location.href = "/#connections"
+          window.location.href = "/#messages"
           log.debug("login successful")
 
         case Failure(res) =>
@@ -203,7 +205,7 @@ object AgentLoginSignUp {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              log.debug(ApiTypes.CreateUserError)
+              //log.debug(ApiTypes.CreateUserError)
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             } catch {
               case e: Exception =>
@@ -211,7 +213,7 @@ object AgentLoginSignUp {
             }
 
           case Failure(s) =>
-            log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
+           // log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))

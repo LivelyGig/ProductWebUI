@@ -23,7 +23,7 @@ object ConnectionsResults {
 
   class Backend($: BackendScope[Props, State]) {
     def mounted(props: Props) =Callback{
-      log.debug("connection view mounted")
+//      log.debug("connection view mounted")
 //      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
 

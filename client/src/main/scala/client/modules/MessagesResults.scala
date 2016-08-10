@@ -33,10 +33,10 @@ object MessagesResults {
 
   class Backend(t: BackendScope[Props, _]) {
     def mounted(props: Props): react.Callback = Callback {
-      log.debug("messages view mounted")
-      if (props.proxy().isEmpty) {
+//      log.debug("messages view mounted")
+      /*if (props.proxy().isEmpty) {
         ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.MESSAGES_VIEW)
-      }
+      }*/
     }
 
     /*{
@@ -131,7 +131,7 @@ object MessagesList {
     def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
         // Get data needed to present From and To
-        println(s"inside render messages: $message")
+//        println(s"inside render messages: $message")
         val userId = LGCircuit.zoom(_.session.messagesSessionUri).value.split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
         var toReceiver = "unknown"

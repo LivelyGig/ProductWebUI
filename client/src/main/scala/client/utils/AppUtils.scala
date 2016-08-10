@@ -16,7 +16,7 @@ import scala.scalajs.js.Date
 object AppUtils {
   val MESSAGE_POST_LABEL = "MESSAGEPOSTLABEL"
   val PROJECT_POST_LABEL = "PROJECTPOSTLABEL"
-  val PROFILE_POST_LABEL = "PROFILEPOSTLABEL"
+  val PROFILE_POST_LABEL = "PROFILESPOSTLABEL"
 
   def getSessionUri (viewName: String): String = {
     viewName match {
@@ -42,7 +42,7 @@ object AppUtils {
     val contentToPost = getContentToPost(postContent, cnxns,uid,viewName)
     val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
     logger.log.debug(s"prolog = $prolog")
-    SubscribeRequest(LGCircuit.zoom(_.user.sessionUri).value,
+    SubscribeRequest(AppUtils.getSessionUri(viewName),
       Expression(ApiTypes.INSERT_CONTENT,
         ExpressionContent(cnxns, prolog, contentToPost, uid)))
   }

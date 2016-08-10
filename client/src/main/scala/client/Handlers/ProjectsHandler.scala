@@ -18,6 +18,8 @@ case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty, retryPolic
   override def next(value: Pot[ProjectsRootModel], newRetryPolicy: RetryPolicy) = RefreshProjects(value, newRetryPolicy)
 }
 
+case class ClearProjects()
+
 class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshProjects =>
@@ -28,5 +30,8 @@ class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends Ac
           .asInstanceOf[Seq[ProjectsPost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
+
+    case ClearProjects() =>
+      updated(Pot.empty)
   }
 }

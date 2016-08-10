@@ -98,10 +98,10 @@ object ConfirmIntroReqForm {
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
-      val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      val connectionSessionURI = LGCircuit.zoom(_.session.messagesSessionUri).value/*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      println(s"introConfirmReq: $introConfirmReq")
+//      println(s"introConfirmReq: $introConfirmReq")
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => println("introRequest Rejected successfully ")
           LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
@@ -134,12 +134,12 @@ object ConfirmIntroReqForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      val connectionSessionURI = LGCircuit.zoom(_.session.messagesSessionUri).value/*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
-          // println("introRequest sent successfully ")
+//           println("introRequest sent successfully ")
           LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
       }
       val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId),AppModule.MESSAGES_VIEW)
@@ -156,7 +156,7 @@ object ConfirmIntroReqForm {
 
     // scalastyle:off
     def render(s: State, p: Props) = {
-      println("p.proxy().introResponse =  " + p.proxy().introResponse)
+//      println("p.proxy().introResponse =  " + p.proxy().introResponse)
       val headerText = p.header
       Modal(
         Modal.Props(

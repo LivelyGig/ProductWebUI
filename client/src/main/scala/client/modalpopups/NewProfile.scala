@@ -19,7 +19,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.models.ProfilePostContent
 import client.sessionitems.SessionItems
-import client.utils.AppUtils
+import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
 import diode.AnyAction._
 
 object NewProfile {
@@ -96,7 +96,7 @@ object NewProfileForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      val req = AppUtils.getPostData(state.profilePost, LGCircuit.zoom(_.connections.connections).value,Nil, AppModule.PROJECTS_VIEW)
+      val req = AppUtils.getPostData(state.profilePost, Seq(ConnectionsUtils.getSelfConnnection(AppModule.PROFILES_VIEW)),Nil, AppModule.PROFILES_VIEW)
       ContentModelHandler.postContent(req)
       t.modState(s => s.copy(postUserSkills = false))
     }

@@ -2,7 +2,7 @@ package client.modules
 
 
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.{ContentModelHandler, RefreshProjects}
+import client.handlers.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
 import client.RootModels.ProjectsRootModel
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
@@ -19,10 +19,11 @@ import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.NewMessage
+import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
-
+import diode.AnyAction._
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -35,10 +36,11 @@ object ProjectResults {
 
   class Backend(t: BackendScope[Props, _]) {
     def mounted(props: Props): react.Callback = Callback {
-      log.debug("project view mounted")
-      if (props.proxy().isEmpty) {
+//      log.debug("project view mounted")
+      /*if (props.proxy().isEmpty) {
         ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
-      }
+      }*/
+
     }
 
   }

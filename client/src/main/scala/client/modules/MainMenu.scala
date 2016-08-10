@@ -58,8 +58,8 @@ object MainMenu {
 
 
     val menuItems = Seq(
-      MenuItem(1, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(5), DashboardLoc),
-      MenuItem(2, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
+      MenuItem(1, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
+      MenuItem(2, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(5), DashboardLoc),
       MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize, JobPostsLoc, buildMenuItem(3), DashboardLoc),
       MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize, OfferingsLoc, buildMenuItem(0), DashboardLoc),
       MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize, ProfilesLoc, buildMenuItem(0), DashboardLoc),

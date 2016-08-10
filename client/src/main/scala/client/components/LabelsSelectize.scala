@@ -51,6 +51,7 @@ object LabelsSelectize {
         //        $(selectizeInput).selectize(SelectizeConfig.maxOptions(2)).destroy()
         //        println(s"test : ${$(selectizeInput)}")
         $(selectizeInput).selectize(SelectizeConfig
+          .create(true)
           .maxItems(3)
           .plugins("remove_button"))
       }
@@ -77,7 +78,7 @@ object LabelsSelectize {
           <.option(^.value := "")("Select"),
           //          props.proxy().render(searchesRootModel => searchesRootModel.se)
           for (label <- props.proxy().searchesModel
-            .filter(e=>e.parentUid=="self")
+            .filter(e => e.parentUid == "self")
             .filterNot(e => LabelsUtils.getSystemLabels().contains(e.text))) yield {
             <.option(^.value := upickle.default.write(label), ^.key := label.uid)(label.text)
           }

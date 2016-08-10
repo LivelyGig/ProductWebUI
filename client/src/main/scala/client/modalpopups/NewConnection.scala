@@ -98,7 +98,7 @@ object ConnectionsForm {
 
     def mounted(props: Props): Callback =  {
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
-      println("In mounted  = " + msg)
+     // println("In mounted  = " + msg)
       t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
     }
 
@@ -147,13 +147,14 @@ object ConnectionsForm {
 //        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
 //        t.modState(s => s.copy(postConnection = false))
 //      }
-//    }
+//    } /*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
 
     def introduceTwoUsers() = {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val state = t.state.runNow()
       val msg = state.introConnections.aMessage.replaceAll("/", "//")
-      val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+     // println(s"SessionURI in introduceTwoUsers ${LGCircuit.zoom(_.session.messagesSessionUri).value}")
+      val uri = LGCircuit.zoom(_.session.messagesSessionUri).value
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
 
       if (connections.length == 2) {
@@ -179,7 +180,8 @@ object ConnectionsForm {
           $("#agentFieldError".asInstanceOf[js.Object]).removeClass("hidden")
           t.modState(s => s.copy(postConnection = false))
         case None =>
-          val uri = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+         // println(s"SessionURI in establishConnection ${LGCircuit.zoom(_.session.messagesSessionUri).value}")
+          val uri = LGCircuit.zoom(_.session.messagesSessionUri).value /*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection(uri).source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
@@ -213,7 +215,7 @@ object ConnectionsForm {
       } else {
         s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
       }
-      println("msg " + msg)
+     // println("msg " + msg)
       t.modState(s => s.copy(introConnections =s.introConnections.copy(aMessage = msg)))
     }
 

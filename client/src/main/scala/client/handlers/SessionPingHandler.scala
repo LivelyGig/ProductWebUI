@@ -38,7 +38,7 @@ class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends Actio
       noChange
 
     case SetSessionUri(sessionUriSeq) =>
-      println(sessionUriSeq)
+//      println(s"sessionUriSeq **** ${sessionUriSeq}")
       updated(value.copy(messagesSessionUri = sessionUriSeq(0), projectSessionUri = sessionUriSeq(1), profileSessionUri = sessionUriSeq(2)))
 
   }

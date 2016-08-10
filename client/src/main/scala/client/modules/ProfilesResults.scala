@@ -26,10 +26,10 @@ object ProfilesResults {
 
   class Backend($: BackendScope[Props, _]) {
     def mounted(props: Props): react.Callback = Callback {
-      log.debug("profiles view mounted")
-      if (props.proxy().isEmpty) {
+//      log.debug("profiles view mounted")
+      /*if (props.proxy().isEmpty) {
         ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROFILES_VIEW)
-      }
+      }*/
     }
   }
 

@@ -26,7 +26,7 @@ import org.scalajs.dom._
 import shared.dtos.Label
 import shared.models.{ProjectPostContent, ProjectsPost}
 import client.sessionitems.SessionItems
-import client.utils.AppUtils
+import client.utils.{AppUtils, ConnectionsUtils}
 
 import scala.scalajs.js
 import scala.scalajs.js.Date
@@ -102,7 +102,7 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      val req = AppUtils.getPostData(state.projectPost, ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId),Nil, AppModule.PROJECTS_VIEW)
+      val req = AppUtils.getPostData(state.projectPost, ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId) ++ Seq(ConnectionsUtils.getSelfConnnection(AppModule.PROJECTS_VIEW)),Nil, AppModule.PROJECTS_VIEW)
       ContentModelHandler.postContent(req)
       t.modState(s => s.copy(postProject = true))
     }

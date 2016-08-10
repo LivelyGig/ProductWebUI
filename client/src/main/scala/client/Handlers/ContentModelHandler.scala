@@ -16,12 +16,17 @@ import scala.util.{Failure, Success}
   * Created by shubham.k on 12-05-2016.
   */
 object ContentModelHandler {
-  def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
+  def filterContent(response: ApiResponse[ResponseContent], viewName: String): Option[Post] = {
     try {
-      Some(upickle.default.read[MessagePost](messages.content.pageOfPosts(0)))
+      viewName match {
+        case AppModule.MESSAGES_VIEW => Some(upickle.default.read[MessagePost](response.content.pageOfPosts(0)))
+        case AppModule.PROFILES_VIEW => Some(upickle.default.read[ProfilesPost](response.content.pageOfPosts(0)))
+        case AppModule.PROJECTS_VIEW => Some(upickle.default.read[ProjectsPost](response.content.pageOfPosts(0)))
+      }
+
     } catch {
       case e: Exception =>
-        logger.log.debug(s"Exception in content filtering: ${e.getMessage}")
+        logger.log.debug(s"Exception in content filtering: ${e.getMessage} for view ${viewName}")
         None
     }
   }
@@ -63,8 +68,7 @@ object ContentModelHandler {
               ConnectionsModel("", content.connection, name, imgSrc)))
         }
       } else if (response.contains("beginIntroductionResponse")) {
-        val beginIntroductionRes = upickle.default
-          .read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
         LGCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
       }
     } catch {
@@ -107,7 +111,7 @@ object ContentModelHandler {
         upickle.default
           .read[Seq[ApiResponse[ResponseContent]]](response)
           .filterNot(_.content.pageOfPosts.isEmpty)
-          .flatMap(content => filterContent(content))
+          .flatMap(content => filterContent(content, viewName))
       msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
     }
   }
@@ -124,8 +128,8 @@ object ContentModelHandler {
   def getDefaultProlog(viewName: String): String = {
     viewName match {
       case AppModule.MESSAGES_VIEW => s"any([${AppUtils.MESSAGE_POST_LABEL}])"
-      case AppModule.PROFILES_VIEW => s"any([${AppUtils.PROJECT_POST_LABEL}])"
-      case AppModule.PROJECTS_VIEW => s"any([${AppUtils.PROFILE_POST_LABEL}])"
+      case AppModule.PROFILES_VIEW => s"any([${AppUtils.PROFILE_POST_LABEL}])"
+      case AppModule.PROJECTS_VIEW => s"any([${AppUtils.PROJECT_POST_LABEL}])"
     }
   }
 
@@ -134,7 +138,7 @@ object ContentModelHandler {
       "feedExpr",
       ExpressionContent(
         LGCircuit.zoom(_.connections.connections).value ++ Seq(
-          ConnectionsUtils.getSelfConnnection(AppModule.MESSAGES_VIEW)),
+          ConnectionsUtils.getSelfConnnection(viewName)),
         getDefaultProlog(viewName)))
     val req = SubscribeRequest(AppUtils.getSessionUri(viewName), expr)
 //    LGCircuit.dispatch(ClearMessages())
@@ -142,7 +146,7 @@ object ContentModelHandler {
     subscribe()
     def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
       case Success(res) =>
-        println(s"message post successful ${res}")
+//        println(s"message post successful ${res}")
         LGCircuit.dispatch(
           UpdatePrevSearchCnxn(req.expression.content.cnxns, viewName))
         LGCircuit.dispatch(
@@ -151,7 +155,7 @@ object ContentModelHandler {
 
       case Failure(res) =>
         if (count == 3) {
-          println(s"Failure data = ${res.getMessage}")
+//          println(s"Failure data = ${res.getMessage}")
           //            logger.log.error("Open Error modal Popup")
           LGCircuit.dispatch(ShowServerError(res.getMessage))
         } else {
@@ -205,9 +209,16 @@ object ContentModelHandler {
     }
   }
 
-  def cancelPreviousAndSubscribeNew(req: SubscribeRequest,
-                                    viewName: String): Unit = {
-    LGCircuit.dispatch(ClearMessages())
+  def clearModel(viewName : String) = {
+    viewName match {
+      case AppModule.MESSAGES_VIEW => LGCircuit.dispatch(ClearMessages())
+      case AppModule.PROFILES_VIEW => LGCircuit.dispatch(ClearProfiles())
+      case AppModule.PROJECTS_VIEW => LGCircuit.dispatch(ClearProjects())
+    }
+  }
+
+  def cancelPreviousAndSubscribeNew(req: SubscribeRequest, viewName: String): Unit = {
+    clearModel(viewName)
     var count = 1
     cancelPrevious()
     def cancelPrevious(): Unit =
@@ -232,7 +243,7 @@ object ContentModelHandler {
     postMsg()
     def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
       case Success(res) =>
-        logger.log.debug("content post success")
+//        logger.log.debug("content post success")
       case Failure(fail) =>
         if (count == 3) {
           //            logger.log.error("server error")
