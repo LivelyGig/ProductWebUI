@@ -5,8 +5,8 @@ object FooterCSS {
   object Style extends StyleSheet.Inline {
     import dsl._
     val footerContainer = style(
-      borderTop(2.px, solid, c"#67EAF2"),
-      backgroundColor(c"#005256"),
+      // borderTop(2.px, solid, c"#67EAF2"),
+      backgroundColor(c"#67EAF2"),
       minHeight(52.px),
       media.maxWidth(375.px)-
       display.none
@@ -15,13 +15,13 @@ object FooterCSS {
     // paddingRight(7.%%)
     )
     val footerNavA = style(
-      color(c"#fff"),
+      color(c"#333"),
       fontSize(1.em),
       letterSpacing(0.5.px),
       marginTop(3.px),
       &.hover(
         height(42.px),
-        backgroundColor(c"#005256"),
+        backgroundColor(c"#67EAF2"),
         color(c"#67EAF2"),
         outline(none)
       ),
@@ -61,7 +61,7 @@ object FooterCSS {
       paddingRight(4.%%),
       display.inline,
       fontSize(1.2.em),
-      color(c"#fff")
+      color(c"#333")
     )
     val footPaddingLeft = style(
       paddingLeft(7.px)
@@ -72,7 +72,7 @@ object FooterCSS {
     val displayInlineGlyph = style(
       paddingLeft(2.%%),
       fontSize(1.em),
-      color(c"#fff"),
+      color(c"#333"),
       media.maxWidth(1300.px) -
         fontSize(12.px)
     )

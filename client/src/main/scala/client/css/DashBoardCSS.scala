@@ -50,7 +50,7 @@ object DashBoardCSS {
       paddingRight(0.px)
     )
     val gigActionsContainer = style(
-      backgroundColor(c"#CCCCFF"),
+      backgroundColor(c"#67eaf2"),
       // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
@@ -323,13 +323,13 @@ object DashBoardCSS {
     )
 
     val footLegalStyle = style(
-      color(c"#fff"),
+      color(c"#333"),
       backgroundColor(transparent),
       paddingTop(12.px),
       fontSize(15.px),
       borderColor(transparent),
       &.active(
-        color(c"#fff"),
+        color(c"#333"),
         backgroundColor(transparent),
         paddingTop(17.px),
         fontSize(15.px),

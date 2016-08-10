@@ -17,7 +17,7 @@ object HeaderCSS {
       minHeight(52.px),
       //      position.absolute,
       //      zIndex(1),
-      borderBottom(2.px, solid, c"#67EAF2"),
+     // borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
       marginBottom(0.px),
@@ -107,7 +107,7 @@ object HeaderCSS {
       width(100.%%),
       paddingTop(4.px),
       //      addClassName("middelNaviContainer"),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
 
     val messagesmiddelNaviContainer = style(
@@ -115,7 +115,7 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
 
     val jobsmiddelNaviContainer = style(
@@ -123,28 +123,28 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
     val offeringsmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
     val profilessmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
     val contractssmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(61, 56, 90))
+      backgroundColor(rgb(0, 82, 86))
     )
 
     val presetPickBtn = style(

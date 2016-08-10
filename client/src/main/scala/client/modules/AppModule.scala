@@ -82,7 +82,7 @@ object AppModule {
         <.div()(
           Presets(Presets.Props(p.view))
         ),
-        <.div(DashBoardCSS.Style.splitContainer, ^.background := "url(./assets/images/LG_Background.jpg)")(
+        <.div(DashBoardCSS.Style.splitContainer, ^.background := "url(./assets/images/LG_Background2D.svg)")(
           <.div(^.className := "col-lg-1")(),
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
             <.div(^.className := "row")(
