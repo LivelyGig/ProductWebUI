@@ -10,7 +10,6 @@ import client.components.Icon.Icon
 import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
-import client.handlers.PostData
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.handlers.ContentModelHandler
 import client.modules.AppModule
@@ -20,9 +19,9 @@ import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
-
 import client.sessionitems.SessionItems
+
+
 import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
 
 import scala.scalajs.js
@@ -154,12 +153,12 @@ object NewMessageForm {
       if ($(messageID).hasClass("disabled"))
         t.modState(s => s.copy(postNewMessage = false))
       else {
-        val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId),AppModule.MESSAGES_VIEW)
+        val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId), AppModule.MESSAGES_VIEW)
         ContentModelHandler.postLabelsAndMsg(getAllLabelsText, AppUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg, AppModule.MESSAGES_VIEW))
         t.modState(s => s.copy(postNewMessage = true))
       }
 
-        t.modState(s => s.copy(postNewMessage = true))
+      t.modState(s => s.copy(postNewMessage = true))
 
     }
 

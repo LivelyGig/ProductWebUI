@@ -82,11 +82,11 @@ object WorkContractModal {
       }
     }
 
-    def hideMessage(showMessage: Boolean = false): Callback = {
-      if (showMessage)
-        t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
-      else
-        t.modState(s => s.copy(showMessage = true, showConfirmation = true, showWorkContract = false))
+    def hideMessage(/*showMessage: Boolean = false*/): Callback = {
+      // if (showMessage)
+      t.modState(s => s.copy(showMessage = false, showConfirmation = false, showWorkContract = true))
+      /*else
+        t.modState(s => s.copy(showMessage = true, showConfirmation = true, showWorkContract = false))*/
 
     }
 
