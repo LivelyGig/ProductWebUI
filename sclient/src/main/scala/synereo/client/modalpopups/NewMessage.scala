@@ -118,7 +118,7 @@ object NewMessageForm {
           tagsCreatedInline = tagsCreatedInline :+ word
         }
       )
-      println(tagsCreatedInline)
+      //      println(tagsCreatedInline)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
@@ -244,7 +244,7 @@ object NewMessageForm {
               <.ul(^.className := "list-inline")(
                 for (tag <- s.tags) yield
                   <.li(
-                    <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", NewMessageCSS.Style.postTagBtn)(^.textTransform:="uppercase",tag)
+                    <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", NewMessageCSS.Style.postTagBtn)(^.textTransform := "uppercase", tag)
                   )
               )
             ),
