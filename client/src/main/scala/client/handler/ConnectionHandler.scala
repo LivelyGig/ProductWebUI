@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.ConnectionsModel

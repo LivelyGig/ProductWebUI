@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import client.services.{CoreApi, LGCircuit}
 import diode.{ActionHandler, ActionResult, ModelRW}

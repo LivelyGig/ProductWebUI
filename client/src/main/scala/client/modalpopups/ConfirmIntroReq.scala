@@ -24,7 +24,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
 import client.RootModels.IntroRootModel
-import client.handlers.{ContentModelHandler, UpdateIntroductionsModel}
+import client.handler.{ContentModelHandler, UpdateIntroductionsModel}
 import client.modules.AppModule
 import shared.dtos.IntroConfirmReq
 import client.sessionitems.SessionItems

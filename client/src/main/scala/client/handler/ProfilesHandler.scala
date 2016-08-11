@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import diode.data.{Empty, Pot, PotActionRetriable}
 import client.RootModels.ProfilesRootModel

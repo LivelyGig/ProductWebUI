@@ -1,7 +1,7 @@
 
 package client.modals
 
-import client.handlers._
+import client.handler._
 import client.components.Bootstrap._
 import client.components._
 import client.css.{HeaderCSS}

@@ -2,6 +2,8 @@
 
 [LivelyGig](http://www.livelygig.com/)'s freelance marketplace front end. Please join LivelyGig at [Slack](https://livelygig.slack.com/messages/general/) or [Twitter](https://twitter.com/LivelyGig/) for more information, community updates and the latest development.
 
+[![Build Status](https://travis-ci.org/LivelyGig/ProductWebUI.svg?branch=master)](https://travis-ci.org/LivelyGig/ProductWebUI)
+
 ## Application Structure
 Application is broadly divided into three parts:
 * `server` Used as proxy to GloseVal backend server - this will go away once the front end is fully implemented

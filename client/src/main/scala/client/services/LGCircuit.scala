@@ -1,7 +1,7 @@
 package client.services
 
 //import client.Handlers.IntroductionHandler
-import client.handlers._
+import client.handler._
 import client.RootModels._
 import diode._
 import diode.data._
@@ -26,7 +26,7 @@ object LGCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
     new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v))),
     new ProjectsHandler(zoomRW(_.jobPosts)((m, v) => m.copy(jobPosts = v))),
     new ProfilesHandler(zoomRW(_.profiles)((m, v) => m.copy(profiles = v))),
-    new AppHandler(zoomRW(_.appRootModel)((m,v) => m.copy(appRootModel = v))),
+    new ApplicationHandler(zoomRW(_.appRootModel)((m,v) => m.copy(appRootModel = v))),
     new SessionPingHandler(zoomRW(_.session)((m,v) => m.copy(session = v)))
   )
 }

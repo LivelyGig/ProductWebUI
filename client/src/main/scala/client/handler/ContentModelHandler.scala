@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import client.logger
 import client.modules.AppModule

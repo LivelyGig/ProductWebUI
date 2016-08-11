@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import client.RootModels.SearchesRootModel
 import client.modules.AppModule

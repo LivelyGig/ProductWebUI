@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import client.RootModels.AppRootModel
 import client.modules.AppModule
@@ -11,7 +11,7 @@ case class ShowServerError(getError: String)
 
 case class SubscribeForDefaultAndBeginPing()
 
-class AppHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(modelRW) {
+class ApplicationHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case ShowServerError(errorMsg) =>
       updated(value.copy(isServerError = true, serverErrorMsg = errorMsg))
