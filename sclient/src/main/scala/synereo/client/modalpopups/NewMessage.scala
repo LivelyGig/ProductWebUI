@@ -14,7 +14,7 @@ import shared.dtos.LabelPost
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{DashboardCSS, NewMessageCSS}
 import synereo.client.handlers._
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
@@ -31,9 +31,11 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
+import org.querki.jquery._
 
 import scala.concurrent.Future
 import scala.collection.mutable.ListBuffer
+import scala.scalajs.js
 
 //scalastyle:off
 object NewMessage {
@@ -110,14 +112,14 @@ object NewMessageForm {
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
       val words: Seq[String] = value.split(" ")
-      var tags: Seq[String] = Seq()
+      var tagsCreatedInline: Seq[String] = Seq()
       words.foreach(
         word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
-          tags = tags :+ word
+          tagsCreatedInline = tagsCreatedInline :+ word
         }
       )
-      //      println(tags)
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tags))
+      println(tagsCreatedInline)
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
     def hideModal = {
@@ -179,9 +181,16 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-      SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
-      t.modState(s => s.copy(postNewMessage = true))
+      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
+      if (connections.length < 1) {
+        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postNewMessage = false))
+      } else {
+        $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+        val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
+        SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
+        t.modState(s => s.copy(postNewMessage = true))
+      }
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -209,6 +218,7 @@ object NewMessageForm {
             <.div(^.id := s.connectionsSelectizeInputId)(
               ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId, fromSelecize))
             ),
+            <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))
             ),
@@ -229,6 +239,14 @@ object NewMessageForm {
                 <.div("")
               }
 
+            ),
+            <.div(
+              <.ul(^.className := "list-inline")(
+                for (tag <- s.tags) yield
+                  <.li(
+                    <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", NewMessageCSS.Style.postTagBtn)(^.textTransform:="uppercase",tag)
+                  )
+              )
             ),
             <.div(^.className := "text-left text-muted")(
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
