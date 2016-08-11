@@ -1,11 +1,11 @@
 package client.modules
 
-import client.handlers.RefreshProfiles
+import client.handler.RefreshProfiles
 import client.components.{Icon, LabelsList, LabelsSelectize}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handlers._
+import client.handler._
 import client.RootModels.SearchesRootModel
 import client.css._
 import shared.models.{Label, UserModel}

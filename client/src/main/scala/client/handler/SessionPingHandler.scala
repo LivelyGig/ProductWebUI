@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 /**
   * Created by shubham.k on 05-08-2016.

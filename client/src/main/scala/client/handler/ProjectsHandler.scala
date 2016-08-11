@@ -1,4 +1,4 @@
-package client.handlers
+package client.handler
 
 import client.modules.AppModule
 import diode.{ActionHandler, ActionResult, Effect, ModelRW}

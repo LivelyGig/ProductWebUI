@@ -11,7 +11,7 @@ import client.RootModels.SearchesRootModel
 import shared.models.Label
 import client.components.Bootstrap._
 import client.css.WorkContractCSS
-import client.handlers.{ContentModelHandler, CreateLabels}
+import client.handler.{ContentModelHandler, CreateLabels}
 import client.logger
 import client.services.{ApiTypes, CoreApi, LGCircuit}
 import japgolly.scalajs.react

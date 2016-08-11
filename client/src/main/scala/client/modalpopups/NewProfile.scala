@@ -7,7 +7,7 @@ import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import client.handlers.ContentModelHandler
+import client.handler.ContentModelHandler
 import client.modules.AppModule
 import client.services.LGCircuit
 import japgolly.scalajs.react

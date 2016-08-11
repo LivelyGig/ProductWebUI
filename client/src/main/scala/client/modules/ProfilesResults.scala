@@ -1,6 +1,6 @@
 package client.modules
 
-import client.handlers.{ContentModelHandler, RefreshProfiles}
+import client.handler.{ContentModelHandler, RefreshProfiles}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 import client.components.Icon

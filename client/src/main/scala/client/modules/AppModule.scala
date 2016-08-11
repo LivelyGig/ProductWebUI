@@ -4,7 +4,7 @@ import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS, LftcontainerCSS}
-import client.handlers.ShowServerError
+import client.handler.ShowServerError
 import client.modals.ServerErrorModal
 
 //import client.handlers.{LogoutUser, ShowServerError}

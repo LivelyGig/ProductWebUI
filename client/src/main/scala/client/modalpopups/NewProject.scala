@@ -12,7 +12,7 @@ import client.components.Icon
 import client.components.Icon._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import client.handlers.ContentModelHandler
+import client.handler.ContentModelHandler
 import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react

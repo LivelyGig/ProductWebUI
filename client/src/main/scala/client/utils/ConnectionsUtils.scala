@@ -1,7 +1,7 @@
 package client.utils
 
 import client.components.{ConnectionsSelectize, LabelsSelectize}
-import client.handlers._
+import client.handler._
 import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import shared.dtos._

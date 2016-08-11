@@ -11,7 +11,7 @@ import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
 import client.css.{DashBoardCSS, ProjectCSS}
-import client.handlers.ContentModelHandler
+import client.handler.ContentModelHandler
 import client.modules.AppModule
 import japgolly.scalajs.react
 
