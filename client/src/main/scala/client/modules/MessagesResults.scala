@@ -5,22 +5,17 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.ContentModelHandler
 import client.RootModels.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
-import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.{NewMessage, ServerErrorModal}
 import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
-import client.sessionitems.SessionItems
-import org.scalajs.dom.window
 import org.widok.moment.Moment
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -108,7 +103,6 @@ object MessagesResults {
           P.proxy().render(messagesRootModel =>
             MessagesList(messagesRootModel.messagesModelList)),
           P.proxy().renderFailed(ex => <.div()(
-
             //<.span(Icon.warning), " Error loading"
             if(!getServerError.isServerError){
               ServerErrorModal(ServerErrorModal.Props(serverError))
@@ -126,9 +120,7 @@ object MessagesResults {
           }
         )
       )
-
     }
-
   }
 
   val component = ReactComponentB[Props]("Messages")
@@ -154,26 +146,18 @@ object MessagesList {
     def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
         // Get data needed to present From and To
-//        println(s"inside render messages: $message")
         val userId = LGCircuit.zoom(_.session.messagesSessionUri).value.split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
+        val connections = LGCircuit.zoom(_.connections).value.connectionsResponse
         var toReceiver = "unknown"
         var fromSender = "unknown"
         if (userId == selfConnectionId) {
           fromSender = "me"
-          // get other party ID, if there is one
-          if (message.connections.size > 1) {
-            if (message.connections(1).source.split("/")(2) == userId) {
-              toReceiver = message.connections(1).target.split("/")(2)
-            } else {
-              toReceiver = message.connections(1).source.split("/")(2)
-            }
-            // ToDo: look up name of Receiver and use friendly name
-          } else {
-            toReceiver = "self"
-          }
+          for(b <- message.connections ; a <- connections  ; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield
+            toReceiver = a.name
         } else {
-          fromSender = selfConnectionId
+          for(b <- message.connections ; a <- connections  ; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield
+            fromSender = a.name
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
         }
