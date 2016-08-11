@@ -9,7 +9,6 @@ object DashBoardCSS {
     import dsl._
 
     val mainContainerDiv = style(
-      backgroundColor(c"#EAEAEA"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
       overflowX.auto,
@@ -323,13 +322,13 @@ object DashBoardCSS {
     )
 
     val footLegalStyle = style(
-      color(c"#333"),
+      color(c"#FFF"),
       backgroundColor(transparent),
       paddingTop(12.px),
       fontSize(15.px),
       borderColor(transparent),
       &.active(
-        color(c"#333"),
+        color(c"#FFF"),
         backgroundColor(transparent),
         paddingTop(17.px),
         fontSize(15.px),

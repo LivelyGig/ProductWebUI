@@ -85,7 +85,9 @@ object LGMain extends js.JSApp {
     ;
     <.div()(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
-      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
+      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")
+        //^.background := "url(./assets/images/LG_Background3.svg)")
+        (
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10")(
           <.div(/*^.className := "navbar-header"*/)(
