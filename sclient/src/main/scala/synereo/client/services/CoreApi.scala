@@ -24,7 +24,7 @@ import scala.language.postfixOps
 case class ApiError(response: String) extends Exception
 
 object CoreApi {
-  var BASE_URL = s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+  var BASE_URL = s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
 
   // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
