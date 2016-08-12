@@ -90,6 +90,10 @@ object ConnectionsLabelsSelectize {
       }
     }
 
+    //    def clearSelect(props: Props) = {
+    //      $(s"${props.parentIdentifier}-selectize".asInstanceOf[js.Object]).find("option").remove()
+    //    }
+
     //    def updateComponent(): Boolean = {
     //      val props = t.props.runNow()
     //            println(s"inside udpateComponent ${props.proxy().searchesModel.isEmpty}")
@@ -150,6 +154,10 @@ object ConnectionsLabelsSelectize {
     .componentDidUpdate(scope => Callback {
     //    println("ConnectionsLabelsSelectize Component did update ")
   })
+    //    .componentWillUnmount(scope =>
+    //      Callback {
+    //        scope.backend.clearSelect(scope.props)
+    //      })
     //    .shouldComponentUpdate(scope => scope.$.backend.updateComponent())
     .componentDidUpdate(scope => Callback {
     SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.searches))(_ => scope.$.backend.attachLabels())

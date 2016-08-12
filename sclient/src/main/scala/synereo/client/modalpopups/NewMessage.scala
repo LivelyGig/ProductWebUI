@@ -118,6 +118,7 @@ object NewMessageForm {
           tagsCreatedInline = tagsCreatedInline :+ word
         }
       )
+      //      tagsCreatedInline.exis
       //      println(tagsCreatedInline)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
@@ -164,6 +165,17 @@ object NewMessageForm {
     //
     //    }
 
+    def deleteInlineLabel(e: ReactEventI) = {
+      val value = e.target.parentElement.getAttribute("data-count")
+      val state = t.state.runNow()
+      //      println(value)
+      val newlist = for {
+        (x, i) <- state.tags.zipWithIndex
+        if i != value.toInt
+      } yield x
+      //      println(newlist)
+      t.modState(state => state.copy(tags = newlist))
+    }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
@@ -242,9 +254,14 @@ object NewMessageForm {
             ),
             <.div(
               <.ul(^.className := "list-inline")(
-                for (tag <- s.tags) yield
-                  <.li(
-                    <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", NewMessageCSS.Style.postTagBtn)(^.textTransform := "uppercase", tag)
+                for (tag <- s.tags.zipWithIndex) yield
+                  <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
+                    <.ul(^.className := "list-inline",
+                      <.li(^.textTransform := "uppercase", tag._1),
+                      <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
+                        "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> deleteInlineLabel
+                      )
+                    )
                   )
               )
             ),
