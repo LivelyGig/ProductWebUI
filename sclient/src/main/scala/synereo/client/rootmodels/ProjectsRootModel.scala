@@ -1,7 +1,6 @@
-package shared.RootModels
+package synereo.client.rootmodels
 
 import shared.models.ProjectsPost
-import shared.dtos._
 
 case class ProjectsRootModel(projectsModelList: Seq[ProjectsPost]) {
   def updated(newProject: ProjectsPost): ProjectsRootModel = {

@@ -22,7 +22,7 @@ object NewMessageCSS {
       fontSize(20 px)
     )
     val newMessageActionsContainerDiv = style(
-//      marginTop(30.px),
+      //      marginTop(30.px),
       marginBottom(30.px)
     )
     val userImage = style(
@@ -80,7 +80,7 @@ object NewMessageCSS {
         border.none.important
       )
     )
-    val postingShortHandBtn =style(
+    val postingShortHandBtn = style(
       backgroundColor.transparent.important,
       color(c"#929497"),
       border.none.important,
@@ -102,6 +102,26 @@ object NewMessageCSS {
     val userNameOnDilogue = style(
       fontSize(16 px)
 
+    )
+    val postTagBtn = style(
+      margin(5.px),
+      fontFamily :=! "karla",
+      fontWeight.normal,
+      fontSize(12.px),
+      textTransform.capitalize,
+      backgroundColor.transparent.important,
+      height(38.px),
+      color(c"#000"),
+      opacity(0.8),
+      border(1.px, solid, c"#78D3F5"),
+      borderRadius(20.px),
+      minWidth(80.px),
+      padding.`0`.important,
+      &.hover(
+        color(c"#000"),
+        border(1.px, solid, c"#78D3F5"),
+        backgroundColor.transparent.important
+      )
     )
 
   }

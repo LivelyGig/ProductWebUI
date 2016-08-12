@@ -1,4 +1,4 @@
-package shared.RootModels
+package synereo.client.rootmodels
 
 import shared.models.MessagePost
 

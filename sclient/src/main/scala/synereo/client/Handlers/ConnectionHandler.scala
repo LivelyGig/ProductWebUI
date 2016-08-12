@@ -1,7 +1,7 @@
 package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
-import shared.RootModels.ConnectionsRootModel
+import synereo.client.rootmodels.ConnectionsRootModel
 import shared.dtos.{Connection, Content, IntroConfirmReq}
 import shared.models.ConnectionsModel
 import synereo.client.logger

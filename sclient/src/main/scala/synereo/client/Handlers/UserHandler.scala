@@ -5,7 +5,8 @@ import org.scalajs.dom.window
 import shared.dtos.UpdateUserRequest
 import shared.models.UserModel
 import synereo.client.logger
-import synereo.client.services.CoreApi
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import diode.AnyAction._
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -29,20 +30,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
     case PostUserUpdate(req) =>
-      var count = 1
-
-      post()
-      def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
-        case Success(response) =>
-          logger.log.debug("user update request sent successfully")
-        case Failure(response) =>
-          if (count == 3) {
-            logger.log.error("user update error")
-          } else {
-            count = count + 1
-            post()
-          }
-      }
+      ContentModelHandler.postUserUpdate(req)
       if (req.jsonBlob.imgSrc != null) {
         updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
       } else noChange

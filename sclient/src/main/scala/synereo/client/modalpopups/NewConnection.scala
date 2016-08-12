@@ -101,7 +101,7 @@ object ConnectionsForm {
     }
 
     def mounted(props: Props): Callback = {
-      val usr = window.sessionStorage.getItem("userName")
+      val usr = SYNEREOCircuit.zoom(_.user).value.name
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
       t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg)))
     }

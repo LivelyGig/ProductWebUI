@@ -2,7 +2,7 @@ package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.Label
-import shared.RootModels.SearchesRootModel
+import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.utils.PrologParser
 import shared.dtos.{Connection, LabelPost, SubscribeRequest}
 import synereo.client.logger
@@ -19,15 +19,17 @@ object SearchesModelHandler {
     try {
       val labelsArray = PrologParser.StringToLabel(listOfLabels.toJSArray)
       val model = upickle.default.read[Seq[Label]](JSON.stringify(labelsArray))
-      // logger.log.debug(s"searchesModel = ${model}")
-      SearchesRootModel(model)
+      SearchesRootModel(searchesModel = model)
     } catch {
       case e: Exception =>
+        println("error in method getsearchesModel")
         SearchesRootModel(Nil)
     }
   }
-  def leaf(text: String/*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
-  def leafMod(text: String/*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
+
+  def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+
+  def leafMod(text: String /*, color: String = "#CC5C64"*/) = "\"leaf(text(\\\"" + s"${text}" + "\\\"),display(color(\\\"\\\"),image(\\\"\\\")))\""
 
 }
 
@@ -47,8 +49,10 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case CreateLabels(labelStrSeq: Seq[String]) =>
       try {
         updated(SearchesModelHandler.getSearchesModel(labelStrSeq))
+        //        noChange
       } catch {
-        case e:Exception =>
+        case e: Exception =>
+          println(s" exception in Create Label action $e")
           noChange
       }
 
@@ -63,21 +67,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case PostLabelsAndMsg(labelsNames, subscribeReq) =>
       val labelPost = LabelPost(SYNEREOCircuit.zoom(_.user.sessionUri).value, labelsNames.map(SearchesModelHandler.leaf), "alias")
-      var count = 1
-      post()
-      def post(): Unit = CoreApi.postLabel(labelPost).onComplete{
-        case Success(res) =>
-          SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
-          SYNEREOCircuit.dispatch(CreateLabels(labelsNames.map(SearchesModelHandler.leafMod)))
-        case Failure(res) =>
-          if (count == 3) {
-            logger.log.debug("server error")
-          } else {
-            count = count + 1
-            post()
-          }
-
-      }
+      ContentModelHandler.postLabelsAndMsg(labelPost, subscribeReq)
       noChange
   }
 
