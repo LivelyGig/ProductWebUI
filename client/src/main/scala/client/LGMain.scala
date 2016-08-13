@@ -83,7 +83,7 @@ object LGMain extends js.JSApp {
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
     ;
-    <.div(^.backgroundImage := "url(./assets/images/LG_Background3B.svg)")(
+    <.div(^.backgroundImage := "url(./assets/images/LG_Background3E.svg)")(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
       <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")
         (
