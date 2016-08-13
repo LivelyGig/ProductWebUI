@@ -60,7 +60,7 @@ object HeaderCSS {
       padding(10.px, 10.px)
     )
     val headerNavLi = style(
-      backgroundColor(c"#005256"),
+      backgroundColor(transparent),
       borderBottom(3.px, solid, c"#67EAF2"),
       color(c"#67EAF2"),
       letterSpacing(0.5.px),
@@ -149,7 +149,7 @@ object HeaderCSS {
 
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
-      color(c"#13EEDD"),
+      color(transparent),
       fontSize(1.em),
       &.hover(
         color(c"#FFFFFF")
@@ -303,10 +303,11 @@ object HeaderCSS {
         unsafeChild("a")(
           display.inlineFlex,
           &.hover(
-            backgroundColor(c"#005256")
+            backgroundColor(transparent),
+              color(c"#333")
           ),
           &.focus(
-            backgroundColor(c"#005256")
+            backgroundColor(transparent)
           )
         )
       ),
