@@ -1,4 +1,4 @@
-package client.RootModels
+package client.rootmodel
 
 import shared.models.ProjectsPost
 import shared.dtos._

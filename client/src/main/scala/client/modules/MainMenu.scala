@@ -59,7 +59,7 @@ object MainMenu {
 
     val menuItems = Seq(
       MenuItem(1, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
-      MenuItem(2, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(5), DashboardLoc),
+      MenuItem(2, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(0), NotificationsLoc),
       MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize, JobPostsLoc, buildMenuItem(3), DashboardLoc),
       MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize, OfferingsLoc, buildMenuItem(0), DashboardLoc),
       MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize, ProfilesLoc, buildMenuItem(0), DashboardLoc),
@@ -89,7 +89,9 @@ object MainMenu {
                   if (item.location == ConnectionsLoc) {
                     introductionProxy(introductionProxy =>
                       if (introductionProxy.value.introResponse.length != 0) {
-                        <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
+                        props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, introductionProxy.value.introResponse.length)))
+                       // <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
+                     //   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", introductionProxy.value.introResponse.length)
                       } else {
                         <.span()
                       }
@@ -108,7 +110,8 @@ object MainMenu {
                   " ", item.label(props)
                 ),
                 if (item.location == ConnectionsLoc) {
-                  ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
+                 // ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
+                  props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, 0)))
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))

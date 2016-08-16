@@ -243,9 +243,9 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      media.minWidth(927.px) - (
+      media.minWidth(927.px) -(
         paddingRight(17.%%),
-      paddingLeft(17.%%))
+        paddingLeft(17.%%))
 
     )
     val modalContent = style(
@@ -353,7 +353,12 @@ object DashBoardCSS {
       )*/
     val inputBtnRadius = style(
       border.none,
-      padding(0.2.em, 0.6.em, 0.1.em)
+      padding(4.px, 7.px, 3.px, 7.px)
+    )
+    val notificationsBtn = style(
+      border.none,
+      padding(4.px, 7.px, 4.px, 8.px),
+      marginLeft(-13.px)
     )
     val inputBtnRadiusCncx = style(
       border.none,

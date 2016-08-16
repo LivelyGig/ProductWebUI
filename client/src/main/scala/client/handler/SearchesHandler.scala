@@ -1,6 +1,6 @@
 package client.handler
 
-import client.RootModels.SearchesRootModel
+import client.rootmodel.SearchesRootModel
 import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import client.utils.PrologParser

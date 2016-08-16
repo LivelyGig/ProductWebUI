@@ -1,6 +1,6 @@
 package client.handler
 
-import client.RootModels.AppRootModel
+import client.rootmodel.AppRootModel
 import client.modules.AppModule
 import diode.{ActionHandler, ActionResult, ModelRW}
 

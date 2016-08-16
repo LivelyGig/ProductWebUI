@@ -1,6 +1,7 @@
 package client
 
 import client.LGMain.{ContractsLoc, OfferingsLoc}
+import client.rootmodel.{ConnectionsRootModel, IntroRootModel}
 import japgolly.scalajs.react.extra.router._
 import client.components.{GlobalStyles, Icon}
 import client.css._
@@ -9,6 +10,7 @@ import client.modules._
 import org.querki.jquery._
 import org.scalajs.dom
 import client.services.LGCircuit
+import diode.react.ModelProxy
 
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
@@ -45,8 +47,6 @@ object LGMain extends js.JSApp {
 
   case object ContestsLoc extends Loc
 
-  case object EmployersLoc extends Loc
-
   case object OfferingsLoc extends Loc
 
   case object ProfilesLoc extends Loc
@@ -59,14 +59,18 @@ object LGMain extends js.JSApp {
 
   case object LandingLoc extends Loc
 
+  case object NotificationsLoc extends Loc
+
   val userProxy = LGCircuit.connect(_.user)
   val appProxy = LGCircuit.connect(_.appRootModel)
+  val introProxy = LGCircuit.connect(_.introduction)
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
     (staticRoute(root, LandingLoc) ~> renderR(ctl => LandingLocation.component(ctl))
       | staticRoute(s"#${AppModule.DASHBOARD_VIEW}", DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
+      | staticRoute(s"#${AppModule.NOTIFICATIONS_VIEW}", NotificationsLoc) ~> renderR(ctl =>introProxy(proxy =>  NotificationResults(NotificationResults.Props(proxy)) ) )
       | staticRoute(s"#${AppModule.MESSAGES_VIEW}", MessagesLoc) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.MESSAGES_VIEW,proxy))))
       // ToDo: the following should be renamed from projects to jobs ?
       | staticRoute(s"#${AppModule.PROJECTS_VIEW}", JobPostsLoc) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.PROJECTS_VIEW,proxy))))
@@ -75,6 +79,7 @@ object LGMain extends js.JSApp {
       // ToDo: following route should be called Profiles not Talent.
       | staticRoute(s"#${AppModule.PROFILES_VIEW}", ProfilesLoc) ~> renderR(ctl =>appProxy(proxy => AppModule(AppModule.Props(AppModule.PROFILES_VIEW,proxy))))
       | staticRoute(s"#${AppModule.OFFERINGS_VIEW}", OfferingsLoc) ~> renderR(ctl =>appProxy(proxy => AppModule(AppModule.Props(AppModule.OFFERINGS_VIEW,proxy))))
+//      | staticRoute(s"#${AppModule.NOTIFICATIONS_VIEW}", NotificationsLoc) ~> renderR(ctl =>appProxy(proxy => AppModule(AppModule.Props(AppModule.NOTIFICATIONS_VIEW, proxy))))
       | staticRoute(s"#${AppModule.CONNECTIONS_VIEW}", ConnectionsLoc) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.CONNECTIONS_VIEW,proxy)))))
       .notFound(redirectToPage(LandingLoc)(Redirect.Replace))
   }.renderWith(layout)
@@ -82,7 +87,7 @@ object LGMain extends js.JSApp {
   // scalastyle:off
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
-    ;
+
     <.div()(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
       <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
@@ -100,6 +105,7 @@ object LGMain extends js.JSApp {
                   case ProfilesLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Profiles")
                   case ContractsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Contracts")
                   case ConnectionsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Connections")
+                  case NotificationsLoc => <.span(^.color := "white", ^.float := "right")(Icon.navicon, "  ", " Notifications")
                   case _ => <.span()
                 }
               ),

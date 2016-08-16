@@ -5,7 +5,7 @@ import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data._
 import shared.models.ProjectsPost
 import org.scalajs.dom.window
-import client.RootModels.ProjectsRootModel
+import client.rootmodel.ProjectsRootModel
 import client.services.{CoreApi, LGCircuit}
 import diode.util.{Retry, RetryPolicy}
 import client.sessionitems.SessionItems

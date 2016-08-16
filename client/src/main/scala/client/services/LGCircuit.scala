@@ -2,7 +2,7 @@ package client.services
 
 //import client.Handlers.IntroductionHandler
 import client.handler._
-import client.RootModels._
+import client.rootmodel._
 import diode._
 import diode.data._
 import diode.react.ReactConnector

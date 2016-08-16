@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
-import client.RootModels.SearchesRootModel
+import client.rootmodel.SearchesRootModel
 import shared.models.Label
 import client.sessionitems.SessionItems
 

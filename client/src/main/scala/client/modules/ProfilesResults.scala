@@ -7,7 +7,7 @@ import client.components.Icon
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.modals.{NewMessage, NewRecommendation, ServerErrorModal}
 import org.querki.jquery._
-import client.RootModels.ProfilesRootModel
+import client.rootmodel.ProfilesRootModel
 import client.logger._
 import client.services.LGCircuit
 import shared.models.ProfilesPost

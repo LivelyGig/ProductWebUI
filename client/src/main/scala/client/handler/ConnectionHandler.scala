@@ -2,7 +2,7 @@ package client.handler
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.ConnectionsModel
-import client.RootModels.ConnectionsRootModel
+import client.rootmodel.ConnectionsRootModel
 import shared.dtos._
 
 // Actions

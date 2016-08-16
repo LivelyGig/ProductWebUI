@@ -5,7 +5,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.RootModels.MessagesRootModel
+import client.rootmodel.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._

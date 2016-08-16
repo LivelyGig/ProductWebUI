@@ -4,7 +4,7 @@ package client.handler
   * Created by shubham.k on 05-08-2016.
   */
 
-import client.RootModels.SessionRootModel
+import client.rootmodel.SessionRootModel
 import client.modules.AppModule
 import diode.{ActionHandler, ActionResult, ModelRW}
 import client.services.LGCircuit

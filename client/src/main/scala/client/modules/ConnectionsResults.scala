@@ -2,7 +2,7 @@ package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
-import client.RootModels.ConnectionsRootModel
+import client.rootmodel.ConnectionsRootModel
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot

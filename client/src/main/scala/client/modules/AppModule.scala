@@ -14,7 +14,7 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import diode.react.ModelProxy
-import client.RootModels.AppRootModel
+import client.rootmodel.AppRootModel
 
 // scalastyle:off
 object AppModule {
@@ -25,6 +25,7 @@ object AppModule {
   val MESSAGES_VIEW = "messages"
   val OFFERINGS_VIEW = "offerings"
   val CONNECTIONS_VIEW = "connections"
+  val NOTIFICATIONS_VIEW = "notifications"
 
   case class Props(view: String ,proxy: ModelProxy[AppRootModel])
 
@@ -77,6 +78,7 @@ object AppModule {
       val messagesProxy = LGCircuit.connect(_.messages)
       val connectionsProxy = LGCircuit.connect(_.connections)
        val appProxy = LGCircuit.connect(_.appRootModel)
+      val introProxy =LGCircuit.connect(_.introduction)
 
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
@@ -109,6 +111,7 @@ object AppModule {
                     case CONNECTIONS_VIEW => connectionsProxy(ConnectionsResults(_))
                     case CONTRACTS_VIEW => ContractResults.component()
                     case OFFERINGS_VIEW => OfferingResults.component()
+                   // case NOTIFICATIONS_VIEW => connectionsProxy(NotificationResults(_))
                   }
                 )
               )

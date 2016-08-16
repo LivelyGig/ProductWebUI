@@ -1,7 +1,7 @@
 package client.handler
 
 import diode.data.{Empty, Pot, PotActionRetriable}
-import client.RootModels.ProfilesRootModel
+import client.rootmodel.ProfilesRootModel
 import shared.models.ProfilesPost
 import client.modules.AppModule
 import diode.{ActionHandler, ActionResult, ModelRW}

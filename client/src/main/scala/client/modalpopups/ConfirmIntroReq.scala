@@ -23,7 +23,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
-import client.RootModels.IntroRootModel
+import client.rootmodel.IntroRootModel
 import client.handler.{ContentModelHandler, UpdateIntroductionsModel}
 import client.modules.AppModule
 import shared.dtos.IntroConfirmReq

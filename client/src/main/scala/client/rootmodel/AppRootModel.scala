@@ -1,4 +1,4 @@
-package client.RootModels
+package client.rootmodel
 
 /**
   * Created by bhagyashree.b on 2016-07-28.

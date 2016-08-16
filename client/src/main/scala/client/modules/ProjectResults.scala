@@ -3,7 +3,7 @@ package client.modules
 
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handler.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
-import client.RootModels.ProjectsRootModel
+import client.rootmodel.ProjectsRootModel
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.modals._
 import shared.models.ProjectsPost

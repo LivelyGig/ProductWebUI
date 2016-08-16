@@ -1,56 +1,56 @@
-package synereo.client.modules
+package client.modules
 
-import japgolly.scalajs.react.{Callback, _}
-import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom._
-import shared.dtos.{IntroConfirmReq, Introduction}
-import synereo.client.css.NotificationViewCSS
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import diode.AnyAction._
+import NotificationList.{NotificationListProps, State}
+import client.rootmodel.{ConnectionsRootModel, IntroRootModel}
+import client.css.{DashBoardCSS, HeaderCSS}
+import client.modals.{NewMessage, NewRecommendation}
+import client.modules.ConnectionsResults.{Props, State}
 import diode.react.ModelProxy
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import client.components.Icon
+import client.css.{DashBoardCSS, HeaderCSS}
+import client.handler.UpdateIntroductionsModel
+import client.modals.{NewMessage, NewRecommendation}
+import shared.models.ConnectionsModel
+import client.services.LGCircuit
 import org.querki.jquery._
-import shared.RootModels.IntroRootModel
-import synereo.client.components.MIcon
-import synereo.client.handlers.UpdateIntroductionsModel
-import synereo.client.logger
-import synereo.client.modalpopups.ConfirmIntroReqModal
-
+import shared.dtos.{IntroConfirmReq, Introduction}
+import diode.AnyAction._
 import scala.scalajs.js
 import scala.scalajs.js.JSON
-import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by mandar.k on 7/27/2016.
+  * Created by bhagyashree.b on 2016-08-12.
   */
-//scalastyle:off
-object NotificationView {
+object NotificationResults {
 
   case class Props(proxy: ModelProxy[IntroRootModel])
 
-  case class State()
+  case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props): Callback = Callback {
-      //      logger.log.info("notifications view mounted")
+    def mounted(props: Props) =Callback{
+      //      log.debug("connection view mounted")
+      //      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
+
+
   }
 
-  val component = ReactComponentB[Props]("NotificationView")
+  // create the React component for Dashboard
+  val component = ReactComponentB[Props]("Connection")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS((t, P, S) => {
-      <.div(/*^.className := "container-fluid", NotificationViewCSS.Style.notificationViewContainerMain*/)(
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
-            <.div(^.className := "col-md-6 col-md-offset-3")(
-              NotificationList(P.proxy().introResponse)
-            )
-          )
-        )
-      )
+    .renderPS(($, P, S) => {
+      <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
+        <.div(^.id := "resultsConnectionsContainer")(
+          NotificationList(P.proxy().introResponse))
+      ) //mainContainer
     })
-    .componentDidMount(s => s.backend.mounted(s.props))
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {
       //      if (scope.currentProps.proxy().introResponse.length <= 0) {
       //        window.location.href = "/#dashboard"
@@ -61,8 +61,10 @@ object NotificationView {
     })
     .build
 
-  def apply(proxy: ModelProxy[IntroRootModel]) = component(Props(proxy))
+  /** Returns a function compatible with router location system while using our own props */
+  def apply(props: Props) = component(props)
 }
+
 
 object NotificationList {
 
@@ -73,19 +75,19 @@ object NotificationList {
   class Backend(t: BackendScope[NotificationListProps, State]) {
 
     def deleteIntroduction(introduction: Introduction) = {
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = LGCircuit.zoom(_.session.messagesSessionUri).value
       val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = false)
-      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+      LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
     }
 
     def handleAllIntroduction(areAccepted: Boolean = false) = {
       val props = t.props.runNow()
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = LGCircuit.zoom(_.session.messagesSessionUri).value
       props.introductions.foreach {
         introduction =>
+          println(s"areAccepted ${areAccepted}")
           val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = areAccepted)
-          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+          LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
       }
       $("#acceptRejectAllBtnContainer".asInstanceOf[js.Object]).addClass("hidden")
     }
@@ -95,17 +97,17 @@ object NotificationList {
         //        println(s"introduction in notification view: $introduction")
         <.li(^.className := "media")(
           <.div(^.className := "card-shadow")(
-            <.div(^.className := "row", NotificationViewCSS.Style.notificationCard)(
+            <.div(^.className := "row")(
               <.div(^.className := "col-md-8")(
                 <.div(s"you have introduction request for : ${JSON.parse(introduction.introProfile).name.asInstanceOf[String]}", ^.display.`inline-block`, ^.margin := "20.px")
               ),
               <.div(^.className := "col-md-4")(
                 <.div(^.display.`inline-block`,
-                  ConfirmIntroReqModal(ConfirmIntroReqModal.Props("details", Seq(NotificationViewCSS.Style.acceptBtn), <.span(MIcon.done), "", introduction))),
+                  ConfirmIntroReqModal(ConfirmIntroReqModal.Props("details", Seq(), <.span(Icon.check), "", introduction))),
                 <.div(^.display.`inline-block`,
                   <.button(^.className := "btn btn-default", ^.color.red, ^.onClick --> Callback {
                     deleteIntroduction(introduction)
-                  }, <.span(MIcon.close), "dismiss")
+                  }, <.span(Icon.close), "dismiss")
                 )
               )
             )
@@ -113,12 +115,12 @@ object NotificationList {
         )
       }
       <.div(^.className := "col-md-12",
-        <.h1(s"you have ${p.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
-        <.div(^.id := "acceptRejectAllBtnContainer", NotificationViewCSS.Style.acceptRejectAllBtnContainer)(
-          <.button(^.className := "btn btn-default", ^.color.green, MIcon.done, NotificationViewCSS.Style.acceptAllRejectAllBtns, ^.onClick --> Callback {
+        <.h1(s"you have ${p.introductions.length} notifications"),
+        <.div(^.id := "acceptRejectAllBtnContainer")(
+          <.button(^.className := "btn btn-default", ^.color.green, Icon.check ,^.onClick --> Callback {
             handleAllIntroduction(true)
           })("Accept all"),
-          <.button(^.className := "btn btn-default", ^.color.red, MIcon.close, NotificationViewCSS.Style.acceptAllRejectAllBtns, ^.onClick --> Callback {
+          <.button(^.className := "btn btn-default", ^.color.red, Icon.close,  ^.onClick --> Callback {
             handleAllIntroduction(false)
           })("Reject all")
         ),
@@ -143,3 +145,4 @@ object NotificationList {
   def apply(introduction: Seq[Introduction]) = component(NotificationListProps(introduction))
 
 }
+

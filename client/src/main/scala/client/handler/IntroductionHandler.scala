@@ -4,7 +4,7 @@ package client.handler
 import java.util.UUID
 
 import diode.{ActionHandler, ActionResult, ModelRW}
-import client.RootModels.IntroRootModel
+import client.rootmodel.IntroRootModel
 import client.logger
 import client.services.{CoreApi, LGCircuit}
 import shared.dtos._

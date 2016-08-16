@@ -4,7 +4,7 @@ import client.modules.AppModule
 import diode._
 import diode.data._
 import shared.models.MessagePost
-import client.RootModels.MessagesRootModel
+import client.rootmodel.MessagesRootModel
 import client.logger
 import client.services.{CoreApi, LGCircuit}
 import diode.util.{Retry, RetryPolicy}

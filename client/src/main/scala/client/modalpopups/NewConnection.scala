@@ -27,7 +27,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
-import client.RootModels.ConnectionsRootModel
+import client.rootmodel.ConnectionsRootModel
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
 import client.sessionitems.SessionItems

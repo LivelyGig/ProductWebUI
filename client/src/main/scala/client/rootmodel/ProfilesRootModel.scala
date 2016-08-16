@@ -1,4 +1,4 @@
-package client.RootModels
+package client.rootmodel
 
 import shared.models.ProfilesPost
 

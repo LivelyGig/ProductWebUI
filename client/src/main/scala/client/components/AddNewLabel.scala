@@ -7,7 +7,7 @@ import japgolly.scalajs.react.ReactComponentB
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.RootModels.SearchesRootModel
+import client.rootmodel.SearchesRootModel
 import shared.models.Label
 import client.components.Bootstrap._
 import client.css.WorkContractCSS
