@@ -13,7 +13,7 @@ object HeaderCSS {
     import dsl._
 
     val naviContainer = style(
-      backgroundColor(c"#005256"),
+      backgroundColor(transparent),
       minHeight(52.px),
       //      position.absolute,
       //      zIndex(1),
@@ -33,9 +33,9 @@ object HeaderCSS {
       fontSize(1.2.em),
       letterSpacing(0.5.px),
       &.hover(
-        borderBottom(3.px, solid, c"#67EAF2"),
+        // borderBottom(3.px, solid, c"#67EAF2"),
         backgroundColor(inherit),
-        color(c"#67EAF2"),
+        color(transparent),
         outline(none)
       ),
       &.focus(
@@ -60,7 +60,7 @@ object HeaderCSS {
       padding(10.px, 10.px)
     )
     val headerNavLi = style(
-      backgroundColor(c"#005256"),
+      backgroundColor(transparent),
       borderBottom(3.px, solid, c"#67EAF2"),
       color(c"#67EAF2"),
       letterSpacing(0.5.px),
@@ -107,7 +107,7 @@ object HeaderCSS {
       width(100.%%),
       paddingTop(4.px),
       //      addClassName("middelNaviContainer"),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
 
     val messagesmiddelNaviContainer = style(
@@ -115,7 +115,7 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
 
     val jobsmiddelNaviContainer = style(
@@ -123,33 +123,33 @@ object HeaderCSS {
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
     val offeringsmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
     val profilessmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
     val contractssmiddelNaviContainer = style(
       //  marginTop(52.px),
       height(44.px),
       width(100.%%),
       paddingTop(4.px),
-      backgroundColor(rgb(0, 82, 86))
+      backgroundColor(transparent)
     )
 
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
-      color(c"#13EEDD"),
+      color(transparent),
       fontSize(1.em),
       &.hover(
         color(c"#FFFFFF")
@@ -303,10 +303,11 @@ object HeaderCSS {
         unsafeChild("a")(
           display.inlineFlex,
           &.hover(
-            backgroundColor(c"#005256")
+            backgroundColor(transparent),
+              color(c"#333")
           ),
           &.focus(
-            backgroundColor(c"#005256")
+            backgroundColor(transparent)
           )
         )
       ),

@@ -47,6 +47,8 @@ object LGMain extends js.JSApp {
 
   case object ContestsLoc extends Loc
 
+  case object EmployersLoc extends Loc
+
   case object OfferingsLoc extends Loc
 
   case object ProfilesLoc extends Loc
@@ -87,10 +89,11 @@ object LGMain extends js.JSApp {
   // scalastyle:off
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
-
-    <.div()(
+    ;
+    <.div(^.backgroundImage := "url(./assets/images/LG_Background3E.svg)")(
       <.img(^.id := "loginLoader", DashBoardCSS.Style.loading, ^.className := "hidden", ^.src := "./assets/images/processing.gif"),
-      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")(
+      <.nav(^.id := "naviContainer", HeaderCSS.Style.naviContainer, HeaderCSS.Style.navbarFixedTop, ^.className := "navbar")
+        (
         <.div(^.className := "col-lg-1")(),
         <.div(^.className := "col-lg-10")(
           <.div(/*^.className := "navbar-header"*/)(

@@ -6,7 +6,7 @@ object FooterCSS {
     import dsl._
     val footerContainer = style(
       // borderTop(2.px, solid, c"#67EAF2"),
-      backgroundColor(c"#67EAF2"),
+      backgroundColor(transparent),
       minHeight(52.px),
       media.maxWidth(375.px)-
       display.none
@@ -15,35 +15,35 @@ object FooterCSS {
     // paddingRight(7.%%)
     )
     val footerNavA = style(
-      color(c"#333"),
+      color(c"#FFF"),
       fontSize(1.em),
       letterSpacing(0.5.px),
       marginTop(3.px),
       &.hover(
         height(42.px),
-        backgroundColor(c"#67EAF2"),
-        color(c"#67EAF2"),
+        backgroundColor(transparent),
+        color(transparent),
         outline(none)
       ),
       &.focus(
         height(42.px),
-        backgroundColor(c"#005256"),
-        color(c"#67EAF2"),
+        backgroundColor(transparent),
+        color(transparent),
         outline(none)
       )
     )
     val footerNavLi = style(
-      backgroundColor(c"#005256"),
+      backgroundColor(transparent),
       height(42.px),
       &.hover(
         height(42.px),
-        backgroundColor(c"#005256"),
+        backgroundColor(transparent),
         //color(c"#67EAF2"),
         outline(none)
       ),
       &.focus(
         height(42.px),
-        backgroundColor(c"#005256"),
+        backgroundColor(transparent),
         // color(c"#67EAF2"),
         outline(none)
       )
@@ -52,16 +52,16 @@ object FooterCSS {
       float.right
     )
     val navbar = style(
-      backgroundColor(c"#005256"),
+      backgroundColor(transparent),
       &.hover(
-        backgroundColor(c"#005256")
+        backgroundColor(transparent)
       )
     )
     val displayInline = style(
       paddingRight(4.%%),
       display.inline,
       fontSize(1.2.em),
-      color(c"#333")
+      color(c"#FFF")
     )
     val footPaddingLeft = style(
       paddingLeft(7.px)
@@ -72,7 +72,7 @@ object FooterCSS {
     val displayInlineGlyph = style(
       paddingLeft(2.%%),
       fontSize(1.em),
-      color(c"#333"),
+      color(c"#FFF"),
       media.maxWidth(1300.px) -
         fontSize(12.px)
     )
