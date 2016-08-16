@@ -98,9 +98,8 @@ SRPClient.prototype = {
         }
         var A = this.A;
         var B = sjcl.bn.fromBits(sjcl.codec.hex.toBits(BHex));
-        var salt = sjcl.codec.hex.toBits(saltHex);
         var u = sjcl.bn.fromBits(this.calculateU(A, B));
-        var x = sjcl.bn.fromBits(this.calculateX(salt));
+        var x = sjcl.bn.fromBits(this.calculateX(saltHex));
         var S = this.calculateS(B, x, u);
         var M1 = this.calculateM(A, B, S)
         // Calculate and store M2 for the further client verification
@@ -113,8 +112,7 @@ SRPClient.prototype = {
         if(!saltHex) {
             throw 'Missing parameter';
         }
-        var salt = sjcl.codec.hex.toBits(saltHex);
-        return sjcl.codec.hex.fromBits(this.calculateV(salt).toBits());
+        return sjcl.codec.hex.fromBits(this.calculateV(saltHex).toBits());
     },
 
     matches: function(M2Hex) {
@@ -148,27 +146,27 @@ SRPClient.prototype = {
     },
 
     /**
-     *  @param {bitArray} salt a random salt.
+     *  @param {String} salt a random salt.
      *  @return {bitArray}
      */
     calculateX: function (salt) {
         if (!salt) {
             throw 'Missing parameter.';
         }
-        var inner = this.calculateH(sjcl.codec.utf8String.toBits(this.username + ':' + this.password));
-        return this.calculateH(sjcl.bitArray.concat(salt, inner));
+        var inner = sjcl.codec.hex.fromBits(this.calculateH(sjcl.codec.utf8String.toBits(this.username + ":" + this.password)));
+        return this.calculateH(sjcl.codec.utf8String.toBits(salt + inner));
     },
 
     /**
      * Calculates the verifier v = g^x % N.
-     * @param {bitArray} salt the server salt.
+     * @param {String} saltHex the server salt.
      * @return {bn}
      */
-    calculateV: function(salt) {
-        if (!salt) {
+    calculateV: function(saltHex) {
+        if (!saltHex) {
             throw 'Missing parameter.';
         }
-        var x = this.calculateX(salt);
+        var x = this.calculateX(saltHex);
         return this.g.powermod(sjcl.bn.fromBits(x), this.N);
     },
 

@@ -16,8 +16,8 @@ describe("SRPClient", function() {
 
   var k = sjcl.bn.fromBits(sjcl.codec.hex.toBits(kHex));
 
-  var x = srpc.calculateX(sjcl.codec.hex.toBits(salt));
-  var v = srpc.calculateV(sjcl.codec.hex.toBits(salt));
+  var x = srpc.calculateX(salt);
+  var v = srpc.calculateV(salt);
 
   var verifier = srpc.getVerifierHex(salt);
 
