@@ -1,33 +1,38 @@
 package synereo.client.modalpopups
 
-import shared.dtos.{CreateUserResponse, ApiResponse}
-import synereo.client.components.Bootstrap._
-import synereo.client.components._
-import synereo.client.css.{SynereoCommanStylesCSS, SignupCSS, LoginCSS}
-import shared.models.UserModel
-import synereo.client.services.{ApiTypes, CoreApi}
-import scala.util.{Failure, Success}
-import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import scalacss.ScalaCssReact._
-import scala.scalajs.js
 import org.querki.jquery._
-import org.scalajs.dom.window
 import org.scalajs.dom
+import org.scalajs.dom.window
+import shared.models.UserModel
+import synereo.client.components.Bootstrap._
+import synereo.client.components._
+import synereo.client.css.{LoginCSS, SignupCSS}
 import synereo.client.sessionitems.SessionItems
+
+import scala.language.reflectiveCalls
+import scala.scalajs.js
+import scalacss.ScalaCssReact._
 
 /**
   * Created by Mandar on 4/19/2016.
   */
 //scalastyle:off
+
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
-  case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false,
-                   showNewInviteForm: Boolean = false,hostName: String = dom.window.location.hostname, portNumber: String = "9876")
+  case class State(userModel: UserModel, login: Boolean = false,
+                   showConfirmAccountCreation: Boolean = false,
+                   showNewUserForm: Boolean = false,
+                   showNewInviteForm: Boolean = false,
+                   hostName: String = dom.window.location.hostname,
+                   portNumber: String = "9876",
+                   apiURL: String = s"http://" + dom.window.location.hostname +":9876"
+                  )
 
   val LoginForm: js.Object = "#LoginForm"
 
@@ -35,8 +40,9 @@ object LoginForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
+      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       val LoginBtn: js.Object = "#LoginBtn"
       if ($(LoginBtn).hasClass("disabled"))
         t.modState(s => s.copy(login = false))
@@ -75,6 +81,12 @@ object LoginForm {
 
     def userNameFocus(): Unit = {
       $(LoginForm).find("input:first").focus()
+    }
+
+    def updateAPIURL(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(apiURL = value))
     }
 
     def updateIp(e: ReactEventI) = {
@@ -137,16 +149,22 @@ object LoginForm {
 //                    )
 //                  )
 //                ),
+//                <.div(^.className := "form-group")(
+//                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
+//                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+//                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
+//                  <.div(^.className := "help-block with-errors")
+//                ),
+//                <.div(^.className := "form-group")(
+//                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
+//                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+//                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
+//                  <.div(^.className := "help-block with-errors")
+//                ),
                 <.div(^.className := "form-group")(
-                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
-                  <.div(^.className := "help-block with-errors")
-                ),
-                <.div(^.className := "form-group")(
-                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
+                  <.label(LoginCSS.Style.loginFormLabel)("API Server"),
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
+                    ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := s.apiURL, ^.onChange ==> updateAPIURL, ^.required := true),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "form-group")(
@@ -162,13 +180,13 @@ object LoginForm {
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "row")(
-                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
-                  ),
-                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
-                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
-                  )
+//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
+//                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
+//                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
+//                  ),
+//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
+//                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
+//                  )
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")

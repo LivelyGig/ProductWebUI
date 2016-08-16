@@ -1,7 +1,5 @@
 package synereo.client.services
 
-import java.util.UUID
-
 import shared.dtos._
 import org.scalajs.dom._
 import upickle.default._
@@ -15,7 +13,8 @@ import synereo.client.sessionitems.SessionItems
 object CoreApi {
 
   def getBaseUrl() = {
-    s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+    //s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+    s"${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}/api"
   }
 
   // scalastyle:ignore

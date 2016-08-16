@@ -45,6 +45,7 @@ object SessionItems {
     val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"
   }
   object ApiDetails {
+    val API_URL = "API_URL"
     val API_HOST = "API_HOST"
     val API_PORT = "API_PORT"
   }

@@ -70,13 +70,28 @@ case class ModeratorProfile(name: String = "", title: String = "", capabilities:
 
 case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
 
-case class UserModel(name: String = "", email: String = "", password: String = "", isLoggedIn: Boolean = false,
-                     imgSrc: String = "", confirmPassword: String = "", isAvailable:Boolean=true, sessionUri: String = "")
+case class UserModel(name: String = "",
+                     email: String = "",
+                     password: String = "",
+                     isLoggedIn: Boolean = false,
+                     imgSrc: String = "",
+                     confirmPassword: String = "",
+                     isAvailable:Boolean=true,
+                     sessionUri: String = "")
 
-case class SignUpModel(email: String = "", password: String = "", confirmPassword: String = "",
-                       name: String = "", lastName: String = "", createBTCWallet: Boolean = false,
-                       isModerator: Boolean = false, isClient: Boolean = false, isFreelancer: Boolean = false,
-                       canReceiveEmailUpdates: Boolean = false, isLoggedIn: Boolean = false, imgSrc: String = "", didAcceptTerms: Boolean = false)
+case class SignUpModel(email: String = "",
+                       password: String = "",
+                       confirmPassword: String = "",
+                       name: String = "",
+                       lastName: String = "",
+                       createBTCWallet: Boolean = false,
+                       isModerator: Boolean = false,
+                       isClient: Boolean = false,
+                       isFreelancer: Boolean = false,
+                       canReceiveEmailUpdates: Boolean = false,
+                       isLoggedIn: Boolean = false,
+                       imgSrc: String = "",
+                       didAcceptTerms: Boolean = false)
 
 case class EmailValidationModel(token: String)
 

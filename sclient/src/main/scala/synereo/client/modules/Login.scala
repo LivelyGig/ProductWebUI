@@ -1,35 +1,31 @@
 package synereo.client.modules
 
+import diode.AnyAction._
 import japgolly.scalajs.react._
-import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.querki.jquery._
+import org.scalajs.dom.window
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import synereo.client.sessionitems.SessionItems
-import synereo.client.handlers._
-import synereo.client.modalpopups._
-import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.services.CoreApi._
-import scala.concurrent.Future
-import scala.scalajs.js
-import js.JSON
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
-import scala.concurrent.ExecutionContext.Implicits.global
-import org.querki.jquery._
 import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
+import synereo.client.handlers._
 import synereo.client.logger._
-import diode.AnyAction._
-import org.scalajs.dom
-import scala.scalajs.js.timers._
-import synereo.client.utils.{AppUtils, ConnectionsUtils, MessagesUtils}
+import synereo.client.modalpopups._
+import synereo.client.services.CoreApi._
+import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
+import synereo.client.utils.ConnectionsUtils
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
 
 /**
   * Created by mandar.k on 3/11/2016.
   */
 //scalastyle:off
-case class ApiDetails(hostName: String = "", portNumber: String = "")
+case class ApiDetails(apiURL: String = "", hostName: String = "", portNumber: String = "")
 
 object Login {
 

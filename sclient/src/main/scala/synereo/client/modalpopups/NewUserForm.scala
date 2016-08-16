@@ -3,17 +3,15 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
-import synereo.client.components.Bootstrap.Modal
+import org.scalajs.dom
+import shared.models.SignUpModel
+import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
-import shared.models.SignUpModel
 
+import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
-import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap._
-import org.scalajs.dom.window
-import synereo.client.sessionitems.SessionItems
 
 object NewUserForm {
   var addNewUserState: Boolean = false
@@ -24,7 +22,12 @@ object NewUserForm {
 
   case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
 
-  case class State(signUpModel: SignUpModel, addNewUser: Boolean = false, showTermsOfServicesForm: Boolean = false, showLoginForm: Boolean = true)
+  case class State(signUpModel: SignUpModel,
+                   addNewUser: Boolean = false,
+                   showTermsOfServicesForm: Boolean = false,
+                   showLoginForm: Boolean = true,
+                   apiURL: String = s"http://" + dom.window.location.hostname +":9876"
+                  )
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = {
@@ -38,16 +41,15 @@ object NewUserForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def updateName(e: ReactEventI) = {
+    def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
-      //      println(value)
-      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(name = value)))
+      t.modState(s => s.copy(apiURL = value))
     }
 
-    //    def updateLastName(e: ReactEventI) = {
-    //      val value = e.target.value
-    //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(lastName = value)))
-    //    }
+    def updateName(e: ReactEventI) = {
+      val value = e.target.value
+      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(name = value)))
+    }
 
     def updateConfirmPassword(e: ReactEventI) = {
       val value = e.target.value
@@ -92,7 +94,8 @@ object NewUserForm {
     }
 
     def render(s: State, p: Props) = {
-      val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)
+      //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
+      val nodeName = s.apiURL
       val headerText = "Sign up"
       Modal(
         Modal.Props(
@@ -106,6 +109,12 @@ object NewUserForm {
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
         ),
         <.form(^.id := "SignUpForm", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
+          <.div(^.className := "form-group")(
+            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "API Server", ^.value := s.apiURL,
+              ^.className := "form-control", "data-error".reactAttr := "Username is required",^.onChange ==> updateAPIURL,
+              ^.required := true, ^.placeholder := "API Server"),
+            <.div(^.className := "help-block with-errors")
+          ),
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := s.signUpModel.name, ^.className := "form-control", "data-error".reactAttr := "Username is required",
               ^.onChange ==> updateName, ^.required := true, ^.placeholder := "Desired user name"),
