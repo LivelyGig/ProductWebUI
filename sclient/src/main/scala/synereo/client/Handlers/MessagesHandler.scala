@@ -43,18 +43,18 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
         CoreApi.sessionPing(SYNEREOCircuit.zoom(_.user.sessionUri).value)
-      } { messagesResponse => MessagesRootModel(ContentModelHandler
+      } { messagesResponse => MessagesRootModel(ContentHandler
         .getContentModel(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
 
     case SubsForMsgAndBeginSessionPing() =>
-      ContentModelHandler.subsForMsgAndBeginSessionPing()
+      ContentHandler.subsForMsgAndBeginSessionPing()
       noChange
 
     case SubsForMsg(req: SubscribeRequest) =>
-      ContentModelHandler.subsForMsg(req)
+      ContentHandler.subsForMsg(req)
       noChange
 
     case ClearMessages() =>
@@ -62,11 +62,11 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
 
     case CancelPreviousAndSubscribeNew(req: SubscribeRequest) =>
       SYNEREOCircuit.dispatch(ClearMessages())
-      ContentModelHandler.cancelPreviousAndSubscribeNew(req)
+      ContentHandler.cancelPreviousAndSubscribeNew(req)
       noChange
 
     case PostMessage(req) =>
-      ContentModelHandler.postMessage(req)
+      ContentHandler.postMessage(req)
       noChange
 
   }

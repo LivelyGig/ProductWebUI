@@ -10,7 +10,6 @@ import synereo.client.handlers._
 import synereo.client.modalpopups._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.services.CoreApi._
-
 import scala.concurrent.Future
 import scala.scalajs.js
 import js.JSON
@@ -23,7 +22,6 @@ import synereo.client.css.LoginCSS
 import synereo.client.logger._
 import diode.AnyAction._
 import org.scalajs.dom
-
 import scala.scalajs.js.timers._
 import synereo.client.utils.{AppUtils, ConnectionsUtils, MessagesUtils}
 
@@ -50,7 +48,7 @@ object Login {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.hostname, portNumber: String = "9876")
+                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false /*hostName: String = dom.window.location.hostname, portNumber: String = "9876"*/)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -244,68 +242,68 @@ object Login {
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
+//      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+//      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def updateIp(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(hostName = value))
-    }
-
-    def updatePort(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(portNumber = value))
-    }
+//    def updateIp(e: ReactEventI) = {
+//      val value = e.target.value
+//      //      println(s"value:$value")
+//      t.modState(s => s.copy(hostName = value))
+//    }
+//
+//    def updatePort(e: ReactEventI) = {
+//      val value = e.target.value
+//      //      println(s"value:$value")
+//      t.modState(s => s.copy(portNumber = value))
+//    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage),
-            <.div(LoginCSS.Style.loginDilog)(
-              <.div(LoginCSS.Style.formPadding)(
-                <.div(LoginCSS.Style.loginDilogContainerDiv)(
-                  <.div(^.className := "row")(
-                    <.div(^.className := "col-md-12")(
-                      <.div(LoginCSS.Style.loginFormContainerDiv)(
-                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
-                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
-                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-4")(
-                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-                              ),
-                              <.div(^.className := "col-md-8")(
-                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
-                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-                              )
-                            )
-                          ),
-                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-4")(
-                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-                              ),
-                              <.div(^.className := "col-md-8")(
-                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
-                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-                              )
-                            )
-                          ),
-                          <.div(^.className := "col-md-12 text-right")(
-                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
+            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+//            <.div(LoginCSS.Style.loginDilog)(
+//              <.div(LoginCSS.Style.formPadding)(
+//                <.div(LoginCSS.Style.loginDilogContainerDiv)(
+//                  <.div(^.className := "row")(
+//                    <.div(^.className := "col-md-12")(
+//                      <.div(LoginCSS.Style.loginFormContainerDiv)(
+//                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
+//                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
+//                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+//                            <.div(^.className := "row")(
+//                              <.div(^.className := "col-md-4")(
+//                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+//                              ),
+//                              <.div(^.className := "col-md-8")(
+//                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+//                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+//                              )
+//                            )
+//                          ),
+//                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+//                            <.div(^.className := "row")(
+//                              <.div(^.className := "col-md-4")(
+//                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+//                              ),
+//                              <.div(^.className := "col-md-8")(
+//                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+//                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+//                              )
+//                            )
+//                          ),
+//                          <.div(^.className := "col-md-12 text-right")(
+//                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
+//                          )
+//                        )
+//                      )
+//                    )
+//                  )
+//                )
+//              )
+//            )
           ),
           <.div()(
             if (s.showNewUserForm) {
@@ -316,7 +314,7 @@ object Login {
               //              <.div()
               PostNewInvite(PostNewInvite.Props(closeRequestInvitePopup))
             }
-            else if (s.showLoginForm) {
+            else if (true) {
               LoginForm(LoginForm.Props(loginUser, isUserVerified))
             }
             else if (s.showConfirmAccountCreation) {
@@ -350,6 +348,7 @@ object Login {
     .initialState_P(p => State())
     //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]
+    .componentWillMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)

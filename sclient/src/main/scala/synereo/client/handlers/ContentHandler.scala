@@ -17,7 +17,7 @@ import scala.util.{Failure, Success}
   * Created by mandar.k on 5/24/2016.
   */
 //scalastyle:off
-object ContentModelHandler {
+object ContentHandler {
   def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
     try {
       Some(upickle.default.read[MessagePost](messages.content.pageOfPosts(0)))

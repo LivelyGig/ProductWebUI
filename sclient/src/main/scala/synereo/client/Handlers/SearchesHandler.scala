@@ -67,7 +67,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
 
     case PostLabelsAndMsg(labelsNames, subscribeReq) =>
       val labelPost = LabelPost(SYNEREOCircuit.zoom(_.user.sessionUri).value, labelsNames.map(SearchesModelHandler.leaf), "alias")
-      ContentModelHandler.postLabelsAndMsg(labelPost, subscribeReq)
+      ContentHandler.postLabelsAndMsg(labelPost, subscribeReq)
       noChange
   }
 
