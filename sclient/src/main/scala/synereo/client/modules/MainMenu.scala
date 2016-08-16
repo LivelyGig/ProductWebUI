@@ -7,7 +7,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{ NewMessage, ProfileImageUploaderForm}
+import synereo.client.modalpopups.{NewMessage, ProfileImageUploaderForm}
 import scala.scalajs.js
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
@@ -43,6 +43,7 @@ object MainMenu {
     def getModal(): react.Callback = {
       t.modState(s => s.copy(getModal = true))
     }
+
     def addImage(): Callback = {
       t.modState(s => s.copy(getModal = false))
     }
@@ -124,12 +125,12 @@ object MainMenu {
                 //                  )
                 //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  if (model.name.length() < 10) {
-                    <.div(model.name)
-                  }
-                  else {
-                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
-                  },
+                  //                  if (model.name.length() < 10) {
+                  <.div(model.name),
+                  //                  }
+                  //                  else {
+                  //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
+                  //                  }
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
                       /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
@@ -143,20 +144,20 @@ object MainMenu {
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)
                     ),
-                   // <.div(^.className := "dropdown-arrow-small"),
+                    // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> $.backend.getModal())(" Upload Picture ")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
                     )
                   ),
-                  if(S.getModal)
+                  if (S.getModal)
                     userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.addImage, "Profile Image Uploader", userProxy)))
                   else
                     Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(
-                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
+                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
               )
             )
@@ -179,7 +180,7 @@ object MainMenu {
         }
       )
     })
-       .build
+    .build
 
   def apply(props: Props) = MainMenu(props)
 }

@@ -30,7 +30,7 @@ object LoginCSS {
       border(1.px, solid)
     )
     val loginModalStyle = style(
-      marginTop(120.px),
+      marginTop(90.px),
       media.maxWidth(1400.px) -
         marginTop(30.px)
     )
@@ -291,8 +291,8 @@ object LoginCSS {
       fontSize(22.px),
       fontFamily :=! "karla",
       float.right,
-      marginTop(74.px),
-      marginBottom(40.px)
+      marginTop(25.px),
+      marginBottom(30.px)
     )
     val apiSubmitBtn = style(
       backgroundColor(c"#ff806c"),

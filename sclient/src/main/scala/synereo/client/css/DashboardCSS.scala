@@ -72,7 +72,8 @@ object DashboardCSS {
       backgroundColor.transparent,
       color.red,
       &.hover(
-        color.red
+        color.red,
+        backgroundColor.transparent.important
       ),
       marginTop.`0`.important
     )
@@ -229,6 +230,21 @@ object DashboardCSS {
     val imgBorder = style(
       border(1.px, solid, gray),
       borderRadius(6.px)
+    )
+    val ampTokenBtn = style(
+      backgroundColor.transparent.important,
+      border.`0`.important,
+      &.hover(
+        backgroundColor.transparent.important,
+        border.`0`.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important,
+        border.`0`.important
+      )
+    )
+    val ampTokenImg = style(
+      maxWidth(20.px)
     )
   }
 

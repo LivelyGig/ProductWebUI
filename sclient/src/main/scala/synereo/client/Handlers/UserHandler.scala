@@ -30,7 +30,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
     case PostUserUpdate(req) =>
-      ContentModelHandler.postUserUpdate(req)
+      ContentHandler.postUserUpdate(req)
       if (req.jsonBlob.imgSrc != null) {
         updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
       } else noChange

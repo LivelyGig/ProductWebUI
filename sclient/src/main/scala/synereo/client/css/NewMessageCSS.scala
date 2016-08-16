@@ -116,7 +116,7 @@ object NewMessageCSS {
       border(1.px, solid, c"#78D3F5"),
       borderRadius(20.px),
       minWidth(80.px),
-      padding.`0`.important,
+      //      padding.`0`.important,
       &.hover(
         color(c"#000"),
         border(1.px, solid, c"#78D3F5"),

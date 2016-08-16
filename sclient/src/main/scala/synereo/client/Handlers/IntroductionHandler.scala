@@ -32,7 +32,7 @@ case class AcceptIntroductionConfirmationResponse(introductionConfirmationRespon
 class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case PostNewConnection(content: Content) =>
-      ContentModelHandler.postNewConnection(content)
+      ContentHandler.postNewConnection(content)
       noChange
 
     case PostIntroSuccess(beginIntroductionRes: BeginIntroductionRes) =>
@@ -44,7 +44,7 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(newList))
 
     case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
-      ContentModelHandler.updateIntroductionsModel(introConfirmReq)
+      ContentHandler.updateIntroductionsModel(introConfirmReq)
       val newList = value.introResponse.filterNot(
         _.introSessionId.equals(introConfirmReq.introSessionId)
       )
