@@ -86,8 +86,8 @@ object SignupCSS {
     val inputStyleSignUpForm = style(
       fontSize(25.px),
       fontFamily :=! "karla",
-      height(75.px),
-      marginBottom(20.px),
+      height(60.px),
+//      marginBottom(20.px),
       color(c"#000") /*,
       opacity(0.4)*/
       //      backgroundColor(c"#022639"),

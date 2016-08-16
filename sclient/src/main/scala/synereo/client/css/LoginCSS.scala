@@ -108,10 +108,7 @@ object LoginCSS {
       color.white
     )
     val loginFormLabel = style(
-      fontSize(18.px),
-      color(white),
-      marginLeft(20.px),
-      paddingTop(6.px)
+      fontSize(18.px)
     )
     val inputFormLoginForm = style(
       marginBottom(10.px),

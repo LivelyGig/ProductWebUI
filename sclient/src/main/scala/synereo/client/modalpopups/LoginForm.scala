@@ -13,6 +13,9 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import org.querki.jquery._
+import org.scalajs.dom.window
+import org.scalajs.dom
+import synereo.client.sessionitems.SessionItems
 
 /**
   * Created by Mandar on 4/19/2016.
@@ -23,13 +26,17 @@ object LoginForm {
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
-  case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false, showNewInviteForm: Boolean = false)
+  case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false, showNewUserForm: Boolean = false,
+                   showNewInviteForm: Boolean = false,hostName: String = dom.window.location.hostname, portNumber: String = "9876")
 
   val LoginForm: js.Object = "#LoginForm"
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val state = t.state.runNow()
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       val LoginBtn: js.Object = "#LoginBtn"
       if ($(LoginBtn).hasClass("disabled"))
         t.modState(s => s.copy(login = false))
@@ -70,6 +77,18 @@ object LoginForm {
       $(LoginForm).find("input:first").focus()
     }
 
+    def updateIp(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(hostName = value))
+    }
+
+    def updatePort(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(portNumber = value))
+    }
+
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(s"state.showNewAgentForm: ${state.showNewUserForm}")
@@ -96,12 +115,48 @@ object LoginForm {
                 } else
                   <.div(),
                 <.div(SignupCSS.Style.signUpHeading)(headerText),
+//                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+//                  <.div(^.className := "row")(
+//                    <.div(/*^.className := "col-md-4"*/)(
+//                      <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+//                    ),
+//                    <.div(/*^.className := "col-md-8"*/)(
+//                      <.input(^.`type` := "text", ^.placeholder := "Host-ip", SignupCSS.Style.inputStyleSignUpForm,
+//                        ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+//                    )
+//                  )
+//                ),
+//                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+//                  <.div(^.className := "row")(
+//                    <.div(/*^.className := "col-md-4"*/)(
+//                      <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+//                    ),
+//                    <.div(/*^.className := "col-md-8"*/)(
+//                      <.input(^.tpe := "text", ^.placeholder := "Port Number", SignupCSS.Style.inputStyleSignUpForm,
+//                        ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+//                    )
+//                  )
+//                ),
                 <.div(^.className := "form-group")(
+                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
+                ),
+                <.div(^.className := "form-group")(
+                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
+                ),
+                <.div(^.className := "form-group")(
+                  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
                     ^.placeholder := "username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "form-group")(
+                  <.label(LoginCSS.Style.loginFormLabel)("Password"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                   <.div(^.className := "help-block with-errors")
