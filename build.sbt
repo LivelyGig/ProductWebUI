@@ -1,6 +1,7 @@
 import org.scalajs.sbtplugin.ScalaJSPlugin.AutoImport._
 import sbt.Keys._
 import sbt.Project.projectToRef
+import JsTestBrowsers._
 
 // a special crossProject for configuring a JS/JVM/shared structure
 lazy val shared = (crossProject.crossType(CrossType.Pure) in file("shared"))
@@ -45,6 +46,10 @@ lazy val client: Project = (project in file(pCompile))
       // use Scala.js provided launcher code to start the client app
       persistLauncher := true,
       persistLauncher in Test := false,
+      jsResources := Seq(),
+      jsTestResources := Seq(),
+      jsAsyncWait := false,
+      jsAsyncWaitTimeout := None,
     //client side js deps
       jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
     // use uTest framework for tests
@@ -76,7 +81,32 @@ lazy val server = (project in file("server"))
       pipelineStages := Seq(scalaJSProd, digest, gzip),
       // compress CSS
       LessKeys.compress in Assets := true,
-      includeFilter in (Assets, LessKeys.less) := lessFile
+      includeFilter in (Assets, LessKeys.less) := lessFile,
+      // settings for testing javascript stuff with Jasmine
+      // launch js tests with the command:
+      //    sbt clean jsLs jsTest
+      jsResources := {
+        val main = (sourceDirectory in Compile).value
+        Seq(
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "sjcl.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "srp.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "bitArray.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "bn.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "codecHex.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "codecString.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "sha256.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "sha512.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "aes.js",
+          main / "assets" / "javascripts" / "srp-client" / "sjcl-core" / "random.js",
+          main / "assets" / "javascripts" / "srp-client" / "srp-client.js")
+      },
+      jsTestResources := {
+      val test = (sourceDirectory in Test).value
+      ((test / "scripts") ** "*.spec.js").get
+      },
+      jsAsyncWait := false,
+      jsAsyncWaitTimeout := None,
+      jsTestBrowsers := Seq(Chrome, Firefox38, InternetExplorer11)
   )
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLayoutPlugin) // use the standard directory layout instead of Play's custom

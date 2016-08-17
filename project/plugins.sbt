@@ -1,7 +1,13 @@
 // repository for Typesafe plugins
 resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"
 
+<<<<<<< HEAD
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.11") //"0.6.8"
+=======
+libraryDependencies += "org.webjars.bower" % "jasmine" % "2.4.1" % "runtime"
+
+addSbtPlugin("com.joescii" % "sbt-js-test" % "0.2.0")
+>>>>>>> 6054af04cf2c13e3db5113a50f618cca5f95dd01
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" %  "1.0.6")  // "1.0.6"
 
