@@ -6,18 +6,12 @@ import upickle.default._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
+import scala.scalajs.js.Date
+import scala.util.{Failure, Success, Try}
+import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
-<<<<<<< HEAD
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import synereo.client.sessionitems.SessionItems
-
-object CoreApi {
-
-  def getBaseUrl() = {
-    //s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
-    s"${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}/api"
-  }
-=======
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 import synereo.client.logger
@@ -25,15 +19,16 @@ import synereo.client.modules.{ConnectionList, Login}
 import synereo.client.srp.SRPClient
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
-import scala.scalajs.js.Date
-import scala.util.{Failure, Success, Try}
-import scala.language.postfixOps
-
 case class ApiError(response: String) extends Exception
 
 object CoreApi {
-  var BASE_URL = s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
->>>>>>> 6054af04cf2c13e3db5113a50f618cca5f95dd01
+
+  //var BASE_URL = s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+
+  def getBaseUrl() = {
+    //s"http://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+    s"${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}/api"
+  }
 
   // scalastyle:ignore
   var CREATE_USER_REQUEST = "createUserRequest"
