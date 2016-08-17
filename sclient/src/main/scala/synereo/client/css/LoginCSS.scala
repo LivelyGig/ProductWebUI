@@ -21,7 +21,7 @@ object LoginCSS {
     val loginContainer = style(
       height(620.px),
       width(600.px),
-      paddingTop(100.px),
+      paddingTop(135.px),
       backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
       backgroundSize := 100.%%
     )
@@ -32,7 +32,6 @@ object LoginCSS {
       minWidth(545.px),
       media.maxWidth(1400.px) -
         maxWidth(600.px)
-
     )
     val watchVideoBtn = style(
       border(1.px, solid)

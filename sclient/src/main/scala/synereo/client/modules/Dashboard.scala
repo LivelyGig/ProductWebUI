@@ -101,21 +101,7 @@ object Dashboard {
       val getServerError = SYNEREOCircuit.zoom(_.appRootModel).value
 
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid")(
-        //        <.div(^.className := "row")(
-        //          //Left Sidebar
-        //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-        //            ^.onMouseEnter --> Callback {
-        //              $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
-        //            },
-        //            ^.onMouseLeave --> Callback {
-        //              $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
-        //            }
-        //          )(
-        //            //            Footer(Footer.Props(c, r.page))
-        //            Sidebar(Sidebar.Props())
-        //          )
-        //        ),
-        //        ),
+
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
@@ -123,7 +109,6 @@ object Dashboard {
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
                   <.div(
-
                     p.proxy().renderFailed(ex => /*<.div(
                       //                      <.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse),
                       <.div(SynereoCommanStylesCSS.Style.renderFailedMessage)(s"We are encountering problems with serving the request!${ex.getMessage}")
@@ -285,10 +270,10 @@ object HomeFeedList {
 
     }
 
-    //    def updateContent(e: ReactEventI) = {
-    //      val value = e.target.value
-    //      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
-    //    }
+//        def updateContent(e: ReactEventI) = {
+//          val value = e.target.value
+//          t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
+//        }
 
     def closeFullViewModalPopUp(): Callback = {
       $(dashboardContainerMain).addClass("SynereoCommanStylesCSS_Style-overflowYScroll")
@@ -302,7 +287,7 @@ object HomeFeedList {
 
     def preventFullViewModalPopUP(e: ReactEvent): Callback = {
       val targetLi = e.target
-      setTimeout(500) {
+      setTimeout(1500) {
         $(targetLi).find(".glance-view-button").addClass(".hide")
       }
       t.modState(s => s.copy(ShowFullPostView = false))
@@ -312,7 +297,7 @@ object HomeFeedList {
       Callback.empty
     }
 
-    def mouseEntered(e: ReactEvent): Callback = Callback {
+    def mouseEntered(e: ReactEvent): Callback =  {
       //      println("mouse entered some where ")
       val targetLi = e.target
       val collapsiblePost: js.Object = $(targetLi).find(".collapse")
@@ -321,8 +306,10 @@ object HomeFeedList {
           $(collapsiblePost).addClass("in")
         }
       }
-      //      Callback.empty
+            Callback.empty
     }
+
+
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
       value.filter(
