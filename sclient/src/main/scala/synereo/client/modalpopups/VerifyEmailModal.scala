@@ -68,12 +68,10 @@ object VerifyEmailModal {
                   <.h4("Your account has been created!"),
                   <.h4("We have sent a verification code to your email address, Please check your email and copy the code, or follow the link.")
                 ),
-                <.div()(
+                <.div(SignupCSS.Style.verificationMessageContainer)(
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
-                    ^.placeholder := "Verification code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken),
-                  <.div(SignupCSS.Style.verificationMessageText, "Verification code has been sent to your email address")
-
-                ),
+                    ^.placeholder := "Verification code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken)
+                                  ),
                 //  <.input(^.tpe := "text", bss.formControl,^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
                 // <.button(^.tpe := "submit",^.className:="btn", "Confirm")
                 <.div(^.className := "pull-right")(

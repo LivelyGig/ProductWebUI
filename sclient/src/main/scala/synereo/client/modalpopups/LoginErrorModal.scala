@@ -15,17 +15,18 @@ import scalacss.ScalaCssReact._
 object LoginErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, loginError: String = "")
+  case class Props(submitHandler: (Boolean) => Callback, loginError: String = "")
 
-  case class State()
+  case class State(showLogin : Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
-    def closeForm = Callback {
+    def closeForm =  {
       jQuery(t.getDOMNode()).modal("hide")
+      t.modState(s => s.copy(showLogin = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
-      props.submitHandler()
+      props.submitHandler(state.showLogin)
     }
 
     def render(s: State, p: Props) = {

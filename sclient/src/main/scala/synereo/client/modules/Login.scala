@@ -221,10 +221,13 @@ object Login {
       }
     }
 
-    def serverError(): Callback = {
+    def serverError(showLogin: Boolean = false): Callback = {
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
-      t.modState(s => s.copy(showErrorModal = false, showLoginForm = false))
+      if (showLogin)
+        t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
+      else
+        t.modState(s => s.copy(showErrorModal = false, showLoginForm = false))
     }
 
     def accountValidationFailed(): Callback = {
@@ -238,68 +241,68 @@ object Login {
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-//      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-//      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
+      //      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+      //      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-//    def updateIp(e: ReactEventI) = {
-//      val value = e.target.value
-//      //      println(s"value:$value")
-//      t.modState(s => s.copy(hostName = value))
-//    }
-//
-//    def updatePort(e: ReactEventI) = {
-//      val value = e.target.value
-//      //      println(s"value:$value")
-//      t.modState(s => s.copy(portNumber = value))
-//    }
+    //    def updateIp(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      //      println(s"value:$value")
+    //      t.modState(s => s.copy(hostName = value))
+    //    }
+    //
+    //    def updatePort(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      //      println(s"value:$value")
+    //      t.modState(s => s.copy(portNumber = value))
+    //    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
             <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
-//            <.div(LoginCSS.Style.loginDilog)(
-//              <.div(LoginCSS.Style.formPadding)(
-//                <.div(LoginCSS.Style.loginDilogContainerDiv)(
-//                  <.div(^.className := "row")(
-//                    <.div(^.className := "col-md-12")(
-//                      <.div(LoginCSS.Style.loginFormContainerDiv)(
-//                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
-//                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
-//                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-//                            <.div(^.className := "row")(
-//                              <.div(^.className := "col-md-4")(
-//                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-//                              ),
-//                              <.div(^.className := "col-md-8")(
-//                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
-//                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-//                              )
-//                            )
-//                          ),
-//                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-//                            <.div(^.className := "row")(
-//                              <.div(^.className := "col-md-4")(
-//                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-//                              ),
-//                              <.div(^.className := "col-md-8")(
-//                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
-//                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-//                              )
-//                            )
-//                          ),
-//                          <.div(^.className := "col-md-12 text-right")(
-//                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
-//                          )
-//                        )
-//                      )
-//                    )
-//                  )
-//                )
-//              )
-//            )
+            //            <.div(LoginCSS.Style.loginDilog)(
+            //              <.div(LoginCSS.Style.formPadding)(
+            //                <.div(LoginCSS.Style.loginDilogContainerDiv)(
+            //                  <.div(^.className := "row")(
+            //                    <.div(^.className := "col-md-12")(
+            //                      <.div(LoginCSS.Style.loginFormContainerDiv)(
+            //                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
+            //                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
+            //                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+            //                            <.div(^.className := "row")(
+            //                              <.div(^.className := "col-md-4")(
+            //                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+            //                              ),
+            //                              <.div(^.className := "col-md-8")(
+            //                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+            //                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+            //                              )
+            //                            )
+            //                          ),
+            //                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+            //                            <.div(^.className := "row")(
+            //                              <.div(^.className := "col-md-4")(
+            //                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+            //                              ),
+            //                              <.div(^.className := "col-md-8")(
+            //                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+            //                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+            //                              )
+            //                            )
+            //                          ),
+            //                          <.div(^.className := "col-md-12 text-right")(
+            //                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
+            //                          )
+            //                        )
+            //                      )
+            //                    )
+            //                  )
+            //                )
+            //              )
+            //            )
           ),
           <.div()(
             if (s.showNewUserForm) {
@@ -310,7 +313,7 @@ object Login {
               //              <.div()
               PostNewInvite(PostNewInvite.Props(closeRequestInvitePopup))
             }
-            else if (true) {
+            else if (s.showLoginForm) {
               LoginForm(LoginForm.Props(loginUser, isUserVerified))
             }
             else if (s.showConfirmAccountCreation) {
