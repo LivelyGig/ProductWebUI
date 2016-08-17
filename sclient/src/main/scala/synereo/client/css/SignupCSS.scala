@@ -57,9 +57,17 @@ object SignupCSS {
     )
     val signUpHeading = style(
       color(c"#000"),
-      fontSize(44.px),
+      fontSize(52.px),
       fontFamily :=! "karla",
       opacity(0.65),
+      textAlign.center,
+      marginBottom(30.px),
+      marginTop(20.px)
+    )
+    val loginHeading = style(
+      color(c"#fff"),
+      fontSize(52.px),
+      fontFamily :=! "karla",
       textAlign.center,
       marginBottom(30.px),
       marginTop(20.px)
@@ -121,6 +129,10 @@ object SignupCSS {
     )
     val signUpBtn = style(
       margin(30.px)
+    )
+
+    val signUPInput = style (
+      marginBottom(22.px)
     )
   }
 

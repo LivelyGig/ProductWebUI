@@ -109,14 +109,14 @@ object LoginForm {
 
     def render(s: State, p: Props) = {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Log In"
+      val headerText = "Log in"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
 
           closed = () => formClosed(s, p),
-          addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false
+          addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false , id="loginContainer"
         ),
         <.form(^.id := "LoginForm", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
@@ -126,7 +126,7 @@ object LoginForm {
                   <.div(^.className := "emailVerifiedContainer")(<.h5("Email address verified."), <.h5("Please login with your credentails "))
                 } else
                   <.div(),
-                <.div(SignupCSS.Style.signUpHeading)(headerText),
+                <.div(SignupCSS.Style.loginHeading)(headerText),
 //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
 //                  <.div(^.className := "row")(
 //                    <.div(/*^.className := "col-md-4"*/)(
@@ -161,35 +161,35 @@ object LoginForm {
 //                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
 //                  <.div(^.className := "help-block with-errors")
 //                ),
-                <.div(^.className := "form-group")(
-                  <.label(LoginCSS.Style.loginFormLabel)("API Server"),
+                <.div(SignupCSS.Style.signUPInput)(
+                 // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
                     ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := s.apiURL, ^.onChange ==> updateAPIURL, ^.required := true),
                   <.div(^.className := "help-block with-errors")
                 ),
-                <.div(^.className := "form-group")(
-                  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
+                <.div(SignupCSS.Style.signUPInput)(
+                //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
                     ^.placeholder := "username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
-                <.div(^.className := "form-group")(
-                  <.label(LoginCSS.Style.loginFormLabel)("Password"),
+                <.div( SignupCSS.Style.signUPInput)(
+                 // <.label(LoginCSS.Style.loginFormLabel)("Password"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "row")(
-//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-//                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-//                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
-//                  ),
-//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
-//                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
-//                  )
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
+                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
+                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
+                  ),
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
+                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
+                  )
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
-                  <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
+                  <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Log in")
                 )
               )
             )

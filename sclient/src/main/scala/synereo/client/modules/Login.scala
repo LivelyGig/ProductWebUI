@@ -52,6 +52,8 @@ object Login {
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
+      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       t.modState(s => s.copy(showLoginForm = true))
     }
 
@@ -262,7 +264,13 @@ object Login {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+//            <.img(^.src := "./assets/synereo-images/LogInBox.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+//            <.div(LoginCSS.Style.loginContainer)(
+//
+//
+//          )
+
+
             //            <.div(LoginCSS.Style.loginDilog)(
             //              <.div(LoginCSS.Style.formPadding)(
             //                <.div(LoginCSS.Style.loginDilogContainerDiv)(
@@ -303,6 +311,13 @@ object Login {
             //                )
             //              )
             //            )
+
+
+
+
+
+
+
           ),
           <.div()(
             if (s.showNewUserForm) {
@@ -347,7 +362,17 @@ object Login {
     .initialState_P(p => State())
     //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]
-    .componentWillMount(scope => scope.backend.mounted(scope.props))
+    .componentWillMount(scope =>
+      scope.backend.mounted(scope.props)
+    )
+    .componentDidMount(scope => Callback {
+      //      if (scope.currentProps.proxy().introResponse.length <= 0) {
+      //        window.location.href = "/#dashboard"
+      //      }
+      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+      //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
+    })
     .build
 
   def apply(props: Props) = component(props)

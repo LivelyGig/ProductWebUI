@@ -15,13 +15,21 @@ object LoginCSS {
 
     val loginPageContainerMain = style(
       height(100.vh),
-      backgroundImage := "url(\"./assets/synereo-images/Login-bg.jpg\")",
+      backgroundImage := "url(\"./assets/synereo-images/Synereo_LogIn_AmpGame.jpg\")",
       marginTop(-53.px)
     )
+    val loginContainer = style(
+      height(620.px),
+      width(600.px),
+      paddingTop(100.px),
+      backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
+      backgroundSize := 100.%%
+    )
+
     val loginScreenBgImage = style(
       margin.auto.important,
-      maxHeight(850.px),
-      minWidth(600.px),
+      maxHeight(600.px),
+      minWidth(545.px),
       media.maxWidth(1400.px) -
         maxWidth(600.px)
 
@@ -180,7 +188,7 @@ object LoginCSS {
       textAlign.center,
       marginLeft(-46.px),
       marginRight(-46.px),
-      backgroundColor(rgb(0, 0, 0)),
+//      backgroundColor(rgb(0, 0, 0)),
       padding.`0`.important
     )
     val dontHaveAccountBtnLoginModal = style(
@@ -241,10 +249,11 @@ object LoginCSS {
       backgroundColor.transparent,
       color(c"#fff"),
       opacity(0.7),
-      height(48.px),
+      height(46.px),
       marginTop(28.px),
       border(0.2.px, solid, c"#D2E1E3"),
-      fontSize(20.px),
+      fontSize(22.px),
+      width(187.px),
       padding(10.px, 15.px),
       &.hover(
         color(c"#fff"),
@@ -278,17 +287,20 @@ object LoginCSS {
     )
     val loginModalTextStyle = style(
       fontFamily :=! "karla",
-      color(c"#000"),
+      color(c"#000000"),
       fontWeight.normal.important,
-      fontSize(20.px)
+      fontSize(17.px)
     )
     val loginModalTextActionContainer = style(
       marginTop(16.px)
     )
     val modalLoginBtn = style(
       backgroundColor(c"#ff806c"),
-      height(58.px),
-      fontSize(22.px),
+      height(45.px),
+      width(142.px),
+      fontSize(30.px),
+      padding(0.px),
+      color(c"#fff"),
       fontFamily :=! "karla",
       float.right,
       marginTop(25.px),
