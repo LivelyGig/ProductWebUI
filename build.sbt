@@ -46,6 +46,10 @@ lazy val client: Project = (project in file(pCompile))
       // use Scala.js provided launcher code to start the client app
       persistLauncher := true,
       persistLauncher in Test := false,
+      jsResources := Seq(),
+      jsTestResources := Seq(),
+      jsAsyncWait := false,
+      jsAsyncWaitTimeout := None,
     //client side js deps
       jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
     // use uTest framework for tests
@@ -100,6 +104,8 @@ lazy val server = (project in file("server"))
       val test = (sourceDirectory in Test).value
       ((test / "scripts") ** "*.spec.js").get
       },
+      jsAsyncWait := false,
+      jsAsyncWaitTimeout := None,
       jsTestBrowsers := Seq(Chrome, Firefox38, InternetExplorer11)
   )
   .enablePlugins(PlayScala)
