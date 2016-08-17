@@ -50,6 +50,11 @@ object AppModule {
       showSidebar
     }
     def render(p: Props) = {
+      val profilesProxy = LGCircuit.connect(_.profiles)
+      val searchesProxy = LGCircuit.connect(_.searches)
+      val jobsProxy = LGCircuit.connect(_.jobPosts)
+      val messagesProxy = LGCircuit.connect(_.messages)
+      val connectionsProxy = LGCircuit.connect(_.connections)
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
         <.div()(
           Presets(Presets.Props(p.view))
@@ -65,17 +70,17 @@ object AppModule {
                   ^.onClick --> showSidebar)(
                     <.span(^.id := "sidebarIcon", LftcontainerCSS.Style.toggleBtn)( /*Icon.chevronCircleLeft*/ )
                   ),
-                LGCircuit.connect(_.searches)(proxy => Searches(Searches.Props(p.view, proxy)))
+                searchesProxy(searchesProxy => Searches(Searches.Props(p.view, searchesProxy)))
               ),
               <.div(^.className := "main col-md-9 col-md-offset-3 LftcontainerCSS_Style-sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
                 <.div(^.onClick --> showSidebar)(
                   p.view match {
-                    case PROFILES_VIEW     => LGCircuit.connect(_.profiles)(ProfilesResults(_))
-                    case PROJECTS_VIEW     => LGCircuit.connect(_.jobPosts)(ProjectResults(_))
+                    case PROFILES_VIEW     => profilesProxy(ProfilesResults(_))
+                    case PROJECTS_VIEW     => jobsProxy(ProjectResults(_))
+                    case MESSAGES_VIEW     => messagesProxy(MessagesResults(_))
+                    case CONNECTIONS_VIEW  => connectionsProxy(ConnectionsResults(_))
                     case CONTRACTS_VIEW    => ContractResults.component()
-                    case MESSAGES_VIEW     => LGCircuit.connect(_.messages)(MessagesResults(_))
                     case OFFERINGS_VIEW    => OfferingResults.component()
-                    case CONNECTIONS_VIEW  => LGCircuit.connect(_.connections)(ConnectionsResults(_))
                   }
                 )
               )

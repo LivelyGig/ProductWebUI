@@ -243,9 +243,9 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      media.minWidth(927.px) -
+      media.minWidth(927.px) - (
         paddingRight(17.%%),
-      paddingLeft(17.%%)
+      paddingLeft(17.%%))
 
     )
     val modalContent = style(
@@ -545,7 +545,7 @@ object DashBoardCSS {
       //    }
       //
       unsafeChild("tbody")(
-        height(350 px),
+        height(350.px),
         overflowY.auto
       ),
       //
@@ -648,7 +648,7 @@ object DashBoardCSS {
       ),
 
       unsafeChild("thead th")(
-        height(50 px)
+        height(50.px)
       ),
 
       //      .rowStyle thead {
@@ -676,7 +676,7 @@ object DashBoardCSS {
     val inProgress = style(
       unsafeChild("tbody")(
         overflowY.auto,
-        height(135 px),
+        height(135.px),
         position.absolute,
         width(97.%%)
       ),
@@ -685,7 +685,7 @@ object DashBoardCSS {
         display.inlineTable
       ),
       unsafeChild("table")(
-        height(190 px)
+        height(190.px)
       )
     )
     val connectionModalWidth = style(
@@ -699,6 +699,12 @@ object DashBoardCSS {
       color.gray,
       fontSize.smaller,
       width(300.px)
+    )
+
+    val imgSize = style(
+      paddingTop(2.%%),
+      height(120.px),
+      width(160.px)
     )
   }
 

@@ -40,8 +40,8 @@ case class InitializeSessionErrorResponse(reason: String)
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String)
 
-case class EvalSubscribeResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection = Connection(),
-                                        filter: String = "")
+case class ResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection = Connection(),
+                           filter: String = "")
 
 case class Connection(source: String = "", label: String = "", target: String = "")
 
@@ -76,6 +76,10 @@ case class SessionPong(sessionURI: String = "")
 
 case class ConnectNotification(connection: Connection, introProfile: String = "")
 
-case class JsonBlobContent(name: String = "", imgSrc: String = "")
+case class JsonBlob(name: String = "", imgSrc: String = "")
 
-case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlobContent = JsonBlobContent()) extends Content
+case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlob = JsonBlob()) extends Content
+
+case class BeginIntroductionRes(sessionURI: String = "")
+
+case class AddAgentAliasesRequest(sessionURI: String = "", aliases: Seq[String]) extends Content

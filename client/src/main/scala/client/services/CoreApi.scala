@@ -1,6 +1,6 @@
 package client.services
 
-import client.utils.{LabelsUtils, ConnectionsUtils}
+import client.utils.{ConnectionsUtils, LabelsUtils}
 import shared.dtos._
 import shared.models._
 import org.scalajs.dom._
@@ -12,9 +12,10 @@ import org.scalajs.dom.ext.Ajax
 import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 
+
 object CoreApi {
     //var BASE_URL = "http://192.168.99.100:8888/api"
-    var BASE_URL = "http://192.168.2.104:9876/api"
+    var BASE_URL = "http://localhost:9876/api"
     var CREATE_USER_REQUEST = "createUserRequest"
     private def ajaxPost(requestContent: String): Future[String] = {
       Ajax.post(
@@ -108,8 +109,9 @@ object CoreApi {
 
   def postIntroduction(introductionModel: Content): Future[String] = {
     val msg = introductionModel match {
-      case _ : IntroConnections => ApiTypes.INTRODUCTION_REQUEST
+      case _ : IntroConnections => ApiTypes.BEGIN_INTRODUCTION_REQUEST
       case _ : EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+      case _ : IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }

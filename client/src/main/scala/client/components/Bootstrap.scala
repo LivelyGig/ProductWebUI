@@ -61,7 +61,7 @@ object Bootstrap {
 
   object Button {
 
-    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, id: String = null, className: String = null)
+    case class Props(onClick: Callback, style: CommonStyle.Value = CommonStyle.default, addStyles: Seq[StyleA] = Seq(), addIcons: Icon = null, title: String, id: String = null, className: String = null)
 
     val component = ReactComponentB[Props]("Button")
       .renderPC { ($, P, C) =>

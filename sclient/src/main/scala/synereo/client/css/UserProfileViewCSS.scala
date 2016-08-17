@@ -11,11 +11,6 @@ object UserProfileViewCSS {
 
     import dsl._
 
-    val UserProfileContainerMain = style(
-      height(98.vh),
-      overflowY.scroll
-    )
-
     val userProfileHeadingContainerDiv = style(
       minHeight(500.px),
       display.block,
@@ -29,18 +24,71 @@ object UserProfileViewCSS {
       fontSize(3.em)
     )
     val userImage = style(
-      minWidth(200.px)
+      minWidth(200.px),
+      maxWidth(200.px)
     )
     val newImageBtn = style(
-      width(200.px),
-      border.`0`.important
+      backgroundColor.transparent.important,
+      paddingLeft.`0`.important,
+      &.hover(
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important
+      ),
+      border.`0`,
+      borderRadius.`0`,
+      maxWidth(45.px),
+      maxHeight(45.px),
+      marginRight(45.px)
+    )
+
+
+    val newImageSubmitBtnContainer = style(
+      marginTop(30.px),
+      marginBottom(30.px)
+    )
+
+    val editSaveButton = style(
+      ToStyleAV(marginLeft(1.%%)),
+      marginTop(1.px)
+    )
+
+
+
+    val sectionButtons = style(
+      marginLeft(2.%%)
+    )
+
+    val buttonDiv = style(
+      position.absolute,
+      top(0.px),
+      left(300.px),
+      width( 100.%%)
+    )
+
+    val label = style(
+      width(350.px)
     )
 
     val agentUID = style(
       marginLeft(15.%%),
       padding(10.px),
       fontSize(20.px),
-      color.white
+      color.white,
+      position.relative
+    )
+
+    val inputText = style(
+      width(200.px),
+      color.black,
+      marginBottom(1.%%)
+    )
+
+    val deleteButton = style(
+      position.relative,
+      top(-47.px),
+      left(270.px)
     )
 
   }

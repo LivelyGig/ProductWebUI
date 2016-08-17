@@ -32,7 +32,7 @@ import scalacss.ScalaCssReact._
 
 object Legal {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, dropDownModalDialog : Option[Boolean] = None)
 
   case class State(showTermsOfServicesForm: Boolean = false, showLegalForm: Boolean = false, showPrivacyPolicyForm: Boolean = false,
     showPrivacyPolicyModal: Boolean = false, showErrorModal: Boolean = false, showEndUserAgreementModal: Boolean = false,
@@ -96,16 +96,40 @@ object Legal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle), " ", ""), P.buttonName),
-        if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
-        else if (S.showTrademarksModal) TrademarksModal(TrademarksModal.Props(B.tradeMarks))
-        else if (S.showEndUserAgreementModal) EndUserAgreement(EndUserAgreement.Props(B.endUserAgreement))
-        else if (S.showCopyrightModal) CopyrightModal(CopyrightModal.Props(B.copyrights))
-        else if (S.showLegalForm) LegalModal(LegalModal.Props(B.Login))
-        else if (S.showPrivacyPolicyModal) PrivacyPolicyModal(PrivacyPolicyModal.Props(B.privacyPolicyModal))
-        else
-          Seq.empty[ReactElement]
+//          P.dropDownModalDialog match {
+//            case Some(true) =>
+//              if (S.showTermsOfServicesForm) TermsOfServices(TermsOfServices.Props(B.termsOfServices))
+//              else if (S.showTrademarksModal) TrademarksModal(TrademarksModal.Props(B.tradeMarks))
+//              else if (S.showEndUserAgreementModal) EndUserAgreement(EndUserAgreement.Props(B.endUserAgreement))
+//              else if (S.showCopyrightModal) CopyrightModal(CopyrightModal.Props(B.copyrights))
+//              else if (true) LegalModal(LegalModal.Props(B.Login))
+//              else if (S.showPrivacyPolicyModal) PrivacyPolicyModal(PrivacyPolicyModal.Props(B.privacyPolicyModal))
+//              else
+//                Seq.empty[ReactElement]
+//
+//            case None => Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle), " ", ""), P.buttonName),
+//          if (S.showTermsOfServicesForm) TermsOfServices (TermsOfServices.Props (B.termsOfServices) )
+//          else if (S.showTrademarksModal) TrademarksModal (TrademarksModal.Props (B.tradeMarks) )
+//          else if (S.showEndUserAgreementModal) EndUserAgreement (EndUserAgreement.Props (B.endUserAgreement) )
+//          else if (S.showCopyrightModal) CopyrightModal (CopyrightModal.Props (B.copyrights) )
+//          else if (S.showLegalForm) LegalModal (LegalModal.Props (B.Login) )
+//          else if (S.showPrivacyPolicyModal) PrivacyPolicyModal (PrivacyPolicyModal.Props (B.privacyPolicyModal) )
+//          else
+//          Seq.empty[ReactElement]
+//          }
+//          )
+
+      Button(Button.Props(B.addLegalForm(), CommonStyle.default, Seq(DashBoardCSS.Style.footLegalStyle), " ", ""), P.buttonName),
+      if (S.showTermsOfServicesForm) TermsOfServices (TermsOfServices.Props (B.termsOfServices) )
+      else if (S.showTrademarksModal) TrademarksModal (TrademarksModal.Props (B.tradeMarks) )
+      else if (S.showEndUserAgreementModal) EndUserAgreement (EndUserAgreement.Props (B.endUserAgreement) )
+      else if (S.showCopyrightModal) CopyrightModal (CopyrightModal.Props (B.copyrights) )
+      else if (S.showLegalForm) LegalModal (LegalModal.Props (B.Login) )
+      else if (S.showPrivacyPolicyModal) PrivacyPolicyModal (PrivacyPolicyModal.Props (B.privacyPolicyModal) )
+      else
+        Seq.empty[ReactElement]
       )
+
     })
     //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)

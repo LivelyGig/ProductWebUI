@@ -23,6 +23,7 @@ import org.querki.jquery._
 import org.widok.moment.Moment
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
+import scala.language.existentials
 
 object ProjectResults {
 

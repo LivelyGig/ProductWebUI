@@ -9,7 +9,7 @@ object SessionItems {
    * @return All session uri.
    */
   def getAllSessionUriName(): Seq[String] = {
-    Seq(MessagesViewItems.MESSAGES_SESSION_URI, ProjectsViewItems.PROJECTS_SESSION_URI,
+    Seq(MessagesViewItems.MESSAGES_SESSION_URI,/* ProjectsViewItems.PROJECTS_SESSION_URI,*/
       ProfilesViewItems.PROFILES_SESSION_URI, ConnectionViewItems.CONNECTIONS_SESSION_URI/*,
       SearchesView.SEARCHES_SESSION_URI*/)
   }
@@ -45,6 +45,7 @@ object SessionItems {
     val PROFILES_POST_LABEL = "PROFILESPOSTLABEL"
   }
   object ApiDetails {
+    val API_URL = "API_URL"
     val API_HOST = "API_HOST"
     val API_PORT = "API_PORT"
   }

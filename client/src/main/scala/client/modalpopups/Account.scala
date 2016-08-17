@@ -24,7 +24,7 @@ import shared.dtos.{EstablishConnection, IntroConnections}
 object Account {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String)
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String,dropDownModalDialog : Option[Boolean] = None)
 
   case class State(showAccountForm: Boolean = false)
 
@@ -51,10 +51,17 @@ object Account {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.addAccountForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName),
-        if (S.showAccountForm) AccountForm(AccountForm.Props(B.addAccount, "Account"))
-        else
-          Seq.empty[ReactElement]
+
+        P.dropDownModalDialog match{
+          case Some(true) => AccountForm(AccountForm.Props(B.addAccount, "Account"))
+          case None => {
+            Button(Button.Props(B.addAccountForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title), P.buttonName)
+            if (S.showAccountForm) AccountForm(AccountForm.Props(B.addAccount, "Account"))
+            else
+              Seq.empty[ReactElement]
+          }
+        }
+
       )
     })
     .configure(OnUnmount.install)
@@ -120,7 +127,7 @@ object AccountForm {
             <.div()(
               <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
                 <.button(^.tpe := "submit", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, "Send"),
-                <.button(^.tpe := "button", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, ^.onClick --> hide, "Cancel")
+                <.button(^.tpe := "button", ^.className := "btn", WorkContractCSS.Style.createWorkContractBtn, ^.marginLeft:="20.px", ^.onClick --> hide, "Cancel")
               )
             )
           ),

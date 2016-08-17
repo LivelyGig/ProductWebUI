@@ -1,44 +1,46 @@
 package synereo.client.modules
 
-import japgolly.scalajs.react.ReactComponentB
+
 import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.components.Icon
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, UserTimelineViewCSS}
-
-import scalacss.ScalaCssReact._
+import synereo.client.css.{ UserTimelineViewCSS}
 import org.querki.jquery._
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
+import japgolly.scalajs.react.{ Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.models.{ConnectionsModel, MessagePost}
 import synereo.client.components.{Icon, MIcon}
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
  * Created by Mandar on 3/28/2016.
  */
-object TimelineView {
-  val searchContainer: js.Object = "#searchContainer"
+object TimelineView {  val searchContainer: js.Object = "#searchContainer"
 
-  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard").
-    render_P { ctr =>
-      <.div(^.className := "container-fluid MainContainer")(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-          )(
-            //            Footer(Footer.Props(c, r.page))
-            Sidebar(Sidebar.Props())
-          )
-        ),
+  case class Props()
+
+  case class State()
+
+  class Backend(t: BackendScope[Props, State]) {
+
+    def render(props: Props) = {
+      <.div(/*^.className := "container-fluid MainContainer"*/)(
+        /*        <.div(^.className := "row")(
+                  //Left Sidebar
+                  <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+                    ^.onMouseEnter --> Callback {
+                      $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
+                    },
+                    ^.onMouseLeave --> Callback {
+                      $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
+                    }
+                  )(
+                    //            Footer(Footer.Props(c, r.page))
+                    Sidebar(Sidebar.Props())
+                  )
+                ),*/
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
             <.div(^.className := "container")(
@@ -268,8 +270,16 @@ object TimelineView {
           )
         )
       )
-    }.build
 
-  def apply(router: RouterCtl[Loc]) = component(router)
+    }
+  }
+
+
+  val component = ReactComponentB[Props]("Timelineview")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
+    .build
+
+  def apply(props: Props) = component(props)
 
 }

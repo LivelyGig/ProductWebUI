@@ -52,7 +52,7 @@ lazy val client: Project = (project in file(pCompile))
     // libraryDependencies ++= Seq(
     // Dependencies.tests.scalajsenvs)
   )
-  .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
+  .enablePlugins(ScalaJSPlugin, ScalaJSPlay )
   .dependsOn(sharedJS)
 //// Indicate that unit tests will access the DOM
 //  requiresDOM := true

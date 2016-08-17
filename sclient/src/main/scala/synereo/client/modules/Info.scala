@@ -1,43 +1,27 @@
 package synereo.client.modules
 
 
-
+import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react.extra.router.RouterCtl
+import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
+import synereo.client.SYNEREOMain
+import synereo.client.SYNEREOMain.Loc
 import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 import diode.react._
+import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import shared.models.{ConnectionsModel, MessagePost}
-import org.scalajs.dom._
-import shared.sessionitems.SessionItems
-import synereo.client.components.{Icon, MIcon}
-import synereo.client.utils.ConnectionsUtils
-import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import japgolly.scalajs.react.{Callback, ReactComponentB}
-import synereo.client.SYNEREOMain
-import synereo.client.css.UserProfileViewCSS
-import synereo.client.components.{GlobalStyles, Icon}
-import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{React, ReactDOM}
-import scala.scalajs.js
-import js.{Date, UndefOr}
-import org.querki.jquery._
-import scalacss.ScalaCssReact._
-import japgolly.scalajs.react.{React, ReactDOM}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import shared.models.{ConnectionsModel, MessagePost}
+import japgolly.scalajs.react
+import org.scalajs.dom._
+import synereo.client.rootmodels.ConnectionsRootModel
+import synereo.client.sessionitems.SessionItems
+import synereo.client.components.{Icon, MIcon}
+import synereo.client.utils.ConnectionsUtils
 
-import scala.scalajs.js
-import js.{Date, UndefOr}
-
-
+import scalacss.ScalaCssReact._
 
 
 /**
@@ -47,18 +31,12 @@ import js.{Date, UndefOr}
 
 object Info {
 
-  val searchContainer: js.Object = "#searchContainer"
   case class Props(proxy: ModelProxy[UserModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
-
-  val response = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CURRENT_SEARCH_CONNECTION_LIST)
-  val agentUID = ConnectionsUtils.getSelfConnnection(response).source
+  val agentUID = ConnectionsUtils.getSelfConnnection().source
   val newAgentUID = agentUID.substring(8)
-//  println(s"agentUID ${newAgentUID}")
   val output = newAgentUID.split("\"")
-//  println(s"output ${output.head}")
-//  for(o <- output)yield {  println(o)}
 
 
   class Backend($: BackendScope[Props, State]) {
@@ -70,18 +48,15 @@ object Info {
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS((t, P, S) => {
+    .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain,UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-        <.div(^.className := "row")(
-          //Left Sidebar
-          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-          )(
-            //            Footer(Footer.Props(c, r.page))
-            Sidebar(Sidebar.Props())
-          )
-        ),
+//        <.div(^.className := "row")(
+//          //Left Sidebar
+//          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+//            //            Footer(Footer.Props(c, r.page))
+//            Sidebar(Sidebar.Props())
+//          )
+//        ),
         <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
         <.div(UserProfileViewCSS.Style.agentUID)("Build Number : ")
       ) //connectionsContainerMain

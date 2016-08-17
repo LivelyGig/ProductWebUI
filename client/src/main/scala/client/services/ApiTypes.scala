@@ -13,7 +13,9 @@ object ApiTypes {
   val INSERT_CONTENT = "insertContent"
   val EVAL_SUBS_CANCEL_REQUEST = "evalSubscribeCancelRequest"
   val FEED_EXPRESSION = "feedExpr"
-  val INTRODUCTION_REQUEST = "beginIntroductionRequest"
-  val UPDATE_ALIAS_LABEL_REQ =  "updateAliasLabelsRequest"
+  val BEGIN_INTRODUCTION_REQUEST = "beginIntroductionRequest"
+  val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
   val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
+  val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
+  val ADD_AGENT_ALIASES_REQUEST = "addAgentAliasesRequest"
 }

@@ -1,37 +1,34 @@
 package synereo.client.modalpopups
 
+import diode.react.ModelProxy
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.Button
-import synereo.client.components.Bootstrap.CommonStyle
+import org.scalajs.dom._
+import synereo.client.rootmodels.AppRootModel
 import synereo.client.components.Bootstrap._
-import synereo.client.components.GlobalStyles
-import synereo.client.components.Icon
-import synereo.client.components.Icon.Icon
-import synereo.client.components.Icon._
 import synereo.client.components._
-import synereo.client.components.{ GlobalStyles }
-import synereo.client.css.{ SynereoCommanStylesCSS, LoginCSS }
-import synereo.client.components.jQuery._
+import synereo.client.components.GlobalStyles
+import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
+import synereo.client.handlers.LogoutUser
+import synereo.client.services.SYNEREOCircuit
+
 import scala.language.reflectiveCalls
-
-import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-
+import diode.AnyAction._
 /**
- * Created by Mandar on 4/13/2016.
- */
+  * Created by Mandar on 4/13/2016.
+  */
 object ServerErrorModal {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback)
+  case class Props(submitHandler: () => Callback /*, proxy: ModelProxy[AppRootModel]*/)
 
   case class State()
 
   class Backend(t: BackendScope[Props, State]) {
     def closeForm = Callback {
+      SYNEREOCircuit.dispatch(LogoutUser())
       jQuery(t.getDOMNode()).modal("hide")
     }
 
@@ -53,7 +50,9 @@ object ServerErrorModal {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)("Encountering problems in serving request. Please try after sometime!")
+                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(s"Encountering problems in serving request. And here is the server Error ${SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value}") /*,*/
+                //                <.div(SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value)
+
               ),
               <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
                 <.div(^.className := "row")(
@@ -72,6 +71,7 @@ object ServerErrorModal {
   private val component = ReactComponentB[Props]("ErrorModal")
     .initialState_P(p => State())
     .renderBackend[Backend]
+    // .shouldComponentUpdate(scope => scope.currentProps.proxy().isServerError)
     .build
 
   def apply(props: Props) = component(props)
