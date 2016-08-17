@@ -4,10 +4,12 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import org.scalajs.dom
+import org.scalajs.dom._
 import shared.models.SignUpModel
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components._
 import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
+import synereo.client.sessionitems.SessionItems
 
 import scala.language.reflectiveCalls
 import scala.scalajs.js
@@ -79,6 +81,8 @@ object NewUserForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val state = t.state.runNow()
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
       val SignUp: js.Object = "#SignUp"
       if ($(SignUp).hasClass("disabled"))
         t.modState(s => s.copy(addNewUser = false))
