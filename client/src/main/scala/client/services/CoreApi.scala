@@ -9,7 +9,7 @@ import upickle.default._
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import org.scalajs.dom.ext.Ajax
-import shared.sessionitems.SessionItems
+// import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 
 

@@ -28,7 +28,7 @@ object NewUserForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = true,
-                   apiURL: String = s"http://" + dom.window.location.hostname +":9876"
+                   apiURL: String = s"https://" + dom.window.location.hostname +":9876"
                   )
 
   case class Backend(t: BackendScope[Props, State]) {
