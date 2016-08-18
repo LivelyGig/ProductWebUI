@@ -12,7 +12,7 @@ import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import synereo.client.sessionitems.SessionItems
-import shared.sessionitems.SessionItems
+//import shared.sessionitems.SessionItems
 import shared.sessionitems.SessionItems.ProfilesViewItems
 import synereo.client.logger
 import synereo.client.modules.{ConnectionList, Login}
