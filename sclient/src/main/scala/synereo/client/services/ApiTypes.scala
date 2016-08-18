@@ -8,6 +8,7 @@ object ApiTypes {
   val InitializeSessionStep1Response = "initializeSessionStep1Response"
   val InitializeSessionStep2Response = "initializeSessionStep2Response"
   val CREATE_USER_REQUEST = "createUserRequest"
+  val UPDATE_USER_REQUEST = "updateUserRequest"
   val CREATE_USER_STEP1_REQUEST = "createUserStep1Request"
   val CREATE_USER_STEP2_REQUEST = "createUserStep2Request"
   val CONFIRM_EMAIL = "confirmEmailToken"
