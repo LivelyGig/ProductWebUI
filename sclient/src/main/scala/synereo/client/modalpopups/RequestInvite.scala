@@ -33,7 +33,7 @@ object RequestInvite {
     }
 
     def addMessage(postMessage: Boolean = false): Callback = {
-      //log.debug(s"addNewAgent signUpModel : t{signUpModel} ,addNewAgent: t{showConnectionsForm}")
+      //log.debug(s"addNewAgent signUpModel : t{signUpModel} ,addNewAgent: t{showAmpsForm}")
       if (postMessage) {
         t.modState(s => s.copy(showNewInviteForm = true))
       } else {

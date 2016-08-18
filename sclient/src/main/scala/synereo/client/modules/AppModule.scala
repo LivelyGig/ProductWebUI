@@ -13,7 +13,7 @@ import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers.{LogoutUser, ShowServerError}
 import diode.AnyAction._
 import synereo.client.logger
-import synereo.client.modalpopups.{ErrorModal, ServerErrorModal}
+import synereo.client.modalpopups.{ServerErrorModal}
 import org.scalajs.dom.window
 
 import scalacss.ScalaCssReact._
@@ -56,7 +56,7 @@ object AppModule {
       logger.log.debug("app module mounted")
       val userHasSessionUri = SYNEREOCircuit.zoom(_.user.sessionUri).value
       if (userHasSessionUri.length < 1) {
-       SYNEREOCircuit.dispatch(LogoutUser())
+        SYNEREOCircuit.dispatch(LogoutUser())
       }
 
     }
@@ -75,7 +75,7 @@ object AppModule {
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
             )(Sidebar(Sidebar.Props())),
-            if (p.proxy().isServerError){
+            if (p.proxy().isServerError) {
               ServerErrorModal(ServerErrorModal.Props(serverError))
             } else {
               <.div()

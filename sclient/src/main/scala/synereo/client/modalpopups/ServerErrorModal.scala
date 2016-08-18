@@ -16,7 +16,7 @@ import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 /**
-  * Created by Mandar on 4/13/2016.
+  * Created by mandar.k on 4/13/2016.
   */
 object ServerErrorModal {
   // shorthand fo

@@ -74,6 +74,8 @@ object Login {
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              $(loginLoader).addClass("hidden")
+              $(loadingScreen).addClass("hidden")
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()

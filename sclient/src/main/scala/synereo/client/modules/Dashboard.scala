@@ -10,7 +10,7 @@ import shared.models.{MessagePost, MessagePostContent}
 import synereo.client.rootmodels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{FullPostViewModal, ServerErrorModal}
+import synereo.client.modalpopups.{AmplifyPostForm, AmplifyPostModal, FullPostViewModal, ServerErrorModal}
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -40,7 +40,7 @@ object Dashboard {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(postMessage: MessagePost, ShowFullPostView: Boolean = false, isMessagePosted: Boolean = false, preventFullPostView: Boolean = true, showErrorModal: Boolean = false)
+  case class State(/*postMessage: MessagePost,isMessagePosted: Boolean = false,  */ ShowFullPostView: Boolean = false, preventFullPostView: Boolean = true, showErrorModal: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
     //scalastyle:off
@@ -52,10 +52,10 @@ object Dashboard {
       //
     }
 
-    def updateContent(e: ReactEventI) = {
-      val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
-    }
+    //    def updateContent(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
+    //    }
 
     def closeFullViewModalPopUp(): Callback = {
       $(dashboardContainerMain).addClass("SynereoCommanStylesCSS_Style-overflowYScroll")
@@ -261,7 +261,8 @@ object Dashboard {
   }
 
   val component = ReactComponentB[Props]("Dashboard")
-    .initialState_P(p => State(new MessagePost("", "", "", "", Nil, new MessagePostContent("", ""))))
+    //    .initialState_P(p => State(new MessagePost("", "", "", "", Nil, new MessagePostContent("", ""))))
+    .initialState_P(p => State())
     .renderBackend[Backend]
     //    .componentDidUpdate(scope => scope.$.backend.updated(scope.currentProps))
     .build
@@ -277,7 +278,7 @@ object HomeFeedList {
 
   case class Props(messages: Seq[MessagePost])
 
-  case class State(/*postMessage: MessagePost,*/ ShowFullPostView: Boolean = false, /*isMessagePosted: Boolean = false,*/ preventFullPostView: Boolean = true)
+  case class State(/*postMessage: MessagePost,*/ ShowFullPostView: Boolean = false, /*isMessagePosted: Boolean = false,*/ preventFullPostView: Boolean = true /*, showAmplifyPostForm: Boolean = false*/)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -330,7 +331,16 @@ object HomeFeedList {
       ).map(_.replace("#", "")).toSet.toSeq
     }
 
-    def render(props: Props) = {
+    //    def amplifyPost(e: ReactEventI): Callback = {
+    //      println("inside amplify post method ")
+    //      t.modState(state => state.copy(showAmplifyPostForm = true))
+    //    }
+    //
+    //    def postAmplified(): Callback = {
+    //      t.modState(state => state.copy(showAmplifyPostForm = false))
+    //    }
+
+    def render(props: Props, state: State) = {
 
       def renderMessages(message: MessagePost) = {
         val messageText = message.postContent.text.split(" ")
@@ -419,10 +429,18 @@ object HomeFeedList {
                       )
                     ),
                     <.div(^.className := "row text-right")(
-                      <.button(^.className := "btn btn-default", DashboardCSS.Style.ampTokenBtn)(
-                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                      )
+                      //                      <.button(^.className := "btn btn-default", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> amplifyPost)(
+                      //                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                      //                      )
+                      AmplifyPostModal(AmplifyPostModal.Props("", Seq(DashboardCSS.Style.ampTokenBtn), <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg), ""))
                     )
+                    //                    <.div(
+                    //                      if (state.showAmplifyPostForm) {
+                    //                        AmplifyPostForm(AmplifyPostForm.Props(postAmplified))
+                    //                      } else {
+                    //                        Seq.empty[ReactElement]
+                    //                      }
+                    //                    )
                   )
                 )
               )

@@ -109,7 +109,8 @@ object DashboardCSS {
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
-      padding(15.px)
+      padding(15.px),
+      overflowY.hidden.important
     )
     val glanceViewName = style(
       display.inlineBlock

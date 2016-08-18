@@ -31,7 +31,7 @@ object LoginForm {
                    showNewInviteForm: Boolean = false,
                    hostName: String = dom.window.location.hostname,
                    portNumber: String = "9876",
-                   apiURL: String = s"http://" + dom.window.location.hostname +":9876"
+                   apiURL: String = s"http://" + dom.window.location.hostname + ":9876"
                   )
 
   val LoginForm: js.Object = "#LoginForm"
@@ -127,40 +127,40 @@ object LoginForm {
                 } else
                   <.div(),
                 <.div(SignupCSS.Style.signUpHeading)(headerText),
-//                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-//                  <.div(^.className := "row")(
-//                    <.div(/*^.className := "col-md-4"*/)(
-//                      <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-//                    ),
-//                    <.div(/*^.className := "col-md-8"*/)(
-//                      <.input(^.`type` := "text", ^.placeholder := "Host-ip", SignupCSS.Style.inputStyleSignUpForm,
-//                        ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-//                    )
-//                  )
-//                ),
-//                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-//                  <.div(^.className := "row")(
-//                    <.div(/*^.className := "col-md-4"*/)(
-//                      <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-//                    ),
-//                    <.div(/*^.className := "col-md-8"*/)(
-//                      <.input(^.tpe := "text", ^.placeholder := "Port Number", SignupCSS.Style.inputStyleSignUpForm,
-//                        ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-//                    )
-//                  )
-//                ),
-//                <.div(^.className := "form-group")(
-//                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
-//                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-//                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
-//                  <.div(^.className := "help-block with-errors")
-//                ),
-//                <.div(^.className := "form-group")(
-//                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
-//                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-//                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
-//                  <.div(^.className := "help-block with-errors")
-//                ),
+                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                //                  <.div(^.className := "row")(
+                //                    <.div(/*^.className := "col-md-4"*/)(
+                //                      <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+                //                    ),
+                //                    <.div(/*^.className := "col-md-8"*/)(
+                //                      <.input(^.`type` := "text", ^.placeholder := "Host-ip", SignupCSS.Style.inputStyleSignUpForm,
+                //                        ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+                //                    )
+                //                  )
+                //                ),
+                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+                //                  <.div(^.className := "row")(
+                //                    <.div(/*^.className := "col-md-4"*/)(
+                //                      <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+                //                    ),
+                //                    <.div(/*^.className := "col-md-8"*/)(
+                //                      <.input(^.tpe := "text", ^.placeholder := "Port Number", SignupCSS.Style.inputStyleSignUpForm,
+                //                        ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+                //                    )
+                //                  )
+                //                ),
+                //                <.div(^.className := "form-group")(
+                //                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
+                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+                //                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
+                //                  <.div(^.className := "help-block with-errors")
+                //                ),
+                //                <.div(^.className := "form-group")(
+                //                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
+                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
+                //                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
+                //                  <.div(^.className := "help-block with-errors")
+                //                ),
                 <.div(^.className := "form-group")(
                   <.label(LoginCSS.Style.loginFormLabel)("API Server"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
@@ -180,13 +180,13 @@ object LoginForm {
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "row")(
-//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-//                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-//                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
-//                  ),
-//                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
-//                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
-//                  )
+                  //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
+                  //                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
+                  //                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
+                  //                  ),
+                  //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
+                  //                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
+                  //                  )
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", "Login")
