@@ -20,7 +20,7 @@ import synereo.client.srp.SRPClient
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils}
 
 case class ApiError(response: String) extends Exception
-
+// scalastyle:off
 object CoreApi {
 
   //var BASE_URL = s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
@@ -30,7 +30,7 @@ object CoreApi {
     s"${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}/api"
   }
 
-  // scalastyle:ignore
+
   var CREATE_USER_REQUEST = "createUserRequest"
 
   private def ajaxPost(requestContent: String): Future[String] = {

@@ -59,8 +59,7 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
 
-    def addMessage(/*submitForm:PostMessage*/): Callback = {
-      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
+    def addMessage(): Callback = {
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }

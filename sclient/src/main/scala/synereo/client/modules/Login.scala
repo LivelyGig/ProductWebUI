@@ -18,6 +18,7 @@ import synereo.client.utils.ConnectionsUtils
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
+import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
@@ -40,11 +41,16 @@ object Login {
 
   case class Props()
 
-  case class State(showNewUserForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
-                   showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
-                   showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false /*hostName: String = dom.window.location.hostname, portNumber: String = "9876"*/)
+  case class State(showNewUserForm: Boolean = false,
+                   showLoginForm: Boolean = false,
+                   showConfirmAccountCreation: Boolean = false,
+                   showAccountValidationSuccess: Boolean = false,
+                   showLoginFailed: Boolean = false,
+                   showRegistrationFailed: Boolean = false,
+                   showErrorModal: Boolean = false,
+                   showAccountValidationFailed: Boolean = false, /*showTermsOfServicesForm: Boolean = false,*/
+                   loginErrorMessage: String = "", /*showValidateForm: Boolean = false,*/
+                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "" /*hostName: String = dom.window.location.hostname, portNumber: String = "9876"*/)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -57,18 +63,18 @@ object Login {
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def addLoginForm(): Callback = {
-      t.modState(s => s.copy(showLoginForm = true))
-    }
+    //    def addLoginForm(): Callback = {
+    //      t.modState(s => s.copy(showLoginForm = true))
+    //    }
 
-    def addNewAgentForm(): Callback = {
-      t.modState(s => s.copy(showNewUserForm = true))
-    }
+    //    def addNewAgentForm(): Callback = {
+    //      t.modState(s => s.copy(showNewUserForm = true))
+    //    }
 
-    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
+    def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
+      log.debug(s"addNewUser userModel : ${signUpModel} ,addNewUser: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
@@ -76,6 +82,12 @@ object Login {
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              $(loginLoader).addClass("hidden")
+              $(loadingScreen).addClass("hidden")
+            } else if (s.msgType == ApiTypes.CREATE_USER_ERROR) {
+              val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
+              //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
+              t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
               $(loginLoader).addClass("hidden")
               $(loadingScreen).addClass("hidden")
             } else {
@@ -238,9 +250,9 @@ object Login {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
 
-    def termsOfServices(): Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
-    }
+    //    def termsOfServices(): Callback = {
+    //      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
+    //    }
 
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
@@ -266,11 +278,11 @@ object Login {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-//            <.img(^.src := "./assets/synereo-images/LogInBox.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
-//            <.div(LoginCSS.Style.loginContainer)(
-//
-//
-//          )
+            //            <.img(^.src := "./assets/synereo-images/LogInBox.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+            //            <.div(LoginCSS.Style.loginContainer)(
+            //
+            //
+            //          )
 
 
             //            <.div(LoginCSS.Style.loginDilog)(
@@ -315,15 +327,10 @@ object Login {
             //            )
 
 
-
-
-
-
-
           ),
           <.div()(
             if (s.showNewUserForm) {
-              NewUserForm(NewUserForm.Props(addNewAgent))
+              NewUserForm(NewUserForm.Props(addNewUser))
             }
             else if (s.showNewInviteForm) {
               //          TermsOfServices(TermsOfServices.Props(B.termsOfServices))
@@ -343,7 +350,7 @@ object Login {
               LoginFailed(LoginFailed.Props(loginFailed, s.loginErrorMessage))
             }
             else if (s.showRegistrationFailed) {
-              RegistrationFailed(RegistrationFailed.Props(registrationFailed))
+              RegistrationFailed(RegistrationFailed.Props(registrationFailed, s.registrationErrorMsg))
             }
             else if (s.showErrorModal) {
               LoginErrorModal(LoginErrorModal.Props(serverError, s.loginErrorMessage))

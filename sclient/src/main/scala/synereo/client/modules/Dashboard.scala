@@ -271,10 +271,10 @@ object HomeFeedList {
 
     }
 
-//        def updateContent(e: ReactEventI) = {
-//          val value = e.target.value
-//          t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
-//        }
+    //        def updateContent(e: ReactEventI) = {
+    //          val value = e.target.value
+    //          t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
+    //        }
 
     def closeFullViewModalPopUp(): Callback = {
       $(dashboardContainerMain).addClass("SynereoCommanStylesCSS_Style-overflowYScroll")
@@ -298,7 +298,7 @@ object HomeFeedList {
       Callback.empty
     }
 
-    def mouseEntered(e: ReactEvent): Callback =  {
+    def mouseEntered(e: ReactEvent): Callback = {
       //      println("mouse entered some where ")
       val targetLi = e.target
       val collapsiblePost: js.Object = $(targetLi).find(".collapse")
@@ -307,9 +307,8 @@ object HomeFeedList {
           $(collapsiblePost).addClass("in")
         }
       }
-            Callback.empty
+      Callback.empty
     }
-
 
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -419,7 +418,8 @@ object HomeFeedList {
                       //                      <.button(^.className := "btn btn-default", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> amplifyPost)(
                       //                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                       //                      )
-                      AmplifyPostModal(AmplifyPostModal.Props("", Seq(DashboardCSS.Style.ampTokenBtn), <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg), ""))
+                      AmplifyPostModal(AmplifyPostModal.Props("", Seq(DashboardCSS.Style.ampTokenBtn),
+                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg), "", message.uid))
                     )
                     //                    <.div(
                     //                      if (state.showAmplifyPostForm) {

@@ -4,6 +4,7 @@ object ApiTypes {
   val CreateUserError = "createUserError"
   val InitializeSessionError = "initializeSessionError"
   val CreateUserWaiting = "createUserWaiting"
+  val CREATE_USER_ERROR = "createUserError"
   val InitializeSessionResponse = "initializeSessionResponse"
   val InitializeSessionStep1Response = "initializeSessionStep1Response"
   val InitializeSessionStep2Response = "initializeSessionStep2Response"

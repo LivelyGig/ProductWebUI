@@ -28,8 +28,7 @@ case class CreateUserStep1Response(salt: String)
 
 case class CreateUserResponse()
 
-/*extends Content*/
-//case class CreateUserResponse()
+case class CreateUserError(reason: String = "")
 
 case class ConfirmEmail(token: String) extends Content
 
