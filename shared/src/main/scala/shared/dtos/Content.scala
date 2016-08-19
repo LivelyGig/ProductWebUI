@@ -28,7 +28,7 @@ case class ConfirmEmail(token: String) extends Content
 
 case class ConfirmEmailResponse(agentURI: String)
 
-case class ErrorResponse(reason: String)
+case class ErrorResponse(reason: String) extends Content
 
 case class InitializeSession(agentURI: String) extends Content
 
@@ -81,3 +81,15 @@ case class JsonBlob(name: String = "", imgSrc: String = "")
 case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlob = JsonBlob()) extends Content
 
 case class BeginIntroductionRes(sessionURI: String = "")
+
+case class CreateUserStep1(email: String) extends Content
+
+case class CreateUserStep2(email: String, jsonBlob: Map[String, String], createBTCWallet: Boolean, salt: String, verifier: String)
+  extends Content
+
+case class CreateUserStep1Response(salt: String)
+
+case class UserLoginResponse(s: String, B: String)
+
+case class InitializeSessionResponseCheck(M2: String)
+
