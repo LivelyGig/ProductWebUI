@@ -14,7 +14,7 @@ import synereo.client.logger._
 import synereo.client.modalpopups._
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.utils.ConnectionsUtils
+import synereo.client.utils.{ConnectionsUtils, UserUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -58,8 +58,6 @@ object Login {
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
-      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       t.modState(s => s.copy(showLoginForm = true))
     }
 
@@ -107,28 +105,13 @@ object Login {
       }
     }
 
-    def validateResponse(response: String): String = {
-      try {
-        upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
-        LOGIN_ERROR
-      } catch {
-        case e: Exception =>
-          try {
-            upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
-            SUCCESS
-          } catch {
-            case p: Exception =>
-              SERVER_ERROR
-          }
-      }
-    }
 
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
       CoreApi.agentLogin(userModel).onComplete {
         case Success(response) =>
-          validateResponse(response) match {
+          UserUtils.validateInitilizeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
             case SERVER_ERROR => processServerError(response)
@@ -335,8 +318,6 @@ object Login {
               NewUserForm(NewUserForm.Props(addNewUser))
             }
             else if (s.showNewInviteForm) {
-              //          TermsOfServices(TermsOfServices.Props(B.termsOfServices))
-              //              <.div()
               PostNewInvite(PostNewInvite.Props(closeRequestInvitePopup))
             }
             else if (s.showLoginForm) {

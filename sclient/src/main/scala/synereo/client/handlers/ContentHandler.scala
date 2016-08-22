@@ -63,6 +63,52 @@ object ContentHandler {
       case e: Exception => /*println("exception for upickle read session ping response")*/
     }
   }
+  //  def processIntroductionNotification(response: String = ""): Unit = {
+  //    val responseTypes = Map("sessionPong" -> Seq[ApiResponse[SessionPong]],
+  //      "introductionNotification" -> Seq[ApiResponse[Introduction]],
+  //      "introductionConfirmationResponse" -> Seq[ApiResponse[IntroductionConfirmationResponse]],
+  //      "connectNotification" -> Seq[ApiResponse[ConnectNotification]],
+  //      "beginIntroductionResponse" -> Seq[ApiResponse[BeginIntroductionRes]]
+  //    )
+  //    val responseMapping = responseTypes collectFirst { case (k, v) if response contains k => v }
+  //    println(responseMapping)
+  //    //    responseMapping match {
+  //    //      case Some() =>
+  //    //      case None =>
+  //    //    }
+  //
+  //    try {
+  //      if (response.contains("sessionPong")) {
+  //        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+  //      } else if (response.contains("introductionNotification")) {
+  //        val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+  //        SYNEREOCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
+  //      } else if (response.contains("introductionConfirmationResponse")) {
+  //        val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
+  //        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+  //      } else if (response.contains("connectNotification")) {
+  //        var isNew: Boolean = true
+  //        val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
+  //        val content = connectNotification(0).content
+  //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+  //        val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
+  //        val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+  //        connections.foreach {
+  //          connection => if (connection.name.equals(name)) {
+  //            isNew = false
+  //          }
+  //        }
+  //        if (isNew) {
+  //          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+  //        }
+  //      } else if (response.contains("beginIntroductionResponse")) {
+  //        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+  //        SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
+  //      }
+  //    } catch {
+  //      case e: Exception => /*println("exception for upickle read session ping response")*/
+  //    }
+  //  }
 
   val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
 
