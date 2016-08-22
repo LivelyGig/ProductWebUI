@@ -143,10 +143,12 @@ object Login {
 
     def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+      SYNEREOCircuit.dispatch(SetSessionUri(response.content.sessionURI))
       CoreApi.sessionPing(response.content.sessionURI).onComplete {
         case Success(res) =>
           SYNEREOCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""),
-            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email, sessionUri = response.content.sessionURI)))
+            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email /*, sessionUri = response.content.sessionURI*/)))
+
           SYNEREOCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(res), response.content.listOfConnections))
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           SYNEREOCircuit.dispatch(AttachPinger())
@@ -169,7 +171,7 @@ object Login {
 
       $(loginLoader).addClass("hidden")
       println("login error")
-      t.modState(s => s.copy(showLoginFailed = true)).runNow()
+      t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
     def processServerError(responseStr: String): Unit = {

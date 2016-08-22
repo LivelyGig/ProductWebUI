@@ -42,7 +42,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
 
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
-        CoreApi.sessionPing(SYNEREOCircuit.zoom(_.user.sessionUri).value)
+        CoreApi.sessionPing(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value)
       } { messagesResponse => MessagesRootModel(ContentHandler
         .getContentModel(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])

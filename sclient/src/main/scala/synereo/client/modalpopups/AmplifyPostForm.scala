@@ -164,7 +164,7 @@ object AmplifyPostForm {
 //
 //  case class Backend(t: BackendScope[Props, State]) {
 //    def hide: Callback = Callback {
-//      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+//      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
 //      val props = t.props.runNow()
 //      val introConfirmReq = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
 //      //      CoreApi.postIntroduction(introConfirmReq).onComplete {
@@ -184,7 +184,7 @@ object AmplifyPostForm {
 //
 //    def submitForm(e: ReactEventI): react.Callback = {
 //      e.preventDefault()
-//      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+//      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
 //      val props = t.props.runNow()
 //      val content = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
 //      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))

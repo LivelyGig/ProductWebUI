@@ -1,4 +1,4 @@
 package synereo.client.rootmodels
 
 // scalastyle:off
-case class SessionRootModel(pinger: Boolean = false)
+case class SessionRootModel(pinger: Boolean = false, sessionUri: String = "")

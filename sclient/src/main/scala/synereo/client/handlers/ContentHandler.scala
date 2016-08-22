@@ -118,7 +118,7 @@ object ContentHandler {
   def subsForMsgAndBeginSessionPing() = {
     val expr = Expression("feedExpr", ExpressionContent(SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(ConnectionsUtils.getSelfConnnection()),
       s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
-    val req = SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value, expr)
+    val req = SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)
     SYNEREOCircuit.dispatch(ClearMessages())
     var count = 1
     subscribe()
@@ -166,7 +166,7 @@ object ContentHandler {
     var count = 1
     cancelPrevious()
     def cancelPrevious(): Unit = CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(
-      SYNEREOCircuit.zoom(_.user.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
+      SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
       SYNEREOCircuit.zoom(_.searches.previousSearchLabel).value)).onComplete {
       case Success(res) =>
         SYNEREOCircuit.dispatch(SubsForMsg(req))

@@ -40,7 +40,7 @@ object SearchComponent {
         Seq(Label(text = AppUtils.MESSAGE_POST_LABEL)) ++ labels.map(currentLabel => Label(text = currentLabel)
         ), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(cnxnToPost, searchLabels))
-      SYNEREOCircuit.dispatch(CancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value, expr)))
+      SYNEREOCircuit.dispatch(CancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)))
     }
 
     def render(s: State, p: Props) = {

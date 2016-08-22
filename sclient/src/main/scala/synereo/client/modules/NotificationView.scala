@@ -73,14 +73,14 @@ object NotificationList {
   class Backend(t: BackendScope[NotificationListProps, State]) {
 
     def deleteIntroduction(introduction: Introduction) = {
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = false)
       SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
     }
 
     def handleAllIntroduction(areAccepted: Boolean = false) = {
       val props = t.props.runNow()
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       props.introductions.foreach {
         introduction =>
           val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = areAccepted)

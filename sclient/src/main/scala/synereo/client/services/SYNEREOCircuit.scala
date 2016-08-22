@@ -10,7 +10,7 @@ import synereo.client.handlers.IntroductionHandler
 import synereo.client.rootmodels._
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
-                     searches: SearchesRootModel, introduction: IntroRootModel, sessionPing: SessionRootModel, appRootModel : AppRootModel)
+                     searches: SearchesRootModel, introduction: IntroRootModel, sessionRootModel: SessionRootModel, appRootModel : AppRootModel)
 
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
@@ -24,7 +24,7 @@ object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] 
     new SearchesHandler(zoomRW(_.searches)((m, v) => m.copy(searches = v))),
     new MessagesHandler(zoomRW(_.messages)((m, v) => m.copy(messages = v))),
     new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v))),
-    new SessionPingHandler(zoomRW(_.sessionPing)((m, v) => m.copy(sessionPing = v))),
+    new SessionPingHandler(zoomRW(_.sessionRootModel)((m, v) => m.copy(sessionRootModel = v))),
     new AppHandler(zoomRW(_.appRootModel)((m,v) => m.copy(appRootModel = v)))
   )
 }

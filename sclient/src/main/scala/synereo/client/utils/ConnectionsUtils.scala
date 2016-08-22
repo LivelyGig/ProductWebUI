@@ -20,23 +20,23 @@ object ConnectionsUtils {
 
   /**
     * Method to get the self connection
+    *
     * @return connection with the source and target to the user and label as alias
     */
   def getSelfConnnection(): Connection = {
-    val sessionUriSplit = SYNEREOCircuit.zoom(_.user.sessionUri).value.split('/')
+    val sessionUriSplit = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split('/')
     val sourceStr = "agent://" + sessionUriSplit(2)
     Connection(sourceStr, "alias", sourceStr)
   }
 
- /* def getCnxsSeq(id: Option[String], sessionUriName: String): Seq[Connection] = {
-    id match {
-      case None =>
-        Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName)))
-      case Some(res) =>
-        Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName))) ++ ConnectionsSelectize.getConnectionsFromSelectizeInput(res)
-    }
-  }*/
-
+  /* def getCnxsSeq(id: Option[String], sessionUriName: String): Seq[Connection] = {
+     id match {
+       case None =>
+         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName)))
+       case Some(res) =>
+         Seq(ConnectionsUtils.getSelfConnnection(window.sessionStorage.getItem(sessionUriName))) ++ ConnectionsSelectize.getConnectionsFromSelectizeInput(res)
+     }
+   }*/
 
 
   def getCnxnForReq(cnxn: Seq[Connection]): Seq[Connection] = {
@@ -47,14 +47,14 @@ object ConnectionsUtils {
     }
   }
 
-  def getNameImgFromJson (jsonBlob: String) :(String, String) = {
+  def getNameImgFromJson(jsonBlob: String): (String, String) = {
     val json = JSON.parse(jsonBlob)
     val name = json.name.asInstanceOf[String]
     val imgSrc = if (jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
     (name, imgSrc)
   }
 
-  def getCnxnFromRes (cnxn: ConnectionProfileResponse): ConnectionsModel = {
+  def getCnxnFromRes(cnxn: ConnectionProfileResponse): ConnectionsModel = {
     val (name, imgSrc) = getNameImgFromJson(cnxn.jsonBlob)
     ConnectionsModel(cnxn.sessionURI, cnxn.connection,
       name, imgSrc)
@@ -67,7 +67,7 @@ object ConnectionsUtils {
       connections.map(e => getCnxnFromRes(e.content))
         .sortBy(_.name)
     } catch {
-      case e:Exception =>
+      case e: Exception =>
         Nil
     }
   }

@@ -139,7 +139,7 @@ object ConnectionsForm {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val state = t.state.runNow()
       val msg = state.introConnections.aMessage.replaceAll("/", "//")
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
       if (connections.length == 2) {
         val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
@@ -160,7 +160,7 @@ object ConnectionsForm {
           $("#agentFieldError".asInstanceOf[js.Object]).removeClass("hidden")
           t.modState(s => s.copy(postConnection = false))
         case None =>
-          val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+          val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection().source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
