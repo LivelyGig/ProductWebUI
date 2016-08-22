@@ -76,8 +76,21 @@ object ContentHandler {
     }
   }
 
+  /**
+    * This function primarily deals with getting the content for the ui interaction
+    * it is connected to the session ping response.
+    * Session ping response consists of a number of different types of responses
+    * which are filtered here and the ui is updated accordingly
+    * @param response   This function takes the response from the session ping
+    *                   It is called from the message handler refresh messages action
+    * @return   seq of post
+    */
   def getContentModel(response: String): Seq[Post] = {
+    // toggle pinger this will refresh the session ping cycle
     SYNEREOCircuit.dispatch(TogglePinger())
+    //check for the reponse type if its not evalSubscribeResponse than it has to be one of
+    // the other expected responses. Why check for all responses instead of one? So that
+    // we know that what are the expected responses and make changes later.
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
       getCurrMsgModel()
