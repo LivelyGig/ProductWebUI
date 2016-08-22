@@ -61,7 +61,7 @@ object ConfirmIntroReqModal {
       <.div()(
         Button(Button.Props(B.addNewIntroForm(), CommonStyle.default, P.addStyles, P.reactChildElement, P.title, className = ""), P.buttonName),
         if (S.showNewIntroForm)
-        //          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro", proxy)))
+        //          introductionProxy(proxy => ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.postAmplified, "New Intro", proxy)))
           ConfirmIntroReqForm(ConfirmIntroReqForm.Props(B.introConfirmed, "New Intro Request", P.introduction))
         else
           Seq.empty[ReactElement]

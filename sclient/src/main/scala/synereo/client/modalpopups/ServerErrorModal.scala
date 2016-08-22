@@ -4,7 +4,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom._
-import shared.RootModels.AppRootModel
+import synereo.client.rootmodels.AppRootModel
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.components.GlobalStyles
@@ -16,7 +16,7 @@ import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 /**
-  * Created by Mandar on 4/13/2016.
+  * Created by mandar.k on 4/13/2016.
   */
 object ServerErrorModal {
   // shorthand fo

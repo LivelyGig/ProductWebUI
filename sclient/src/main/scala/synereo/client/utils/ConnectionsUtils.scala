@@ -10,7 +10,7 @@ import shared.models._
 import org.scalajs.dom._
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.ConnectionsSelectize
-import shared.RootModels.ConnectionsRootModel
+import synereo.client.rootmodels.ConnectionsRootModel
 import synereo.client.services.SYNEREOCircuit
 
 import scala.scalajs.js.JSON

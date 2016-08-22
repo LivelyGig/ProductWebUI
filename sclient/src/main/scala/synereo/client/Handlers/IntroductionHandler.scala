@@ -3,7 +3,7 @@ package synereo.client.handlers
 
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.dtos._
-import shared.RootModels.IntroRootModel
+import synereo.client.rootmodels.IntroRootModel
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._
@@ -32,20 +32,7 @@ case class AcceptIntroductionConfirmationResponse(introductionConfirmationRespon
 class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case PostNewConnection(content: Content) =>
-      var count = 1
-      post()
-      def post(): Unit = CoreApi.postIntroduction(content).onComplete {
-        case Success(res) =>
-          logger.log.debug("Connection request sent successfully")
-        case Failure(fail) =>
-          if (count == 3) {
-//            logger.log.error("Error sending connection request")
-            SYNEREOCircuit.dispatch(ShowServerError(fail.getMessage))
-          } else {
-            count = count + 1
-            post()
-          }
-      }
+      ContentHandler.postNewConnection(content)
       noChange
 
     case PostIntroSuccess(beginIntroductionRes: BeginIntroductionRes) =>
@@ -57,10 +44,7 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(newList))
 
     case UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq) =>
-      CoreApi.postIntroduction(introConfirmReq).onComplete {
-        case Success(response) => logger.log.debug("Intro confirm request sent successfully")
-        case Failure(response) => /*logger.log.error("Error sending intro confirm request")*/ SYNEREOCircuit.dispatch(ShowServerError(response.getMessage))
-      }
+      ContentHandler.updateIntroductionsModel(introConfirmReq)
       val newList = value.introResponse.filterNot(
         _.introSessionId.equals(introConfirmReq.introSessionId)
       )
@@ -70,9 +54,6 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       updated(IntroRootModel(Nil))
 
     case AcceptIntroductionConfirmationResponse(introductionConfirmationResponse: IntroductionConfirmationResponse) =>
-      //      if (introductionConfirmationResponse.sessionURI.length != 0) {
-      //        updated(IntroRootModel(Nil))
-      //      } else
       noChange
   }
 }

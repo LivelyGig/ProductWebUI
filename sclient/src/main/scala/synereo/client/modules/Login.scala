@@ -1,37 +1,32 @@
 package synereo.client.modules
 
+import diode.AnyAction._
 import japgolly.scalajs.react._
-import org.scalajs.dom.window
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.querki.jquery._
+import org.scalajs.dom.window
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import synereo.client.sessionitems.SessionItems
-import synereo.client.handlers._
-import synereo.client.modalpopups._
-import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.services.CoreApi._
-
-import scala.concurrent.Future
-import scala.scalajs.js
-import js.JSON
-import scala.util.{Failure, Success}
-import scalacss.ScalaCssReact._
-import scala.concurrent.ExecutionContext.Implicits.global
-import org.querki.jquery._
 import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
+import synereo.client.handlers._
 import synereo.client.logger._
-import diode.AnyAction._
-import org.scalajs.dom
+import synereo.client.modalpopups._
+import synereo.client.services.CoreApi._
+import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
+import synereo.client.utils.ConnectionsUtils
 
-import scala.scalajs.js.timers._
-import synereo.client.utils.{AppUtils, ConnectionsUtils, MessagesUtils}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
+import scala.scalajs.js.JSON
+import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
 
 /**
   * Created by mandar.k on 3/11/2016.
   */
 //scalastyle:off
-case class ApiDetails(hostName: String = "", portNumber: String = "")
+case class ApiDetails(apiURL: String = "", hostName: String = "", portNumber: String = "")
 
 object Login {
 
@@ -46,11 +41,16 @@ object Login {
 
   case class Props()
 
-  case class State(showNewUserForm: Boolean = false, showLoginForm: Boolean = false, showValidateForm: Boolean = false,
-                   showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
-                   showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
-                   showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false,
-                   loginErrorMessage: String = "", showNewInviteForm: Boolean = false, hostName: String = dom.window.location.hostname, portNumber: String = "9876")
+  case class State(showNewUserForm: Boolean = false,
+                   showLoginForm: Boolean = false,
+                   showConfirmAccountCreation: Boolean = false,
+                   showAccountValidationSuccess: Boolean = false,
+                   showLoginFailed: Boolean = false,
+                   showRegistrationFailed: Boolean = false,
+                   showErrorModal: Boolean = false,
+                   showAccountValidationFailed: Boolean = false, /*showTermsOfServicesForm: Boolean = false,*/
+                   loginErrorMessage: String = "", /*showValidateForm: Boolean = false,*/
+                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "" /*hostName: String = dom.window.location.hostname, portNumber: String = "9876"*/)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
@@ -58,21 +58,23 @@ object Login {
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
+      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def addLoginForm(): Callback = {
-      t.modState(s => s.copy(showLoginForm = true))
-    }
+    //    def addLoginForm(): Callback = {
+    //      t.modState(s => s.copy(showLoginForm = true))
+    //    }
 
-    def addNewAgentForm(): Callback = {
-      t.modState(s => s.copy(showNewUserForm = true))
-    }
+    //    def addNewAgentForm(): Callback = {
+    //      t.modState(s => s.copy(showNewUserForm = true))
+    //    }
 
-    def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
+    def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
+      log.debug(s"addNewUser userModel : ${signUpModel} ,addNewUser: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
@@ -80,13 +82,21 @@ object Login {
             log.debug(s"createUser msg : ${s.msgType}")
             if (s.msgType == ApiTypes.CreateUserWaiting) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              $(loginLoader).addClass("hidden")
+              $(loadingScreen).addClass("hidden")
+            } else if (s.msgType == ApiTypes.CREATE_USER_ERROR) {
+              val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
+              //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
+              t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
+              $(loginLoader).addClass("hidden")
+              $(loadingScreen).addClass("hidden")
             } else {
               log.debug(s"createUser msg : ${s.content}")
               t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
             }
           case Failure(res) =>
             log.debug(s"createUserFailure: ${res}")
-            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
+            t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.getMessage)).runNow()
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewUserForm = false))
@@ -159,7 +169,7 @@ object Login {
 
       $(loginLoader).addClass("hidden")
       println("login error")
-      t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
+      t.modState(s => s.copy(showLoginFailed = true)).runNow()
     }
 
     def processServerError(responseStr: String): Unit = {
@@ -227,89 +237,100 @@ object Login {
       }
     }
 
-    def serverError(): Callback = {
+    def serverError(showLogin: Boolean = false): Callback = {
       $(loginLoader).addClass("hidden")
       $(loadingScreen).addClass("hidden")
-      t.modState(s => s.copy(showErrorModal = false, showLoginForm = false))
+      if (showLogin)
+        t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
+      else
+        t.modState(s => s.copy(showErrorModal = false, showLoginForm = false))
     }
 
     def accountValidationFailed(): Callback = {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
 
-    def termsOfServices(): Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
-    }
+    //    def termsOfServices(): Callback = {
+    //      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
+    //    }
 
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
+      //      window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
+      //      window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def updateIp(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(hostName = value))
-    }
-
-    def updatePort(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(portNumber = value))
-    }
+    //    def updateIp(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      //      println(s"value:$value")
+    //      t.modState(s => s.copy(hostName = value))
+    //    }
+    //
+    //    def updatePort(e: ReactEventI) = {
+    //      val value = e.target.value
+    //      //      println(s"value:$value")
+    //      t.modState(s => s.copy(portNumber = value))
+    //    }
 
     def render(s: State, p: Props) = {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-            <.img(^.src := "./assets/synereo-images/login_nodeDecoration.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage),
-            <.div(LoginCSS.Style.loginDilog)(
-              <.div(LoginCSS.Style.formPadding)(
-                <.div(LoginCSS.Style.loginDilogContainerDiv)(
-                  <.div(^.className := "row")(
-                    <.div(^.className := "col-md-12")(
-                      <.div(LoginCSS.Style.loginFormContainerDiv)(
-                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
-                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
-                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-4")(
-                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-                              ),
-                              <.div(^.className := "col-md-8")(
-                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
-                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-                              )
-                            )
-                          ),
-                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-4")(
-                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-                              ),
-                              <.div(^.className := "col-md-8")(
-                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
-                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-                              )
-                            )
-                          ),
-                          <.div(^.className := "col-md-12 text-right")(
-                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
+            //            <.img(^.src := "./assets/synereo-images/LogInBox.png", ^.className := "img-responsive", LoginCSS.Style.loginScreenBgImage)
+            //            <.div(LoginCSS.Style.loginContainer)(
+            //
+            //
+            //          )
+
+
+            //            <.div(LoginCSS.Style.loginDilog)(
+            //              <.div(LoginCSS.Style.formPadding)(
+            //                <.div(LoginCSS.Style.loginDilogContainerDiv)(
+            //                  <.div(^.className := "row")(
+            //                    <.div(^.className := "col-md-12")(
+            //                      <.div(LoginCSS.Style.loginFormContainerDiv)(
+            //                        <.h1(^.className := "text-center", LoginCSS.Style.textWhite)("API DETAILS"),
+            //                        <.form(^.role := "form", ^.onSubmit ==> submitApiForm)(
+            //                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+            //                            <.div(^.className := "row")(
+            //                              <.div(^.className := "col-md-4")(
+            //                                <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
+            //                              ),
+            //                              <.div(^.className := "col-md-8")(
+            //                                <.input(^.`type` := "text", ^.placeholder := "Host-ip", LoginCSS.Style.inputStyleLoginForm,
+            //                                  ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+            //                              )
+            //                            )
+            //                          ),
+            //                          <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
+            //                            <.div(^.className := "row")(
+            //                              <.div(^.className := "col-md-4")(
+            //                                <.label(LoginCSS.Style.loginFormLabel)("Port Number")
+            //                              ),
+            //                              <.div(^.className := "col-md-8")(
+            //                                <.input(^.tpe := "text", ^.placeholder := "Port Number", LoginCSS.Style.inputStyleLoginForm,
+            //                                  ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
+            //                              )
+            //                            )
+            //                          ),
+            //                          <.div(^.className := "col-md-12 text-right")(
+            //                            <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.apiSubmitBtn, ^.className := "btn", "Submit")
+            //                          )
+            //                        )
+            //                      )
+            //                    )
+            //                  )
+            //                )
+            //              )
+            //            )
+
+
           ),
           <.div()(
             if (s.showNewUserForm) {
-              NewUserForm(NewUserForm.Props(addNewAgent))
+              NewUserForm(NewUserForm.Props(addNewUser))
             }
             else if (s.showNewInviteForm) {
               //          TermsOfServices(TermsOfServices.Props(B.termsOfServices))
@@ -329,7 +350,7 @@ object Login {
               LoginFailed(LoginFailed.Props(loginFailed, s.loginErrorMessage))
             }
             else if (s.showRegistrationFailed) {
-              RegistrationFailed(RegistrationFailed.Props(registrationFailed))
+              RegistrationFailed(RegistrationFailed.Props(registrationFailed, s.registrationErrorMsg))
             }
             else if (s.showErrorModal) {
               LoginErrorModal(LoginErrorModal.Props(serverError, s.loginErrorMessage))
@@ -350,6 +371,17 @@ object Login {
     .initialState_P(p => State())
     //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]
+    .componentWillMount(scope =>
+      scope.backend.mounted(scope.props)
+    )
+    .componentDidMount(scope => Callback {
+      //      if (scope.currentProps.proxy().introResponse.length <= 0) {
+      //        window.location.href = "/#dashboard"
+      //      }
+      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+      //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
+    })
     .build
 
   def apply(props: Props) = component(props)

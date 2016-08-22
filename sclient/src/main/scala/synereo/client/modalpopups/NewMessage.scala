@@ -9,12 +9,12 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
-import shared.RootModels.SearchesRootModel
+import synereo.client.rootmodels.SearchesRootModel
 import shared.dtos.LabelPost
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{DashboardCSS, NewMessageCSS}
 import synereo.client.handlers._
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
@@ -31,8 +31,11 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
+import org.querki.jquery._
 
 import scala.concurrent.Future
+import scala.collection.mutable.ListBuffer
+import scala.scalajs.js
 
 //scalastyle:off
 object NewMessage {
@@ -56,8 +59,7 @@ object NewMessage {
       t.modState(s => s.copy(showNewMessageForm = true))
     }
 
-    def addMessage(/*submitForm:PostMessage*/): Callback = {
-      //log.debug(s"addNewAgent signUpModel : ${signUpModel} ,addNewAgent: ${showNewMessageForm}")
+    def addMessage(): Callback = {
       t.modState(s => s.copy(showNewMessageForm = false))
     }
   }
@@ -90,7 +92,7 @@ object NewMessageForm {
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
-                   labelsSelectizeInputId: String = "labelsSelectizeInputId", labelModel: Label, postLabel: Boolean = false)
+                   labelsSelectizeInputId: String = "labelsSelectizeInputId", tags: Seq[String] = Seq())
 
   val getUsers = SYNEREOCircuit.connect(_.user)
   val getConnections = SYNEREOCircuit.connect(_.connections)
@@ -108,7 +110,16 @@ object NewMessageForm {
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value)))
+      val words: Seq[String] = value.split(" ")
+      var tagsCreatedInline: Seq[String] = Seq()
+      words.foreach(
+        word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
+          tagsCreatedInline = tagsCreatedInline :+ word
+        }
+      )
+      //      tagsCreatedInline.exis
+      //      println(tagsCreatedInline)
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
     def hideModal = {
@@ -142,6 +153,28 @@ object NewMessageForm {
       allLabels.distinct
     }
 
+    //    def createHashtag(text: String) = {
+    //      val newText: Seq[String] = text.split(" ")
+    //      newText.foreach(
+    //        text => if (text.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
+    //          newText ++ text
+    //        }
+    //      )
+    //      t.modState()
+    //
+    //    }
+
+    def deleteInlineLabel(e: ReactEventI) = {
+      val value = e.target.parentElement.getAttribute("data-count")
+      val state = t.state.runNow()
+      //      println(value)
+      val newlist = for {
+        (x, i) <- state.tags.zipWithIndex
+        if i != value.toInt
+      } yield x
+      //      println(newlist)
+      t.modState(state => state.copy(tags = newlist))
+    }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
@@ -159,9 +192,16 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-      SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
-      t.modState(s => s.copy(postNewMessage = true))
+      val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
+      if (connections.length < 1) {
+        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postNewMessage = false))
+      } else {
+        $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+        val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
+        SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
+        t.modState(s => s.copy(postNewMessage = true))
+      }
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -189,6 +229,7 @@ object NewMessageForm {
             <.div(^.id := s.connectionsSelectizeInputId)(
               ConnectionsSelectize(ConnectionsSelectize.Props(s.connectionsSelectizeInputId, fromSelecize))
             ),
+            <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := s.labelsSelectizeInputId)(
               LabelsSelectize(LabelsSelectize.Props(s.labelsSelectizeInputId))
             ),
@@ -197,7 +238,9 @@ object NewMessageForm {
             ),
             <.div()(
               <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := s.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> updateContent, ^.required := true)
-            )
+            ),
+            <.div()
+
           ),
           <.div(^.className := "row")(
             <.div()(
@@ -207,6 +250,19 @@ object NewMessageForm {
                 <.div("")
               }
 
+            ),
+            <.div(
+              <.ul(^.className := "list-inline")(
+                for (tag <- s.tags.zipWithIndex) yield
+                  <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
+                    <.ul(^.className := "list-inline",
+                      <.li(^.textTransform := "uppercase", tag._1),
+                      <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
+                        "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> deleteInlineLabel
+                      )
+                    )
+                  )
+              )
             ),
             <.div(^.className := "text-left text-muted")(
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
@@ -228,12 +284,13 @@ object NewMessageForm {
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     //.initialState_P(p => State(p=> new MessagesData("","","")))
-    .initialState_P(p => State(new MessagePostContent(), labelModel = Label()))
+    .initialState_P(p => State(new MessagePostContent()))
     .renderBackend[Backend]
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal
       }
+      //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted())
     //      .shouldComponentUpdate(scope => false)

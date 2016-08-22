@@ -29,7 +29,11 @@ object SynereoCommanStylesCSS {
     val searchBoxContainer = style(
       marginTop(20.px),
       display.inlineBlock,
-      width(380.px)
+      width(380.px),
+      media.maxWidth(800.px)-
+        width(40.%%)
+
+
     )
     val labelSelectizeNavbar = style(
       width(480.px),
@@ -276,7 +280,7 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top(50.%%),
       left(50.%%),
-      zIndex(2000),
+      //      zIndex(00),
       color.grey
     )
     val messagesLoadingWaitCursor = style(
@@ -285,7 +289,7 @@ object SynereoCommanStylesCSS {
       position.fixed,
       top(29.%%),
       left(50.%%),
-      zIndex(2000),
+      zIndex(100),
       color.grey
     )
     val backgroundColorWhite = style(
@@ -321,7 +325,8 @@ object SynereoCommanStylesCSS {
       backgroundColor.transparent,
       border.none.important,
       borderRadius.`0`.important,
-      marginTop(-20.px),
+      marginTop(-30.px),
+      marginLeft(10.px),
       paddingTop(3.px),
       paddingBottom(3.px),
       paddingLeft.`0`,

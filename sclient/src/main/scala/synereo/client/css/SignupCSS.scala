@@ -3,8 +3,8 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
- * Created by Mandar on 4/15/2016.
- */
+  * Created by Mandar on 4/15/2016.
+  */
 object SignupCSS {
 
   object Style extends StyleSheet.Inline {
@@ -27,6 +27,9 @@ object SignupCSS {
       fontSize(12.px),
       marginTop(-15.px),
       marginBottom(25.px)
+    )
+    val accountValidationSuccessText = style(
+      fontSize(2.4.em)
     )
     val verificationMessageContainer = style(
       marginBottom(30.px)
@@ -57,9 +60,17 @@ object SignupCSS {
     )
     val signUpHeading = style(
       color(c"#000"),
-      fontSize(64.px),
+      fontSize(52.px),
       fontFamily :=! "karla",
       opacity(0.65),
+      textAlign.center,
+      marginBottom(30.px),
+      marginTop(20.px)
+    )
+    val loginHeading = style(
+      color(c"#fff"),
+      fontSize(52.px),
+      fontFamily :=! "karla",
       textAlign.center,
       marginBottom(30.px),
       marginTop(20.px)
@@ -84,21 +95,21 @@ object SignupCSS {
         marginTop(1.px)
     )
     val inputStyleSignUpForm = style(
-      fontSize(25.px),
+      fontSize(20.px),
       fontFamily :=! "karla",
-      height(75.px),
-      marginBottom(20.px),
-      color(c"#000"),
-      opacity(0.4)
-    //      backgroundColor(c"#022639"),
-    //      borderRadius(5.px),
-    //      border(1.px, solid, c"#3C4346"),
-    //      height(40.px),
-    //      padding(4.%%),
-    //      fontSize(18.px),
-    //      color.white,
-    //      width(70.%%),
-    //      margin.auto.important
+      height(50.px),
+      //      marginBottom(20.px),
+      color(c"#000") /*,
+      opacity(0.4)*/
+      //      backgroundColor(c"#022639"),
+      //      borderRadius(5.px),
+      //      border(1.px, solid, c"#3C4346"),
+      //      height(40.px),
+      //      padding(4.%%),
+      //      fontSize(18.px),
+      //      color.white,
+      //      width(70.%%),
+      //      margin.auto.important
     )
     val SignupformFooter = style(
       color(c"#35b0e2"),
@@ -121,6 +132,10 @@ object SignupCSS {
     )
     val signUpBtn = style(
       margin(30.px)
+    )
+
+    val signUPInput = style(
+      marginBottom(22.px)
     )
   }
 

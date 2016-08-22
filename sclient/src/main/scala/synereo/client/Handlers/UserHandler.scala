@@ -30,21 +30,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
     case PostUserUpdate(req) =>
-      var count = 1
-
-      post()
-      def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
-        case Success(response) =>
-          logger.log.debug("user update request sent successfully")
-        case Failure(response) =>
-          if (count == 3) {
-//            logger.log.error("user update error")
-            SYNEREOCircuit.dispatch(ShowServerError(response.toString))
-          } else {
-            count = count + 1
-            post()
-          }
-      }
+      ContentHandler.postUserUpdate(req)
       if (req.jsonBlob.imgSrc != null) {
         updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
       } else noChange

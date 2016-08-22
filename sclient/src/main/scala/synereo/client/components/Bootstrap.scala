@@ -5,7 +5,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.ext.KeyCode
 import synereo.client.components.Icon._
-import synereo.client.css.SynereoCommanStylesCSS
+import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
 
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
@@ -105,7 +105,7 @@ object Bootstrap {
         <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
             <.div( if(P.id == "newMessage")SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div() ,   modalStyle.dialog )(
-              <.div(modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
+              <.div(if(P.id=="loginContainer")LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
                 <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
               //              <.div(modalStyle.footer, P.footer(hide))

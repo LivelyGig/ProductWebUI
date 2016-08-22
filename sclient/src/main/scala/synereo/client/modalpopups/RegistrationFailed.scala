@@ -1,24 +1,24 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.{ Icon, GlobalStyles }
-import synereo.client.css.{ LoginCSS, SignupCSS, SynereoCommanStylesCSS }
+import synereo.client.components.{Icon, GlobalStyles}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import scala.util.{ Failure, Success }
+import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 
 /**
- * Created by bhagyashree.b on 4/19/2016.
- */
+  * Created by bhagyashree.b on 4/19/2016.
+  */
 object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean) => Callback)
+  case class Props(submitHandler: (Boolean) => Callback, registrationErrorMsg: String = "")
 
   case class State(registrationFailed: Boolean = false)
 
@@ -52,7 +52,7 @@ object RegistrationFailed {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.div(LoginCSS.Style.requestInviteModalText)("This user already exists. Please try logging in!"),
+                <.div(LoginCSS.Style.message)(p.registrationErrorMsg),
                 <.div(^.className := "pull-right")(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.SignUpBtn, ^.onClick --> hide)("Try again")),
                 <.div(^.className := "pull-right", SynereoCommanStylesCSS.Style.marginRight15px)(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.SignUpBtn, ^.onClick --> login)("Login"))
               )
