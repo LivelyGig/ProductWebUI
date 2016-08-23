@@ -23,7 +23,7 @@ object MessagesUtils {
       new Date().toISOString(), "", cnxns, postContent.asInstanceOf[MessagePostContent]))
     val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
     // logger.log.debug(s"prolog = $prolog")
-    SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value,
+    SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value,
       Expression(ApiTypes.INSERT_CONTENT,
         ExpressionContent(cnxns, prolog, contentToPost, uid)))
   }

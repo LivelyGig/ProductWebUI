@@ -54,8 +54,8 @@ object AppModule {
 
     def mounted(props: Props) = Callback {
       logger.log.debug("app module mounted")
-      val userHasSessionUri = SYNEREOCircuit.zoom(_.user.sessionUri).value
-      if (userHasSessionUri.length < 1) {
+      val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+      if (userSessionUri.length < 1) {
         SYNEREOCircuit.dispatch(LogoutUser())
       }
 
