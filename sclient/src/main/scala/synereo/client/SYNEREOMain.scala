@@ -18,7 +18,6 @@ import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.handlers.RefreshMessages
 
 import scala.scalajs.js
 import scala.scalajs.js.timers._

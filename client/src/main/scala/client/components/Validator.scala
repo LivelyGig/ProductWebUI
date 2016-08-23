@@ -17,7 +17,6 @@ object Validator {
 @JSName("Validator")
 @js.native
 trait ValidatorJQuery extends js.Object {
-  @js.native
   def validator(options: ValidatorOptions):Any = js.native
 // def popover(options: PopoverOptions):Any = js.native
 }

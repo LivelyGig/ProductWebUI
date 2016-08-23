@@ -12,7 +12,8 @@ import client.components.Icon
 import client.components.Icon._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import client.handlers.PostData
+import client.handler.ContentModelHandler
+import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react
 
@@ -24,7 +25,8 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Label
 import shared.models.{ProjectPostContent, ProjectsPost}
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
+import client.utils.{AppUtils, ConnectionsUtils}
 
 import scala.scalajs.js
 import scala.scalajs.js.Date
@@ -100,7 +102,8 @@ object NewProjectForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.projectPost, Some(state.selectizeInputId), SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI, None))
+      val req = AppUtils.getPostData(state.projectPost, ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId) ++ Seq(ConnectionsUtils.getSelfConnnection(AppModule.PROJECTS_VIEW)),Nil, AppModule.PROJECTS_VIEW)
+      ContentModelHandler.postContent(req)
       t.modState(s => s.copy(postProject = true))
     }
 

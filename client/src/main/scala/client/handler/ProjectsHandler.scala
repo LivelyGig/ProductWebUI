@@ -1,14 +1,14 @@
-package client.handlers
+package client.handler
 
 import client.modules.AppModule
-import diode.{ ActionHandler, ActionResult, Effect, ModelRW }
+import diode.{ActionHandler, ActionResult, Effect, ModelRW}
 import diode.data._
 import shared.models.ProjectsPost
 import org.scalajs.dom.window
-import shared.RootModels.ProjectsRootModel
-import client.services.CoreApi
-import diode.util.{ Retry, RetryPolicy }
-import shared.sessionitems.SessionItems
+import client.rootmodel.ProjectsRootModel
+import client.services.{CoreApi, LGCircuit}
+import diode.util.{Retry, RetryPolicy}
+import client.sessionitems.SessionItems
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -18,20 +18,20 @@ case class RefreshProjects(potResult: Pot[ProjectsRootModel] = Empty, retryPolic
   override def next(value: Pot[ProjectsRootModel], newRetryPolicy: RetryPolicy) = RefreshProjects(value, newRetryPolicy)
 }
 
+case class ClearProjects()
+
 class ProjectsHandler[M](modelRW: ModelRW[M, Pot[ProjectsRootModel]]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
     case action: RefreshProjects =>
-      val labels = window.sessionStorage.getItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH)
-      val updateF = action.effectWithRetry(CoreApi.getContent(SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI)) { jobPostsResponse =>
+//      val labels = window.sessionStorage.getItem(SessionItems.ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH)
+      val updateF = action.effectWithRetry(CoreApi.sessionPing(LGCircuit.zoom(_.session.projectSessionUri).value)) { res =>
         ProjectsRootModel(ContentModelHandler
-          .getContentModel(jobPostsResponse, AppModule.PROJECTS_VIEW)
+          .getContentModel(res, AppModule.PROJECTS_VIEW)
           .asInstanceOf[Seq[ProjectsPost]])
       }
-      Option(labels) match {
-        case Some(s) =>
-          action.handleWith(this, updateF)(PotActionRetriable.handler())
-        case _ =>
-          updated(Empty)
-      }
+      action.handleWith(this, updateF)(PotActionRetriable.handler())
+
+    case ClearProjects() =>
+      updated(Pot.empty)
   }
 }

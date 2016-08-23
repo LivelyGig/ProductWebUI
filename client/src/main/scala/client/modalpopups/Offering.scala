@@ -82,7 +82,7 @@ object OfferingForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postOffer)
+//      println(state.postOffer)
       props.submitHandler(state.postOffer)
     }
 

@@ -1,35 +1,49 @@
 package client.modules
 
-import client.handlers.RefreshProfiles
+import client.handler.{ContentModelHandler, RefreshProfiles}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 import client.components.Icon
 import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals.{NewMessage, NewRecommendation}
+import client.modals.{NewMessage, NewRecommendation, ServerErrorModal}
 import org.querki.jquery._
-import shared.RootModels.ProfilesRootModel
+import client.rootmodel.ProfilesRootModel
+import client.logger._
+import client.services.LGCircuit
 import shared.models.ProfilesPost
 import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
+import japgolly.scalajs.react
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object ProfilesResults {
+
   case class Props(proxy: ModelProxy[Pot[ProfilesRootModel]])
 
-  case class State()
+  case class State(showErrorModal : Boolean = false)
 
-  class Backend($: BackendScope[Props, _]) {
-    def mounted(props: Props) =
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProfiles()))
-  }
+  val getServerError = LGCircuit.zoom(_.appRootModel).value
 
+  class Backend(t: BackendScope[Props, State]) {
+    def mounted(props: Props): react.Callback = Callback {
+//      log.debug("profiles view mounted")
+      /*if (props.proxy().isEmpty) {
+        ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROFILES_VIEW)
+      }*/
+    }
 
-  val component = ReactComponentB[Props]("Talent")
-    .backend(new Backend(_))
-    .renderPS((B, P, S) =>
+    def serverError(showErrorModal :Boolean = false): Callback = {
+      if(showErrorModal)
+      t.modState(s => s.copy(showErrorModal = false))
+      else
+        t.modState(s => s.copy(showErrorModal = true))
+    }
+
+    def render(P:Props,S:State) = {
+
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -77,17 +91,39 @@ object ProfilesResults {
           )
         ), //col-12
         <.div(^.className := "container-fluid", ^.id := "resultsContainer")(
-              P.proxy().render(profilesPostsRootModel =>
-                ProfilesList(profilesPostsRootModel.profilesList)),
-              P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-              P.proxy().renderPending(ex => <.div()(
-                <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-              ))
+          P.proxy().render(profilesPostsRootModel =>
+            ProfilesList(profilesPostsRootModel.profilesList)),
+          P.proxy().renderFailed(ex => <.div()(
+
+            // <.span(Icon.warning), " Error loading")
+            if(!getServerError.isServerError){
+              ServerErrorModal(ServerErrorModal.Props(serverError))
+            }
+            else
+            <.div())
+
+          ),
+          if (P.proxy().isEmpty) {
+            <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+            )
+          } else {
+            <.div()
+          }
         )
-      ))
+      )
+
+    }
+  }
+
+  private val component = ReactComponentB[Props]("Talent")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
-  def apply(proxy: ModelProxy[Pot[ProfilesRootModel]]) = component(Props(proxy))
+
+    def apply(proxy: ModelProxy[Pot[ProfilesRootModel]]) = component(Props(proxy))
+
 }
 
 object ProfilesList {

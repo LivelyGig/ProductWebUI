@@ -1,22 +1,29 @@
 package client.modals
 
-import shared.models.MessagePostContent
+import shared.models.{Label, MessagePostContent}
 import client.services.LGCircuit
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
-import client.components.Validator._
 import client.components.Icon.Icon
+import client.components.Validator._
 import client.components._
+import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
 import client.css.{DashBoardCSS, ProjectCSS}
-import client.handlers.PostData
+import client.handler.ContentModelHandler
+import client.modules.AppModule
 import japgolly.scalajs.react
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
+
+
+import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
+
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent
@@ -102,11 +109,9 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      println("Img src = " + value)
-      var reader = new FileReader()
+      val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
-        println(s"in on load $contents")
         t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
       }
       reader.readAsDataURL(value)
@@ -120,17 +125,40 @@ object NewMessageForm {
 
     }
 
+    def filterLabelStrings(value: Seq[String]): Seq[String] = {
+      value.filter(
+        _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
+      ).map(_.replace("#", "")).toSet.toSeq
+    }
+
+    def labelsTextFromMsg: Seq[String] = {
+      filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
+    }
+
+    def labelsToPostMsg: Seq[Label] = {
+      val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelSelectizeParentId))
+      textSeq.distinct.map(LabelsUtils.getLabelModel)
+    }
+
+    def getAllLabelsText: Seq[String] = {
+      val (props, state) = (t.props.runNow(), t.state.runNow())
+      val allLabels = LGCircuit.zoom(_.searches).value.searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelSelectizeParentId))
+      allLabels.distinct
+    }
+
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
-        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
-
       val messageID: js.Object = "#messageID"
       if ($(messageID).hasClass("disabled"))
         t.modState(s => s.copy(postNewMessage = false))
-      else
+      else {
+        val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId), AppModule.MESSAGES_VIEW)
+        ContentModelHandler.postLabelsAndMsg(getAllLabelsText, AppUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg, AppModule.MESSAGES_VIEW))
         t.modState(s => s.copy(postNewMessage = true))
+      }
+
+      t.modState(s => s.copy(postNewMessage = true))
 
     }
 

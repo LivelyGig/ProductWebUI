@@ -1,11 +1,10 @@
 package client.modules
 
-import client.modules.MainMenu.{Backend, State}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handlers.{LoginUser, LogoutUser, ToggleAvailablity}
+import client.handler.{LoginUser, LogoutUser, ToggleAvailablity}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
 import client.modals._
@@ -13,7 +12,6 @@ import client.components._
 import client.css.{DashBoardCSS, FooterCSS, HeaderCSS, WorkContractCSS}
 import shared.models.UserModel
 import client.services.LGCircuit
-import shared.dtos._
 import client.components.Bootstrap._
 
 import scala.scalajs.js
@@ -40,10 +38,10 @@ object MainMenu {
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc, count: ReactElement, locationCount: Loc)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) = {
+    def mounted(props: Props) = Callback{
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
-      Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
-        imgSrc = "", isLoggedIn = false))))
+      /*Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
+        imgSrc = "", isLoggedIn = false))))*/
     }
 
     def newCnxnReq() = {
@@ -60,8 +58,8 @@ object MainMenu {
 
 
     val menuItems = Seq(
-      MenuItem(1, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(5), DashboardLoc),
-      MenuItem(2, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
+      MenuItem(1, _ => AppModule.MESSAGES_VIEW.capitalize, MessagesLoc, buildMenuItem(6), DashboardLoc),
+      MenuItem(2, _ => AppModule.CONNECTIONS_VIEW.capitalize, ConnectionsLoc, buildMenuItem(0), NotificationsLoc),
       MenuItem(3, _ => AppModule.PROJECTS_VIEW.capitalize, JobPostsLoc, buildMenuItem(3), DashboardLoc),
       MenuItem(4, _ => AppModule.OFFERINGS_VIEW.capitalize, OfferingsLoc, buildMenuItem(0), DashboardLoc),
       MenuItem(5, _ => AppModule.PROFILES_VIEW.capitalize, ProfilesLoc, buildMenuItem(0), DashboardLoc),
@@ -91,7 +89,9 @@ object MainMenu {
                   if (item.location == ConnectionsLoc) {
                     introductionProxy(introductionProxy =>
                       if (introductionProxy.value.introResponse.length != 0) {
-                        <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
+                        props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, introductionProxy.value.introResponse.length)))
+                       // <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
+                     //   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", introductionProxy.value.introResponse.length)
                       } else {
                         <.span()
                       }
@@ -110,7 +110,8 @@ object MainMenu {
                   " ", item.label(props)
                 ),
                 if (item.location == ConnectionsLoc) {
-                  ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
+                 // ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
+                  props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, 0)))
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
@@ -149,15 +150,15 @@ object LoggedInUser {
       t.modState(s => s.copy(showNewMessageForm = false))
     }
 
-    def mounted(props: Props) = {
+    def mounted(props: Props) = Callback{
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
-      Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
-        imgSrc = "", isLoggedIn = false))))
+      /*Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
+        imgSrc = "", isLoggedIn = false))))*/
     }
   }
 
   val LoggedUser = ReactComponentB[Props]("MainMenu")
-    .initialState(State(new UserModel("", "", "", false, "", "", true)))
+    .initialState(State(new UserModel()))
     .backend(new Backend(_))
     .renderPS((t, props, S) => {
       /*var test = LGCircuit.wrap(_.user)(p => Data)

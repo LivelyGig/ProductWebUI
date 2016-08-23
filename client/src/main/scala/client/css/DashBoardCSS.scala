@@ -9,7 +9,6 @@ object DashBoardCSS {
     import dsl._
 
     val mainContainerDiv = style(
-      backgroundColor(c"#EAEAEA"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
       overflowX.auto,
@@ -50,7 +49,7 @@ object DashBoardCSS {
       paddingRight(0.px)
     )
     val gigActionsContainer = style(
-      backgroundColor(c"#CCCCFF"),
+      backgroundColor(c"#67eaf2"),
       // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
@@ -243,9 +242,9 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      media.minWidth(927.px) - (
+      media.minWidth(927.px) -(
         paddingRight(17.%%),
-      paddingLeft(17.%%))
+        paddingLeft(17.%%))
 
     )
     val modalContent = style(
@@ -323,13 +322,13 @@ object DashBoardCSS {
     )
 
     val footLegalStyle = style(
-      color(c"#fff"),
+      color(c"#FFF"),
       backgroundColor(transparent),
       paddingTop(12.px),
       fontSize(15.px),
       borderColor(transparent),
       &.active(
-        color(c"#fff"),
+        color(c"#FFF"),
         backgroundColor(transparent),
         paddingTop(17.px),
         fontSize(15.px),
@@ -353,7 +352,12 @@ object DashBoardCSS {
       )*/
     val inputBtnRadius = style(
       border.none,
-      padding(0.2.em, 0.6.em, 0.1.em)
+      padding(4.px, 7.px, 3.px, 7.px)
+    )
+    val notificationsBtn = style(
+      border.none,
+      padding(4.px, 7.px, 4.px, 8.px),
+      marginLeft(-13.px)
     )
     val inputBtnRadiusCncx = style(
       border.none,
@@ -705,6 +709,11 @@ object DashBoardCSS {
       paddingTop(2.%%),
       height(120.px),
       width(160.px)
+    )
+
+    val marginLR = style(
+      marginLeft(10.%%),
+      marginRight(10.%%)
     )
   }
 
