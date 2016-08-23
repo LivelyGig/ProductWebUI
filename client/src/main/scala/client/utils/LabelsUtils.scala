@@ -1,70 +1,57 @@
 package client.utils
 
-import client.components.LabelsSelectize
-import org.scalajs.dom._
+import client.modules.AppModule
 import shared.models.Label
-import shared.sessionitems.SessionItems.{MessagesViewItems, ProfilesViewItems, ProjectsViewItems}
+
 
 /**
-  * Created by shubham.k on 02-06-2016.
+  * Created by Mandar on 6/7/2016.
   */
 object LabelsUtils {
+
   object PrologTypes {
     val Any = "any"
     val Each = "each"
   }
 
-  /**
-    * Get the previous and current search labels for the session uri
-    * these labels are then utilised to cancel previous request and create a new
-    * one respectively
-    *
-    * @param sessionUriName ri name of the view associated
-    *                       see SessionItems with Session uri
-    *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,
-    *                       SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI,etc
-    * @return current and previous search labels for context
-    */
-  def getCurrentPreviousLabel(sessionUriName: String): (String, String) = {
-    val sessionStorage = window.sessionStorage
-    sessionUriName match {
-      case ProjectsViewItems.PROJECTS_SESSION_URI =>
-        (sessionStorage.getItem(ProjectsViewItems.CURRENT_PROJECTS_LABEL_SEARCH), sessionStorage.getItem(ProjectsViewItems.PREVIOUS_PROJECTS_LABEL_SEARCH))
-      case MessagesViewItems.MESSAGES_SESSION_URI =>
-        (sessionStorage.getItem(MessagesViewItems.CURRENT_MESSAGE_LABEL_SEARCH), sessionStorage.getItem(MessagesViewItems.PREVIOUS_MESSAGE_LABEL_SEARCH))
-      case ProfilesViewItems.PROFILES_SESSION_URI =>
-        (sessionStorage.getItem(ProfilesViewItems.CURRENT_PROFILES_LABEL_SEARCH), sessionStorage.getItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH))
-    }
+  def getSystemLabels(): Seq[String] = {
+    Seq(AppUtils.MESSAGE_POST_LABEL, AppUtils.PROJECT_POST_LABEL, AppUtils.PROFILE_POST_LABEL)
   }
 
   /**
     * This is a temporary method will modify later
- *
+    *
     * @param labels
     * @param queryType
     * @return
     */
-  def buildProlog(labels: Seq[Label], queryType: String) : String = {
+  def buildProlog(labels: Seq[Label], queryType: String): String = {
     val labelPrologItems = labels.map(e => if (e != labels.last) s"[${e.text}]," else s"[${e.text}]").mkString
     s"$queryType($labelPrologItems)"
   }
 
-  def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[Label] = {
+  /*def getLabelsSeq(id: Option[String], sessionUriName: String): Seq[Label] = {
     id match {
       case None =>
         Nil
       case Some(res) =>
         LabelsSelectize.getLabelsFromSelectizeInput(res)
     }
-  }
+  }*/
 
-  def getSystemLabelModel(labelName: String): Label = {
+  def getLabelModel(labelName: String): Label = {
     Label(parentUid = "self", text = labelName)
   }
 
-  def getSystemLabels() : Seq[String] = {
-    Seq(MessagesViewItems.MESSAGE_POST_LABEL, ProjectsViewItems.PROJECT_POST_LABEL, ProfilesViewItems.PROFILES_POST_LABEL)
+  def getSystemLabelModel(viewName: String): Label = {
+    val labelName = viewName match {
+      case AppModule.MESSAGES_VIEW => AppUtils.MESSAGE_POST_LABEL
+      case AppModule.PROFILES_VIEW => AppUtils.PROFILE_POST_LABEL
+      case AppModule.PROJECTS_VIEW => AppUtils.PROJECT_POST_LABEL
+    }
+    getLabelModel(labelName)
   }
+
   /**
     * *
     * This function is used to return the prolog used by
@@ -91,4 +78,5 @@ object LabelsUtils {
     prolog.append(")")
     prolog.toString()
   }
+
 }

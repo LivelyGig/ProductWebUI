@@ -1,15 +1,17 @@
 package client.components
 
+import javax.swing.text.html.parser.ContentModel
+
 import client.components.Bootstrap.PopoverOptions
 import japgolly.scalajs.react.ReactComponentB
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.RootModels.SearchesRootModel
+import client.rootmodel.SearchesRootModel
 import shared.models.Label
 import client.components.Bootstrap._
 import client.css.WorkContractCSS
-import client.handlers.CreateLabels
+import client.handler.{ContentModelHandler, CreateLabels}
 import client.logger
 import client.services.{ApiTypes, CoreApi, LGCircuit}
 import japgolly.scalajs.react
@@ -18,7 +20,7 @@ import scala.scalajs.js
 import org.querki.jquery._
 import org.scalajs.dom
 import shared.dtos.{ApiRequest, LabelPost}
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
 
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -35,7 +37,7 @@ object LabelsList {
   case class State(labelModel: Label, postLabel: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
-
+    // scalastyle:off
     def mounted(props: Props) = {
 
     }
@@ -47,34 +49,37 @@ object LabelsList {
 
     def postLabel(e: ReactEventI) = {
       e.preventDefault()
-      var label = t.state.runNow().labelModel
-      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI),leafParser(), "alias")
-      println("labelPost = "+labelPost)
-      CoreApi.postLabel(labelPost).onComplete{
+      val state = t.state.runNow()
+      val props = t.props.runNow()
+
+//      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI),leafParser(), "alias")
+//      println("labelPost = "+labelPost)
+      ContentModelHandler.postLabels(props.proxy().searchesModel.map(_.text):+ state.labelModel.text)
+      /*CoreApi.postLabel(labelPost).onComplete{
         case Success(res) =>
-          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${leafParser(true).mkString(",")}]")
-          LGCircuit.dispatch(CreateLabels())
+//          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${leafParser(true).mkString(",")}]")
+          LGCircuit.dispatch(CreateLabels(t.props.runNow().proxy().searchesModel.map(e => leaf(e.text, e.color) ):+ leaf(state.labelModel.text, "#CC5C64")))
         case Failure(res) =>
           logger.log.debug("Label Post failure")
 
-      }
+      }*/
       $(addBtn).show()
       t.modState(s => s.copy(postLabel = !s.postLabel))
     }
 
 
-
-    def leafParser (requireStore: Boolean = false): Seq[String] = {
+/*
+    def leafParser (): Seq[String] = {
       val (props,state) = (t.props.runNow(),t.state.runNow())
       def leaf (text: String, color: String) =  "leaf(text(\""+ s"${ text }"+ "\"),display(color(\""+ s"${color}" + "\"),image(\"\")))"
-      def leafMod (text: String, color: String) =  "\"leaf(text(\\\""+ s"${ text }"+ "\\\"),display(color(\\\""+ s"${color}" + "\\\"),image(\\\"\\\")))\""
+//      def leafMod (text: String, color: String) =  "\"leaf(text(\\\""+ s"${ text }"+ "\\\"),display(color(\\\""+ s"${color}" + "\\\"),image(\\\"\\\")))\""
 
-      if (requireStore)
+      /*if (requireStore)
         props.proxy().searchesModel.map(e => leafMod(e.text, e.color) ):+ leafMod(state.labelModel.text, "#CC5C64")
-      else
+      else*/
         props.proxy().searchesModel.map(e => leaf(e.text, e.color) ):+ leaf(state.labelModel.text, "#CC5C64")
 
-    }
+    }*/
 
     def render(props: Props, state: State) = {
       <.div(

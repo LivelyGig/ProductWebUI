@@ -55,7 +55,7 @@ object LegalModal { //TodoForm
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
-      println("state.showTrademarksModal : " + state.showTrademarksModal)
+//      println("state.showTrademarksModal : " + state.showTrademarksModal)
       props.submitHandler(state.legal, state.showPrivacyPolicyModal, state.showTermsOfServicesForm, state.showEndUserAgreementModal, state.showTrademarksModal, state.showCopyrightModal)
     }
     def render(s: State, p: Props) = {

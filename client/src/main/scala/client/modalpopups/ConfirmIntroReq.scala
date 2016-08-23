@@ -14,7 +14,6 @@ import client.components.Bootstrap.{Button, CommonStyle, _}
 import client.components.Icon._
 import client.components.{GlobalStyles, _}
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS, WorkContractCSS}
-import client.handlers.{PostData, UpdateIntroduction}
 import client.modals.NewMessage.State
 import diode.react.ModelProxy
 import japgolly.scalajs.react
@@ -24,9 +23,12 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
-import shared.RootModels.IntroRootModel
+import client.rootmodel.IntroRootModel
+import client.handler.{ContentModelHandler, UpdateIntroductionsModel}
+import client.modules.AppModule
 import shared.dtos.IntroConfirmReq
-import shared.sessionitems.SessionItems
+import client.sessionitems.SessionItems
+import client.utils.{AppUtils, ConnectionsUtils}
 
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
@@ -96,13 +98,13 @@ object ConfirmIntroReqForm {
 
   case class Backend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
-      val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      val connectionSessionURI = LGCircuit.zoom(_.session.messagesSessionUri).value/*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = false)
-      println(s"introConfirmReq: $introConfirmReq")
+//      println(s"introConfirmReq: $introConfirmReq")
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) => println("introRequest Rejected successfully ")
-          LGCircuit.dispatch(UpdateIntroduction(introConfirmReq))
+          LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
 
         case Failure(response) => println("introRequest In failure ")
 
@@ -132,17 +134,19 @@ object ConfirmIntroReqForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      val connectionSessionURI = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)
+      val connectionSessionURI = LGCircuit.zoom(_.session.messagesSessionUri).value/*window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI)*/
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(connectionSessionURI, alias = "alias", props.proxy().introResponse(0).introSessionId, props.proxy().introResponse(0).correlationId, accepted = true)
       CoreApi.postIntroduction(introConfirmReq).onComplete {
         case Success(response) =>
-          // println("introRequest sent successfully ")
-          LGCircuit.dispatch(UpdateIntroduction(introConfirmReq))
+//           println("introRequest sent successfully ")
+          LGCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
       }
-
-      LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
-        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))
+      val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId),AppModule.MESSAGES_VIEW)
+      val labels = LabelsSelectize.getLabelsFromSelectizeInput(state.labelSelectizeParentId)
+      ContentModelHandler.postContent(AppUtils.getPostData(state.postMessage, cnxns, labels, AppModule.MESSAGES_VIEW))
+     /* LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
+        SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))*/
       t.modState(s => s.copy(postNewMessage = true, confirmIntroReq = true))
     }
 
@@ -152,7 +156,7 @@ object ConfirmIntroReqForm {
 
     // scalastyle:off
     def render(s: State, p: Props) = {
-      println("p.proxy().introResponse =  " + p.proxy().introResponse)
+//      println("p.proxy().introResponse =  " + p.proxy().introResponse)
       val headerText = p.header
       Modal(
         Modal.Props(

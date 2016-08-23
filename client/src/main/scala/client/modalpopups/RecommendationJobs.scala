@@ -88,7 +88,7 @@ object RecommendationJobsForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postNewRecommendation)
+//      println(state.postNewRecommendation)
       props.submitHandler(state.postNewRecommendation)
     }
 

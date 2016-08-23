@@ -85,7 +85,7 @@ object UserPreferencesForm {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postUserPreferences)
+//      println(state.postUserPreferences)
       props.submitHandler(state.postUserPreferences)
     }
 

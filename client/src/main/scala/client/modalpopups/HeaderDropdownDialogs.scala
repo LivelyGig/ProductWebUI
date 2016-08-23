@@ -8,7 +8,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handlers.{LoginUser, LogoutUser, ToggleAvailablity}
+import client.handler.{LoginUser, LogoutUser}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
 import client.modals.{AgentLoginSignUp, ConfirmIntroReq, Legal, NewMessage}

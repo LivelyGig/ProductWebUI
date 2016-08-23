@@ -2,10 +2,10 @@ package client.modules
 
 
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.RefreshProjects
-import shared.RootModels.ProjectsRootModel
+import client.handler.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
+import client.rootmodel.ProjectsRootModel
 import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals.{NewMessage, RecommendationJobs, WorkContractModal}
+import client.modals._
 import shared.models.ProjectsPost
 import client.components.Bootstrap._
 import diode.react.ReactPot._
@@ -18,9 +18,12 @@ import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
-import client.modals.NewMessage
+import client.services.LGCircuit
+import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
+import diode.AnyAction._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -29,20 +32,28 @@ object ProjectResults {
 
   case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
 
-  case class State()
+  case class State(showErrorModal:Boolean=false)
 
-  class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props) = {
-      log.debug("projects view mounted")
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshProjects()))
+  val getServerError = LGCircuit.zoom(_.appRootModel).value
+
+  class Backend(t: BackendScope[Props, State]) {
+    def mounted(props: Props): react.Callback = Callback {
+//      log.debug("project view mounted")
+      /*if (props.proxy().isEmpty) {
+        ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
+      }*/
+
     }
 
-  }
+    def serverError(showErrorModal :Boolean = false): Callback = {
+      if(showErrorModal)
+        t.modState(s => s.copy(showErrorModal = false))
+      else
+        t.modState(s => s.copy(showErrorModal = true))
+    }
 
-  // create the React component for Dashboard
-  val component = ReactComponentB[Props]("Projects")
-    .backend(new Backend(_))
-    .renderPS((B, P, S) =>
+    def render(P:Props, S:State) ={
+
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -92,14 +103,35 @@ object ProjectResults {
         <.div(^.id := "resultsContainer")(
           P.proxy().render(jobPostsRootModel =>
             ProjectsList(jobPostsRootModel.projectsModelList)),
-          P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-          P.proxy().renderPending(ex => <.div()(
-            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-          ))
+          P.proxy().renderFailed(ex => <.div()(
+            //<.span(Icon.warning), " Error loading")
+            if(!getServerError.isServerError){
+              ServerErrorModal(ServerErrorModal.Props(serverError))
+            }
+            else
+              <.div()
+          )),
+          if (P.proxy().isEmpty) {
+            <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+            )
+          } else {
+            <.div()
+          }
 
 
         ) //gigConversation
-      ))
+      )
+
+    }
+
+
+  }
+
+  // create the React component for Dashboard
+  val component = ReactComponentB[Props]("Projects")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 

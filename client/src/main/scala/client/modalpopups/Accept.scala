@@ -95,7 +95,7 @@ object PayoutTransaction {
 
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      println(state.postPayoutTransaction)
+//      println(state.postPayoutTransaction)
       props.submitHandler(state.postPayoutTransaction)
     }
 

@@ -1,39 +1,67 @@
 package client.services
 
-import client.utils.{ConnectionsUtils, LabelsUtils}
 import shared.dtos._
-import shared.models._
 import org.scalajs.dom._
 import upickle.default._
 
+import shared.models.{EmailValidationModel, SignUpModel, UserModel}
+import client.srp.SRPClient
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
+import scala.scalajs.js.Date
+import scala.util.{Failure, Success, Try}
+import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
-// import shared.sessionitems.SessionItems
-import shared.sessionitems.SessionItems.ProfilesViewItems
+import shared.models.{EmailValidationModel, SignUpModel, UserModel}
+import client.sessionitems.SessionItems
+import client.modules.{ConnectionList}
+import client.utils.{ConnectionsUtils, LabelsUtils}
+
+case class ApiError(response: String) extends Exception
 
 
 object CoreApi {
-    //var BASE_URL = "http://192.168.99.100:8888/api"
-    var BASE_URL = "http://localhost:9876/api"
-    var CREATE_USER_REQUEST = "createUserRequest"
-    private def ajaxPost(requestContent: String): Future[String] = {
-      Ajax.post(
-        url = BASE_URL,
-        data = requestContent,
-        headers = Map("Content-Type" -> "application/json;charset=UTF-8")
-      ).map(_.responseText)
-    }
 
-  def getConnections(): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI))))
-    ajaxPost(requestContent)
+  def getBaseUrl() = {
+    s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+  }
+
+
+
+  // scalastyle:ignore
+  var CREATE_USER_REQUEST = "createUserRequest"
+
+
+  private def ajaxPost(requestContent: String): Future[String] = {
+    Ajax.post(
+      url = getBaseUrl,
+      data = requestContent,
+      headers = Map("Content-Type" -> "application/json;charset=UTF-8")
+    ).map(_.responseText)
+
   }
 
   def createUser(signUpModel: SignUpModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_REQUEST, CreateUser(signUpModel.email, signUpModel.password,
-      Map("name" -> signUpModel.name), true)))
-    ajaxPost(requestContent)
+    val srpc = new SRPClient(signUpModel.email, signUpModel.password)
+    val requestContent1 = upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_STEP1_REQUEST,
+      CreateUserStep1(signUpModel.email)))
+    val futureResponse = for {
+      requestContent2 <- ajaxPost(requestContent1).map {
+        response =>
+          Try(upickle.default.read[ApiResponse[CreateUserStep1Response]](response)) toOption match {
+            case None => throw new ApiError(response)
+            case Some(rsp) => upickle.default.write(ApiRequest(ApiTypes.CREATE_USER_STEP2_REQUEST,
+              CreateUserStep2(signUpModel.email, Map("name" -> signUpModel.name),
+                true, rsp.content.salt, srpc.getVerifierHex(rsp.content.salt))))
+          }
+      }
+      result <- ajaxPost(requestContent2)
+    } yield result
+
+    futureResponse.recover {
+      case ae: ApiError => ae.response
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.CreateUserError, ErrorResponse(e.getMessage)))
+    }
   }
 
   def emailValidation(emailValidationModel: EmailValidationModel): Future[String] = {
@@ -41,10 +69,37 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+
   def agentLogin(userModel: UserModel): Future[String] = {
-    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
-      s"?password=${userModel.password}")))
-    ajaxPost(requestContent)
+    val srpc = new SRPClient(userModel.email, userModel.password)
+    val Aval = srpc.getAHex()
+    val requestContent1 = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_STEP1_REQUEST,
+      InitializeSession(s"agent://email/${userModel.email}?A=$Aval")))
+    val futureResponse = for {
+      requestContent2 <- ajaxPost(requestContent1).map {
+        response =>
+          Try(upickle.default.read[ApiResponse[UserLoginResponse]](response)) toOption match {
+            case None => throw new ApiError(response)
+            case Some(ulr) =>
+              val Mval = srpc.getMHex(ulr.content.B, ulr.content.s)
+              upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_STEP2_REQUEST,
+                InitializeSession(s"agent://email/${userModel.email}?M=$Mval")))
+          }
+      }
+      result <- ajaxPost(requestContent2).map {
+        response =>
+          Try(upickle.default.read[ApiResponse[InitializeSessionResponseCheck]](response)) toOption match {
+            case None => throw new ApiError(response)
+            case Some(rsp) =>
+              if(srpc.matches(rsp.content.M2)) response else throw new Exception("Authentication failed on client")
+          }
+      }
+    } yield result
+
+    futureResponse.recover {
+      case ae: ApiError => ae.response
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.InitializeSessionError, ErrorResponse(e.getMessage)))
+    }
   }
 
   def sessionPing(uri: String): Future[String] = {
@@ -52,73 +107,40 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
-  /**
-    * Generic method to get content data from the backend
-    * used to get search results on different views.
- *
-    * @param sessionUriName uri name of the view associated
-    *                       see SessionItems with Session uri
-    *                       eg. SessionItems.ProfilesViewItems.PROFILES_SESSION_URI,
-    *                       SessionItems.ProjectsViewItems.PROJECTS_SESSION_URI,etc
-    * @return Future with the response data
-    */
-  def getContent(sessionUriName: String): Future[String] = {
-    val sessionUri = window.sessionStorage.getItem(sessionUriName)
-    val connectionsList = upickle.default.read[Seq[Connection]](
-      window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTION_LIST)
-    ) ++ Seq(ConnectionsUtils.getSelfConnnection(sessionUri)) // scalastyle:ignore
-    val (currentSearchLabels, previousSearchLabels) = LabelsUtils.getCurrentPreviousLabel(sessionUriName)
-    val getMessagesSubscription = SubscribeRequest(sessionUri, Expression(msgType = "feedExpr", ExpressionContent(connectionsList, currentSearchLabels)))
-    val cancelPreviousRequest = CancelSubscribeRequest(sessionUri, connectionsList, previousSearchLabels)
-    Option(previousSearchLabels) match {
-      case Some(s) =>
-        window.sessionStorage.setItem(ProfilesViewItems.PREVIOUS_PROFILES_LABEL_SEARCH, currentSearchLabels)
-        for {
-          cancel <- cancelSubscriptionRequest(cancelPreviousRequest)
-          messages <- evalSubscribeRequestAndSessionPing(getMessagesSubscription)
-        } yield messages
-      case None =>
-        evalSubscribeRequestAndSessionPing(getMessagesSubscription)
 
-    }
-  }
 
   def evalSubscribeRequest(subscribeRequest: SubscribeRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.EVAL_SUBS_REQUEST, subscribeRequest))
     ajaxPost(requestContent)
   }
 
-  def evalSubscribeRequestAndSessionPing(subscribeRequest: SubscribeRequest): Future[String] = {
-    for {
-      subscription <- evalSubscribeRequest(subscribeRequest)
-      response <- sessionPing(subscribeRequest.sessionURI)
-    } yield response
-  }
-
-  def cancelSubscriptionRequestAndSessionPing(cancelSubscribeRequest: CancelSubscribeRequest): Future[String] = {
-    for {
-      cancelRequest <- cancelSubscriptionRequest(cancelSubscribeRequest)
-      response <- sessionPing(cancelSubscribeRequest.sessionURI)
-    } yield response
-  }
 
   def cancelSubscriptionRequest(cancelSubscribeRequest: CancelSubscribeRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.EVAL_SUBS_CANCEL_REQUEST, cancelSubscribeRequest))
     ajaxPost(requestContent)
   }
 
+
   def postIntroduction(introductionModel: Content): Future[String] = {
     val msg = introductionModel match {
-      case _ : IntroConnections => ApiTypes.BEGIN_INTRODUCTION_REQUEST
-      case _ : EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
-      case _ : IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
+      case _: IntroConnections => ApiTypes.BEGIN_INTRODUCTION_REQUEST
+      case _: EstablishConnection => ApiTypes.ESTABLISH_CONNECTION_REQ
+      case _: IntroConfirmReq => ApiTypes.INTRODUCTION_CONFIRMATION_REQUEST
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
 
-  def postLabel (labelPost: LabelPost): Future[String] = {
+
+
+  def postLabel(labelPost: LabelPost): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_ALIAS_LABEL_REQ, labelPost))
-    println("requestContent = "+ requestContent)
     ajaxPost(requestContent)
   }
+
+  def updateUserRequest(updateUserRequest: UpdateUserRequest): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_USER_REQUEST, updateUserRequest))
+    ajaxPost(requestContent)
+  }
+
+
 }

@@ -76,6 +76,7 @@ object NotificationList {
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = false)
       SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
     }
 
     def handleAllIntroduction(areAccepted: Boolean = false) = {

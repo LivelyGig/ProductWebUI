@@ -7,7 +7,7 @@ object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions
 
 trait ScalaJSVersions {
 
-  val scalajsReact = "0.11.0"
+  val scalajsReact =   "0.11.1" // "0.11.0"
   val scalaCSS = "0.4.1"
   val scalaDom = "0.9.0"
   val diode = "1.0.0" //"0.5.2"
@@ -36,7 +36,7 @@ trait SharedVersions
 trait WebJarsVersions{
 
   val bootstrap = "3.3.6"  //"3.3.6"
-  val playScripts = "0.4.0"  //"0.5.0"
+  val playScripts =  "0.4.0"  // "0.5.0"
   val playWS = "2.4.3"
   val fontAwesome = "4.6.3"  //"4.6.2" //"4.5.0"
   val json4s = "3.4.0"
@@ -45,8 +45,8 @@ trait WebJarsVersions{
 
 trait JsVersions {
   val log4js = "1.4.13-1"
-  val react =   "15.2.1" // "15.1.0" //"15.0.1"
-  val chartjs = "2.1.3"
+  val react =   "15.3.0" // "15.2.1"
+  val chartjs =  "26962ce-1"     //"2.1.3"
   val datePicker = "1.5.0-1"
   val selectizejs = "0.12.2" //"0.12.1"
 }

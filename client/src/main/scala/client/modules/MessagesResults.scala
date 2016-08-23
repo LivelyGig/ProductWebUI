@@ -5,19 +5,16 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handlers.RefreshMessages
-import shared.RootModels.MessagesRootModel
+import client.rootmodel.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
-import client.logger._
 import shared.models.{ConnectionsModel, MessagePost}
-import client.modals.NewMessage
+import client.modals.{NewMessage, ServerErrorModal}
+import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
-import shared.sessionitems.SessionItems
-import org.scalajs.dom.window
 import org.widok.moment.Moment
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -27,12 +24,16 @@ object MessagesResults {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]])
 
-  case class State(/*selectedItem: Option[MessagesModel] = None*/)
+  case class State(showErrorModal:Boolean =false)
 
-  class Backend(t: BackendScope[Props, _]) {
-    def mounted(props: Props): react.Callback = {
-      log.debug("messages view mounted")
-      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshMessages()))
+  val getServerError = LGCircuit.zoom(_.appRootModel).value
+
+  class Backend(t: BackendScope[Props, State]) {
+    def mounted(props: Props): react.Callback = Callback {
+//      log.debug("messages view mounted")
+      /*if (props.proxy().isEmpty) {
+        ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.MESSAGES_VIEW)
+      }*/
     }
 
     /*{
@@ -42,11 +43,16 @@ object MessagesResults {
         Callback.empty
       }
     }*/
-  }
 
-  val component = ReactComponentB[Props]("Messages")
-    .backend(new Backend(_))
-    .renderPS((B, P, S) => {
+    def serverError(showErrorModal :Boolean = false): Callback = {
+      if(showErrorModal)
+        t.modState(s => s.copy(showErrorModal = false))
+      else
+        t.modState(s => s.copy(showErrorModal = true))
+    }
+
+
+    def render(P:Props,S:State) ={
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
           <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
@@ -96,13 +102,30 @@ object MessagesResults {
         <.div(^.id := "resultsContainer")(
           P.proxy().render(messagesRootModel =>
             MessagesList(messagesRootModel.messagesModelList)),
-          P.proxy().renderFailed(ex => <.div()(<.span(Icon.warning), " Error loading")),
-          P.proxy().renderPending(ex => <.div()(
-            <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
-          ))
+          P.proxy().renderFailed(ex => <.div()(
+            //<.span(Icon.warning), " Error loading"
+            if(!getServerError.isServerError){
+              ServerErrorModal(ServerErrorModal.Props(serverError))
+            }
+            else
+              <.div()
+
+          )),
+          if (P.proxy().isEmpty) {
+            <.div()(
+              <.img(^.src := "./assets/images/processing.gif", DashBoardCSS.Style.imgc)
+            )
+          } else {
+            <.div()
+          }
         )
       )
-    })
+    }
+  }
+
+  val component = ReactComponentB[Props]("Messages")
+    .initialState_P(p => State())
+    .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
@@ -123,25 +146,18 @@ object MessagesList {
     def render(p: Props) = {
       def renderMessages(message: MessagePost) = {
         // Get data needed to present From and To
-        val userId = window.sessionStorage.getItem(SessionItems.ConnectionViewItems.CONNECTIONS_SESSION_URI).split("/")(2)
+        val userId = LGCircuit.zoom(_.session.messagesSessionUri).value.split("/")(2)
         var selfConnectionId = message.connections(0).source.split("/")(2)
+        val connections = LGCircuit.zoom(_.connections).value.connectionsResponse
         var toReceiver = "unknown"
         var fromSender = "unknown"
         if (userId == selfConnectionId) {
           fromSender = "me"
-          // get other party ID, if there is one
-          if (message.connections.size > 1) {
-            if (message.connections(1).source.split("/")(2) == userId) {
-              toReceiver = message.connections(1).target.split("/")(2)
-            } else {
-              toReceiver = message.connections(1).source.split("/")(2)
-            }
-            // ToDo: look up name of Receiver and use friendly name
-          } else {
-            toReceiver = "self"
-          }
+          for(b <- message.connections ; a <- connections  ; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield
+            toReceiver = a.name
         } else {
-          fromSender = selfConnectionId
+          for(b <- message.connections ; a <- connections  ; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield
+            fromSender = a.name
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
         }
@@ -167,7 +183,7 @@ object MessagesList {
               <.div(^.className := "col-md-6 col-sm-12")(
                 <.div(
                   if (message.postContent.imgSrc != "") {
-                    <.img(^.src := message.postContent.imgSrc)
+                    <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px")
                   } else {
                     <.div("")
                   }
