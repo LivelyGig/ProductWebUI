@@ -23,7 +23,6 @@ trait ScalaJSVersions {
 //versions for libs that are shared between client and server
 trait SharedVersions
 {
-
   val upickle = "0.4.1" //"0.3.8"
   val scalatest = "3.0.0-M15"
   val autowire = "0.2.5"
