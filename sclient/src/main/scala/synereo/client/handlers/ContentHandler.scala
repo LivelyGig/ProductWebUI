@@ -44,7 +44,7 @@ object ContentHandler {
         var isNew: Boolean = true
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         val content = connectNotification(0).content
-        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+        //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
         connections.foreach {
@@ -63,6 +63,7 @@ object ContentHandler {
       case e: Exception => /*println("exception for upickle read session ping response")*/
     }
   }
+
   //  def processIntroductionNotification(response: String = ""): Unit = {
   //    val responseTypes = Map("sessionPong" -> Seq[ApiResponse[SessionPong]],
   //      "introductionNotification" -> Seq[ApiResponse[Introduction]],

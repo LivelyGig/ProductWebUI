@@ -196,7 +196,8 @@ object Login {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              isUserVerified = true
+              //              isUserVerified = true changed to false to make toastr hidden
+              isUserVerified = false
               log.debug(ApiTypes.CreateUserError)
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             } catch {
