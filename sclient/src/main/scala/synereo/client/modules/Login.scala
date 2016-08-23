@@ -14,7 +14,7 @@ import synereo.client.logger._
 import synereo.client.modalpopups._
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.utils.{ConnectionsUtils, UserUtils}
+import synereo.client.utils.{ConnectionsUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -105,13 +105,29 @@ object Login {
       }
     }
 
+    def validateInitilizeSessionResponse(response: String): String = {
+      try {
+        upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+        LOGIN_ERROR
+      } catch {
+        case e: Exception =>
+          try {
+            upickle.default.read[ApiResponse[InitializeSessionResponse]](response)
+            SUCCESS
+          } catch {
+            case p: Exception =>
+              SERVER_ERROR
+          }
+      }
+    }
+
 
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
       CoreApi.agentLogin(userModel).onComplete {
         case Success(response) =>
-          UserUtils.validateInitilizeSessionResponse(response) match {
+          validateInitilizeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
             case SERVER_ERROR => processServerError(response)
@@ -268,8 +284,6 @@ object Login {
             //
             //
             //          )
-
-
             //            <.div(LoginCSS.Style.loginDilog)(
             //              <.div(LoginCSS.Style.formPadding)(
             //                <.div(LoginCSS.Style.loginDilogContainerDiv)(
@@ -350,7 +364,7 @@ object Login {
     }
   }
 
-  val component = ReactComponentB[Props]("SynereoLogin")
+  val component = ReactComponentB[Props]("Login")
     .initialState_P(p => State())
     //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]
