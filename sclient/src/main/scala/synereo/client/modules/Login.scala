@@ -14,7 +14,7 @@ import synereo.client.logger._
 import synereo.client.modalpopups._
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.utils.{ConnectionsUtils}
+import synereo.client.utils.{AppUtils, ConnectionsUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -147,8 +147,8 @@ object Login {
         case Success(res) =>
           SYNEREOCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""),
             imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email /*, sessionUri = response.content.sessionURI*/)))
-
-          SYNEREOCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(res), response.content.listOfConnections))
+          AppUtils.handleInitialSessionPingRes(res)
+          SYNEREOCircuit.dispatch(UpdateConnectionSeq(response.content.listOfConnections))
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           SYNEREOCircuit.dispatch(AttachPinger())
           SYNEREOCircuit.dispatch(SubsForMsgAndBeginSessionPing())

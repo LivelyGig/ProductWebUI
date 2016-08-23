@@ -13,11 +13,6 @@ import scala.util.{Failure, Success}
 
 // scalastyle:off
 
-/**
-  * Created by mandar.k on 4/6/2016.
-  */
-
-case class PostNewConnection(newCnxn: Content)
 
 case class AcceptNotification(introconfirmSeq: Seq[Introduction])
 
@@ -31,9 +26,6 @@ case class AcceptIntroductionConfirmationResponse(introductionConfirmationRespon
 
 class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
-    case PostNewConnection(content: Content) =>
-      ContentHandler.postNewConnection(content)
-      noChange
 
     case PostIntroSuccess(beginIntroductionRes: BeginIntroductionRes) =>
       noChange
