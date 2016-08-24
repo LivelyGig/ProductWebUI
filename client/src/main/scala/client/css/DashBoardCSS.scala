@@ -715,6 +715,13 @@ object DashBoardCSS {
       marginLeft(10.%%),
       marginRight(10.%%)
     )
+
+    val notificationsText = style(
+      marginLeft(50.px),
+      marginTop(50.px),
+      color(white),
+      fontSize(26.px)
+    )
   }
 
 }

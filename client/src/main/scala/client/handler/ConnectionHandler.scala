@@ -11,12 +11,20 @@ case class AddConnection(newConnectionModel: ConnectionsModel)
 
 case class UpdateConnection(listOfConnectionModel: Seq[ConnectionsModel], connections: Seq[Connection])
 
+case class UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel])
+
 
 class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
     case UpdateConnection(listOfConnectionModel: Seq[ConnectionsModel], connections: Seq[Connection]) =>
       updated(ConnectionsRootModel(listOfConnectionModel, connections))
+
+    case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) =>{
+      println("In UpdateConnectionModelSeq")
+      updated(ConnectionsRootModel(listOfConnectionModel, value.connections))
+    }
+
 
     case AddConnection(newConnectionModel: ConnectionsModel) =>
       updated(ConnectionsRootModel(Seq(newConnectionModel) ++ value.connectionsResponse, value.connections))

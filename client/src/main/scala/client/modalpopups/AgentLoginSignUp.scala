@@ -4,13 +4,14 @@ package client.modals
 import client.handler._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{HeaderCSS}
+import client.css.HeaderCSS
 import client.logger._
 import shared.models.{EmailValidationModel, SignUpModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
 import org.scalajs.dom._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
@@ -19,9 +20,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
 import org.querki.jquery._
 import client.sessionitems.SessionItems
+
 import scala.concurrent.Future
 import diode.AnyAction._
-import client.utils.ConnectionsUtils
+import client.utils.{AppUtils, ConnectionsUtils}
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -145,6 +147,7 @@ object AgentLoginSignUp {
       val futureArray = for (response <- responseSeq) yield CoreApi.sessionPing(response.content.sessionURI)
       Future.sequence(futureArray).onComplete {
         case Success(sessionPingResponseStr) =>
+          AppUtils.handleInitialSessionPingRes(sessionPingResponseStr(0))
           setUserDetails(responseArray(0), sessionPingResponseStr(0))
           LGCircuit.dispatch(AttachPingers())
           LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())

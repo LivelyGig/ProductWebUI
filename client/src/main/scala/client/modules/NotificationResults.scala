@@ -115,8 +115,8 @@ object NotificationList {
         )
       }
       <.div(^.className := "col-md-12",
-        <.h1(s"you have ${p.introductions.length} notifications"),
-        <.div(^.id := "acceptRejectAllBtnContainer")(
+        <.div(DashBoardCSS.Style.notificationsText)(s"you have ${p.introductions.length} notifications"),
+        <.div(^.id := "acceptRejectAllBtnContainer", DashBoardCSS.Style.notificationsText)(
           <.button(^.className := "btn btn-default", ^.color.green, Icon.check ,^.onClick --> Callback {
             handleAllIntroduction(true)
           })("Accept all"),
