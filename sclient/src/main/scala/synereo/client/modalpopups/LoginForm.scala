@@ -10,7 +10,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{LoginCSS, SignupCSS}
 import synereo.client.sessionitems.SessionItems
-
+import org.scalajs.dom._
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._

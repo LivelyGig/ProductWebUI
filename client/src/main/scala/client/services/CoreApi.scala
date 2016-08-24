@@ -23,7 +23,7 @@ case class ApiError(response: String) extends Exception
 object CoreApi {
 
   def getBaseUrl() = {
-    s"https://${window.sessionStorage.getItem(SessionItems.ApiDetails.API_HOST)}:${window.sessionStorage.getItem(SessionItems.ApiDetails.API_PORT)}/api"
+    s"${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}/api"
   }
 
 
