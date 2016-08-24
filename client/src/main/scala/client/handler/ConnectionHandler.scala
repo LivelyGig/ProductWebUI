@@ -20,11 +20,9 @@ class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends Ac
     case UpdateConnection(listOfConnectionModel: Seq[ConnectionsModel], connections: Seq[Connection]) =>
       updated(ConnectionsRootModel(listOfConnectionModel, connections))
 
-    case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) =>{
-      println("In UpdateConnectionModelSeq")
+    case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) => {
       updated(ConnectionsRootModel(listOfConnectionModel, value.connections))
     }
-
 
     case AddConnection(newConnectionModel: ConnectionsModel) =>
       updated(ConnectionsRootModel(Seq(newConnectionModel) ++ value.connectionsResponse, value.connections))

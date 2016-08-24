@@ -11,7 +11,6 @@ import client.services.CoreApi._
 import client.services._
 import shared.dtos._
 import org.scalajs.dom._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
@@ -20,7 +19,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
 import org.querki.jquery._
 import client.sessionitems.SessionItems
-
 import scala.concurrent.Future
 import diode.AnyAction._
 import client.utils.{AppUtils, ConnectionsUtils}

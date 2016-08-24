@@ -3,16 +3,11 @@ package client.modules
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
 import client.rootmodel.ConnectionsRootModel
-import diode.react.ReactPot._
 import diode.react._
-import diode.data.Pot
 import client.components.Icon
 import client.css.{ HeaderCSS, DashBoardCSS }
 import client.modals.{ NewMessage, NewRecommendation }
 import shared.models.ConnectionsModel
-import client.logger._
-import org.querki.jquery._
-import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 object ConnectionsResults {
@@ -26,8 +21,6 @@ object ConnectionsResults {
 //      log.debug("connection view mounted")
 //      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
-
-
   }
 
   // create the React component for Dashboard

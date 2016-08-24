@@ -61,20 +61,6 @@ object Searches {
         Seq(LabelsUtils.getSystemLabelModel(props.view)) ++ LGCircuit.zoom(_.searches.searchesModel).value.filter(_.isChecked), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(ConnectionsUtils.getCnxnForReq(Nil, props.view), searchLabels))
       ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr) , props.view)
-
-      //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
-      /*props.view match {
-        case AppModule.MESSAGES_VIEW =>
-          LGCircuit.dispatch(StoreMessagesSearchLabel())
-          LGCircuit.dispatch(RefreshMessages())
-        case AppModule.PROJECTS_VIEW =>
-          LGCircuit.dispatch(StoreProjectsSearchLabel())
-          LGCircuit.dispatch(RefreshProjects())
-        case AppModule.PROFILES_VIEW =>
-          LGCircuit.dispatch(StoreProfilesSearchLabel())
-          LGCircuit.dispatch(RefreshProfiles())
-      }*/
-
     }
 
     /*val ref = RefHolder[ReactTagsInputM]*/
@@ -89,7 +75,6 @@ object Searches {
 
     def initializeTagsInput(): Unit = {
       val selectState: js.Object = ".select-state"
-      //    println($(selectState).get())
       $(selectState).selectize(SelectizeConfig
         .maxItems(10)
         .plugins("remove_button"))
@@ -122,16 +107,13 @@ object Searches {
       $(projectsEndDate).datepicker(baseOpts)
       $(messageBeforeDate).datepicker(baseOpts)
       $(messagesFromDate).datepicker(baseOpts)
-      //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-      //      save()
-      //    })
     }
 
     def mounted(): Callback =  {
       initializeDatepicker
       initializeTagsInput
       toggleSidebar
-//      LGCircuit.dispatch(CreateLabels())
+
     }
 
     def render(s: State, p: Props) = {

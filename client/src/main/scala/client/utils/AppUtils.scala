@@ -59,7 +59,6 @@ object AppUtils {
       var cnxnSeq: Seq[ConnectionsModel] = Nil
       var introSeq: Seq[Introduction] = Nil
       val responseArray = upickle.json.read(response)
-      println(s" In handleInitialSessionPingRes responseArray =  ${responseArray}")
       responseArray.arr.foreach {
         obj =>
           try {
@@ -67,12 +66,10 @@ object AppUtils {
             if(jsonObj.contains("connectionProfileResponse")) {
               val apiRes = upickle.default.read[ApiResponse[ConnectionProfileResponse]](upickle.json.write(obj))
               cnxnSeq :+= ConnectionsUtils.getCnxnFromRes(apiRes.content)
-              println(s"In connectionProfileResponse cnxnSeq = ${cnxnSeq}")
             }
             if (jsonObj.contains("introductionNotification")) {
               val apiRes = upickle.default.read[ApiResponse[Introduction]](upickle.json.write(obj))
               introSeq :+= apiRes.content
-              println(s"In introductionNotification cnxnSeq = ${introSeq}")
             }
 
           } catch {

@@ -23,7 +23,6 @@ import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
 import diode.AnyAction._
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -32,27 +31,27 @@ object ProjectResults {
 
   case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
 
-  case class State(showErrorModal:Boolean=false)
+  case class State(showErrorModal: Boolean = false)
 
   val getServerError = LGCircuit.zoom(_.appRootModel).value
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props): react.Callback = Callback {
-//      log.debug("project view mounted")
+      //      log.debug("project view mounted")
       /*if (props.proxy().isEmpty) {
         ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
       }*/
 
     }
 
-    def serverError(showErrorModal :Boolean = false): Callback = {
-      if(showErrorModal)
+    def serverError(showErrorModal: Boolean = false): Callback = {
+      if (showErrorModal)
         t.modState(s => s.copy(showErrorModal = false))
       else
         t.modState(s => s.copy(showErrorModal = true))
     }
 
-    def render(P:Props, S:State) ={
+    def render(P: Props, S: State) = {
 
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
@@ -105,7 +104,7 @@ object ProjectResults {
             ProjectsList(jobPostsRootModel.projectsModelList)),
           P.proxy().renderFailed(ex => <.div()(
             //<.span(Icon.warning), " Error loading")
-            if(!getServerError.isServerError){
+            if (!getServerError.isServerError) {
               ServerErrorModal(ServerErrorModal.Props(serverError))
             }
             else
@@ -118,8 +117,6 @@ object ProjectResults {
           } else {
             <.div()
           }
-
-
         ) //gigConversation
       )
 
@@ -139,6 +136,7 @@ object ProjectResults {
 }
 
 object ProjectsList {
+
   case class Props(projects: Seq[ProjectsPost])
 
   case class Backend(t: BackendScope[Props, _]) {
@@ -147,22 +145,22 @@ object ProjectsList {
       $(msgTime).tooltip(PopoverOptions.html(true))
     }
 
-    def render (p:Props) = {
+    def render(p: Props) = {
       def renderJobPosts(project: ProjectsPost) = {
         //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
-        <.li(^.className := "media",DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.postContent.name ,
+            project.postContent.name,
             <.div(DashBoardCSS.Style.displayInlineText)("  Posted by: @LivelyGig  "),
-            <.div(DashBoardCSS.Style.displayInlineText)("  Posted: ")  ,
-              <.div(DashBoardCSS.Style.displayInlineText,^.className:="msgTime","data-toggle".reactAttr := "tooltip", ^.title := project.created, "data-placement".reactAttr := "right")(Moment(project.created).toLocaleString)
+            <.div(DashBoardCSS.Style.displayInlineText)("  Posted: "),
+            <.div(DashBoardCSS.Style.displayInlineText, ^.className := "msgTime", "data-toggle".reactAttr := "tooltip", ^.title := project.created, "data-placement".reactAttr := "right")(Moment(project.created).toLocaleString)
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             "Job Type: " + project.postContent.contractType,
-            <.div( project.postContent.description),
-            <.div( /*^.className := "col-md-4 col-sm-4",*/)(
+            <.div(project.postContent.description),
+            <.div(/*^.className := "col-md-4 col-sm-4",*/)(
               <.br(),
               "Skills: Java, Financial Apps, cryptography",
               <.br(),
@@ -192,5 +190,5 @@ object ProjectsList {
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(jobPosts: Seq[ProjectsPost]) =   ProjectsList(Props(jobPosts))
+  def apply(jobPosts: Seq[ProjectsPost]) = ProjectsList(Props(jobPosts))
 }

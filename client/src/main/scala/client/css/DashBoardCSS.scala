@@ -21,16 +21,6 @@ object DashBoardCSS {
       overflow.hidden
     )
 
-    //      .splitContainer{
-    //        position:relative;
-    //        height:100%;
-    //        overflow:hidden
-    //      }
-    /*  val rsltContainer = style(
-        display.inlineBlock,
-        width(98.2.%%),
-        fontSize(1.2.em)
-      )*/
 
     val rsltContainer = style(
       display.inlineBlock,
@@ -346,10 +336,7 @@ object DashBoardCSS {
     val replyMarginTop = style(
       marginTop(20.px)
     )
-    /*  val footPreferences = style (
-        padding(22.px) ,
-        backgroundColor(c"#00767c")
-      )*/
+
     val inputBtnRadius = style(
       border.none,
       padding(4.px, 7.px, 3.px, 7.px)
@@ -543,34 +530,24 @@ object DashBoardCSS {
     )
 
     val rowStyle = style(
-      //      .rowStyle  tbody {
-      //      height: 350px;
-      //      overflow-y: auto;
-      //    }
-      //
+
       unsafeChild("tbody")(
         height(350.px),
         overflowY.auto
       ),
-      //
-      //      .rowStyle thead, .rowStyle tbody, .rowStyle tr, .rowStyle td, .rowStyle th { display: block; }
-      //
+
       unsafeChild("thead")(display.block),
       unsafeChild("tbody")(display.block),
       unsafeChild("tr")(display.block),
       unsafeChild("td")(display.block),
       unsafeChild("th")(display.block),
-      //      .rowStyle > tbody > tr:nth-child(even) {
-      //      background-color: #D7E3E3;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr:nth-child(even)")(
           backgroundColor(c"#D7E3E3")
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(1), .rowStyle > thead > tr th:nth-child(1), .rowStyle > tfoot >  tr td:nth-child(1){
-      //      width:30%;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(1)")(
           width(30.%%)
@@ -584,10 +561,6 @@ object DashBoardCSS {
           width(30.%%)
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(2), .rowStyle > thead > tr th:nth-child(2), .rowStyle > tfoot >  tr td:nth-child(2){
-      //      width:18%;
-      //      text-align:center;
-      //    }
 
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(2)")(
@@ -605,10 +578,7 @@ object DashBoardCSS {
           textAlign.center
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(3), .rowStyle > thead > tr th:nth-child(3), .rowStyle > tfoot >  tr td:nth-child(3){
-      //      width:18%;
-      //      text-align:center;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(3)")(
           width(18.%%),
@@ -625,10 +595,7 @@ object DashBoardCSS {
           textAlign.center
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(4), .rowStyle > thead > tr th:nth-child(4), .rowStyle > tfoot >  tr td:nth-child(4){
-      //      width:34%;
-      //
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(4)")(
           width(34.%%)
@@ -655,14 +622,7 @@ object DashBoardCSS {
         height(50.px)
       ),
 
-      //      .rowStyle thead {
-      //      /* fallback */
-      //    }
-      //
-      //      .rowStyle tbody td, .rowStyle thead th, .rowStyle tfoot td {
-      //      width: 25%;
-      //      float: left;
-      //    }
+
       unsafeChild("tbody td")(
         width(25.%%),
         float.left
