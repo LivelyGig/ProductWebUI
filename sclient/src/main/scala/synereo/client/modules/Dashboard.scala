@@ -337,7 +337,7 @@ object HomeFeedList {
         //        var getName = ""
         var fromSender = "unknown"
         var toReceiver = "unknown"
-        val userId = SYNEREOCircuit.zoom(_.user.sessionUri).value.split("/")(2)
+        val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
         //  for(a <- value){println(a.connection + a.name)}
 
         if (userId == selfConnectionId) {

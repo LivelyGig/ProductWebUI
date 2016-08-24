@@ -11,6 +11,8 @@ case class AttachPinger()
 
 case class SessionPing()
 
+case class SetSessionUri(sessionUri: String)
+
 // scalastyle:off
 class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
@@ -18,11 +20,12 @@ class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends Actio
       updated(value.copy(pinger = !value.pinger))
 
     case AttachPinger() =>
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.sessionPing.pinger))(_ => ping())
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.sessionRootModel.pinger))(_ => ping())
       def ping() = {
         SYNEREOCircuit.dispatch(RefreshMessages())
       }
       noChange
-
+    case SetSessionUri(sessionUri) =>
+      updated(value.copy(sessionUri = sessionUri))
   }
 }

@@ -14,7 +14,7 @@ import synereo.client.logger._
 import synereo.client.modalpopups._
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.utils.ConnectionsUtils
+import synereo.client.utils.{AppUtils, ConnectionsUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -58,8 +58,6 @@ object Login {
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
     def mounted(props: Props): Callback = {
-      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       t.modState(s => s.copy(showLoginForm = true))
     }
 
@@ -107,7 +105,7 @@ object Login {
       }
     }
 
-    def validateResponse(response: String): String = {
+    def validateInitilizeSessionResponse(response: String): String = {
       try {
         upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
         LOGIN_ERROR
@@ -123,12 +121,13 @@ object Login {
       }
     }
 
+
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
       CoreApi.agentLogin(userModel).onComplete {
         case Success(response) =>
-          validateResponse(response) match {
+          validateInitilizeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
             case SERVER_ERROR => processServerError(response)
@@ -143,11 +142,13 @@ object Login {
 
     def processSuccessfulLogin(responseStr: String, userModel: UserModel): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](responseStr)
+      SYNEREOCircuit.dispatch(SetSessionUri(response.content.sessionURI))
       CoreApi.sessionPing(response.content.sessionURI).onComplete {
         case Success(res) =>
           SYNEREOCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""),
-            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email, sessionUri = response.content.sessionURI)))
-          SYNEREOCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(res), response.content.listOfConnections))
+            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email /*, sessionUri = response.content.sessionURI*/)))
+          AppUtils.handleInitialSessionPingRes(res)
+          SYNEREOCircuit.dispatch(UpdateConnectionSeq(response.content.listOfConnections))
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           SYNEREOCircuit.dispatch(AttachPinger())
           SYNEREOCircuit.dispatch(SubsForMsgAndBeginSessionPing())
@@ -169,7 +170,7 @@ object Login {
 
       $(loginLoader).addClass("hidden")
       println("login error")
-      t.modState(s => s.copy(showLoginFailed = true)).runNow()
+      t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
     def processServerError(responseStr: String): Unit = {
@@ -195,7 +196,8 @@ object Login {
           case Success(responseStr) =>
             try {
               upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
-              isUserVerified = true
+              //              isUserVerified = true changed to false to make toastr hidden
+              isUserVerified = false
               log.debug(ApiTypes.CreateUserError)
               t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
             } catch {
@@ -283,8 +285,6 @@ object Login {
             //
             //
             //          )
-
-
             //            <.div(LoginCSS.Style.loginDilog)(
             //              <.div(LoginCSS.Style.formPadding)(
             //                <.div(LoginCSS.Style.loginDilogContainerDiv)(
@@ -333,8 +333,6 @@ object Login {
               NewUserForm(NewUserForm.Props(addNewUser))
             }
             else if (s.showNewInviteForm) {
-              //          TermsOfServices(TermsOfServices.Props(B.termsOfServices))
-              //              <.div()
               PostNewInvite(PostNewInvite.Props(closeRequestInvitePopup))
             }
             else if (s.showLoginForm) {
@@ -367,7 +365,7 @@ object Login {
     }
   }
 
-  val component = ReactComponentB[Props]("SynereoLogin")
+  val component = ReactComponentB[Props]("Login")
     .initialState_P(p => State())
     //    .initialState_P(p => State(apiDetails = new ApiDetails("", "")))
     .renderBackend[Backend]

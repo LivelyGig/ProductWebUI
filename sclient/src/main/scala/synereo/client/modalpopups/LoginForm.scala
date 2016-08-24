@@ -8,7 +8,7 @@ import org.scalajs.dom.window
 import shared.models.UserModel
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
-import synereo.client.css.{LoginCSS, SignupCSS}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.sessionitems.SessionItems
 import org.scalajs.dom._
 import scala.language.reflectiveCalls
@@ -126,6 +126,7 @@ object LoginForm {
                   <.div(^.className := "emailVerifiedContainer")(<.h5("Email address verified."), <.h5("Please login with your credentails "))
                 } else
                   <.div(),
+                <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.loginImg),
                 <.div(SignupCSS.Style.loginHeading)(headerText),
                 //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
                 //                  <.div(^.className := "row")(

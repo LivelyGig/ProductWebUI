@@ -44,7 +44,7 @@ object ContentHandler {
         var isNew: Boolean = true
         val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
         val content = connectNotification(0).content
-        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+        //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
         connections.foreach {
@@ -64,6 +64,53 @@ object ContentHandler {
     }
   }
 
+  //  def processIntroductionNotification(response: String = ""): Unit = {
+  //    val responseTypes = Map("sessionPong" -> Seq[ApiResponse[SessionPong]],
+  //      "introductionNotification" -> Seq[ApiResponse[Introduction]],
+  //      "introductionConfirmationResponse" -> Seq[ApiResponse[IntroductionConfirmationResponse]],
+  //      "connectNotification" -> Seq[ApiResponse[ConnectNotification]],
+  //      "beginIntroductionResponse" -> Seq[ApiResponse[BeginIntroductionRes]]
+  //    )
+  //    val responseMapping = responseTypes collectFirst { case (k, v) if response contains k => v }
+  //    println(responseMapping)
+  //    //    responseMapping match {
+  //    //      case Some() =>
+  //    //      case None =>
+  //    //    }
+  //
+  //    try {
+  //      if (response.contains("sessionPong")) {
+  //        val sessionPong = upickle.default.read[Seq[ApiResponse[SessionPong]]](response)
+  //      } else if (response.contains("introductionNotification")) {
+  //        val intro = upickle.default.read[Seq[ApiResponse[Introduction]]](response)
+  //        SYNEREOCircuit.dispatch(AcceptNotification(Seq(intro(0).content)))
+  //      } else if (response.contains("introductionConfirmationResponse")) {
+  //        val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
+  //        SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
+  //      } else if (response.contains("connectNotification")) {
+  //        var isNew: Boolean = true
+  //        val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
+  //        val content = connectNotification(0).content
+  //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
+  //        val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
+  //        val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+  //        connections.foreach {
+  //          connection => if (connection.name.equals(name)) {
+  //            isNew = false
+  //          }
+  //        }
+  //        if (isNew) {
+  //          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+  //        }
+  //      } else if (response.contains("beginIntroductionResponse")) {
+  //        val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
+  //        SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
+  //      }
+  //    } catch {
+  //      case e: Exception => /*println("exception for upickle read session ping response")*/
+  //    }
+  //  }
+
   val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
 
   def getCurrMsgModel(): Seq[Post] = {
@@ -76,8 +123,21 @@ object ContentHandler {
     }
   }
 
+  /**
+    * This function primarily deals with getting the content for the ui interaction
+    * it is connected to the session ping response.
+    * Session ping response consists of a number of different types of responses
+    * which are filtered here and the ui is updated accordingly
+    * @param response   This function takes the response from the session ping
+    *                   It is called from the message handler refresh messages action
+    * @return   seq of post
+    */
   def getContentModel(response: String): Seq[Post] = {
+    // toggle pinger this will refresh the session ping cycle
     SYNEREOCircuit.dispatch(TogglePinger())
+    //check for the reponse type if its not evalSubscribeResponse than it has to be one of
+    // the other expected responses. Why check for all responses instead of one? So that
+    // we know that what are the expected responses and make changes later.
     if (responseType.exists(response.contains(_))) {
       processIntroductionNotification(response)
       getCurrMsgModel()
@@ -118,7 +178,7 @@ object ContentHandler {
   def subsForMsgAndBeginSessionPing() = {
     val expr = Expression("feedExpr", ExpressionContent(SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(ConnectionsUtils.getSelfConnnection()),
       s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
-    val req = SubscribeRequest(SYNEREOCircuit.zoom(_.user.sessionUri).value, expr)
+    val req = SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)
     SYNEREOCircuit.dispatch(ClearMessages())
     var count = 1
     subscribe()
@@ -166,7 +226,7 @@ object ContentHandler {
     var count = 1
     cancelPrevious()
     def cancelPrevious(): Unit = CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(
-      SYNEREOCircuit.zoom(_.user.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
+      SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
       SYNEREOCircuit.zoom(_.searches.previousSearchLabel).value)).onComplete {
       case Success(res) =>
         SYNEREOCircuit.dispatch(SubsForMsg(req))

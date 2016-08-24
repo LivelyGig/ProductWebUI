@@ -14,8 +14,7 @@ import shared.dtos.LabelPost
 import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.{DashboardCSS, NewMessageCSS}
-import synereo.client.handlers._
+import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS}
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -32,6 +31,7 @@ import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
 import org.querki.jquery._
+import synereo.client.handlers.PostLabelsAndMsg
 
 import scala.concurrent.Future
 import scala.collection.mutable.ListBuffer
@@ -178,6 +178,7 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
+      println(s"value of img = ${value.size}")
       //      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
@@ -213,11 +214,9 @@ object NewMessageForm {
       val headerText = p.header
       Modal(
         Modal.Props(
-
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
-
           closed = () => formClosed(s, p),
           id = "newMessage"
         ),
@@ -269,7 +268,7 @@ object NewMessageForm {
             ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.camera)),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide,  <.span(Icon.camera)),
                 <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
                 <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
               ),

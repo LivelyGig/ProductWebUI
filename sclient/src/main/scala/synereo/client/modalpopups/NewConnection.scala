@@ -15,6 +15,7 @@ import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
 import synereo.client.utils.ConnectionsUtils
 import diode.AnyAction._
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -22,7 +23,7 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import synereo.client.handlers.PostNewConnection
+import synereo.client.handlers.ContentHandler
 
 import scala.scalajs.js
 
@@ -139,12 +140,13 @@ object ConnectionsForm {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val state = t.state.runNow()
       val msg = state.introConnections.aMessage.replaceAll("/", "//")
-      val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
       if (connections.length == 2) {
         val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
           sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-        SYNEREOCircuit.dispatch(PostNewConnection(content))
+        //        SYNEREOCircuit.dispatch(PostNewConnection(content))
+        ContentHandler.postNewConnection(content)
         t.modState(s => s.copy(postConnection = true))
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -160,11 +162,12 @@ object ConnectionsForm {
           $("#agentFieldError".asInstanceOf[js.Object]).removeClass("hidden")
           t.modState(s => s.copy(postConnection = false))
         case None =>
-          val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+          val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection().source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
-          SYNEREOCircuit.dispatch(PostNewConnection(content))
+          //          SYNEREOCircuit.dispatch(PostNewConnection(content))
+          ContentHandler.postNewConnection(content)
           t.modState(s => s.copy(postConnection = true))
       }
     }

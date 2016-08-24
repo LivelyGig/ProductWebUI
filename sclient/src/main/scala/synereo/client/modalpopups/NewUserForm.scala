@@ -14,7 +14,7 @@ import synereo.client.sessionitems.SessionItems
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
-
+//scalastyle:off
 object NewUserForm {
   var addNewUserState: Boolean = false
   var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
@@ -28,7 +28,7 @@ object NewUserForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = true,
-                   apiURL: String = s"https://" + dom.window.location.hostname +":9876"
+                   apiURL: String = s"https://" + dom.window.location.hostname + ":9876"
                   )
 
   case class Backend(t: BackendScope[Props, State]) {
@@ -115,7 +115,7 @@ object NewUserForm {
         <.form(^.id := "SignUpForm", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "API Server", ^.value := s.apiURL,
-              ^.className := "form-control", "data-error".reactAttr := "Username is required",^.onChange ==> updateAPIURL,
+              ^.className := "form-control", "data-error".reactAttr := "Username is required", ^.onChange ==> updateAPIURL,
               ^.required := true, ^.placeholder := "API Server"),
             <.div(^.className := "help-block with-errors")
           ),
@@ -142,7 +142,7 @@ object NewUserForm {
           ),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-              <.input(^.`type` := "checkbox", ^.id := "IamCoolWithThe"), <.label(^.`for` := "IamCoolWithThe")("I'm cool with the"),
+              <.input(^.`type` := "checkbox", ^.id := "IamCoolWithThe", ^.required := true), <.label(^.`for` := "IamCoolWithThe")("I'm cool with the"),
               // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", SignupCSS.Style.checkBoxTermsAndCond /*, ^.onClick ==> changeCheckBox*/), <.span("I am cool with the"),
               <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> showTermsOfServices, "Terms of Service ")
             )

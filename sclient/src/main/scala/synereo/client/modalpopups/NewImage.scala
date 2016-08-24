@@ -105,7 +105,7 @@ object ProfileImageUploaderForm {
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
         val props = t.props.runNow()
-        val uri = SYNEREOCircuit.zoom(_.user.sessionUri).value
+        val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
         t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
       }
       reader.readAsDataURL(value)
