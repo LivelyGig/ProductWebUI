@@ -23,7 +23,7 @@ import scalacss.ScalaCssReact._
 object AmplifyPostModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), reactChildElement: ReactTag = <.span(), title: String, modalId: String = "")
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), /*reactChildElement: ReactTag = <.span(),*/ title: String, modalId: String = "")
 
   case class State(showAmplifyPostForm: Boolean = false)
 
@@ -50,7 +50,7 @@ object AmplifyPostModal {
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.showAmplifyPostForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), P.reactChildElement),
+        Button(Button.Props(B.showAmplifyPostForm(), CommonStyle.default, P.addStyles, "", P.title, className = "")/*, P.reactChildElement*/),
         if (S.showAmplifyPostForm)
           AmplifyPostForm(AmplifyPostForm.Props(B.postAmplified, P.modalId))
         else
@@ -104,9 +104,9 @@ object AmplifyPostForm {
       //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
       //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       //      $("body".asInstanceOf[js.Object]).find(".modal-backdrop").remove()
-      $(s"${props.modalId}".asInstanceOf[js.Object]).removeClass("modal  fade")
-      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+      //      $(s"${props.modalId}".asInstanceOf[js.Object]).removeClass("modal  fade")
+      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
       logger.log.debug("AmplifyPostForm mounted")
     }
@@ -153,89 +153,3 @@ object AmplifyPostForm {
 
   def apply(props: Props) = component(props)
 }
-
-//object ConfirmIntroReqForm {
-//  // shorthand for styles
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//
-//  case class Props(submitHandler: () => Callback, header: String, introduction: Introduction)
-//
-//  case class State(confirmIntroReq: Boolean = false)
-//
-//  case class Backend(t: BackendScope[Props, State]) {
-//    def hide: Callback = Callback {
-//      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-//      val props = t.props.runNow()
-//      val introConfirmReq = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
-//      //      CoreApi.postIntroduction(introConfirmReq).onComplete {
-//      //        case Success(response) =>
-//      //
-//      //      }
-//      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-//      jQuery(t.getDOMNode()).modal("hide")
-//    }
-//
-//    def hideModal(): Unit = {
-//      jQuery(t.getDOMNode()).modal("hide")
-//    }
-//
-//    def mounted(props: Props): Callback = Callback {
-//    }
-//
-//    def submitForm(e: ReactEventI): react.Callback = {
-//      e.preventDefault()
-//      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-//      val props = t.props.runNow()
-//      val content = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
-//      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
-//      t.modState(s => s.copy(confirmIntroReq = true))
-//    }
-//
-//    def formClosed(state: State, props: Props): Callback = {
-//      props.submitHandler(/*state.postMessage*/)
-//    }
-//
-//    def render(s: State, p: Props) = {
-//
-//      val headerText = p.header
-//      Modal(
-//        Modal.Props(
-//          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-//            <.div("Introduction Request")),
-//          closed = () => formClosed(s, p),
-//          addStyles = Seq()
-//        ),
-//        <.form(^.onSubmit ==> submitForm)(
-//          <.div(^.className := "row", ^.fontSize := "0.8.em")(
-//            <.div(^.className := "col-md-12")(
-//              <.div(p.introduction.message),
-//              <.div(
-//                s"From : ${JSON.parse(p.introduction.introProfile).name.asInstanceOf[String]}", <.br,
-//                "Date : Mon July 27 2016 ", <.br
-//              )
-//            ),
-//            <.div()(
-//              <.div(^.className := "text-right")(
-//                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Accept"),
-//                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Reject")
-//              )
-//            )
-//          )
-//        )
-//      )
-//    }
-//  }
-//
-//  private val component = ReactComponentB[Props]("PostNewMessage")
-//    .initialState_P(p => State())
-//    .renderBackend[Backend]
-//    .componentDidUpdate(scope => Callback {
-//      if (scope.currentState.confirmIntroReq) {
-//        scope.$.backend.hideModal
-//      }
-//    })
-//    .componentDidMount(scope => scope.backend.mounted(scope.props))
-//    .build
-//
-//  def apply(props: Props) = component(props)
-//}

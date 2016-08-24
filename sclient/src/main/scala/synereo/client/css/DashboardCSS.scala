@@ -235,6 +235,8 @@ object DashboardCSS {
     val ampTokenBtn = style(
       backgroundColor.transparent.important,
       border.`0`.important,
+      marginTop(6.px),
+      paddingLeft(2.px),
       &.hover(
         backgroundColor.transparent.important,
         border.`0`.important
