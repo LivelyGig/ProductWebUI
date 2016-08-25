@@ -421,7 +421,7 @@ object HomeFeedList {
                     for {b <- 1 to messageText.length if b >= 30} yield {
                       messageText(b) + " "
                     },
-                    <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                    <.div(^.className := "col-md-12 text-uppercase")(
                       for {label <- filterLabelStrings(message.postContent.text.split(" +"))} yield {
                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
                       }
