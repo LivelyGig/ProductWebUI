@@ -41,7 +41,6 @@ case class UpdatePrevSearchLabel(labelStr: String)
 
 case class UpdatePrevSearchCnxn(cnxns: Seq[Connection])
 
-case class PostLabelsAndMsg(labelNames: Seq[String], subscribeReq: SubscribeRequest)
 
 // scalastyle:off
 class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionHandler(modelRW) {
@@ -65,10 +64,6 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
     case UpdatePrevSearchCnxn(cnxns) =>
       updated(value.copy(previousSearchCnxn = cnxns))
 
-    case PostLabelsAndMsg(labelsNames, subscribeReq) =>
-      val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, labelsNames.map(SearchesModelHandler.leaf), "alias")
-      ContentHandler.postLabelsAndMsg(labelPost, subscribeReq)
-      noChange
   }
 
 }

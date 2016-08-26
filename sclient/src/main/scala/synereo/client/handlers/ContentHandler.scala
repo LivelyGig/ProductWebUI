@@ -128,9 +128,10 @@ object ContentHandler {
     * it is connected to the session ping response.
     * Session ping response consists of a number of different types of responses
     * which are filtered here and the ui is updated accordingly
-    * @param response   This function takes the response from the session ping
-    *                   It is called from the message handler refresh messages action
-    * @return   seq of post
+    *
+    * @param response This function takes the response from the session ping
+    *                 It is called from the message handler refresh messages action
+    * @return seq of post
     */
   def getContentModel(response: String): Seq[Post] = {
     // toggle pinger this will refresh the session ping cycle
@@ -263,14 +264,13 @@ object ContentHandler {
   def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
 
   def postLabelsAndMsg(labelPost: LabelPost, subscribeReq: SubscribeRequest) = {
-
     var count = 1
     post()
     def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
       case Success(res) =>
         // println("searches handler label post success")
-        SYNEREOCircuit.dispatch(PostMessage(subscribeReq))
-        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
+        postMessage(subscribeReq)
+      //        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
       case Failure(res) =>
         // println("searces handler label post failure")
         if (count == 3) {

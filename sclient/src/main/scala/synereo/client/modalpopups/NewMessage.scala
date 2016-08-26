@@ -187,15 +187,11 @@ object NewMessageForm {
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-        val newLabels = (props.proxy().searchesModel.map(e => e.text) union getAllLabelsText) diff props.proxy().searchesModel.map(e => e.text)
-        println(s"newLabels = $newLabels")
-        println(s"newLabels isEmpty = ${newLabels.isEmpty}")
-        if (props.proxy().searchesModel.isEmpty) {
-          println("new message posting label")
+        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union getAllLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
+        if (labelsToPost.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
           ContentHandler.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         } else {
-          println("new message posting message")
           ContentHandler.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
