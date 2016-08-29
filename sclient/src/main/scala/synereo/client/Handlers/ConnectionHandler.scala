@@ -12,7 +12,7 @@ import scala.util.{Failure, Success}
 
 // Actions
 //scalastyle:off
-case class AddConnection(newConnectionModel: ConnectionsModel)
+case class AddConnection(newConnectionModel: ConnectionsModel, newConnection: Connection)
 
 case class UpdateConnectionSeq(connections: Seq[Connection])
 
@@ -28,7 +28,7 @@ class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends Ac
     case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) =>
       updated(ConnectionsRootModel(listOfConnectionModel, value.connections))
 
-    case AddConnection(newConnectionModel: ConnectionsModel) =>
-      updated(ConnectionsRootModel(Seq(newConnectionModel) ++ value.connectionsResponse, value.connections))
+    case AddConnection(newConnectionModel: ConnectionsModel, newConnection) =>
+      updated(ConnectionsRootModel(value.connectionsResponse:+newConnectionModel, value.connections:+newConnection))
   }
 }
