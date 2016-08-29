@@ -31,7 +31,7 @@ import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import diode.AnyAction._
 import org.querki.jquery._
-import synereo.client.handlers.PostLabelsAndMsg
+import synereo.client.handlers.{ContentHandler, SearchesModelHandler}
 
 import scala.concurrent.Future
 import scala.collection.mutable.ListBuffer
@@ -153,33 +153,19 @@ object NewMessageForm {
       allLabels.distinct
     }
 
-    //    def createHashtag(text: String) = {
-    //      val newText: Seq[String] = text.split(" ")
-    //      newText.foreach(
-    //        text => if (text.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
-    //          newText ++ text
-    //        }
-    //      )
-    //      t.modState()
-    //
-    //    }
-
     def deleteInlineLabel(e: ReactEventI) = {
       val value = e.target.parentElement.getAttribute("data-count")
       val state = t.state.runNow()
-      //      println(value)
       val newlist = for {
         (x, i) <- state.tags.zipWithIndex
         if i != value.toInt
       } yield x
-      //      println(newlist)
       t.modState(state => state.copy(tags = newlist))
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
       println(s"value of img = ${value.size}")
-      //      println("Img src = " + value)
       val reader = new FileReader()
       reader.onload = (e: UIEvent) => {
         val contents = reader.result.asInstanceOf[String]
@@ -193,6 +179,7 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
+      val props = t.props.runNow()
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -200,7 +187,15 @@ object NewMessageForm {
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-        SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
+        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union getAllLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
+        if (labelsToPost.nonEmpty) {
+          val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
+          ContentHandler.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        } else {
+          ContentHandler.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        }
+        //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
+
         t.modState(s => s.copy(postNewMessage = true))
       }
     }
@@ -268,7 +263,7 @@ object NewMessageForm {
             ),
             <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
               <.div(^.className := "pull-left")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide,  <.span(Icon.camera)),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
                 <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
                 <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc)
               ),

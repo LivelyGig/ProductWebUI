@@ -72,7 +72,7 @@ object Login {
     def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      log.debug(s"addNewUser userModel : ${signUpModel} ,addNewUser: ${addNewAgent}")
+      //      log.debug(s"addNewUser userModel : ${signUpModel} ,addNewUser: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
