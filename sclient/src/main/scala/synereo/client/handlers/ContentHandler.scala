@@ -53,7 +53,7 @@ object ContentHandler {
           }
         }
         if (isNew) {
-          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc)))
+          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc),content.connection))
         }
       } else if (response.contains("beginIntroductionResponse")) {
         val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
