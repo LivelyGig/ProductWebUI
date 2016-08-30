@@ -55,9 +55,9 @@ lazy val client: Project = (project in file(pCompile))
       jsAsyncWait := false,
       jsAsyncWaitTimeout := None,
     //client side js deps
-      jsDependencies ++= clientJSDeps.map(ProvidedJS / _)
+      jsDependencies ++= clientJSDeps.map(ProvidedJS / _),
     // use uTest framework for tests
-    // testFrameworks += new TestFramework("utest.runner.Framework")
+     testFrameworks += new TestFramework("utest.runner.Framework")
     // libraryDependencies ++= Seq(
     // Dependencies.tests.scalajsenvs)
   )

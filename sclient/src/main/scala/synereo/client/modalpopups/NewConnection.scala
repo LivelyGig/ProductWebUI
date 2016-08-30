@@ -31,7 +31,7 @@ import scala.scalajs.js
 object NewConnection {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String = "Invite friend")
+  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String = "Introduce Connections")
 
   case class State(showConnectionsForm: Boolean = false)
 
@@ -60,7 +60,7 @@ object NewConnection {
       val B = $.backend
       <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
         Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), P.title),
-        if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "Invite friend"))
+        if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "Introduce Connections"))
         else
           Seq.empty[ReactElement]
       )
@@ -227,7 +227,7 @@ object ConnectionsForm {
               //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
               // " Invite new user(s) to sign up and  connect with you."), <.br(),
               <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnExstandOther),
-                " Introduce your existing connections."), <.br()
+                " Introduce your existing connections to each other."), <.br()
             ),
 
             //            else if (s.chkCnxnNewUser == true) {
