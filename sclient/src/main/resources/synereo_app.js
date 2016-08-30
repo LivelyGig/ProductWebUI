@@ -1,12 +1,22 @@
 var SelectizeUtils = (function(){
     function addOption(selectizeId, text, value) {
         var sel= $("#"+selectizeId)[0].selectize
-                  sel.addOption({
-                    text:text,
-                    value: value
-                  })
+        sel.addOption({
+            text:text,
+            value: value
+        })
     }
-    return {addOption:addOption}
+    function initilizeSelectize(selectizeId,maximumItems){
+     $("#"+selectizeId).selectize({
+        plugins: ['remove_button'],
+        create: true,
+        maxItems:maximumItems
+    })
+ }
+ return {
+    addOption:addOption,
+    initilizeSelectize:initilizeSelectize
+}
 
 })();
 
@@ -95,16 +105,16 @@ window.onload = function() {
 $(document).ready(function() {
     applyStylingToHomeFeed();
     var hoverInterval=  setInterval(function(){
-    $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
       // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
       var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
 //        console.log('Scroll speed: ' + speedInPxPerMs);
-        if (speedInPxPerMs > 3) {
-            $("#homeFeedMediaList li").css("opacity","0.2");
-        }else{
-            applyStylingToHomeFeed();
-        }
-    });
+if (speedInPxPerMs > 3) {
+    $("#homeFeedMediaList li").css("opacity","0.2");
+}else{
+    applyStylingToHomeFeed();
+}
+});
       $("#homeFeedMediaList li").hover(function(){
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});

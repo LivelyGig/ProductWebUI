@@ -3,14 +3,12 @@ package synereo.client.components
 
 import shared.models.Label
 import synereo.client.services.SYNEREOCircuit
-
 import scala.language.existentials
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.denigma.selectize.SelectizeConfig
-import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
+import synereo.client.utils.SelectizeUtils
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
@@ -45,10 +43,11 @@ object LabelsSelectize {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       if ($(selectState).length < 1) {
         val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
-        $(selectizeInput).selectize(SelectizeConfig
-          .create(true)
-          .maxItems(3)
-          .plugins("remove_button"))
+        //        $(selectizeInput).selectize(SelectizeConfig
+        //          .create(true)
+        //          .maxItems(3)
+        //          .plugins("remove_button"))
+        SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7)
       }
 
     }

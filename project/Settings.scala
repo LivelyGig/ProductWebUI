@@ -49,7 +49,7 @@ object Settings {
     "org.querki" %%% "jquery-facade" % Versions.jqueryFacade,
     "org.querki" %%% "querki-jsext" % Versions.querkiJsext,
     "org.querki" %%% "bootstrap-datepicker-facade" % Versions.datePickerFacade,
-    "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
+    //    "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
     "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
     "com.lihaoyi" %%% "upickle" % Versions.upickle,
@@ -64,7 +64,7 @@ object Settings {
     "org.webjars" % "jquery" % Versions.jQuery / "jquery.js" minified "jquery.min.js",
     "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
-    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
-    "org.webjars" % "selectize.js" % Versions.selectizejs / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
+    "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js"
+    //    "org.webjars" % "selectize.js" % Versions.selectizejs / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
   ))
 }

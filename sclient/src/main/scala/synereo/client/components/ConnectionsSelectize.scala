@@ -2,7 +2,6 @@ package synereo.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 
@@ -11,6 +10,9 @@ import scala.scalajs.js
 import shared.dtos.Connection
 import shared.models.{ConnectionsModel, Post}
 import synereo.client.services.SYNEREOCircuit
+import synereo.client.utils.SelectizeUtils
+
+//import org.denigma.selectize._
 
 
 /**
@@ -40,7 +42,6 @@ object ConnectionsSelectize {
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
-
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
       val props = t.props.runNow()
@@ -48,34 +49,16 @@ object ConnectionsSelectize {
 
       val count = props.option match {
         case Some(a) => a
-        case None => 30
+        case None => 7
       }
 
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-      //      $(selectizeInput).selectize()
-      $(selectizeInput).selectize(SelectizeConfig
-        .maxItems(count)
-        .plugins("remove_button")
-        .onItemAdd((item: String, value: js.Dynamic) => {
-          props.fromSelecize().runNow()
-          //          println("")
-        })
-        .onItemRemove((item: String) => {
-          props.fromSelecize().runNow()
-          //          println("")
-        })
-
-      )
+      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", count)
 
     }
 
     def mounted(props: Props): Callback = Callback {
-      /*if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-        t.modState(s => s.copy(connections = value)).runNow()
-      }
-      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.connections))(_ => attachConnections())*/
       initializeTagsInput()
     }
 
@@ -89,29 +72,9 @@ object ConnectionsSelectize {
       }
     }
 
-    def willMount(props: Props) = {
+    def componentWillMount(props: Props) = {
       t.modState(s => s.copy(connections = getCnxnModel()))
     }
-
-    /*def attachConnections() = {
-      if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-        val value = SYNEREOCircuit.zoom(_.connections).value.get.connectionsResponse
-        t.modState(s => s.copy(connections = value)).runNow()
-      }
-    }
-
-
-
-
-    def componentDidUpdate(props: Props, state: State): Callback = Callback {
-//      println("In componentDid  Update")
-      if (SYNEREOCircuit.zoom(_.connections).value.isReady) {
-        initializeTagsInput(props, state)
-
-        // println(state.connections.foreach(a => println(a.name)))
-      }
-
-    }*/
 
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
@@ -132,12 +95,7 @@ object ConnectionsSelectize {
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props))
-    .componentWillMount(scope => scope.backend.willMount(scope.props))
-    /*.componentDidUpdate(scope => {
-
-      scope.$.backend.componentDidUpdate(scope.currentProps, scope.currentState)
-    })*/
-    //    .componentWillUpdate(scope => scope.)
+    .componentWillMount(scope => scope.backend.componentWillMount(scope.props))
     .build
 
   def apply(props: Props) = component(props)
