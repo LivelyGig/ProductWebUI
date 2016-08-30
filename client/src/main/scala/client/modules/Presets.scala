@@ -26,24 +26,6 @@ object Presets {
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                    <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#talent")("Recommended Matches")),
-                          <.li()(<.a(^.href := "#talent")("My Profiles")),
-                          <.li()(<.a(^.href := "#talent")("Favorited")),
-                          <.li()(<.a(^.href := "#talent")("Available")),
-                          <.li()(<.a(^.href := "#talent")("Active Unavailable")),
-                          <.li()(<.a(^.href := "#talent")("Inactive")),
-                          <.li()(<.a(^.href := "#talent")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#talent")("Videographers w/5+ yrs experience")),
-                          <.li()(<.a(^.href := "#talent")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         NewProfile(NewProfile.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.user, "Update Profile"))
                       )
@@ -53,7 +35,6 @@ object Presets {
                 )
               ),
               <.div(^.className := "col-lg-1")()
-            )
           )
         } //talent
         case AppModule.PROJECTS_VIEW => {
@@ -63,21 +44,6 @@ object Presets {
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                    <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#projects")("Recommended Matches")),
-                          <.li()(<.a(^.href := "#projects")("Direct from Connection")),
-                          <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
-                          <.li()(<.a(^.href := "#projects")("Favorited")),
-                          <.li()(<.a(^.href := "#projects")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#projects")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
                       )
@@ -87,7 +53,6 @@ object Presets {
                 )
               ),
               <.div(^.className := "col-lg-1")()
-            )
           )
         } //project
         case AppModule.OFFERINGS_VIEW => {
@@ -97,20 +62,6 @@ object Presets {
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                    <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
-                          <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
-                          <.li()(<.a(^.href := "#offerings")("Favorited")),
-                          <.li()(<.a(^.href := "#offerings")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#offerings")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
                       )
@@ -120,7 +71,6 @@ object Presets {
                 )
               ),
               <.div(^.className := "col-lg-1")()
-            )
           )
         } //project
         case AppModule.CONTRACTS_VIEW => {
@@ -130,19 +80,6 @@ object Presets {
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                    <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#contract")("Active")),
-                          <.li()(<.a(^.href := "#contract")("Favorited")),
-                          <.li()(<.a(^.href := "#contract")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#contract")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
                       )
@@ -152,7 +89,6 @@ object Presets {
                 )
               ),
               <.div(^.className := "col-lg-1")()
-            )
           )
         }
         case AppModule.MESSAGES_VIEW => {
@@ -163,20 +99,6 @@ object Presets {
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
                     <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#messages")("Inbox")),
-                          <.li()(<.a(^.href := "#messages")("Sent")),
-                          <.li()(<.a(^.href := "#messages")("Unread")),
-                          <.li()(<.a(^.href := "#messages")("Favorited")),
-                          <.li()(<.a(^.href := "#messages")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#messages")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message"))
                       )
@@ -196,20 +118,6 @@ object Presets {
               <.div(^.className := "col-md-12 col-lg-10")(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-3 col-sm-3", DashBoardCSS.Style.paddingLeft0px)(
-                    <.div()(
-                      <.div(^.className := "btn-group")(
-                        <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
-                          <.span(^.className := "caret")
-                        ),
-                        <.ul( /*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
-                          <.li()(<.a(^.href := "#connections")("All")),
-                          <.li()(<.a(^.href := "#connections")("Available for Chat")),
-                          <.li()(<.a(^.href := "#connections")("Favorited")),
-                          <.li()(<.a(^.href := "#connections")("Hidden")),
-                          <.li(^.className := "divider")(),
-                          <.li()(<.a(^.href := "#connections")("Customize..."))
-                        )
-                      ),
                       <.div(PresetsCSS.Style.modalBtn)(
                         NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
                       )
@@ -219,7 +127,6 @@ object Presets {
                 )
               ),
               <.div(^.className := "col-lg-1")()
-            )
           )
         }
       } //main switch

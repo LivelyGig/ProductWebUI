@@ -39,7 +39,7 @@ object DashBoardCSS {
       paddingRight(0.px)
     )
     val gigActionsContainer = style(
-      backgroundColor(c"#67eaf2"),
+      backgroundColor(c"#C7DADA"),
       // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
@@ -516,12 +516,12 @@ object DashBoardCSS {
       height(100.%%),
       unsafeChild(".media-list ")(
         unsafeChild("li:nth-child(odd)")(
-          backgroundColor(c"#EAEAEA")
+          backgroundColor(c"#EEEEEE")
         )
       ),
       unsafeChild(".media-list ")(
         unsafeChild("li:nth-child(even)")(
-          backgroundColor(c"#D7E3E3")
+          backgroundColor(c"#F5F5F5")
         )
       )
     )

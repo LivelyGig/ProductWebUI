@@ -2,6 +2,8 @@ package client.css
 
 import client.components
 import client.css.MessagesCSS.Style._
+import japgolly.scalajs.react.vdom.prefix_<^._
+
 import scalacss.Defaults._
 import scalacss.LengthUnit.px
 import scala.language.postfixOps
@@ -149,7 +151,7 @@ object HeaderCSS {
 
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
-      color(transparent),
+      color(black),
       fontSize(1.em),
       &.hover(
         color(c"#FFFFFF")
@@ -242,13 +244,21 @@ object HeaderCSS {
     )
     val searchContainerBtn = style(
       fontSize(16.px),
-      marginTop(10.px),
+      marginTop(6.px),
       marginBottom(8.px),
       marginRight(15.px),
       color(orange),
       backgroundColor.transparent,
       border.none
     )
+
+    val searchActionsContainer = style (
+      backgroundColor(c"#c7dada"),
+      height(44.px),
+      textAlign.right
+)
+
+
 
     val loginbtn = style(
       backgroundColor.transparent,
