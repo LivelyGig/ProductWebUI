@@ -121,18 +121,18 @@ object LoginForm {
                   <.button(^.tpe := "submit", ^.id := "LoginID", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
                 <.div(DashBoardCSS.Style.paddingTop10px)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
                     <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
                     <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Validate Account",
                       ^.onClick ==> showValidate)
-                  ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
-                    <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Forgot My Password",
-                      ^.onClick ==> showValidate)
                   )
+                  // <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  //  <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Forgot My Password",
+                  //    ^.onClick ==> showValidate)
+                  // )
                 )
               )
             ),

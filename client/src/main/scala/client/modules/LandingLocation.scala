@@ -14,7 +14,7 @@ object LandingLocation {
   val component = ReactComponentB[RouterCtl[Loc]]("LandingLocation")
     .render_P(ctl =>
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        <.iframe(^.src := "http://www.livelygig.com", ^.width := "100%", ^.height := "100%")
+        // <.iframe(^.src := "http://www.livelygig.com", ^.width := "100%", ^.height := "100%")
       ))
 
     .build
