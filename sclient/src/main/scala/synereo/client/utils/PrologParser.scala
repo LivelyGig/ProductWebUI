@@ -12,4 +12,9 @@ object PrologParser extends js.Object {
   def StringToLabel(json: js.Array[String]): js.Array[js.Any] = js.native
 
 }
+@js.native
+object SelectizeUtils extends js.Object {
+  def addOption(selectizeId:String, text:String, value:String): js.Any = js.native
+
+}
 

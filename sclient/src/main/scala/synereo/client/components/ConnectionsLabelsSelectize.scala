@@ -6,17 +6,10 @@ import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
-import synereo.client.handlers.CreateLabels
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.rootmodels._
-
 import scala.language.existentials
 import scala.scalajs.js
-import diode.AnyAction._
-import diode.react.ModelProxy
 import shared.models.Label
-import synereo.client.rootmodels.SearchesRootModel
-
 
 /**
   * Created by shubham.k on 4/6/2016.
@@ -51,7 +44,8 @@ object ConnectionsLabelsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String /*labels: Seq[Label]*/ , proxy: ModelProxy[SearchesRootModel])
+  case class Props(parentIdentifier: String /*labels: Seq[Label]*/
+                   /*, proxy: ModelProxy[SearchesRootModel]*/)
 
   case class State(/*connections: Seq[ConnectionsModel] = Nil,*/ labels: Seq[Label] = Nil)
 
@@ -61,10 +55,27 @@ object ConnectionsLabelsSelectize {
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
       //      $(selectizeInput).selectize()
-      $(selectizeInput).selectize(SelectizeConfig
+      val chacha = $(selectizeInput).selectize(SelectizeConfig
         .maxItems(7)
         .plugins("remove_button")
       )
+      //      chacha.createItem(Map("text"->"huha","value"-> "huhahi"))
+
+    }
+
+    def addOption(label: Label) = {
+      /*val chacha = $("#SearchComponentCnxnSltz-selectize")[0].selectize
+      chacha.addOption({
+        text:'bar',
+        value: 'bar'
+      });*/
+      //      SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", label.text, label.uid)
+      /*var chacha = $("#SearchComponentCnxnSltz-selectize".asInstanceOf[js.Object]).get(0).get
+      println(chacha.selectDynamic("value").toString)
+      //    chacha.foreach(rawElement:raw.Element => println(rawElement))
+      chacha.selectize(SelectizeConfig).createItem(Map("text"->label.text,"value"-> label.uid))
+      ()*/
+
     }
 
     def mounted(props: Props): Callback = Callback {
@@ -78,6 +89,7 @@ object ConnectionsLabelsSelectize {
       //      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom((_.searches)))(_ => attachLabels())
       attachLabels()
       initializeTagsInput()
+      //      addOption(Label("yosasur","yosasur"))
     }
 
     //    def willMount(props: Props): Callback = Callback.when(SYNEREOCircuit.zoom(_.searches).value.searchesModel.isEmpty)(Callback{SYNEREOCircuit.dispatch(CreateLabels())})
@@ -132,8 +144,8 @@ object ConnectionsLabelsSelectize {
         <.option(^.value := "")("Select"),
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),
-        //        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
-        for (label <- props.proxy().searchesModel if !props.proxy().searchesModel.isEmpty) yield
+        for (label <- SYNEREOCircuit.zoom(_.searches).value.searchesModel) yield
+          //        for (label <- props.proxy().searchesModel if !props.proxy().searchesModel.isEmpty) yield
           <.option(^.value := label.text, ^.key := label.uid)(s"#${label.text}")
       )
       //        for (label <- state.labels) yield

@@ -28,7 +28,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.logger
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
-import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils, SelectizeUtils}
 import diode.AnyAction._
 import org.querki.jquery._
 import synereo.client.handlers.{ContentHandler, SearchesModelHandler}
@@ -187,14 +187,18 @@ object NewMessageForm {
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union getAllLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
-        if (labelsToPost.nonEmpty) {
+
+
+//        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
+        val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
+        if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
           ContentHandler.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
         } else {
           ContentHandler.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
-        //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(getAllLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
+        //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(allLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
 
         t.modState(s => s.copy(postNewMessage = true))
       }

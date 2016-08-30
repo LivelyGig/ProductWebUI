@@ -1,13 +1,16 @@
 package synereo.client.handlers
 
+import java.util.UUID
+
 import org.widok.moment.Moment
 import shared.dtos._
 import shared.models.{ConnectionsModel, MessagePost, Post}
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._
+import synereo.client.components.ConnectionsLabelsSelectize
 import synereo.client.rootmodels.SessionRootModel
-import synereo.client.utils.{AppUtils, ConnectionsUtils}
+import synereo.client.utils.{AppUtils, ConnectionsUtils, LabelsUtils, SelectizeUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -268,9 +271,9 @@ object ContentHandler {
     post()
     def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
       case Success(res) =>
-        // println("searches handler label post success")
         postMessage(subscribeReq)
-      //        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
+        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
+
       case Failure(res) =>
         // println("searces handler label post failure")
         if (count == 3) {
