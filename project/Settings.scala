@@ -33,7 +33,7 @@ object Settings {
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
     "com.vmunier" %% "play-scalajs-scripts" % Versions.playScripts,
-    "org.webjars" % "font-awesome" % Versions.fontAwesome  % Provided,
+    "org.webjars" % "font-awesome" % Versions.fontAwesome % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
     "org.json4s" %% "json4s-jackson" % Versions.json4s
   ))
@@ -47,7 +47,7 @@ object Settings {
     "me.chrons" %%% "diode" % Versions.diode,
     "me.chrons" %%% "diode-react" % Versions.diode,
     "org.querki" %%% "jquery-facade" % Versions.jqueryFacade,
-    "org.querki" %%% "querki-jsext" % Versions.querkiJsext ,
+    "org.querki" %%% "querki-jsext" % Versions.querkiJsext,
     "org.querki" %%% "bootstrap-datepicker-facade" % Versions.datePickerFacade,
     "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,

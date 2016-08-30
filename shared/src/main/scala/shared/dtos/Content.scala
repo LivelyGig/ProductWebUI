@@ -65,7 +65,7 @@ case class Expression(msgType: String, content: ExpressionContent)
 
 case class ExpressionContent(cnxns: Seq[Connection], label: String, value: String = "", uid: String = "")
 
-case class Label(text: String, color: String, imgSrc: String)
+//case class Label(text: String, color: String, imgSrc: String)
 
 case class IntroConnections(sessionURI: String = "", alias: String = "", aConnection: Connection = Connection(),
                             bConnection: Connection = Connection(), aMessage: String = "", bMessage: String = "") extends Content

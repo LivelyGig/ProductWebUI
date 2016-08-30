@@ -37,7 +37,9 @@ object SignupCSS {
     val signUpuserNameContainer = style(
       opacity(0.5)
     )
-    val howAccountsWorkLink = style()
+    val howAccountsWorkLink = style(
+      color(c"#35b0e2")
+    )
     val termsAndCondBtn = style(
       color(c"#000"),
       backgroundColor.transparent.important,

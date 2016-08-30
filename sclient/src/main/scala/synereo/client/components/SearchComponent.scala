@@ -46,8 +46,8 @@ object SearchComponent {
     def render(s: State, p: Props) = {
       <.div(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.searchBoxContainer)(
-          searchesProxy(proxy => ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId, proxy)))
-        //          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))
+//          searchesProxy(proxy => ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId, proxy)))
+                  ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))
       ),
       <.div(SynereoCommanStylesCSS.Style.displayInline)(
         <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")

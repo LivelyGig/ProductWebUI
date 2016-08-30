@@ -56,7 +56,7 @@ class SearchesHandler[M](modelRW: ModelRW[M, SearchesRootModel]) extends ActionH
       }
 
     case AddLabel(label: Label) =>
-      updated(value.copy(searchesModel = value.searchesModel ++ Seq(label)))
+      updated(value.copy(searchesModel = value.searchesModel :+ label))
 
     case UpdatePrevSearchLabel(labelStr) =>
       updated(value.copy(previousSearchLabel = labelStr))

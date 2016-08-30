@@ -1,6 +1,7 @@
 package synereo.client.utils
 
 import shared.models.Label
+import synereo.client.services.SYNEREOCircuit
 
 
 /**
@@ -64,5 +65,21 @@ object LabelsUtils {
     prolog.append(")")
     prolog.toString()
   }
+
+  def getNewLabelsText(allLabelsText: Seq[String]): Seq[String] ={
+    if(SYNEREOCircuit.zoom(_.searches.searchesModel.isEmpty).value){
+      allLabelsText
+    } else {
+      allLabelsText diff SYNEREOCircuit.zoom(_.searches.searchesModel).value.map(_.text)
+    }
+  }
+
+  /*def getNewLabels(allLabels: Seq[Label]): Seq[Label] ={
+    if(SYNEREOCircuit.zoom(_.searches.searchesModel.isEmpty).value){
+      allLabels
+    } else {
+      allLabels diff SYNEREOCircuit.zoom(_.searches.searchesModel).value
+    }
+  }*/
 
 }

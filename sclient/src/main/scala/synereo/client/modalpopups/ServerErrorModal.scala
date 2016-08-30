@@ -15,6 +15,7 @@ import synereo.client.services.SYNEREOCircuit
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
+
 /**
   * Created by mandar.k on 4/13/2016.
   */
@@ -50,7 +51,7 @@ object ServerErrorModal {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
               <.div()(
-                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(s"Encountering problems in serving request. And here is the server Error ${SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value}") /*,*/
+                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(s"Encountering problems in serving request. ${SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value}") /*,*/
                 //                <.div(SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value)
 
               ),
