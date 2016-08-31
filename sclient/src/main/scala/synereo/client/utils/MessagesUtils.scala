@@ -2,12 +2,8 @@ package synereo.client.utils
 
 import java.util.UUID
 
-import org.scalajs.dom._
 import shared.dtos.{Connection, Expression, ExpressionContent, SubscribeRequest}
 import shared.models.{Label, MessagePost, MessagePostContent, PostContent}
-import synereo.client.sessionitems.SessionItems
-import synereo.client.handlers.SubsForMsgAndBeginSessionPing
-import synereo.client.logger
 import synereo.client.services.{ApiTypes, SYNEREOCircuit}
 
 import scala.scalajs.js.Date

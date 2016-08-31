@@ -40,17 +40,18 @@ object SearchComponent {
         Seq(Label(text = AppUtils.MESSAGE_POST_LABEL)) ++ labels.map(currentLabel => Label(text = currentLabel)
         ), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(cnxnToPost, searchLabels))
-      SYNEREOCircuit.dispatch(CancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)))
+      //      SYNEREOCircuit.dispatch(CancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)))
+      ContentHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr))
     }
 
     def render(s: State, p: Props) = {
       <.div(
         <.div(^.id := s.connectionsSelectizeInputId, SynereoCommanStylesCSS.Style.searchBoxContainer)(
-                  ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))
+          ConnectionsLabelsSelectize(ConnectionsLabelsSelectize.Props(s.connectionsSelectizeInputId))
         ),
-      <.div(SynereoCommanStylesCSS.Style.displayInline)(
-        <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
-        ))
+        <.div(SynereoCommanStylesCSS.Style.displayInline)(
+          <.button(^.className := "btn btn-primary", SynereoCommanStylesCSS.Style.searchBtn, ^.onClick ==> searchWithLblAndCnxn)(MIcon.apply("search", "24")
+          ))
       )
     }
   }
