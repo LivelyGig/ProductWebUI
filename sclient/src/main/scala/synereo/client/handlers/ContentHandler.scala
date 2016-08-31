@@ -1,13 +1,16 @@
 package synereo.client.handlers
 
+import java.util.UUID
+
 import org.widok.moment.Moment
 import shared.dtos._
 import shared.models.{ConnectionsModel, MessagePost, Post}
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import diode.AnyAction._
+import synereo.client.components.ConnectionsLabelsSelectize
 import synereo.client.rootmodels.SessionRootModel
-import synereo.client.utils.{AppUtils, ConnectionsUtils}
+import synereo.client.utils.{AppUtils, ConnectionsUtils, LabelsUtils, SelectizeUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -18,6 +21,8 @@ import scala.util.{Failure, Success}
   */
 //scalastyle:off
 object ContentHandler {
+  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
+
   def filterContent(messages: ApiResponse[ResponseContent]): Option[Post] = {
     try {
       Some(upickle.default.read[MessagePost](messages.content.pageOfPosts(0)))
@@ -29,7 +34,27 @@ object ContentHandler {
     }
   }
 
-  def processIntroductionNotification(response: String = ""): Unit = {
+  def processConnectNotification(response: String) = {
+    //    var isNew: Boolean = true
+    val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
+    val content = connectNotification(0).content
+    val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
+    val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+    //    connections.foreach {
+    //      connection => if (connection.name.equals(name)) {
+    //        isNew = false
+    //      }
+    //    }
+    //    if (isNew) {
+    //      SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc), content.connection))
+    //    }
+    if (connections.filter(_.name == name).isEmpty) {
+      SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc), content.connection))
+    }
+
+  }
+
+  def processResponse(response: String = ""): Unit = {
     //    toDo: Think of some better logic to identify different responses from session ping
     try {
       if (response.contains("sessionPong")) {
@@ -41,21 +66,7 @@ object ContentHandler {
         val introductionConfirmationResponse = upickle.default.read[Seq[ApiResponse[IntroductionConfirmationResponse]]](response)
         SYNEREOCircuit.dispatch(AcceptIntroductionConfirmationResponse(introductionConfirmationResponse(0).content))
       } else if (response.contains("connectNotification")) {
-        var isNew: Boolean = true
-        val connectNotification = upickle.default.read[Seq[ApiResponse[ConnectNotification]]](response)
-        val content = connectNotification(0).content
-        //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
-        val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
-        val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
-
-        connections.foreach {
-          connection => if (connection.name.equals(name)) {
-            isNew = false
-          }
-        }
-        if (connections.filter(_.name == name).nonEmpty) {
-          SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc),content.connection))
-        }
+        processConnectNotification(response)
       } else if (response.contains("beginIntroductionResponse")) {
         val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
         SYNEREOCircuit.dispatch(PostIntroSuccess(beginIntroductionRes(0).content))
@@ -65,7 +76,7 @@ object ContentHandler {
     }
   }
 
-  //  def processIntroductionNotification(response: String = ""): Unit = {
+  //  def processResponse(response: String = ""): Unit = {
   //    val responseTypes = Map("sessionPong" -> Seq[ApiResponse[SessionPong]],
   //      "introductionNotification" -> Seq[ApiResponse[Introduction]],
   //      "introductionConfirmationResponse" -> Seq[ApiResponse[IntroductionConfirmationResponse]],
@@ -112,7 +123,6 @@ object ContentHandler {
   //    }
   //  }
 
-  val responseType = Seq("sessionPong", "introductionNotification", "introductionConfirmationResponse", "connectNotification", "beginIntroductionResponse")
 
   def getCurrMsgModel(): Seq[Post] = {
 
@@ -141,15 +151,20 @@ object ContentHandler {
     // the other expected responses. Why check for all responses instead of one? So that
     // we know that what are the expected responses and make changes later.
     if (responseType.exists(response.contains(_))) {
-      processIntroductionNotification(response)
+      processResponse(response)
       getCurrMsgModel()
     } else {
-      val msg = getCurrMsgModel() ++
-        upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
-          .filterNot(_.content.pageOfPosts.isEmpty)
-          .flatMap(content => filterContent(content))
+      val msg = getCurrMsgModel() ++ getPostFromRes(response)
       msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
     }
+  }
+
+  def getPostFromRes(response: String) = {
+
+    upickle.default.read[Seq[ApiResponse[ResponseContent]]](response)
+      .filterNot(_.content.pageOfPosts.isEmpty)
+      .flatMap(content => filterContent(content))
+
   }
 
   def postNewConnection(content: Content) = {
@@ -225,13 +240,14 @@ object ContentHandler {
   }
 
   def cancelPreviousAndSubscribeNew(req: SubscribeRequest) = {
+    SYNEREOCircuit.dispatch(ClearMessages())
     var count = 1
     cancelPrevious()
     def cancelPrevious(): Unit = CoreApi.cancelSubscriptionRequest(CancelSubscribeRequest(
       SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, SYNEREOCircuit.zoom(_.searches.previousSearchCnxn).value,
       SYNEREOCircuit.zoom(_.searches.previousSearchLabel).value)).onComplete {
       case Success(res) =>
-        SYNEREOCircuit.dispatch(SubsForMsg(req))
+        subsForMsg(req)
       case Failure(res) =>
         if (count == 3) {
           //            logger.log.error("server error")
@@ -262,16 +278,16 @@ object ContentHandler {
     }
   }
 
-  def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
+  //  def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
 
   def postLabelsAndMsg(labelPost: LabelPost, subscribeReq: SubscribeRequest) = {
     var count = 1
     post()
     def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
       case Success(res) =>
-        // println("searches handler label post success")
         postMessage(subscribeReq)
-      //        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
+        SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
+
       case Failure(res) =>
         // println("searces handler label post failure")
         if (count == 3) {
@@ -287,11 +303,11 @@ object ContentHandler {
 
   def postUserUpdate(req: UpdateUserRequest) = {
     var count = 1
-
     post()
     def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
       case Success(response) =>
-        logger.log.debug("user update request sent successfully")
+        logger.log.debug("user image update request successful")
+        SYNEREOCircuit.dispatch(UpdateUserImage(req.jsonBlob.imgSrc))
       case Failure(response) =>
         if (count == 3) {
           //            logger.log.error("user update error")
