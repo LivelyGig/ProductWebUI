@@ -20,7 +20,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import synereo.client.handlers.PostUserUpdate
+import synereo.client.handlers.{ContentHandler}
 import diode.AnyAction._
 import org.querki.jquery._
 import synereo.client.logger
@@ -118,7 +118,8 @@ object ProfileImageUploaderForm {
         $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
         t.modState(s => s.copy(postNewImage = false))
       } else {
-        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
+        //        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
+        ContentHandler.postUserUpdate(t.state.runNow().updateUserRequest)
         t.modState(s => s.copy(postNewImage = true))
       }
     }

@@ -15,7 +15,9 @@ case class LoginUser(userModel: UserModel)
 
 case class LogoutUser()
 
-case class PostUserUpdate(updateUserRequest: UpdateUserRequest)
+case class UpdateUserImage(imgSrc: String)
+
+//case class PostUserUpdate(updateUserRequest: UpdateUserRequest)
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
   //  val messageLoader = "#messageLoader"
@@ -29,11 +31,14 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       window.location.href = "/"
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
 
-    case PostUserUpdate(req) =>
-      ContentHandler.postUserUpdate(req)
-      if (req.jsonBlob.imgSrc != null) {
-        updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
-      } else noChange
+    case UpdateUserImage(imgSrc) =>
+      updated(value.copy(imgSrc = imgSrc))
+
+    //    case PostUserUpdate(req) =>
+    //      ContentHandler.postUserUpdate(req)
+    //      if (req.jsonBlob.imgSrc != null) {
+    //        updated(value.copy(imgSrc = req.jsonBlob.imgSrc))
+    //      } else noChange
 
   }
 }

@@ -23,17 +23,16 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
 
 case class StoreCnxnAndLabels(slctzId: String, sessionUriName: String)
 
-case class SubsForMsgAndBeginSessionPing()
+//case class SubsForMsgAndBeginSessionPing()
 
-case class SubsForMsg(req: SubscribeRequest)
+//case class CancelPreviousAndSubscribeNew(req: SubscribeRequest)
 
-case class CancelPreviousAndSubscribeNew(req: SubscribeRequest)
+//case class PostMessage(req: SubscribeRequest)
+
+//case class PendingMsg()
 
 case class ClearMessages()
 
-case class PostMessage(req: SubscribeRequest)
-
-case class PendingMsg()
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
   //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
@@ -49,25 +48,22 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
 
-    case SubsForMsgAndBeginSessionPing() =>
-      ContentHandler.subsForMsgAndBeginSessionPing()
-      noChange
-
-    case SubsForMsg(req: SubscribeRequest) =>
-      ContentHandler.subsForMsg(req)
-      noChange
-
     case ClearMessages() =>
       updated(Pot.empty)
 
-    case CancelPreviousAndSubscribeNew(req: SubscribeRequest) =>
-      SYNEREOCircuit.dispatch(ClearMessages())
-      ContentHandler.cancelPreviousAndSubscribeNew(req)
-      noChange
+    //    case SubsForMsgAndBeginSessionPing() =>
+    //      ContentHandler.subsForMsgAndBeginSessionPing()
+    //      noChange
 
-    case PostMessage(req) =>
-      ContentHandler.postMessage(req)
-      noChange
+
+    //    case CancelPreviousAndSubscribeNew(req: SubscribeRequest) =>
+    //      SYNEREOCircuit.dispatch(ClearMessages())
+    //      ContentHandler.cancelPreviousAndSubscribeNew(req)
+    //      noChange
+
+    //    case PostMessage(req) =>
+    //      ContentHandler.postMessage(req)
+    //      noChange
 
   }
 }

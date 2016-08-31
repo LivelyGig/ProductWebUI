@@ -20,8 +20,6 @@ case class UpdateIntroductionsModel(introConfirmReq: IntroConfirmReq)
 
 case class PostIntroSuccess(beginIntroductionRes: BeginIntroductionRes)
 
-case class AcceptConnectNotification(connectNotification: ConnectNotification)
-
 case class AcceptIntroductionConfirmationResponse(introductionConfirmationResponse: IntroductionConfirmationResponse)
 
 class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends ActionHandler(modelRW) {
@@ -41,9 +39,6 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
         _.introSessionId.equals(introConfirmReq.introSessionId)
       )
       updated(IntroRootModel(newList))
-
-    case AcceptConnectNotification(connectNotification: ConnectNotification) =>
-      updated(IntroRootModel(Nil))
 
     case AcceptIntroductionConfirmationResponse(introductionConfirmationResponse: IntroductionConfirmationResponse) =>
       noChange

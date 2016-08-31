@@ -1,43 +1,25 @@
-// old code
+var SelectizeUtils = (function(){
+    function addOption(selectizeId, text, value) {
+        var sel= $("#"+selectizeId)[0].selectize
+        sel.addOption({
+            text:text,
+            value: value
+        })
+    }
+    function initilizeSelectize(selectizeId,maximumItems){
+     $("#"+selectizeId).selectize({
+        plugins: ['remove_button'],
+        create: true,
+        maxItems:maximumItems
+    })
+ }
+ return {
+    addOption:addOption,
+    initilizeSelectize:initilizeSelectize
+}
 
-//window.onload = function() {
-//  function applyStylingToHomeFeed(){
-//    $("#homeFeedMediaList li").each(function(){
-//      if ($(this).offset().top < 400 &&  $(this).offset().top > 100) {
-//        $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
-//        $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-//        $(this).css({"opacity":"1","transform": "scale(1.05)"});
-//        $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
-//        $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-//      }
-//    });
-//  };
-//  $(document).ready(function() {
-//    applyStylingToHomeFeed();
-//    var hoverInterval=  setInterval(function(){
-//      $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
-//      $("#homeFeedMediaList li").hover(function(){
-//        $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
-//        $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-//        $(this).css({"opacity":"1","transform": "scale(1.05)"});
-//        $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
-//        $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-//      },
-//      function(){
-//      // $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
-//      // $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-//      // $(this).css({"opacity":"1","transform": "scale(1.05)"});
-//      // $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
-//      // $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-//    });
-//    }, 1000);
-//    setTimeout(function(){
-//      clearInterval(hoverInterval);
-//    },100000000);
-//  });
-//};
+})();
 
-// new code
 
 var ScrollSpeedMonitor = (function()
 {
@@ -123,16 +105,16 @@ window.onload = function() {
 $(document).ready(function() {
     applyStylingToHomeFeed();
     var hoverInterval=  setInterval(function(){
-    $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
       // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
       var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
 //        console.log('Scroll speed: ' + speedInPxPerMs);
-        if (speedInPxPerMs > 3) {
-            $("#homeFeedMediaList li").css("opacity","0.2");
-        }else{
-            applyStylingToHomeFeed();
-        }
-    });
+if (speedInPxPerMs > 3) {
+    $("#homeFeedMediaList li").css("opacity","0.2");
+}else{
+    applyStylingToHomeFeed();
+}
+});
       $("#homeFeedMediaList li").hover(function(){
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});

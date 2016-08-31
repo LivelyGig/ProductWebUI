@@ -14,6 +14,7 @@ import synereo.client.sessionitems.SessionItems
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
+
 //scalastyle:off
 object NewUserForm {
   var addNewUserState: Boolean = false
@@ -99,7 +100,7 @@ object NewUserForm {
 
     def render(s: State, p: Props) = {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
-      val nodeName = s.apiURL
+      val nodeName = dom.window.location.hostname
       val headerText = "Sign up"
       Modal(
         Modal.Props(
@@ -151,7 +152,7 @@ object NewUserForm {
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
               <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
                 <.div(^.className := "text-left")("creating account on node: ", <.span(nodeName)),
-                <.a(^.href := "#", SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
+                <.span(SignupCSS.Style.howAccountsWorkLink)("How do accounts works accross nodes?")
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
                 <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hideModal, "Sign up")
