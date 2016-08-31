@@ -76,21 +76,31 @@ object Login {
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
-            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiTypes.CreateUserWaiting) {
-              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
-              $(loginLoader).addClass("hidden")
-              $(loadingScreen).addClass("hidden")
-            } else if (s.msgType == ApiTypes.CREATE_USER_ERROR) {
-              val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
-              //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
-              t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
-              $(loginLoader).addClass("hidden")
-              $(loadingScreen).addClass("hidden")
-            } else {
-              log.debug(s"createUser msg : ${s.content}")
-              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            try {
+              val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
+              log.debug(s"createUser msg : ${s.msgType}")
+              if (s.msgType == ApiTypes.CreateUserWaiting) {
+                t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+                $(loginLoader).addClass("hidden")
+                $(loadingScreen).addClass("hidden")
+              } else if (s.msgType == ApiTypes.CREATE_USER_ERROR) {
+                val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
+                //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
+                t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
+                $(loginLoader).addClass("hidden")
+                $(loadingScreen).addClass("hidden")
+              } else if (s.msgType == ApiTypes.ApiHostUnreachableError){
+                processServerError(s.msgType)
+              }
+              else {
+                log.debug(s"createUser msg : ${s.content}")
+                t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+              }
+            } catch {
+              case e:Exception =>
+                val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+                processServerError(error.msgType)
+
             }
           case Failure(res) =>
             log.debug(s"createUserFailure: ${res}")
@@ -105,10 +115,13 @@ object Login {
       }
     }
 
-    def validateInitilizeSessionResponse(response: String): String = {
+    def validateInitializeSessionResponse(response: String): String = {
       try {
-        upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
-        LOGIN_ERROR
+        val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+        if (error.msgType == ApiTypes.ApiHostUnreachableError)
+          SERVER_ERROR
+        else
+          LOGIN_ERROR
       } catch {
         case e: Exception =>
           try {
@@ -127,10 +140,12 @@ object Login {
       $(loadingScreen).removeClass("hidden")
       CoreApi.agentLogin(userModel).onComplete {
         case Success(response) =>
-          validateInitilizeSessionResponse(response) match {
+          validateInitializeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
             case LOGIN_ERROR => processLoginFailed(response)
-            case SERVER_ERROR => processServerError(response)
+            case SERVER_ERROR =>
+              val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+              processServerError(error.msgType)
           }
         case Failure(res) =>
           println("res = " + res.getMessage)
