@@ -10,7 +10,7 @@ import shared.models.{MessagePost, MessagePostContent}
 import synereo.client.rootmodels.MessagesRootModel
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{AmplifyPostForm, AmplifyPostModal, FullPostViewModal, ServerErrorModal}
+import synereo.client.modalpopups._
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -260,10 +260,11 @@ object HomeFeedList {
 
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
   val FeedTimeOut = 1500
+  val getSearches = SYNEREOCircuit.connect(_.searches)
 
   case class Props(messages: Seq[MessagePost])
 
-  case class State(ShowFullPostView: Boolean = false, preventFullPostView: Boolean = true, showAmplifyPostForm: Boolean = false)
+  case class State(ShowFullPostView: Boolean = false, preventFullPostView: Boolean = true, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
 
@@ -315,6 +316,16 @@ object HomeFeedList {
     def amplifyPost(e: ReactEventI): Callback = {
       println("inside amplify post method ")
       t.modState(state => state.copy(showAmplifyPostForm = true))
+    }
+
+    def forwardPost(e: ReactEventI): Callback = {
+      println("inside amplify post method ")
+      t.modState(state => state.copy(showForwardPostForm = true))
+    }
+
+    def postForwarded(): Callback = {
+      println("inside amplify post method ")
+      t.modState(state => state.copy(showForwardPostForm = false))
     }
 
     def postAmplified(): Callback = {
@@ -377,6 +388,9 @@ object HomeFeedList {
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> amplifyPost)(
                   <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                ),
+                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> forwardPost)(
+                  <.span(Icon.mailForward)
                 )
               )
             ),
@@ -443,8 +457,12 @@ object HomeFeedList {
         <.div(
           if (state.showAmplifyPostForm) {
             AmplifyPostForm(AmplifyPostForm.Props(postAmplified))
-          } else {
-            <.span
+          }
+          else if (state.showForwardPostForm) {
+            getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(postForwarded, "New Message", searchesProxy)))
+          }
+          else {
+            <.span()
           }
         ),
         <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer /*, ^.onScroll ==> handleScroll*/)(
