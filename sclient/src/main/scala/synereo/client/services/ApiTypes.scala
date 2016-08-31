@@ -2,7 +2,7 @@ package synereo.client.services
 
 object ApiTypes {
   val CreateUserError = "createUserError"
-  val InitializeSessionError = "initializeSessionError"
+  val ApiHostUnreachableError = "apiHostUnreachableError"
   val CreateUserWaiting = "createUserWaiting"
   val CREATE_USER_ERROR = "createUserError"
   val InitializeSessionResponse = "initializeSessionResponse"

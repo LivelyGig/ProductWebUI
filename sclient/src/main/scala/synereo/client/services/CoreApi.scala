@@ -57,7 +57,7 @@ object CoreApi {
 
     futureResponse.recover {
       case ae: ApiError => ae.response
-      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.CreateUserError, ErrorResponse(e.getMessage)))
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.ApiHostUnreachableError, ErrorResponse(e.getMessage)))
     }
   }
 
@@ -94,7 +94,7 @@ object CoreApi {
 
     futureResponse.recover {
       case ae: ApiError => ae.response
-      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.InitializeSessionError, ErrorResponse(e.getMessage)))
+      case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.ApiHostUnreachableError, ErrorResponse(e.getMessage)))
     }
   }
 //  def agentLogin(userModel: UserModel): Future[String] = {

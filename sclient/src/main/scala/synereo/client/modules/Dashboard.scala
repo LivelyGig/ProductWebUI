@@ -52,11 +52,6 @@ object Dashboard {
       //
     }
 
-    //    def updateContent(e: ReactEventI) = {
-    //      val value = e.target.value
-    //      t.modState(s => s.copy(postMessage = s.postMessage.copy(postContent = s.postMessage.postContent.copy(text = value))))
-    //    }
-
     def closeFullViewModalPopUp(): Callback = {
       $(dashboardContainerMain).addClass("SynereoCommanStylesCSS_Style-overflowYScroll")
       t.modState(s => s.copy(ShowFullPostView = false))
@@ -386,10 +381,14 @@ object HomeFeedList {
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> amplifyPost)(
+                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                  ^.onClick ==> amplifyPost)(
                   <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                 ),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> forwardPost)(
+                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
+                  ^.onClick ==> forwardPost)(
                   <.span(Icon.mailForward)
                 )
               )
