@@ -24,7 +24,7 @@ class MessagesHandlerTest extends UnitTest("MessagesHandlerTest") {
     Connection("newSource2", "newLabel2", "newTarget2"),
     Connection("newSource3", "newLabel3", "newTarget3"))
 
-  val newMessagePostContent = new MessagePostContent("text", "subject", "imgSrc")
+  val newMessagePostContent =  MessagePostContent("text", "subject", "imgSrc")
 
   val newMessagePostSeq = Seq(MessagePost("uid1", "created", "modified", "label1", newCnxnSeq, newMessagePostContent),
     MessagePost("uid2", "created", "modified", "label2", newCnxnSeq, newMessagePostContent),
@@ -45,6 +45,7 @@ class MessagesHandlerTest extends UnitTest("MessagesHandlerTest") {
         assert(false)
     }
   }
+  //todo think of simulating the ajax behaviour
 
 //  "PostMessage" should "Post a message" in {
 //    val result = handler.handle(PostMessage(newSubscribeRequest))

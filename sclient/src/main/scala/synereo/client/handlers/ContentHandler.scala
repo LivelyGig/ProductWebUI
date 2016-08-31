@@ -47,12 +47,13 @@ object ContentHandler {
         //        SYNEREOCircuit.dispatch(AcceptConnectNotification(content))
         val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(content.introProfile)
         val connections = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+
         connections.foreach {
           connection => if (connection.name.equals(name)) {
             isNew = false
           }
         }
-        if (isNew) {
+        if (connections.filter(_.name == name).nonEmpty) {
           SYNEREOCircuit.dispatch(AddConnection(ConnectionsModel("", content.connection, name, imgSrc),content.connection))
         }
       } else if (response.contains("beginIntroductionResponse")) {
