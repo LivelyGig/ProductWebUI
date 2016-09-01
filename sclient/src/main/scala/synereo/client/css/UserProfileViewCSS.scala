@@ -42,35 +42,26 @@ object UserProfileViewCSS {
       maxHeight(45.px),
       marginRight(45.px)
     )
-
-
     val newImageSubmitBtnContainer = style(
       marginTop(30.px),
       marginBottom(30.px)
     )
-
     val editSaveButton = style(
       ToStyleAV(marginLeft(1.%%)),
       marginTop(1.px)
     )
-
-
-
     val sectionButtons = style(
       marginLeft(2.%%)
     )
-
-    val buttonDiv = style(
+    val buttonsContainerDiv = style(
       position.absolute,
       top(0.px),
       left(300.px),
-      width( 100.%%)
+      width(100.%%)
     )
-
     val label = style(
       width(350.px)
     )
-
     val agentUID = style(
       marginLeft(15.%%),
       padding(10.px),
@@ -78,17 +69,30 @@ object UserProfileViewCSS {
       color.white,
       position.relative
     )
-
+    val nodeSettingSection = style(
+      fontSize(20.px),
+      color.black
+    )
     val inputText = style(
       width(200.px),
       color.black,
       marginBottom(1.%%)
     )
-
+    val nodeSettingsFormControlContainer = style(
+      marginBottom(10.px)
+    )
     val deleteButton = style(
       position.relative,
       top(-47.px),
       left(270.px)
+    )
+    val nodeSettingsSelectButtons = style(
+      marginTop(5.px),
+      marginRight(10.px)
+    )
+    val sectionButtonsContainer = style(
+      width(100.%%),
+      marginBottom(5.px)
     )
 
   }

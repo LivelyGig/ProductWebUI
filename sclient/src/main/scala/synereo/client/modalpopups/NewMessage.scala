@@ -132,7 +132,6 @@ object NewMessageForm {
 
     def labelsToPostMsg: Seq[Label] = {
       val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
-
       //      println(s"labelsToPostMsg ${textSeq.distinct}")
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }

@@ -7,15 +7,17 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{NewMessage, ProfileImageUploaderForm}
+import synereo.client.modalpopups.{NewMessage, NodeSettingModal, ProfileImageUploaderForm}
+
 import scala.scalajs.js
-import synereo.client.SYNEREOMain
+import synereo.client.{SYNEREOMain, logger}
 import SYNEREOMain._
 import synereo.client.handlers._
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
+
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -30,7 +32,7 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false)
+  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false, showNodeSettingModal: Boolean = false)
 
 
   class Backend(t: BackendScope[Props, State]) {
@@ -47,13 +49,23 @@ object MainMenu {
     def imageUploaded(): Callback = {
       t.modState(s => s.copy(showProfileImageUploadModal = false))
     }
+
+    def showNodeSettingModal(): react.Callback = {
+      logger.log.debug("showNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = true))
+    }
+
+    def hideNodeSettingModal(): Callback = {
+      logger.log.debug("hideNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = false))
+    }
   }
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS(($, props, S) => {
-      //      println(s"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
+    .renderPS(($, props, state) => {
+      //      println(state"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
@@ -149,13 +161,16 @@ object MainMenu {
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Upload Picture ")),
-                      <.li(<.a(" About")),
+                      <.li(<.a("About")),
+                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(),"Node Settings")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
 
                     )
                   ),
-                  if (S.showProfileImageUploadModal)
+                  if (state.showProfileImageUploadModal)
                     userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.imageUploaded, "Profile Image Uploader", userProxy)))
+                  else if (state.showNodeSettingModal)
+                    NodeSettingModal(NodeSettingModal.Props($.backend.hideNodeSettingModal))
                   else
                     Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
