@@ -4,8 +4,7 @@ package client.modules
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handler.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
 import client.rootmodel.ProjectsRootModel
-import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals._
+import client.css._
 import shared.models.ProjectsPost
 import client.components.Bootstrap._
 import diode.react.ReactPot._
@@ -17,12 +16,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
+import client.modals._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
 import diode.AnyAction._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -68,6 +69,9 @@ object ProjectResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

@@ -1,13 +1,14 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.rootmodel.ConnectionsRootModel
 import diode.react._
 import client.components.Icon
-import client.css.{ HeaderCSS, DashBoardCSS }
-import client.modals.{ NewMessage, NewRecommendation }
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
+import client.modals.{NewConnection, NewMessage, NewRecommendation}
 import shared.models.ConnectionsModel
+
 import scalacss.ScalaCssReact._
 
 object ConnectionsResults {
@@ -43,6 +44,9 @@ object ConnectionsResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

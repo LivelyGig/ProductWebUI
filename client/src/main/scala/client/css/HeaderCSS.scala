@@ -244,18 +244,19 @@ object HeaderCSS {
     )
     val searchContainerBtn = style(
       fontSize(16.px),
-      marginTop(6.px),
-      marginBottom(8.px),
-      marginRight(15.px),
+      paddingRight(10.px),
       color(orange),
       backgroundColor.transparent,
-      border.none
+      border.none,
+      float.right
     )
 
     val searchActionsContainer = style (
       backgroundColor(c"#c7dada"),
       height(44.px),
-      textAlign.right
+      textAlign.left,
+      paddingTop(4.px),
+      paddingBottom(4.px)
 )
 
 

@@ -4,8 +4,8 @@ import client.handler.{ContentModelHandler, RefreshProfiles}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 import client.components.Icon
-import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals.{NewMessage, NewRecommendation, ServerErrorModal}
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
+import client.modals.{NewMessage, NewProfile, NewRecommendation, ServerErrorModal}
 import org.querki.jquery._
 import client.rootmodel.ProfilesRootModel
 import client.logger._
@@ -59,6 +59,9 @@ object ProfilesResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewProfile(NewProfile.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.user, "Update Profile"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
