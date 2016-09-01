@@ -6,7 +6,7 @@ import org.querki.jquery._
 import synereo.client.components.GlobalStyles
 import synereo.client.css.LoginCSS
 import synereo.client.modalpopups._
-import synereo.client.utils.{ UserUtils}
+import synereo.client.modalpopupbackends.LoginViewBackend
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
@@ -44,7 +44,7 @@ object Login {
 
   val component = ReactComponentB[Props]("NotificationView")
     .initialState(State())
-    .backend(new UserUtils.Backend(_))
+    .backend(new LoginViewBackend(_))
     .renderPS((t, P, s) => {
       <.div(^.className := "container-fluid", LoginCSS.Style.loginPageContainerMain)(
         <.div(^.className := "row")(
