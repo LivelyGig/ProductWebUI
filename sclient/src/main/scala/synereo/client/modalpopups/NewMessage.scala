@@ -4,37 +4,27 @@ import java.util.UUID
 
 import diode.react.ModelProxy
 import japgolly.scalajs.react
-import shared.models.{Label, MessagePost, MessagePostContent}
+import shared.models.{Label, MessagePostContent}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
 import synereo.client.rootmodels.SearchesRootModel
 import shared.dtos.LabelPost
-import synereo.client.sessionitems.SessionItems
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
-import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS}
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+import synereo.client.services.{SYNEREOCircuit}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
-import synereo.client.logger
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils, SelectizeUtils}
-import diode.AnyAction._
 import org.querki.jquery._
 import synereo.client.handlers.{ContentHandler, SearchesModelHandler}
-
-import scala.concurrent.Future
-import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 
 //scalastyle:off
@@ -189,12 +179,13 @@ object NewMessageForm {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
 
 
-//        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
+        //        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
           ContentHandler.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
-          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
+          //          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
+          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
         } else {
           ContentHandler.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
