@@ -6,11 +6,12 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
-
 import synereo.client.components.Bootstrap._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
 import synereo.client.logger
+import synereo.client.modalpopupbackends.AmplifyPostBackend
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -77,71 +78,38 @@ object AmplifyPostForm {
 
   case class State(isAmplified: Boolean = false)
 
-  class Backend(t: BackendScope[Props, State]) {
-    def hideModal = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
 
-    def modalClosed(state: State, props: Props): Callback = {
-      props.submitHandler()
-    }
 
-    def submitForm(e: ReactEventI) = {
-      e.preventDefault()
-      val state = t.state.runNow()
-      t.modState(state => state.copy(isAmplified = true))
-    }
+  private val component = ReactComponentB[Props]("AmplifyPostForm")
+    .initialState_P(p => State())
+    .backend(new AmplifyPostBackend(_))
+    .renderPS((t, P, S) => {
 
-    def check(): Boolean = {
-      if ($("body".asInstanceOf[js.Object]).hasClass("modal-open"))
-        true
-      else
-        false
-    }
-
-    def mounted(props: Props) = Callback {
-      //      jQuery(t.getDOMNode()).modal("{backdrop: 'static', keyboard: true, show: false}")
-      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $("body".asInstanceOf[js.Object]).find(".modal-backdrop").remove()
-      //      $(s"${props.modalId}".asInstanceOf[js.Object]).removeClass("modal  fade")
-      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
-      logger.log.debug("AmplifyPostForm mounted")
-    }
-
-    def render(s: State, p: Props) = {
       val headerText = "Amplify"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.h4(^.className := "text-left", headerText),
-          closed = () => modalClosed(s, p),
-          id = p.modalId
+          closed = () => t.backend.modalClosed(S, P),
+          id = P.modalId
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> submitForm)(
+            <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
               <.div()(
                 <.div(^.marginLeft := "15px")(
                   <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Amps to donate")
                 ),
                 <.div(^.className := "text-right")(
                   <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Amplify"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hideModal, "Cancel")
+                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal, "Cancel")
                 )
               )
             )
           )
         )
       )
-    }
-  }
-
-  private val component = ReactComponentB[Props]("AmplifyPostForm")
-    .initialState_P(p => State())
-    .renderBackend[Backend]
+    })
     //    .componentWillMount(scope => scope.backend.mounted(scope.props))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .shouldComponentUpdate(scope => scope.$.backend.check)

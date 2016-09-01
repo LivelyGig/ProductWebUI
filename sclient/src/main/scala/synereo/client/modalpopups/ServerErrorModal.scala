@@ -36,42 +36,42 @@ object ServerErrorModal {
     def modalClosed(state: State, props: Props): Callback = {
       props.submitHandler()
     }
+  }
 
-    def render(s: State, p: Props) = {
-      val headerText = "Error"
-      Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
-          header = hide => <.span(<.div()(headerText)),
+  private val component = ReactComponentB[Props]("ErrorModal")
+    .initialState_P(p => State())
+    .backend(new Backend(_))
+      .renderPS((t,P,S)=>{
+        val headerText = "Error"
+        Modal(
+          Modal.Props(
+            // header contains a cancel button (X)
+            header = hide => <.span(<.div()(headerText)),
 
-          closed = () => modalClosed(s, p)
-        ),
+            closed = () => t.backend.modalClosed(S, P)
+          ),
 
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row")(
-              <.div()(
-                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(s"Encountering problems in serving request. ${SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value}") /*,*/
-                //                <.div(SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value)
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div(^.className := "row")(
+                <.div()(
+                  <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(s"Encountering problems in serving request. ${SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value}") /*,*/
+                  //                <.div(SYNEREOCircuit.zoom(_.appRootModel.serverErrorMsg).value)
 
-              ),
-              <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 text-center")(
-                    <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close"))
+                ),
+                <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
+                  <.div(^.className := "row")(
+                    <.div(^.className := "col-md-12 text-center")(
+                      <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close"))
+                    )
                   )
                 )
               )
             )
           )
         )
-      )
-    }
-  }
 
-  private val component = ReactComponentB[Props]("ErrorModal")
-    .initialState_P(p => State())
-    .renderBackend[Backend]
+      })
     // .shouldComponentUpdate(scope => scope.currentProps.proxy().isServerError)
     .build
 

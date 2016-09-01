@@ -20,10 +20,11 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import synereo.client.handlers.{ContentHandler}
+import synereo.client.handlers.ContentHandler
 import diode.AnyAction._
 import org.querki.jquery._
 import synereo.client.logger
+import synereo.client.modalpopupbackends.NewImgBackend
 
 import scala.scalajs.js
 
@@ -86,93 +87,49 @@ object ProfileImageUploaderForm {
 
   val getUsers = SYNEREOCircuit.connect(_.user)
 
-  case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
+  private val component = ReactComponentB[Props]("PostNewMessage")
+    .initialState_P(p => State(new UpdateUserRequest()))
+    .backend(new NewImgBackend(_))
+      .renderPS((t,P,S)=>{
+        Modal(
+          Modal.Props(
+            header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close),
+              <.h1(^.className := "pull-left")(P.header)),
+            closed = () => t.backend.formClosed(S, P),
+            id = "newImage"
+          ),
+          <.form(^.onSubmit ==> t.backend.submitForm)(
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12")(
+                <.div(^.className := "row",
+                  <.div(^.className := "col-md-12")(
+                    if (S.updateUserRequest.jsonBlob.imgSrc.length < 2) {
+                      <.img(^.src := P.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
+                    } else {
+                      <.img(^.src := S.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
+                    }
 
-    def hideModal = {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
-
-    def mounted(): Callback = Callback {
-      // logger.log.info("new Image modal mounted")
-    }
-
-    def updateImgSrc(e: ReactEventI): react.Callback = Callback {
-      val value = e.target.files.item(0)
-      val reader = new FileReader()
-      reader.onload = (e: UIEvent) => {
-        val contents = reader.result.asInstanceOf[String]
-        val props = t.props.runNow()
-        val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
-      }
-      reader.readAsDataURL(value)
-      $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
-    }
-
-    def submitForm(e: ReactEventI): Callback = {
-      e.preventDefault()
-      if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
-        $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
-        t.modState(s => s.copy(postNewImage = false))
-      } else {
-        //        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
-        ContentHandler.postUserUpdate(t.state.runNow().updateUserRequest)
-        t.modState(s => s.copy(postNewImage = true))
-      }
-    }
-
-    def formClosed(state: State, props: Props): Callback = {
-      props.submitHandler(/*state.submitForm*/)
-    }
-
-    def render(s: State, p: Props) = {
-      Modal(
-        Modal.Props(
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close),
-            <.h1(^.className := "pull-left")(p.header)),
-          closed = () => formClosed(s, p),
-          id = "newImage"
-        ),
-        <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12")(
-              <.div(^.className := "row",
-                <.div(^.className := "col-md-12")(
-                  if (s.updateUserRequest.jsonBlob.imgSrc.length < 2) {
-                    <.img(^.src := p.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
-                  } else {
-                    <.img(^.src := s.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
-                  }
-
-                )
-              ),
-              <.div(^.className := "row",
-                <.div(^.className := "col-md-12")(
-                  <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> updateImgSrc, ^.marginTop := "40.px"),
-                  <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
-                    "Please provide Image to upload ... !!!"
                   )
-                )
-              ),
-              <.div(^.className := "row",
-                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> hide, "Cancel"),
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
+                ),
+                <.div(^.className := "row",
+                  <.div(^.className := "col-md-12")(
+                    <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
+                    <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                      "Please provide Image to upload ... !!!"
+                    )
+                  )
+                ),
+                <.div(^.className := "row",
+                  <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
+                    <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
+                    <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
+                  )
                 )
               )
             )
           )
         )
-      )
-    }
-  }
-
-  private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State(new UpdateUserRequest()))
-    .renderBackend[Backend]
+      })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewImage) {
         scope.$.backend.hideModal

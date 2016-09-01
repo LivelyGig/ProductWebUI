@@ -8,6 +8,7 @@ import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{DashboardCSS, LoginCSS}
 import synereo.client.components.jQuery
+import synereo.client.modalpopupbackends.PostNewInviteBackend
 
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -69,63 +70,36 @@ object PostNewInvite {
 
   case class State(postMessage: Boolean = false,requestInviteModalId: String = "request-invite-modal")
 
-  case class Backend(t: BackendScope[Props, State]) {
-    def hide = Callback {
-      jQuery(t.getDOMNode()).modal("hide")
-
-    }
-
-    def hideModal = {
-      jQuery(t.getDOMNode()).modal("hide")
-    }
-
-    def mounted(props: Props): Callback = Callback {
-
-    }
-
-    def submitForm(e: ReactEventI) = {
-      e.preventDefault()
-      t.modState(s => s.copy(postMessage = false))
-    }
-
-    def formClosed(state: State, props: Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      //      println(state.postMessage)
-      props.submitHandler(state.postMessage)
-
-    }
-
-    def render(s: State, p: Props) = {
-      Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
-          // this is called after the modal has been hidden (animation is completed)
-          closed = () => formClosed(s, p),id = s.requestInviteModalId
-        ),
-        <.form(^.onSubmit ==> submitForm)(
-          <.div(^.className := "row", LoginCSS.Style.requestInviteModalStyle)(
-            <.div(^.className := "col-md-12")(
-              <.div(LoginCSS.Style.requestInviteModalText)(
-                "Invites aren't quite ready, however we're eager for you to join us on this journey!"
-              ),
-              <.div()(
-                <.input(^.`type` := "text", ^.className := "form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
-              ),
-              <.div()(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> hide, "Subscribe")
-              )
-            )
-          )
-
-        )
-      )
-    }
-  }
 
   private val component = ReactComponentB[Props]("RequestNewInvite")
     .initialState_P(p => State())
-    .renderBackend[Backend]
+    .backend(new PostNewInviteBackend(_))
+      .renderPS((t,P,S)=>{
+        Modal(
+          Modal.Props(
+            // header contains a cancel button (X)
+            header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div("")),
+            // this is called after the modal has been hidden (animation is completed)
+            closed = () => t.backend.formClosed(S, P),id = S.requestInviteModalId
+          ),
+          <.form(^.onSubmit ==> t.backend.submitForm)(
+            <.div(^.className := "row", LoginCSS.Style.requestInviteModalStyle)(
+              <.div(^.className := "col-md-12")(
+                <.div(LoginCSS.Style.requestInviteModalText)(
+                  "Invites aren't quite ready, however we're eager for you to join us on this journey!"
+                ),
+                <.div()(
+                  <.input(^.`type` := "text", ^.className := "form-control", LoginCSS.Style.requestInviteTextarea, ^.placeholder := "you@email.com")
+                ),
+                <.div()(
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hide, "Subscribe")
+                )
+              )
+            )
+
+          )
+        )
+      })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postMessage) {
         scope.$.backend.hideModal

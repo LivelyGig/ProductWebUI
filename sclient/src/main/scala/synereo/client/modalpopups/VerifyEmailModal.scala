@@ -45,21 +45,31 @@ object VerifyEmailModal {
       // call parent handler with the new item and whether form was OK or cancelled
       props.submitHandler(state.emailValidationModel, state.accountValidationFailed)
     }
+  }
 
     def render(s: State, p: Props) = {
+
+
+    }
+
+
+  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
+    .initialState_P(p => State(new EmailValidationModel("")))
+      .backend(new Backend(_))
+    .renderPS((t,P,S)=>{
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
       val headerText = "Verify email"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span()(
-          <.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),
-          <.div(SignupCSS.Style.signUpHeading)(headerText)
-        ),
-          closed = () => formClosed(s, p),
+            <.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(SignupCSS.Style.signUpHeading)(headerText)
+          ),
+          closed = () => t.backend.formClosed(S, P),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
         ),
-        <.form(^.onSubmit ==> submitForm)(
+        <.form(^.onSubmit ==>  t.backend.submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
@@ -70,8 +80,8 @@ object VerifyEmailModal {
                 ),
                 <.div(SignupCSS.Style.verificationMessageContainer)(
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
-                    ^.placeholder := "Verification code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken)
-                                  ),
+                    ^.placeholder := "Verification code", ^.value := S.emailValidationModel.token, ^.onChange ==>  t.backend.updateToken)
+                ),
                 //  <.input(^.tpe := "text", bss.formControl,^.id := "Name", ^.placeholder:="Enter validation code",^.value:=s.emailValidationModel.token,^.onChange==>updateToken),
                 // <.button(^.tpe := "submit",^.className:="btn", "Confirm")
                 <.div(^.className := "pull-right")(
@@ -83,12 +93,7 @@ object VerifyEmailModal {
           )
         )
       )
-    }
-  }
-
-  private val component = ReactComponentB[Props]("ConfirmAccountCreation")
-    .initialState_P(p => State(new EmailValidationModel("")))
-    .renderBackend[Backend]
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.accountValidationFailed) {
         scope.$.backend.hide

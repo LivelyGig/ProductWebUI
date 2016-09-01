@@ -28,28 +28,34 @@ object ErrorModal {
       props.submitHandler()
     }
 
-    def render(s: State, p: Props) = {
-      val headerText = "Error"
-      Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
-          header = hide => <.span(<.h4(headerText)),
+  }
 
-          closed = () => modalClosed(s, p)
-        ),
+  private val component = ReactComponentB[Props]("ErrorModal")
+    .initialState_P(p => State())
+    .backend(new Backend(_))
+    .renderPS((t, P, S) => {
+        val headerText = "Error"
+        Modal(
+          Modal.Props(
+            // header contains a cancel button (X)
+            header = hide => <.span(<.h4(headerText)),
 
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row")(
-              <.div()(
-                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(p.loginError)
-              ),
-              <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 text-center")(
-                    <.div()(
-                      <.h5("We are encountering problems in serving your request. Please try after sometime."),
-                      <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> closeForm)("Close")
+            closed = () => t.backend.modalClosed(S, P)
+          ),
+
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div(^.className := "row")(
+                <.div()(
+                  <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(P.loginError)
+                ),
+                <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
+                  <.div(^.className := "row")(
+                    <.div(^.className := "col-md-12 text-center")(
+                      <.div()(
+                        <.h5("We are encountering problems in serving your request. Please try after sometime."),
+                        <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close")
+                      )
                     )
                   )
                 )
@@ -57,13 +63,9 @@ object ErrorModal {
             )
           )
         )
-      )
-    }
-  }
 
-  private val component = ReactComponentB[Props]("ErrorModal")
-    .initialState_P(p => State())
-    .renderBackend[Backend]
+      })
+
     .build
 
   def apply(props: Props) = component(props)
