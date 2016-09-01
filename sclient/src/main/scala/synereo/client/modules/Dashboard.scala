@@ -25,6 +25,7 @@ import org.widok.moment.Moment
 import synereo.client.handlers.ShowServerError
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
+import synereo.client.logger
 
 
 /**
@@ -309,23 +310,23 @@ object HomeFeedList {
     }
 
     def amplifyPost(e: ReactEventI): Callback = {
-      println("inside amplify post method ")
+      logger.log.debug("amplifyPost called")
       t.modState(state => state.copy(showAmplifyPostForm = true))
     }
 
+    def postAmplified(): Callback = {
+      logger.log.debug("postAmplified called ")
+      t.modState(s => s.copy(showAmplifyPostForm = false))
+    }
+
     def forwardPost(e: ReactEventI): Callback = {
-      println("inside amplify post method ")
+      logger.log.debug("forwardPost called ")
       t.modState(state => state.copy(showForwardPostForm = true))
     }
 
     def postForwarded(): Callback = {
-      println("inside amplify post method ")
+      logger.log.debug("postForwarded called")
       t.modState(state => state.copy(showForwardPostForm = false))
-    }
-
-    def postAmplified(): Callback = {
-      println("inside post amplified method ")
-      t.modState(s => s.copy(showAmplifyPostForm = false))
     }
 
     def render(props: Props, state: State) = {

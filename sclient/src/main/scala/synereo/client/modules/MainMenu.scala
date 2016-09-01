@@ -30,7 +30,7 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeInputId", getModal: Boolean = false)
+  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false)
 
 
   class Backend(t: BackendScope[Props, State]) {
@@ -40,12 +40,12 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
-    def getModal(): react.Callback = {
-      t.modState(s => s.copy(getModal = true))
+    def showUploadImageModal(): react.Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = true))
     }
 
-    def addImage(): Callback = {
-      t.modState(s => s.copy(getModal = false))
+    def imageUploaded(): Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = false))
     }
   }
 
@@ -148,12 +148,14 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.getModal())(" Upload Picture ")),
+                      <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Upload Picture ")),
+                      <.li(<.a(" About")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+
                     )
                   ),
-                  if (S.getModal)
-                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.addImage, "Profile Image Uploader", userProxy)))
+                  if (S.showProfileImageUploadModal)
+                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.imageUploaded, "Profile Image Uploader", userProxy)))
                   else
                     Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
