@@ -63,7 +63,7 @@ object HeaderCSS {
     )
     val headerNavLi = style(
       backgroundColor(transparent),
-      borderBottom(3.px, solid, c"#67EAF2"),
+      borderBottom(4.px, solid, c"#67EAF2"),
       color(c"#67EAF2"),
       letterSpacing(0.5.px),
       &.hover(
@@ -101,6 +101,7 @@ object HeaderCSS {
       //      height(44.px),
       //      width(100.%%),
       //      paddingTop(4.px),
+      //
     )
 
     val connectionsmiddelNaviContainer = style(
@@ -256,7 +257,9 @@ object HeaderCSS {
       height(44.px),
       textAlign.left,
       paddingTop(4.px),
-      paddingBottom(4.px)
+      paddingBottom(4.px),
+      media.minWidth(1200.px) -
+        borderRadius(25.px, 0.px, 0.px, 0.px)
 )
 
 

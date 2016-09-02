@@ -1,6 +1,7 @@
 package client.css
 
 import scalacss.Defaults._
+import scalacss.LengthUnit.px
 
 object DashBoardCSS {
 
@@ -11,8 +12,8 @@ object DashBoardCSS {
     val mainContainerDiv = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
-      overflowX.auto,
-      height(800.px)
+      overflowX.auto
+      // height(800.px),
     )
     val splitContainer = style(
       position.relative,
@@ -30,7 +31,10 @@ object DashBoardCSS {
         width(100.%%),
       media.minWidth(1200.px) -
         width(98.2.%%),
+      media.minWidth(1200.px) -
+        borderRadius(0.px, 25.px, 25.px, 0.px),
       marginLeft(-4.px)
+
     )
 
     val dashboardResults2 = style(
@@ -51,7 +55,9 @@ object DashBoardCSS {
       paddingTop(4.px),
       paddingBottom(4.px),
       media.maxWidth(375.px) -
-        display.none
+        display.none,
+      media.minWidth(1200.px) -
+        borderRadius(0.px, 25.px, 0.px, 0.px)
     )
     val rsltCheckboxStyle = style(
       height(13.px),

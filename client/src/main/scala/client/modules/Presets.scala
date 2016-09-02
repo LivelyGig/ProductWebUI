@@ -19,8 +19,11 @@ object Presets {
 
     // scalastyle:off
     def render(p: Props) = {
-      <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
-      )
+
+      // EE: Intend on deleting this.
+      <.div(^.display.none)
+      // <.div(^.id := "middelNaviContainer", HeaderCSS.Style.profilessmiddelNaviContainer)(
+      // )
     }
   }
 

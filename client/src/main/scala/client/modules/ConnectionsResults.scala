@@ -78,7 +78,7 @@ object ConnectionsResults {
             )
           )
         ), //col-12
-        <.div(^.id := "resultsConnectionsContainer")(
+        <.div(^.id := "resultsContainer")(
           ConnectionList(P.proxy().connectionsResponse))
       ) //mainContainer
     })

@@ -81,7 +81,7 @@ object AppModule {
       val introProxy =LGCircuit.connect(_.introduction)
 
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        ^.background := "url(./assets/images/LG_Background3.svg)")(
+         ^.background := "url(./assets/images/LG_Background3E.svg)", ^.backgroundSize := "101% 101%"  )(
         <.div()(
           Presets(Presets.Props(p.view))
         ),
@@ -92,7 +92,7 @@ object AppModule {
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
             <.div(^.className := "row")(
               //Left Sidebar
-              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-sm-4 sidebar", DashBoardCSS.Style.padding0px)(
+              <.div(^.id := "searchContainer", ^.marginBottom := "4px", ^.className := "col-md-3 col-sm-4 sidebar", DashBoardCSS.Style.padding0px)(
                 //Adding toggle button for sidebar
                 <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left hidden-md hidden-lg", ^.float := "right", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
                   ^.onClick --> showSidebar)(
