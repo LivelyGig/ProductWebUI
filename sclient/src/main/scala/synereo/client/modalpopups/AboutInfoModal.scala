@@ -40,6 +40,7 @@ object AboutInfoModal {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"Agent UID : ${agentUID.head}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)("Build Number : "),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"glosevalVersion : ${versionInfo.glosevalVersion}"),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"scalaVersion : ${versionInfo.scalaVersion}"),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"mongoDBVersion : ${versionInfo.mongoDBVersion}"),
