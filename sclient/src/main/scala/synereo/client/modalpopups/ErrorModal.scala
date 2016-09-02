@@ -5,12 +5,11 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.SynereoCommanStylesCSS
-
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by bhagyashree.b on 2016-07-29.
+  * Created by mandar.k on 2016-07-29.
   */
 object ErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles

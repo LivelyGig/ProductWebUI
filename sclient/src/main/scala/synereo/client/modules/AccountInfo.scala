@@ -31,9 +31,9 @@ object AccountInfo {
                    DSLEvaluatorPreferredSupplier: Seq[ServerModel] = Nil, BFactoryCommLinkServer: Seq[ServerModel] = Nil,
                    BFactoryCommLinkClient: Seq[ServerModel] = Nil, BFactoryEvaluator: Seq[ServerModel] = Nil)
 
-  val agentUID = ConnectionsUtils.getSelfConnnection().source
-  val newAgentUID = agentUID.substring(8)
-  val output = newAgentUID.split("\"")
+  val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
+//  val newAgentUID = agentUID.substring(8)
+//  val output = newAgentUID.split("\"")
 
 
   class Backend(t: BackendScope[Props, State]) {
@@ -133,10 +133,10 @@ object AccountInfo {
     def render(s: State, p: Props) = {
       <.div()(
         <.div(UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-          <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
+          <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${agentUID.head}"),
           <.div(UserProfileViewCSS.Style.agentUID)("Build Number : "),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLCommLinkClient", ^.id := "DSLCommLinkClient")(<.label(UserProfileViewCSS.Style.label)("DSLCommLinkClient : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLCommLinkClient"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLCommLinkClient"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLCommLinkClient"))("Add"),
@@ -160,7 +160,7 @@ object AccountInfo {
             }
           ),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLEvaluator")(<.label(UserProfileViewCSS.Style.label)("DSLEvaluator : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluator"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluator"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluator"))("Add"),
@@ -184,7 +184,7 @@ object AccountInfo {
             }
           ),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "DSLEvaluatorPreferredSupplier")(<.label(UserProfileViewCSS.Style.label)("DSLEvaluatorPreferredSupplier : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluatorPreferredSupplier"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluatorPreferredSupplier"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluatorPreferredSupplier"))("Add"),
@@ -208,7 +208,7 @@ object AccountInfo {
             }
           ),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryCommLinkServer")(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkServer : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkServer"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkServer"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkServer"))("Add"),
@@ -232,7 +232,7 @@ object AccountInfo {
             }
           ),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryCommLinkClient")(<.label(UserProfileViewCSS.Style.label)("BFactoryCommLinkClient : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkClient"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkClient"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkClient"))("Add"),
@@ -256,7 +256,7 @@ object AccountInfo {
             }
           ),
           <.div(UserProfileViewCSS.Style.agentUID, ^.id := "BFactoryEvaluator")(<.label(UserProfileViewCSS.Style.label)("BFactoryEvaluator : "))
-          (<.div(UserProfileViewCSS.Style.buttonDiv)
+          (<.div(UserProfileViewCSS.Style.buttonsContainerDiv)
           (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryEvaluator"))("Edit All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryEvaluator"))("Save All"),
             <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryEvaluator"))("Add"),
