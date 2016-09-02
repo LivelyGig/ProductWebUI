@@ -1,26 +1,14 @@
 package synereo.client.modules
 
 
-import japgolly.scalajs.react.ReactComponentB
-import japgolly.scalajs.react.extra.router.RouterCtl
-import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
-import synereo.client.SYNEREOMain
-import synereo.client.SYNEREOMain.Loc
-import synereo.client.css.{ConnectionsCSS, DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.css.{ConnectionsCSS,  UserProfileViewCSS}
 import diode.react._
-import diode.data.Pot
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.models.{ConnectionsModel, MessagePost}
-import japgolly.scalajs.react
-import org.scalajs.dom._
-import synereo.client.rootmodels.ConnectionsRootModel
-import synereo.client.sessionitems.SessionItems
-import synereo.client.components.{Icon, MIcon}
+import shared.models.{ConnectionsModel}
 import synereo.client.utils.ConnectionsUtils
-
 import scalacss.ScalaCssReact._
 
 
@@ -34,6 +22,7 @@ object Info {
   case class Props(proxy: ModelProxy[UserModel])
 
   case class State(selectedItem: Option[ConnectionsModel] = None)
+
   val agentUID = ConnectionsUtils.getSelfConnnection().source
   val newAgentUID = agentUID.substring(8)
   val output = newAgentUID.split("\"")
@@ -49,14 +38,7 @@ object Info {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
-      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain,UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-//        <.div(^.className := "row")(
-//          //Left Sidebar
-//          <.div(^.id := "searchContainer", ^.className := "col-md-2  sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
-//            //            Footer(Footer.Props(c, r.page))
-//            Sidebar(Sidebar.Props())
-//          )
-//        ),
+      <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain, UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
         <.div(UserProfileViewCSS.Style.agentUID)(s"Agent UID : ${output.head}"),
         <.div(UserProfileViewCSS.Style.agentUID)("Build Number : ")
       ) //connectionsContainerMain

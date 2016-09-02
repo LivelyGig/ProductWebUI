@@ -1,26 +1,22 @@
 package synereo.client.modules
 
 
-import org.querki.jquery._
 import synereo.client.components._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.modalpopups.{NewMessage, NodeSettingModal, ProfileImageUploaderForm}
-
-import scala.scalajs.js
-import synereo.client.{SYNEREOMain, logger}
+import synereo.client.{SYNEREOMain }
 import SYNEREOMain._
 import synereo.client.handlers._
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
-import japgolly.scalajs.react
+import synereo.client.modulebackends.MainMenuBackend
 
 //scalastyle:off
 object MainMenu {
@@ -35,35 +31,9 @@ object MainMenu {
   case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false, showNodeSettingModal: Boolean = false)
 
 
-  class Backend(t: BackendScope[Props, State]) {
-
-    def toggleTopbar = Callback {
-      val topBtn: js.Object = "#TopbarContainer"
-      $(topBtn).toggleClass("topbar-left topbar-lg-show")
-    }
-
-    def showUploadImageModal(): react.Callback = {
-      t.modState(s => s.copy(showProfileImageUploadModal = true))
-    }
-
-    def imageUploaded(): Callback = {
-      t.modState(s => s.copy(showProfileImageUploadModal = false))
-    }
-
-    def showNodeSettingModal(): react.Callback = {
-      logger.log.debug("showNodeSettingModal")
-      t.modState(s => s.copy(showNodeSettingModal = true))
-    }
-
-    def hideNodeSettingModal(): Callback = {
-      logger.log.debug("hideNodeSettingModal")
-      t.modState(s => s.copy(showNodeSettingModal = false))
-    }
-  }
-
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
-    .backend(new Backend(_))
+    .backend(new MainMenuBackend(_))
     .renderPS(($, props, state) => {
       //      println(state"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
@@ -162,7 +132,7 @@ object MainMenu {
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Upload Picture ")),
                       <.li(<.a("About")),
-                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(),"Node Settings")),
+                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
 
                     )

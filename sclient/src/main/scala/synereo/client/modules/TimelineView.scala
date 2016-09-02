@@ -4,10 +4,10 @@ package synereo.client.modules
 import japgolly.scalajs.react.extra.router.RouterCtl
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.css.{ UserTimelineViewCSS}
+import synereo.client.css.{UserTimelineViewCSS}
 import org.querki.jquery._
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react.{ Callback, ReactComponentB}
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{Icon, MIcon}
@@ -15,9 +15,10 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
- * Created by Mandar on 3/28/2016.
- */
-object TimelineView {  val searchContainer: js.Object = "#searchContainer"
+  * Created by Mandar on 3/28/2016.
+  */
+object TimelineView {
+  val searchContainer: js.Object = "#searchContainer"
 
   case class Props()
 
@@ -26,21 +27,7 @@ object TimelineView {  val searchContainer: js.Object = "#searchContainer"
   class Backend(t: BackendScope[Props, State]) {
 
     def render(props: Props) = {
-      <.div(/*^.className := "container-fluid MainContainer"*/)(
-        /*        <.div(^.className := "row")(
-                  //Left Sidebar
-                  <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-                    ^.onMouseEnter --> Callback {
-                      $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
-                    },
-                    ^.onMouseLeave --> Callback {
-                      $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
-                    }
-                  )(
-                    //            Footer(Footer.Props(c, r.page))
-                    Sidebar(Sidebar.Props())
-                  )
-                ),*/
+      <.div()(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
             <.div(^.className := "container")(

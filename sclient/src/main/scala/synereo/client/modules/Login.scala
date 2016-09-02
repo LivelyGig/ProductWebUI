@@ -36,10 +36,9 @@ object Login {
                    showLoginFailed: Boolean = false,
                    showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false,
-                   showAccountValidationFailed: Boolean = false, /*showTermsOfServicesForm: Boolean = false,*/
-                   loginErrorMessage: String = "", /*showValidateForm: Boolean = false,*/
-                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "" /*hostName: String = dom.window.location.hostname, portNumber: String = "9876"*/)
-
+                   showAccountValidationFailed: Boolean = false,
+                   loginErrorMessage: String = "",
+                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "" )
 
 
   val component = ReactComponentB[Props]("NotificationView")
@@ -136,12 +135,8 @@ object Login {
       scope.backend.mounted(scope.props)
     )
     .componentDidMount(scope => Callback {
-      //      if (scope.currentProps.proxy().introResponse.length <= 0) {
-      //        window.location.href = "/#dashboard"
-      //      }
       $("body".asInstanceOf[js.Object]).removeClass("modal-open")
       $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
     })
     .build
 

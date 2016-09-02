@@ -15,9 +15,10 @@ import diode.AnyAction._
 import synereo.client.logger
 import synereo.client.modalpopups.{ServerErrorModal}
 import org.scalajs.dom.window
-
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
+import synereo.client.modulebackends.{AccountModuleBackend}
+
 
 /**
   * Created by a4tech on 5/24/2016.
@@ -45,23 +46,10 @@ object AppModule {
 
   case class State(showErrorModal: Boolean = false)
 
-  case class Backend(t: BackendScope[Props, State]) {
-
-    def serverError(): Callback = {
-      SYNEREOCircuit.dispatch(ShowServerError(""))
-      t.modState(s => s.copy(showErrorModal = false))
-    }
-
-    def mounted(props: Props) = Callback {
-      logger.log.debug("app module mounted")
-      val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-      if (userSessionUri.length < 1) {
-        SYNEREOCircuit.dispatch(LogoutUser())
-      }
-
-    }
-
-    def render(p: Props, state: State) = {
+  private val component = ReactComponentB[Props]("AppModule")
+    .initialState_P(p => (State()))
+    .backend(new AccountModuleBackend(_))
+    .renderPS((t, P, S) => {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
           <.div(),
@@ -75,14 +63,14 @@ object AppModule {
                 $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
               }
             )(Sidebar(Sidebar.Props())),
-            if (p.proxy().isServerError) {
-              ServerErrorModal(ServerErrorModal.Props(serverError))
+            if (P.proxy().isServerError) {
+              ServerErrorModal(ServerErrorModal.Props(t.backend.serverError))
             } else {
               <.div()
             }
           ),
           <.div(
-            p.view match {
+            P.view match {
               case PEOPLE_VIEW => connectionProxy(s => ConnectionsResults(s))
               case ACCOUNT_VIEW => userProxy(s => AccountInfo())
               case DASHBOARD_VIEW => messagesProxy(s => Dashboard(s))
@@ -95,12 +83,7 @@ object AppModule {
           )
         )
       )
-    }
-  }
-
-  private val component = ReactComponentB[Props]("AppModule")
-    .initialState_P(p => (State()))
-    .renderBackend[Backend]
+    })
     .componentWillMount(scope => scope.backend.mounted(scope.props))
     .build
 

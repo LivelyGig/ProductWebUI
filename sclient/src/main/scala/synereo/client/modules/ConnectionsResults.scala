@@ -1,7 +1,7 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope,ReactComponentB}
+import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import synereo.client.rootmodels.ConnectionsRootModel
 import diode.react._
 import synereo.client.css._
@@ -29,12 +29,12 @@ object ConnectionsResults {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       <.div(^.id := "connectionsContainerMain")(
-//        <.div(^.className := "row")(
-//          //Left Sidebar
-//          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
-//            Sidebar(Sidebar.Props())
-//          )
-//        ),
+        //        <.div(^.className := "row")(
+        //          //Left Sidebar
+        //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
+        //            Sidebar(Sidebar.Props())
+        //          )
+        //        ),
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
             NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Connections"))
@@ -62,7 +62,7 @@ object ConnectionsResults {
         )
       ) //connectionsContainerMain
     })
-//    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    //    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(proxy: ModelProxy[ConnectionsRootModel]) = component(Props(proxy))

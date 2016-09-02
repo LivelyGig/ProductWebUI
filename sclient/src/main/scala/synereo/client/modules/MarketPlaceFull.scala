@@ -4,7 +4,7 @@ package synereo.client.modules
 import japgolly.scalajs.react.extra.router.RouterCtl
 import synereo.client.SYNEREOMain
 import SYNEREOMain.Loc
-import synereo.client.css.{ MarketPlaceFullCSS}
+import synereo.client.css.{MarketPlaceFullCSS}
 import scala.scalajs.js
 import org.querki.jquery._
 import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
@@ -29,20 +29,8 @@ object MarketPlaceFull {
   class Backend(t: BackendScope[Props, State]) {
 
     def render() = {
-      <.div(/*^.className := "container-fluid MainContainer"*/)(
-        //        <.div(^.className := "row")(
-        //          //Left Sidebar
-        //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-        //            ^.onMouseEnter --> Callback{$(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")},
-        //            ^.onMouseLeave --> Callback{$(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")}
-        //          )(
-        //            //            Footer(Footer.Props(c, r.page))
-        //            Sidebar(Sidebar.Props())
-        //          )
-        //        ),
-        //        <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
-        //          <.div("User Profile View", UserProfileViewCSS.Style.heading)
-        //        )
+      <.div()(
+
         <.div(^.className := "container")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12", MarketPlaceFullCSS.Style.headingImageContainerDiv)(
@@ -195,13 +183,9 @@ object MarketPlaceFull {
               )
             )
           )
-
         )
       )
-
-
     }
-
   }
 
   val component = ReactComponentB[Props]("Dashboard")

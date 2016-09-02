@@ -2,22 +2,16 @@ package synereo.client.modules
 
 import japgolly.scalajs.react.{Callback, _}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom._
-import shared.dtos.{IntroConfirmReq, Introduction}
+import shared.dtos.{Introduction}
 import synereo.client.css.NotificationViewCSS
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-import diode.AnyAction._
 import diode.react.ModelProxy
 import org.querki.jquery._
 import synereo.client.rootmodels.IntroRootModel
 import synereo.client.components.MIcon
-import synereo.client.handlers.UpdateIntroductionsModel
-import synereo.client.logger
 import synereo.client.modalpopups.ConfirmIntroReqModal
-
+import synereo.client.modulebackends.NotificationsListBackend
 import scala.scalajs.js
 import scala.scalajs.js.JSON
-import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 
 /**
@@ -40,7 +34,7 @@ object NotificationView {
     .initialState(State())
     .backend(new Backend(_))
     .renderPS((t, P, S) => {
-      <.div(/*^.className := "container-fluid", NotificationViewCSS.Style.notificationViewContainerMain*/)(
+      <.div()(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
             <.div(^.className := "col-md-6 col-md-offset-3")(
@@ -52,12 +46,8 @@ object NotificationView {
     })
     .componentDidMount(s => s.backend.mounted(s.props))
     .componentDidUpdate(scope => Callback {
-      //      if (scope.currentProps.proxy().introResponse.length <= 0) {
-      //        window.location.href = "/#dashboard"
-      //      }
       $("body".asInstanceOf[js.Object]).removeClass("modal-open")
       $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $(".modal-backdrop .fade .in".asInstanceOf[js.Object]).removeClass(".modal-backdrop .fade .in")
     })
     .build
 
@@ -66,31 +56,14 @@ object NotificationView {
 
 object NotificationList {
 
-  case class NotificationListProps(introductions: Seq[Introduction])
+  case class Props(introductions: Seq[Introduction])
 
   case class State()
 
-  class Backend(t: BackendScope[NotificationListProps, State]) {
-
-    def deleteIntroduction(introduction: Introduction) = {
-      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-      val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = false)
-      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-    }
-
-    def handleAllIntroduction(areAccepted: Boolean = false) = {
-      val props = t.props.runNow()
-      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-      props.introductions.foreach {
-        introduction =>
-          val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = areAccepted)
-          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
-      }
-      $("#acceptRejectAllBtnContainer".asInstanceOf[js.Object]).addClass("hidden")
-    }
-
-    def render(s: State, p: NotificationListProps) = {
+  val component = ReactComponentB[Props]("Dashboard")
+    .initialState_P(p => State())
+    .backend(new NotificationsListBackend(_))
+    .renderPS((t, P, S) => {
       def renderIntroductions(introduction: Introduction) = {
         //        println(s"introduction in notification view: $introduction")
         <.li(^.className := "media")(
@@ -104,7 +77,7 @@ object NotificationList {
                   ConfirmIntroReqModal(ConfirmIntroReqModal.Props("details", Seq(NotificationViewCSS.Style.acceptBtn), <.span(MIcon.done), "", introduction))),
                 <.div(^.display.`inline-block`,
                   <.button(^.className := "btn btn-default", ^.color.red, ^.onClick --> Callback {
-                    deleteIntroduction(introduction)
+                    t.backend.deleteIntroduction(introduction)
                   }, <.span(MIcon.close), "dismiss")
                 )
               )
@@ -113,25 +86,20 @@ object NotificationList {
         )
       }
       <.div(^.className := "col-md-12",
-        <.h1(s"you have ${p.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
+        <.h1(s"you have ${P.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
         <.div(^.id := "acceptRejectAllBtnContainer", NotificationViewCSS.Style.acceptRejectAllBtnContainer)(
           <.button(^.className := "btn btn-default", ^.color.green, MIcon.done, NotificationViewCSS.Style.acceptAllRejectAllBtns, ^.onClick --> Callback {
-            handleAllIntroduction(true)
+            t.backend.handleAllIntroduction(true)
           })("Accept all"),
           <.button(^.className := "btn btn-default", ^.color.red, MIcon.close, NotificationViewCSS.Style.acceptAllRejectAllBtns, ^.onClick --> Callback {
-            handleAllIntroduction(false)
+            t.backend.handleAllIntroduction(false)
           })("Reject all")
         ),
         <.ul(^.className := "media-list")(
-          p.introductions map renderIntroductions
+          P.introductions map renderIntroductions
         )
       )
-    }
-  }
-
-  val component = ReactComponentB[NotificationListProps]("Dashboard")
-    .initialState_P(p => State())
-    .renderBackend[Backend]
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentProps.introductions.length == 0) {
         $("#acceptRejectAllBtnContainer".asInstanceOf[js.Object]).addClass("hidden")
@@ -140,6 +108,6 @@ object NotificationList {
     //    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(introduction: Seq[Introduction]) = component(NotificationListProps(introduction))
+  def apply(introduction: Seq[Introduction]) = component(Props(introduction))
 
 }

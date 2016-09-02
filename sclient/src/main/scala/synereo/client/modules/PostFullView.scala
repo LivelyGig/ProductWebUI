@@ -15,8 +15,8 @@ import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
 /**
- * Created by Mandar on 3/22/2016.
- */
+  * Created by Mandar on 3/22/2016.
+  */
 object PostFullView {
 
   val searchContainer: js.Object = "#searchContainer"
@@ -29,21 +29,7 @@ object PostFullView {
 
     def render(props: Props) = {
 
-      <.div(/*^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer*/)(
-        /*    <.div(^.className := "row")(
-              //Left Sidebar
-              <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
-                ^.onMouseEnter --> Callback {
-                  $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
-                },
-                ^.onMouseLeave --> Callback {
-                  $(searchContainer).addClass("sidebar-left sidebar-animate sidebar-lg-show")
-                }
-              )(
-                //            Footer(Footer.Props(c, r.page))
-                Sidebar(Sidebar.Props())
-              )
-            ),*/
+      <.div()(
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row")(
