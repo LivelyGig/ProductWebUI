@@ -8,7 +8,7 @@ import org.querki.jquery._
 import shared.models.ServerModel
 import synereo.client.components.Bootstrap._
 import synereo.client.components.{GlobalStyles, _}
-import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 import synereo.client.utils.ConnectionsUtils
 
 import scala.language.reflectiveCalls
@@ -131,7 +131,7 @@ object NodeSettingModal {
 
     def render(s: State, p: Props) = {
       val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
-      val headerText = "NodeSettingModal"
+      val headerText = "NodeSettings"
       Modal(
         Modal.Props(
           header = hide => <.h4(headerText),
@@ -139,47 +139,45 @@ object NodeSettingModal {
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12")(
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"Agent UID : ${agentUID.head}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)("Build Number : "),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "DSLCommLinkClient", ^.id := "DSLCommLinkClient",
-              <.label()("DSLCommLinkClient : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLCommLinkClient"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLCommLinkClient"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLCommLinkClient"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLCommLinkClient"))("Delete All")),
+              <.label("DSLCommLinkClient : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer,
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLCommLinkClient"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLCommLinkClient"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLCommLinkClient"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLCommLinkClient"))("Delete All")),
               for (dsl <- s.DSLCommLinkClient) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLCommLinkClient", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLCommLinkClient", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLCommLinkClient", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLCommLinkClient", dsl.uid)
                       )
                     },
-                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("DSLCommLinkClient", dsl.uid))
+                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("DSLCommLinkClient", dsl.uid))
                   )
                 )
               }
             ),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "DSLEvaluator",
-              <.label()("DSLEvaluator : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluator"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluator"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluator"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLEvaluator"))("Delete All")),
+              <.label("DSLEvaluator : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer)
+              (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluator"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluator"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluator"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLEvaluator"))("Delete All")),
               for (dsl <- s.DSLEvaluator) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluator", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluator", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluator", dsl.uid))
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluator", dsl.uid))
                     },
                     <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons)(^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("DSLEvaluator", dsl.uid))
                   )
@@ -187,96 +185,100 @@ object NodeSettingModal {
               }
             ),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "DSLEvaluatorPreferredSupplier",
-              <.label()("DSLEvaluatorPreferredSupplier : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluatorPreferredSupplier"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluatorPreferredSupplier"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluatorPreferredSupplier"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLEvaluatorPreferredSupplier"))("Delete All")),
+              <.label("DSLEvaluatorPreferredSupplier : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer)
+              (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("DSLEvaluatorPreferredSupplier"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("DSLEvaluatorPreferredSupplier"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("DSLEvaluatorPreferredSupplier"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("DSLEvaluatorPreferredSupplier"))("Delete All")),
               for (dsl <- s.DSLEvaluatorPreferredSupplier) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("DSLEvaluatorPreferredSupplier", dsl.uid)
                       )
                     },
-                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("DSLEvaluatorPreferredSupplier", dsl.uid))
+                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("DSLEvaluatorPreferredSupplier", dsl.uid))
                   )
                 )
               }
             ),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "BFactoryCommLinkServer",
-              <.label()("BFactoryCommLinkServer : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkServer"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkServer"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkServer"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryCommLinkServer"))("Delete All")),
+              <.label("BFactoryCommLinkServer : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer)
+              (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkServer"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkServer"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkServer"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryCommLinkServer"))("Delete All")),
               for (dsl <- s.BFactoryCommLinkServer) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkServer", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkServer", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkServer", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkServer", dsl.uid)
                       )
                     },
-                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryCommLinkServer", dsl.uid))
+                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryCommLinkServer", dsl.uid))
                   )
                 )
               }
             ),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "BFactoryCommLinkClient",
-              <.label()("BFactoryCommLinkClient : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkClient"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkClient"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkClient"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryCommLinkClient"))("Delete All")),
+              <.label("BFactoryCommLinkClient : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer)
+              (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryCommLinkClient"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryCommLinkClient"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryCommLinkClient"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryCommLinkClient"))("Delete All")),
               for (dsl <- s.BFactoryCommLinkClient) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkClient", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkClient", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkClient", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryCommLinkClient", dsl.uid)
                       )
                     },
-                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryCommLinkClient", dsl.uid))
+                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryCommLinkClient", dsl.uid))
                   )
                 )
               }
             ),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection,
-              ^.id := "BFactoryEvaluator", <.label()("BFactoryEvaluator : "))
-            (<.div(UserProfileViewCSS.Style.sectionButtonsContainer)
-            (<.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryEvaluator"))("Edit All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryEvaluator"))("Save All"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryEvaluator"))("Add"),
-              <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryEvaluator"))("Delete All")),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "BFactoryEvaluator",
+              <.label("BFactoryEvaluator : "),
+              <.div(UserProfileViewCSS.Style.sectionButtonsContainer,
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> editAll("BFactoryEvaluator"))("Edit All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> saveAll("BFactoryEvaluator"))("Save All"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> addNewServer("BFactoryEvaluator"))("Add"),
+                <.button(UserProfileViewCSS.Style.sectionButtons)(^.className := "btn btn-default", ^.`type` := "button", ^.onClick --> deleteAll("BFactoryEvaluator"))("Delete All")),
               for (dsl <- s.BFactoryEvaluator) yield {
                 <.div(
                   <.div(UserProfileViewCSS.Style.nodeSettingsFormControlContainer, ^.className := "form-group",
                     <.input(^.`type` := "text", ^.className := "form-control", ^.onChange ==> updateTextbox, ^.id := dsl.uid, ^.value := dsl.serverAddress, ^.disabled := !dsl.isEditable),
                     if (dsl.isEditable) {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryEvaluator", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.check, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryEvaluator", dsl.uid)
                       )
                     } else {
-                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryEvaluator", dsl.uid)
+                      <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.pencil, ^.`type` := "button", ^.onClick --> enableTextboxToggle("BFactoryEvaluator", dsl.uid)
                       )
                     },
-                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons,^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryEvaluator", dsl.uid))
+                    <.button(UserProfileViewCSS.Style.nodeSettingsSelectButtons, ^.className := "btn btn-default", Icon.times, ^.`type` := "button", ^.onClick --> deleteAddress("BFactoryEvaluator", dsl.uid))
                   )
                 )
               }
+            ),
+            <.div(^.className := "text-right")(
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, "Submit"),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> closeForm, "Cancel")
             )
           )
         )

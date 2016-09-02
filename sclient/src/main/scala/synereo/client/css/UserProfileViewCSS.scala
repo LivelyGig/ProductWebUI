@@ -51,7 +51,7 @@ object UserProfileViewCSS {
       marginTop(1.px)
     )
     val sectionButtons = style(
-      marginLeft(2.%%)
+      marginRight(10.px)
     )
     val buttonsContainerDiv = style(
       position.absolute,

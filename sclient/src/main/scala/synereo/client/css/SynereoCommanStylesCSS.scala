@@ -30,7 +30,7 @@ object SynereoCommanStylesCSS {
       marginTop(20.px),
       display.inlineBlock,
       width(380.px),
-      media.maxWidth(800.px)-
+      media.maxWidth(800.px) -
         width(40.%%)
 
 
@@ -374,7 +374,7 @@ object SynereoCommanStylesCSS {
 
     )
 
-    val loginImg = style (
+    val loginImg = style(
       height(117.px),
       width(117.px),
       marginTop(-31.%%),
@@ -382,7 +382,7 @@ object SynereoCommanStylesCSS {
     )
 
     val featureHide = style(
-      display.none
+      display.none.important
     )
 
   }

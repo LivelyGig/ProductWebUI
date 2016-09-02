@@ -7,11 +7,12 @@ package synereo.client.modules
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.SYNEREOMain.{SynereoLoc, Loc}
+import synereo.client.SYNEREOMain.{Loc, SynereoLoc}
 import synereo.client.components.GlobalStyles
+
 import scalacss.ScalaCssReact._
 import synereo.client.components._
-import synereo.client.css.DashboardCSS
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
 
 object Sidebar {
 
@@ -34,7 +35,7 @@ object Sidebar {
           <.li()(<.a(^.href := "#")(<.span(Icon.home), "  Stream")),
           <.li()(<.a(^.href := "#")(<.span(/*MIcon.mailOutline*/ Icon.envelope), " Messages")),
           <.li()(<.a(^.href := "#")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Profile")),
-          <.li()(<.a(^.href := "/#account")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Account")),
+          <.li(SynereoCommanStylesCSS.Style.featureHide)(<.a(^.href := "/#account")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Account")),
           <.li()(<.a(^.href := "/#people")(<.span(Icon.users), "  People"))
           //          <.li(^.className := "nav-divider")(),
           //          <.li()(<.a(^.href := "#")(<.span(/*MIcon.accessTime*/), "  Recents")),
