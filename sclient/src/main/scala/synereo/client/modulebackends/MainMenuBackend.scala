@@ -27,6 +27,14 @@ class MainMenuBackend(t: BackendScope[MainMenu.Props, MainMenu.State]) {
     t.modState(s => s.copy(showProfileImageUploadModal = false))
   }
 
+  def toggleShowAboutInfoModal(): react.Callback = {
+    t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
+  }
+
+  //  def hideAboutInfoModal(): Callback = {
+  //    t.modState(s => s.copy(showProfileImageUploadModal = false))
+  //  }
+
   def showNodeSettingModal(): react.Callback = {
     logger.log.debug("showNodeSettingModal")
     t.modState(s => s.copy(showNodeSettingModal = true))

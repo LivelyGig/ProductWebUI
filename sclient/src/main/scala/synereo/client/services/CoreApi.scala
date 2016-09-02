@@ -97,11 +97,12 @@ object CoreApi {
       case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.ApiHostUnreachableError, ErrorResponse(e.getMessage)))
     }
   }
-//  def agentLogin(userModel: UserModel): Future[String] = {
-//    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
-//      s"?password=${userModel.password}")))
-//    ajaxPost(requestContent)
-//  }
+
+  //  def agentLogin(userModel: UserModel): Future[String] = {
+  //    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
+  //      s"?password=${userModel.password}")))
+  //    ajaxPost(requestContent)
+  //  }
 
   def sessionPing(uri: String): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.SESSION_PING, SessionPing(uri)))
@@ -134,6 +135,11 @@ object CoreApi {
 
   def updateUserRequest(updateUserRequest: UpdateUserRequest): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.UPDATE_USER_REQUEST, updateUserRequest))
+    ajaxPost(requestContent)
+  }
+
+  def getVersionInfo(): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.VERSION_INFO_REQUEST, new VersionInfoRequest))
     ajaxPost(requestContent)
   }
 }

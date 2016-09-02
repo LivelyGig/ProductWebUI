@@ -130,7 +130,6 @@ object NodeSettingModal {
     }
 
     def render(s: State, p: Props) = {
-      val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
       val headerText = "NodeSettings"
       Modal(
         Modal.Props(
@@ -277,7 +276,7 @@ object NodeSettingModal {
               }
             ),
             <.div(^.className := "text-right")(
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, "Submit"),
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Submit"),
               <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> closeForm, "Cancel")
             )
           )
