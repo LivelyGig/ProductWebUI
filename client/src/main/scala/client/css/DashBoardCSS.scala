@@ -289,7 +289,9 @@ object DashBoardCSS {
         borderLeft(2.px, double, c"#000000")
     )
     val modalBorderRadius = style(
-      borderRadius(0.px)
+      borderRadius(14.px),
+      overflow.hidden,
+      boxShadow := "13px 13px 20px rgba(0,0,0,0.5)"
     )
     val marginLeftRight = style(
       marginRight(-15.px),
