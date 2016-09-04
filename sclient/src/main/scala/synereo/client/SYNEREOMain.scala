@@ -139,6 +139,7 @@ object SYNEREOMain extends js.JSApp {
     log.warn("Application starting")
     // send log messages also to the server
     log.enableServerLogging("/logging")
+//    log.disableServerLogging()
     log.info("This message goes to server as well")
     // create stylesheet
     GlobalStyles.addToDocument()

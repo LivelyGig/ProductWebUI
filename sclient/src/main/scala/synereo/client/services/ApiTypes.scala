@@ -21,6 +21,7 @@ object ApiTypes {
     val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
     val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
     val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
+    val FEEDEXPR = "feedExpr"
   }
 
   object responseTypes {
