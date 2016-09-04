@@ -22,6 +22,7 @@ object ApiTypes {
     val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
     val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
     val FEEDEXPR = "feedExpr"
+    val VERSION_INFO_REQUEST = "versionInfoRequest"
   }
 
   object responseTypes {
