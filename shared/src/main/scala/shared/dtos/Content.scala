@@ -93,3 +93,7 @@ case class UpdateUserRequest(sessionURI: String = "", jsonBlob: JsonBlob = JsonB
 case class BeginIntroductionRes(sessionURI: String = "")
 
 case class AddAgentAliasesRequest(sessionURI: String = "", aliases: Seq[String]) extends Content
+
+case class VersionInfoRequest() extends Content
+
+case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: String = "", mongoDBVersion: String = "", rabbitMQVersion: String = "")

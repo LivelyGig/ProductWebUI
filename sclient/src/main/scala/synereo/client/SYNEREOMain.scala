@@ -33,8 +33,6 @@ object SYNEREOMain extends js.JSApp {
 
   case object UserProfileViewLOC extends Loc
 
-  case object SynereoUserProfileViewLOC extends Loc
-
   case object SynereoLoc extends Loc
 
   case object DashboardLoc extends Loc
@@ -44,8 +42,6 @@ object SYNEREOMain extends js.JSApp {
   case object PostFullViewLOC extends Loc
 
   case object MarketPlaceLOC extends Loc
-
-  case object InformationLOC extends Loc
 
   case object AccountLOC extends Loc
 
@@ -67,14 +63,14 @@ object SYNEREOMain extends js.JSApp {
     import dsl._
     (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
       | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.PEOPLE_VIEW,proxy))))
-      | staticRoute("#account", AccountLOC) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.ACCOUNT_VIEW,proxy))))
-      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.DASHBOARD_VIEW,proxy))))
-      | staticRoute("#fullpost", PostFullViewLOC) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.POSTFULL_VIEW,proxy))))
-      | staticRoute("#userprofile", UserProfileViewLOC) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.USERPROFILE_VIEW,proxy))))
-      | staticRoute("#timeline", TimelineViewLOC) ~> renderR(ctl => appProxy(proxy =>AppModule(AppModule.Props(AppModule.TIMELINE_VIEW,proxy))))
-      | staticRoute("#notifications", NotificationsLOC) ~> renderR(ctl =>appProxy(proxy => AppModule(AppModule.Props(AppModule.NOTIFICATIONS_VIEW,proxy))))
-      | staticRoute("#marketplace", MarketPlaceLOC) ~> renderR(ctl =>appProxy(proxy => AppModule(AppModule.Props(AppModule.MARKETPLACE_VIEW,proxy)))))
+      | staticRoute("#people", PeopleLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.PEOPLE_VIEW, proxy))))
+      | staticRoute("#account", AccountLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.ACCOUNT_VIEW, proxy))))
+      | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.DASHBOARD_VIEW, proxy))))
+      | staticRoute("#fullpost", PostFullViewLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.POSTFULL_VIEW, proxy))))
+      | staticRoute("#userprofile", UserProfileViewLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.USERPROFILE_VIEW, proxy))))
+      | staticRoute("#timeline", TimelineViewLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.TIMELINE_VIEW, proxy))))
+      | staticRoute("#notifications", NotificationsLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.NOTIFICATIONS_VIEW, proxy))))
+      | staticRoute("#marketplace", MarketPlaceLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.MARKETPLACE_VIEW, proxy)))))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
     //      .onPostRender((prev, cur) => Callback.log(s"Page changing from $prev to $cur."))
   }.renderWith(layout)

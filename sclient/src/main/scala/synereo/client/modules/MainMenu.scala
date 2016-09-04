@@ -6,14 +6,15 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{NewMessage, NodeSettingModal, ProfileImageUploaderForm}
-import synereo.client.{SYNEREOMain }
+import synereo.client.modalpopups.{AboutInfoModal, NewMessage, NodeSettingModal, ProfileImageUploaderForm}
+import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
+
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import synereo.client.modulebackends.MainMenuBackend
@@ -28,7 +29,8 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false, showNodeSettingModal: Boolean = false)
+  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
+                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
 
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
@@ -131,7 +133,7 @@ object MainMenu {
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Upload Picture ")),
-                      <.li(<.a("About")),
+                      <.li(<.a(^.onClick --> $.backend.toggleShowAboutInfoModal())("About")),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
 
@@ -141,6 +143,8 @@ object MainMenu {
                     userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.imageUploaded, "Profile Image Uploader", userProxy)))
                   else if (state.showNodeSettingModal)
                     NodeSettingModal(NodeSettingModal.Props($.backend.hideNodeSettingModal))
+                  else if (state.showAboutInfoModal)
+                    AboutInfoModal(AboutInfoModal.Props($.backend.toggleShowAboutInfoModal))
                   else
                     Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))

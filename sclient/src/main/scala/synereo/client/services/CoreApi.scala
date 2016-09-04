@@ -137,5 +137,10 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def getVersionInfo(): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.VERSION_INFO_REQUEST, new VersionInfoRequest))
+    ajaxPost(requestContent)
+  }
+
 
 }
