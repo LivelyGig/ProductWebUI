@@ -7,11 +7,12 @@ import org.scalajs.dom.raw.{FileReader, UIEvent}
 import shared.dtos.LabelPost
 import shared.models.Label
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
-import synereo.client.handlers.{ContentHandler, SearchesModelHandler}
+import synereo.client.handlers.SearchesModelHandler
 import synereo.client.modalpopups.NewMessageForm
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils, SelectizeUtils}
+import synereo.client.utils._
 import synereo.client.components.Bootstrap._
+
 import scala.scalajs.js
 
 /**
@@ -113,11 +114,11 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
       val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
       if (newLabels.nonEmpty) {
         val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-        ContentHandler.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         //          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
         newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
       } else {
-        ContentHandler.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
       }
       //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(allLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
 

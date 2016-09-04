@@ -12,7 +12,7 @@ import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 import diode.AnyAction._
-import synereo.client.utils.{AppUtils, ConnectionsUtils}
+import synereo.client.utils.{AppUtils, ConnectionsUtils, ContentUtils}
 
 // Actions
 //scalastyle:off
@@ -23,47 +23,26 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
 
 case class StoreCnxnAndLabels(slctzId: String, sessionUriName: String)
 
-//case class SubsForMsgAndBeginSessionPing()
-
-//case class CancelPreviousAndSubscribeNew(req: SubscribeRequest)
-
-//case class PostMessage(req: SubscribeRequest)
-
-//case class PendingMsg()
-
 case class ClearMessages()
 
 
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
-  //  var labelFamily = LabelsUtils.getLabelProlog(Nil)
 
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
         CoreApi.sessionPing(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value)
-      } { messagesResponse => MessagesRootModel(ContentHandler
-        .getContentModel(messagesResponse)
+      } { messagesResponse =>
+        // toggle pinger to re issue session ping
+        SYNEREOCircuit.dispatch(TogglePinger())
+        MessagesRootModel(ContentUtils
+        .processRes(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
 
     case ClearMessages() =>
       updated(Pot.empty)
-
-    //    case SubsForMsgAndBeginSessionPing() =>
-    //      ContentHandler.subsForMsgAndBeginSessionPing()
-    //      noChange
-
-
-    //    case CancelPreviousAndSubscribeNew(req: SubscribeRequest) =>
-    //      SYNEREOCircuit.dispatch(ClearMessages())
-    //      ContentHandler.cancelPreviousAndSubscribeNew(req)
-    //      noChange
-
-    //    case PostMessage(req) =>
-    //      ContentHandler.postMessage(req)
-    //      noChange
-
   }
 }

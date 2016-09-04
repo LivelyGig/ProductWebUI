@@ -45,7 +45,7 @@ class ConnectionHandlerTest extends UnitTest("ConnectionHandlerTest") {
   "AddConnection" should "add the new connection in the ConnectionRootModel" in {
     val newCnxn = ConnectionsModel("sessionUriForAdd",Connection("sourceForAddCnxn",
       "labelForAddCnxn","targetForAddCnxn"),"nameForAddCnxn","")
-    val result = handler.handle(AddConnection(newCnxn,newCnxn.connection))
+    val result = handler.handle(UpdateConnections(newCnxn,newCnxn.connection))
     result match {
       case ModelUpdate(newValue) =>
         assert(newValue.connectionsResponse.last == newCnxn)

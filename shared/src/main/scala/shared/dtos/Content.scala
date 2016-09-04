@@ -50,8 +50,8 @@ case class UserLoginResponse(s: String, B: String)
 
 case class ConnectionProfileResponse(sessionURI: String, connection: Connection, jsonBlob: String)
 
-case class ResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection = Connection(),
-                           filter: String = "")
+case class ResponseContent(sessionURI: String, pageOfPosts: Seq[String] = Nil, connection: Connection,
+                           filter: String)
 
 case class Connection(source: String = "", label: String = "", target: String = "")
 
@@ -75,14 +75,14 @@ case class EstablishConnection(sessionURI: String = "", aURI: String = "", bURI:
 
 case class LabelPost(sessionURI: String = "", labels: Seq[String] = Nil, alias: String = "") extends Content
 
-case class Introduction(introSessionId: String = "", correlationId: String = "", connection: Connection = Connection(), message: String = "", introProfile: String = "")
+case class Introduction(introSessionId: String, correlationId: String, connection: Connection, message: String, introProfile: String)
 
 case class IntroConfirmReq(sessionURI: String = "", alias: String = "", introSessionId: String = "",
                            correlationId: String = "", accepted: Boolean) extends Content
 
 case class IntroductionConfirmationResponse(sessionURI: String = "")
 
-case class SessionPong(sessionURI: String = "")
+case class SessionPong(sessionURI: String)
 
 case class ConnectNotification(connection: Connection, introProfile: String = "")
 

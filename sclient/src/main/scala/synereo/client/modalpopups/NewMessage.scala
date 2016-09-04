@@ -25,7 +25,7 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils, SelectizeUtils}
 import org.querki.jquery._
-import synereo.client.handlers.{ContentHandler, SearchesModelHandler}
+import synereo.client.handlers.SearchesModelHandler
 import synereo.client.modalpopupbackends.NewMessageBackend
 
 import scala.scalajs.js

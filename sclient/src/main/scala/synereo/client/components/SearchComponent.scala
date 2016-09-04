@@ -13,7 +13,7 @@ import org.scalajs.dom
 
 import scalacss.ScalaCssReact._
 import synereo.client.utils
-import synereo.client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
+import synereo.client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
 
 import scala.language.reflectiveCalls
 
@@ -41,7 +41,7 @@ object SearchComponent {
         ), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(cnxnToPost, searchLabels))
       //      SYNEREOCircuit.dispatch(CancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)))
-      ContentHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr))
+      ContentUtils.cancelPreviousAndSubscribeNew(SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr))
     }
 
     def render(s: State, p: Props) = {

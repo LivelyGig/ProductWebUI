@@ -13,7 +13,7 @@ import synereo.client.css._
 import synereo.client.services.SYNEREOCircuit
 import japgolly.scalajs.react
 import synereo.client.components.Bootstrap._
-import synereo.client.utils.ConnectionsUtils
+import synereo.client.utils.{ConnectionsUtils, ContentUtils}
 import diode.AnyAction._
 
 import scalacss.Defaults._
@@ -23,7 +23,6 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import synereo.client.handlers.ContentHandler
 import synereo.client.modalpopupbackends.ConnectionsFormBackend
 
 import scala.scalajs.js

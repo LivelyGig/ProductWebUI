@@ -117,7 +117,7 @@ class L4JSLogger(jsLogger: JSLogger) extends Logger {
 
   override def disableServerLogging(): Unit = {
     if (ajaxAppender != null) {
-      jsLogger.removeAppender(ajaxAppender)
+      jsLogger.addAppender(ajaxAppender)
       ajaxAppender = null
     }
   }

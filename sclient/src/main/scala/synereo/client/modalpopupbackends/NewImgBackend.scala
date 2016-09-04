@@ -7,9 +7,9 @@ import org.scalajs.dom.raw.{FileReader, UIEvent}
 import shared.dtos.JsonBlob
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
-import synereo.client.handlers.ContentHandler
 import synereo.client.modalpopups.ProfileImageUploaderForm
 import synereo.client.services.SYNEREOCircuit
+import synereo.client.utils.ContentUtils
 
 import scala.scalajs.js
 
@@ -50,7 +50,7 @@ case class NewImgBackend(t: BackendScope[ProfileImageUploaderForm.Props, Profile
       t.modState(s => s.copy(postNewImage = false))
     } else {
       //        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
-      ContentHandler.postUserUpdate(t.state.runNow().updateUserRequest)
+      ContentUtils.postUserUpdate(t.state.runNow().updateUserRequest)
       t.modState(s => s.copy(postNewImage = true))
     }
   }

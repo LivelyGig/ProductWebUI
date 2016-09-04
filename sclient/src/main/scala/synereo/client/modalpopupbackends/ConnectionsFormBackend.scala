@@ -5,11 +5,11 @@ import japgolly.scalajs.react.{Callback, _}
 import org.querki.jquery._
 import shared.models.ConnectionsModel
 import synereo.client.components.{ConnectionsSelectize, _}
-import synereo.client.handlers.ContentHandler
 import synereo.client.modalpopups.ConnectionsForm
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.utils.ConnectionsUtils
+import synereo.client.utils.{ConnectionsUtils, ContentUtils}
 import synereo.client.components.Bootstrap._
+
 import scala.scalajs.js
 
 /**
@@ -76,7 +76,7 @@ case class ConnectionsFormBackend(t: BackendScope[ConnectionsForm.Props, Connect
       val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
         sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
       //        SYNEREOCircuit.dispatch(PostNewConnection(content))
-      ContentHandler.postNewConnection(content)
+      ContentUtils.postNewConnection(content)
       t.modState(s => s.copy(postConnection = true))
     } else {
       $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -97,7 +97,7 @@ case class ConnectionsFormBackend(t: BackendScope[ConnectionsForm.Props, Connect
           aURI = ConnectionsUtils.getSelfConnnection().source,
           bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
         //          SYNEREOCircuit.dispatch(PostNewConnection(content))
-        ContentHandler.postNewConnection(content)
+        ContentUtils.postNewConnection(content)
         t.modState(s => s.copy(postConnection = true))
     }
   }

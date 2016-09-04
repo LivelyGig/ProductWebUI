@@ -32,7 +32,7 @@ object LoginForm {
                    showNewInviteForm: Boolean = false,
                    hostName: String = dom.window.location.hostname,
                    portNumber: String = "9876",
-                   apiURL: String = s"https://" + dom.window.location.hostname + ":9876"
+                   apiURL: String = s"https://192.168.99.100:9876"
                   )
 
 

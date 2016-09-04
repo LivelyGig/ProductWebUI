@@ -20,11 +20,11 @@ import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import synereo.client.handlers.ContentHandler
 import diode.AnyAction._
 import org.querki.jquery._
 import synereo.client.logger
 import synereo.client.modalpopupbackends.NewImgBackend
+import synereo.client.utils.ContentUtils
 
 import scala.scalajs.js
 

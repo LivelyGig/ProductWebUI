@@ -12,23 +12,23 @@ import scala.util.{Failure, Success}
 
 // Actions
 //scalastyle:off
-case class AddConnection(newConnectionModel: ConnectionsModel, newConnection: Connection)
-
-case class UpdateConnectionSeq(connections: Seq[Connection])
-
-case class UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel])
-
+case class UpdateConnections(newConnectionModel: Seq[ConnectionsModel], newConnection: Seq[Connection])
 
 class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
-    case UpdateConnectionSeq(connections: Seq[Connection]) =>
-      updated(ConnectionsRootModel(value.connectionsResponse, connections))
-
-    case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) =>
-      updated(ConnectionsRootModel(listOfConnectionModel, value.connections))
-
-    case AddConnection(newConnectionModel: ConnectionsModel, newConnection) =>
-      updated(ConnectionsRootModel(value.connectionsResponse:+newConnectionModel, value.connections:+newConnection))
+    case UpdateConnections(newConnectionsModel, newConnections) =>
+      println(s"newConnectionsModel : ${newConnectionsModel}, newConnections: ${newConnections}")
+      val (cnxnModelMod, cnxnMod) = if (value.connections.nonEmpty){
+        println(s"value.connectionsResponse: ${value.connectionsResponse}")
+        (value.connectionsResponse ++ newConnectionsModel.filterNot(e=>
+          value.connectionsResponse.exists( p=> e.connection.source == p.connection.target || e.connection.target == p.connection.target)),
+          value.connections ++ newConnections.filterNot(e=>
+            value.connections.exists(p => p.target == e.source || p.target == e.target))
+          )
+      } else {
+        (newConnectionsModel, newConnections)
+      }
+      updated(ConnectionsRootModel(cnxnModelMod, cnxnMod))
   }
 }

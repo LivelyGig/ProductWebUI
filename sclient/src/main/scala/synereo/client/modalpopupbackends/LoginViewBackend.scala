@@ -8,12 +8,12 @@ import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import synereo.client.handlers.{ContentHandler, _}
+import synereo.client.handlers._
 import synereo.client.logger._
 import synereo.client.modules.Login
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
-import synereo.client.utils.AppUtils
+import synereo.client.utils.{AppUtils, ContentUtils}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
@@ -55,17 +55,17 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
           try {
             val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
             log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiTypes.CreateUserWaiting) {
+            if (s.msgType == ApiTypes.responseTypes.CREATE_USER_WAITING) {
               t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
               $(loginLoader).addClass("hidden")
               $(loadingScreen).addClass("hidden")
-            } else if (s.msgType == ApiTypes.CREATE_USER_ERROR) {
+            } else if (s.msgType == ApiTypes.responseTypes.CREATE_USER_ERROR) {
               val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
               //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
               t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
               $(loginLoader).addClass("hidden")
               $(loadingScreen).addClass("hidden")
-            } else if (s.msgType == ApiTypes.ApiHostUnreachableError) {
+            } else if (s.msgType == ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR) {
               processServerError(s.msgType)
             }
             else {
@@ -94,7 +94,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
   def validateInitializeSessionResponse(response: String): String = {
     try {
       val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
-      if (error.msgType == ApiTypes.ApiHostUnreachableError)
+      if (error.msgType == ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR)
         SERVER_ERROR
       else
         LOGIN_ERROR
@@ -138,20 +138,16 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
       case Success(res) =>
         SYNEREOCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""),
           imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email /*, sessionUri = response.content.sessionURI*/)))
-        AppUtils.handleInitialSessionPingRes(res)
-        SYNEREOCircuit.dispatch(UpdateConnectionSeq(response.content.listOfConnections))
+        ContentUtils.processRes(res)
         SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
         SYNEREOCircuit.dispatch(AttachPinger())
-        //          SYNEREOCircuit.dispatch(SubsForMsgAndBeginSessionPing())
-        ContentHandler.subsForMsgAndBeginSessionPing()
-        //          SYNEREOCircuit.dispatch(RefreshMessages())
+        ContentUtils.subsForMsgAndBeginSessionPing()
         $(loginLoader).addClass("hidden")
         $(loadingScreen).addClass("hidden")
         window.location.href = "/#dashboard"
-        //      checkIntroductionNotification
         log.debug("login successful")
       case Failure(res) =>
-        println("res = " + res.getMessage)
+        console.log(s"login failure : ${res.getMessage}")
         processServerError(res.getMessage)
     }
   }
@@ -190,7 +186,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
             upickle.default.read[ApiResponse[ConfirmEmailResponse]](responseStr)
             //              isUserVerified = true changed to false to make toastr hidden
             isUserVerified = false
-            log.debug(ApiTypes.CreateUserError)
+            log.debug(ApiTypes.responseTypes.CREATE_USER_ERROR)
             t.modState(s => s.copy(showAccountValidationSuccess = true)).runNow()
           } catch {
             case e: Exception =>

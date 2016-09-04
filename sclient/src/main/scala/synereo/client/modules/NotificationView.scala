@@ -70,7 +70,7 @@ object NotificationList {
           <.div(^.className := "card-shadow")(
             <.div(^.className := "row", NotificationViewCSS.Style.notificationCard)(
               <.div(^.className := "col-md-8")(
-                <.div(s"you have introduction request for : ${JSON.parse(introduction.introProfile).name.asInstanceOf[String]}", ^.display.`inline-block`, ^.margin := "20.px")
+                <.div(s"You have introduction request for : ${JSON.parse(introduction.introProfile).name.asInstanceOf[String]}", ^.display.`inline-block`, ^.margin := "20.px")
               ),
               <.div(^.className := "col-md-4")(
                 <.div(^.display.`inline-block`,
@@ -86,7 +86,7 @@ object NotificationList {
         )
       }
       <.div(^.className := "col-md-12",
-        <.h1(s"you have ${P.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
+        <.h1(s"You have ${P.introductions.length} notifications", NotificationViewCSS.Style.notificationCountHeading),
         <.div(^.id := "acceptRejectAllBtnContainer", NotificationViewCSS.Style.acceptRejectAllBtnContainer)(
           <.button(^.className := "btn btn-default", ^.color.green, MIcon.done, NotificationViewCSS.Style.acceptAllRejectAllBtns, ^.onClick --> Callback {
             t.backend.handleAllIntroduction(true)
