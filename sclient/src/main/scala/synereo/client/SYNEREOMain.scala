@@ -14,11 +14,10 @@ import org.scalajs.dom
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-import scalacss.mutable.GlobalRegistry
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
+import scalacss.mutable.GlobalRegistry
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
