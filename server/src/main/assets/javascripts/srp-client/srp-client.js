@@ -154,7 +154,10 @@ SRPClient.prototype = {
             throw 'Missing parameter.';
         }
         var inner = sjcl.codec.hex.fromBits(this.calculateH(sjcl.codec.utf8String.toBits(this.username + ":" + this.password)));
-        return this.calculateH(sjcl.codec.utf8String.toBits(salt + inner));
+        var bnSalt = sjcl.bn.fromBits(sjcl.codec.hex.toBits(salt));
+        var bnInner = sjcl.bn.fromBits(sjcl.codec.hex.toBits(inner));
+        var toHash = sjcl.bitArray.concat(this._getPadded(bnSalt), this._getPadded(bnInner));
+        return this.calculateH(toHash);
     },
 
     /**
