@@ -34,15 +34,6 @@ object Searches {
   case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
 
   // scalastyle:off
-  def toggleSidebar = Callback {
-    val sidebtn: js.Object = "#searchContainer"
-    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-    if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
-    } else {
-      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
-    }
-  }
 
   val selectState: js.Object = "#selectize"
 
@@ -50,11 +41,14 @@ object Searches {
 
     def searchClick(props: Props): Unit = {
       val sidebtn: js.Object = "#searchContainer"
+      val overlayContainer: js.Object = "#overlayContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
+        $(overlayContainer).addClass("overlaySidebar")
+//        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       } else {
-        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
+        $(overlayContainer).removeClass("overlaySidebar")
+//        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
       }
 
       val searchLabels = LabelsUtils.buildProlog(
@@ -62,6 +56,20 @@ object Searches {
       val expr = Expression("feedExpr", ExpressionContent(ConnectionsUtils.getCnxnForReq(Nil, props.view), searchLabels))
       ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr), props.view)
     }
+
+    def toggleSidebar = Callback {
+      val sidebtn: js.Object = "#searchContainer"
+      val overlayContainer: js.Object = "#overlayContainer"
+      $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+      if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
+        $(overlayContainer).addClass("overlaySidebar")
+        //      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
+      } else {
+        $(overlayContainer).removeClass("overlaySidebar")
+        //      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
+      }
+    }
+
 
     /*val ref = RefHolder[ReactTagsInputM]*/
 
@@ -109,10 +117,10 @@ object Searches {
       $(messagesFromDate).datepicker(baseOpts)
     }
 
-    def mounted(): Callback = {
+    def mounted(): Callback = Callback{
       initializeDatepicker
       initializeTagsInput
-      toggleSidebar
+//      toggleSidebar
 
     }
 
