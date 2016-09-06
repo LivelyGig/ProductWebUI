@@ -29,19 +29,14 @@
   script:
      - sbt ++$TRAVIS_SCALA_VERSION compile stage
 
-# server/target/universal/stage/lib
-# server.server-1.0.1-assets.jar
-# server.server-1.0.1-sans-externalized.jar
-# sharedjvm.sharedjvm-0.1-SNAPSHOT.jar
-  deploy:
-    provider: releases
-#  api_key: "$N10NAPI_TOKEN"
-    api_key:
-      secure: gyM1f3RjQYAcPMFbE5t04Ar0OrTFAb+QnSZxgMdw6J6zH1uREwe8JJ+L0nPqtlOgMbb1+yAPQ23E8SdcrCgzbF+pH+Uk+NozzEyEgK85scsNo5DdKLVFiZSM4+7wZA/lhiYTGxjhRDKBbW2qJmeCS8xYErdYMVO1MILZke5IUM/w5DS21fZsV68IfoVieO9O1FHFCO4fmTwVsIKHjTGSDt+Elj5TcItiOmlTA2A7QlV1wPAgYnWkoMKsYm+RzEYtiU3+we8RlAaaHnK1Odv1IS6KHnnAPOk2ThsksHask0UElQtdQAIc3jrnEuupVy+CIzCvH772FwziNtElcoCRKwFy8QkJxcTPKPjVfBPD5oznR66ZyExF+JmLDZhQVRnrWQd4OK7+9vlgxcJI5yb4xU0Y9IuEMLpc2dNchGXbYzryGxvdl5Bzc/RorGkqZ81/rtEpetMm6aeYpzsy0orzHefSMmuY3Kqx7zUJID1/dWUXZsVzXGPbo37OpSrJamnSRbdp7IjIlKxBP7BfkIqbEbPNhRbJpqbStgzBfR/3iwzgALrtzAIrAmMSp3LO1QCGkjggtV6otA60LN6vaUB/JPxddGfZ7yp1aRXx8Z++XH+03b0Y0USbgzMZ9QRDrViFH9LxG+i3gj0ZoDAjtcI9d6pssW08DOrJeWd+jWTzifU=
-    file:
-      - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
-      - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
-      - "server/target/universal/stage/lib/sharedjvm.sharedjvm-0.1-SNAPSHOT.jar"
+#  deploy:
+#    provider: releases
+#    api_key:
+#      secure: gyM1f3RjQYAcPMFbE5t04Ar0OrTFAb+QnSZxgMdw6J6zH1uREwe8JJ+L0nPqtlOgMbb1+yAPQ23E8SdcrCgzbF+pH+Uk+NozzEyEgK85scsNo5DdKLVFiZSM4+7wZA/lhiYTGxjhRDKBbW2qJmeCS8xYErdYMVO1MILZke5IUM/w5DS21fZsV68IfoVieO9O1FHFCO4fmTwVsIKHjTGSDt+Elj5TcItiOmlTA2A7QlV1wPAgYnWkoMKsYm+RzEYtiU3+we8RlAaaHnK1Odv1IS6KHnnAPOk2ThsksHask0UElQtdQAIc3jrnEuupVy+CIzCvH772FwziNtElcoCRKwFy8QkJxcTPKPjVfBPD5oznR66ZyExF+JmLDZhQVRnrWQd4OK7+9vlgxcJI5yb4xU0Y9IuEMLpc2dNchGXbYzryGxvdl5Bzc/RorGkqZ81/rtEpetMm6aeYpzsy0orzHefSMmuY3Kqx7zUJID1/dWUXZsVzXGPbo37OpSrJamnSRbdp7IjIlKxBP7BfkIqbEbPNhRbJpqbStgzBfR/3iwzgALrtzAIrAmMSp3LO1QCGkjggtV6otA60LN6vaUB/JPxddGfZ7yp1aRXx8Z++XH+03b0Y0USbgzMZ9QRDrViFH9LxG+i3gj0ZoDAjtcI9d6pssW08DOrJeWd+jWTzifU=
+#    file:
+#      - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
+#      - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
+#      - "server/target/universal/stage/lib/sharedjvm.sharedjvm-0.1-SNAPSHOT.jar"
     skip_cleanup: true
     on:
       repo: LivelyGig/ProductWebUI
