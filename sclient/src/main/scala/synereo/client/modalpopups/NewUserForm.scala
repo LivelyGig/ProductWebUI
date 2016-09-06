@@ -31,7 +31,7 @@ object NewUserForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = true,
-                   apiURL: String = s"https://localhost:9876"
+                   apiURL: String = s"https://${dom.window.location.hostname}"
                   )
 
   private val component = ReactComponentB[Props]("NewUserForm")
