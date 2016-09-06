@@ -14,9 +14,9 @@ import scalacss.ScalaCssReact._
   * Created by mandar.k on 3/11/2016.
   */
 //scalastyle:off
-case class ApiDetails(apiURL: String = "", hostName: String = "", portNumber: String = "")
+//case class ApiDetails(apiURL: String = "", hostName: String = "", portNumber: String = "")
 
-object Login {
+object LoginView {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
   val SERVER_ERROR = "SERVER_ERROR"

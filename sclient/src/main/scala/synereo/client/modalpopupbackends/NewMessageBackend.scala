@@ -52,7 +52,7 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
   def filterLabelStrings(value: Seq[String]): Seq[String] = {
     value.filter(
       _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
-    ).map(_.replace("#", "")).toSet.toSeq
+    ).map(_.replace("#", "")).distinct
   }
 
   def labelsTextFromMsg: Seq[String] = {
@@ -68,7 +68,9 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
 
   def getAllLabelsText: Seq[String] = {
     val (props, state) = (t.props.runNow(), t.state.runNow())
-    val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))
+    //    println(s"filtered labels from selectize ${filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))}")
+    val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++
+      filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId).map(label => s"#$label"))
     allLabels.distinct
   }
 
@@ -84,7 +86,7 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
 
   def updateImgSrc(e: ReactEventI): react.Callback = Callback {
     val value = e.target.files.item(0)
-    println(s"value of img = ${value.size}")
+    //    println(s"value of img = ${value.size}")
     val reader = new FileReader()
     reader.onload = (e: UIEvent) => {
       val contents = reader.result.asInstanceOf[String]
@@ -106,10 +108,10 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
     } else {
       $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
       val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-
-
       //        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
       val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
+      //      println(s"all label text from content,selectize,circuit : $getAllLabelsText")
+      //      println(s"newLabels : $newLabels")
       if (newLabels.nonEmpty) {
         val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
         ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
@@ -119,7 +121,6 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
         ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
       }
       //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(allLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
-
       t.modState(s => s.copy(postNewMessage = true))
     }
   }

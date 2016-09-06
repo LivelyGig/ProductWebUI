@@ -1,7 +1,7 @@
 package synereo.client.modalpopupbackends
 
 import japgolly.scalajs.react._
-import synereo.client.modules.Login
+import synereo.client.modules.LoginView
 import diode.AnyAction._
 import japgolly.scalajs.react._
 import org.querki.jquery._
@@ -9,8 +9,9 @@ import org.scalajs.dom._
 import shared.dtos._
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import synereo.client.handlers._
+import synereo.client.logger
 import synereo.client.logger._
-import synereo.client.modules.Login
+import synereo.client.modules.LoginView
 import synereo.client.services.CoreApi._
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 import synereo.client.utils.{AppUtils, ContentUtils}
@@ -24,7 +25,7 @@ import scala.util.{Failure, Success}
   * Created by bhagyashree.b on 2016-09-01.
   */
 //
-class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
+class LoginViewBackend(t: BackendScope[LoginView.Props, LoginView.State]) {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
   val SERVER_ERROR = "SERVER_ERROR"
@@ -33,7 +34,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
   val loadingScreen: js.Object = "#loadingScreen"
   var isUserVerified = false
 
-  def mounted(props: Login.Props): Callback = {
+  def mounted(props: LoginView.Props): Callback = {
     t.modState(s => s.copy(showLoginForm = true))
   }
 
@@ -164,7 +165,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
   def processServerError(responseStr: String): Unit = {
     //      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
     $(loginLoader).addClass("hidden")
-    println(s"internal server error  ${responseStr}")
+    logger.log.error(s"internal server error  ${responseStr}")
     t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = responseStr)).runNow()
   }
 

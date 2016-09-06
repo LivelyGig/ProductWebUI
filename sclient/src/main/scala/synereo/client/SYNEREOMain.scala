@@ -60,8 +60,8 @@ object SYNEREOMain extends js.JSApp {
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
-    (staticRoute(root, SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
-      | staticRoute("#login", SynereoLoc) ~> renderR(ctl => Login(Login.Props()))
+    (staticRoute(root, SynereoLoc) ~> renderR(ctl => LoginView(LoginView.Props()))
+      | staticRoute("#login", SynereoLoc) ~> renderR(ctl => LoginView(LoginView.Props()))
       | staticRoute("#people", PeopleLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.PEOPLE_VIEW, proxy))))
       | staticRoute("#account", AccountLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.ACCOUNT_VIEW, proxy))))
       | staticRoute("#dashboard", DashboardLoc) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.DASHBOARD_VIEW, proxy))))
