@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.GlobalStyles
+import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.VersionInfoResponse
@@ -34,17 +34,17 @@ object AboutInfoModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(SignupCSS.Style.signUpHeading)(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(headerText)),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"Agent UID : ${agentUID.head}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)("Build Number : "),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"glosevalVersion : ${versionInfo.glosevalVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"scalaVersion : ${versionInfo.scalaVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"mongoDBVersion : ${versionInfo.mongoDBVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection)(s"rabbitMQVersion :${versionInfo.rabbitMQVersion} "),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Agent UID :  ${agentUID.head}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)("Build Number : "),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"glosevalVersion :   ${versionInfo.glosevalVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"scalaVersion :   ${versionInfo.scalaVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"mongoDBVersion :   ${versionInfo.mongoDBVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"rabbitMQVersion :  ${versionInfo.rabbitMQVersion} "),
             <.div(^.className := "row pull-right")(
               <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "Ok")
             ),

@@ -69,14 +69,6 @@ object SignupCSS {
       marginBottom(30.px),
       marginTop(20.px)
     )
-    val loginHeading = style(
-      color(c"#fff"),
-      fontSize(52.px),
-      fontFamily :=! "karla",
-      textAlign.center,
-      marginBottom(30.px),
-      marginTop(20.px)
-    )
     val checkBoxTermsAndCond = style(
       width(20.px),
       opacity(0.5),
@@ -134,10 +126,6 @@ object SignupCSS {
     )
     val signUpBtn = style(
       margin(30.px)
-    )
-
-    val signUPInput = style(
-      marginBottom(22.px)
     )
   }
 

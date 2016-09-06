@@ -20,7 +20,7 @@ import scalacss.ScalaCssReact._
 object NewUserForm {
 
   var addNewUserState: Boolean = false
-  var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
+//  var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -31,7 +31,7 @@ object NewUserForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = true,
-                   apiURL: String = s"https://192.168.99.100:9876"
+                   apiURL: String = s"https://localhost:9876"
                   )
 
   private val component = ReactComponentB[Props]("NewUserForm")
