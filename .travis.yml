@@ -37,11 +37,11 @@
 #      - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
 #      - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
 #      - "server/target/universal/stage/lib/sharedjvm.sharedjvm-0.1-SNAPSHOT.jar"
-    skip_cleanup: true
-    on:
-      repo: LivelyGig/ProductWebUI
-      branch: synereo
-#    tags: true
+#    skip_cleanup: true
+#    on:
+#      repo: LivelyGig/ProductWebUI
+#      branch: synereo
+##    tags: true
     
 notifications:
   email:
