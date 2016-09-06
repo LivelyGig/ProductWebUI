@@ -56,4 +56,19 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
 
   }
 
+  "sortContent" should "give a tuple with different types for mixed responses" in {
+    val mixedRes = MockData.mixedReponse
+    val responseArray = upickle.json.read(mixedRes).arr.map(e => upickle.json.write(e))
+    val (cnxn, msg, intro, cnctNot) = contentUtils.sortContent(responseArray)
+    assert(cnxn.nonEmpty && msg.nonEmpty && intro.nonEmpty && cnctNot.nonEmpty)
+  }
+
+  "getMsgModel" should "give the messages sequence" in {
+    val msgRes = MockData.messagesResponse
+    val responseArray = upickle.json.read(msgRes).arr.map(e => upickle.json.write(e))
+    val (cnxn, msg, intro, cnctNot) = contentUtils.sortContent(responseArray)
+    val res = contentUtils.getMsgModel(msg)
+    assert(res.isInstanceOf[Seq[MessagePost]])
+  }
+
 }
