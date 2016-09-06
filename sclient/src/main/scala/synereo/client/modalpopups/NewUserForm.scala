@@ -20,7 +20,7 @@ import scalacss.ScalaCssReact._
 object NewUserForm {
 
   var addNewUserState: Boolean = false
-  var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
+//  var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles

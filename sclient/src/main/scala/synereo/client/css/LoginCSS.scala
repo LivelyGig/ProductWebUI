@@ -60,6 +60,13 @@ object LoginCSS {
     val requestInviteModalStyle = style(
       //      backgroundColor(c"#96989B")
     )
+    val loginHeading = style(
+      color(c"#fff"),
+      fontSize(52.px),
+      fontFamily :=! "karla",
+      textAlign.center,
+      marginBottom(30.px)
+    )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
       marginLeft(-30.px),
@@ -184,29 +191,46 @@ object LoginCSS {
       opacity(0.4)
     )
     val loginModalFooter = style(
-      textAlign.center,
-      marginLeft(-46.px),
-      marginRight(-46.px),
-//      backgroundColor(rgb(0, 0, 0)),
-      padding.`0`.important
+      textAlign.center
+      //      marginLeft(-46.px),
+      //      marginRight(-46.px),
+      //      backgroundColor(rgb(0, 0, 0)),
+      //      padding.`0`.important
     )
     val dontHaveAccountBtnLoginModal = style(
-      //      position.absolute,
-      //      right(43.%%),
-      //      bottom(10.%%),
       display.block,
-      marginLeft.auto,
-      marginRight.auto,
+      float.left,
       opacity(0.6),
       marginTop(38.px),
       color(c"#fff"),
       fontSize(20.px),
-      //      display.inlineBlock,
-      //      marginBottom(28.px),
       color(c"#fff"),
       backgroundColor.transparent.important,
       outline.none.important,
 
+      &.hover(
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      &.focus(
+        color(c"#fff"),
+        outline.none.important,
+        backgroundColor.transparent.important
+      ),
+      border.none.important,
+      fontFamily :=! "karla"
+    )
+    val verifyUserBtnLoginModal = style(
+      display.block,
+      opacity(0.6),
+      float.right,
+      marginTop(38.px),
+      color(c"#fff"),
+      fontSize(20.px),
+      color(c"#fff"),
+      backgroundColor.transparent.important,
+      outline.none.important,
       &.hover(
         color(c"#fff"),
         outline.none.important,
@@ -302,8 +326,8 @@ object LoginCSS {
       color(c"#fff"),
       fontFamily :=! "karla",
       float.right,
-      marginTop(25.px),
-      marginBottom(30.px)
+      marginTop(25.px)
+      //      marginBottom(30.px)
     )
     val apiSubmitBtn = style(
       backgroundColor(c"#ff806c"),
@@ -312,6 +336,9 @@ object LoginCSS {
       fontFamily :=! "karla",
       marginTop(40.px),
       marginBottom(40.px)
+    )
+    val loginFormInputText = style(
+      marginBottom(22.px)
     )
   }
 

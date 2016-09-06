@@ -18,7 +18,7 @@ import scala.scalajs.js
 /**
   * Created by bhagyashree.b on 2016-09-01.
   */
-
+//scalastyle:off
 case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageForm.State]) {
   def hide = Callback {
     jQuery(t.getDOMNode()).modal("hide")
@@ -38,8 +38,6 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
         tagsCreatedInline = tagsCreatedInline :+ word
       }
     )
-    //      tagsCreatedInline.exis
-    //      println(tagsCreatedInline)
     t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
   }
 
