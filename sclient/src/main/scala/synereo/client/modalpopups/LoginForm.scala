@@ -32,15 +32,14 @@ object LoginForm {
                    showNewInviteForm: Boolean = false,
                    hostName: String = dom.window.location.hostname,
                    portNumber: String = "9876",
-                   apiURL: String = s"https://192.168.99.100:9876"
+                   apiURL: String = s"https://localhost:9876"
                   )
 
 
-  private val component = ReactComponentB[Props]("AddLoginForm")
+  private val component = ReactComponentB[Props]("LoginForm")
     .initialState_P(p => State(new UserModel("", "", "")))
     .backend(new LoginFormBackend(_))
       .renderPS((t,P,S)=>{
-        // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
         val headerText = "Log in"
         Modal(
           Modal.Props(

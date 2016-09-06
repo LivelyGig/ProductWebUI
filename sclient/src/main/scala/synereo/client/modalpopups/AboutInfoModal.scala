@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.GlobalStyles
+import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.VersionInfoResponse
@@ -34,7 +34,7 @@ object AboutInfoModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(SignupCSS.Style.signUpHeading)(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),  <.div(SignupCSS.Style.signUpHeading)(headerText)),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "row")(
