@@ -110,7 +110,7 @@ object MainMenu {
                 //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
                   //                  if (model.name.length() < 10) {
-                  <.div(model.name),
+                  <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
                   //                  }
                   //                  else {
                   //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")

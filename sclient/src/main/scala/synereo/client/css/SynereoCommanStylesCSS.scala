@@ -27,13 +27,9 @@ object SynereoCommanStylesCSS {
       //      marginTop(30.px)
     )
     val searchBoxContainer = style(
-      marginTop(20.px),
+      marginTop(12.px),
       display.inlineBlock,
-      width(380.px),
-      media.maxWidth(800.px) -
-        width(40.%%)
-
-
+      width(80.%%)
     )
     val labelSelectizeNavbar = style(
       width(480.px),
@@ -102,10 +98,18 @@ object SynereoCommanStylesCSS {
       //      paddingTop(6.px),
       //      paddingRight(20.px),
       right.`0`,
-      media.maxWidth(767.px) -
-        marginTop(65.px)
+    //  media.maxWidth(767.px) -
+       // marginTop(65.px)
       //      zIndex(100)
       //      backgroundColor(c"#277490")
+        media.minWidth(546.px).maxWidth(766.px) -
+        width(233.px),
+        float.right,
+
+      media.maxWidth(545.px) -(
+        marginTop(65.px),
+      width(100.%%)
+        )
     )
     val renderFailedMessage = style(
       marginTop(40.px),
@@ -171,8 +175,10 @@ object SynereoCommanStylesCSS {
         fontSize(16.px),
       media.minWidth(1251.px) -
         fontSize(20.px),
-      media.maxWidth(1050.px) -
-        width(130.px)
+      media.maxWidth(1050.px).minWidth(546.px) -
+        width(130.px),
+      media.maxWidth(545.px) -
+        width.auto
     )
     val ampsDropdownToggleBtn = style(
       //      width(110.px),
@@ -208,7 +214,7 @@ object SynereoCommanStylesCSS {
       maxHeight(48.px)
     )
     val imgLogoOtherLoc = style(
-      marginTop(8.px),
+      marginTop(4.px),
       padding(5.px),
       maxHeight(54.px)
     )
@@ -383,6 +389,12 @@ object SynereoCommanStylesCSS {
 
     val featureHide = style(
       display.none.important
+    )
+
+    val userNameOverflow = style(
+      whiteSpace.nowrap,
+      overflow.hidden,
+      textOverflow.:=("ellipsis")
     )
 
   }
