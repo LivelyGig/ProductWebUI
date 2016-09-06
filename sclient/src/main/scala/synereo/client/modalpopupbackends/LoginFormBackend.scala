@@ -13,8 +13,7 @@ import scala.scalajs.js
 /**
   * Created by bhagyashree.b on 2016-09-01.
   */
-
-
+//scalastyle:off
 class LoginFormBackend(t: BackendScope[LoginForm.Props, LoginForm.State]) {
 
   val LoginFormID: js.Object = "#LoginForm"
@@ -52,7 +51,7 @@ class LoginFormBackend(t: BackendScope[LoginForm.Props, LoginForm.State]) {
     t.modState(s => s.copy(userModel = s.userModel.copy(email = value)))
   }
 
-  def showValidate(e: ReactEventI) = {
+  def showVerifyEmailModal(): Callback = {
     t.modState(s => s.copy(showConfirmAccountCreation = true))
   }
 

@@ -73,6 +73,9 @@ object UserProfileViewCSS {
       fontSize(20.px),
       color.black
     )
+    val aboutInfoSectionContainer= style(
+      marginBottom(15.px)
+    )
     val inputText = style(
       width(200.px),
       color.black,

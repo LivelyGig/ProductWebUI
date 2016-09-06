@@ -29,7 +29,7 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 
 lazy val pCompile = "sclient"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
-lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js", "validator.js", "synereo_app.js", "selectize.min.js") else List("prolog_parser.js", "validator.js") /*++ clientsrpDeps*/
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js", "validator.js", "synereo_app.js"/*, "selectize.min.js"*/) else List("prolog_parser.js", "validator.js") /*++ clientsrpDeps*/
 lazy val client: Project = (project in file(pCompile))
   .settings(
     name := "client",

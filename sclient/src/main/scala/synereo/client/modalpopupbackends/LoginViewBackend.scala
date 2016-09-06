@@ -23,7 +23,7 @@ import scala.util.{Failure, Success}
 /**
   * Created by bhagyashree.b on 2016-09-01.
   */
-
+//scalastyle:off
 class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -199,7 +199,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
       }
       t.modState(s => s.copy(showConfirmAccountCreation = false))
     } else {
-      t.modState(s => s.copy(showConfirmAccountCreation = false))
+      t.modState(s => s.copy(showLoginForm = true))
     }
   }
 
