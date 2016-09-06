@@ -56,7 +56,6 @@ object Dashboard {
                       else
                         <.div()
                     ),
-
                     P.proxy().render(
                       messagesRootModel =>
                         HomeFeedList(messagesRootModel.messagesModelList)
@@ -74,7 +73,7 @@ object Dashboard {
                     )
                   ),
                   <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
-                    for (i <- 1 to 50) yield {
+                    for (i <- 1 to 6) yield {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
@@ -229,7 +228,6 @@ object HomeFeedList {
             fromSender = a.name
             img = a.imgSrc
           }
-
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
@@ -266,11 +264,15 @@ object HomeFeedList {
             <.div(^.className := "")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12")(
-                  //                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
+                  if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
+                    <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage)
+                  }else {
+                    <.span("")
+                  },
                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                     <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
-                      <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
+                      if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size >= 80659) {
                         <.div(DashboardCSS.Style.cardText /*, ^.onClick ==> openFullViewModalPopUP*/)(
                           if (messageText.length == 1) {
                             messageText(0)
@@ -279,14 +281,28 @@ object HomeFeedList {
                               messageText(b) + " "
                             }
                         )
-                      ),
-                      <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
-                        if (message.postContent.imgSrc != "") {
+                      }else{
+                      <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
+                          <.div(DashboardCSS.Style.cardText /*, ^.onClick ==> openFullViewModalPopUP*/)(
+                            if (messageText.length == 1) {
+                              messageText(0)
+                            } else
+                              for {b <- 0 to messageText.length - 1 if b <= 30} yield {
+                                messageText(b) + " "
+                              }
+                          )
+                          )
+                      },
+                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
+                          <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
+                          //println(s"message.postContent.imgSrc ${message.postContent.imgSrc.size}")
                           <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder)
+                          )
                         } else {
-                          <.div("")
+
+                          <.span("")
+
                         }
-                      )
                     )
                     //                    <.div(^.className := "row text-right")(
                     //                      <.button(^.className := "btn btn-default", DashboardCSS.Style.ampTokenBtn, ^.onClick ==> amplifyPost)(
@@ -298,16 +314,16 @@ object HomeFeedList {
                   )
                 )
               ),
-              <.div(^.className := "col-md-12")(
+              <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                 <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                  <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero /*, ^.onClick ==> openFullViewModalPopUP*/)(
-                    for {b <- 1 to messageText.length if b >= 30} yield {
+                  <.div(/*, ^.onClick ==> openFullViewModalPopUP*/)(
+                    for {b <- 2 to messageText.length if b >= 30} yield {
                       messageText(b) + " "
                     },
                     <.div(^.className := "col-md-12 text-uppercase")(
-                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
-                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
-                      }
+//                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
+//                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
+//                      }
                     )
                   )
                 )

@@ -94,6 +94,7 @@ object DashboardCSS {
     )
     val cardImage = style(
       //      paddingRight(65.px)s
+      width(100.%%)
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
