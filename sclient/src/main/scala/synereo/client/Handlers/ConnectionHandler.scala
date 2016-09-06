@@ -19,7 +19,6 @@ class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends Ac
 
     case UpdateConnections(newConnectionsModel, newConnections) =>
       val (cnxnModelMod, cnxnMod) = if (value.connections.nonEmpty){
-        println(s"value.connectionsResponse: ${value.connectionsResponse}")
         (value.connectionsResponse ++ newConnectionsModel.filterNot(e=>
           value.connectionsResponse.exists( p=> e.connection.source == p.connection.target || e.connection.target == p.connection.target)),
           value.connections ++ newConnections.filterNot(e=>
