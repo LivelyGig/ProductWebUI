@@ -18,7 +18,6 @@ class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends Ac
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
     case UpdateConnections(newConnectionsModel, newConnections) =>
-      println(s"newConnectionsModel : ${newConnectionsModel}, newConnections: ${newConnections}")
       val (cnxnModelMod, cnxnMod) = if (value.connections.nonEmpty){
         println(s"value.connectionsResponse: ${value.connectionsResponse}")
         (value.connectionsResponse ++ newConnectionsModel.filterNot(e=>

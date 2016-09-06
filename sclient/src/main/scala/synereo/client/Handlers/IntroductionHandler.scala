@@ -24,7 +24,6 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
     case AddNotification(introconfirmSeq: Seq[Introduction]) =>
-      println(introconfirmSeq)
       val modelMod =if (value.introResponse.nonEmpty) {
         value.introResponse ++ introconfirmSeq.filterNot(e=>
           value.introResponse.exists(p=>JSON.parse(p.introProfile).name.asInstanceOf[String] ==  JSON.parse(e.introProfile).name.asInstanceOf[String]))

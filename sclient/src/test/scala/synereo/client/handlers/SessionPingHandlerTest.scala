@@ -8,7 +8,7 @@ import synereo.client.rootmodels.SessionRootModel
 /**
   * Created by shubham.k on 31-08-2016.
   */
-class SessionPingHandlerTest extends UnitTest("") {
+class SessionPingHandlerTest extends UnitTest("SessionPingHandler") {
   val handler = new SessionPingHandler(new RootModelRW(SessionRootModel(pinger = false)))
 
 

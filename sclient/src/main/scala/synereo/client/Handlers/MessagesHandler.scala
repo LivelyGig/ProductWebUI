@@ -29,7 +29,16 @@ case class ClearMessages()
 class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends ActionHandler(modelRW) {
 
   override def handle: PartialFunction[Any, ActionResult[M]] = {
-
+    /**
+      * This is the prime action which maintains the ping cycle.
+      * It extends the PotActionRetriable trait which makes it retry the action
+      * if a failure occurs in the session ping
+      * However it is observed that the retry action is triggered for any error in the
+      * dom even if it is not bound to the MessagesRootModel.
+      * This is not a problem as of now, however if you are seeing too many session ping in
+      * your network tab then probably this action is the culprit. This may be a bug in
+      * Diode library. Need to investigate.
+      */
     case action: RefreshMessages =>
       val updateF = action.effectWithRetry {
         CoreApi.sessionPing(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value)

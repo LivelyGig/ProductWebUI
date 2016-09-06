@@ -8,7 +8,7 @@ import synereo.client.rootmodels.AppRootModel
 /**
   * Created by shubham.k on 2016-08-23.
   */
-class AppHandlerTest extends UnitTest("AppHandlerTest") {
+class AppHandlerTest extends UnitTest("AppHandler") {
   val appRootModel = new AppRootModel()
 
   def build = new AppHandler(new RootModelRW(appRootModel))

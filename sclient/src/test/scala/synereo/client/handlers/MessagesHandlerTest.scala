@@ -12,7 +12,7 @@ import synereo.client.rootmodels.MessagesRootModel
   * Created by bhagyashree.b on 2016-08-29.
   */
 
-class MessagesHandlerTest extends UnitTest("MessagesHandlerTest") {
+class MessagesHandlerTest extends UnitTest("MessagesHandler") {
 
   val model: Pot[MessagesRootModel] = Ready(MessagesRootModel())
   //def build = new MotdHandler(new RootModelRW(model))
@@ -31,9 +31,9 @@ class MessagesHandlerTest extends UnitTest("MessagesHandlerTest") {
     MessagePost("uid3", "created", "modified", "label3", newCnxnSeq, newMessagePostContent)
   )
 
-  val newSubscribeRequest = new SubscribeRequest("",newExpression)
-  val newExpression = new Expression("",newExpressionContent)
-  val newExpressionContent = new ExpressionContent(newCnxnSeq,"label","value","uid")
+  val newSubscribeRequest =  SubscribeRequest("",newExpression)
+  val newExpression =  Expression("",newExpressionContent)
+  val newExpressionContent =  ExpressionContent(newCnxnSeq,"label","value","uid")
 
 
   "ClearMessages" should "clear messages" in {
@@ -45,36 +45,5 @@ class MessagesHandlerTest extends UnitTest("MessagesHandlerTest") {
         assert(false)
     }
   }
-  //todo think of simulating the ajax behaviour
-
-//  "PostMessage" should "Post a message" in {
-//    val result = handler.handle(PostMessage(newSubscribeRequest))
-//    result match {
-//      case ModelUpdate(newValue) =>
-//        assert(newValue.isReady == true)
-//      case _=>
-//        assert(false)
-//    }
-//  }
-
-//  "CancelPreviousAndSubscribeNew" should "Cancel previous request and subscribe new request" in {
-//    val result = handler.handle(CancelPreviousAndSubscribeNew(newSubscribeRequest))
-//    result match {
-//      case ModelUpdate(newValue) =>
-//        assert(newValue.isReady == true)
-//      case _=>
-//        assert(false)
-//    }
-//  }
-
-//  "SubsForMsg" should "Subscribe for message " in {
-//    val result = handler.handle(SubsForMsg(newSubscribeRequest))
-//    result match {
-//      case ModelUpdate(newValue) =>
-//        assert(newValue.isReady == true)
-//      case _=>
-//        assert(false)
-//    }
-//  }
 
 }
