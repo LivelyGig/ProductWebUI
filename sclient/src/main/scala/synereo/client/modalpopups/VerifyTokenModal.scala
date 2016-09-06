@@ -8,28 +8,28 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{SignupCSS}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.modalpopupbackends.{VerifyEmailModalBackend => Backend}
+import synereo.client.modalpopupbackends.{VerifyTokenModalBackend => Backend}
 
 /**
   * Created by Mandar on 4/19/2016.
   */
-object VerifyEmailModal {
+object VerifyTokenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
+  case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
-  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
+  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false)
 
   private val component = ReactComponentB[Props]("ConfirmAccountCreation")
     .initialState_P(p => State(new EmailValidationModel("")))
     .backend(new Backend(_))
     .renderPS((t, P, S) => {
-      val headerText = "Verify email"
+      val headerText = "Verify Token"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span()(
-            <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+          header = hide => <.span(
+            <.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
             <.div(SignupCSS.Style.signUpHeading)(headerText)
           ),
           closed = () => t.backend.formClosed(S, P),
@@ -59,7 +59,7 @@ object VerifyEmailModal {
     })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.accountValidationFailed) {
-        scope.$.backend.hide
+        scope.$.backend.hideModal
       }
     })
     .build

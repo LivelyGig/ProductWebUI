@@ -23,7 +23,7 @@ import scala.util.{Failure, Success}
 /**
   * Created by bhagyashree.b on 2016-09-01.
   */
-//scalastyle:off
+//
 class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
 
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -127,7 +127,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
         println("res = " + res.getMessage)
         processServerError(res.getMessage)
     }
-    t.modState(s => s.copy(showLoginForm = false))
+    t.modState(s => s.copy(showLoginForm = false, showConfirmAccountCreation = false))
   }
 
 
@@ -178,7 +178,7 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
     }
   }
 
-  def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false): Callback = {
+  def confirmAccountCreation(emailValidationModel: EmailValidationModel, confirmAccountCreation: Boolean = false, showLoginForm: Boolean = false): Callback = {
     if (confirmAccountCreation) {
       emailValidation(emailValidationModel).onComplete {
         case Success(responseStr) =>
@@ -198,8 +198,11 @@ class LoginViewBackend(t: BackendScope[Login.Props, Login.State]) {
           t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
       }
       t.modState(s => s.copy(showConfirmAccountCreation = false))
-    } else {
+    } else if (showLoginForm) {
       t.modState(s => s.copy(showLoginForm = true))
+    }
+    else {
+      t.modState(s => s.copy(showConfirmAccountCreation = false))
     }
   }
 

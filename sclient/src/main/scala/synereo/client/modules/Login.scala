@@ -106,7 +106,7 @@ object Login {
               LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
             }
             else if (s.showConfirmAccountCreation) {
-              VerifyEmailModal(VerifyEmailModal.Props(t.backend.confirmAccountCreation))
+              VerifyTokenModal(VerifyTokenModal.Props(t.backend.confirmAccountCreation))
             }
             else if (s.showAccountValidationSuccess) {
               AccountValidationSuccess(AccountValidationSuccess.Props(t.backend.accountValidationSuccess))
