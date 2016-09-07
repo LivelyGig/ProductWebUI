@@ -12,9 +12,6 @@ import scala.language.reflectiveCalls
 import synereo.client.modalpopupbackends.{AboutInfoModalBackend => Backend}
 import synereo.client.utils.ConnectionsUtils
 
-/**
-  * Created by mandar.k on 9/2/2016.
-  */
 object AboutInfoModal {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
