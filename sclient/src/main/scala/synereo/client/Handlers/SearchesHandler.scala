@@ -3,15 +3,16 @@ package synereo.client.handlers
 import diode.{ActionHandler, ActionResult, ModelRW}
 import shared.models.Label
 import synereo.client.rootmodels.SearchesRootModel
-import synereo.client.utils.PrologParser
 import shared.dtos.{Connection, LabelPost, SubscribeRequest}
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
 import diode.AnyAction._
+import synereo.client.facades.PrologParser
 
 object SearchesModelHandler {
   def getSearchesModel(listOfLabels: Seq[String]): SearchesRootModel = {

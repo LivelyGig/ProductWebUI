@@ -4,8 +4,7 @@ package client.modules
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.handler.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
 import client.rootmodel.ProjectsRootModel
-import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals._
+import client.css._
 import shared.models.ProjectsPost
 import client.components.Bootstrap._
 import diode.react.ReactPot._
@@ -17,6 +16,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
+import client.modals._
 import shared.models.{ConnectionsModel, MessagePost}
 import client.services.LGCircuit
 import japgolly.scalajs.react
@@ -32,27 +32,27 @@ object ProjectResults {
 
   case class Props(proxy: ModelProxy[Pot[ProjectsRootModel]])
 
-  case class State(showErrorModal:Boolean=false)
+  case class State(showErrorModal: Boolean = false)
 
   val getServerError = LGCircuit.zoom(_.appRootModel).value
 
   class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props): react.Callback = Callback {
-//      log.debug("project view mounted")
+      //      log.debug("project view mounted")
       /*if (props.proxy().isEmpty) {
         ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
       }*/
 
     }
 
-    def serverError(showErrorModal :Boolean = false): Callback = {
-      if(showErrorModal)
+    def serverError(showErrorModal: Boolean = false): Callback = {
+      if (showErrorModal)
         t.modState(s => s.copy(showErrorModal = false))
       else
         t.modState(s => s.copy(showErrorModal = true))
     }
 
-    def render(P:Props, S:State) ={
+    def render(P: Props, S: State) = {
 
       <.div(^.id := "rsltScrollContainer", DashBoardCSS.Style.rsltContainer)(
         <.div(DashBoardCSS.Style.gigActionsContainer, ^.className := "row")(
@@ -69,6 +69,9 @@ object ProjectResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
@@ -105,7 +108,7 @@ object ProjectResults {
             ProjectsList(jobPostsRootModel.projectsModelList)),
           P.proxy().renderFailed(ex => <.div()(
             //<.span(Icon.warning), " Error loading")
-            if(!getServerError.isServerError){
+            if (!getServerError.isServerError) {
               ServerErrorModal(ServerErrorModal.Props(serverError))
             }
             else
@@ -118,8 +121,6 @@ object ProjectResults {
           } else {
             <.div()
           }
-
-
         ) //gigConversation
       )
 
@@ -139,6 +140,7 @@ object ProjectResults {
 }
 
 object ProjectsList {
+
   case class Props(projects: Seq[ProjectsPost])
 
   case class Backend(t: BackendScope[Props, _]) {
@@ -147,22 +149,22 @@ object ProjectsList {
       $(msgTime).tooltip(PopoverOptions.html(true))
     }
 
-    def render (p:Props) = {
+    def render(p: Props) = {
       def renderJobPosts(project: ProjectsPost) = {
         //  <.li(^.className := "media profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
-        <.li(^.className := "media",DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           <.div(DashBoardCSS.Style.profileNameHolder)(
-            project.postContent.name ,
+            project.postContent.name,
             <.div(DashBoardCSS.Style.displayInlineText)("  Posted by: @LivelyGig  "),
-            <.div(DashBoardCSS.Style.displayInlineText)("  Posted: ")  ,
-              <.div(DashBoardCSS.Style.displayInlineText,^.className:="msgTime","data-toggle".reactAttr := "tooltip", ^.title := project.created, "data-placement".reactAttr := "right")(Moment(project.created).toLocaleString)
+            <.div(DashBoardCSS.Style.displayInlineText)("  Posted: "),
+            <.div(DashBoardCSS.Style.displayInlineText, ^.className := "msgTime", "data-toggle".reactAttr := "tooltip", ^.title := project.created, "data-placement".reactAttr := "right")(Moment(project.created).toLocaleString)
           ),
           <.div(^.className := "media-body", ^.paddingLeft := "28px")(
             "Job Type: " + project.postContent.contractType,
-            <.div( project.postContent.description),
-            <.div( /*^.className := "col-md-4 col-sm-4",*/)(
+            <.div(project.postContent.description),
+            <.div(/*^.className := "col-md-4 col-sm-4",*/)(
               <.br(),
               "Skills: Java, Financial Apps, cryptography",
               <.br(),
@@ -192,5 +194,5 @@ object ProjectsList {
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
-  def apply(jobPosts: Seq[ProjectsPost]) =   ProjectsList(Props(jobPosts))
+  def apply(jobPosts: Seq[ProjectsPost]) = ProjectsList(Props(jobPosts))
 }

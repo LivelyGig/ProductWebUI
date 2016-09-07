@@ -1,1 +1,7 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 287.57 509"><defs><style>.cls-1{fill:url(#linear-gradient);}</style><linearGradient id="linear-gradient" x1="143.79" y1="1" x2="143.79" y2="510" gradientTransform="matrix(1, 0, 0, -1, 0, 510)" gradientUnits="userSpaceOnUse"><stop offset="0.11" stop-color="#025358"/><stop offset="0.79" stop-color="#49a0b2"/></linearGradient></defs><title>LG_Background3E</title><rect class="cls-1" width="287.57" height="509"/></svg>
+<!-- SVG syntax -->
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1 1" preserveAspectRatio="none">
+    <linearGradient id="g399" gradientUnits="userSpaceOnUse" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop stop-color="#49a0b2" offset="0"/><stop stop-color="#025358" offset="1"/>
+    </linearGradient>
+    <rect x="0" y="0" width="1" height="1" fill="url(#g399)" />
+</svg>

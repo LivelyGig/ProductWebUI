@@ -2,10 +2,10 @@ package client.modules
 
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ Callback, ReactComponentB }
-import client.LGMain.{ Loc }
+import japgolly.scalajs.react.{Callback, ReactComponentB}
+import client.LGMain.{Loc}
 import client.components._
-import client.css.{ DashBoardCSS }
+import client.css.{DashBoardCSS}
 import scalacss.ScalaCssReact._
 
 object Dashboard {
@@ -64,56 +64,5 @@ object Dashboard {
         <.div(^.className := "col-lg-1")()
 
       ))
-    .componentDidMount(scope => Callback {
-      //val P = scope.props
-      // instruct Bootstrap to show the modal
-      //     jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))})
-      //
-      //     var citynames = new Bloodhound({
-      //           datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
-      //           queryTokenizer: Bloodhound.tokenizers.whitespace//,
-      //           prefetch: {
-      //             url: 'assets/citynames.json',
-      //             filter: function(list) {
-      //             return $.map(list, function(cityname) {
-      //             return { name: cityname }; });
-      //           }
-      //         })
-
-      //         citynames.initialize();
-      //         jQuery(scope.getDOMNode()).input().tagsinput({
-      //
-      //       typeaheadjs: {
-      //         name : 'citynames ',
-      //         displayKey : 'name ',
-      //         valueKey : 'name ',
-      //         source : citynames.ttAdapter()
-      //       }
-      //
-      //     })
-      //
-      //  var citynames = new Bloodhound({
-      //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-      //    queryTokenizer: Bloodhound.tokenizers.whitespace,
-      //    prefetch: {
-      //      url: 'assets/citynames.json',
-      //      filter: function(list) {
-      //      return $.map(list, function(cityname) {
-      //      return { name: cityname }; });
-      //    }
-      //    }
-      //  });
-      //  citynames.initialize();
-      //
-      //  $('input').tagsinput({
-      //    typeaheadjs: {
-      //      name: 'citynames',
-      //      displayKey: 'name',
-      //      valueKey: 'name',
-      //      source: citynames.ttAdapter()
-      //    }
-      //  });
-
-    })
     .build
 }

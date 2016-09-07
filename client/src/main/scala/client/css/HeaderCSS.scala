@@ -2,6 +2,8 @@ package client.css
 
 import client.components
 import client.css.MessagesCSS.Style._
+import japgolly.scalajs.react.vdom.prefix_<^._
+
 import scalacss.Defaults._
 import scalacss.LengthUnit.px
 import scala.language.postfixOps
@@ -61,7 +63,7 @@ object HeaderCSS {
     )
     val headerNavLi = style(
       backgroundColor(transparent),
-      borderBottom(3.px, solid, c"#67EAF2"),
+      borderBottom(4.px, solid, c"#67EAF2"),
       color(c"#67EAF2"),
       letterSpacing(0.5.px),
       &.hover(
@@ -99,6 +101,7 @@ object HeaderCSS {
       //      height(44.px),
       //      width(100.%%),
       //      paddingTop(4.px),
+      //
     )
 
     val connectionsmiddelNaviContainer = style(
@@ -149,7 +152,7 @@ object HeaderCSS {
 
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
-      color(transparent),
+      color(black),
       fontSize(1.em),
       &.hover(
         color(c"#FFFFFF")
@@ -242,13 +245,24 @@ object HeaderCSS {
     )
     val searchContainerBtn = style(
       fontSize(16.px),
-      marginTop(10.px),
-      marginBottom(8.px),
-      marginRight(15.px),
+      paddingRight(10.px),
       color(orange),
       backgroundColor.transparent,
-      border.none
+      border.none,
+      float.right
     )
+
+    val searchActionsContainer = style (
+      backgroundColor(c"#c7dada"),
+      height(44.px),
+      textAlign.left,
+      paddingTop(4.px),
+      paddingBottom(4.px),
+      media.minWidth(1200.px) -
+        borderRadius(25.px, 0.px, 0.px, 0.px)
+)
+
+
 
     val loginbtn = style(
       backgroundColor.transparent,

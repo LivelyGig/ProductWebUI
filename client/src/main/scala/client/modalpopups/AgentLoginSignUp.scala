@@ -4,9 +4,8 @@ package client.modals
 import client.handler._
 import client.components.Bootstrap._
 import client.components._
-import client.css.{HeaderCSS}
+import client.css.HeaderCSS
 import client.logger._
-import client.modalpopups.ApiDetailsForm
 import shared.models.{EmailValidationModel, SignUpModel}
 import client.services.CoreApi._
 import client.services._
@@ -22,7 +21,7 @@ import org.querki.jquery._
 import client.sessionitems.SessionItems
 import scala.concurrent.Future
 import diode.AnyAction._
-import client.utils.ConnectionsUtils
+import client.utils.{AppUtils, ConnectionsUtils}
 
 object AgentLoginSignUp {
   val LOGIN_ERROR = "LOGIN_ERROR"
@@ -54,15 +53,15 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    def addApiDetailsForm(): Callback = {
-      t.modState(s => s.copy(showApiDetailsForm = true))
-    }
+//    def addApiDetailsForm(): Callback = {
+//      t.modState(s => s.copy(showApiDetailsForm = true))
+//    }
 
     def addLoginDetails(showLoginForm : Boolean = false): Callback = {
       if(showLoginForm)
-        t.modState(s => s.copy(showApiDetailsForm = false, showLoginForm = true))
+        t.modState(s => s.copy(/*showApiDetailsForm = false,*/ showLoginForm = true))
       else
-        t.modState(s => s.copy(showApiDetailsForm = false))
+        t.modState(s => s.copy(showLoginForm = false))
     }
 
     def addNewAgentForm(): Callback = {
@@ -146,6 +145,7 @@ object AgentLoginSignUp {
       val futureArray = for (response <- responseSeq) yield CoreApi.sessionPing(response.content.sessionURI)
       Future.sequence(futureArray).onComplete {
         case Success(sessionPingResponseStr) =>
+          AppUtils.handleInitialSessionPingRes(sessionPingResponseStr(0))
           setUserDetails(responseArray(0), sessionPingResponseStr(0))
           LGCircuit.dispatch(AttachPingers())
           LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())
@@ -238,8 +238,8 @@ object AgentLoginSignUp {
       }
     }
 
-    def serverError(showApiDetailsForm : Boolean = false): Callback = {
-      t.modState(s => s.copy(showErrorModal = false, showApiDetailsForm = true))
+    def serverError(showLoginForm : Boolean = false): Callback = {
+      t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
     }
 
     def accountValidationFailed(): Callback = {
@@ -262,15 +262,15 @@ object AgentLoginSignUp {
     .renderPS((t, P, S) => {
       val B = t.backend
       <.div()(
-        Button(Button.Props(B.addApiDetailsForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Login"),
-      //  Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Log In"),
-     //   Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
+        // Button(Button.Props(B.addLoginForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Log In"),
+        // Button(Button.Props(B.addNewAgentForm(), CommonStyle.default, Seq(HeaderCSS.Style.SignUpBtn), "", ""), "Sign Up"),
         //        <.button(^.className:="btn btn-default",^.tpe := "button", ^.onClick --> P.proxy.dispatch(LoginUser(P.proxy.value)),
         //          HeaderCSS.Style.SignUpBtn)("Login"),
-        if(S.showApiDetailsForm){
+        /*if(S.showApiDetailsForm){
           ApiDetailsForm(ApiDetailsForm.Props(B.addLoginDetails))
         }
-        else if (S.showNewAgentForm) {
+        else*/
+        if (S.showNewAgentForm) {
           NewAgentForm(NewAgentForm.Props(B.addNewAgent))
         }
         else if (S.showTermsOfServicesForm) {
@@ -301,9 +301,10 @@ object AgentLoginSignUp {
           AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
         }
         else {
-          Seq.empty[ReactElement]
+          // Show the Log In modal by default
+          LoginForm(LoginForm.Props(B.loginUser))
+          // Seq.empty[ReactElement]
         }
-
       )
     })
     .build

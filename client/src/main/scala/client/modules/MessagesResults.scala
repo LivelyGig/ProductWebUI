@@ -9,13 +9,14 @@ import client.rootmodel.MessagesRootModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components._
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
 import shared.models.{ConnectionsModel, MessagePost}
 import client.modals.{NewMessage, ServerErrorModal}
 import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
 import org.widok.moment.Moment
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.existentials
@@ -68,6 +69,9 @@ object MessagesResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

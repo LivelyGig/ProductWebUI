@@ -1,11 +1,12 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ Callback, ReactComponentB }
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import client.components.Icon
-import client.css.{ HeaderCSS, DashBoardCSS }
-import client.modals.{ WorkContractModal, NewMessage }
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
+import client.modals.{NewMessage, WorkContractModal}
 import org.querki.jquery._
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 
@@ -29,6 +30,9 @@ object ContractResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

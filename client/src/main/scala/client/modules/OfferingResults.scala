@@ -1,10 +1,10 @@
 package client.modules
 
-import japgolly.scalajs.react.{ Callback, ReactComponentB }
+import japgolly.scalajs.react.{Callback, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Icon
-import client.css.{ DashBoardCSS, HeaderCSS }
-import client.modals.{ NewMessage, NewRecommendation }
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
+import client.modals.{NewMessage, NewRecommendation, Offering}
 import org.querki.jquery._
 
 import scala.scalajs.js
@@ -29,6 +29,9 @@ object OfferingResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

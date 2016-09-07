@@ -5,7 +5,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
-import client.modalpopups.ApiDetailsForm
 import client.services.LGCircuit
 
 import scala.language.reflectiveCalls
@@ -17,15 +16,15 @@ object ServerErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (Boolean) => Callback)
-  case class State(showApiDetailsForm:Boolean=false,showLoginForm:Boolean=false)
+  case class State(/*showApiDetailsForm:Boolean=false,*/showLoginForm:Boolean=false)
   class Backend(t: BackendScope[Props, State]) {
     def closeForm() =  {
       $(t.getDOMNode()).modal("hide")
-      t.modState(s => s.copy(showApiDetailsForm = true))
+      t.modState(s => s.copy(showLoginForm = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
-      props.submitHandler(state.showApiDetailsForm)
+      props.submitHandler(state.showLoginForm)
     }
 
     def addLoginDetails(): Callback = Callback{

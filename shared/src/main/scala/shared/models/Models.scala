@@ -39,7 +39,7 @@ case class ProjectsPost(uid: String, created: String, modified: String, labels: 
 }
 
 case class ProjectPostContent(name: String, startDate: String, endDate: String, budget: String, contractType: String,
-                              workLocation: String, description: String, skillNeeded: String, allowFormatting: Boolean,
+                              workLocation: String, description: String, skillNeeded: String, allowForwarding: Boolean,
                               versionNumber: Int, message: String) extends PostContent
 
 sealed trait Person {

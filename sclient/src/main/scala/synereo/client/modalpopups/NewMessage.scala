@@ -23,7 +23,7 @@ import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import org.scalajs.dom._
 import org.scalajs.dom.raw.UIEvent
-import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils, SelectizeUtils}
+import synereo.client.utils.{ConnectionsUtils, LabelsUtils, MessagesUtils}
 import org.querki.jquery._
 import synereo.client.handlers.SearchesModelHandler
 import synereo.client.modalpopupbackends.NewMessageBackend
