@@ -43,15 +43,16 @@ object MainMenu {
           val model = props.proxy.value
           <.div(^.className := "row")(
             <.div(^.className := "label-selectize-container-main")(
-                <.div(^.className:="pull-left")(  NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "" ,""))),
-              <.div()(  if (props.currentLoc == DashboardLoc) {
+              if (props.currentLoc == DashboardLoc) {
+                <.div(
+                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "", ""))),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
-                } else {
-                  <.span()
-                }
-              )
+                )
+              } else {
+                <.span()
+              }
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
@@ -136,7 +137,6 @@ object MainMenu {
                       <.li(<.a(^.onClick --> $.backend.toggleShowAboutInfoModal())("About")),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
-
                     )
                   ),
                   if (state.showProfileImageUploadModal)

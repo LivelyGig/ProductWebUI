@@ -82,7 +82,15 @@ object SynereoCommanStylesCSS {
       // width(20.px),
       color(white),
       overflow.hidden,
-      display.block
+      display.block,
+      &.hover(
+        backgroundColor(transparent),
+        color(white)
+      ),
+      &.focus(
+        backgroundColor(transparent),
+        color(white)
+      )
       //      &.hover(
       //        width(135.px),
       //        backgroundColor(c"#2283AE"),

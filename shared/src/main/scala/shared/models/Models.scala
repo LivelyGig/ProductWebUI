@@ -23,7 +23,7 @@ sealed trait Post {
 sealed trait PostContent
 
 case class MessagePost(uid: String = "", created: String = "", modified: String = "",
-                       labels: String = "", connections: Seq[Connection] = Nil, postContent: MessagePostContent) extends Post {
+                       labels: String = "", connections: Seq[Connection] = Nil, postContent: MessagePostContent ) extends Post {
   override def postType: String = "MessagePost"
 
   override def versionNumber: Int = 0
