@@ -141,9 +141,9 @@ object NewProjectForm {
       t.modState(s => s.copy(projectPost = s.projectPost.copy(skillNeeded = value)))
     }
 
-    def updateAllowFormatting(event: ReactEventI): react.Callback = {
+    def updateAllowForwarding(event: ReactEventI): react.Callback = {
       val value = event.target.checked
-      t.modState(s => s.copy(projectPost = s.projectPost.copy(allowFormatting = value)))
+      t.modState(s => s.copy(projectPost = s.projectPost.copy(allowForwarding = value)))
     }
 
     def fromSelecize(): Callback = Callback {}
@@ -286,7 +286,7 @@ object NewProjectForm {
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, DashBoardCSS.Style.footTextAlign, DashBoardCSS.Style.marginTop10px)(
               <.div(
-                <.input(^.`type` := "checkbox", ^.checked := model.allowFormatting, ^.onChange ==> updateAllowFormatting),
+                <.input(^.`type` := "checkbox", ^.checked := model.allowForwarding, ^.onChange ==> updateAllowForwarding),
                 <.span(^.fontWeight := "bold")(" Allow forwarding")
               )
 

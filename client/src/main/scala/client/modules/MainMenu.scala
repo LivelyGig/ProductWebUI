@@ -4,23 +4,19 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.handler.{LoginUser, LogoutUser, ToggleAvailablity}
+import client.handler.{LogoutUser, ToggleAvailablity}
 import client.LGMain._
 import client.components.Bootstrap.CommonStyle
 import client.modals._
 import client.components._
-import client.css.{DashBoardCSS, FooterCSS, HeaderCSS, WorkContractCSS}
+import client.css.{DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
 import client.services.LGCircuit
 import client.components.Bootstrap._
-
-import scala.scalajs.js
-import scala.util._
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
-
 import scala.language.reflectiveCalls
-import client.modalpopups.{Account, AccountForm, HeaderDropdownDialogs}
+import client.modalpopups.{AccountForm, HeaderDropdownDialogs}
 import japgolly.scalajs.react
 import diode.AnyAction._
 
@@ -29,7 +25,6 @@ object MainMenu {
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  //  val introductionConnectProxy = LGCircuit.connect(_.introduction)
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
@@ -38,7 +33,7 @@ object MainMenu {
   case class MenuItem(idx: Int, label: (Props) => ReactNode, location: Loc, count: ReactElement, locationCount: Loc)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) = Callback{
+    def mounted(props: Props) = Callback {
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       /*Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))*/
@@ -75,7 +70,7 @@ object MainMenu {
     .renderPS(($, props, S) => {
       val introductionProxy = LGCircuit.connect(_.introduction)
       <.div(
-        <.ul(/*^.id := "headerNavUl",*/ ^.className := "nav", HeaderCSS.Style.navbarNav)(
+        <.ul(^.className := "nav", HeaderCSS.Style.navbarNav)(
           // build a list of menu items
           for (item <- $.backend.menuItems) yield {
             if (Seq(ConnectionsLoc, MessagesLoc, JobPostsLoc, OfferingsLoc, ProfilesLoc, ContractsLoc, DashboardLoc).contains(item.location)) {
@@ -90,8 +85,7 @@ object MainMenu {
                     introductionProxy(introductionProxy =>
                       if (introductionProxy.value.introResponse.length != 0) {
                         props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, introductionProxy.value.introResponse.length)))
-                       // <.span(ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), s"${introductionProxy.value.introResponse.length}")))
-                     //   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", introductionProxy.value.introResponse.length)
+
                       } else {
                         <.span()
                       }
@@ -110,12 +104,10 @@ object MainMenu {
                   " ", item.label(props)
                 ),
                 if (item.location == ConnectionsLoc) {
-                 // ConfirmIntroReq(ConfirmIntroReq.Props("", Seq(DashBoardCSS.Style.inputBtnRadiusCncx, bss.labelOpt(CommonStyle.danger), bss.labelAsBadge), "3", "3"))
                   props.ctl.link(item.locationCount)(<.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashBoardCSS.Style.notificationsBtn, 0)))
                 }
                 else
                   props.ctl.link(item.locationCount)((props.currentLoc != item.locationCount) ?= HeaderCSS.Style.headerNavA, ^.className := "countBadge", " ", item.count))
-              //              <.li()
             }
           }
         )
@@ -150,7 +142,7 @@ object LoggedInUser {
       t.modState(s => s.copy(showNewMessageForm = false))
     }
 
-    def mounted(props: Props) = Callback{
+    def mounted(props: Props) = Callback {
       //      Callback.ifTrue(props.proxy().isEmpty, props.proxy.dispatch(RefreshConnections()))
       /*Callback(LGCircuit.dispatch(LoginUser(UserModel(email = "", name = "",
         imgSrc = "", isLoggedIn = false))))*/

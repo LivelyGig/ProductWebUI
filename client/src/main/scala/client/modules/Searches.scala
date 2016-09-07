@@ -34,15 +34,6 @@ object Searches {
   case class State(userModel: UserModel, tags: js.Array[String] = js.Array("scala", "scalajs"))
 
   // scalastyle:off
-  def toggleSidebar = Callback {
-    val sidebtn: js.Object = "#searchContainer"
-    $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
-    if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
-    } else {
-      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
-    }
-  }
 
   val selectState: js.Object = "#selectize"
 
@@ -50,32 +41,35 @@ object Searches {
 
     def searchClick(props: Props): Unit = {
       val sidebtn: js.Object = "#searchContainer"
+      val overlayContainer: js.Object = "#overlayContainer"
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
+        $(overlayContainer).addClass("overlaySidebar")
+//        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       } else {
-        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
+        $(overlayContainer).removeClass("overlaySidebar")
+//        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
       }
 
       val searchLabels = LabelsUtils.buildProlog(
         Seq(LabelsUtils.getSystemLabelModel(props.view)) ++ LGCircuit.zoom(_.searches.searchesModel).value.filter(_.isChecked), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(ConnectionsUtils.getCnxnForReq(Nil, props.view), searchLabels))
-      ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr) , props.view)
-
-      //      window.sessionStorage.setItem("messageSearchLabel", "any([Spilicious])")
-      /*props.view match {
-        case AppModule.MESSAGES_VIEW =>
-          LGCircuit.dispatch(StoreMessagesSearchLabel())
-          LGCircuit.dispatch(RefreshMessages())
-        case AppModule.PROJECTS_VIEW =>
-          LGCircuit.dispatch(StoreProjectsSearchLabel())
-          LGCircuit.dispatch(RefreshProjects())
-        case AppModule.PROFILES_VIEW =>
-          LGCircuit.dispatch(StoreProfilesSearchLabel())
-          LGCircuit.dispatch(RefreshProfiles())
-      }*/
-
+      ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr), props.view)
     }
+
+    def toggleSidebar = Callback {
+      val sidebtn: js.Object = "#searchContainer"
+      val overlayContainer: js.Object = "#overlayContainer"
+      $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+      if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
+        $(overlayContainer).addClass("overlaySidebar")
+        //      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
+      } else {
+        $(overlayContainer).removeClass("overlaySidebar")
+        //      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
+      }
+    }
+
 
     /*val ref = RefHolder[ReactTagsInputM]*/
 
@@ -89,7 +83,6 @@ object Searches {
 
     def initializeTagsInput(): Unit = {
       val selectState: js.Object = ".select-state"
-      //    println($(selectState).get())
       $(selectState).selectize(SelectizeConfig
         .maxItems(10)
         .plugins("remove_button"))
@@ -122,16 +115,13 @@ object Searches {
       $(projectsEndDate).datepicker(baseOpts)
       $(messageBeforeDate).datepicker(baseOpts)
       $(messagesFromDate).datepicker(baseOpts)
-      //    $("#dateid").on("changeDate", { rawEvt:JQueryEventObject =>
-      //      save()
-      //    })
     }
 
-    def mounted(): Callback =  {
+    def mounted(): Callback = Callback{
       initializeDatepicker
       initializeTagsInput
-      toggleSidebar
-//      LGCircuit.dispatch(CreateLabels())
+//      toggleSidebar
+
     }
 
     def render(s: State, p: Props) = {
@@ -158,8 +148,25 @@ object Searches {
       p.view match {
         case AppModule.PROFILES_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
 
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#talent")("Recommended Matches")),
+                  <.li()(<.a(^.href := "#talent")("My Profiles")),
+                  <.li()(<.a(^.href := "#talent")("Favorited")),
+                  <.li()(<.a(^.href := "#talent")("Available")),
+                  <.li()(<.a(^.href := "#talent")("Active Unavailable")),
+                  <.li()(<.a(^.href := "#talent")("Inactive")),
+                  <.li()(<.a(^.href := "#talent")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#talent")("Videographers w/5+ yrs experience")),
+                  <.li()(<.a(^.href := "#talent")("Customize..."))
+                )
+              ),
               <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
@@ -261,7 +268,20 @@ object Searches {
         } //talent
         case AppModule.OFFERINGS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#offerings")("Recommended to Me")),
+                  <.li()(<.a(^.href := "#offerings")("My Posted Offerings")),
+                  <.li()(<.a(^.href := "#offerings")("Favorited")),
+                  <.li()(<.a(^.href := "#offerings")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#offerings")("Customize..."))
+                )
+              ),
               <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -332,7 +352,21 @@ object Searches {
         }
         case AppModule.PROJECTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Recommended ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#projects")("Recommended Matches")),
+                  <.li()(<.a(^.href := "#projects")("Direct from Connection")),
+                  <.li()(<.a(^.href := "#projects")("My Posted Jobs")),
+                  <.li()(<.a(^.href := "#projects")("Favorited")),
+                  <.li()(<.a(^.href := "#projects")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#projects")("Customize..."))
+                )
+              ),
               <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
@@ -507,8 +541,19 @@ object Searches {
         } //project
         case AppModule.CONTRACTS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
-
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Active ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#contract")("Active")),
+                  <.li()(<.a(^.href := "#contract")("Favorited")),
+                  <.li()(<.a(^.href := "#contract")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#contract")("Customize..."))
+                )
+              ),
               <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
@@ -632,8 +677,22 @@ object Searches {
             }
           }
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
               /*<.button(^.id:="sidebarbtn",^.className := "btn btn-default HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search,^.onClick-->)*/
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Unread ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#messages")("Inbox")),
+                  <.li()(<.a(^.href := "#messages")("Sent")),
+                  <.li()(<.a(^.href := "#messages")("Unread")),
+                  <.li()(<.a(^.href := "#messages")("Favorited")),
+                  <.li()(<.a(^.href := "#messages")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#messages")("Customize..."))
+                )
+              ),
               <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
@@ -725,8 +784,21 @@ object Searches {
         }
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
-            <.div(^.wrap := "pull-right", ^.textAlign := "right" /*, ^.height := "55px"*/)(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+            <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar),
+              <.div(^.className := "btn-group")(
+                <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
+                  <.span(^.className := "caret")
+                ),
+                <.ul(/*HeaderCSS.Style.dropdownMenuWidth,*/ ^.className := "dropdown-menu")(
+                  <.li()(<.a(^.href := "#connections")("All")),
+                  <.li()(<.a(^.href := "#connections")("Available for Chat")),
+                  <.li()(<.a(^.href := "#connections")("Favorited")),
+                  <.li()(<.a(^.href := "#connections")("Hidden")),
+                  <.li(^.className := "divider")(),
+                  <.li()(<.a(^.href := "#connections")("Customize..."))
+                )
+              )
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(

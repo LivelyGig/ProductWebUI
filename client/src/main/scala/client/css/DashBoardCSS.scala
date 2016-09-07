@@ -1,6 +1,7 @@
 package client.css
 
 import scalacss.Defaults._
+import scalacss.LengthUnit.px
 
 object DashBoardCSS {
 
@@ -11,8 +12,8 @@ object DashBoardCSS {
     val mainContainerDiv = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
-      overflowX.auto,
-      height(800.px)
+      overflowX.auto
+      // height(800.px),
     )
     val splitContainer = style(
       position.relative,
@@ -21,16 +22,6 @@ object DashBoardCSS {
       overflow.hidden
     )
 
-    //      .splitContainer{
-    //        position:relative;
-    //        height:100%;
-    //        overflow:hidden
-    //      }
-    /*  val rsltContainer = style(
-        display.inlineBlock,
-        width(98.2.%%),
-        fontSize(1.2.em)
-      )*/
 
     val rsltContainer = style(
       display.inlineBlock,
@@ -40,7 +31,10 @@ object DashBoardCSS {
         width(100.%%),
       media.minWidth(1200.px) -
         width(98.2.%%),
+      media.minWidth(1200.px) -
+        borderRadius(0.px, 25.px, 25.px, 0.px),
       marginLeft(-4.px)
+
     )
 
     val dashboardResults2 = style(
@@ -49,7 +43,7 @@ object DashBoardCSS {
       paddingRight(0.px)
     )
     val gigActionsContainer = style(
-      backgroundColor(c"#67eaf2"),
+      backgroundColor(c"#C7DADA"),
       // height(55.px),
       marginTop(0.px),
       marginLeft(0.px),
@@ -61,7 +55,9 @@ object DashBoardCSS {
       paddingTop(4.px),
       paddingBottom(4.px),
       media.maxWidth(375.px) -
-        display.none
+        display.none,
+      media.minWidth(1200.px) -
+        borderRadius(0.px, 25.px, 0.px, 0.px)
     )
     val rsltCheckboxStyle = style(
       height(13.px),
@@ -293,7 +289,9 @@ object DashBoardCSS {
         borderLeft(2.px, double, c"#000000")
     )
     val modalBorderRadius = style(
-      borderRadius(0.px)
+      borderRadius(14.px),
+      overflow.hidden,
+      boxShadow := "13px 13px 20px rgba(0,0,0,0.5)"
     )
     val marginLeftRight = style(
       marginRight(-15.px),
@@ -346,10 +344,7 @@ object DashBoardCSS {
     val replyMarginTop = style(
       marginTop(20.px)
     )
-    /*  val footPreferences = style (
-        padding(22.px) ,
-        backgroundColor(c"#00767c")
-      )*/
+
     val inputBtnRadius = style(
       border.none,
       padding(4.px, 7.px, 3.px, 7.px)
@@ -529,12 +524,12 @@ object DashBoardCSS {
       height(100.%%),
       unsafeChild(".media-list ")(
         unsafeChild("li:nth-child(odd)")(
-          backgroundColor(c"#EAEAEA")
+          backgroundColor(c"#EEEEEE")
         )
       ),
       unsafeChild(".media-list ")(
         unsafeChild("li:nth-child(even)")(
-          backgroundColor(c"#D7E3E3")
+          backgroundColor(c"#F5F5F5")
         )
       )
     )
@@ -543,34 +538,24 @@ object DashBoardCSS {
     )
 
     val rowStyle = style(
-      //      .rowStyle  tbody {
-      //      height: 350px;
-      //      overflow-y: auto;
-      //    }
-      //
+
       unsafeChild("tbody")(
         height(350.px),
         overflowY.auto
       ),
-      //
-      //      .rowStyle thead, .rowStyle tbody, .rowStyle tr, .rowStyle td, .rowStyle th { display: block; }
-      //
+
       unsafeChild("thead")(display.block),
       unsafeChild("tbody")(display.block),
       unsafeChild("tr")(display.block),
       unsafeChild("td")(display.block),
       unsafeChild("th")(display.block),
-      //      .rowStyle > tbody > tr:nth-child(even) {
-      //      background-color: #D7E3E3;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr:nth-child(even)")(
           backgroundColor(c"#D7E3E3")
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(1), .rowStyle > thead > tr th:nth-child(1), .rowStyle > tfoot >  tr td:nth-child(1){
-      //      width:30%;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(1)")(
           width(30.%%)
@@ -584,10 +569,6 @@ object DashBoardCSS {
           width(30.%%)
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(2), .rowStyle > thead > tr th:nth-child(2), .rowStyle > tfoot >  tr td:nth-child(2){
-      //      width:18%;
-      //      text-align:center;
-      //    }
 
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(2)")(
@@ -605,10 +586,7 @@ object DashBoardCSS {
           textAlign.center
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(3), .rowStyle > thead > tr th:nth-child(3), .rowStyle > tfoot >  tr td:nth-child(3){
-      //      width:18%;
-      //      text-align:center;
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(3)")(
           width(18.%%),
@@ -625,10 +603,7 @@ object DashBoardCSS {
           textAlign.center
         )
       ),
-      //      .rowStyle > tbody >  tr td:nth-child(4), .rowStyle > thead > tr th:nth-child(4), .rowStyle > tfoot >  tr td:nth-child(4){
-      //      width:34%;
-      //
-      //    }
+
       unsafeChild("tbody")(
         unsafeChild("tr td:nth-child(4)")(
           width(34.%%)
@@ -655,14 +630,7 @@ object DashBoardCSS {
         height(50.px)
       ),
 
-      //      .rowStyle thead {
-      //      /* fallback */
-      //    }
-      //
-      //      .rowStyle tbody td, .rowStyle thead th, .rowStyle tfoot td {
-      //      width: 25%;
-      //      float: left;
-      //    }
+
       unsafeChild("tbody td")(
         width(25.%%),
         float.left
@@ -714,6 +682,13 @@ object DashBoardCSS {
     val marginLR = style(
       marginLeft(10.%%),
       marginRight(10.%%)
+    )
+
+    val notificationsText = style(
+      marginLeft(50.px),
+      marginTop(50.px),
+      color(white),
+      fontSize(26.px)
     )
   }
 

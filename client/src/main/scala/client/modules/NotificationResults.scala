@@ -1,18 +1,13 @@
 package client.modules
 
-import NotificationList.{NotificationListProps, State}
-import client.rootmodel.{ConnectionsRootModel, IntroRootModel}
-import client.css.{DashBoardCSS, HeaderCSS}
-import client.modals.{NewMessage, NewRecommendation}
-import client.modules.ConnectionsResults.{Props, State}
+
+import client.rootmodel.{ IntroRootModel}
 import diode.react.ModelProxy
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.components.Icon
-import client.css.{DashBoardCSS, HeaderCSS}
+import client.css.{DashBoardCSS}
 import client.handler.UpdateIntroductionsModel
-import client.modals.{NewMessage, NewRecommendation}
 import shared.models.ConnectionsModel
 import client.services.LGCircuit
 import org.querki.jquery._
@@ -115,8 +110,8 @@ object NotificationList {
         )
       }
       <.div(^.className := "col-md-12",
-        <.h1(s"you have ${p.introductions.length} notifications"),
-        <.div(^.id := "acceptRejectAllBtnContainer")(
+        <.div(DashBoardCSS.Style.notificationsText)(s"you have ${p.introductions.length} notifications"),
+        <.div(^.id := "acceptRejectAllBtnContainer", DashBoardCSS.Style.notificationsText)(
           <.button(^.className := "btn btn-default", ^.color.green, Icon.check ,^.onClick --> Callback {
             handleAllIntroduction(true)
           })("Accept all"),
@@ -139,7 +134,6 @@ object NotificationList {
         $("#acceptRejectAllBtnContainer".asInstanceOf[js.Object]).addClass("hidden")
       }
     })
-    //    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(introduction: Seq[Introduction]) = component(NotificationListProps(introduction))

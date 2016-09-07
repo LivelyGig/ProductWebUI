@@ -1,18 +1,14 @@
 package client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ BackendScope, Callback, ReactComponentB }
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import client.rootmodel.ConnectionsRootModel
-import diode.react.ReactPot._
 import diode.react._
-import diode.data.Pot
 import client.components.Icon
-import client.css.{ HeaderCSS, DashBoardCSS }
-import client.modals.{ NewMessage, NewRecommendation }
+import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
+import client.modals.{NewConnection, NewMessage, NewRecommendation}
 import shared.models.ConnectionsModel
-import client.logger._
-import org.querki.jquery._
-import scala.scalajs.js
+
 import scalacss.ScalaCssReact._
 
 object ConnectionsResults {
@@ -26,8 +22,6 @@ object ConnectionsResults {
 //      log.debug("connection view mounted")
 //      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
-
-
   }
 
   // create the React component for Dashboard
@@ -50,6 +44,9 @@ object ConnectionsResults {
                   <.li()(<.a()("Unhide")),
                   <.li()(<.a()("Unfavorite"))
                 )
+              ),
+              <.div(PresetsCSS.Style.modalBtn)(
+                NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
@@ -81,7 +78,7 @@ object ConnectionsResults {
             )
           )
         ), //col-12
-        <.div(^.id := "resultsConnectionsContainer")(
+        <.div(^.id := "resultsContainer")(
           ConnectionList(P.proxy().connectionsResponse))
       ) //mainContainer
     })

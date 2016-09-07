@@ -8,11 +8,13 @@ import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
-
+import client.sessionitems.SessionItems
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import org.scalajs.dom
+import org.scalajs.dom._
 
 
 object LoginForm {
@@ -27,12 +29,14 @@ object LoginForm {
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean) => Callback)
 
   case class State(userModel: UserModel, login: Boolean = false, showConfirmAccountCreation: Boolean = false,
-                   showNewAgentForm: Boolean = false)
+                   showNewAgentForm: Boolean = false, hostName: String = s"https://${dom.window.location.hostname}:9876")
 
   class Backend(t: BackendScope[Props, State]) {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val state = t.state.runNow()
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.hostName)
       if ($(LoginID).hasClass("disabled")) {
         t.modState(s => s.copy(login = false))
       }
@@ -68,6 +72,12 @@ object LoginForm {
       $(modal).find("input:first").focus()
     }
 
+    def updateIp(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(hostName = value))
+    }
+
     def formClosed(state: State, props: Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //println("form closed")
@@ -92,6 +102,12 @@ object LoginForm {
               <.div(/*DashBoardCSS.Style.scltInputModalContainerMargin */)(
                 <.div(DashBoardCSS.Style.modalHeaderFont)("Log In with LivelyGig credentials"),
                 <.div(^.className := "form-group")(
+                    <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
+                        ^.placeholder := "username", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
+
+
+                ),
+                <.div(^.className := "form-group")(
                   <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Username is required",
                     ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
                   <.div(^.className := "help-block with-errors")
@@ -105,18 +121,18 @@ object LoginForm {
                   <.button(^.tpe := "submit", ^.id := "LoginID", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")
                 ),
                 <.div(DashBoardCSS.Style.paddingTop10px)(
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
                     <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Sign Up",
                       ^.onClick ==> showAddNewAgent)
                   ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  <.div(^.className := "col-md-6 col-sm-6 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
                     <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Validate Account",
                       ^.onClick ==> showValidate)
-                  ),
-                  <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
-                    <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Forgot My Password",
-                      ^.onClick ==> showValidate)
                   )
+                  // <.div(^.className := "col-md-4 col-sm-4 col-xs-12", DashBoardCSS.Style.padding0px, DashBoardCSS.Style.paddingTop10px, ^.textAlign.center)(
+                  //  <.button(^.tpe := "button", ^.className := "btn-link", /*DashBoardCSS.Style.btnBackground,*/ "Forgot My Password",
+                  //    ^.onClick ==> showValidate)
+                  // )
                 )
               )
             ),

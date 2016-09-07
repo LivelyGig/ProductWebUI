@@ -6,6 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.css.{DashBoardCSS, LftcontainerCSS}
 import client.handler.ShowServerError
 import client.modals.ServerErrorModal
+import org.querki.jquery._
 
 //import client.handlers.{LogoutUser, ShowServerError}
 import org.querki.jquery._
@@ -33,20 +34,24 @@ object AppModule {
 
   def showSidebar(): Callback = Callback {
     val sidebtn: js.Object = "#searchContainer"
+    val overlayContainer: js.Object = "#overlayContainer"
     val sidebarIcon: js.Object = "#sidebarIcon"
     val rsltScrollContainer: js.Object = "#rsltScrollContainer"
     val middelNaviContainer: js.Object = "#middelNaviContainer"
-    val profiledescription: js.Object = "DashBoardCSS_Style-profileDescription" /*".profile-description"*/
+    val profiledescription: js.Object = "DashBoardCSS_Style-profileDescription"
     val profileActionButtons: js.Object = ".profile-action-buttons"
     $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
+
+    //show
     if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
-      $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
-      $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
-      $(profileActionButtons).css("pointer-events", "none")
-    } else {
-      $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
-      //      e.stopPropagation()
-      $(profileActionButtons).css("pointer-events", "all")
+      $(overlayContainer).addClass("overlaySidebar")
+      //      $(profiledescription).find(".profile-action-buttons").css("pointer-events", "none")
+      //      $(profileActionButtons).css("pointer-events", "none")
+    } else
+    //hide
+    {
+      $(overlayContainer).removeClass("overlaySidebar")
+      //      $(profileActionButtons).css("pointer-events", "all")
     }
     val t1: js.Object = ".sidebar-left.sidebar-animate.sidebar-md-show > #sidebarbtn > #sidebarIcon"
     val t2: js.Object = ".sidebar > #sidebarbtn > #sidebarIcon"
@@ -56,9 +61,18 @@ object AppModule {
     $(t1).addClass("fa fa-chevron-circle-right")
   }
 
+  def hideSidebar(): Callback = Callback {
+    val overlayContainer: js.Object = "#overlayContainer"
+    val sidebtn: js.Object = "#searchContainer"
+
+    $(sidebtn).addClass("sidebar-left sidebar-animate sidebar-md-show")
+    $(overlayContainer).removeClass("overlaySidebar")
+  }
+
+
   case class Backend(t: BackendScope[Props, State]) {
     def mounted(props: Props) = {
-      showSidebar
+     showSidebar
       //  LGCircuit.dispatch(ShowServerError(""))
     }
 
@@ -71,6 +85,7 @@ object AppModule {
       }
     }
 
+
     def render(p: Props) = {
       val profilesProxy = LGCircuit.connect(_.profiles)
       val searchesProxy = LGCircuit.connect(_.searches)
@@ -81,7 +96,7 @@ object AppModule {
       val introProxy =LGCircuit.connect(_.introduction)
 
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-        ^.background := "url(./assets/images/LG_Background3.svg)")(
+         ^.background := "url(./assets/images/LG_Background3E.svg)", ^.backgroundSize := "101% 101%"  )(
         <.div()(
           Presets(Presets.Props(p.view))
         ),
@@ -92,7 +107,7 @@ object AppModule {
           <.div(^.className := "split col-lg-10 col-md-12", DashBoardCSS.Style.paddingRight0px)(
             <.div(^.className := "row")(
               //Left Sidebar
-              <.div(^.id := "searchContainer", ^.className := "col-md-3 col-sm-4 sidebar", DashBoardCSS.Style.padding0px)(
+              <.div(^.id := "searchContainer", ^.marginBottom := "4px", ^.className := "col-md-3 col-sm-4 sidebar", DashBoardCSS.Style.padding0px)(
                 //Adding toggle button for sidebar
                 <.button(^.id := "sidebarbtn", ^.`type` := "button", ^.className := "navbar-toggle toggle-left hidden-md hidden-lg", ^.float := "right", "data-toggle".reactAttr := "sidebar", "data-target".reactAttr := ".sidebar-left",
                   ^.onClick --> showSidebar)(
@@ -105,8 +120,9 @@ object AppModule {
               } else {
                 <.div()
               },
-              <.div(^.className := "main col-md-9 col-md-offset-3 LftcontainerCSS_Style-sidebarRightContainer", DashBoardCSS.Style.dashboardResults2)(
-                <.div(^.onClick --> showSidebar)(
+              <.div(^.id:="overlayContainer", ^.onClick-->hideSidebar()),
+              <.div(^.className := "main col-md-9 col-md-offset-3", DashBoardCSS.Style.dashboardResults2)(
+                <.div()(
                   p.view match {
                     case PROFILES_VIEW => profilesProxy(ProfilesResults(_))
                     case PROJECTS_VIEW => jobsProxy(ProjectResults(_))
