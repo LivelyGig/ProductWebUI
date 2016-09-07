@@ -72,7 +72,6 @@ object SynereoCommanStylesCSS {
       //      backgroundColor(c"#2283AE"),
       backgroundColor(transparent),
       fontSize(22.px),
-
       //      marginTop(8.px),
       marginTop(12.%%),
       marginRight(15.px),
@@ -82,17 +81,18 @@ object SynereoCommanStylesCSS {
       // width(20.px),
       color(white),
       overflow.hidden,
-      display.block
-      //      &.hover(
-      //        width(135.px),
-      //        backgroundColor(c"#2283AE"),
-      //        color(c"#FFFFFF").important
-      //      ),
-      //      &.focus(
-      //        width(135.px),
-      //        backgroundColor(c"#2283AE"),
-      //        color(c"#FFFFFF").important
-      //      )
+      display.block,
+      &.hover(
+        //        width(135.px),
+        //        backgroundColor(c"#2283AE"),
+        backgroundColor.transparent.important,
+        color(c"#FFFFFF").important
+      ),
+      &.focus(
+        //        width(135.px),
+        //        backgroundColor(c"#2283AE"),
+        color(c"#FFFFFF").important
+      )
     )
     val ampsCount = style(
       fontWeight._600,
@@ -111,7 +111,7 @@ object SynereoCommanStylesCSS {
         width(233.px),
       float.right,
 
-      media.maxWidth(545.px) -(
+      media.maxWidth(545.px) - (
         marginTop(65.px),
         width(100.%%)
         )

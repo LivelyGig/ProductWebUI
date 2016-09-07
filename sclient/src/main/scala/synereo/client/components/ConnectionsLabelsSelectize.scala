@@ -50,7 +50,7 @@ object ConnectionsLabelsSelectize {
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
       val parentIdentifier = t.props.runNow().parentIdentifier
-      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7)
+      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7, false)
     }
 
     def mounted(props: Props): Callback = Callback {

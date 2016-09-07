@@ -1,15 +1,15 @@
 var SelectizeUtils = (function(){
     function addOption(selectizeId, text, value) {
-        var sel= $("#"+selectizeId)[0].selectize
-        sel.addOption({
+        var $select= $("#"+selectizeId)[0].selectize
+        $select.addOption({
             text:text,
             value: value
         })
     }
-    function initilizeSelectize(selectizeId,maximumItems){
+    function initilizeSelectize(selectizeId,maximumItems,allowCreate){
      $("#"+selectizeId).selectize({
         plugins: ['remove_button'],
-        create: true,
+        create: allowCreate,
         maxItems:maximumItems
     })
  }

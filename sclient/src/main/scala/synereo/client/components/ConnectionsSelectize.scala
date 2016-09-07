@@ -54,7 +54,7 @@ object ConnectionsSelectize {
 
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", count)
+      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
 
     }
 

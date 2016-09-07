@@ -47,7 +47,7 @@ object LabelsSelectize {
         //          .create(true)
         //          .maxItems(3)
         //          .plugins("remove_button"))
-        SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7)
+        SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7, true)
       }
 
     }
