@@ -29,7 +29,9 @@ object SynereoCommanStylesCSS {
     val searchBoxContainer = style(
       marginTop(12.px),
       display.inlineBlock,
-      width(80.%%)
+      width(67.%%),
+      media.maxWidth(617.px) -
+        width(50.%%)
     )
     val labelSelectizeNavbar = style(
       width(480.px),
@@ -67,27 +69,30 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val createPostButton = style(
-      backgroundColor(c"#2283AE"),
-      fontSize(18.px),
-      //      position.absolute,
-      marginTop(8.px),
-      marginRight(-4.px),
-      height(50.px),
+      //      backgroundColor(c"#2283AE"),
+      backgroundColor(transparent),
+      fontSize(22.px),
+
+      //      marginTop(8.px),
+      marginTop(12.%%),
+      marginRight(15.px),
+      //      marginRight(-4.px),
+      //      height(50.px),
       textAlign.left,
-      width(20.px),
-      //      right(-15.px),
+      // width(20.px),
+      color(white),
       overflow.hidden,
-      display.block,
-      &.hover(
-        width(135.px),
-        backgroundColor(c"#2283AE"),
-        color(c"#FFFFFF").important
-      ),
-      &.focus(
-        width(135.px),
-        backgroundColor(c"#2283AE"),
-        color(c"#FFFFFF").important
-      )
+      display.block
+      //      &.hover(
+      //        width(135.px),
+      //        backgroundColor(c"#2283AE"),
+      //        color(c"#FFFFFF").important
+      //      ),
+      //      &.focus(
+      //        width(135.px),
+      //        backgroundColor(c"#2283AE"),
+      //        color(c"#FFFFFF").important
+      //      )
     )
     val ampsCount = style(
       fontWeight._600,
@@ -98,17 +103,17 @@ object SynereoCommanStylesCSS {
       //      paddingTop(6.px),
       //      paddingRight(20.px),
       right.`0`,
-    //  media.maxWidth(767.px) -
-       // marginTop(65.px)
+      //  media.maxWidth(767.px) -
+      // marginTop(65.px)
       //      zIndex(100)
       //      backgroundColor(c"#277490")
-        media.minWidth(546.px).maxWidth(766.px) -
+      media.minWidth(546.px).maxWidth(766.px) -
         width(233.px),
-        float.right,
+      float.right,
 
       media.maxWidth(545.px) -(
         marginTop(65.px),
-      width(100.%%)
+        width(100.%%)
         )
     )
     val renderFailedMessage = style(

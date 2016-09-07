@@ -43,8 +43,8 @@ object MainMenu {
           val model = props.proxy.value
           <.div(^.className := "row")(
             <.div(^.className := "label-selectize-container-main")(
-              <.div()(
-                if (props.currentLoc == DashboardLoc) {
+                <.div(^.className:="pull-left")(  NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "" ,""))),
+              <.div()(  if (props.currentLoc == DashboardLoc) {
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
@@ -125,7 +125,7 @@ object MainMenu {
                     )
                   )
                 ),
-                <.li(SynereoCommanStylesCSS.Style.marginRight15px)(
+                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/)(
                   <.div()(
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)
@@ -149,7 +149,7 @@ object MainMenu {
                     Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
-                <.li(
+                <.li(SynereoCommanStylesCSS.Style.featureHide)(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
               )
