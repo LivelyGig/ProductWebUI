@@ -6,13 +6,12 @@ import upickle.default._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import scala.scalajs.js.Date
-import scala.util.{Failure, Success, Try}
+import scala.util.{Try}
 import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
+import synereo.client.facades.SRPClient
 import synereo.client.sessionitems.SessionItems
-import synereo.client.srp.SRPClient
 
 case class ApiError(response: String) extends Exception
 
@@ -97,11 +96,12 @@ object CoreApi {
       case e: Throwable => upickle.default.write(ApiRequest(ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR, ErrorResponse(e.getMessage)))
     }
   }
-//  def agentLogin(userModel: UserModel): Future[String] = {
-//    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
-//      s"?password=${userModel.password}")))
-//    ajaxPost(requestContent)
-//  }
+
+  //  def agentLogin(userModel: UserModel): Future[String] = {
+  //    val requestContent = upickle.default.write(ApiRequest(ApiTypes.INITIALIZE_SESSION_REQUEST, InitializeSession(s"agent://email/${userModel.email}" +
+  //      s"?password=${userModel.password}")))
+  //    ajaxPost(requestContent)
+  //  }
 
   def sessionPing(uri: String): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.SESSION_PING, SessionPing(uri)))

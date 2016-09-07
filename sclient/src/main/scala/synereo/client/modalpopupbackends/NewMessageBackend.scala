@@ -12,6 +12,7 @@ import synereo.client.modalpopups.NewMessageForm
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils._
 import synereo.client.components.Bootstrap._
+import synereo.client.facades.SynereoSelectizeFacade
 
 import scala.scalajs.js
 
@@ -115,8 +116,8 @@ case class NewMessageBackend(t: BackendScope[NewMessageForm.Props, NewMessageFor
       if (newLabels.nonEmpty) {
         val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
         ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
-        //          newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
-        newLabels.foreach(label => SelectizeUtils.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
+        //          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
+        newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
       } else {
         ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
       }

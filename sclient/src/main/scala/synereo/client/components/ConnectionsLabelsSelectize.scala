@@ -2,16 +2,14 @@ package synereo.client.components
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.utils.SelectizeUtils
-
-//import org.denigma.selectize._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.dtos.Connection
+import synereo.client.facades.SynereoSelectizeFacade
 import synereo.client.services.SYNEREOCircuit
+
 import scala.language.existentials
 import scala.scalajs.js
-import shared.models.Label
 
 /**
   * Created by shubham.k on 4/6/2016.
@@ -50,7 +48,7 @@ object ConnectionsLabelsSelectize {
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
       val parentIdentifier = t.props.runNow().parentIdentifier
-      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7, false)
+      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", 7, false)
     }
 
     def mounted(props: Props): Callback = Callback {

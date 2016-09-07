@@ -1,4 +1,4 @@
-package synereo.client.srp
+package synereo.client.facades
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
