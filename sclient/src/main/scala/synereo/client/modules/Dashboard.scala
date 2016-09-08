@@ -255,7 +255,8 @@ object HomeFeedList {
 
   case class Props(messages: Seq[MessagePost])
 
-  case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false, messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()))
+  case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
+                   messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),fromSender:String="",toReceiver:String="")
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
 
     val messageLoader: js.Object = "#messageLoader"
@@ -302,9 +303,9 @@ object HomeFeedList {
       t.modState(s => s.copy(showFullPostView = false))
     }
 
-    def openFullViewModalPopUP(getMessagePost : MessagePost): Callback = {
+    def openFullViewModalPopUP(getMessagePost : MessagePost,fromSender:String,toReceiver:String): Callback = {
       $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
-      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost))
+      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=fromSender))
     }
 
     def preventFullViewModalPopUP(e: ReactEvent): Callback = {
@@ -401,7 +402,7 @@ object HomeFeedList {
                 <.div(^.className := "col-md-12")(
                   if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
                     // getMessage = message
-                    <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage)
+                    <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))
                   } else {
                     // getMessage = null
                     <.span("")
@@ -411,7 +412,7 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.cardText)(
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
 
-                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message))(
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                           if (messageText.length == 1) {
                             messageText(0)
                           } else
@@ -421,7 +422,7 @@ object HomeFeedList {
                         )
                       } else {
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message))(
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                             if (messageText.length == 1) {
                               messageText(0)
                             } else
@@ -434,7 +435,7 @@ object HomeFeedList {
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                         <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
                           //println(s"message.postContent.imgSrc ${message.postContent.imgSrc.size}")
-                          <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder)
+                          <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))
                         )
                       } else {
                         <.span("")
@@ -452,7 +453,7 @@ object HomeFeedList {
               ),
               <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                 <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                  <.div(^.onClick --> t.backend.openFullViewModalPopUP(message))(
+                  <.div(^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                     for {b <- 2 to messageText.length if b >= 30} yield {
                       messageText(b) + " "
                     },
@@ -487,7 +488,7 @@ object HomeFeedList {
           }
         ),
         <.div(
-          if (S.showFullPostView) FullPostViewModal(FullPostViewModal.Props(t.backend.closeFullViewModalPopUp, S.messagePostForFullView))
+          if (S.showFullPostView) FullPostViewModal(FullPostViewModal.Props(t.backend.closeFullViewModalPopUp, S.messagePostForFullView,S.fromSender,S.toReceiver))
           else Seq.empty[ReactElement]
         ),
         <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(

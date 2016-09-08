@@ -16,8 +16,8 @@ object PostFullViewCSS {
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
       marginTop(-20.px),
       marginLeft(-15.px),
-      overflowY.scroll
-    //      height(953.px)
+      overflowY.hidden,
+      height.auto
     )
     val blogMainImage = style(
       marginLeft.auto,
@@ -72,7 +72,8 @@ object PostFullViewCSS {
     //      textAlign.center
     )
     val postDescription = style(
-      fontSize(1.1.em)
+      fontSize(1.1.em),
+      paddingBottom(30.px)
     )
     val postedUserInfoContainerDiv = style(
       //      marginLeft(11.2.%%),

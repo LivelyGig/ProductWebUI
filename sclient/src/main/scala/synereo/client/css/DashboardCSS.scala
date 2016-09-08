@@ -250,6 +250,10 @@ object DashboardCSS {
     val ampTokenImg = style(
       maxWidth(20.px)
     )
+
+    val verticalAlignInherit = style {
+      verticalAlign.inherit
+    }
   }
 
 }
