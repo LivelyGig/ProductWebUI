@@ -1,37 +1,22 @@
 package synereo.client.modalpopups
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.GlobalStyles
+import shared.dtos.UpdateUserRequest
+import shared.models.UserModel
+import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components.Icon.Icon
+import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
+import synereo.client.modalpopupbackends.NewImgBackend
 import synereo.client.services.SYNEREOCircuit
 
+import scala.language.reflectiveCalls
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap.Modal
-import synereo.client.components._
-import synereo.client.components.Bootstrap._
-import org.scalajs.dom._
-import org.scalajs.dom.raw.UIEvent
-import shared.dtos.{JsonBlob, UpdateUserRequest}
-import shared.models.UserModel
-import diode.AnyAction._
-import org.querki.jquery._
-import synereo.client.logger
-import synereo.client.modalpopupbackends.NewImgBackend
-import synereo.client.utils.ContentUtils
 
-import scala.scalajs.js
-
-//scalastyle:off
-/**
-  * Created by mandar.k on 7/22/2016.
-  */
 object NewImage {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -66,7 +51,7 @@ object NewImage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewImageForm(), CommonStyle.default, P.addStyles, "", P.title, className = P.className), P.buttonName, P.childrenElement),
-        if (S.showNewImageForm) userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props(B.addImage, "Profile Image Uploader", userProxy)))
+        if (S.showNewImageForm) userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props(B.addImage, "Profile Picture", userProxy)))
         else
           Seq.empty[ReactElement]
       )
@@ -115,14 +100,14 @@ object ProfileImageUploaderForm {
                   <.div(^.className := "col-md-12")(
                     <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
                     <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
-                      "Please provide Image to upload ... !!!"
+                      "Please provide a picture to upload ... !!!"
                     )
                   )
                 ),
                 <.div(^.className := "row",
                   <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
                     <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
-                    <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Profile Image")
+                    <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Set Picture")
                   )
                 )
               )
