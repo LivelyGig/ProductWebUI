@@ -1,12 +1,9 @@
 package client.modals
 
-import java.util.UUID
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
-import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import client.LGMain.Loc
 import client.components.Bootstrap._
 import client.components.Icon
 import client.components.Icon._
@@ -17,19 +14,12 @@ import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react
 
-import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import org.scalajs.dom._
-import shared.dtos.Label
 import shared.models.{ProjectPostContent, ProjectsPost}
-import client.sessionitems.SessionItems
 import client.utils.{AppUtils, ConnectionsUtils}
-
-import scala.scalajs.js
-import scala.scalajs.js.Date
 import diode.AnyAction._
 
 object NewProject {
@@ -74,7 +64,6 @@ object NewProject {
           Seq.empty[ReactElement]
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 

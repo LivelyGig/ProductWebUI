@@ -84,7 +84,6 @@ object ContentModelHandler {
     "beginIntroductionResponse")
 
   def getCurrModelAndPing(viewName: String): Seq[Post] = {
-
     try {
       LGCircuit.dispatch(TogglePinger(viewName))
       viewName match {
@@ -141,12 +140,10 @@ object ContentModelHandler {
           ConnectionsUtils.getSelfConnnection(viewName)),
         getDefaultProlog(viewName)))
     val req = SubscribeRequest(AppUtils.getSessionUri(viewName), expr)
-//    LGCircuit.dispatch(ClearMessages())
     var count = 1
     subscribe()
     def subscribe(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
       case Success(res) =>
-//        println(s"message post successful ${res}")
         LGCircuit.dispatch(
           UpdatePrevSearchCnxn(req.expression.content.cnxns, viewName))
         LGCircuit.dispatch(
@@ -155,8 +152,6 @@ object ContentModelHandler {
 
       case Failure(res) =>
         if (count == 3) {
-//          println(s"Failure data = ${res.getMessage}")
-          //            logger.log.error("Open Error modal Popup")
           LGCircuit.dispatch(ShowServerError(res.getMessage))
         } else {
           count = count + 1
@@ -209,7 +204,7 @@ object ContentModelHandler {
     }
   }
 
-  def clearModel(viewName : String) = {
+  def clearModel(viewName: String) = {
     viewName match {
       case AppModule.MESSAGES_VIEW => LGCircuit.dispatch(ClearMessages())
       case AppModule.PROFILES_VIEW => LGCircuit.dispatch(ClearProfiles())
@@ -243,7 +238,6 @@ object ContentModelHandler {
     postMsg()
     def postMsg(): Unit = CoreApi.evalSubscribeRequest(req).onComplete {
       case Success(res) =>
-//        logger.log.debug("content post success")
       case Failure(fail) =>
         if (count == 3) {
           //            logger.log.error("server error")
@@ -293,7 +287,6 @@ object ContentModelHandler {
           CreateLabels(labelNames.map(SearchesModelHandler.leaf)))
       case Failure(res) =>
         if (count == 3) {
-          //            logger.log.debug("server error")
           LGCircuit.dispatch(ShowServerError(res.getMessage))
         } else {
           count = count + 1
