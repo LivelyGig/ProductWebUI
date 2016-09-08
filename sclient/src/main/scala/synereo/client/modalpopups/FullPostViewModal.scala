@@ -1,22 +1,18 @@
 package synereo.client.modalpopups
 
 import synereo.client.components.{GlobalStyles, Icon}
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SignupCSS, SynereoCommanStylesCSS}
-
-import scala.scalajs.js
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap._
-
-import scala.scalajs.js.dom
-import org.querki.jquery._
 import shared.models.MessagePost
-import synereo.client.modalpopupbackends.FullPostViewBackend
+import japgolly.scalajs.react._
+import org.querki.jquery._
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
+import scala.scalajs.js
 
 /**
   * Created by Mandar on 5/3/2016.
@@ -29,6 +25,45 @@ object FullPostViewModal {
   case class Props(submitHandler: () => Callback, messages: MessagePost)
 
   case class State()
+
+  class FullPostViewBackend(t: BackendScope[Props, State]) {
+    val fullPostViewContainer: js.Object = "#fullPostViewContainer"
+    val fullViewModalNavBar: js.Object = "#fullViewModalNavBar"
+    val fullViewImage: js.Object = "#fullViewImage"
+    val fullViewImageHeight = $(fullViewImage).height()
+    val dashboardContainerMain: js.Object = "#dashboardContainerMain"
+    val modalCloseButton: js.Object = "#modal-close-button"
+    var scrollY: Int = 0
+
+    def mounted() = Callback {
+      $(fullPostViewContainer).height($(dashboardContainerMain).height() + 25)
+    }
+
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def modalClosed(state: FullPostViewModal.State, props: FullPostViewModal.Props): Callback = {
+      props.submitHandler()
+    }
+
+    def handleScroll(e: ReactEventI): Callback = {
+      val fullViewImageHeight = $(fullViewImage).height()
+      scrollY = $(fullPostViewContainer).scrollTop()
+      //      println(scrollY)
+      if (scrollY > fullViewImageHeight) {
+        $(fullViewModalNavBar).addClass("postedUserInfoNavModalScroll").css("top", fullViewImageHeight.toInt + (scrollY - fullViewImageHeight.toInt))
+        $(modalCloseButton).css("position", "absolute")
+        $(modalCloseButton).css("top", fullViewImageHeight.toInt + (scrollY - fullViewImageHeight.toInt - 20))
+        $(modalCloseButton).css("right", "20px")
+      } else if (scrollY < fullViewImageHeight - 160) {
+        $(fullViewModalNavBar).removeClass("postedUserInfoNavModalScroll").css("top", "0")
+        $(modalCloseButton).addClass("").css("position", "initial")
+      }
+      Callback.empty
+    }
+
+  }
 
 
   private val component = ReactComponentB[Props]("FullPostViewModal")

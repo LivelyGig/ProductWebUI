@@ -1,17 +1,16 @@
 package synereo.client.modalpopups
 
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap._
 import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{DashboardCSS, LoginCSS}
 import synereo.client.components.jQuery
-import synereo.client.modalpopupbackends.PostNewInviteBackend
-
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import japgolly.scalajs.react._
+import synereo.client.components.Bootstrap._
+
 
 object RequestInvite {
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -70,6 +69,32 @@ object PostNewInvite {
 
   case class State(postMessage: Boolean = false,requestInviteModalId: String = "request-invite-modal")
 
+  class PostNewInviteBackend(t: BackendScope[PostNewInvite.Props, PostNewInvite.State]) {
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+
+    }
+
+    def hideModal = {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def mounted(props: PostNewInvite.Props): Callback = Callback {
+
+    }
+
+    def submitForm(e: ReactEventI) = {
+      e.preventDefault()
+      t.modState(s => s.copy(postMessage = false))
+    }
+
+    def formClosed(state: PostNewInvite.State, props: PostNewInvite.Props): Callback = {
+      // call parent handler with the new item and whether form was OK or cancelled
+      //      println(state.postMessage)
+      props.submitHandler(state.postMessage)
+
+    }
+  }
 
   private val component = ReactComponentB[Props]("RequestNewInvite")
     .initialState_P(p => State())

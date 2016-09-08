@@ -11,7 +11,6 @@ import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
-import synereo.client.modalpopupbackends.AccountValidationSuccessBackend
 
 /**
   * Created by bhagyashree.b on 4/19/2016.
@@ -76,6 +75,17 @@ object AccountValidationSuccess {
   case class Props(submitHandler: () => Callback)
 
   case class State()
+
+  class AccountValidationSuccessBackend(t: BackendScope[Props, State]) {
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def formClosed(state: AccountValidationSuccess.State, props: AccountValidationSuccess.Props): Callback = {
+      // call parent handler with the new item and whether form was OK or cancelled
+      props.submitHandler()
+    }
+  }
 
   private val component = ReactComponentB[Props]("AccountValidationFailed")
     .initialState_P(p => State())

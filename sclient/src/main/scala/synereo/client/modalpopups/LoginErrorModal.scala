@@ -1,15 +1,13 @@
 package synereo.client.modalpopups
 
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap._
-import synereo.client.components._
 import synereo.client.components.GlobalStyles
 import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopupbackends.LoginErrorBackend
-
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
+import japgolly.scalajs.react._
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
 
 /**
  * Created by mandar.k on 4/13/2016.
@@ -20,6 +18,17 @@ object LoginErrorModal {
   case class Props(submitHandler: (Boolean) => Callback, loginError: String = "")
 
   case class State(showLogin : Boolean = false)
+
+  class LoginErrorBackend(t: BackendScope[Props, State]) {
+    def closeForm = {
+      jQuery(t.getDOMNode()).modal("hide")
+      t.modState(s => s.copy(showLogin = true))
+    }
+
+    def modalClosed(state: LoginErrorModal.State, props: LoginErrorModal.Props): Callback = {
+      props.submitHandler(state.showLogin)
+    }
+  }
 
 
 

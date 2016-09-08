@@ -1,13 +1,13 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.GlobalStyles
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.SignupCSS
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.modalpopupbackends.AccountValidationFailedBacked
+import japgolly.scalajs.react._
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
 
 /**
   * Created by bhagyashree.b on 4/19/2016.
@@ -20,6 +20,16 @@ object AccountValidationFailed {
   case class Props(submitHandler: () => Callback)
 
   case class State()
+
+  class AccountValidationFailedBacked(t: BackendScope[Props, State]) {
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def formClosed(state: AccountValidationFailed.State, props: AccountValidationFailed.Props): Callback = {
+      props.submitHandler()
+    }
+  }
 
 
   private val component = ReactComponentB[Props]("AccountValidationFailed")
