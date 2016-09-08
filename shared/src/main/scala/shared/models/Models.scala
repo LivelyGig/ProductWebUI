@@ -4,19 +4,12 @@ import shared.dtos._
 
 sealed trait Post {
   def uid: String
-
   def created: String
-
   def modified: String
-
   def labels: String
-
   def connections: Seq[Connection]
-
   def postType: String
-
   def versionNumber: Int
-
   def postContent: PostContent
 }
 
@@ -25,7 +18,6 @@ sealed trait PostContent
 case class MessagePost(uid: String = "", created: String = "", modified: String = "",
                        labels: String = "", connections: Seq[Connection] = Nil, postContent: MessagePostContent ) extends Post {
   override def postType: String = "MessagePost"
-
   override def versionNumber: Int = 0
 }
 
@@ -34,7 +26,6 @@ case class MessagePostContent(text: String = "", subject: String = "",imgSrc : S
 case class ProjectsPost(uid: String, created: String, modified: String, labels: String = "",
                         connections: Seq[Connection] = Nil, postContent: ProjectPostContent) extends Post {
   override def postType: String = "VersionedPost"
-
   override def versionNumber: Int = 0
 }
 
@@ -44,16 +35,13 @@ case class ProjectPostContent(name: String, startDate: String, endDate: String, 
 
 sealed trait Person {
   def name: String
-
   def capabilities: String
-
   def title: String
 }
 
 case class ProfilesPost(uid: String, created: String, modified: String, labels: String,
                         connections: Seq[Connection], postContent: ProfilePostContent) extends Post {
   override def postType: String = "ProfilePost"
-
   override def versionNumber: Int = 0
 }
 

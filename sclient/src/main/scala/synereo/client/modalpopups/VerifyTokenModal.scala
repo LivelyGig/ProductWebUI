@@ -72,7 +72,7 @@ object VerifyTokenModal {
               <.div()(
                 <.div(SignupCSS.Style.verificationMessageContainer)(
                   <.h4("Your account has been created!"),
-                  <.h4("We have sent a verification code to your email address, Please check your email and copy the code, or follow the link.")
+                  <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")
                 ),
                 <.div(SignupCSS.Style.verificationMessageContainer)(
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",

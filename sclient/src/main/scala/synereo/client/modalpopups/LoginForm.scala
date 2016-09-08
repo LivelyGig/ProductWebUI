@@ -1,10 +1,7 @@
 package synereo.client.modalpopups
 
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.querki.jquery._
 import org.scalajs.dom
-import org.scalajs.dom.window
 import shared.models.UserModel
 import synereo.client.components.Bootstrap._
 import synereo.client.components._
@@ -208,10 +205,10 @@ object LoginForm {
           )
         ),
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
-          Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), "Dont have an account?"),
-          Button(Button.Props(t.backend.showVerifyEmailModal(), CommonStyle.default, Seq(LoginCSS.Style.verifyUserBtnLoginModal), "", ""), "Verify user"),
-          Button(Button.Props(t.backend.addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
-          //            RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
+          Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), "Don't have an account?"),
+          Button(Button.Props(t.backend.showVerifyEmailModal(), CommonStyle.default, Seq(LoginCSS.Style.verifyUserBtnLoginModal), "", ""), "Verify your token")
+          //Button(Button.Props(t.backend.addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
+          //RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
 
