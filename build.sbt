@@ -27,17 +27,16 @@ lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable function
 //lazy val clientsrpDeps = List("sjcl.js", "srp.js", "bitArray.js", "srpBn.js",
 //  "codecHex.js", "codecString.js", "sha256.js", "sha512.js", "aes.js", "random.js","srp-client.js", "prolog_parser.js", "validator.js")
 
-lazy val pCompile = "sclient"
+lazy val pCompile = "client"
 lazy val lessFile = if (pCompile == "sclient") "synereo-main.less" else "main.less"
-lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js", "validator.js", "synereo_app.js"/*, "selectize.min.js"*/) else List("prolog_parser.js", "validator.js") /*++ clientsrpDeps*/
+lazy val clientJSDeps = if (pCompile == "sclient") List("prolog_parser.js", "validator.js", "synereo_app.js" /*, "selectize.min.js"*/) else List("prolog_parser.js", "validator.js") /*++ clientsrpDeps*/
 lazy val client: Project = (project in file(pCompile))
   .settings(
     name := "client",
     version := Versions.appVersion,
     scalaVersion := Versions.scalaVersion,
     scalacOptions ++= Settings.scalacOptions,
-    //      resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
-    //     resolvers += "wasted.io/repo" at "http://repo.wasted.io/mvn",
+    resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"), //add resolver
     libraryDependencies ++= Settings.scalajsDependencies.value,
     // by default we do development build, no eliding
     elideOptions := Seq(),
