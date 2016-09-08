@@ -14,10 +14,14 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
-import synereo.client.modulebackends.MainMenuBackend
+import japgolly.scalajs.react
+import japgolly.scalajs.react._
+import org.querki.jquery._
+import synereo.client.logger
+import scala.scalajs.js
+
 
 //scalastyle:off
 object MainMenu {
@@ -32,6 +36,40 @@ object MainMenu {
   case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
                    showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
 
+  class MainMenuBackend(t: BackendScope[Props, State]) {
+
+    def toggleTopbar = Callback {
+      val topBtn: js.Object = "#TopbarContainer"
+      $(topBtn).toggleClass("topbar-left topbar-lg-show")
+    }
+
+    def showUploadImageModal(): react.Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = true))
+    }
+
+    def imageUploaded(): Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = false))
+    }
+
+    def toggleShowAboutInfoModal(): react.Callback = {
+      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
+    }
+
+    //  def hideAboutInfoModal(): Callback = {
+    //    t.modState(s => s.copy(showProfileImageUploadModal = false))
+    //  }
+
+    def showNodeSettingModal(): react.Callback = {
+      logger.log.debug("showNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = true))
+    }
+
+    def hideNodeSettingModal(): Callback = {
+      logger.log.debug("hideNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = false))
+    }
+  }
+
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
@@ -43,15 +81,16 @@ object MainMenu {
           val model = props.proxy.value
           <.div(^.className := "row")(
             <.div(^.className := "label-selectize-container-main")(
-                <.div(^.className:="pull-left")(  NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "" ,""))),
-              <.div()(  if (props.currentLoc == DashboardLoc) {
+              if (props.currentLoc == DashboardLoc) {
+                <.div(
+                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "", ""))),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
-                } else {
-                  <.span()
-                }
-              )
+                )
+              } else {
+                <.span()
+              }
             ),
             <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
@@ -118,7 +157,7 @@ object MainMenu {
                   <.div(^.className := "text-center")(
                     <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
                       /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
                       <.span("543")
@@ -132,11 +171,10 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Upload Picture ")),
                       <.li(<.a(^.onClick --> $.backend.toggleShowAboutInfoModal())("About")),
+                      <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Change Profile Picture ")),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
                       <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
-
                     )
                   ),
                   if (state.showProfileImageUploadModal)

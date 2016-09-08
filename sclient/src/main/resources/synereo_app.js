@@ -1,26 +1,3 @@
-var SelectizeUtils = (function(){
-    function addOption(selectizeId, text, value) {
-        var sel= $("#"+selectizeId)[0].selectize
-        sel.addOption({
-            text:text,
-            value: value
-        })
-    }
-    function initilizeSelectize(selectizeId,maximumItems){
-     $("#"+selectizeId).selectize({
-        plugins: ['remove_button'],
-        create: true,
-        maxItems:maximumItems
-    })
- }
- return {
-    addOption:addOption,
-    initilizeSelectize:initilizeSelectize
-}
-
-})();
-
-
 var ScrollSpeedMonitor = (function()
 {
     var self = this;

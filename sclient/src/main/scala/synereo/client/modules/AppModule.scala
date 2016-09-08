@@ -17,7 +17,11 @@ import synereo.client.modalpopups.{ServerErrorModal}
 import org.scalajs.dom.window
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
-import synereo.client.modulebackends.{AccountModuleBackend}
+import japgolly.scalajs.react.{Callback, _}
+import synereo.client.handlers.{LogoutUser, ShowServerError}
+import synereo.client.logger
+import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
 
 
 /**
@@ -46,9 +50,27 @@ object AppModule {
 
   case class State(showErrorModal: Boolean = false)
 
+
+  class AppModuleBackend(t: BackendScope[Props, State]) {
+
+    def serverError(): Callback = {
+      SYNEREOCircuit.dispatch(ShowServerError(""))
+      t.modState(s => s.copy(showErrorModal = false))
+    }
+
+    def mounted(props: AppModule.Props) = Callback {
+      logger.log.debug("app module mounted")
+      val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+      if (userSessionUri.length < 1) {
+        SYNEREOCircuit.dispatch(LogoutUser())
+      }
+
+    }
+  }
+
   private val component = ReactComponentB[Props]("AppModule")
     .initialState_P(p => (State()))
-    .backend(new AccountModuleBackend(_))
+    .backend(new AppModuleBackend(_))
     .renderPS((t, P, S) => {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(

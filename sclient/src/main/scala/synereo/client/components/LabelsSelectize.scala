@@ -3,12 +3,14 @@ package synereo.client.components
 
 import shared.models.Label
 import synereo.client.services.SYNEREOCircuit
+
 import scala.language.existentials
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import org.scalajs.dom._
-import synereo.client.utils.SelectizeUtils
+import synereo.client.facades.SynereoSelectizeFacade
+
 import scala.language.existentials
 import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
@@ -47,7 +49,7 @@ object LabelsSelectize {
         //          .create(true)
         //          .maxItems(3)
         //          .plugins("remove_button"))
-        SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", 7)
+        SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", 7, true)
       }
 
     }

@@ -8,12 +8,9 @@ import org.scalajs.dom._
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
-import shared.models.{ConnectionsModel, Post}
+import shared.models.{ConnectionsModel}
+import synereo.client.facades.SynereoSelectizeFacade
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.utils.SelectizeUtils
-
-//import org.denigma.selectize._
-
 
 /**
   * Created by mandar.k on 4/6/2016.
@@ -54,7 +51,7 @@ object ConnectionsSelectize {
 
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-      SelectizeUtils.initilizeSelectize(s"${parentIdentifier}-selectize", count)
+      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
 
     }
 

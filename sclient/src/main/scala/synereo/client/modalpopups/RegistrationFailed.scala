@@ -2,16 +2,13 @@ package synereo.client.modalpopups
 
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.components._
-
-import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
+import japgolly.scalajs.react._
+import synereo.client.components._
 import synereo.client.components.Bootstrap._
-import synereo.client.modalpopupbackends.RegistrationFailedBackend
 
 /**
   * Created by bhagyashree.b on 4/19/2016.
@@ -24,7 +21,21 @@ object RegistrationFailed {
 
   case class State(registrationFailed: Boolean = false)
 
+  class RegistrationFailedBackend(t: BackendScope[Props, State]) {
 
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def login(): Callback = {
+      jQuery(t.getDOMNode()).modal("hide")
+      t.modState(s => s.copy(registrationFailed = true))
+    }
+
+    def modalClosed(state: RegistrationFailed.State, props: RegistrationFailed.Props): Callback = {
+      props.submitHandler(state.registrationFailed)
+    }
+  }
 
   private val component = ReactComponentB[Props]("RegistrationFailed")
     .initialState_P(p => State())
