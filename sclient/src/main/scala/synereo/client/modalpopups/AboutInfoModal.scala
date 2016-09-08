@@ -1,16 +1,20 @@
 package synereo.client.modalpopups
 
 import synereo.client.components.{GlobalStyles, Icon}
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import shared.dtos.VersionInfoResponse
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{SignupCSS, UserProfileViewCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.modalpopupbackends.{AboutInfoModalBackend => Backend}
 import synereo.client.utils.ConnectionsUtils
+import japgolly.scalajs.react._
+import shared.dtos.{ApiResponse, VersionInfoResponse}
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
+import synereo.client.logger
+import synereo.client.services.CoreApi
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.{Failure, Success}
 
 object AboutInfoModal {
 
@@ -20,10 +24,35 @@ object AboutInfoModal {
 
   case class State(versionInfo: VersionInfoResponse)
 
+  class AboutInfoModalBackend(t: BackendScope[Props, State]) {
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def mounted(props: AboutInfoModal.Props) = Callback {
+      CoreApi.getVersionInfo().onComplete {
+        case Success(res) =>
+          try {
+            val versionInfoFromAjax = upickle.default.read[ApiResponse[VersionInfoResponse]](res).content
+            logger.log.debug(s"versionInfoFromAjax:$versionInfoFromAjax")
+            t.modState(state => state.copy(versionInfo = versionInfoFromAjax)).runNow()
+          } catch {
+            case e: Exception => logger.log.error("Exception in read VersionInfoResponse")
+          }
+        case Failure(res) =>
+          logger.log.debug(s"getVersionInfo Failed: $res")
+      }
+    }
+
+    def formClosed(state: AboutInfoModal.State, props: AboutInfoModal.Props): Callback = {
+      props.submitHandler()
+    }
+  }
+
 
   private val component = ReactComponentB[Props]("AboutInfoModal")
     .initialState_P(p => State(new VersionInfoResponse()))
-    .backend(new Backend(_))
+    .backend(new AboutInfoModalBackend(_))
     .renderPS((t, props, state) => {
       val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
       val headerText = "About"

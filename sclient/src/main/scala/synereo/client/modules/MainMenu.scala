@@ -14,10 +14,14 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
-import synereo.client.modulebackends.MainMenuBackend
+import japgolly.scalajs.react
+import japgolly.scalajs.react._
+import org.querki.jquery._
+import synereo.client.logger
+import scala.scalajs.js
+
 
 //scalastyle:off
 object MainMenu {
@@ -31,6 +35,40 @@ object MainMenu {
 
   case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
                    showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
+
+  class MainMenuBackend(t: BackendScope[Props, State]) {
+
+    def toggleTopbar = Callback {
+      val topBtn: js.Object = "#TopbarContainer"
+      $(topBtn).toggleClass("topbar-left topbar-lg-show")
+    }
+
+    def showUploadImageModal(): react.Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = true))
+    }
+
+    def imageUploaded(): Callback = {
+      t.modState(s => s.copy(showProfileImageUploadModal = false))
+    }
+
+    def toggleShowAboutInfoModal(): react.Callback = {
+      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
+    }
+
+    //  def hideAboutInfoModal(): Callback = {
+    //    t.modState(s => s.copy(showProfileImageUploadModal = false))
+    //  }
+
+    def showNodeSettingModal(): react.Callback = {
+      logger.log.debug("showNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = true))
+    }
+
+    def hideNodeSettingModal(): Callback = {
+      logger.log.debug("hideNodeSettingModal")
+      t.modState(s => s.copy(showNodeSettingModal = false))
+    }
+  }
 
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")

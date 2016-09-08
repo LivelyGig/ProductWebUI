@@ -2,20 +2,19 @@ package synereo.client.modalpopups
 
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
 import synereo.client.components.Bootstrap.Modal
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.querki.jquery._
-import synereo.client.components.Bootstrap._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-import synereo.client.logger
-import synereo.client.modalpopupbackends.AmplifyPostBackend
-
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import japgolly.scalajs.react._
+import org.querki.jquery._
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
+import synereo.client.logger
 
 /**
   * Created by mandar.k on 8/17/2016.
@@ -27,6 +26,8 @@ object AmplifyPostModal {
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), /*reactChildElement: ReactTag = <.span(),*/ title: String, modalId: String = "")
 
   case class State(showAmplifyPostForm: Boolean = false)
+
+
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -78,7 +79,32 @@ object AmplifyPostForm {
 
   case class State(isAmplified: Boolean = false)
 
+  class AmplifyPostBackend(t: BackendScope[Props, State]) {
+    def hideModal = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
 
+    def modalClosed(state: AmplifyPostForm.State, props: AmplifyPostForm.Props): Callback = {
+      props.submitHandler()
+    }
+
+    def submitForm(e: ReactEventI) = {
+      e.preventDefault()
+      val state = t.state.runNow()
+      t.modState(state => state.copy(isAmplified = true))
+    }
+
+    def check(): Boolean = {
+      if ($("body".asInstanceOf[js.Object]).hasClass("modal-open"))
+        true
+      else
+        false
+    }
+
+    def mounted(props: AmplifyPostForm.Props) = Callback {
+      logger.log.debug("AmplifyPostForm mounted")
+    }
+  }
 
   private val component = ReactComponentB[Props]("AmplifyPostForm")
     .initialState_P(p => State())

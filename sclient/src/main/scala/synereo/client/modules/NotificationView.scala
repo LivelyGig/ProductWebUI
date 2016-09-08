@@ -5,19 +5,24 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.dtos.{Introduction}
 import synereo.client.css.NotificationViewCSS
 import diode.react.ModelProxy
-import org.querki.jquery._
 import synereo.client.rootmodels.IntroRootModel
 import synereo.client.components.MIcon
 import synereo.client.modalpopups.ConfirmIntroReqModal
-import synereo.client.modulebackends.NotificationsListBackend
-import scala.scalajs.js
 import scala.scalajs.js.JSON
 import scalacss.ScalaCssReact._
+import japgolly.scalajs.react.BackendScope
+import org.querki.jquery._
+import shared.dtos.{IntroConfirmReq, Introduction}
+import synereo.client.handlers.UpdateIntroductionsModel
+import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
+import scala.scalajs.js
 
 /**
   * Created by mandar.k on 7/27/2016.
   */
 //scalastyle:off
+
 object NotificationView {
 
   case class Props(proxy: ModelProxy[IntroRootModel])
@@ -59,6 +64,28 @@ object NotificationList {
   case class Props(introductions: Seq[Introduction])
 
   case class State()
+
+
+  class NotificationsListBackend(t: BackendScope[Props, State]) {
+
+    def deleteIntroduction(introduction: Introduction) = {
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+      val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = false)
+      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+      SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+    }
+
+    def handleAllIntroduction(areAccepted: Boolean = false) = {
+      val props = t.props.runNow()
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+      props.introductions.foreach {
+        introduction =>
+          val introConfirmReq = IntroConfirmReq(uri, alias = "alias", introduction.introSessionId, introduction.correlationId, accepted = areAccepted)
+          SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
+      }
+      $("#acceptRejectAllBtnContainer".asInstanceOf[js.Object]).addClass("hidden")
+    }
+  }
 
   val component = ReactComponentB[Props]("Dashboard")
     .initialState_P(p => State())

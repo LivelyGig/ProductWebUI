@@ -1,29 +1,25 @@
 package synereo.client.modalpopups
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
-import synereo.client.services.SYNEREOCircuit
-
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.components._
-import synereo.client.components.Bootstrap._
-import org.scalajs.dom._
-import org.scalajs.dom.raw.UIEvent
 import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
-import diode.AnyAction._
+import japgolly.scalajs.react
+import japgolly.scalajs.react._
 import org.querki.jquery._
-import synereo.client.logger
-import synereo.client.modalpopupbackends.NewImgBackend
+import org.scalajs.dom.raw.{FileReader, UIEvent}
+import shared.dtos.JsonBlob
+import synereo.client.components._
+import synereo.client.components.Bootstrap._
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.ContentUtils
 
 import scala.scalajs.js
@@ -86,6 +82,49 @@ object ProfileImageUploaderForm {
   case class State(updateUserRequest: UpdateUserRequest, postNewImage: Boolean = false)
 
   val getUsers = SYNEREOCircuit.connect(_.user)
+
+  case class NewImgBackend(t: BackendScope[Props, State]) {
+    def hide = Callback {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def hideModal = {
+      jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def mounted(): Callback = Callback {
+      // logger.log.info("new Image modal mounted")
+    }
+
+    def updateImgSrc(e: ReactEventI): react.Callback = Callback {
+      val value = e.target.files.item(0)
+      val reader = new FileReader()
+      reader.onload = (e: UIEvent) => {
+        val contents = reader.result.asInstanceOf[String]
+        val props = t.props.runNow()
+        val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
+      }
+      reader.readAsDataURL(value)
+      $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+    }
+
+    def submitForm(e: ReactEventI): Callback = {
+      e.preventDefault()
+      if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
+        $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
+        t.modState(s => s.copy(postNewImage = false))
+      } else {
+        //        SYNEREOCircuit.dispatch(PostUserUpdate(t.state.runNow().updateUserRequest))
+        ContentUtils.postUserUpdate(t.state.runNow().updateUserRequest)
+        t.modState(s => s.copy(postNewImage = true))
+      }
+    }
+
+    def formClosed(state: ProfileImageUploaderForm.State, props: ProfileImageUploaderForm.Props): Callback = {
+      props.submitHandler(/*state.submitForm*/)
+    }
+  }
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new UpdateUserRequest()))
