@@ -81,8 +81,8 @@ object FullPostViewModal {
         <.div(
           <.div(^.id := "fullPostViewContainer", PostFullViewCSS.Style.fullPostViewContainer/*, ^.onScroll ==> t.backend.handleScroll*/)(
               <.div()(
-                <.div(^.className:="col-md-1",PostFullViewCSS.Style.fullPostViewLeftRightContainer,^.onClick --> t.backend.hide)(" "),
-                <.div(^.className := "col-md-10")(
+                <.div(^.className:="col-md-1 col-sm-1 col-xs-2",PostFullViewCSS.Style.fullPostViewLeftRightContainer,^.onClick --> t.backend.hide)(" "),
+                <.div(^.className := "col-md-10 col-sm-10 col-xs-8")(
                   <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
                     if (P.messages.postContent.imgSrc != "" && P.messages.postContent.imgSrc.size > 80659) {
                       // getMessage = message
@@ -288,16 +288,14 @@ object FullPostViewModal {
                     )
                   )
                 ),
-                <.div(^.className := "col-md-1", PostFullViewCSS.Style.fullPostViewLeftRightContainer ,^.onClick --> t.backend.hide)(
+                <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer ,^.onClick --> t.backend.hide)(
                   //                  <.span(MIcon.close, PostFullViewCSS.Style.closeIcon)
                 //  if (P.messages.postContent.imgSrc == "") {
                     // getMessage = message
                     <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide, (MIcon.apply("close", "48")))
                 //  }else{<.span()}
-
                     )
               )
-
           )
         ),
         <.div(bss.modal.footer, ^.className := "hide")()
