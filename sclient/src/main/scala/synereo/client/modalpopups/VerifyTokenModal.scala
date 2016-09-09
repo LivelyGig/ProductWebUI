@@ -1,27 +1,36 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.{Icon, GlobalStyles}
+import synereo.client.components.{GlobalStyles, Icon}
 import shared.models.EmailValidationModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.{SignupCSS}
+import synereo.client.css.{LoginCSS, SignupCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
+import org.querki.jquery._
+import org.scalajs.dom
 import synereo.client.components._
+
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+
+import scala.scalajs.js
 
 /**
   * Created by Mandar on 4/19/2016.
   */
 object VerifyTokenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
+  val addBtn : js.Object = "#addBtn"
 
   case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
-  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false)
+  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false,
+                   portNumber: String = "9876",
+                   apiURL: String = s"https://${dom.window.location.hostname}")
 
   class VerifyTokenModalBackend(t: BackendScope[Props, State]) {
 
@@ -43,6 +52,16 @@ object VerifyTokenModal {
       t.modState(s => s.copy(emailValidationModel = s.emailValidationModel.copy(token = value)))
     }
 
+    def updateAPIURL(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(apiURL = value))
+    }
+
+    def updateAPI(e: ReactEventI) = {
+      $(addBtn).show()
+      t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+    }
 
 
     def formClosed(state: VerifyTokenModal.State, props: VerifyTokenModal.Props): Callback = {
@@ -75,6 +94,19 @@ object VerifyTokenModal {
                   <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")
                 ),
                 <.div(SignupCSS.Style.verificationMessageContainer)(
+                  <.div(LoginCSS.Style.loginFormInputText,LoginCSS.Style.apiDetailsContainer)(
+                    <.div(^.id := "addLabel", ^.className := "collapse")(
+                      <.div(^.className:="input-group")(
+                        // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
+                        <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
+                          ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
+                        <.div(^.className := "help-block with-errors"),
+                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.updateAPI)(Icon.times),
+                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn", ^.onClick --> Callback{ $(addBtn).show()})(Icon.check)
+                      )
+                    ),
+                    <.button(^.id:="addBtn",^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.onClick --> Callback{$(addBtn).hide()})("Edit API details")
+                  ),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
                     ^.placeholder := "Verification code", ^.value := S.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
                 ),

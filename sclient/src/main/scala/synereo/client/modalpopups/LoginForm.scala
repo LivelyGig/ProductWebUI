@@ -24,6 +24,7 @@ import synereo.client.sessionitems.SessionItems
 
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
+  val addBtn : js.Object = "#addBtn"
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
@@ -40,6 +41,7 @@ object LoginForm {
   class LoginFormBackend(t: BackendScope[Props, State]) {
 
     val LoginFormID: js.Object = "#LoginForm"
+
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -92,7 +94,10 @@ object LoginForm {
       //      println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
-
+    def updateAPI(e: ReactEventI) = {
+      $(addBtn).show()
+      t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+    }
     def updateIp(e: ReactEventI) = {
       val value = e.target.value
       //      println(s"value:$value")
@@ -171,10 +176,19 @@ object LoginForm {
                 //                  <.div(^.className := "help-block with-errors")
                 //                ),
                 <.div(LoginCSS.Style.loginFormInputText)(
-                  // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
-                    ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(LoginCSS.Style.apiDetailsContainer)(
+                    <.div(^.id := "addLabel", ^.className := "collapse")(
+                      <.div(^.className:="input-group")(
+                        // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
+                        <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
+                          ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
+                        <.div(^.className := "help-block with-errors"),
+                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.updateAPI)(Icon.times),
+                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn", ^.onClick --> Callback{ $(addBtn).show()})(Icon.check)
+                      )
+                    ),
+                    <.button(^.id:="addBtn",^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.onClick --> Callback{$(addBtn).hide()})("Edit API details")
+                  )
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
