@@ -4,8 +4,8 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
- * Created by Mandar on 3/22/2016.
- */
+  * Created by Mandar on 3/22/2016.
+  */
 object PostFullViewCSS {
 
   object Style extends StyleSheet.Inline {
@@ -16,9 +16,14 @@ object PostFullViewCSS {
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
       marginTop(-20.px),
       marginLeft(-15.px),
-      overflowY.hidden,
-      height.auto
+      overflowY.hidden
     )
+
+    val fullPostViewLeftRightContainer = style(
+      height(100.vh),
+      cursor.pointer
+    )
+
     val blogMainImage = style(
       marginLeft.auto,
       marginRight.auto,
@@ -33,7 +38,9 @@ object PostFullViewCSS {
     val postedImageContainerDiv = style()
     val modalCloseButton = style(
       fontSize(60.px),
-      color(c"#678892"),
+      //      color(c"#678892"),
+      color(white),
+      opacity(1),
       &.hover(
         color(c"#678892")
       ),
@@ -67,9 +74,9 @@ object PostFullViewCSS {
     val tagsEditorsDiv = style(
       marginTop(60.px),
       marginBottom(60.px)
-    //      fontSize(24.px)
-    //      fontWeight._100
-    //      textAlign.center
+      //      fontSize(24.px)
+      //      fontWeight._100
+      //      textAlign.center
     )
     val postDescription = style(
       fontSize(1.1.em),

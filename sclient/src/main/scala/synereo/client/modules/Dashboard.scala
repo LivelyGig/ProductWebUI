@@ -305,7 +305,7 @@ object HomeFeedList {
 
     def openFullViewModalPopUP(getMessagePost : MessagePost,fromSender:String,toReceiver:String): Callback = {
       $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
-      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=fromSender))
+      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=toReceiver))
     }
 
     def preventFullViewModalPopUP(e: ReactEvent): Callback = {
