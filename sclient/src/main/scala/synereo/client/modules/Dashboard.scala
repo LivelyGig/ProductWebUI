@@ -409,7 +409,7 @@ object HomeFeedList {
                               messageText(b) + " "
                             }
                         )
-                      } else {
+                      } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                             if (messageText.length == 1) {
@@ -420,6 +420,19 @@ object HomeFeedList {
                               }
                           )
                         )
+                      }
+                      else if(message.postContent.imgSrc == ""){
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                          if (messageText.length == 1) {
+                            messageText(0)
+                          } else
+                            for {b <- 0 to messageText.length - 1 if b <= 30} yield {
+                              messageText(b) + " "
+                            }
+                        )
+
+                      }else{
+                        <.div()
                       },
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                         <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
