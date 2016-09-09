@@ -41,7 +41,7 @@ object AmplifyPostModal {
       t.modState(s => s.copy(showAmplifyPostForm = true))
     }
 
-    def postAmplified(): Callback = {
+    def postAmplified(amount: String = "", to: String = "", isAmplified: Boolean = false): Callback = {
       t.modState(s => s.copy(showAmplifyPostForm = false))
     }
   }
@@ -75,9 +75,9 @@ object AmplifyPostForm {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, modalId: String = "")
+  case class Props(submitHandler: (String, String, Boolean) => Callback, senderAddress: String = "", modalId: String = "")
 
-  case class State(isAmplified: Boolean = false)
+  case class State(isAmplified: Boolean = false, amount: String = "")
 
   class AmplifyPostBackend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -85,7 +85,7 @@ object AmplifyPostForm {
     }
 
     def modalClosed(state: AmplifyPostForm.State, props: AmplifyPostForm.Props): Callback = {
-      props.submitHandler()
+      props.submitHandler(state.amount, props.senderAddress, state.isAmplified)
     }
 
     def submitForm(e: ReactEventI) = {
@@ -103,6 +103,11 @@ object AmplifyPostForm {
 
     def mounted(props: AmplifyPostForm.Props) = Callback {
       logger.log.debug("AmplifyPostForm mounted")
+    }
+
+    def updateAmount(e: ReactEventI) = {
+      val amount = e.target.value
+      t.modState(state => state.copy(amount = amount))
     }
   }
 
@@ -124,10 +129,10 @@ object AmplifyPostForm {
             <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
               <.div()(
                 <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Amps to donate")
+                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Amps to donate", ^.onChange ==> t.backend.updateAmount)
                 ),
                 <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Amplify"),
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal, "Amplify"),
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal, "Cancel")
                 )
               )

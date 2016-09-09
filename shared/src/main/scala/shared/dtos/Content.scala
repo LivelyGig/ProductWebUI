@@ -39,7 +39,7 @@ case class ErrorResponse(reason: String) extends Content
 case class InitializeSession(agentURI: String) extends Content
 
 case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String],
-                                     listOfConnections: Seq[Connection], lastActiveLabel: String,
+                                     listOfConnections: Seq[Connection], lastActiveLabel: String, balance: String, address: String,
                                      jsonBlob: Map[String, String])
 
 case class InitializeSessionResponseCheck(M2: String)
@@ -97,3 +97,12 @@ case class AddAgentAliasesRequest(sessionURI: String = "", aliases: Seq[String])
 case class VersionInfoRequest() extends Content
 
 case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: String = "", mongoDBVersion: String = "", rabbitMQVersion: String = "")
+
+case class BalanceChange(sessionURI: String = "", address: String = "", tx: String = "", prevBalance: String = "0", newBalance: String = "0")
+
+case class SendAmpsRequest(sessionURI: String, amount: String, target: String) extends Content {
+  require(amount.nonEmpty, "Amount of AMPs should be non-zero!")
+  require(target.nonEmpty, "Unable to amplify the post: receiver's address is missing!")
+}
+
+case class SendAmpsResponse(sessionURI: String, transaction: String)
