@@ -23,6 +23,7 @@ object ApiTypes {
     val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
     val FEEDEXPR = "feedExpr"
     val VERSION_INFO_REQUEST = "versionInfoRequest"
+    val SEND_AMPS_REQUEST = "sendAmpsRequest"
   }
 
   object responseTypes {
@@ -38,6 +39,8 @@ object ApiTypes {
     val INITIALIZE_SESSION_STEP1_RESPONSE = "initializeSessionStep1Response"
     val INITIALIZE_SESSION_STEP2_RESPONSE = "initializeSessionStep2Response"
     val EVAL_SUBSCRIBE_RESPONSE = "evalSubscribeResponse"
+    val SEND_AMPS_RESPONSE = "sendAmpsResponse"
+    val SEND_AMPS_ERROR = "sendAmpsError"
   }
 
 

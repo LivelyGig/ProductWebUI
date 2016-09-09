@@ -65,6 +65,8 @@ case class UserModel(name: String = "",
                      imgSrc: String = "",
                      confirmPassword: String = "",
                      isAvailable:Boolean=true,
+                     balance: String = "",
+                     address: String = "",
                      sessionUri: String = "")
 
 case class SignUpModel(email: String = "",

@@ -12,16 +12,22 @@ import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups._
 import diode.AnyAction._
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import synereo.client.components.Icon
 
 import scala.language.reflectiveCalls
 import org.widok.moment.Moment
+import shared.dtos.{ApiResponse, ErrorResponse, SendAmpsResponse}
 import synereo.client.handlers.ShowServerError
 import synereo.client.logger
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.scalajs.js.timers._
+import scala.util.{Failure, Success, Try}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 /**
@@ -256,7 +262,8 @@ object HomeFeedList {
   case class Props(messages: Seq[MessagePost])
 
   case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
-                   messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),fromSender:String="",toReceiver:String="")
+                   messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),
+                   fromSender:String="", toReceiver:String="", senderAddress: String = "")
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
 
     val messageLoader: js.Object = "#messageLoader"
@@ -278,11 +285,28 @@ object HomeFeedList {
 
     def amplifyPost(e: ReactEventI): Callback = {
       logger.log.debug("amplifyPost called")
-      t.modState(state => state.copy(showAmplifyPostForm = true))
+      val senderAddress = e.target.id
+      t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
     }
 
-    def postAmplified(): Callback = {
+    def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
       logger.log.debug("postAmplified called ")
+      if(isAmplified) {
+        logger.log.debug(s"Sending $amount AMPs to $to")
+        CoreApi.sendAmps(amount, to).onComplete {
+          case Success(res) =>
+            Try(upickle.default.read[ApiResponse[SendAmpsResponse]](res)).toOption match {
+              case Some(v) => logger.log.debug(v.content.transaction)
+              case None =>
+                Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
+                  case Some(v) => logger.log.debug(v.content.reason)
+                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
+                }
+            }
+          case Failure(res) =>
+            logger.log.debug(s"sending AMPs failed: $res")
+        }
+      }
       t.modState(s => s.copy(showAmplifyPostForm = false))
     }
 
@@ -341,9 +365,11 @@ object HomeFeedList {
         var fromSender = "unknown"
         var toReceiver = "unknown"
         var img = ""
+        var sendAmpsTo = ""
         val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
         if (userId == selfConnectionId) {
           fromSender = "me"
+          sendAmpsTo = userId
           for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield
             toReceiver = a.name
 
@@ -351,6 +377,7 @@ object HomeFeedList {
           for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
             fromSender = a.name
             img = a.imgSrc
+            sendAmpsTo = a.connection.target.split("/")(2)
           }
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
@@ -379,7 +406,7 @@ object HomeFeedList {
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                   "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
                   ^.onClick ==> t.backend.amplifyPost)(
-                  <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                  <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                   "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
@@ -471,7 +498,7 @@ object HomeFeedList {
       <.div(
         <.div(
           if (S.showAmplifyPostForm) {
-            AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified))
+            AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified, S.senderAddress))
           }
           else if (S.showForwardPostForm) {
             getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy)))
