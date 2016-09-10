@@ -12,7 +12,7 @@ import shared.dtos.{ApiResponse, VersionInfoResponse}
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import synereo.client.services.CoreApi
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
