@@ -57,6 +57,7 @@ object AboutInfoModal {
       val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
       val headerText = "About"
       val versionInfo = state.versionInfo
+      val ampAddress = SYNEREOCircuit.zoom(_.user.address).value
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -66,6 +67,7 @@ object AboutInfoModal {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Agent UID: ${agentUID.head}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Wallet Address: $ampAddress"),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(""),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)("Build Information"),
             <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- Gloseval Version: ${versionInfo.glosevalVersion}"),
