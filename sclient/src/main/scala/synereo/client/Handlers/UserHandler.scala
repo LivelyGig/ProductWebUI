@@ -17,6 +17,8 @@ case class LogoutUser()
 
 case class UpdateUserImage(imgSrc: String)
 
+case class BalanceChanged(newBalance: String)
+
 //case class PostUserUpdate(updateUserRequest: UpdateUserRequest)
 
 class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(modelRW) {
@@ -35,6 +37,10 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
     case UpdateUserImage(imgSrc) =>
       updated(value.copy(imgSrc = imgSrc))
+
+    case BalanceChanged(newBalance) => {
+      updated(value.copy(balance = newBalance))
+    }
 
     //    case PostUserUpdate(req) =>
     //      ContentHandler.postUserUpdate(req)

@@ -160,7 +160,7 @@ object MainMenu {
                       "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
-                      <.span("543")
+                      <.span(model.balance)
                     )
                   )
                 ),
