@@ -97,3 +97,5 @@ case class AddAgentAliasesRequest(sessionURI: String = "", aliases: Seq[String])
 case class VersionInfoRequest() extends Content
 
 case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: String = "", mongoDBVersion: String = "", rabbitMQVersion: String = "")
+
+case class CloseSessionRequest(sessionURI: String = "") extends Content

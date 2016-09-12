@@ -142,5 +142,9 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def closeSessionRequest(uri: String) : Future[String]={
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.CLOSE_SESSION_REQUEST, CloseSessionRequest(uri)))
+    ajaxPost(requestContent)
+  }
 
 }
