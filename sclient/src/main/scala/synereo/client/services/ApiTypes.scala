@@ -23,6 +23,7 @@ object ApiTypes {
     val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
     val FEEDEXPR = "feedExpr"
     val VERSION_INFO_REQUEST = "versionInfoRequest"
+    val CLOSE_SESSION_REQUEST ="closeSessionRequest"
     val SEND_AMPS_REQUEST = "sendAmpsRequest"
   }
 

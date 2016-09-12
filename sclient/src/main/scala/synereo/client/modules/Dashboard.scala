@@ -403,11 +403,15 @@ object HomeFeedList {
                   <.span(s"To  : ${   toReceiver}")
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                  ^.onClick ==> t.backend.amplifyPost)(
-                  <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                ),
+                if(fromSender.equals("me")){
+                  <.span()
+                }else{
+                  <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                    "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                    ^.onClick ==> t.backend.amplifyPost)(
+                    <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                  )
+                },
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                   "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
                   ^.onClick ==> t.backend.forwardPost)(
@@ -436,7 +440,7 @@ object HomeFeedList {
                               messageText(b) + " "
                             }
                         )
-                      } else {
+                      } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                             if (messageText.length == 1) {
@@ -447,6 +451,19 @@ object HomeFeedList {
                               }
                           )
                         )
+                      }
+                      else if(message.postContent.imgSrc == ""){
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                          if (messageText.length == 1) {
+                            messageText(0)
+                          } else
+                            for {b <- 0 to messageText.length - 1 if b <= 30} yield {
+                              messageText(b) + " "
+                            }
+                        )
+
+                      }else{
+                        <.div()
                       },
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                         <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(

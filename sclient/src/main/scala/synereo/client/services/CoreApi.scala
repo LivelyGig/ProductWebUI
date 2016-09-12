@@ -142,11 +142,15 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def closeSessionRequest(uri: String) : Future[String]={
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.CLOSE_SESSION_REQUEST, CloseSessionRequest(uri)))
+    ajaxPost(requestContent)
+  }
+
   def sendAmps(amount: String, to: String): Future[String] = {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.SEND_AMPS_REQUEST,
       SendAmpsRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, amount, to)))
     ajaxPost(requestContent)
   }
-
 
 }

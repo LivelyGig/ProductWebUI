@@ -98,6 +98,8 @@ case class VersionInfoRequest() extends Content
 
 case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: String = "", mongoDBVersion: String = "", rabbitMQVersion: String = "")
 
+case class CloseSessionRequest(sessionURI: String = "") extends Content
+
 case class BalanceChange(sessionURI: String = "", address: String = "", tx: String = "", prevBalance: String = "0", newBalance: String = "0")
 
 case class SendAmpsRequest(sessionURI: String, amount: String, target: String) extends Content {

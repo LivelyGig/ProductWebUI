@@ -20,40 +20,4 @@ class ConnectionHandlerTest extends UnitTest("ConnectionHandlerTest") {
     ConnectionsModel("sessionUri2",newCnxnSeq(1),"name2",""),
     ConnectionsModel("sessionUri3",newCnxnSeq(2),"name3",""))
 
-  /*"UpdateConnectionSeq" should "update the ConnectionRootModel with the new connection Seq" in {
-
-    val result = handler.handle(UpdateConnectionSeq(newCnxnSeq))
-    result match {
-      case ModelUpdate(newValue) =>
-        assert(newValue.connections == newCnxnSeq)
-      case _ =>
-        assert(false)
-    }
-  }
-
-  "UpdateConnectionModelSeq" should "update the ConnectionRootModel with the new connection model seq" in {
-      val result = handler.handle(UpdateConnectionModelSeq(newConnectionModelSeq))
-    result match {
-      case ModelUpdate(newValue) =>
-        assert(newValue.connectionsResponse == newConnectionModelSeq)
-      case _ =>
-        assert(false)
-
-    }
-  }*/
-
-  /*"AddConnection" should "add the new connection in the ConnectionRootModel" in {
-    val newCnxn = ConnectionsModel("sessionUriForAdd",Connection("sourceForAddCnxn",
-      "labelForAddCnxn","targetForAddCnxn"),"nameForAddCnxn","")
-    val result = handler.handle(UpdateConnections(newCnxn,newCnxn.connection))
-    result match {
-      case ModelUpdate(newValue) =>
-        assert(newValue.connectionsResponse.last == newCnxn)
-        assert(newValue.connections.last == newCnxn.connection)
-      case _ =>
-        assert(false)
-    }
-  }*/
-
-
 }
