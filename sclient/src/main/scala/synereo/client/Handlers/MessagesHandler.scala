@@ -44,7 +44,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
         CoreApi.sessionPing(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value)
       } { messagesResponse =>
         // toggle pinger to re issue session ping
-        SYNEREOCircuit.dispatch(TogglePinger())
+        SYNEREOCircuit.dispatch(RefreshMessages())
         MessagesRootModel(ContentUtils
         .processRes(messagesResponse)
         .asInstanceOf[Seq[MessagePost]])

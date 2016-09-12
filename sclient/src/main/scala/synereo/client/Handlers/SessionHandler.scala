@@ -5,18 +5,18 @@ import synereo.client.rootmodels.SessionRootModel
 import synereo.client.services.SYNEREOCircuit
 
 
-case class TogglePinger()
+/*case class TogglePinger()
 
-case class AttachPinger()
+case class AttachPinger()*/
 
 case class SessionPing()
 
 case class SetSessionUri(sessionUri: String)
 
 // scalastyle:off
-class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends ActionHandler(modelRW) {
+class SessionHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
-    case TogglePinger() =>
+    /*case TogglePinger() =>
       updated(value.copy(pinger = !value.pinger))
 
     case AttachPinger() =>
@@ -24,7 +24,7 @@ class SessionPingHandler[M](modelRW: ModelRW[M, SessionRootModel]) extends Actio
       def ping() = {
         SYNEREOCircuit.dispatch(RefreshMessages())
       }
-      noChange
+      noChange*/
     case SetSessionUri(sessionUri) =>
       updated(value.copy(sessionUri = sessionUri))
   }
