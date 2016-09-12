@@ -376,11 +376,15 @@ object HomeFeedList {
                   <.span(s"To  : ${   toReceiver}")
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                  ^.onClick ==> t.backend.amplifyPost)(
-                  <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                ),
+                if(fromSender.equals("me")){
+                  <.span()
+                }else{
+                  <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                    "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                    ^.onClick ==> t.backend.amplifyPost)(
+                    <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                  )
+                },
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                   "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
                   ^.onClick ==> t.backend.forwardPost)(
