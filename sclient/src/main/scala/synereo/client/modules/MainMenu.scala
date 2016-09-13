@@ -217,6 +217,5 @@ object MainMenu {
       )
     })
     .build
-
   def apply(props: Props) = MainMenu(props)
 }

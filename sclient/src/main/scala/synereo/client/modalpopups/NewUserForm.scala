@@ -34,7 +34,7 @@ object NewUserForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = true,
-                   apiURL: String = s"https://${dom.window.location.hostname}"
+                   apiURL: String = ""
                   )
 
   case class NewUserFormBackend(t: BackendScope[Props, State]) {
@@ -58,9 +58,19 @@ object NewUserForm {
       t.modState(s => s.copy(apiURL = value))
     }
 
-    def updateAPI(e: ReactEventI) = {
+    def closeAPITextbox(e: ReactEventI) = {
       $(addBtn).show()
-      t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+    }
+
+    def mounted(): Callback = {
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
     }
 
     def updateName(e: ReactEventI) = {
@@ -145,7 +155,7 @@ object NewUserForm {
                     ^.className := "form-control", "data-error".reactAttr := "API is required", ^.onChange ==> t.backend.updateAPIURL,
                     ^.required := true, ^.placeholder := "API Server"),
                   <.div(^.className := "help-block with-errors"),
-                  <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.updateAPI)(Icon.times),
+                  <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
                   <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
                     $(addBtn).show()
                   })(Icon.check)
@@ -200,9 +210,7 @@ object NewUserForm {
         )
       )
     })
-    .componentDidMount(scope => Callback {
-
-    })
+    .componentDidMount(scope => scope.backend.mounted())
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.addNewUser || scope.currentState.showTermsOfServicesForm) {
         scope.$.backend.hidecomponent

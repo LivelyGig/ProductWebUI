@@ -7,6 +7,7 @@ import synereo.client.components.Bootstrap._
 import synereo.client.components._
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.sessionitems.SessionItems
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -24,7 +25,8 @@ import synereo.client.sessionitems.SessionItems
 
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  val addBtn : js.Object = "#addBtn"
+
+  val addBtn: js.Object = "#addBtn"
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
@@ -34,7 +36,7 @@ object LoginForm {
                    showNewInviteForm: Boolean = false,
                    hostName: String = dom.window.location.hostname,
                    portNumber: String = "9876",
-                   apiURL: String = s"https://${dom.window.location.hostname}"
+                   apiURL: String = ""
                   )
 
 
@@ -46,6 +48,7 @@ object LoginForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
+
       window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
       //window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
       //window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
@@ -94,20 +97,20 @@ object LoginForm {
       //      println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
-    def updateAPI(e: ReactEventI) = {
+
+    def closeAPITextbox(e: ReactEventI) = {
       $(addBtn).show()
-      t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
-    }
-    def updateIp(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(hostName = value))
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
     }
 
-    def updatePort(e: ReactEventI) = {
-      val value = e.target.value
-      //      println(s"value:$value")
-      t.modState(s => s.copy(portNumber = value))
+    def mounted(): Callback = {
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
     }
 
     def formClosed(state: LoginForm.State, props: LoginForm.Props): Callback = {
@@ -178,16 +181,20 @@ object LoginForm {
                 <.div(LoginCSS.Style.loginFormInputText)(
                   <.div(LoginCSS.Style.apiDetailsContainer)(
                     <.div(^.id := "addLabel", ^.className := "collapse")(
-                      <.div(^.className:="input-group")(
+                      <.div(^.className := "input-group")(
                         // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
                         <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
                           ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
                         <.div(^.className := "help-block with-errors"),
-                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.updateAPI)(Icon.times),
-                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn", ^.onClick --> Callback{ $(addBtn).show()})(Icon.check)
+                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
+                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
+                          $(addBtn).show()
+                        })(Icon.check)
                       )
                     ),
-                    <.button(^.id:="addBtn",^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.onClick --> Callback{$(addBtn).hide()})("Edit API details")
+                    <.button(^.id := "addBtn", ^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                      $(addBtn).hide()
+                    })("Edit API details")
                   )
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(
@@ -227,9 +234,15 @@ object LoginForm {
       )
 
     })
-    .componentDidMount(scope => Callback {
-      $(scope.getDOMNode()).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
-    })
+    .componentDidMount(scope => {
+      Callback {
+        $(scope.getDOMNode()).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
+      }
+      scope.backend.mounted()
+    }
+
+
+    )
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewUserForm || scope.currentState.showNewInviteForm) {
         scope.$.backend.hide

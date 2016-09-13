@@ -176,7 +176,6 @@ object LoginView {
           ContentUtils.subsForMsgAndBeginSessionPing()
           $(loginLoader).addClass("hidden")
           $(loadingScreen).addClass("hidden")
-
           window.location.replace("#dashboard")
           log.debug("login successful")
         case Failure(res) =>
