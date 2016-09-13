@@ -39,7 +39,7 @@ case class ErrorResponse(reason: String) extends Content
 case class InitializeSession(agentURI: String) extends Content
 
 case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String],
-                                     listOfConnections: Seq[Connection], lastActiveLabel: String, balance: String, address: String,
+                                     listOfConnections: Seq[Connection], lastActiveLabel: String, balance: String="", address: String="",
                                      jsonBlob: Map[String, String])
 
 case class InitializeSessionResponseCheck(M2: String)

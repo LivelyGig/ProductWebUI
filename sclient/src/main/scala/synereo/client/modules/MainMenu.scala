@@ -14,12 +14,16 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
+
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import org.querki.jquery._
+import shared.dtos.CloseSessionRequest
 import synereo.client.logger
+import synereo.client.utils.ContentUtils
+
 import scala.scalajs.js
 
 
@@ -75,6 +79,7 @@ object MainMenu {
     .initialState(State())
     .backend(new MainMenuBackend(_))
     .renderPS(($, props, state) => {
+      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       //      println(state"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
@@ -174,7 +179,7 @@ object MainMenu {
                       <.li(<.a(^.onClick --> $.backend.toggleShowAboutInfoModal())("About")),
                       <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Change Profile Picture ")),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
-                      <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign Out"))
                     )
                   ),
                   if (state.showProfileImageUploadModal)

@@ -293,4 +293,23 @@ object ContentUtils {
   }
 
 
+  def closeSessionReq(closeSessionRequest: CloseSessionRequest) = {
+    var count = 1
+    post()
+    def post(): Unit = CoreApi.closeSessionRequest(closeSessionRequest).onComplete {
+      case Success(response) => {
+        logger.log.debug("Closed session request")
+        SYNEREOCircuit.dispatch(LogoutUser())
+      }
+      case Failure(response) => logger.log.error("Error closing the session")
+        if (count == 3) {
+          SYNEREOCircuit.dispatch(ShowServerError(response.getMessage))
+        }
+        else {
+          count = count + 1
+          post()
+        }
+    }
+  }
+
 }
