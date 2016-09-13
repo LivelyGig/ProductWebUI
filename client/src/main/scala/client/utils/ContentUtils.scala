@@ -1,21 +1,21 @@
-package client.handler
+package client.utils
 
+import client.handler._
 import client.logger
 import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
-import client.utils.{AppUtils, ConnectionsUtils}
+import diode.AnyAction._
 import org.widok.moment.Moment
 import shared.dtos._
 import shared.models._
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import diode.AnyAction._
 
-import scala.util.{Failure, Success}
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
+import scala.util.{Failure, Success, Try}
 
 /**
   * Created by shubham.k on 12-05-2016.
   */
-object ContentModelHandler {
+object ContentUtils {
   def filterContent(response: ApiResponse[ResponseContent], viewName: String): Option[Post] = {
     try {
       viewName match {
@@ -63,9 +63,6 @@ object ContentModelHandler {
           }
         }
         if (isNew) {
-          LGCircuit.dispatch(
-            AddConnection(
-              ConnectionsModel("", content.connection, name, imgSrc)))
         }
       } else if (response.contains("beginIntroductionResponse")) {
         val beginIntroductionRes = upickle.default.read[Seq[ApiResponse[BeginIntroductionRes]]](response)
@@ -85,7 +82,6 @@ object ContentModelHandler {
 
   def getCurrModelAndPing(viewName: String): Seq[Post] = {
     try {
-      LGCircuit.dispatch(TogglePinger(viewName))
       viewName match {
         case AppModule.MESSAGES_VIEW =>
           LGCircuit.zoom(_.messages).value.get.messagesModelList
@@ -136,7 +132,7 @@ object ContentModelHandler {
     val expr = Expression(
       "feedExpr",
       ExpressionContent(
-        LGCircuit.zoom(_.connections.connections).value ++ Seq(
+        LGCircuit.zoom(_.connections.connectionsResponse).value.map(_.connection) ++ Seq(
           ConnectionsUtils.getSelfConnnection(viewName)),
         getDefaultProlog(viewName)))
     val req = SubscribeRequest(AppUtils.getSessionUri(viewName), expr)
@@ -211,6 +207,87 @@ object ContentModelHandler {
       case AppModule.PROJECTS_VIEW => LGCircuit.dispatch(ClearProjects())
     }
   }
+
+
+  /**
+    * This function primarily deals with getting the content for the ui interaction
+    * it is connected to the session ping response.
+    * Session ping response consists of a number of different types of responses
+    * which are filtered here and the ui is updated accordingly
+    *
+    * @param response This function takes the response from the session ping
+    *                 It is called from the message handler refresh messages action
+    * @return seq of post
+    */
+  def processRes(response: String): Seq[ResponseContent] = {
+    // process response
+    val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
+    val (cnxn, postContent, intro, cnctNot) = sortContent(responseArray)
+    // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
+    if (intro.nonEmpty) LGCircuit.dispatch(AddNotification(intro.map(_.content)))
+    if (cnctNot.nonEmpty)  {
+      val resp= cnctNot.map(e => ConnectionsUtils.getCnxnFromNot(e.content))
+      LGCircuit.dispatch(UpdateConnections(resp))
+    }
+    if (cnxn.nonEmpty) {
+      val res= cnxn.map(e => ConnectionsUtils.getCnxnFromRes(e.content))
+      LGCircuit.dispatch(UpdateConnections(res))
+    }
+    // return the mod messages model if new messages in response otherwise return the old response
+    if (postContent.nonEmpty) postContent.map(_.content)
+    else Nil
+  }
+
+  /**
+    * This function sort content based on their types
+    * @param responseArray
+    * @return
+    */
+
+  def sortContent(responseArray: Seq[String]): (Seq[ApiResponse[ConnectionProfileResponse]],
+    Seq[ApiResponse[ResponseContent]],
+    Seq[ApiResponse[Introduction]],
+    Seq[ApiResponse[ConnectNotification]]) = {
+    var remainingObj: Seq[String] = Nil
+    var cnxn: Seq[ApiResponse[ConnectionProfileResponse]] = Nil
+    var msg: Seq[ApiResponse[ResponseContent]] = Nil
+    var intro: Seq[ApiResponse[Introduction]] = Nil
+    var cnctNot: Seq[ApiResponse[ConnectNotification]] = Nil
+    responseArray.foreach {
+      e =>
+        Try(upickle.default.read[ApiResponse[ConnectionProfileResponse]](e)) match {
+          case Success(a) => cnxn :+= a
+          case Failure(b) => Try(upickle.default.read[ApiResponse[ResponseContent]](e)) match {
+            case Success(a) => msg :+= a
+            case Failure(b) => Try(upickle.default.read[ApiResponse[Introduction]](e)) match {
+              case Success(a) => intro :+= a
+              case Failure(b) => Try(upickle.default.read[ApiResponse[ConnectNotification]](e)) match {
+                case Success(a) => cnctNot :+= a
+                case Failure(b) => {
+                  remainingObj :+= e
+                }
+              }
+            }
+          }
+        }
+    }
+    (cnxn, msg, intro, cnctNot)
+
+  }
+
+  /*/**
+    * This function yields the message model that needs to be updated
+    *
+    * @param response
+    * @return
+    */
+  def getMsgModel(response: Seq[ApiResponse[ResponseContent]]): Seq[Post] = {
+    val msgModelMod = getCurrMsgModel() ++
+      response
+        .filterNot(_.content.pageOfPosts.isEmpty)
+        .flatMap(content => Try(upickle.default.read[MessagePost](content.content.pageOfPosts(0))).toOption)
+    msgModelMod.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+  }*/
 
   def cancelPreviousAndSubscribeNew(req: SubscribeRequest, viewName: String): Unit = {
     clearModel(viewName)

@@ -22,7 +22,7 @@ import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import client.handler.{ContentModelHandler, UpdateIntroductionsModel}
+import client.handler.UpdateIntroductionsModel
 import shared.dtos.{IntroConfirmReq, Introduction}
 import client.utils.{AppUtils, ConnectionsUtils}
 import scala.scalajs.js.JSON

@@ -5,14 +5,19 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.{DashBoardCSS, FooterCSS}
+import client.sessionitems.SessionItems
 import shared.models.SignUpModel
 
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
+import org.scalajs.dom
 
 import scala.scalajs.js
+import org.querki.jquery._
+import org.scalajs.dom
+import org.scalajs.dom._
 
 object NewAgentForm {
   var addNewAgentState: Boolean = false
@@ -24,7 +29,8 @@ object NewAgentForm {
 
   case class Props(submitHandler: (SignUpModel, Boolean, Boolean, Boolean) => Callback)
 
-  case class State(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false)
+  case class State(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false,
+                   hostName: String = s"https://${dom.window.location.hostname}:9876")
 
   case class Backend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -106,8 +112,16 @@ object NewAgentForm {
         t.modState(s => s.copy(addNewAgent = false))
       }
       else {
+        dom.window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, t.state.runNow().hostName)
         t.modState(s => s.copy(addNewAgent = true))
       }
+    }
+
+
+    def updateIp(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(hostName = value))
     }
 
     def formClosed(state: State, props: Props): Callback = {
@@ -129,6 +143,20 @@ object NewAgentForm {
         <.form("data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-6 col-sm-6 col-xs-12")(
+//              <.div(^.className := "form-group")(
+//                <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
+//                  ^.placeholder := "username", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)),
+
+              <.div(^.className := "row")(
+                <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
+                  <.label(^.`for` := "API Details *", "API Details\u00a0*")
+                ),
+                <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "FirstName", ^.className := "form-control", "data-error".reactAttr := "API Details are required",
+                    ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
+                  <.div(^.className := "help-block with-errors")
+                )
+              ),
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12 col-sm-12 col-xs-12", DashBoardCSS.Style.slctInputWidthLabel)(
                   <.label(^.`for` := "First name *", "First name\u00a0*")

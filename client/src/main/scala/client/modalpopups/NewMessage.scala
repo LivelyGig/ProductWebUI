@@ -11,7 +11,6 @@ import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
 import client.css.{DashBoardCSS, ProjectCSS}
-import client.handler.ContentModelHandler
 import client.modules.AppModule
 import japgolly.scalajs.react
 
@@ -20,9 +19,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import client.sessionitems.SessionItems
-
-
-import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
+import client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
 
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
@@ -154,7 +151,7 @@ object NewMessageForm {
         t.modState(s => s.copy(postNewMessage = false))
       else {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId), AppModule.MESSAGES_VIEW)
-        ContentModelHandler.postLabelsAndMsg(getAllLabelsText, AppUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg, AppModule.MESSAGES_VIEW))
+        ContentUtils.postLabelsAndMsg(getAllLabelsText, AppUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg, AppModule.MESSAGES_VIEW))
         t.modState(s => s.copy(postNewMessage = true))
       }
 

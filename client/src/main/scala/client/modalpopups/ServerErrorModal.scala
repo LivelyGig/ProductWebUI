@@ -15,7 +15,7 @@ object ServerErrorModal {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (Boolean) => Callback)
+  case class Props(submitHandler: (Boolean) => Callback, msg: String)
   case class State(/*showApiDetailsForm:Boolean=false,*/showLoginForm:Boolean=false)
   class Backend(t: BackendScope[Props, State]) {
     def closeForm() =  {
@@ -47,7 +47,7 @@ object ServerErrorModal {
             <.div(^.className := "row")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)(
-                  s"Encountering problems in serving request. And here is the server Error ${LGCircuit.zoom(_.appRootModel.serverErrorMsg).value}",
+                  s"We are currently encountering problems in serving your request. ${p.msg}",
                   <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn",DashBoardCSS.Style.btnDefault,DashBoardCSS.Style.btnBackground, ^.onClick --> closeForm)("Close")
                    // ApiDetailsForm(ApiDetailsForm.Props(addLoginDetails))
 

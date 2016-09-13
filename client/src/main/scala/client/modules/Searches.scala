@@ -12,7 +12,7 @@ import shared.models.{Label, UserModel}
 import client.services.{CoreApi, LGCircuit}
 import org.scalajs.dom._
 import client.components.Bootstrap._
-import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
+import client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
 
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
@@ -54,7 +54,7 @@ object Searches {
       val searchLabels = LabelsUtils.buildProlog(
         Seq(LabelsUtils.getSystemLabelModel(props.view)) ++ LGCircuit.zoom(_.searches.searchesModel).value.filter(_.isChecked), LabelsUtils.PrologTypes.Each)
       val expr = Expression("feedExpr", ExpressionContent(ConnectionsUtils.getCnxnForReq(Nil, props.view), searchLabels))
-      ContentModelHandler.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr), props.view)
+      ContentUtils.cancelPreviousAndSubscribeNew(SubscribeRequest(AppUtils.getSessionUri(props.view), expr), props.view)
     }
 
     def toggleSidebar = Callback {

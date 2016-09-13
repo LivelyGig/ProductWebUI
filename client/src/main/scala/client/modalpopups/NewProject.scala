@@ -9,7 +9,6 @@ import client.components.Icon
 import client.components.Icon._
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import client.handler.ContentModelHandler
 import client.modules.AppModule
 import client.services.{CoreApi, LGCircuit}
 import japgolly.scalajs.react
@@ -19,7 +18,7 @@ import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.models.{ProjectPostContent, ProjectsPost}
-import client.utils.{AppUtils, ConnectionsUtils}
+import client.utils.{AppUtils, ConnectionsUtils, ContentUtils}
 import diode.AnyAction._
 
 object NewProject {
@@ -92,7 +91,7 @@ object NewProjectForm {
       e.preventDefault()
       val state = t.state.runNow()
       val req = AppUtils.getPostData(state.projectPost, ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId) ++ Seq(ConnectionsUtils.getSelfConnnection(AppModule.PROJECTS_VIEW)),Nil, AppModule.PROJECTS_VIEW)
-      ContentModelHandler.postContent(req)
+      ContentUtils.postContent(req)
       t.modState(s => s.copy(postProject = true))
     }
 

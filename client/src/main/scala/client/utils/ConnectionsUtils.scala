@@ -48,7 +48,7 @@ object ConnectionsUtils {
 
   def getCnxnForReq(cnxn: Seq[Connection], viewName: String): Seq[Connection] = {
     if (cnxn.isEmpty) {
-      LGCircuit.zoom(_.connections.connections).value ++ Seq(getSelfConnnection(viewName))
+      LGCircuit.zoom(_.connections.connectionsResponse).value.map(_.connection) ++ Seq(getSelfConnnection(viewName))
     } else {
       cnxn ++ Seq(getSelfConnnection(viewName))
     }
@@ -77,6 +77,11 @@ object ConnectionsUtils {
       case e:Exception =>
         Nil
     }
+  }
+
+  def getCnxnFromNot (cnxn: ConnectNotification): ConnectionsModel = {
+    val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(cnxn.introProfile)
+    ConnectionsModel("", cnxn.connection, name, imgSrc)
   }
 
   // #todo think about better structure for the label prolog

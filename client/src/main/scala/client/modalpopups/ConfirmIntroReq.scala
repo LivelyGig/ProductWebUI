@@ -24,11 +24,11 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import org.scalajs.dom._
 import client.rootmodel.IntroRootModel
-import client.handler.{ContentModelHandler, UpdateIntroductionsModel}
+import client.handler.UpdateIntroductionsModel
 import client.modules.AppModule
 import shared.dtos.IntroConfirmReq
 import client.sessionitems.SessionItems
-import client.utils.{AppUtils, ConnectionsUtils}
+import client.utils.{AppUtils, ConnectionsUtils, ContentUtils}
 
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
@@ -144,7 +144,7 @@ object ConfirmIntroReqForm {
       }
       val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.cnxsSelectizeParentId),AppModule.MESSAGES_VIEW)
       val labels = LabelsSelectize.getLabelsFromSelectizeInput(state.labelSelectizeParentId)
-      ContentModelHandler.postContent(AppUtils.getPostData(state.postMessage, cnxns, labels, AppModule.MESSAGES_VIEW))
+      ContentUtils.postContent(AppUtils.getPostData(state.postMessage, cnxns, labels, AppModule.MESSAGES_VIEW))
      /* LGCircuit.dispatch(PostData(state.postMessage, Some(state.cnxsSelectizeParentId),
         SessionItems.MessagesViewItems.MESSAGES_SESSION_URI, Some(state.labelSelectizeParentId)))*/
       t.modState(s => s.copy(postNewMessage = true, confirmIntroReq = true))
