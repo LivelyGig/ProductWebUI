@@ -123,6 +123,7 @@ object CoreApi {
       case _: IntroConnections => ApiTypes.requestTypes.BEGIN_INTRODUCTION_REQUEST
       case _: EstablishConnection => ApiTypes.requestTypes.ESTABLISH_CONNECTION_REQ
       case _: IntroConfirmReq => ApiTypes.requestTypes.INTRODUCTION_CONFIRMATION_REQUEST
+      case _ => ""
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
