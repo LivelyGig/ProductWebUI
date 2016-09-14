@@ -21,7 +21,7 @@ import scala.scalajs.js
 object FullPostViewModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, messages: MessagePost, fromSender: String = "", toReceiver: String = "")
+  case class Props(submitHandler: () => Callback, messages: MessagePost, fromSender: String = "", toReceiver:  String = "" )
 
   case class State()
 

@@ -263,7 +263,7 @@ object HomeFeedList {
 
   case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
                    messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),
-                   fromSender:String="", toReceiver:String="", senderAddress: String = "")
+                   fromSender:String="", toReceiver:String= "", senderAddress: String = "")
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
 
     val messageLoader: js.Object = "#messageLoader"
@@ -327,7 +327,7 @@ object HomeFeedList {
       t.modState(s => s.copy(showFullPostView = false))
     }
 
-    def openFullViewModalPopUP(getMessagePost : MessagePost,fromSender:String,toReceiver:String): Callback = {
+    def openFullViewModalPopUP(getMessagePost : MessagePost,fromSender:String,toReceiver:String ) : Callback = {
       $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
       t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=toReceiver))
     }
@@ -363,15 +363,17 @@ object HomeFeedList {
         val selfConnectionId = message.connections(0).source.split("/")(2)
         val connections = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
         var fromSender = "unknown"
-        var toReceiver = "unknown"
+      //  var toReceiver = ""
         var img = ""
         var sendAmpsTo = ""
+        var getReceiverName : Seq[String] =Seq()
         val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
         if (userId == selfConnectionId) {
           fromSender = "me"
           sendAmpsTo = userId
-          for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield
-            toReceiver = a.name
+          for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield {
+            getReceiverName :+= a.name
+          }
 
         } else {
           for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
@@ -381,7 +383,7 @@ object HomeFeedList {
           }
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
-          toReceiver = "me"
+          getReceiverName :+= "me"
         }
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
@@ -400,7 +402,7 @@ object HomeFeedList {
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.div(DashboardCSS.Style.userNameDescription)(
-                  <.span(s"To  : ${   toReceiver}")
+                  <.span(s"To  : ${   getReceiverName.mkString(", ") }")
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
                 if(fromSender.equals("me")){
@@ -423,7 +425,7 @@ object HomeFeedList {
                 <.div(^.className := "col-md-12")(
                   if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
                     // getMessage = message
-                    <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))
+                    <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))
                   } else {
                     // getMessage = null
                     <.span("")
@@ -432,7 +434,7 @@ object HomeFeedList {
                     <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))(
                           if (messageText.length == 1) {
                             messageText(0)
                           } else
@@ -442,7 +444,7 @@ object HomeFeedList {
                         )
                       } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))(
                             if (messageText.length == 1) {
                               messageText(0)
                             } else
@@ -453,7 +455,7 @@ object HomeFeedList {
                         )
                       }
                       else if(message.postContent.imgSrc == ""){
-                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))(
                           if (messageText.length == 1) {
                             messageText(0)
                           } else
@@ -468,7 +470,7 @@ object HomeFeedList {
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                         <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
                           //println(s"message.postContent.imgSrc ${message.postContent.imgSrc.size}")
-                          <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))
+                          <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))
                         )
                       } else {
                         Seq.empty[ReactElement]
@@ -486,7 +488,7 @@ object HomeFeedList {
               ),
               <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                 <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                  <.div(^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                  <.div(^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,getReceiverName.mkString(", ")))(
                     for {b <- 2 to messageText.length if b >= 30} yield {
                       messageText(b) + " "
                     },
