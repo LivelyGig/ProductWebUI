@@ -27,7 +27,7 @@ object ConnectionsUtils {
 
   def getCnxnForReq(cnxn: Seq[Connection]): Seq[Connection] = {
     if (cnxn.isEmpty) {
-      SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(getSelfConnnection())
+      SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection) ++ Seq(getSelfConnnection())
     } else {
       cnxn ++ Seq(getSelfConnnection())
     }
@@ -46,7 +46,7 @@ object ConnectionsUtils {
       name, imgSrc)
   }
 
-  def getCnxnFromNot (cnxn: ConnectNotification): ConnectionsModel = {
+  def getCnxnFromNot(cnxn: ConnectNotification): ConnectionsModel = {
     val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(cnxn.introProfile)
     ConnectionsModel("", cnxn.connection, name, imgSrc)
   }

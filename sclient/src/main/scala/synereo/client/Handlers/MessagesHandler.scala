@@ -10,8 +10,9 @@ import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 import diode.AnyAction._
+import org.widok.moment.Moment
 import synereo.client.utils.{AppUtils, ConnectionsUtils, ContentUtils}
 
 // Actions
@@ -43,11 +44,13 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
       val updateF = action.effectWithRetry {
         CoreApi.sessionPing(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value)
       } { messagesResponse =>
-        // toggle pinger to re issue session ping
         SYNEREOCircuit.dispatch(RefreshMessages())
-        MessagesRootModel(ContentUtils
-        .processRes(messagesResponse)
-        .asInstanceOf[Seq[MessagePost]])
+        val currentVal = if (value.nonEmpty) value.get.messagesModelList else Nil
+        val msg = currentVal ++ ContentUtils
+          .processRes(messagesResponse)
+          .filterNot(_.pageOfPosts.isEmpty)
+          .flatMap(content => Try(upickle.default.read[MessagePost](content.pageOfPosts(0))).toOption)
+        MessagesRootModel(msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created))))
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())
 
