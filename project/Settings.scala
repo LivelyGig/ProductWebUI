@@ -49,7 +49,7 @@ object Settings {
     "org.querki" %%% "jquery-facade" % Versions.jqueryFacade,
     "org.querki" %%% "querki-jsext" % Versions.querkiJsext,
     //    "org.querki" %%% "bootstrap-datepicker-facade" % Versions.datePickerFacade,
-    //    "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
+    "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
     "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
     "com.lihaoyi" %%% "upickle" % Versions.upickle,
