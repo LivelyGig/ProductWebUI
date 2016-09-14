@@ -410,6 +410,10 @@ object SynereoCommanStylesCSS {
       textOverflow.:=("ellipsis")
     )
 
+    val paddingLeft15p = style(
+      paddingLeft(17.%%).important
+    )
+
   }
 
 }
