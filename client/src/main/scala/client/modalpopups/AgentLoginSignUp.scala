@@ -177,7 +177,7 @@ object AgentLoginSignUp {
           LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())
           $(loginLoader).addClass("hidden")
           $(dashboardContainer).removeClass("hidden")
-          window.location.href = "/#messages"
+          window.location.replace("/#messages")
           log.debug("login successful")
 
         case Failure(res) =>

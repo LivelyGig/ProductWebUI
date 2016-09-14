@@ -14,6 +14,7 @@ object GlobalStyles extends StyleSheet.Inline {
     fontFamily :=! "'karla', sans-serif",
     backgroundColor(c"#277490"),
     height(100.vh),
+    backgroundSize:="cover" ,
     overflowY.hidden
   ))
   style(unsafeRoot(".modal-footer")(

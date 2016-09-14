@@ -12,16 +12,22 @@ import synereo.client.components._
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
 import synereo.client.modalpopups._
 import diode.AnyAction._
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import synereo.client.components.Icon
 
 import scala.language.reflectiveCalls
 import org.widok.moment.Moment
+import shared.dtos.{ApiResponse, ErrorResponse, SendAmpsResponse}
 import synereo.client.handlers.ShowServerError
 import synereo.client.logger
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.scalajs.js.timers._
+import scala.util.{Failure, Success, Try}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 /**
@@ -102,9 +108,9 @@ object Dashboard {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid")(
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
-            <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12",DashboardCSS.Style.paddingLeftRight)(
               <.div(^.className := "row")(
-                <.div(^.className := "col-sm-12 col-md-12 col-lg-12")(
+                <.div(^.className := "col-sm-12 col-md-12 col-lg-12",DashboardCSS.Style.paddingLeftRight)(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
                   <.div(
                     P.proxy().renderFailed(ex => /*<.div(
@@ -139,7 +145,7 @@ object Dashboard {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                             <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                              <.div(^.className := "col-md-1")(
+                              <.div(^.className := "col-md-1 pull-left")(
                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                               ),
                               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
@@ -183,7 +189,7 @@ object Dashboard {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                             <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                              <.div(^.className := "col-md-1")(
+                              <.div(^.className := "col-md-1 pull-left")(
                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                               ),
                               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
@@ -256,7 +262,8 @@ object HomeFeedList {
   case class Props(messages: Seq[MessagePost])
 
   case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
-                   messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),fromSender:String="",toReceiver:String="")
+                   messagePostForFullView:MessagePost = new MessagePost(postContent = new MessagePostContent()),
+                   fromSender:String="", toReceiver:String="", senderAddress: String = "")
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
 
     val messageLoader: js.Object = "#messageLoader"
@@ -278,11 +285,28 @@ object HomeFeedList {
 
     def amplifyPost(e: ReactEventI): Callback = {
       logger.log.debug("amplifyPost called")
-      t.modState(state => state.copy(showAmplifyPostForm = true))
+      val senderAddress = e.target.id
+      t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
     }
 
-    def postAmplified(): Callback = {
+    def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
       logger.log.debug("postAmplified called ")
+      if(isAmplified) {
+        logger.log.debug(s"Sending $amount AMPs to $to")
+        CoreApi.sendAmps(amount, to).onComplete {
+          case Success(res) =>
+            Try(upickle.default.read[ApiResponse[SendAmpsResponse]](res)).toOption match {
+              case Some(v) => logger.log.debug(v.content.transaction)
+              case None =>
+                Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
+                  case Some(v) => logger.log.debug(v.content.reason)
+                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
+                }
+            }
+          case Failure(res) =>
+            logger.log.debug(s"sending AMPs failed: $res")
+        }
+      }
       t.modState(s => s.copy(showAmplifyPostForm = false))
     }
 
@@ -305,7 +329,7 @@ object HomeFeedList {
 
     def openFullViewModalPopUP(getMessagePost : MessagePost,fromSender:String,toReceiver:String): Callback = {
       $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
-      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=fromSender))
+      t.modState(s => s.copy(showFullPostView = true, messagePostForFullView = getMessagePost,fromSender=fromSender ,toReceiver=toReceiver))
     }
 
     def preventFullViewModalPopUP(e: ReactEvent): Callback = {
@@ -315,12 +339,9 @@ object HomeFeedList {
       }
       t.modState(s => s.copy(showFullPostView = false))
     }
-
     def handleScroll(e: ReactEvent): Callback = {
       Callback.empty
     }
-
-
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
       val targetLi = e.target
       val collapsiblePost: js.Object = $(targetLi).find(".collapse")
@@ -331,10 +352,7 @@ object HomeFeedList {
       }
       Callback.empty
     }
-
-
   }
-
 
   val MessagesList = ReactComponentB[Props]("MessagesList")
     .initialState_P(p => State())
@@ -347,9 +365,11 @@ object HomeFeedList {
         var fromSender = "unknown"
         var toReceiver = "unknown"
         var img = ""
+        var sendAmpsTo = ""
         val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
         if (userId == selfConnectionId) {
           fromSender = "me"
+          sendAmpsTo = userId
           for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield
             toReceiver = a.name
 
@@ -357,18 +377,16 @@ object HomeFeedList {
           for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
             fromSender = a.name
             img = a.imgSrc
+            sendAmpsTo = a.connection.target.split("/")(2)
           }
           //   fromSender = selfConnectionId1
           // ToDo: Look up name of Sender and use friendly name
           toReceiver = "me"
         }
-
-
-
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
-            <.div(^.className := "")(
-              <.div(^.className := "col-md-1")(
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-1 pull-left")(
                 if (img.length != 0)
                   <.img(^.className := "media-object", ^.src := img, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                 else if (fromSender.equals("me"))
@@ -385,11 +403,15 @@ object HomeFeedList {
                   <.span(s"To  : ${   toReceiver}")
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                  ^.onClick ==> t.backend.amplifyPost)(
-                  <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                ),
+                if(fromSender.equals("me")){
+                  <.span()
+                }else{
+                  <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                    "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                    ^.onClick ==> t.backend.amplifyPost)(
+                    <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                  )
+                },
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                   "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
                   ^.onClick ==> t.backend.forwardPost)(
@@ -397,7 +419,6 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.className := "")(
               <.div(^.className := "row")(
                 <.div(^.className := "col-md-12")(
                   if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
@@ -407,11 +428,10 @@ object HomeFeedList {
                     // getMessage = null
                     <.span("")
                   },
-                  <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                  <.div(DashboardCSS.Style.cardDescriptionContainerDiv,DashboardCSS.Style.cardPaddingBottom)(
                     <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                     <.div(DashboardCSS.Style.cardText)(
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-
                         <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                           if (messageText.length == 1) {
                             messageText(0)
@@ -420,7 +440,7 @@ object HomeFeedList {
                               messageText(b) + " "
                             }
                         )
-                      } else {
+                      } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
                         <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                           <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
                             if (messageText.length == 1) {
@@ -431,6 +451,19 @@ object HomeFeedList {
                               }
                           )
                         )
+                      }
+                      else if(message.postContent.imgSrc == ""){
+                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))(
+                          if (messageText.length == 1) {
+                            messageText(0)
+                          } else
+                            for {b <- 0 to messageText.length - 1 if b <= 30} yield {
+                              messageText(b) + " "
+                            }
+                        )
+
+                      }else{
+                        <.div()
                       },
                       if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                         <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
@@ -438,7 +471,7 @@ object HomeFeedList {
                           <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder,^.onClick --> t.backend.openFullViewModalPopUP(message,fromSender,toReceiver))
                         )
                       } else {
-                        <.span("")
+                        Seq.empty[ReactElement]
                       }
                     )
                     //                    <.div(^.className := "row text-right")(
@@ -464,13 +497,17 @@ object HomeFeedList {
                     )
                   )
                 )
-              )
-            ),
+              ),
             <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-              <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
-                (MIcon.moreHoriz)
-              )
+              if (messageText.length > 30) {
+                <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                  "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
+                  (MIcon.moreHoriz)
+                )
+              }
+              else{
+                <.span()
+              }
             )
           )
         )
@@ -478,7 +515,7 @@ object HomeFeedList {
       <.div(
         <.div(
           if (S.showAmplifyPostForm) {
-            AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified))
+            AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified, S.senderAddress))
           }
           else if (S.showForwardPostForm) {
             getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy)))
@@ -498,7 +535,5 @@ object HomeFeedList {
     })
     .componentDidMount(scope => scope.backend.mounted())
     .build
-
   def apply(messages: Seq[MessagePost]) = MessagesList(Props(messages))
-
 }

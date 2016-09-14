@@ -105,13 +105,25 @@ object DashboardCSS {
       paddingTop(10.px)
     )
     val cardDescriptionContainerDiv = style(
-      paddingLeft(65.px),
-      paddingRight(65.px)
+      media.minWidth(768.px) -(
+        paddingLeft(65.px),
+        paddingRight(65.px)
+        ),
+      media.maxWidth(767.px) -(
+        paddingLeft(20.px),
+        paddingRight(20.px)
+        )
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
-      padding(15.px),
-      overflowY.hidden.important
+
+      overflowY.hidden.important,
+      media.minWidth(768.px) -(
+        padding(15.px)
+        ),
+      media.maxWidth(767.px) -(
+        padding(0.px, 18.px, 10.px, 18.px)
+        )
     )
     val glanceViewName = style(
       display.inlineBlock
@@ -183,7 +195,13 @@ object DashboardCSS {
       fontWeight.bold,
       lineHeight(1.5.em),
       color(c"#000"),
-      opacity(0.65)
+      opacity(0.65),
+      media.minWidth(768.px) - (
+        fontSize(14.px)
+        ),
+      media.maxWidth(767.px) - (
+        fontSize(11.px)
+        )
     )
     val postActions = style(
       marginLeft(-10.px)
@@ -208,7 +226,13 @@ object DashboardCSS {
       fontWeight.bold,
       color(c"#000"),
       lineHeight(1.25.em),
-      letterSpacing(0.5.px)
+      letterSpacing(0.5.px),
+      media.minWidth(768.px) - (
+        fontSize(24.px)
+        ),
+      media.maxWidth(767.px) - (
+        fontSize(21.px)
+        )
     )
     val sidebarNavStyle = style(
       fontSize(17.px)
@@ -222,11 +246,17 @@ object DashboardCSS {
       marginTop(-30.px)
     )
     val cardText = style(
-      fontSize(21.px),
+
       fontFamily :=! "lora",
       fontWeight.normal,
       opacity(0.95),
-      lineHeight(1.5.em)
+      lineHeight(1.5.em),
+      media.minWidth(768.px) - (
+        fontSize(21.px)
+        ),
+      media.maxWidth(767.px) - (
+        fontSize(17.px)
+        )
     )
 
     val imgBorder = style(
@@ -254,6 +284,17 @@ object DashboardCSS {
     val verticalAlignInherit = style {
       verticalAlign.inherit
     }
+
+    val cardPaddingBottom = style(
+      paddingBottom(15.px)
+    )
+
+
+    val paddingLeftRight = style(
+      media.maxWidth(767.px) -(
+        paddingLeft(0.px),
+        paddingRight(0.px))
+    )
   }
 
 }

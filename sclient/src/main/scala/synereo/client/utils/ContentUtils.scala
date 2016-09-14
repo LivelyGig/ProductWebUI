@@ -39,6 +39,11 @@ object ContentUtils {
   def processRes(response: String): Seq[Post] = {
     // process response
     val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
+    val balanceChangedResponse: Seq[String] = responseArray.filter(_.contains("balanceChanged"))
+    if(balanceChangedResponse.nonEmpty) {
+      val newBalance = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content.newBalance
+      SYNEREOCircuit.dispatch(BalanceChanged(newBalance))
+    }
     val (cnxn, msg, intro, cnctNot) = sortContent(responseArray)
     // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
     if (intro.nonEmpty) SYNEREOCircuit.dispatch(AddNotification(intro.map(_.content)))
@@ -57,6 +62,7 @@ object ContentUtils {
 
   /**
     * This function sort content based on their types
+    *
     * @param responseArray
     * @return
     */
@@ -286,5 +292,24 @@ object ContentUtils {
     }
   }
 
+
+  def closeSessionReq(closeSessionRequest: CloseSessionRequest) = {
+    var count = 1
+    post()
+    def post(): Unit = CoreApi.closeSessionRequest(closeSessionRequest).onComplete {
+      case Success(response) => {
+        logger.log.debug("Closed session request")
+        SYNEREOCircuit.dispatch(LogoutUser())
+      }
+      case Failure(response) => logger.log.error("Error closing the session")
+        if (count == 3) {
+          SYNEREOCircuit.dispatch(ShowServerError(response.getMessage))
+        }
+        else {
+          count = count + 1
+          post()
+        }
+    }
+  }
 
 }
