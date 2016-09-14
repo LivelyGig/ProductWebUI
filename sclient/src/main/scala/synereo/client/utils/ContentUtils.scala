@@ -40,19 +40,19 @@ object ContentUtils {
     // process response
     val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
     val balanceChangedResponse: Seq[String] = responseArray.filter(_.contains("balanceChanged"))
-    if(balanceChangedResponse.nonEmpty) {
+    if (balanceChangedResponse.nonEmpty) {
       val newBalance = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content.newBalance
       SYNEREOCircuit.dispatch(BalanceChanged(newBalance))
     }
     val (cnxn, msg, intro, cnctNot) = sortContent(responseArray)
     // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
     if (intro.nonEmpty) SYNEREOCircuit.dispatch(AddNotification(intro.map(_.content)))
-    if (cnctNot.nonEmpty)  {
-      val resp= cnctNot.map(e => ConnectionsUtils.getCnxnFromNot(e.content))
+    if (cnctNot.nonEmpty) {
+      val resp = cnctNot.map(e => ConnectionsUtils.getCnxnFromNot(e.content))
       SYNEREOCircuit.dispatch(UpdateConnections(resp, resp.map(_.connection)))
     }
     if (cnxn.nonEmpty) {
-      val res= cnxn.map(e => ConnectionsUtils.getCnxnFromRes(e.content))
+      val res = cnxn.map(e => ConnectionsUtils.getCnxnFromRes(e.content))
       SYNEREOCircuit.dispatch(UpdateConnections(res, res.map(_.connection)))
     }
     // return the mod messages model if new messages in response otherwise return the old response
@@ -151,8 +151,9 @@ object ContentUtils {
     * the dispatch of refresh messages
     */
   def subsForMsgAndBeginSessionPing() = {
-    val expr = Expression(ApiTypes.requestTypes.FEED_EXPRESSION, ExpressionContent(SYNEREOCircuit.zoom(_.connections.connections).value ++ Seq(ConnectionsUtils.getSelfConnnection()),
-      s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
+    val expr = Expression(ApiTypes.requestTypes.FEED_EXPRESSION,
+      ExpressionContent(SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnResp => cnxnResp.connection) ++ Seq(ConnectionsUtils.getSelfConnnection()),
+        s"any([${AppUtils.MESSAGE_POST_LABEL}])"))
     val req = SubscribeRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, expr)
     // clear the previous messages model. It sets the state to Pot.Empty effectively showing the loader
     // The loader on the dashboard is shown for Pot state empty

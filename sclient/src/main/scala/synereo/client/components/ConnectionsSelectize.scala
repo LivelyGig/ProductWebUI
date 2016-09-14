@@ -39,20 +39,20 @@ object ConnectionsSelectize {
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
   case class Backend(t: BackendScope[Props, State]) {
-//    def initializeTagsInput(): Unit = {
-//      val props = t.props.runNow()
-//      val parentIdentifier = props.parentIdentifier
-//
-//      val count = props.option match {
-//        case Some(a) => a
-//        case None => 7
-//      }
-//
-//      val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
-//      val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-//      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
-//
-//    }
+    //    def initializeTagsInput(): Unit = {
+    //      val props = t.props.runNow()
+    //      val parentIdentifier = props.parentIdentifier
+    //
+    //      val count = props.option match {
+    //        case Some(a) => a
+    //        case None => 7
+    //      }
+    //
+    //      val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
+    //      val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
+    //      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
+    //
+    //    }
 
     def initializeTagsInput(props: Props, state: State): Unit = {
 
@@ -65,18 +65,18 @@ object ConnectionsSelectize {
         .plugins("remove_button")
         .onItemAdd((item: String, value: js.Dynamic) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
-        .onItemRemove((item: String)=> {
+        .onItemRemove((item: String) => {
           props.fromSelecize().runNow()
-          println("")
+          //          println("")
         })
 
       )
 
     }
 
-    def mounted(props: Props,state: State): Callback = Callback {
+    def mounted(props: Props, state: State): Callback = Callback {
       initializeTagsInput(props, state)
     }
 
