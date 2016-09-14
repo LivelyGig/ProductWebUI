@@ -12,11 +12,15 @@ import shared.dtos._
 import concurrent._
 import ExecutionContext.Implicits._
 import diode.AnyAction._
+
+import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
 
 /**
   * Created by bhagyashree.b on 2016-07-20.
   */
+case class AddNotification(introconfirmSeq: Seq[Introduction])
+
 
 case class PostNewConnection(newCnxn: Content)
 
@@ -75,5 +79,15 @@ class IntroductionHandler[M](modelRW: ModelRW[M, IntroRootModel]) extends Action
       //        updated(IntroRootModel(Nil))
       //      } else
       noChange
+    case AddNotification(introconfirmSeq: Seq[Introduction]) =>
+      val modelMod =if (value.introResponse.nonEmpty) {
+        value.introResponse ++ introconfirmSeq.filterNot(e=>
+          value.introResponse.exists(p=>JSON.parse(p.introProfile).name.asInstanceOf[String] ==  JSON.parse(e.introProfile).name.asInstanceOf[String]))
+      } else {
+        introconfirmSeq
+      }
+
+      updated(IntroRootModel(modelMod))
   }
+
 }

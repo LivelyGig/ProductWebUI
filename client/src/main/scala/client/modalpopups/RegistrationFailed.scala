@@ -12,7 +12,7 @@ import org.querki.jquery._
 object RegistrationFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
-  case class Props(submitHandler: (Boolean) => Callback)
+  case class Props(submitHandler: (Boolean) => Callback, errorMsg: String = "")
   case class State(registrationFailed: Boolean = false)
 
   class Backend(t: BackendScope[Props, State]) {
@@ -44,7 +44,7 @@ object RegistrationFailed {
             <.div(^.className := "row")(
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 <.div(DashBoardCSS.Style.modalBodyText)(
-                  "This user already exists. Please try logging in!",
+                  p.errorMsg,
                   <.div(DashBoardCSS.Style.modalContentFont)(<.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnBackground, ^.onClick --> hide)("Try again"), <.button(^.tpe := "button", DashBoardCSS.Style.MarginLeftchkproduct,DashBoardCSS.Style.btnDefault, ^.className := "btn", ^.onClick --> login)("Login"))
 
                 )

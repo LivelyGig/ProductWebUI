@@ -1,8 +1,5 @@
 package client.modules
 
-
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import client.handler.{ContentModelHandler, RefreshProjects, SubscribeForDefaultAndBeginPing}
 import client.rootmodel.ProjectsRootModel
 import client.css._
 import shared.models.ProjectsPost
@@ -17,7 +14,6 @@ import client.components._
 import client.css.{DashBoardCSS, HeaderCSS}
 import client.logger._
 import client.modals._
-import shared.models.{ConnectionsModel, MessagePost}
 import client.services.LGCircuit
 import japgolly.scalajs.react
 import org.querki.jquery._
@@ -109,7 +105,7 @@ object ProjectResults {
           P.proxy().renderFailed(ex => <.div()(
             //<.span(Icon.warning), " Error loading")
             if (!getServerError.isServerError) {
-              ServerErrorModal(ServerErrorModal.Props(serverError))
+              ServerErrorModal(ServerErrorModal.Props(serverError, "Server offline"))
             }
             else
               <.div()

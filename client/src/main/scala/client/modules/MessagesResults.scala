@@ -109,7 +109,7 @@ object MessagesResults {
           P.proxy().renderFailed(ex => <.div()(
             //<.span(Icon.warning), " Error loading"
             if(!getServerError.isServerError){
-              ServerErrorModal(ServerErrorModal.Props(serverError))
+              ServerErrorModal(ServerErrorModal.Props(serverError, "Server offline"))
             }
             else
               <.div()

@@ -5,24 +5,38 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components._
 import client.css.DashBoardCSS
+import client.sessionitems.SessionItems
 import shared.models.EmailValidationModel
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import org.querki.jquery._
 import diode.AnyAction._
+import org.querki.jquery._
+import org.scalajs.dom
+import org.scalajs.dom._
 
 object ConfirmAccountCreation {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: (EmailValidationModel, Boolean) => Callback)
 
-  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false)
+  case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false,
+                   hostName: String = s"https://${dom.window.location.hostname}:9876")
 
   class Backend(t: BackendScope[Props, State]) {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, t.state.runNow().hostName)
       // mark it as NOT cancelled (which is the default)
       t.modState(s => s.copy(accountValidationFailed = true))
+    }
+
+
+    def updateIp(e: ReactEventI) = {
+      val value = e.target.value
+      //      println(s"value:$value")
+      t.modState(s => s.copy(hostName = value))
     }
 
     def hide = {
@@ -56,6 +70,9 @@ object ConfirmAccountCreation {
               <.div(DashBoardCSS.Style.scltInputModalContainerMargin)(
                 // <.div(DashBoardCSS.Style.modalHeaderFont)("Confirm Account Creation"),
                 <.h5("After registration, you were emailed a confirmation code. Please enter the code below"),
+                <.div(^.className := "form-group")(
+                  <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name",
+                    ^.placeholder := "username", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)),
                 <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, DashBoardCSS.Style.marginTop10px,
                   ^.id := "Name", ^.placeholder := "Enter validation code", ^.value := s.emailValidationModel.token, ^.onChange ==> updateToken),
                 <.button(^.tpe := "submit", ^.className := "btn", DashBoardCSS.Style.btnWidth, DashBoardCSS.Style.btnBackground, "Confirm")

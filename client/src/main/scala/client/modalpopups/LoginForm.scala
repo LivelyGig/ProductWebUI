@@ -4,7 +4,6 @@ import client.LGMain.{DashboardLoc, Loc}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
-import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, HeaderCSS}
 import shared.models.UserModel
