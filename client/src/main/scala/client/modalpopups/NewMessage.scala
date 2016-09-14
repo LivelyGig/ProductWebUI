@@ -7,7 +7,6 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
-import client.components.Validator._
 import client.components._
 import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
 import client.css.{DashBoardCSS, ProjectCSS}
@@ -75,7 +74,7 @@ object NewMessage {
 object NewMessageForm {
 
   val messageID: js.Object = "#messageID"
-  $("#a".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
+//  $("#a".asInstanceOf[js.Object]).validator(ValidatorOptions.validate())
 
   // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -175,7 +174,7 @@ object NewMessageForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => formClosed(s, p)
         ),
-        <.form(^.id := "a", ^.onSubmit ==> submitForm /*"data-toggle".reactAttr := "validator"*/)(
+        <.form(^.id := "a", ^.onSubmit ==> submitForm ,"data-toggle".reactAttr := "validator")(
           <.div(^.className := "row", DashBoardCSS.Style.MarginLeftchkproduct)(
             <.div(DashBoardCSS.Style.marginTop10px)(),
             /*<.div(^.className:="row")(

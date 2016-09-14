@@ -1,11 +1,11 @@
 package client.services
 
+import client.facades.SRPClient
 import shared.dtos._
 import org.scalajs.dom._
 import upickle.default._
-
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
-import client.srp.SRPClient
+
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js.Date
@@ -14,7 +14,7 @@ import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import client.sessionitems.SessionItems
-import client.modules.{ConnectionList}
+import client.modules.ConnectionList
 import client.utils.{ConnectionsUtils, LabelsUtils}
 
 case class ApiError(response: String) extends Exception
