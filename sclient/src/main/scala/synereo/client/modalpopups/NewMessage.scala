@@ -1,9 +1,10 @@
 package synereo.client.modalpopups
 
 import java.util.UUID
+
 import diode.react.ModelProxy
 import japgolly.scalajs.react
-import shared.models.{Label, MessagePostContent}
+import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -13,6 +14,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
 import synereo.client.services.SYNEREOCircuit
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -23,7 +25,6 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
 import shared.dtos.LabelPost
-import shared.models.Label
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.SearchesModelHandler
 import synereo.client.services.SYNEREOCircuit
@@ -40,7 +41,7 @@ object NewMessage {
 
   case class State(showNewMessageForm: Boolean = false)
 
-  val getSearches = SYNEREOCircuit.connect(_.searches)
+  val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
@@ -66,13 +67,11 @@ object NewMessage {
       val B = $.backend
       <.div(
         Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        //        if (S.showNewMessageForm) NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message"))
-        if (S.showNewMessageForm) getSearches(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
+        if (S.showNewMessageForm) searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
         else
           Seq.empty[ReactElement]
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 
@@ -80,19 +79,15 @@ object NewMessage {
 }
 
 object NewMessageForm {
-  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel])
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel], messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()))
 
   case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
                    labelsSelectizeInputId: String = "labelsSelectizeInputId", tags: Seq[String] = Seq())
 
-  val getUsers = SYNEREOCircuit.connect(_.user)
-  val getConnections = SYNEREOCircuit.connect(_.connections)
-  val getSearches = SYNEREOCircuit.connect(_.searches)
-
+  val userProxy = SYNEREOCircuit.connect(_.user)
 
   case class NewMessageBackend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -121,7 +116,9 @@ object NewMessageForm {
     }
 
     def mounted(): Callback = Callback {
-
+      val props = t.props.runNow()
+      println(s"messagePost from Props : ${props.messagePost} ")
+      t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
     }
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -136,7 +133,6 @@ object NewMessageForm {
 
     def labelsToPostMsg: Seq[Label] = {
       val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
-
       //      println(s"labelsToPostMsg ${textSeq.distinct}")
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
@@ -185,8 +181,6 @@ object NewMessageForm {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         //        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
-        //      println(s"all label text from content,selectize,circuit : $getAllLabelsText")
-        //      println(s"newLabels : $newLabels")
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
           ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
@@ -207,80 +201,78 @@ object NewMessageForm {
 
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    //.initialState_P(p => State(p=> new MessagesData("","","")))
     .initialState_P(p => State(new MessagePostContent()))
     .backend(new NewMessageBackend(_))
-      .renderPS((t,P,S)=>{
-
-        val headerText = P.header
-        Modal(
-          Modal.Props(
-            // header contains a cancel button (X)
-            header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
-            // this is called after the modal has been hidden (animation is completed)
-            closed = () => t.backend.formClosed(S, P),
-            id = "newMessage"
+    .renderPS((t, P, S) => {
+      val headerText = P.header
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => t.backend.formClosed(S, P),
+          id = "newMessage"
+        ),
+        <.form(^.onSubmit ==> t.backend.submitForm)(
+          <.div(
+            userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
           ),
-          <.form(^.onSubmit ==> t.backend.submitForm)(
+          <.div(^.className := "row")(
+            <.div(^.id := S.connectionsSelectizeInputId)(
+              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize))
+            ),
+            <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
+            <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
+              LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
+            ),
+            <.div()(
+              <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
+            ),
+            <.div()(
+              <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
+            ),
+            <.div()
+
+          ),
+          <.div(^.className := "row")(
+            <.div()(
+              if (S.postMessage.imgSrc != "") {
+                <.img(^.src := S.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
+              } else {
+                <.div("")
+              }
+
+            ),
             <.div(
-              getUsers(proxy => UserPersona(UserPersona.Props(proxy)))
-            ),
-            <.div(^.className := "row")(
-              <.div(^.id := S.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize))
-              ),
-              <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
-              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
-                LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
-              ),
-              <.div()(
-                <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
-              ),
-              <.div()(
-                <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
-              ),
-              <.div()
-
-            ),
-            <.div(^.className := "row")(
-              <.div()(
-                if (S.postMessage.imgSrc != "") {
-                  <.img(^.src := S.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
-                } else {
-                  <.div("")
-                }
-
-              ),
-              <.div(
-                <.ul(^.className := "list-inline")(
-                  for (tag <- S.tags.zipWithIndex) yield
-                    <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
-                      <.ul(^.className := "list-inline",
-                        <.li(^.textTransform := "uppercase", tag._1),
-                        <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
-                          "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
-                        )
+              <.ul(^.className := "list-inline")(
+                for (tag <- S.tags.zipWithIndex) yield
+                  <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
+                    <.ul(^.className := "list-inline",
+                      <.li(^.textTransform := "uppercase", tag._1),
+                      <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
+                        "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
                       )
                     )
-                )
-              ),
-              <.div(^.className := "text-left text-muted")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),
-              <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
-                <.div(^.className := "pull-left")(
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
-                  <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc)
-                ),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
+                  )
               )
-            ) //                <.div(bss.modal.footer)
-          )
+            ),
+            <.div(^.className := "text-left text-muted")(
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
+            ),
+            <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+              <.div(^.className := "pull-left")(
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
+                <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
+                <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc)
+              ),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
+            )
+          ) //                <.div(bss.modal.footer)
         )
+      )
 
-      })
+    })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal
