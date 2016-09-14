@@ -35,7 +35,9 @@ object FullPostViewModal {
     var scrollY: Int = 0
 
     def mounted() = Callback {
-      $(fullPostViewContainer).height($(dashboardContainerMain).height() + 25)
+     // println(s"Dashboard height ${$(dashboardContainerMain).height()}")
+//      $(fullPostViewContainer).height($(dashboardContainerMain).height() + 25)
+
     }
 
     def hide = Callback {
@@ -77,13 +79,11 @@ object FullPostViewModal {
           CSSClass = "full-post-view-modal"
         ),
         <.div(
-          <.div(^.id := "fullPostViewContainer", ^.className := "container-fluid", PostFullViewCSS.Style.fullPostViewContainer, ^.onScroll ==> t.backend.handleScroll)(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
-                <.div(^.className := "col-md-offset-1 col-md-10")(
+          <.div(^.id := "fullPostViewContainer", PostFullViewCSS.Style.fullPostViewContainer/*, ^.onScroll ==> t.backend.handleScroll*/)(
+              <.div()(
+                <.div(^.className:="col-md-1 col-sm-1 col-xs-2",PostFullViewCSS.Style.fullPostViewLeftRightContainer,^.onClick --> t.backend.hide)(" "),
+                <.div(^.className := "col-md-10 col-sm-10 col-xs-8")(
                   <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
-
-
                     if (P.messages.postContent.imgSrc != "" && P.messages.postContent.imgSrc.size > 80659) {
                       // getMessage = message
                       <.img(^.id := "fullViewImage", ^.src := P.messages.postContent.imgSrc, PostFullViewCSS.Style.blogMainImage)
@@ -288,12 +288,14 @@ object FullPostViewModal {
                     )
                   )
                 ),
-                <.div(^.className := "col-md-1")(
+                <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer ,^.onClick --> t.backend.hide)(
                   //                  <.span(MIcon.close, PostFullViewCSS.Style.closeIcon)
-                  <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide, (MIcon.apply("close", "48")))
-                )
+                //  if (P.messages.postContent.imgSrc == "") {
+                    // getMessage = message
+                    <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide, (MIcon.apply("close", "48")))
+                //  }else{<.span()}
+                    )
               )
-            )
           )
         ),
         <.div(bss.modal.footer, ^.className := "hide")()

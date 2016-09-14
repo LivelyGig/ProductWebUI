@@ -340,6 +340,10 @@ object LoginCSS {
     val loginFormInputText = style(
       marginBottom(22.px)
     )
+
+    val apiDetailsContainer = style(
+      height(50.px)
+    )
   }
 
 }

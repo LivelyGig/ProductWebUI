@@ -4,12 +4,11 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import org.scalajs.dom._
-
+import org.denigma.selectize._
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
 import shared.models.{ConnectionsModel}
-import synereo.client.facades.SynereoSelectizeFacade
 import synereo.client.services.SYNEREOCircuit
 
 /**
@@ -40,23 +39,45 @@ object ConnectionsSelectize {
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
   case class Backend(t: BackendScope[Props, State]) {
-    def initializeTagsInput(): Unit = {
-      val props = t.props.runNow()
-      val parentIdentifier = props.parentIdentifier
+//    def initializeTagsInput(): Unit = {
+//      val props = t.props.runNow()
+//      val parentIdentifier = props.parentIdentifier
+//
+//      val count = props.option match {
+//        case Some(a) => a
+//        case None => 7
+//      }
+//
+//      val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
+//      val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
+//      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
+//
+//    }
 
-      val count = props.option match {
-        case Some(a) => a
-        case None => 7
-      }
+    def initializeTagsInput(props: Props, state: State): Unit = {
 
+      val parentIdentifier = t.props.runNow().parentIdentifier
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
+      //      $(selectizeInput).selectize()
+      $(selectizeInput).selectize(SelectizeConfig
+        .maxItems(30)
+        .plugins("remove_button")
+        .onItemAdd((item: String, value: js.Dynamic) => {
+          props.fromSelecize().runNow()
+          println("")
+        })
+        .onItemRemove((item: String)=> {
+          props.fromSelecize().runNow()
+          println("")
+        })
+
+      )
 
     }
 
-    def mounted(props: Props): Callback = Callback {
-      initializeTagsInput()
+    def mounted(props: Props,state: State): Callback = Callback {
+      initializeTagsInput(props, state)
     }
 
     def getCnxnModel(): Seq[ConnectionsModel] = {
@@ -91,7 +112,7 @@ object ConnectionsSelectize {
   val component = ReactComponentB[Props]("SearchesConnectionList")
     .initialState(State())
     .renderBackend[Backend]
-    .componentDidMount(scope => scope.backend.mounted(scope.props))
+    .componentDidMount(scope => scope.backend.mounted(scope.props, scope.state))
     .componentWillMount(scope => scope.backend.componentWillMount(scope.props))
     .build
 

@@ -123,6 +123,7 @@ object CoreApi {
       case _: IntroConnections => ApiTypes.requestTypes.BEGIN_INTRODUCTION_REQUEST
       case _: EstablishConnection => ApiTypes.requestTypes.ESTABLISH_CONNECTION_REQ
       case _: IntroConfirmReq => ApiTypes.requestTypes.INTRODUCTION_CONFIRMATION_REQUEST
+      case _ => ""
     }
     ajaxPost(upickle.default.write(ApiRequest(msg, introductionModel)))
   }
@@ -142,5 +143,15 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
+  def closeSessionRequest(closeSessionRequest: CloseSessionRequest) : Future[String]={
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.CLOSE_SESSION_REQUEST,closeSessionRequest))
+    ajaxPost(requestContent)
+  }
+
+  def sendAmps(amount: String, to: String): Future[String] = {
+    val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.SEND_AMPS_REQUEST,
+      SendAmpsRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, amount, to)))
+    ajaxPost(requestContent)
+  }
 
 }
