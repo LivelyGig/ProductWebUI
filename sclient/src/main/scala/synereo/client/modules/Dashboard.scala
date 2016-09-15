@@ -29,11 +29,6 @@ import scala.util.{Failure, Success, Try}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-
-/**
-  * Created by Mandar on 3/11/2016.
-  */
-
 //scalastyle:off
 object Dashboard {
 

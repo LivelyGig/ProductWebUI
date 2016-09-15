@@ -53,7 +53,7 @@ object LoginView {
                    showErrorModal: Boolean = false,
                    showAccountValidationFailed: Boolean = false,
                    loginErrorMessage: String = "",
-                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "" )
+                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "")
 
 
   class LoginViewBackend(t: BackendScope[Props, State]) {
@@ -172,7 +172,7 @@ object LoginView {
             imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email, balance = response.content.balance, address = response.content.address /*, sessionUri = response.content.sessionURI*/)))
           ContentUtils.processRes(res)
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
-//          SYNEREOCircuit.dispatch(AttachPinger())
+          //          SYNEREOCircuit.dispatch(AttachPinger())
           ContentUtils.subsForMsgAndBeginSessionPing()
           $(loginLoader).addClass("hidden")
           $(loadingScreen).addClass("hidden")

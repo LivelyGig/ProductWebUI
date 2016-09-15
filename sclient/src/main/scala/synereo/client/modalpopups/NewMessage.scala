@@ -117,7 +117,7 @@ object NewMessageForm {
 
     def mounted(): Callback = Callback {
       val props = t.props.runNow()
-      println(s"messagePost from Props : ${props.messagePost} ")
+      //      println(s"messagePost from Props : ${props.messagePost} ")
       t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
     }
 
