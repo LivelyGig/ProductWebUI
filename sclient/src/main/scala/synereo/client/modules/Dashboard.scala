@@ -268,15 +268,17 @@ object HomeFeedList {
 
     }
 
-    def getAllMessagePostDetails(message: MessagePost): (String, Seq[String], String, String) = {
+    def getAllMessagePostDetails(message: MessagePost): (String, Seq[String], String, String,String) = {
       val selfConnectionId = message.connections(0).source.split("/")(2)
       val connections = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
       var senderName = "unknown"
       var imgContentOfMessagePost = ""
       var sendAmpsTo = ""
+      var fromSenderUID =""
       var receiverNames: Seq[String] = Seq()
       val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
       if (userId == selfConnectionId) {
+        fromSenderUID = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
         senderName = "me"
         sendAmpsTo = userId
         for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield {
@@ -286,13 +288,14 @@ object HomeFeedList {
       } else {
         for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
           senderName = a.name
+          fromSenderUID = a.connection.source.split("/")(2)
           imgContentOfMessagePost = a.imgSrc
           sendAmpsTo = a.connection.target.split("/")(2)
         }
         // ToDo: Look up name of Sender and use friendly name
         receiverNames :+= "me"
       }
-      (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo)
+      (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo,fromSenderUID )
     }
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -379,7 +382,7 @@ object HomeFeedList {
     .renderPS((t, P, S) => {
       def renderMessages(message: MessagePost) = {
         val allWordsFromMessageText = message.postContent.text.split(" ")
-        val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo) = t.backend.getAllMessagePostDetails(message: MessagePost)
+        val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo,fromSenderUID) = t.backend.getAllMessagePostDetails(message: MessagePost)
 
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
@@ -394,10 +397,10 @@ object HomeFeedList {
               ),
               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                 <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
-                  <.span(s"From  : ${senderName}"),
+                  <.span(^.className:="fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := fromSenderUID, "data-placement".reactAttr := "right")(s"From  : ${senderName}"),
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
-                <.div(DashboardCSS.Style.userNameDescription)(
+                <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
                   <.span(s"To  : ${receiverNames.mkString(", ")}")
                 ),
                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
