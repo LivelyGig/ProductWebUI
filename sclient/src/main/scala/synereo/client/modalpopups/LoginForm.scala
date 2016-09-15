@@ -141,8 +141,7 @@ object LoginForm {
                 if (P.isUserVerified) {
                   <.div(^.className := "emailVerifiedContainer")(<.h5("Email address verified."), <.h5("Please login with your credentails "))
                 } else
-                  <.div(),
-                <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.loginImg),
+                <.img(^.src := "./assets/synereo-images/Logo_Login_Dialogue.png", LoginCSS.Style.loginImg),
                 <.div(LoginCSS.Style.loginHeading)(headerText),
                 //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
                 //                  <.div(^.className := "row")(

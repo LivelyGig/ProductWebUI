@@ -393,13 +393,6 @@ object SynereoCommanStylesCSS {
 
     )
 
-    val loginImg = style(
-      height(117.px),
-      width(117.px),
-      marginTop(-31.%%),
-      marginLeft(37.%%)
-    )
-
     val featureHide = style(
       display.none.important
     )
