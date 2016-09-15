@@ -153,7 +153,7 @@ object HeaderCSS {
     val presetPickBtn = style(
       backgroundColor(rgba(0, 0, 0, 0)),
       color(black),
-      fontSize(1.em),
+      fontSize(15.px),
       &.hover(
         color(c"#FFFFFF")
       ),

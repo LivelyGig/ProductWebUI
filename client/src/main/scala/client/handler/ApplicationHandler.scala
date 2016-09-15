@@ -2,6 +2,7 @@ package client.handler
 
 import client.rootmodel.AppRootModel
 import client.modules.AppModule
+import client.utils.ContentUtils
 import diode.{ActionHandler, ActionResult, ModelRW}
 
 /**
@@ -17,9 +18,9 @@ class ApplicationHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHan
       updated(value.copy(isServerError = true, serverErrorMsg = errorMsg))
 
     case SubscribeForDefaultAndBeginPing() =>
-      ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.MESSAGES_VIEW)
-      ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROFILES_VIEW)
-      ContentModelHandler.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
+      ContentUtils.subsForContentAndBeginSessionPing(AppModule.MESSAGES_VIEW)
+      ContentUtils.subsForContentAndBeginSessionPing(AppModule.PROFILES_VIEW)
+      ContentUtils.subsForContentAndBeginSessionPing(AppModule.PROJECTS_VIEW)
       noChange
   }
 }

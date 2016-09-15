@@ -7,13 +7,13 @@ import play.api.Environment._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-class Application() (/*implicit environment: Environment*/) extends Controller {
+class Application()(/*implicit environment: Environment*/) extends Controller {
   //  val apiService = new ApiService()
 
   def index = Action {
 
-       //             Ok(views.html.index("LivelyGig"))
-   Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
+    //                    Ok(views.html.index("LivelyGig"))
+    Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
   }
 
   def logging = Action(parse.anyContent) {

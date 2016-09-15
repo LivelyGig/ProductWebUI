@@ -1,4 +1,4 @@
-package client.srp
+package client.facades
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName

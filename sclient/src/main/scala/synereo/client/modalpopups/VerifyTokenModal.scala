@@ -12,10 +12,12 @@ import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom
+import org.scalajs.dom._
 import synereo.client.components._
 
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+import synereo.client.sessionitems.SessionItems
 
 import scala.scalajs.js
 
@@ -30,12 +32,13 @@ object VerifyTokenModal {
 
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false,
                    portNumber: String = "9876",
-                   apiURL: String = s"https://${dom.window.location.hostname}")
+                   apiURL: String = "")
 
   class VerifyTokenModalBackend(t: BackendScope[Props, State]) {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, t.state.runNow().apiURL)
       // mark it as NOT cancelled (which is the default)
       t.modState(s => s.copy(accountValidationFailed = true))
     }
@@ -58,9 +61,20 @@ object VerifyTokenModal {
       t.modState(s => s.copy(apiURL = value))
     }
 
-    def updateAPI(e: ReactEventI) = {
+
+    def closeAPITextbox(e: ReactEventI) = {
       $(addBtn).show()
-      t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+    }
+
+    def mounted(): Callback = {
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+        t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
+      else
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
     }
 
 
@@ -101,7 +115,7 @@ object VerifyTokenModal {
                         <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
                           ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
                         <.div(^.className := "help-block with-errors"),
-                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.updateAPI)(Icon.times),
+                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.closeAPITextbox)(Icon.times),
                         <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn", ^.onClick --> Callback{ $(addBtn).show()})(Icon.check)
                       )
                     ),
@@ -120,6 +134,7 @@ object VerifyTokenModal {
         )
       )
     })
+    .componentDidMount(scope => scope.backend.mounted())
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.accountValidationFailed) {
         scope.$.backend.hideModal

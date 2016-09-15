@@ -5,12 +5,14 @@ import client.handler._
 import client.components.Bootstrap._
 import client.components._
 import client.css.HeaderCSS
+import client.logger
 import client.logger._
 import shared.models.{EmailValidationModel, SignUpModel}
 import client.services.CoreApi._
 import client.services._
 import shared.dtos._
 import org.scalajs.dom._
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.util.{Failure, Success}
@@ -19,6 +21,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.UserModel
 import org.querki.jquery._
 import client.sessionitems.SessionItems
+
 import scala.concurrent.Future
 import diode.AnyAction._
 import client.utils.{AppUtils, ConnectionsUtils}
@@ -38,10 +41,11 @@ object AgentLoginSignUp {
                    showConfirmAccountCreation: Boolean = false, showAccountValidationSuccess: Boolean = false,
                    showLoginFailed: Boolean = false, showRegistrationFailed: Boolean = false,
                    showErrorModal: Boolean = false, showAccountValidationFailed: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false,
-                   loginErrorMessage: String = "",showApiDetailsForm:Boolean =false)
+                   loginErrorMessage: String = "", showApiDetailsForm: Boolean = false, registrationErrorMsg: String = "")
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) /*extends OnUnmount*/ {
   }
+
   // scalastyle:off
   case class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
 
@@ -53,12 +57,12 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-//    def addApiDetailsForm(): Callback = {
-//      t.modState(s => s.copy(showApiDetailsForm = true))
-//    }
+    //    def addApiDetailsForm(): Callback = {
+    //      t.modState(s => s.copy(showApiDetailsForm = true))
+    //    }
 
-    def addLoginDetails(showLoginForm : Boolean = false): Callback = {
-      if(showLoginForm)
+    def addLoginDetails(showLoginForm: Boolean = false): Callback = {
+      if (showLoginForm)
         t.modState(s => s.copy(/*showApiDetailsForm = false,*/ showLoginForm = true))
       else
         t.modState(s => s.copy(showLoginForm = false))
@@ -69,21 +73,36 @@ object AgentLoginSignUp {
     }
 
     def addNewAgent(signUpModel: SignUpModel, addNewAgent: Boolean = false, showTermsOfServicesForm: Boolean = false, showPrivacyPolicyModal: Boolean = false): Callback = {
-//      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
+      //      log.debug(s"addNewAgent userModel : ${signUpModel} ,addNewAgent: ${addNewAgent}")
       if (addNewAgent) {
         createUser(signUpModel).onComplete {
           case Success(response) =>
-            val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
-//            log.debug(s"createUser msg : ${s.msgType}")
-            if (s.msgType == ApiTypes.CreateUserWaiting) {
-              t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
-            } else {
-             // log.debug(s"createUser msg : ${s.content}")
-              t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+            try {
+              val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
+              //            log.debug(s"createUser msg : ${s.msgType}")
+              if (s.msgType == ApiTypes.responseTypes.CREATE_USER_WAITING) {
+                t.modState(s => s.copy(showConfirmAccountCreation = true)).runNow()
+              } else if (s.msgType == ApiTypes.responseTypes.CREATE_USER_ERROR) {
+                val errorResponse = upickle.default.read[ApiResponse[CreateUserError]](response)
+                //              val msg = JSON.parse(errorResponse.content.reason).reason.asInstanceOf[String]
+                t.modState(s => s.copy(showRegistrationFailed = true, registrationErrorMsg = errorResponse.content.reason)).runNow()
+                //                $(loginLoader).addClass("hidden")
+                //                $(loadingScreen).addClass("hidden")
+              } else if (s.msgType == ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR) {
+                processServerError(s.msgType)
+              }
+              else {
+                // log.debug(s"createUser msg : ${s.content}")
+                t.modState(s => s.copy(showRegistrationFailed = true)).runNow()
+              }
+            } catch {
+              case e: Exception =>
+                val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+                processServerError(error.msgType)
             }
           case Failure(s) =>
-           // log.debug(s"createUserFailure: ${s}")
-            t.modState(s => s.copy(showErrorModal = true)).runNow()
+            processServerError(ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR)
+          //            processServerError(s.)
           // now you need to refresh the UI
         }
         t.modState(s => s.copy(showNewAgentForm = false))
@@ -97,9 +116,13 @@ object AgentLoginSignUp {
     }
 
     def validateResponse(response: String): String = {
+//      println(response)
       try {
-        upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
-        LOGIN_ERROR
+        val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](response)
+        if (error.msgType == ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR)
+          SERVER_ERROR
+        else
+          LOGIN_ERROR
       } catch {
         case e: Exception =>
           try {
@@ -115,9 +138,9 @@ object AgentLoginSignUp {
 
     def setUserDetails(cnxnResponseStr: String, cnxnModelStr: String): Unit = {
       val response = upickle.default.read[ApiResponse[InitializeSessionResponse]](cnxnResponseStr)
-     // println(s"SetUserDetails initialresponse sessionURI ==== ${response.content.sessionURI}")
-      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", "")/*,sessionUri = response.content.sessionURI*/)))
-      LGCircuit.dispatch(UpdateConnection(ConnectionsUtils.getConnectionsModel(cnxnModelStr),response.content.listOfConnections))
+      // println(s"SetUserDetails initialresponse sessionURI ==== ${response.content.sessionURI}")
+      LGCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""), imgSrc = response.content.jsonBlob.getOrElse("imgSrc", "") /*,sessionUri = response.content.sessionURI*/)))
+      LGCircuit.dispatch(UpdateConnections(ConnectionsUtils.getConnectionsModel(cnxnModelStr)))
       LGCircuit.dispatch(CreateLabels(response.content.listOfLabels))
     }
 
@@ -130,10 +153,14 @@ object AgentLoginSignUp {
           validateResponse(responseArray(0)) match {
             case SUCCESS => processSuccessfulLogin(responseArray, userModel)
             case LOGIN_ERROR => processLoginFailed(responseArray(0))
-            case SERVER_ERROR => processServerError()
+            case SERVER_ERROR =>
+              val error = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseArray(0))
+//              println(error)
+              processServerError(error.msgType)
+
           }
         case Failure(res) =>
-          processServerError()
+          processServerError(ApiTypes.responseTypes.API_HOST_UNREACHABLE_ERROR)
       }
       t.modState(s => s.copy(showLoginForm = false))
     }
@@ -147,15 +174,14 @@ object AgentLoginSignUp {
         case Success(sessionPingResponseStr) =>
           AppUtils.handleInitialSessionPingRes(sessionPingResponseStr(0))
           setUserDetails(responseArray(0), sessionPingResponseStr(0))
-          LGCircuit.dispatch(AttachPingers())
           LGCircuit.dispatch(SubscribeForDefaultAndBeginPing())
           $(loginLoader).addClass("hidden")
           $(dashboardContainer).removeClass("hidden")
-          window.location.href = "/#messages"
+          window.location.replace("/#messages")
           log.debug("login successful")
 
         case Failure(res) =>
-          processServerError()
+          processServerError(res.getMessage)
       }
     }
 
@@ -167,11 +193,12 @@ object AgentLoginSignUp {
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()
     }
 
-    def processServerError(): Unit = {
+    def processServerError(responseStr: String): Unit = {
+      //      val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
       $(loginLoader).addClass("hidden")
-      //  $("#bodyBackground").removeClass("DashBoardCSS.Style.overlay")
-      println("internal server error")
-      t.modState(s => s.copy(showErrorModal = true)).runNow()
+      logger.log.error(s"internal server error  ${responseStr}")
+      t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = responseStr)).runNow()
+
     }
 
     /*def processLogin(userModel: UserModel): Callback = {
@@ -213,7 +240,7 @@ object AgentLoginSignUp {
             }
 
           case Failure(s) =>
-           // log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
+            // log.debug(s"ConfirmAccountCreationAPI failure: ${s.getMessage}")
             t.modState(s => s.copy(showErrorModal = true)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
@@ -238,7 +265,7 @@ object AgentLoginSignUp {
       }
     }
 
-    def serverError(showLoginForm : Boolean = false): Callback = {
+    def serverError(showLoginForm: Boolean = false): Callback = {
       t.modState(s => s.copy(showErrorModal = false, showLoginForm = true))
     }
 
@@ -292,10 +319,10 @@ object AgentLoginSignUp {
           LoginFailed(LoginFailed.Props(B.loginFailed, S.loginErrorMessage))
         }
         else if (S.showRegistrationFailed) {
-          RegistrationFailed(RegistrationFailed.Props(B.registrationFailed))
+          RegistrationFailed(RegistrationFailed.Props(B.registrationFailed, S.registrationErrorMsg))
         }
         else if (S.showErrorModal) {
-          ServerErrorModal(ServerErrorModal.Props(B.serverError))
+          ServerErrorModal(ServerErrorModal.Props(B.serverError, S.loginErrorMessage))
         }
         else if (S.showAccountValidationFailed) {
           AccountValidationFailed(AccountValidationFailed.Props(B.accountValidationFailed))
@@ -303,7 +330,7 @@ object AgentLoginSignUp {
         else {
           // Show the Log In modal by default
           LoginForm(LoginForm.Props(B.loginUser))
-          // Seq.empty[ReactElement]
+          //  Seq.empty[ReactElement]
         }
       )
     })

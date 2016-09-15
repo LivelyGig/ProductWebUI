@@ -1,6 +1,6 @@
 package client.modules
 
-import client.handler.{ContentModelHandler, RefreshProfiles}
+import client.handler.RefreshProfiles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 import client.components.Icon
@@ -100,7 +100,7 @@ object ProfilesResults {
 
             // <.span(Icon.warning), " Error loading")
             if (!getServerError.isServerError) {
-              ServerErrorModal(ServerErrorModal.Props(serverError))
+              ServerErrorModal(ServerErrorModal.Props(serverError, "Server offline"))
             }
             else
               <.div())

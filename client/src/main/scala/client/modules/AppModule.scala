@@ -116,7 +116,7 @@ object AppModule {
                 searchesProxy(searchesProxy => Searches(Searches.Props(p.view, searchesProxy)))
               ),
               if (p.proxy().isServerError){
-                ServerErrorModal(ServerErrorModal.Props(serverError))
+                ServerErrorModal(ServerErrorModal.Props(serverError, "Server offline"))
               } else {
                 <.div()
               },

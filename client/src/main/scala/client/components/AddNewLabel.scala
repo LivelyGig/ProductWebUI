@@ -11,7 +11,7 @@ import client.rootmodel.SearchesRootModel
 import shared.models.Label
 import client.components.Bootstrap._
 import client.css.WorkContractCSS
-import client.handler.{ContentModelHandler, CreateLabels}
+import client.handler.CreateLabels
 import client.logger
 import client.services.{ApiTypes, CoreApi, LGCircuit}
 import japgolly.scalajs.react
@@ -21,6 +21,7 @@ import org.querki.jquery._
 import org.scalajs.dom
 import shared.dtos.{ApiRequest, LabelPost}
 import client.sessionitems.SessionItems
+import client.utils.ContentUtils
 
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -54,7 +55,7 @@ object LabelsList {
 
 //      val labelPost = LabelPost(dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI),leafParser(), "alias")
 //      println("labelPost = "+labelPost)
-      ContentModelHandler.postLabels(props.proxy().searchesModel.map(_.text):+ state.labelModel.text)
+      ContentUtils.postLabels(props.proxy().searchesModel.map(_.text):+ state.labelModel.text)
       /*CoreApi.postLabel(labelPost).onComplete{
         case Success(res) =>
 //          dom.window.sessionStorage.setItem(SessionItems.SearchesView.LIST_OF_LABELS, s"[${leafParser(true).mkString(",")}]")

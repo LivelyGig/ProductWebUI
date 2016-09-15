@@ -12,21 +12,19 @@ import scala.util.{Failure, Success}
 
 // Actions
 //scalastyle:off
-case class UpdateConnections(newConnectionModel: Seq[ConnectionsModel], newConnection: Seq[Connection])
+case class UpdateConnections(newConnectionModel: Seq[ConnectionsModel])
 
 class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
-    case UpdateConnections(newConnectionsModel, newConnections) =>
-      val (cnxnModelMod, cnxnMod) = if (value.connections.nonEmpty){
-        (value.connectionsResponse ++ newConnectionsModel.filterNot(e=>
-          value.connectionsResponse.exists( p=> e.connection.source == p.connection.target || e.connection.target == p.connection.target)),
-          value.connections ++ newConnections.filterNot(e=>
-            value.connections.exists(p => p.target == e.source || p.target == e.target))
-          )
+    case UpdateConnections(newConnectionsModel) =>
+      val cnxnModelMod = if (value.connectionsResponse.nonEmpty) {
+        value.connectionsResponse ++ newConnectionsModel.filterNot(e =>
+          value.connectionsResponse.exists(p => e.connection.source == p.connection.target || e.connection.target == p.connection.target))
+
       } else {
-        (newConnectionsModel, newConnections)
+        newConnectionsModel
       }
-      updated(ConnectionsRootModel(cnxnModelMod, cnxnMod))
+      updated(ConnectionsRootModel(cnxnModelMod))
   }
 }

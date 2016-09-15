@@ -51,7 +51,7 @@ object AppUtils {
     val prolog = LabelsUtils.buildProlog(labelToPost, LabelsUtils.PrologTypes.Each)
     logger.log.debug(s"prolog = $prolog")
     SubscribeRequest(AppUtils.getSessionUri(viewName),
-      Expression(ApiTypes.INSERT_CONTENT,
+      Expression(ApiTypes.requestTypes.INSERT_CONTENT,
         ExpressionContent(cnxns, prolog, contentToPost, uid)))
   }
 
@@ -78,7 +78,7 @@ object AppUtils {
 
           }
       }
-      LGCircuit.dispatch(UpdateConnectionModelSeq(cnxnSeq))
+      LGCircuit.dispatch(UpdateConnections(cnxnSeq))
       LGCircuit.dispatch(AcceptNotification(introSeq))
 
   }

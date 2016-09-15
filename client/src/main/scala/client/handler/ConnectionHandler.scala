@@ -7,24 +7,20 @@ import shared.dtos._
 
 // Actions
 //scalastyle:off
-case class AddConnection(newConnectionModel: ConnectionsModel)
-
-case class UpdateConnection(listOfConnectionModel: Seq[ConnectionsModel], connections: Seq[Connection])
-
-case class UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel])
+case class UpdateConnections(newConnectionModel: Seq[ConnectionsModel])
 
 
 class ConnectionHandler[M](modelRW: ModelRW[M, ConnectionsRootModel]) extends ActionHandler(modelRW) {
   override def handle: PartialFunction[Any, ActionResult[M]] = {
 
-    case UpdateConnection(listOfConnectionModel: Seq[ConnectionsModel], connections: Seq[Connection]) =>
-      updated(ConnectionsRootModel(listOfConnectionModel, connections))
+    case UpdateConnections(newConnectionsModel) =>
+      val cnxnModelMod = if (value.connectionsResponse.nonEmpty){
+        value.connectionsResponse ++ newConnectionsModel.filterNot(e=>
+          value.connectionsResponse.exists( p=> e.connection.source == p.connection.target || e.connection.target == p.connection.target))
 
-    case UpdateConnectionModelSeq(listOfConnectionModel: Seq[ConnectionsModel]) => {
-      updated(ConnectionsRootModel(listOfConnectionModel, value.connections))
-    }
-
-    case AddConnection(newConnectionModel: ConnectionsModel) =>
-      updated(ConnectionsRootModel(Seq(newConnectionModel) ++ value.connectionsResponse, value.connections))
+      } else {
+        newConnectionsModel
+      }
+      updated(ConnectionsRootModel(cnxnModelMod))
   }
 }

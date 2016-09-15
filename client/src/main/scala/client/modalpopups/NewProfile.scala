@@ -7,7 +7,6 @@ import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
 import client.css.{DashBoardCSS, HeaderCSS, ProjectCSS}
-import client.handler.ContentModelHandler
 import client.modules.AppModule
 import client.services.LGCircuit
 import japgolly.scalajs.react
@@ -19,7 +18,7 @@ import scala.language.reflectiveCalls
 import org.querki.jquery._
 import shared.models.ProfilePostContent
 import client.sessionitems.SessionItems
-import client.utils.{AppUtils, ConnectionsUtils, LabelsUtils}
+import client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
 import diode.AnyAction._
 
 object NewProfile {
@@ -97,7 +96,7 @@ object NewProfileForm {
       e.preventDefault()
       val state = t.state.runNow()
       val req = AppUtils.getPostData(state.profilePost, Seq(ConnectionsUtils.getSelfConnnection(AppModule.PROFILES_VIEW)),Nil, AppModule.PROFILES_VIEW)
-      ContentModelHandler.postContent(req)
+      ContentUtils.postContent(req)
       t.modState(s => s.copy(postUserSkills = false))
     }
 
