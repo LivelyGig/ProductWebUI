@@ -268,13 +268,13 @@ object HomeFeedList {
 
     }
 
-    def getAllMessagePostDetails(message: MessagePost): (String, Seq[String], String, String,String) = {
+    def getAllMessagePostDetails(message: MessagePost): (String, Seq[String], String, String, String) = {
       val selfConnectionId = message.connections(0).source.split("/")(2)
       val connections = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
       var senderName = "unknown"
       var imgContentOfMessagePost = ""
       var sendAmpsTo = ""
-      var fromSenderUID =""
+      var fromSenderUID = ""
       var receiverNames: Seq[String] = Seq()
       val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
       if (userId == selfConnectionId) {
@@ -295,7 +295,7 @@ object HomeFeedList {
         // ToDo: Look up name of Sender and use friendly name
         receiverNames :+= "me"
       }
-      (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo,fromSenderUID )
+      (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo, fromSenderUID)
     }
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -381,8 +381,8 @@ object HomeFeedList {
     .backend(new HomeFeedListBackend(_))
     .renderPS((t, P, S) => {
       def renderMessages(message: MessagePost) = {
-        val allWordsFromMessageText = message.postContent.text.split(" ")
-        val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo,fromSenderUID) = t.backend.getAllMessagePostDetails(message: MessagePost)
+        val allWordsFrmMessageText = message.postContent.text.split(" ")
+        val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo, fromSenderUID) = t.backend.getAllMessagePostDetails(message: MessagePost)
 
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
@@ -397,7 +397,7 @@ object HomeFeedList {
               ),
               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                 <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
-                  <.span(^.className:="fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := fromSenderUID, "data-placement".reactAttr := "right")(s"From  : ${senderName}"),
+                  <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := fromSenderUID, "data-placement".reactAttr := "right")(s"From  : ${senderName}"),
                   <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                 ),
                 <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
@@ -434,32 +434,32 @@ object HomeFeedList {
                   <.div(DashboardCSS.Style.cardText)(
                     if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
                       <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                        if (allWordsFromMessageText.length == 1) {
-                          allWordsFromMessageText(0)
+                        if (allWordsFrmMessageText.length == 1) {
+                          allWordsFrmMessageText(0)
                         } else
-                          for {b <- 0 to allWordsFromMessageText.length - 1 if b <= 30} yield {
-                            allWordsFromMessageText(b) + " "
+                          for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                            allWordsFrmMessageText(b) + " "
                           }
                       )
                     } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                       <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
                         <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                          if (allWordsFromMessageText.length == 1) {
-                            allWordsFromMessageText(0)
+                          if (allWordsFrmMessageText.length == 1) {
+                            allWordsFrmMessageText(0)
                           } else
-                            for {b <- 0 to allWordsFromMessageText.length - 1 if b <= 30} yield {
-                              allWordsFromMessageText(b) + " "
+                            for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                              allWordsFrmMessageText(b) + " "
                             }
                         )
                       )
                     }
                     else if (message.postContent.imgSrc == "") {
                       <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                        if (allWordsFromMessageText.length == 1) {
-                          allWordsFromMessageText(0)
+                        if (allWordsFrmMessageText.length == 1) {
+                          allWordsFrmMessageText(0)
                         } else
-                          for {b <- 0 to allWordsFromMessageText.length - 1 if b <= 30} yield {
-                            allWordsFromMessageText(b) + " "
+                          for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                            allWordsFrmMessageText(b) + " "
                           }
                       )
 
@@ -480,8 +480,8 @@ object HomeFeedList {
             <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
               <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
                 <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                  for {b <- 2 to allWordsFromMessageText.length if b >= 30} yield {
-                    allWordsFromMessageText(b) + " "
+                  for {b <- 2 to allWordsFrmMessageText.length if b >= 30} yield {
+                    allWordsFrmMessageText(b) + " "
                   },
                   <.div(^.className := "col-md-12 text-uppercase")(
                     //                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
@@ -492,7 +492,7 @@ object HomeFeedList {
               )
             ),
             <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-              if (allWordsFromMessageText.length > 30) {
+              if (allWordsFrmMessageText.length > 30) {
                 <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                   "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
                   (MIcon.moreHoriz)

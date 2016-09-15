@@ -12,6 +12,7 @@ import synereo.client.rootmodels.ConnectionsRootModel
   */
 class ConnectionHandlerTest extends UnitTest("ConnectionHandlerTest") {
   val handler = new ConnectionHandler(new RootModelRW(ConnectionsRootModel()))
+
   val newCnxnSeq  = Seq(Connection("newSource1", "newLabel1", "newTarget1"),
     Connection("newSource2", "newLabel2", "newTarget2"),
     Connection("newSource3", "newLabel3", "newTarget3"))

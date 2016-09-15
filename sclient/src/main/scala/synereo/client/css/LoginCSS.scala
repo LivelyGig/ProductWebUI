@@ -25,6 +25,12 @@ object LoginCSS {
       backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
       backgroundSize := 100.%%
     )
+    val loginImg = style(
+      height(120.px),
+      width(117.px),
+      marginTop(-31.%%),
+      marginLeft(36.9.%%)
+    )
 
     val loginScreenBgImage = style(
       margin.auto.important,
@@ -318,6 +324,10 @@ object LoginCSS {
       marginTop(16.px)
     )
     val modalLoginBtn = style(
+      textAlign.center,
+      &.hover(
+        color(c"#cc3300")
+      ),
       backgroundColor(c"#ff806c"),
       height(45.px),
       width(142.px),
