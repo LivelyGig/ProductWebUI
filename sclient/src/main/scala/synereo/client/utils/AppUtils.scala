@@ -5,6 +5,7 @@ package synereo.client.utils
   */
 object AppUtils {
   val MESSAGE_POST_LABEL = "MESSAGEPOSTLABEL"
+  val BTC_SATOSHI = 100000000
 /*
   def handleInitialSessionPingRes(response: String): Unit = {
     var cnxnSeq: Seq[ConnectionsModel] = Nil
