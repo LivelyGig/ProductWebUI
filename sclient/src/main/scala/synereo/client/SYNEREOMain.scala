@@ -109,7 +109,7 @@ object SYNEREOMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            if (r.page == DashboardLoc) {
+            if (r.page == DashboardLoc || r.page == SynereoLoc) {
               <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
             } else {
               c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
@@ -134,7 +134,7 @@ object SYNEREOMain extends js.JSApp {
     log.warn("Application starting")
     // send log messages also to the server
     log.enableServerLogging("/logging")
-//    log.disableServerLogging()
+    //    log.disableServerLogging()
     log.info("This message goes to server as well")
     // create stylesheet
     GlobalStyles.addToDocument()

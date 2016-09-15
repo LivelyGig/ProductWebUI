@@ -80,9 +80,9 @@ object LoginView {
     def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
-      //      log.debug(s"addNewUser userModel : ${signUpModel} ,addNewUser: ${addNewAgent}")
+      //      log.debug(s"addNewUser userModel : ${signUpModel}")
       if (addNewAgent) {
-        createUser(signUpModel).onComplete {
+        createUser(signUpModel.copy(email = signUpModel.email.toLowerCase)).onComplete {
           case Success(response) =>
             try {
               val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
@@ -146,7 +146,7 @@ object LoginView {
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
-      CoreApi.agentLogin(userModel).onComplete {
+      CoreApi.agentLogin(userModel.copy(email = userModel.email.toLowerCase)).onComplete {
         case Success(response) =>
           validateInitializeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
@@ -344,14 +344,14 @@ object LoginView {
 
           ),
           <.div()(
-            if (s.showNewUserForm) {
+            if (s.showLoginForm) {
+              LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
+            }
+            else if (s.showNewUserForm) {
               NewUserForm(NewUserForm.Props(t.backend.addNewUser))
             }
             else if (s.showNewInviteForm) {
               PostNewInvite(PostNewInvite.Props(t.backend.closeRequestInvitePopup))
-            }
-            else if (s.showLoginForm) {
-              LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
             }
             else if (s.showConfirmAccountCreation) {
               VerifyTokenModal(VerifyTokenModal.Props(t.backend.confirmAccountCreation))
