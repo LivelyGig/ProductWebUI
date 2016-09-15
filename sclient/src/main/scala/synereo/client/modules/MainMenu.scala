@@ -165,7 +165,8 @@ object MainMenu {
                       "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
-                      <.span(model.balance)
+                      //<.span(model.balance)
+                      <.span("%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI))
                     )
                   )
                 ),
