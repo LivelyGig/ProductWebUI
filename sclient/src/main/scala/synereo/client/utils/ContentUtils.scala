@@ -39,14 +39,18 @@ object ContentUtils {
   def processRes(response: String): Seq[ResponseContent] = {
     // process response
     val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
-    val (cnxn, postContent, intro, cnctNot, balChanged) = sortContent(responseArray)
+    val balanceChangedResponse: Seq[String] = responseArray.filter(_.contains("balanceChanged"))
+    if(balanceChangedResponse.nonEmpty) {
+      val newBalance = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content.newBalance
+      SYNEREOCircuit.dispatch(BalanceChanged(newBalance))
+    }
+    val (cnxn, postContent, intro, cnctNot) = sortContent(responseArray)
     // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
     if (intro.nonEmpty) SYNEREOCircuit.dispatch(AddNotification(intro.map(_.content)))
     if (cnctNot.nonEmpty) {
       val resp = cnctNot.map(e => ConnectionsUtils.getCnxnFromNot(e.content))
       SYNEREOCircuit.dispatch(UpdateConnections(resp))
     }
-    if (balChanged.nonEmpty) SYNEREOCircuit.dispatch(BalanceChanged(balChanged(0).content.newBalance))
     if (cnxn.nonEmpty) {
       val res = cnxn.map(e => ConnectionsUtils.getCnxnFromRes(e.content))
       SYNEREOCircuit.dispatch(UpdateConnections(res))
@@ -66,14 +70,12 @@ object ContentUtils {
   def sortContent(responseArray: Seq[String]): (Seq[ApiResponse[ConnectionProfileResponse]],
     Seq[ApiResponse[ResponseContent]],
     Seq[ApiResponse[Introduction]],
-    Seq[ApiResponse[ConnectNotification]],
-    Seq[ApiResponse[BalanceChange]]) = {
+    Seq[ApiResponse[ConnectNotification]]) = {
     var remainingObj: Seq[String] = Nil
     var cnxn: Seq[ApiResponse[ConnectionProfileResponse]] = Nil
     var msg: Seq[ApiResponse[ResponseContent]] = Nil
     var intro: Seq[ApiResponse[Introduction]] = Nil
     var cnctNot: Seq[ApiResponse[ConnectNotification]] = Nil
-    var balanceChanged: Seq[ApiResponse[BalanceChange]] = Nil
     responseArray.foreach {
       e =>
         Try(upickle.default.read[ApiResponse[ConnectionProfileResponse]](e)) match {
@@ -84,17 +86,13 @@ object ContentUtils {
               case Success(a) => intro :+= a
               case Failure(b) => Try(upickle.default.read[ApiResponse[ConnectNotification]](e)) match {
                 case Success(a) => cnctNot :+= a
-                case Failure(b) =>Try(upickle.default.read[ApiResponse[BalanceChange]](e)) match {
-                  case Success(a) => balanceChanged :+= a
-                  case Failure(b) => remainingObj :+= e
-                }
-
+                case Failure(b) => remainingObj :+= e
               }
             }
           }
         }
     }
-    (cnxn, msg, intro, cnctNot,balanceChanged)
+    (cnxn, msg, intro, cnctNot)
 
   }
 
