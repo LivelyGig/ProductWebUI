@@ -75,8 +75,8 @@ object ConnectionsForm {
 
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(),
-                   establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = false,
-                   chkCnxnNewUser: Boolean = false, chkCnxnExstUser: Boolean = true, agentUid: String = "", userName: String = "")
+                   establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = true,
+                   chkCnxnNewUser: Boolean = true, chkCnxnExstUser: Boolean = false, agentUid: String = "", userName: String = "")
 
   val connectionSelectize = SYNEREOCircuit.connect(_.connections)
 
@@ -118,7 +118,7 @@ object ConnectionsForm {
 
     def chkCnxnExstandOther(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(introduceUsers = true, chkCnxnNewUser = false, chkCnxnExstUser = false))
+      t.modState(s => s.copy(introduceUsers = true, chkCnxnNewUser = true, chkCnxnExstUser = false))
     }
 
     def getCnxn(uri: String): Option[ConnectionsModel] = {
@@ -199,43 +199,21 @@ object ConnectionsForm {
   private val component = ReactComponentB[Props]("PostConnections")
     .initialState_P(p => State())
     .backend(new ConnectionsFormBackend(_))
-      .renderPS((t,P,S)=>{
+    .renderPS((t, P, S) => {
 
-        val headerText = P.header
-        Modal(
-          Modal.Props(
-            // header contains a cancel button (X)
-            header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div()(headerText)),
-            // this is called after the modal has been hidden (animation is completed)
-            closed = () => t.backend.formClosed(S, P)
-          ),
-          <.form(^.onSubmit ==> t.backend.submitForm)(
-            <.div(^.className := "row")(
-              <.div()(
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := S.chkCnxnExstUser, ^.onChange ==> t.backend.chkCnxnExstUser),
-                  " Introduce yourself to existing user(s)."), <.br(),
-                if (S.chkCnxnExstUser == true) {
-                  <.div(^.marginLeft := "15px")(
-                    <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
-                      ^.value := S.agentUid, ^.onChange ==> t.backend.updateAgentUid),
-                    <.div(^.id := "agentFieldError", ^.className := "hidden")
-                    ("User with this uid is already added as your connection")
-                  )
-                }
-                else
-                  <.div(),
-                //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
-                // " Invite new user(s) to sign up and  connect with you."), <.br(),
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> t.backend.chkCnxnExstandOther),
-                  " Introduce your existing connections to each other."), <.br()
-              ),
-
-              //            else if (s.chkCnxnNewUser == true) {
-              //              <.div()(
-              //                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
-              //              )
-              //            }
-              //            else if (s.introduceTwoUsers == true) {
+      val headerText = P.header
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div()(headerText)),
+          // this is called after the modal has been hidden (animation is completed)
+          closed = () => t.backend.formClosed(S, P)
+        ),
+        <.form(^.onSubmit ==> t.backend.submitForm)(
+          <.div(^.className := "row")(
+            <.div()(
+              <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := S.chkCnxnNewUser, ^.onChange ==> t.backend.chkCnxnExstandOther),
+                " Introduce your existing connections to each other."), <.br(),
               <.div(^.marginLeft := "15px", (!S.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
                 <.div(<.h5("Connections:")),
                 <.div(^.id := s"${S.selectizeInputId}")(
@@ -254,18 +232,44 @@ object ConnectionsForm {
 
                 )
               ),
-              //            }
-              <.div()(
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Send"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel")
-                )
-              )
-            ),
-            <.div(bss.modal.footer)
-          ))
+              //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
+              // " Invite new user(s) to sign up and  connect with you."), <.br(),
 
-      })
+              <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", /*^.checked := S.chkCnxnExstUser,*/ ^.onChange ==> t.backend.chkCnxnExstUser),
+                " Introduce yourself to existing user(s)."), <.br()
+
+            ),
+
+            //            else if (s.chkCnxnNewUser == true) {
+            //              <.div()(
+            //                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
+            //              )
+            //            }
+            //            else if (s.introduceTwoUsers == true) {
+            if (S.chkCnxnExstUser == true) {
+              <.div(^.marginLeft := "15px")(
+                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
+                  ^.value := S.agentUid, ^.onChange ==> t.backend.updateAgentUid),
+                <.div(^.id := "agentFieldError", ^.className := "hidden")
+                ("User with this uid is already added as your connection")
+              )
+            }
+            else
+              <.div(),
+
+
+            //            }
+            <.div()(
+              <.div(^.className := "text-right")(
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Send"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel")
+              )
+            )
+          ),
+          <.div(bss.modal.footer)
+        ))
+
+    })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postConnection) {
