@@ -27,6 +27,7 @@ object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   val addBtn: js.Object = "#addBtn"
+  val Name: js.Object = "#Name"
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
 
@@ -41,9 +42,6 @@ object LoginForm {
 
 
   class LoginFormBackend(t: BackendScope[Props, State]) {
-
-    val LoginFormID: js.Object = "#LoginForm"
-
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
@@ -88,10 +86,6 @@ object LoginForm {
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
 
-    def userNameFocus(): Unit = {
-      $(LoginFormID).find("input:first").focus()
-    }
-
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
       //      println(s"value:$value")
@@ -107,6 +101,7 @@ object LoginForm {
     }
 
     def mounted(): Callback = {
+      $(Name).focus()
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
@@ -234,13 +229,8 @@ object LoginForm {
 
     })
     .componentDidMount(scope => {
-      Callback {
-        $(scope.getDOMNode()).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
-      }
       scope.backend.mounted()
     }
-
-
     )
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewUserForm || scope.currentState.showNewInviteForm) {
