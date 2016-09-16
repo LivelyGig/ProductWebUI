@@ -41,8 +41,8 @@ object ContentUtils {
     val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
     val balanceChangedResponse: Seq[String] = responseArray.filter(_.contains("balanceChanged"))
     if(balanceChangedResponse.nonEmpty) {
-      val newBalance = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content.newBalance
-      SYNEREOCircuit.dispatch(BalanceChanged(newBalance))
+      val content = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content
+      SYNEREOCircuit.dispatch(BalanceChanged(content.newBalance, content.address))
     }
     val (cnxn, postContent, intro, cnctNot) = sortContent(responseArray)
     // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
