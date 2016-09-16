@@ -75,9 +75,9 @@ object AppModule {
       <.div(
         <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
           <.div(),
-          <.div(^.className := "row")(
+          <.div()(
             //Left Sidebar
-            <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ",
+            <.div(^.id := "searchContainer", ^.className := "sidebar sidebar-left sidebar-animate sidebar-lg-show ",
               ^.onMouseEnter --> Callback {
                 $(searchContainer).removeClass("sidebar-left sidebar-animate sidebar-lg-show")
               },

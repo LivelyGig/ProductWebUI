@@ -166,7 +166,7 @@ object MainMenu {
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
                       //<.span(model.balance)
-                      <.span("%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI))
+                      <.span(if (model.balance != "")"%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI) else "0")
                     )
                   )
                 ),
