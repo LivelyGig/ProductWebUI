@@ -480,7 +480,7 @@ object HomeFeedList {
             <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
               <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
                 <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                  for {b <- 2 to allWordsFrmMessageText.length if b >= 30} yield {
+                  for {b <- 1 to allWordsFrmMessageText.length -1 if b > 30} yield {
                     allWordsFrmMessageText(b) + " "
                   },
                   <.div(^.className := "col-md-12 text-uppercase")(
