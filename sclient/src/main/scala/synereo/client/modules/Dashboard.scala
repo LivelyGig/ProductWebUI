@@ -89,14 +89,14 @@ object Dashboard {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
-    /*   def showLeftPost(showLeftPost: Boolean = false): Callback = {
-         if (showLeftPost) {
-           println(s"ShowLeftPost: ${showLeftPost}")
-           t.modState(s => s.copy(showLeftPost = true))
+    /*   def showrightPost(showrightPost: Boolean = false): Callback = {
+         if (showrightPost) {
+           println(s"ShowrightPost: ${showrightPost}")
+           t.modState(s => s.copy(showrightPost = true))
          }
          else {
-           println(s"ShowLeftPost: ${showLeftPost}")
-           t.modState(s => s.copy(showLeftPost = false))
+           println(s"ShowrightPost: ${showrightPost}")
+           t.modState(s => s.copy(showrightPost = false))
          }
        }*/
   }
@@ -128,7 +128,7 @@ object Dashboard {
                     ),
                     P.proxy().render(
                       messagesRootModel =>
-                        HomeFeedList(messagesRootModel.messagesModelList /*, t.backend.showLeftPost*/)
+                        HomeFeedList(messagesRootModel.messagesModelList /*, t.backend.showrightPost*/)
                     ),
                     P.proxy().renderPending(ex => <.div(
                       <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
@@ -262,12 +262,12 @@ object Dashboard {
 object HomeFeedList {
 
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
-  val lftPost: js.Object = "#lftPost"
+  val rightPost: js.Object = "#rightPost"
   val FeedTimeOut = 1500
   var collapsiblePost = ""
   val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
-  case class Props(messages: Seq[MessagePost] /*, leftPost: (Boolean) => Callback*/)
+  case class Props(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/)
 
   case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
@@ -368,13 +368,12 @@ object HomeFeedList {
     }
 
     def preventFullViewModalPopUP(message: MessagePost): Callback = {
-      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#lftPost").hasClass("hidden")) {
-        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#lftPost").removeClass("hidden")
+      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
       } else {
-        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#lftPost").addClass("hidden")
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
       }
       t.modState(s => s.copy(showFullPostView = false))
-
     }
 
     def handleScroll(e: ReactEvent): Callback = {
@@ -395,14 +394,14 @@ object HomeFeedList {
       if ($(collapsedPost).hasClass("in")) {
         collapsiblePost = $(targetLi).height().toString
         println(s"Height = ${collapsiblePost}")
-        $(lftPost).height(collapsiblePost)
+        $(rightPost).height(collapsiblePost)
       }
       Callback.empty
 
     }
 
-    def showLftPost(getLftPost: String): Callback = {
-      getLftPost match {
+    def showRightPost(getRightPost: String): Callback = {
+      getRightPost match {
         case "showLovePost" => {
           t.modState(s => s.copy(showLovePost = true, showSharePost = false, showCirclePost = false, showCommentPost = false))
         }
@@ -555,44 +554,43 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.id := "lftPost", ^.className := "col-md-2 col-sm-3 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
+            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
 
               <.div(^.id := "trans")(
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "leftPost", ^.onClick --> t.backend.showLftPost("showLovePost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showLovePost"))),
                   //                    <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("120"*/),
-                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div()
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                   if (S.showLovePost) <.div(^.className := "col-md-")() else <.div()
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "leftPost", ^.onClick --> t.backend.showLftPost("showCommentPost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("10"*/),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div()
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "leftPost", ^.onClick --> t.backend.showLftPost("showCirclePost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
                   <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("12"*/),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div()
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "leftPost", ^.onClick --> t.backend.showLftPost("showSharePost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
                   <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("2"*/),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "leftPost")) else <.div()
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                 )
               )
-
             )
           )
         )
@@ -626,5 +624,5 @@ object HomeFeedList {
     //    })
     .build
 
-  def apply(messages: Seq[MessagePost] /*, leftPost: (Boolean) => Callback*/) = MessagesList(Props(messages /*, leftPost*/))
+  def apply(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/) = MessagesList(Props(messages /*, rightPost*/))
 }
