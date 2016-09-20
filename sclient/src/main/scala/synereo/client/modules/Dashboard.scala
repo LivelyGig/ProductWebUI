@@ -26,7 +26,6 @@ import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scala.scalajs.js.timers._
 import scala.util.{Failure, Success, Try}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 //scalastyle:off
@@ -90,6 +89,16 @@ object Dashboard {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
+    /*   def showrightPost(showrightPost: Boolean = false): Callback = {
+         if (showrightPost) {
+           println(s"ShowrightPost: ${showrightPost}")
+           t.modState(s => s.copy(showrightPost = true))
+         }
+         else {
+           println(s"ShowrightPost: ${showrightPost}")
+           t.modState(s => s.copy(showrightPost = false))
+         }
+       }*/
   }
 
   val component = ReactComponentB[Props]("Dashboard")
@@ -101,6 +110,7 @@ object Dashboard {
       <.div(^.id := "dashboardContainerMain", ^.className := "container-fluid")(
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
+            //            <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-12")("Hello"),
             <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12", DashboardCSS.Style.paddingLeftRight)(
               <.div(^.className := "row")(
                 <.div(^.className := "col-sm-12 col-md-12 col-lg-12", DashboardCSS.Style.paddingLeftRight)(
@@ -118,7 +128,7 @@ object Dashboard {
                     ),
                     P.proxy().render(
                       messagesRootModel =>
-                        HomeFeedList(messagesRootModel.messagesModelList)
+                        HomeFeedList(messagesRootModel.messagesModelList /*, t.backend.showrightPost*/)
                     ),
                     P.proxy().renderPending(ex => <.div(
                       <.div(^.id := "loginLoader", SynereoCommanStylesCSS.Style.messagesLoadingWaitCursor, ^.className := "", Icon.spinnerIconPulse)
@@ -230,7 +240,10 @@ object Dashboard {
                   )
                 )
               )
-            )
+            ) /*,
+            <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-12")(
+
+            )*/
           )
         ),
         <.div(
@@ -249,20 +262,22 @@ object Dashboard {
 object HomeFeedList {
 
   val dashboardContainerMain: js.Object = "#dashboardContainerMain"
+  val rightPost: js.Object = "#rightPost"
   val FeedTimeOut = 1500
+  var collapsiblePost = ""
   val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
-  case class Props(messages: Seq[MessagePost])
+  case class Props(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/)
 
   case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
-                   fromSender: String = "", toReceiver: String = "", senderAddress: String = "")
+                   fromSender: String = "", toReceiver: String = "", senderAddress: String = "", showLovePost: Boolean = false,
+                   showCommentPost: Boolean = false,
+                   showCirclePost: Boolean = false,
+                   showSharePost: Boolean = false
+                  )
 
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
-
-    val dashboardContainerMain: js.Object = "#dashboardContainerMain"
-    val FeedTimeOut = 1500
-
 
     def mounted() = Callback {
 
@@ -352,10 +367,11 @@ object HomeFeedList {
       t.modState(s => s.copy(showFullPostView = true, messagePost = message, fromSender = fromSender, toReceiver = toReceiver))
     }
 
-    def preventFullViewModalPopUP(e: ReactEvent): Callback = {
-      val targetLi = e.target
-      setTimeout(500) {
-        $(targetLi).find(".glance-view-button").addClass(".hide")
+    def preventFullViewModalPopUP(message: MessagePost): Callback = {
+      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
+      } else {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
       }
       t.modState(s => s.copy(showFullPostView = false))
     }
@@ -364,15 +380,44 @@ object HomeFeedList {
       Callback.empty
     }
 
+
     def handleMouseEnterEvent(e: ReactEvent): Callback = {
       val targetLi = e.target
-      val collapsiblePost: js.Object = $(targetLi).find(".collapse")
-      setTimeout(FeedTimeOut) {
-        if (!$(collapsiblePost).hasClass("in")) {
-          $(collapsiblePost).addClass("in")
-        }
+      //      val collapsiblePost: js.Object = $(targetLi).find(".collapse")
+      //      setTimeout(FeedTimeOut) {
+      //        if (!$(collapsiblePost).hasClass("in")) {
+      //          $(collapsiblePost).addClass("in")
+      //          $(lftPost).show()
+      //        }
+      //      }
+      val collapsedPost: js.Object = $(targetLi).find(".collapse")
+      if ($(collapsedPost).hasClass("in")) {
+        collapsiblePost = $(targetLi).height().toString
+        println(s"Height = ${collapsiblePost}")
+        $(rightPost).height(collapsiblePost)
       }
       Callback.empty
+
+    }
+
+    def showRightPost(getRightPost: String): Callback = {
+      getRightPost match {
+        case "showLovePost" => {
+          t.modState(s => s.copy(showLovePost = true, showSharePost = false, showCirclePost = false, showCommentPost = false))
+        }
+        case "showCommentPost" => {
+          t.modState(s => s.copy(showCommentPost = true, showSharePost = false, showCirclePost = false, showLovePost = false))
+        }
+        case "showCirclePost" => {
+          t.modState(s => s.copy(showCirclePost = true, showCommentPost = false, showLovePost = false, showSharePost = false))
+        }
+        case "showSharePost" => {
+          t.modState(s => s.copy(showSharePost = true, showCirclePost = false, showCommentPost = false, showLovePost = false))
+        }
+        case _ => {
+          t.modState(s => s.copy(showSharePost = false, showCirclePost = false, showCommentPost = false, showLovePost = false))
+        }
+      }
     }
   }
 
@@ -385,122 +430,167 @@ object HomeFeedList {
         val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo, fromSenderUID) = t.backend.getAllMessagePostDetails(message: MessagePost)
 
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
-          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
-            <.div(^.className := "row")(
-              <.div(^.className := "col-md-1 pull-left")(
-                if (imgContentOfMessagePost.length != 0)
-                  <.img(^.className := "media-object", ^.src := imgContentOfMessagePost, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                else if (senderName.equals("me"))
-                  <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                else
-                  <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-              ),
-              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
-                  <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := fromSenderUID, "data-placement".reactAttr := "right")(s"From  : ${senderName}"),
-                  <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
-                ),
-                <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
-                  <.span(s"To  : ${receiverNames.mkString(", ")}")
-                ),
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                if (senderName.equals("me")) {
-                  <.span()
-                } else {
-                  <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                    "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                    ^.onClick ==> t.backend.amplifyPost)(
-                    <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                  )
-                },
-                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                  "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
-                  ^.onClick --> t.backend.forwardPost(message))(
-                  <.span(Icon.mailForward)
-                )
-              )
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-3 col-sm-3")(
+              ""
             ),
-            <.div(^.className := "row")(
-              <.div(^.className := "col-md-12")(
-                if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                  // getMessage = message
-                  <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
-                } else {
-                  // getMessage = null
-                  <.span("")
-                },
-                <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom)(
-                  <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                  <.div(DashboardCSS.Style.cardText)(
-                    if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                      <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                        if (allWordsFrmMessageText.length == 1) {
-                          allWordsFrmMessageText(0)
-                        } else
-                          for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                            allWordsFrmMessageText(b) + " "
-                          }
-                      )
-                    } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                      <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                        <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                          if (allWordsFrmMessageText.length == 1) {
-                            allWordsFrmMessageText(0)
-                          } else
-                            for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                              allWordsFrmMessageText(b) + " "
-                            }
-                        )
-                      )
-                    }
-                    else if (message.postContent.imgSrc == "") {
-                      <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                        if (allWordsFrmMessageText.length == 1) {
-                          allWordsFrmMessageText(0)
-                        } else
-                          for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                            allWordsFrmMessageText(b) + " "
-                          }
-                      )
-
+            <.div(^.className := "col-md-6 col-sm-6")(
+              <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-1 pull-left")(
+                    if (imgContentOfMessagePost.length != 0)
+                      <.img(^.className := "media-object", ^.src := imgContentOfMessagePost, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                    else if (senderName.equals("me"))
+                      <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                    else
+                      <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                  ),
+                  <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                    <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
+                      <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := fromSenderUID, "data-placement".reactAttr := "right")(s"From  : ${senderName}"),
+                      <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
+                    ),
+                    <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
+                      <.span(s"To  : ${receiverNames.mkString(", ")}")
+                    ),
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
+                    if (senderName.equals("me")) {
+                      <.span()
                     } else {
-                      <.div()
+                      <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                        "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                        ^.onClick ==> t.backend.amplifyPost)(
+                        <.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                      )
                     },
-                    if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                      <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
-                        <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
-                      )
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
+                      ^.onClick --> t.backend.forwardPost(message))(
+                      <.span(Icon.mailForward)
+                    )
+                  )
+                ),
+                <.div(^.className := "row")(
+                  <.div(^.className := "col-md-12")(
+                    if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
+                      // getMessage = message
+                      <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
                     } else {
-                      Seq.empty[ReactElement]
-                    }
+                      // getMessage = null
+                      <.span("")
+                    },
+                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom)(
+                      <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                      <.div(DashboardCSS.Style.cardText)(
+                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                            if (allWordsFrmMessageText.length == 1) {
+                              allWordsFrmMessageText(0)
+                            } else
+                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                                allWordsFrmMessageText(b) + " "
+                              }
+                          )
+                        } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
+                          <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
+                            <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                              if (allWordsFrmMessageText.length == 1) {
+                                allWordsFrmMessageText(0)
+                              } else
+                                for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                                  allWordsFrmMessageText(b) + " "
+                                }
+                            )
+                          )
+                        }
+                        else if (message.postContent.imgSrc == "") {
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                            if (allWordsFrmMessageText.length == 1) {
+                              allWordsFrmMessageText(0)
+                            } else
+                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
+                                allWordsFrmMessageText(b) + " "
+                              }
+                          )
+
+                        } else {
+                          <.div()
+                        },
+                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
+                          <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
+                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
+                          )
+                        } else {
+                          Seq.empty[ReactElement]
+                        }
+                      )
+                    )
                   )
+                ),
+                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                  <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                    <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                      for {b <- 1 to allWordsFrmMessageText.length - 1 if b > 30} yield {
+                        allWordsFrmMessageText(b) + " "
+                      },
+                      <.div(^.className := "col-md-12 text-uppercase")(
+                        //                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
+                        //                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
+                        //                      }
+                      )
+                    )
+                  )
+                ),
+                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                  if (allWordsFrmMessageText.length > 30) {
+                    <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                      "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.preventFullViewModalPopUP(message))(
+                      (MIcon.moreHoriz)
+                    )
+                  }
+                  else {
+                    <.span()
+                  }
                 )
               )
             ),
-            <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-              <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                  for {b <- 1 to allWordsFrmMessageText.length -1 if b > 30} yield {
-                    allWordsFrmMessageText(b) + " "
-                  },
-                  <.div(^.className := "col-md-12 text-uppercase")(
-                    //                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
-                    //                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
-                    //                      }
-                  )
+            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
+
+              <.div(^.id := "trans")(
+                <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showLovePost"))),
+                  //                    <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("120"*/),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
+                  if (S.showLovePost) <.div(^.className := "col-md-")() else <.div()
+                ),
+                <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
+                  <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("10"*/),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
+                ),
+                <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
+                  <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("12"*/),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
+                ),
+                <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
+                  <.div(^.className := "col-md-2" /*,DashboardCSS.Style.userNameDescription)("2"*/),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(),
+                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                 )
               )
-            ),
-            <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-              if (allWordsFrmMessageText.length > 30) {
-                <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                  "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
-                  (MIcon.moreHoriz)
-                )
-              }
-              else {
-                <.span()
-              }
             )
           )
         )
@@ -527,7 +617,12 @@ object HomeFeedList {
       )
     })
     .componentDidMount(scope => scope.backend.mounted())
+    //    .componentDidUpdate(scope => Callback{
+    //
+    //
+    //
+    //    })
     .build
 
-  def apply(messages: Seq[MessagePost]) = MessagesList(Props(messages))
+  def apply(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/) = MessagesList(Props(messages /*, rightPost*/))
 }

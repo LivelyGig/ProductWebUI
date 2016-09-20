@@ -407,6 +407,14 @@ object SynereoCommanStylesCSS {
       paddingLeft(17.%%).important
     )
 
-  }
+    val lftHeightPost = style (
+//      height(50.vh),
+      display.flex,
+      alignItems.center
+    )
 
+    val marginTop20px = style (
+      marginTop(20.px)
+    )
+  }
 }
