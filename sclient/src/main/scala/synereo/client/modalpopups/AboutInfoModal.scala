@@ -16,6 +16,7 @@ import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
+//scalastyle:off
 object AboutInfoModal {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -30,11 +31,11 @@ object AboutInfoModal {
     }
 
     def mounted(props: AboutInfoModal.Props) = Callback {
+      logger.log.debug(s"versionInfoModal mounted")
       CoreApi.getVersionInfo().onComplete {
         case Success(res) =>
           try {
             val versionInfoFromAjax = upickle.default.read[ApiResponse[VersionInfoResponse]](res).content
-            logger.log.debug(s"versionInfoFromAjax:$versionInfoFromAjax")
             t.modState(state => state.copy(versionInfo = versionInfoFromAjax)).runNow()
           } catch {
             case e: Exception => logger.log.error("Exception in read VersionInfoResponse")

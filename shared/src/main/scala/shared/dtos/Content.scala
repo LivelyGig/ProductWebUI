@@ -100,7 +100,7 @@ case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: Strin
 
 case class CloseSessionRequest(sessionURI: String = "") extends Content
 
-case class BalanceChange(sessionURI: String = "", address: String = "", tx: String = "", prevBalance: String = "0", newBalance: String = "0")
+case class BalanceChange(sessionURI: String , address: String , tx: String , prevBalance: String , newBalance: String )
 
 case class SendAmpsRequest(sessionURI: String, amount: String, target: String) extends Content {
   require(amount.nonEmpty, "Amount of AMPs should be non-zero!")
