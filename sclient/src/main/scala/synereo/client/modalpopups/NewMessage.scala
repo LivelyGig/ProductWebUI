@@ -115,6 +115,11 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
+//    def willUnmount(): Callback = Callback {
+    //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+    //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+    //    }
+
     def mounted(): Callback = Callback {
       val props = t.props.runNow()
       //      println(s"messagePost from Props : ${props.messagePost} ")
@@ -280,6 +285,7 @@ object NewMessageForm {
       //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted())
+//    .componentWillUnmount(scope => scope.backend.willUnmount)
     //      .shouldComponentUpdate(scope => false)
     .build
 

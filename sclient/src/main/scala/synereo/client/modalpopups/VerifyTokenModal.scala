@@ -106,7 +106,7 @@ object VerifyTokenModal {
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
                 <.div(SignupCSS.Style.verificationMessageContainer)(
-                  <.h4("Check for the email you have registered with for the verification code.") /*,
+                  <.h4("Check the email you have registered with us for the verification code.") /*,
                   <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")*/
                 ),
                 <.div(SignupCSS.Style.verificationMessageContainer)(
