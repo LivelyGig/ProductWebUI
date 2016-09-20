@@ -68,8 +68,8 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
   "sortContent" should "give a tuple with different types for mixed responses" in {
     val mixedRes = MockData.mixedReponse
     val responseArray = upickle.json.read(mixedRes).arr.map(e => upickle.json.write(e))
-    val (cnxn, msg, intro, cnctNot) = contentUtils.sortContent(responseArray)
-    assert(cnxn.nonEmpty && msg.nonEmpty && intro.nonEmpty && cnctNot.nonEmpty)
+    val (cnxn, msg, intro, cnctNot, balanceChanged) = contentUtils.sortContent(responseArray)
+    assert(cnxn.nonEmpty && msg.nonEmpty && intro.nonEmpty && cnctNot.nonEmpty && balanceChanged.nonEmpty)
   }
 
 

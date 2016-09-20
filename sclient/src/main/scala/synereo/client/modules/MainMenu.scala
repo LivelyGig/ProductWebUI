@@ -25,6 +25,7 @@ import synereo.client.logger
 import synereo.client.utils.ContentUtils
 
 import scala.scalajs.js
+import scala.util.{Failure, Success, Try}
 
 
 //scalastyle:off
@@ -166,7 +167,10 @@ object MainMenu {
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
                       //<.span(model.balance)
-                      <.span(if (model.balance != "")"%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI) else "0")
+                      <.span(Try ("%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI)) match {
+                        case Success(a) => a
+                        case Failure(b) => "0"
+                      }  )
                     )
                   )
                 ),
