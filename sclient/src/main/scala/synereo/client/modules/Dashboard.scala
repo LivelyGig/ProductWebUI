@@ -390,7 +390,6 @@ object HomeFeedList {
 //        $(rightPost).height(collapsiblePost)
       }
       Callback.empty
-
     }
 
     def showRightPost(getRightPost: String): Callback = {
@@ -472,11 +471,11 @@ object HomeFeedList {
                       // getMessage = null
                       <.span("")
                     },
-                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom)(
+                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
                       <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                       <.div(DashboardCSS.Style.cardText)(
                         if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")) )(
                             if (allWordsFrmMessageText.length == 1) {
                               allWordsFrmMessageText(0)
                             } else
