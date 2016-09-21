@@ -105,6 +105,7 @@ object DashboardCSS {
       paddingTop(10.px)
     )
     val cardDescriptionContainerDiv = style(
+      cursor.pointer,
       media.minWidth(768.px) -(
         paddingLeft(65.px),
         paddingRight(65.px)

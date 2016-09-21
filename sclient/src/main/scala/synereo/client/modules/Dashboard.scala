@@ -88,17 +88,6 @@ object Dashboard {
     def serverError(): Callback = {
       t.modState(s => s.copy(showErrorModal = false))
     }
-
-    /*   def showrightPost(showrightPost: Boolean = false): Callback = {
-         if (showrightPost) {
-           println(s"ShowrightPost: ${showrightPost}")
-           t.modState(s => s.copy(showrightPost = true))
-         }
-         else {
-           println(s"ShowrightPost: ${showrightPost}")
-           t.modState(s => s.copy(showrightPost = false))
-         }
-       }*/
   }
 
   val component = ReactComponentB[Props]("Dashboard")
@@ -141,8 +130,8 @@ object Dashboard {
                         <.span()
                       }
                     )
-                  ),
-                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
+                  )
+                 /* <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
                     for (i <- 1 to 6) yield {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
@@ -237,7 +226,7 @@ object Dashboard {
                         )
                       }
                     }
-                  )
+                  )*/
                 )
               )
             ) /*,
@@ -401,7 +390,6 @@ object HomeFeedList {
 //        $(rightPost).height(collapsiblePost)
       }
       Callback.empty
-
     }
 
     def showRightPost(getRightPost: String): Callback = {
@@ -483,11 +471,11 @@ object HomeFeedList {
                       // getMessage = null
                       <.span("")
                     },
-                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom)(
+                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
                       <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                       <.div(DashboardCSS.Style.cardText)(
                         if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")) )(
                             if (allWordsFrmMessageText.length == 1) {
                               allWordsFrmMessageText(0)
                             } else
