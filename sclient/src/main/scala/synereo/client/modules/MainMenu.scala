@@ -48,30 +48,32 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
-    def showUploadImageModal(): react.Callback = {
-      t.modState(s => s.copy(showProfileImageUploadModal = true))
+    //    def showImageUploadModal(): react.Callback = {
+    //      t.modState(s => s.copy(showProfileImageUploadModal = !s.showProfileImageUploadModal))
+    //    }
+    //
+    //    def showAboutInfoModal(): react.Callback = {
+    //      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
+    //    }
+    //
+    //    def showNodeSettingModal(): react.Callback = {
+    //      logger.log.debug("showNodeSettingModal")
+    //      t.modState(s => s.copy(showNodeSettingModal = true))
+    //    }
+
+    def showImageUploadModal(): react.Callback = Callback {
+      logger.log.debug("main menu showImageUploadModal")
+      SYNEREOCircuit.dispatch(ToggleImageUploadModal())
     }
 
-    def imageUploaded(): Callback = {
-      t.modState(s => s.copy(showProfileImageUploadModal = false))
+    def showAboutInfoModal(): react.Callback = Callback {
+      logger.log.debug("main menu showAboutInfoModal")
+      SYNEREOCircuit.dispatch(ToggleAboutInfoModal())
     }
 
-    def toggleShowAboutInfoModal(): react.Callback = {
-      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
-    }
-
-    //  def hideAboutInfoModal(): Callback = {
-    //    t.modState(s => s.copy(showProfileImageUploadModal = false))
-    //  }
-
-    def showNodeSettingModal(): react.Callback = {
-      logger.log.debug("showNodeSettingModal")
-      t.modState(s => s.copy(showNodeSettingModal = true))
-    }
-
-    def hideNodeSettingModal(): Callback = {
-      logger.log.debug("hideNodeSettingModal")
-      t.modState(s => s.copy(showNodeSettingModal = false))
+    def showNodeSettingModal(): react.Callback = Callback {
+      logger.log.debug("main menu showNodeSettingModal")
+      SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
     }
   }
 
@@ -167,10 +169,10 @@ object MainMenu {
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
                       //<.span(model.balance)
-                      <.span(Try ("%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI)) match {
+                      <.span(Try("%06.4f".format((model.balance).toString.toFloat / synereo.client.utils.AppUtils.BTC_SATOSHI)) match {
                         case Success(a) => a
                         case Failure(b) => "0"
-                      }  )
+                      })
                     )
                   )
                 ),
@@ -181,20 +183,20 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.toggleShowAboutInfoModal())("About")),
-                      <.li(<.a(^.onClick --> $.backend.showUploadImageModal())(" Change Profile Picture ")),
+                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())("About")),
+                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(" Change Profile Picture ")),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
                       <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign Out"))
                     )
-                  ),
-                  if (state.showProfileImageUploadModal)
-                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.imageUploaded, "Profile Image Uploader", userProxy)))
-                  else if (state.showNodeSettingModal)
-                    NodeSettingModal(NodeSettingModal.Props($.backend.hideNodeSettingModal))
-                  else if (state.showAboutInfoModal)
-                    AboutInfoModal(AboutInfoModal.Props($.backend.toggleShowAboutInfoModal))
-                  else
-                    Seq.empty[ReactElement]
+                  )
+                  //                  if (state.showProfileImageUploadModal)
+                  //                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.showImageUploadModal, "Profile Image Uploader", userProxy)))
+                  //                  else if (state.showNodeSettingModal)
+                  //                    NodeSettingModal(NodeSettingModal.Props($.backend.showNodeSettingModal))
+                  //                  else if (state.showAboutInfoModal)
+                  //                    AboutInfoModal(AboutInfoModal.Props($.backend.showAboutInfoModal))
+                  //                  else
+                  //                    Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
@@ -222,5 +224,6 @@ object MainMenu {
       )
     })
     .build
+
   def apply(props: Props) = MainMenu(props)
 }

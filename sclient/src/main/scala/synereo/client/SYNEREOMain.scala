@@ -17,10 +17,12 @@ import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+
 import scalacss.mutable.GlobalRegistry
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
+import synereo.client.handlers.CloseAllPopUp
 import synereo.client.sessionitems.SessionItems
 
 
@@ -71,7 +73,12 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#notifications", NotificationsLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.NOTIFICATIONS_VIEW, proxy))))
       | staticRoute("#marketplace", MarketPlaceLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.MARKETPLACE_VIEW, proxy)))))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
-    //      .onPostRender((prev, cur) => Callback.log(s"Page changing from $prev to $cur."))
+      .onPostRender((prev, cur) => /*Callback.log(s"Page changing from $prev to $cur."*/
+        Callback{
+          $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+          SYNEREOCircuit.dispatch(CloseAllPopUp()
+        )}
+      )
   }.renderWith(layout)
 
   // scalastyle:off

@@ -572,27 +572,50 @@ object HomeFeedList {
                 ),
                 <.div(^.className := "row", if (!S.showLovePost)SynereoCommanStylesCSS.Style.marginTop20px else ^.marginTop:="0.px")(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
-                  if (S.showCommentPost)  <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("10") else <.div(^.className := "col-md-2")(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCommentPost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")()
+                  if (S.showCommentPost) <.div(
+                    <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("10"),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) ,
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) ,
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                  )
+                  else
+                    <.div(^.className := "col-md-2")()
+
+
+
+
+
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("12") else <.div(^.className := "col-md-2")(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showCirclePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")()
+
+                  if (S.showCirclePost) <.div(
+                    <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("12"),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+
+                  ) else
+                      <.div(^.className := "col-md-2")()
+
+
+
+
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
-                  if (S.showSharePost)  <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("1") else <.div(^.className := "col-md-2")(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")(),
-                  if (S.showSharePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div(^.className := "col-md-2")()
+                  if (S.showSharePost)
+                    <.div(
+                       <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("1"),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+
+                    )  else
+                        <.div(^.className := "col-md-2")()
                 )
               )
             )
