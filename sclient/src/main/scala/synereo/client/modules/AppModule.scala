@@ -13,8 +13,9 @@ import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers.{LogoutUser, ShowServerError}
 import diode.AnyAction._
 import synereo.client.logger
-import synereo.client.modalpopups.{ServerErrorModal}
+import synereo.client.modalpopups.ServerErrorModal
 import org.scalajs.dom.window
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import japgolly.scalajs.react.{Callback, _}
@@ -22,6 +23,7 @@ import synereo.client.handlers.{LogoutUser, ShowServerError}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
+import org.scalajs.dom
 
 
 /**
@@ -66,6 +68,13 @@ object AppModule {
       }
 
     }
+
+    def didUpdate(): Callback = Callback {
+      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+      //      $("[role='dialog']".asInstanceOf[js.Object]).remove()
+      //      ReactDOM.unmountComponentAtNode(org.scalajs.dom.document.getElementById("naviContainer"));
+    }
   }
 
   private val component = ReactComponentB[Props]("AppModule")
@@ -73,7 +82,7 @@ object AppModule {
     .backend(new AppModuleBackend(_))
     .renderPS((t, P, S) => {
       <.div(
-        <.div(^.id := "connectionsContainerMain", ConnectionsCSS.Style.connectionsContainerMain)(
+        <.div(^.id := "appContainer", ConnectionsCSS.Style.connectionsContainerMain)(
           <.div(),
           <.div()(
             //Left Sidebar
@@ -106,6 +115,7 @@ object AppModule {
         )
       )
     })
+    .componentDidUpdate(scope => scope.$.backend.didUpdate())
     .componentWillMount(scope => scope.backend.mounted(scope.props))
     .build
 

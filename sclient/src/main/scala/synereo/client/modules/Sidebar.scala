@@ -34,7 +34,7 @@ object Sidebar {
         <.ul(^.id := "sidebarNavStyle", ^.className := "nav nav-stacked", DashboardCSS.Style.sidebarNavStyle)(
           <.li()(<.a(^.href := "#")(<.span(Icon.home), "  Stream")),
           <.li(SynereoCommanStylesCSS.Style.featureHide)(<.a(^.href := "#")(<.span(/*MIcon.mailOutline*/ Icon.envelope), " Messages")),
-          <.li()(<.a(^.href := "#")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Profile")),
+          <.li()(<.a(^.href := "/#userprofile")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Profile")),
           <.li(SynereoCommanStylesCSS.Style.featureHide)(<.a(^.href := "/#account")(<.span(/*MIcon.accountCircle*/ Icon.user), "  Account")),
           <.li()(<.a(^.href := "/#people")(<.span(Icon.users), "  People"))
           //          <.li(^.className := "nav-divider")(),

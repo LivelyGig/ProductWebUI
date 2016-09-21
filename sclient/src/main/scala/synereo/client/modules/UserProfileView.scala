@@ -35,27 +35,28 @@ object UserProfileView {
       <.div(^.className := "container-fluid")(
         <.div(^.className := "row", UserProfileViewCSS.Style.userProfileHeadingContainerDiv)(
           <.div(^.className := "col-md-12",
-            <.div(^.className := "row",
-              <.div(^.className := "col-md-2"),
-              <.div(^.className := "col-md-4 text-right",
-                <.img(^.alt := "User Image", ^.className := "", ^.src := userModel.imgSrc, UserProfileViewCSS.Style.userImage),
-                NewImage(NewImage.Props("Change Image", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, ""))
-              ),
-              <.div(^.className := "col-md-4",
-                <.h2()(userModel.name)
-              ),
-              <.div(^.className := "col-md-2")
-            ),
-            <.div(^.className := "row",
-              <.div(^.className := "col-md-2"),
-              <.div(^.className := "col-md-4 text-right",
-                <.h2()("email:")
-              ),
-              <.div(^.className := "col-md-4",
-                <.h2()(userModel.email)
-              ),
-              <.div(^.className := "col-md-2")
+            <.div(^.className := "row text-center",UserProfileViewCSS.Style.heading,
+              "coming soon"
+              //              <.div(^.className := "col-md-2"),
+              //              <.div(^.className := "col-md-4 text-right",
+              //                <.img(^.alt := "User Image", ^.className := "", ^.src := userModel.imgSrc, UserProfileViewCSS.Style.userImage),
+              //                NewImage(NewImage.Props("Change Image", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, ""))
+              //              ),
+              //              <.div(^.className := "col-md-4",
+              //                <.h2()(userModel.name)
+              //              ),
+              //              <.div(^.className := "col-md-2")
             )
+            //            <.div(^.className := "row",
+            //              <.div(^.className := "col-md-2"),
+            //              <.div(^.className := "col-md-4 text-right",
+            //                <.h2()("email:")
+            //              ),
+            //              <.div(^.className := "col-md-4",
+            //                <.h2()(userModel.email)
+            //              ),
+            //              <.div(^.className := "col-md-2")
+            //            )
           )
         )
       )

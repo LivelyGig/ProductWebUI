@@ -6,7 +6,7 @@ var ScrollSpeedMonitor = (function()
     {
         callback = callbackMethod;
 
-        $("#dashboardContainerMain").scroll(function(e)
+        $("#appContainer").scroll(function(e)
         {
             var scrollTop = $(this).scrollTop();
             didScroll(new Date().getTime(), scrollTop);
@@ -85,7 +85,7 @@ $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
       // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
       var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
-//        console.log('Scroll speed: ' + speedInPxPerMs);
+        console.log('Scroll speed: ' + speedInPxPerMs);
 if (speedInPxPerMs > 3) {
     $("#homeFeedMediaList li").css("opacity","0.2");
 }else{

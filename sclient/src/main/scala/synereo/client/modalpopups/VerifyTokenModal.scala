@@ -22,11 +22,13 @@ import synereo.client.sessionitems.SessionItems
 import scala.scalajs.js
 
 /**
-  * Created by Mandar on 4/19/2016.
+  * Created by mandar.k on 4/19/2016.
   */
+//scalastyle:off
 object VerifyTokenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
-  val addBtn : js.Object = "#addBtn"
+
+  val addBtn: js.Object = "#addBtn"
 
   case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
@@ -80,7 +82,7 @@ object VerifyTokenModal {
 
     def formClosed(state: VerifyTokenModal.State, props: VerifyTokenModal.Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
-      props.submitHandler(state.emailValidationModel, state.accountValidationFailed,state.showLoginForm)
+      props.submitHandler(state.emailValidationModel, state.accountValidationFailed, state.showLoginForm)
     }
   }
 
@@ -104,22 +106,26 @@ object VerifyTokenModal {
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
                 <.div(SignupCSS.Style.verificationMessageContainer)(
-                  <.h4("Your account has been created!"),
-                  <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")
+                  <.h4("Check the email you have registered with us for the verification code.") /*,
+                  <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")*/
                 ),
                 <.div(SignupCSS.Style.verificationMessageContainer)(
-                  <.div(LoginCSS.Style.loginFormInputText,LoginCSS.Style.apiDetailsContainer)(
+                  <.div(LoginCSS.Style.loginFormInputText, LoginCSS.Style.apiDetailsContainer)(
                     <.div(^.id := "addLabel", ^.className := "collapse")(
-                      <.div(^.className:="input-group")(
+                      <.div(^.className := "input-group")(
                         // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
                         <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
                           ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := S.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
                         <.div(^.className := "help-block with-errors"),
-                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn",^.onClick ==>t.backend.closeAPITextbox)(Icon.times),
-                        <.span(^.className:="input-group-addon",^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.className := "btn", ^.onClick --> Callback{ $(addBtn).show()})(Icon.check)
+                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
+                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
+                          $(addBtn).show()
+                        })(Icon.check)
                       )
                     ),
-                    <.button(^.id:="addBtn",^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel",^.onClick --> Callback{$(addBtn).hide()})("Edit API details")
+                    <.button(^.id := "addBtn", ^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                      $(addBtn).hide()
+                    })("Edit API details")
                   ),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
                     ^.placeholder := "Verification code", ^.value := S.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
