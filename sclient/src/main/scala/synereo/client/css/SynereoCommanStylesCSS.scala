@@ -416,5 +416,13 @@ object SynereoCommanStylesCSS {
     val marginTop20px = style (
       marginTop(20.px)
     )
+
+    val lovePost = style (
+      height(100.px),
+      marginTop(-70.px),
+      marginLeft(51.px),
+      opacity(0.3),
+      background := rgba(0,0,0,0.5)
+    )
   }
 }

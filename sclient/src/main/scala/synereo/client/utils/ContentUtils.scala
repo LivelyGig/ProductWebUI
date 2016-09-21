@@ -38,7 +38,7 @@ object ContentUtils {
     */
   def processRes(response: String): Seq[ResponseContent] = {
     // process response
-    val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
+    val responseArray = upickle.json.read(response).arr.distinct.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
     val (cnxn, postContent, intro, cnctNot, balChanged) = sortContent(responseArray)
     // three more responses session pong, begin introduction and introduction confirmation which are not processed because tney do nothing
     if (intro.nonEmpty) SYNEREOCircuit.dispatch(AddNotification(intro.map(_.content)))

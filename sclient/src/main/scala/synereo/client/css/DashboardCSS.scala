@@ -203,6 +203,24 @@ object DashboardCSS {
         fontSize(11.px)
         )
     )
+
+    val postDescription = style (
+
+      display.inlineBlock,
+      paddingTop(2.px),
+      fontFamily :=! "karla",
+      fontWeight.bold,
+      lineHeight(1.5.em),
+      color(c"#fff"),
+      opacity(0.65),
+      media.minWidth(768.px) - (
+        fontSize(14.px)
+        ),
+      media.maxWidth(767.px) - (
+        fontSize(11.px)
+        )
+
+    )
     val postActions = style(
       marginLeft(-10.px)
     )
