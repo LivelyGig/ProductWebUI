@@ -88,17 +88,6 @@ object Dashboard {
     def serverError(): Callback = {
       t.modState(s => s.copy(showErrorModal = false))
     }
-
-    /*   def showrightPost(showrightPost: Boolean = false): Callback = {
-         if (showrightPost) {
-           println(s"ShowrightPost: ${showrightPost}")
-           t.modState(s => s.copy(showrightPost = true))
-         }
-         else {
-           println(s"ShowrightPost: ${showrightPost}")
-           t.modState(s => s.copy(showrightPost = false))
-         }
-       }*/
   }
 
   val component = ReactComponentB[Props]("Dashboard")
@@ -141,8 +130,8 @@ object Dashboard {
                         <.span()
                       }
                     )
-                  ),
-                  <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
+                  )
+                 /* <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
                     for (i <- 1 to 6) yield {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
@@ -237,7 +226,7 @@ object Dashboard {
                         )
                       }
                     }
-                  )
+                  )*/
                 )
               )
             ) /*,

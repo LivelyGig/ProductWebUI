@@ -45,9 +45,15 @@ object SignupCSS {
       backgroundColor.transparent.important,
       border.none.important,
       paddingLeft(4.px),
-      textDecorationLine.underline,
-      fontSize(13.px),
-      marginTop(-1.px)
+      textDecoration:="underline",
+//      textDecorationLine.underline,
+      fontSize(14.px),
+      fontWeight.lighter,
+      marginTop(-1.px),
+      &.hover(
+        textDecoration:="underline"
+      )
+
     )
     val SignUpBtn = style(
       backgroundColor(c"#FF806C"),
