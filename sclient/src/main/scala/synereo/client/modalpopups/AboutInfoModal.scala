@@ -31,7 +31,7 @@ object AboutInfoModal {
     }
 
     def mounted(props: AboutInfoModal.Props) = Callback {
-      logger.log.debug(s"versionInfoModal mounted")
+      logger.log.debug(s"AboutInfoModal mounted")
       CoreApi.getVersionInfo().onComplete {
         case Success(res) =>
           try {

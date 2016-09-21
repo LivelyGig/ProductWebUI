@@ -10,19 +10,18 @@ import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.AppRootModel
-import synereo.client.handlers.{LogoutUser, ShowServerError}
-import diode.AnyAction._
+import synereo.client.handlers._
 import synereo.client.logger
-import synereo.client.modalpopups.ServerErrorModal
+import synereo.client.modalpopups.{AboutInfoModal, NodeSettingModal, ProfileImageUploaderForm, ServerErrorModal}
 import org.scalajs.dom.window
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import japgolly.scalajs.react.{Callback, _}
-import synereo.client.handlers.{LogoutUser, ShowServerError}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
+import japgolly.scalajs.react
 import org.scalajs.dom
 
 
@@ -50,10 +49,33 @@ object AppModule {
 
   case class Props(view: String, proxy: ModelProxy[AppRootModel])
 
-  case class State(showErrorModal: Boolean = false)
+  case class State(showErrorModal: Boolean = false, showProfileImageUploadModal: Boolean = false,
+                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
 
 
   class AppModuleBackend(t: BackendScope[Props, State]) {
+    /**
+      * do not try to change these callback methods using react.Callback or other ways of callbacks, popups wont work then
+      *
+      * @return
+      */
+    def hideProfileImageModal(): Callback = {
+      logger.log.debug("hideProfileImageModal")
+      SYNEREOCircuit.dispatch(ToggleImageUploadModal())
+      t.modState(s => s.copy(showProfileImageUploadModal = false))
+    }
+
+    def hideAboutInfoModal(): Callback = {
+      logger.log.debug("hideAboutInfoModal")
+      SYNEREOCircuit.dispatch(ToggleAboutInfoModal())
+      t.modState(s => s.copy(showAboutInfoModal = false))
+    }
+
+    def hideNodeSettingModal(): Callback = {
+      logger.log.debug("hideNodeSettingModal")
+      SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
+      t.modState(s => s.copy(showNodeSettingModal = false))
+    }
 
     def serverError(): Callback = {
       SYNEREOCircuit.dispatch(ShowServerError(""))
@@ -70,8 +92,9 @@ object AppModule {
     }
 
     def didUpdate(): Callback = Callback {
-      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
+      //      SYNEREOCircuit.dispatch(CloseAllPopUp())
+      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
+      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
       //      $("[role='dialog']".asInstanceOf[js.Object]).remove()
       //      ReactDOM.unmountComponentAtNode(org.scalajs.dom.document.getElementById("naviContainer"));
     }
@@ -83,7 +106,6 @@ object AppModule {
     .renderPS((t, P, S) => {
       <.div(
         <.div(^.id := "appContainer", ConnectionsCSS.Style.connectionsContainerMain)(
-          <.div(),
           <.div()(
             //Left Sidebar
             <.div(^.id := "searchContainer", ^.className := "sidebar sidebar-left sidebar-animate sidebar-lg-show ",
@@ -96,9 +118,18 @@ object AppModule {
             )(Sidebar(Sidebar.Props())),
             if (P.proxy().isServerError) {
               ServerErrorModal(ServerErrorModal.Props(t.backend.serverError))
-            } else {
-              <.div()
             }
+            else if (P.proxy().showProfileImageUploadModal) {
+              userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props(t.backend.hideProfileImageModal, "Profile Image Uploader", userProxy)))
+            }
+            else if (P.proxy().showNodeSettingModal) {
+              NodeSettingModal(NodeSettingModal.Props(t.backend.hideNodeSettingModal))
+            }
+            else if (P.proxy().showAboutInfoModal) {
+              AboutInfoModal(AboutInfoModal.Props(t.backend.hideAboutInfoModal))
+            }
+            else
+              Seq.empty[ReactElement]
           ),
           <.div(
             P.view match {
