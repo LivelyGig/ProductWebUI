@@ -53,7 +53,9 @@ object LoginView {
                    showErrorModal: Boolean = false,
                    showAccountValidationFailed: Boolean = false,
                    loginErrorMessage: String = "",
-                   showNewInviteForm: Boolean = false, registrationErrorMsg: String = "")
+                   showNewInviteForm: Boolean = false,
+                   showTermsOfServicesForm: Boolean = false,
+                   registrationErrorMsg: String = "")
 
 
   class LoginViewBackend(t: BackendScope[Props, State]) {
@@ -77,7 +79,7 @@ object LoginView {
     //      t.modState(s => s.copy(showNewUserForm = true))
     //    }
 
-    def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false): Callback = {
+    def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       //      log.debug(s"addNewUser userModel : ${signUpModel}")
@@ -118,7 +120,10 @@ object LoginView {
         t.modState(s => s.copy(showNewUserForm = false))
       } else if (showLoginForm) {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
-      } else {
+      } else if (showTermsOfServicesForm){
+        t.modState(s => s.copy(showNewUserForm = false, showLoginForm=false, showTermsOfServicesForm = true))
+      }
+      else {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }
@@ -275,9 +280,9 @@ object LoginView {
       t.modState(s => s.copy(showAccountValidationFailed = false, showConfirmAccountCreation = true))
     }
 
-    //    def termsOfServices(): Callback = {
-    //      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true))
-    //    }
+    def termsOfServices(): Callback = {
+      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true,showLoginForm = false))
+    }
 
     def submitApiForm(e: ReactEventI) = {
       e.preventDefault()
@@ -344,7 +349,10 @@ object LoginView {
 
           ),
           <.div()(
-            if (s.showLoginForm) {
+            if (s.showTermsOfServicesForm) {
+              TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Services"))
+            }
+            else if (s.showLoginForm) {
               LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
             }
             else if (s.showNewUserForm) {

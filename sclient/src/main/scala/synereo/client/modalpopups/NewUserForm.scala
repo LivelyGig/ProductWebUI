@@ -25,7 +25,7 @@ object NewUserForm {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (SignUpModel, Boolean, Boolean) => Callback)
+  case class Props(submitHandler: (SignUpModel, Boolean, Boolean, Boolean) => Callback)
 
   case class State(signUpModel: SignUpModel,
                    addNewUser: Boolean = false,
@@ -96,9 +96,9 @@ object NewUserForm {
     //      t.modState(s => s.copy(signUpModel = s.signUpModel.copy(createBTCWallet = !s.signUpModel.createBTCWallet)))
     //    }
 
-    def showTermsOfServices(e: ReactEventI) = {
+    def showTermsOfServices(): Callback = {
       addNewUserState = true
-      t.modState(s => s.copy(showTermsOfServicesForm = true))
+      t.modState(s => s.copy(showTermsOfServicesForm = true, addNewUser = false, showLoginForm = false))
     }
 
     def submitForm(e: ReactEventI) = {
@@ -116,7 +116,7 @@ object NewUserForm {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(state.addNewUser)
       signUpModelUpdate = state.signUpModel
-      props.submitHandler(state.signUpModel, state.addNewUser, state.showLoginForm)
+      props.submitHandler(state.signUpModel, state.addNewUser, state.showLoginForm, state.showTermsOfServicesForm)
     }
   }
 
@@ -187,8 +187,8 @@ object NewUserForm {
           ),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-              <.input(^.`type` := "checkbox", ^.id := "IamCoolWithThe", ^.required := true), <.label(^.`for` := "IamCoolWithThe")("I'm cool with the"),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", SignupCSS.Style.termsAndCondBtn, ^.onClick ==> t.backend.showTermsOfServices, "Terms of Service ")
+              <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true), <.label(^.`for` := "termsOfServices", ^.fontSize := "14.px")("I'm cool with the"),
+              Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), "Terms of Service ")
             )
           ),
           <.div()(
