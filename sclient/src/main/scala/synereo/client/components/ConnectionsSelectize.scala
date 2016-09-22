@@ -5,7 +5,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import org.scalajs.dom._
 import org.denigma.selectize._
-
+import org.querki.jquery.JQueryExtensions
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
@@ -19,19 +19,29 @@ import synereo.client.utils.AppUtils
 //scalastyle:off
 object ConnectionsSelectize {
 
+  //  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
+  //    var selectedConnections = Seq[Connection]()
+  //    var allSelected: Boolean = false
+  //    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
+  //    $(selector).each((ele: Element) =>
+  //      if ($(ele).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID) {
+  //        allSelected = true
+  //        selectedConnections = selectedConnections ++ SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
+  //      } else if (!allSelected) {
+  //        selectedConnections :+= upickle.default.read[Connection]($(ele).attr("data-value").toString)
+  //      }
+  //    )
+  //    selectedConnections
+  //  }
+
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
-    var selectedConnections = Seq[Connection]()
-    var allSelected: Boolean = false
-    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
-    $(selector).each((ele: Element) =>
-      if ($(ele).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID) {
-        allSelected = true
-        selectedConnections = selectedConnections ++ SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
-      } else if (!allSelected) {
-        selectedConnections :+= upickle.default.read[Connection]($(ele).attr("data-value").toString)
-      }
-    )
-    selectedConnections
+    val selectedCnxn = $(s"#${selectizeInputId} > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
+    if ($(selectedCnxn(0)).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID)
+      SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
+    else {
+      val extn = new JQueryExtensions(selectedCnxn)
+      extn.mapElems[Connection](ele => upickle.default.read[Connection]($(ele).attr("data-value").toString))
+    }
   }
 
   def getConnectionNames(selectizeInputId: String): Seq[String] = {
@@ -107,7 +117,7 @@ object ConnectionsSelectize {
       if (props.enableAllContacts) {
         <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
-          <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@AllContacts"),
+          <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@All_Contacts"),
           for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
             ^.key := connection.connection.target)(
             if (connection.name.startsWith("@")) {

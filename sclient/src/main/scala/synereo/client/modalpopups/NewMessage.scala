@@ -224,7 +224,8 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := S.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize, enableAllContacts = true))
+              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,
+                enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))
             ),
             <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
