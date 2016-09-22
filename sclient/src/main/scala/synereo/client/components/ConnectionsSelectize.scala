@@ -5,11 +5,13 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
 import org.scalajs.dom._
 import org.denigma.selectize._
+
 import scala.language.existentials
 import scala.scalajs.js
 import shared.dtos.Connection
-import shared.models.{ConnectionsModel}
+import shared.models.ConnectionsModel
 import synereo.client.services.SYNEREOCircuit
+import synereo.client.utils.AppUtils
 
 /**
   * Created by mandar.k on 4/6/2016.
@@ -19,10 +21,16 @@ object ConnectionsSelectize {
 
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     var selectedConnections = Seq[Connection]()
+    var allSelected: Boolean = false
     val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
-
-    $(selector).each((y: Element) => selectedConnections :+= upickle.default.read[Connection]($(y).attr("data-value").toString))
-    //    println("selectedConnections" + selectedConnections)
+    $(selector).each((ele: Element) =>
+      if ($(ele).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID) {
+        allSelected = true
+        selectedConnections = selectedConnections ++ SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
+      } else if (!allSelected) {
+        selectedConnections :+= upickle.default.read[Connection]($(ele).attr("data-value").toString)
+      }
+    )
     selectedConnections
   }
 
@@ -34,7 +42,7 @@ object ConnectionsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None)
+  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, enableAllContacts: Boolean = false)
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
@@ -78,6 +86,7 @@ object ConnectionsSelectize {
 
     def mounted(props: Props, state: State): Callback = Callback {
       initializeTagsInput(props, state)
+      //      SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection).foreach(println)
     }
 
     def getCnxnModel(): Seq[ConnectionsModel] = {
@@ -95,16 +104,31 @@ object ConnectionsSelectize {
     }
 
     def render(props: Props, state: State) = {
-      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
-        <.option(^.value := "")("Select"),
-        for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
-          ^.key := connection.connection.target)(
-          if (connection.name.startsWith("@")) {
-            s"${connection.name}"
-          } else {
-            s"@${connection.name}"
-          })
-      )
+      if (props.enableAllContacts) {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
+          <.option(^.value := "")("Select"),
+          <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@AllContacts"),
+          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+            ^.key := connection.connection.target)(
+            if (connection.name.startsWith("@")) {
+              s"${connection.name}"
+            } else {
+              s"@${connection.name}"
+            })
+        )
+      } else {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+          <.option(^.value := "")("Select"),
+          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+            ^.key := connection.connection.target)(
+            if (connection.name.startsWith("@")) {
+              s"${connection.name}"
+            } else {
+              s"@${connection.name}"
+            })
+        )
+      }
+
     }
   }
 

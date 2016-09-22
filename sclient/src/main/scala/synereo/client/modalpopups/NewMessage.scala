@@ -115,7 +115,7 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-//    def willUnmount(): Callback = Callback {
+    //    def willUnmount(): Callback = Callback {
     //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
     //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
     //    }
@@ -213,7 +213,7 @@ object NewMessageForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.className := "hidden", ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(S, P),
           id = "newMessage"
@@ -224,7 +224,7 @@ object NewMessageForm {
           ),
           <.div(^.className := "row")(
             <.div(^.id := S.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize))
+              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize, enableAllContacts = true))
             ),
             <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
             <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
@@ -285,7 +285,7 @@ object NewMessageForm {
       //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted())
-//    .componentWillUnmount(scope => scope.backend.willUnmount)
+    //    .componentWillUnmount(scope => scope.backend.willUnmount)
     //      .shouldComponentUpdate(scope => false)
     .build
 
