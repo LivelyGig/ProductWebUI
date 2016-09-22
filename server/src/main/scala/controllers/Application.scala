@@ -12,8 +12,8 @@ class Application()(/*implicit environment: Environment*/) extends Controller {
 
   def index = Action {
 
-    //                    Ok(views.html.index("LivelyGig"))
-    Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
+    Ok(views.html.index("LivelyGig"))
+    //    Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
   }
 
   def logging = Action(parse.anyContent) {
