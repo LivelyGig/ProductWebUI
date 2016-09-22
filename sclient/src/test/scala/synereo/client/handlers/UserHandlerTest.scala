@@ -14,7 +14,7 @@ import synereo.client.UnitTest
 class UserHandlerTest extends UnitTest("UserHandlerTest") {
   val handler = new UserHandler(new RootModelRW(UserModel()))
 
-val newUserModel =  UserModel("name", "email","password",false,"imgSrc", "confirmPassword",true,"balance","address","sessionUri")
+  val newUserModel = UserModel("name", "email", "password", false, "imgSrc", "confirmPassword", true, "balance", "address", "sessionUri")
 
   "LoginUser" should "Login details" in {
 
@@ -26,15 +26,12 @@ val newUserModel =  UserModel("name", "email","password",false,"imgSrc", "confir
         assert(true)
     }
   }
-/*
-  "LogoutUser" should "Log out Details" in {
+  /*"LogoutUser" should "Log out Details" in {
 
-    val result = handler.handle(LogoutUser())
+    val result = handler.handle(LogoutUser)
     result match {
-      case ModelUpdate(newValue) =>{
-        assert(newValue!=null)
-      }
-
+      case ModelUpdate(newValue) =>
+        assert(newValue != null)
       case _ => assert(true)
     }
   }*/
@@ -44,17 +41,17 @@ val newUserModel =  UserModel("name", "email","password",false,"imgSrc", "confir
     val result = handler.handle(UpdateUserImage(newUserModel.imgSrc))
     result match {
       case ModelUpdate(newValue) =>
-        assert(newValue!=null)
+        assert(newValue != null)
       case _ => assert(true)
     }
 
   }
 
   "BalanceChanged" should "Updated AMP balance should not be null" in {
-    val result = handler.handle(BalanceChanged(newUserModel.balance,newUserModel.address))
+    val result = handler.handle(BalanceChanged(newUserModel.balance, newUserModel.address))
     result match {
       case ModelUpdate(newValue) =>
-        assert(newValue.balance!=null, newValue.address!=null)
+        assert(newValue.balance != null, newValue.address != null)
       case _ => assert(true)
     }
   }

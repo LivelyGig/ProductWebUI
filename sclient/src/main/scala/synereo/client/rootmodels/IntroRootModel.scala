@@ -5,7 +5,7 @@ import shared.dtos.Introduction
 /**
   * Created by mandar.k on 7/19/2016.
   */
-case  class IntroRootModel(introResponse:Seq[Introduction]) {
+case  class IntroRootModel(introResponse:Seq[Introduction] = Nil) {
   def updated(newIntroRes: Introduction) = {
     introResponse.indexWhere(_.connection.target == newIntroRes.connection.target) match {
       case -1 =>

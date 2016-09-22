@@ -21,4 +21,13 @@ class ConnectionHandlerTest extends UnitTest("ConnectionHandlerTest") {
     ConnectionsModel("sessionUri2",newCnxnSeq(1),"name2",""),
     ConnectionsModel("sessionUri3",newCnxnSeq(2),"name3",""))
 
+    "UpdateConnections" should "Updated connections as per responce" in {
+      val result = handler.handle(UpdateConnections(newConnectionModelSeq))
+      result match {
+        case ModelUpdate(newValue) =>
+          assert(newValue != null)
+        case _ =>
+          assert(false)
+      }
+    }
 }

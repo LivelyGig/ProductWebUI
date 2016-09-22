@@ -22,7 +22,7 @@ case class RefreshMessages(potResult: Pot[MessagesRootModel] = Empty, retryPolic
   override def next(value: Pot[MessagesRootModel], newRetryPolicy: RetryPolicy): RefreshMessages = RefreshMessages(value, newRetryPolicy)
 }
 
-case class StoreCnxnAndLabels(slctzId: String, sessionUriName: String)
+//case class StoreCnxnAndLabels(slctzId: String, sessionUriName: String)
 
 case class ClearMessages()
 

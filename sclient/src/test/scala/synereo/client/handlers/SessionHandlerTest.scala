@@ -11,7 +11,6 @@ import synereo.client.rootmodels.SessionRootModel
 class SessionHandlerTest extends UnitTest("SessionPingHandler") {
   val handler = new SessionHandler(new RootModelRW(SessionRootModel()))
 
-
   "SetSessionUri" should "set the session uri in the SessionRootModel" in {
     val result = handler.handle(SetSessionUri("test"))
     result match {
