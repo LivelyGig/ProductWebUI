@@ -16,4 +16,6 @@ object MockData {
 
   val balChanged = "[{\"msgType\":\"balanceChanged\",\"content\":{\"sessionURI\":\"agent-session://ff03586051a338dd7577f8d99cd661a0dbea/c5e007bca9000f11742eec9fe2091c1966c8a6a640868a4c6956ba998c68f04d\", \"address\":\"testAddress\", \"tx\":\"testtx\", \"prevBalance\":\"testprevBalance\", \"newBalance\":\"testnewBalance\"}}]"
 
+  val selectizeInputId = "connectionsSelectizeInputId"
+
 }
