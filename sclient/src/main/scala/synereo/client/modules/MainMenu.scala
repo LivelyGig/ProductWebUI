@@ -91,7 +91,7 @@ object MainMenu {
             <.div(^.className := "label-selectize-container-main")(
               if (props.currentLoc == DashboardLoc) {
                 <.div(
-                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), Icon.envelope, "", ""))),
+                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif",SynereoCommanStylesCSS.Style.createPostImg), "", ""))),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
