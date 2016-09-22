@@ -75,7 +75,8 @@ object SynereoCommanStylesCSS {
 
       //      marginTop(8.px),
       marginTop(12.%%),
-      marginRight(15.px),
+//      marginRight(15.px),
+
       //      marginRight(-4.px),
       //      height(50.px),
       textAlign.left,
@@ -101,6 +102,10 @@ object SynereoCommanStylesCSS {
       //        backgroundColor(c"#2283AE"),
       //        color(c"#FFFFFF").important
       //      )
+    )
+    val createPostImg = style(
+      maxWidth(24.px),
+      borderRadius(31.%%)
     )
     val ampsCount = style(
       fontWeight._600,

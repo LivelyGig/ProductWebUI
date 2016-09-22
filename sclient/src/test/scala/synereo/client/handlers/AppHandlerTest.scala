@@ -23,8 +23,6 @@ class AppHandlerTest extends UnitTest("AppHandler") {
         assert(newValue.serverErrorMsg == errorMsg)
       case _ =>
         assert(false)
-
     }
   }
-
 }
