@@ -22,7 +22,7 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.ContentUtils
+import synereo.client.utils.{ContentUtils, I18N}
 
 import scala.scalajs.js
 import scala.util.{Failure, Success, Try}
@@ -83,7 +83,6 @@ object MainMenu {
     .backend(new MainMenuBackend(_))
     .renderPS(($, props, state) => {
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-      //      println(state"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
@@ -91,7 +90,7 @@ object MainMenu {
             <.div(^.className := "label-selectize-container-main")(
               if (props.currentLoc == DashboardLoc) {
                 <.div(
-                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif",SynereoCommanStylesCSS.Style.createPostImg), "", ""))),
+                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg), "", ""))),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
@@ -183,10 +182,10 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())("About")),
-                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(" Change Profile Picture ")),
-                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign Out"))
+                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(I18N.En.MainMenu.DROPDOWN_ABOUT)),
+                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(I18N.En.MainMenu.DROPDOWN_CHANGE_PROFILE_PICTURE)),
+                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), I18N.En.MainMenu.DROPDOWN_NODE_SETTINGS)),
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(I18N.En.MainMenu.SIGN_OUT))
                     )
                   )
                   //                  if (state.showProfileImageUploadModal)
@@ -210,13 +209,12 @@ object MainMenu {
             <.li(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
-                "WHAT IS SYNEREO?"
+                I18N.En.MainMenu.WHAT_IS_SYNEREO
               )
             ),
             <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
-                <.span("WATCH THE VIDEO")
+                I18N.En.MainMenu.WATCH_THE_VIDEO
               )
             )
           )

@@ -165,9 +165,6 @@ object LoginCSS {
         )
 
     )
-    val navLiAIcon = style(
-      paddingRight(8.px)
-    )
     val passwordGlyphStyle = style(
       marginLeft(-25.px),
       marginRight(10.px)
