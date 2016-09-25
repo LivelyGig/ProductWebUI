@@ -46,7 +46,10 @@ object ConnectionsResults {
                 )
               ),
               <.div(PresetsCSS.Style.modalBtn)(
-                NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection"))
+                NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection")),
+                <.div(PresetsCSS.Style.overlay, ^.top:="0.1em")(
+                  Icon.plus
+                )
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

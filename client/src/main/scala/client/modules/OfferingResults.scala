@@ -31,7 +31,10 @@ object OfferingResults {
                 )
               ),
               <.div(PresetsCSS.Style.modalBtn)(
-                Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create New Offering"))
+                Offering(Offering.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.briefcase, "Create Offering")),
+                <.div(PresetsCSS.Style.overlay)(
+                  Icon.plus
+                )
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

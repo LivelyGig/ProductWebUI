@@ -71,7 +71,10 @@ object MessagesResults {
                 )
               ),
               <.div(PresetsCSS.Style.modalBtn)(
-                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message"))
+                NewMessage(NewMessage.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.envelope, "Create New Message")),
+                <.div(PresetsCSS.Style.overlay)(
+                  Icon.plus
+                )
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )
