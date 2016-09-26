@@ -22,7 +22,7 @@ object HeaderCSS {
      // borderBottom(2.px, solid, c"#67EAF2"),
       paddingLeft(0.%%),
       paddingRight(0.%%),
-      marginBottom(0.px),
+      marginBottom(10.px),
       media.maxWidth(820.px) -
         paddingTop(2.px),
       media.minWidth(821.px) -
