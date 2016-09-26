@@ -84,7 +84,7 @@ object LoginView {
       $(loginLoader).removeClass("hidden")
       //      log.debug(s"addNewUser userModel : ${signUpModel}")
       if (addNewAgent) {
-        createUser(signUpModel.copy(email = signUpModel.email.toLowerCase)).onComplete {
+        createUser(signUpModel.copy(email = signUpModel.email.trim.toLowerCase)).onComplete {
           case Success(response) =>
             try {
               val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
@@ -120,8 +120,8 @@ object LoginView {
         t.modState(s => s.copy(showNewUserForm = false))
       } else if (showLoginForm) {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
-      } else if (showTermsOfServicesForm){
-        t.modState(s => s.copy(showNewUserForm = false, showLoginForm=false, showTermsOfServicesForm = true))
+      } else if (showTermsOfServicesForm) {
+        t.modState(s => s.copy(showNewUserForm = false, showLoginForm = false, showTermsOfServicesForm = true))
       }
       else {
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
@@ -151,7 +151,7 @@ object LoginView {
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
-      CoreApi.agentLogin(userModel.copy(email = userModel.email.toLowerCase)).onComplete {
+      CoreApi.agentLogin(userModel.copy(email = userModel.email.trim.toLowerCase)).onComplete {
         case Success(response) =>
           validateInitializeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
@@ -281,7 +281,7 @@ object LoginView {
     }
 
     def termsOfServices(): Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true,showLoginForm = false))
+      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true, showLoginForm = false))
     }
 
     def submitApiForm(e: ReactEventI) = {
@@ -346,7 +346,6 @@ object LoginView {
             //                )
             //              )
             //            )
-
           ),
           <.div()(
             if (s.showTermsOfServicesForm) {

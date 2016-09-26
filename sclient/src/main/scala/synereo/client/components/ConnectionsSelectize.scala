@@ -36,7 +36,7 @@ object ConnectionsSelectize {
 
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     val selectedCnxn = $(s"#${selectizeInputId} > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
-    if ($(selectedCnxn(0)).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID)
+    if (selectedCnxn.filter(s"[data-value='${AppUtils.ALL_CONTACTS_ID}']").length == 1)
       SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
     else {
       val extn = new JQueryExtensions(selectedCnxn)
