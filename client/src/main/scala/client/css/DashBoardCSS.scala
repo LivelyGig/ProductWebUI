@@ -266,7 +266,13 @@ object DashBoardCSS {
     )
     val marginLeftCloseBtn = style(
       marginLeft(20.px),
-      backgroundColor(orange)
+      backgroundColor(orange),
+      /*&.active(
+      backgroundColor(blue)
+    ),*/
+    &.hover(
+      backgroundColor(orangered)
+    )
       // addClassName("btnBackground")
 
     )
