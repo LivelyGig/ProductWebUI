@@ -12,6 +12,13 @@ import scala.scalajs.js.Date
   * Created by shubham.k on 15-07-2016.
   */
 object MessagesUtils {
+  /**
+    * This  method gives the message post data which can be posted to the server
+    * @param postContent the content of the post with the message
+    * @param cnxns all connection to which post will be sent
+    * @param labels all labels for which post will be sent
+    * @return
+    */
   def getPostData(postContent: PostContent, cnxns: Seq[Connection], labels: Seq[Label]): SubscribeRequest = {
     val uid = UUID.randomUUID().toString.replaceAll("-", "")
     val labelToPost = Seq(LabelsUtils.getLabelModel(AppUtils.MESSAGE_POST_LABEL)) ++ labels

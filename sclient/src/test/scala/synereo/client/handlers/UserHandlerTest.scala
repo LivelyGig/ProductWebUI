@@ -14,7 +14,7 @@ import synereo.client.UnitTest
 class UserHandlerTest extends UnitTest("UserHandlerTest") {
   val handler = new UserHandler(new RootModelRW(UserModel()))
 
-  val newUserModel = UserModel("name", "email", "password", false, "imgSrc", "confirmPassword", true, "balance", "address", "sessionUri")
+  val newUserModel = UserModel("name", "email", "password", false, "imgSrc", "confirmPassword", true, "balance", "address")
 
   "LoginUser" should "Login details" in {
 

@@ -107,13 +107,13 @@ object ContentUtils {
     * @param response
     * @return
     */
-  def getMsgModel(response: Seq[ApiResponse[ResponseContent]]): Seq[Post] = {
-    val msgModelMod = getCurrMsgModel() ++
-      response
-        .filterNot(_.content.pageOfPosts.isEmpty)
-        .flatMap(content => Try(upickle.default.read[MessagePost](content.content.pageOfPosts(0))).toOption)
-    msgModelMod.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
-  }
+//  def getMsgModel(response: Seq[ApiResponse[ResponseContent]]): Seq[Post] = {
+//    val msgModelMod = getCurrMsgModel() ++
+//      response
+//        .filterNot(_.content.pageOfPosts.isEmpty)
+//        .flatMap(content => Try(upickle.default.read[MessagePost](content.content.pageOfPosts(0))).toOption)
+//    msgModelMod.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created)))
+//  }
 
   def postNewConnection(content: Content) = {
     var count = 1
