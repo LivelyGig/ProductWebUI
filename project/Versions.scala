@@ -26,7 +26,7 @@ trait SharedVersions
   val upickle = "0.4.1" //"0.3.8"
   val scalatest = "3.0.0-M15"
   val autowire = "0.2.5"
-  val booPickle = "1.1.2"
+  val booPickle = "1.2.4"
   val scalaTest = "3.0.0"  //"3.0.0-M15"
   val test = "0.11.1"
 

@@ -66,13 +66,11 @@ object AppModule {
     }
 
     def hideAboutInfoModal(): Callback = {
-      logger.log.debug("hideAboutInfoModal")
       SYNEREOCircuit.dispatch(ToggleAboutInfoModal())
       t.modState(s => s.copy(showAboutInfoModal = false))
     }
 
     def hideNodeSettingModal(): Callback = {
-      logger.log.debug("hideNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
       t.modState(s => s.copy(showNodeSettingModal = false))
     }

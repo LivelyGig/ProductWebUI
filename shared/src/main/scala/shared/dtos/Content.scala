@@ -1,5 +1,7 @@
 package shared.dtos
 
+import boopickle.Default._
+
 /**
   * Represents content within a request/response to API endpoints.
   */
@@ -12,9 +14,7 @@ case class ApiRequest(msgType: String, content: Content)
 
 case class ApiResponse[T](msgType: String, content: T)
 
-sealed trait Content {
-
-}
+sealed trait Content
 
 case class CreateUser(email: String, password: String, jsonBlob: Map[String, String], createBTCWallet: Boolean)
   extends Content
@@ -108,3 +108,9 @@ case class SendAmpsRequest(sessionURI: String, amount: String, target: String) e
 }
 
 case class SendAmpsResponse(sessionURI: String, transaction: String)
+
+case class ServerModel(uid: String = "", serverAddress : String = "", isEditable : Boolean = true, serverType: String = "")
+
+/*object Content {
+  implicit val todoPriorityPickler: Pickler[Content] = generatePickler[Content]
+}*/

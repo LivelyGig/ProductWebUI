@@ -12,3 +12,6 @@ GET     /assets/*file                     controllers.Assets.at(path="/public", 
 
 # Logging
 POST /logging                             controllers.Application.logging
+
+# Autowire calls
+POST    /api/*path                        controllers.Application.autowireApi(path: String)
