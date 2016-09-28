@@ -56,7 +56,7 @@ object AboutInfoModal {
     .backend(new AboutInfoModalBackend(_))
     .renderPS((t, props, state) => {
       val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
-      val headerText = "About"
+      val headerText = "About Synereo Social -- Alpha release"
       val versionInfo = state.versionInfo
       val ampAddress = SYNEREOCircuit.zoom(_.user.address).value
       Modal(
@@ -67,16 +67,42 @@ object AboutInfoModal {
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Agent UID: ${agentUID.head}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Wallet Address: $ampAddress"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(""),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)("Build Information"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- Gloseval Version: ${versionInfo.glosevalVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- Scala Version: ${versionInfo.scalaVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- MongoDB Version: ${versionInfo.mongoDBVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- RabbitMQ Version: ${versionInfo.rabbitMQVersion} "),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.span(^.fontWeight.bold)(s"Current User:"),
+              <.div(^.className := "row", ^.marginLeft:="30px")(
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                  <.span(^.fontWeight.bold)(s"Username: "),
+                  s" n/a"
+                ),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                  <.span(^.fontWeight.bold)(s"Agent UID: "),
+                  s" ${agentUID.head}"
+                ),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                  <.span(^.fontWeight.bold)(s"Wallet Address: "),
+                  s" $ampAddress"
+                )
+              )
+            ),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.span(^.fontWeight.bold)("Node Operator:"),
+              <.div(^.className := "row", ^.marginLeft:="30px")(
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"n/a")
+              )
+            ),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.span(^.fontWeight.bold)("Build Information:"),
+              <.div(^.className := "row", ^.marginLeft:="30px")(
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Web User Interface version: n/a"),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"GLoSEval version: ${versionInfo.glosevalVersion}"),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Scala version: ${versionInfo.scalaVersion}"),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"MongoDB version: ${versionInfo.mongoDBVersion}"),
+                <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"RabbitMQ version: ${versionInfo.rabbitMQVersion} ")
+              )
+            ),
+
             <.div(^.className := "row pull-right")(
-              <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "Ok")
+              <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "OK")
             ),
             <.div(bss.modal.footer)()
           )
