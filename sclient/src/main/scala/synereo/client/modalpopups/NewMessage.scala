@@ -99,8 +99,8 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
-    def updateContent(e: ReactEventI) = {
-      val value = e.target.value
+    def updateContent(e: ReactEventI) =  {
+      var value = e.target.value
       val words: Seq[String] = value.split(" ")
       var tagsCreatedInline: Seq[String] = Seq()
       words.foreach(
@@ -110,6 +110,7 @@ object NewMessageForm {
       )
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
+
 
     def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
@@ -238,7 +239,6 @@ object NewMessageForm {
               <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
             ),
             <.div()
-
           ),
           <.div(^.className := "row")(
             <.div()(

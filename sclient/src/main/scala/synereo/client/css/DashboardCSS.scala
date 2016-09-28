@@ -268,6 +268,8 @@ object DashboardCSS {
 
       fontFamily :=! "lora",
       fontWeight.normal,
+      wordWrap.breakWord,
+      whiteSpace.preWrap,
       opacity(0.95),
       lineHeight(1.5.em),
       media.minWidth(768.px) - (
@@ -280,7 +282,10 @@ object DashboardCSS {
 
     val imgBorder = style(
       border(1.px, solid, gray),
-      borderRadius(6.px)
+      borderRadius(6.px),
+      float.right,
+      marginBottom(10.px),
+      marginTop(-10.px)
     )
     val ampTokenBtn = style(
       backgroundColor.transparent.important,
@@ -314,6 +319,9 @@ object DashboardCSS {
         paddingLeft(0.px),
         paddingRight(0.px))
     )
+
+
+
   }
 
 }

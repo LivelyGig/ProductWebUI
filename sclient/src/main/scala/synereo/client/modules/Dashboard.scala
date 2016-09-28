@@ -358,12 +358,16 @@ object HomeFeedList {
 
     def preventFullViewModalPopUP(message: MessagePost): Callback = {
       if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
+
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
+
         println( $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height())
         $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
       } else {
         $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height()/* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
       }
 
       t.modState(s => s.copy(showFullPostView = false))
@@ -418,7 +422,6 @@ object HomeFeedList {
     .backend(new HomeFeedListBackend(_))
     .renderPS((t, P, S) => {
       def renderMessages(message: MessagePost) = {
-        val allWordsFrmMessageText = message.postContent.text.split(" ")
         val (senderName, receiverNames, imgContentOfMessagePost, sendAmpsTo, fromSenderUID) = t.backend.getAllMessagePostDetails(message: MessagePost)
 
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
@@ -462,79 +465,47 @@ object HomeFeedList {
                     )
                   )
                 ),
+
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12")(
                     if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                      // getMessage = message
-                      <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
-                    } else {
-                      // getMessage = null
-                      <.span("")
-                    },
-                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                      <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                      <.div(DashboardCSS.Style.cardText)(
-                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")) )(
-                            if (allWordsFrmMessageText.length == 1) {
-                              allWordsFrmMessageText(0)
-                            } else
-                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                allWordsFrmMessageText(b) + " "
-                              }
-                          )
-                        } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                          <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                            <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                              if (allWordsFrmMessageText.length == 1) {
-                                allWordsFrmMessageText(0)
-                              } else
-                                for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                  allWordsFrmMessageText(b) + " "
-                                }
+                      <.div(
+                        <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", "))),
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                            <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text),
+                                                <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                          <.span()(message.postContent.text)
+                        )
+                        )
+                      )
+                    } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
+                      <.div(
+                          <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                            <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                            <.div(
+                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", "))),
+                            <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text)),
+                            <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                              <.div()(message.postContent.text)
                             )
                           )
-                        }
-                        else if (message.postContent.imgSrc == "") {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                            if (allWordsFrmMessageText.length == 1) {
-                              allWordsFrmMessageText(0)
-                            } else
-                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                allWordsFrmMessageText(b) + " "
-                              }
+                      )
+                    } else {
+                      <.div(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                          <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text),
+                            <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                              <.span()(message.postContent.text)
                           )
+                        )
+                      )
+                    })),
 
-                        } else {
-                          <.div()
-                        },
-                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                          <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
-                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))
-                          )
-                        } else {
-                          Seq.empty[ReactElement]
-                        }
-                      )
-                    )
-                  )
-                ),
                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                  <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                    <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                      for {b <- 1 to allWordsFrmMessageText.length - 1 if b > 30} yield {
-                        allWordsFrmMessageText(b) + " "
-                      },
-                      <.div(^.className := "col-md-12 text-uppercase")(
-                        //                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
-                        //                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
-                        //                      }
-                      )
-                    )
-                  )
-                ),
-                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                  if (allWordsFrmMessageText.length > 30) {
+                  if (message.postContent.text.length > 105) {
+                   // println(s"message length = ${message.postContent.subject}  ${}")
                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                       "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.preventFullViewModalPopUP(message))(
                       (MIcon.moreHoriz)
@@ -569,11 +540,6 @@ object HomeFeedList {
                   )
                   else
                     <.div(^.className := "col-md-2")()
-
-
-
-
-
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
