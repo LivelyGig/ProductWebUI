@@ -7,4 +7,5 @@ import shared.dtos.ServerModel
   */
 trait Api {
   def postServers(servers: Seq[ServerModel]): String
+  def getLang(lang: String): String
 }

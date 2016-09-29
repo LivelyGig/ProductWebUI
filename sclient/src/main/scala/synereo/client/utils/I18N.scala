@@ -1,21 +1,8 @@
 package synereo.client.utils
 
 /**
-  * Created by mandar.k on 9/23/2016.
+  * Created by a4tech on 9/28/2016.
   */
 object I18N {
-
-  object En {
-
-    object MainMenu {
-      val WHAT_IS_SYNEREO = "WHAT IS SYNEREO?"
-      val WATCH_THE_VIDEO = "WATCH THE VIDEO"
-      val DROPDOWN_ABOUT = "About"
-      val DROPDOWN_CHANGE_PROFILE_PICTURE = "Change Profile Picture"
-      val DROPDOWN_NODE_SETTINGS = "Node Settings"
-      val SIGN_OUT = "Sign Out"
-    }
-
-  }
-
+    var en = "{\n\t\"WHAT_IS_SYNEREO\":\"What is synereo\",\n\t\"WATCH_THE_VIDEO\": \"Watch the video\",\n\t\"ABOUT\": \"About\",\n\t\"CHANGE_PROFILE_PICTURE\": \"Change profile picture\",\n\t\"NODE_SETTINGS\": \"Node settings\",\n\t\"SIGN_OUT\": \"Sign out\"\n}"
 }

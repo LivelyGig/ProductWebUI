@@ -22,9 +22,10 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.{ContentUtils, I18N}
+import synereo.client.utils.{AppUtils, ContentUtils}
 
 import scala.scalajs.js
+import scala.scalajs.js.JSON
 import scala.util.{Failure, Success, Try}
 
 
@@ -48,18 +49,7 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
-    //    def showImageUploadModal(): react.Callback = {
-    //      t.modState(s => s.copy(showProfileImageUploadModal = !s.showProfileImageUploadModal))
-    //    }
-    //
-    //    def showAboutInfoModal(): react.Callback = {
-    //      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
-    //    }
-    //
-    //    def showNodeSettingModal(): react.Callback = {
-    //      logger.log.debug("showNodeSettingModal")
-    //      t.modState(s => s.copy(showNodeSettingModal = true))
-    //    }
+
 
     def showImageUploadModal(): react.Callback = Callback {
       logger.log.debug("main menu showImageUploadModal")
@@ -77,11 +67,11 @@ object MainMenu {
     }
   }
 
-
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new MainMenuBackend(_))
     .renderPS(($, props, state) => {
+
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
@@ -182,11 +172,11 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(I18N.En.MainMenu.DROPDOWN_ABOUT)),
-                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(I18N.En.MainMenu.DROPDOWN_CHANGE_PROFILE_PICTURE)),
-                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), I18N.En.MainMenu.DROPDOWN_NODE_SETTINGS)),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(I18N.En.MainMenu.SIGN_OUT))
-                    )
+                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(AppUtils.getFromLang("ABOUT"))),
+                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())("Change profile picture")),
+                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal()) ("Node settings")),
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign out"))
+
                   )
                   //                  if (state.showProfileImageUploadModal)
                   //                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.showImageUploadModal, "Profile Image Uploader", userProxy)))
@@ -197,7 +187,7 @@ object MainMenu {
                   //                  else
                   //                    Seq.empty[ReactElement]
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
-                ),
+                )),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
@@ -209,12 +199,14 @@ object MainMenu {
             <.li(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
-                I18N.En.MainMenu.WHAT_IS_SYNEREO
+                //                renderLang.asInstanceOf[I18N].
+                //                I18N.En.MainMenu.WATCH_THE_VIDEO
+                AppUtils.getFromLang("WATCH_THE_VIDEO")
               )
             ),
             <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                I18N.En.MainMenu.WATCH_THE_VIDEO
+                AppUtils.getFromLang("WHAT_IS_SYNEREO")
               )
             )
           )
