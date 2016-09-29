@@ -3,7 +3,7 @@ package synereo.client
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
 import synereo.client.modules._
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import synereo.client.logger._
 
 import scala.scalajs.js
@@ -22,8 +22,10 @@ import scalacss.mutable.GlobalRegistry
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
+import synereo.client.handlers.ChangeLang
 import synereo.client.handlers.CloseAllPopUp
 import synereo.client.sessionitems.SessionItems
+import synereo.client.utils.I18N
 
 
 @JSExport("SYNEREOMain")
@@ -151,6 +153,8 @@ object SYNEREOMain extends js.JSApp {
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
+    SYNEREOCircuit.dispatch(ChangeLang(scalajs.js.JSON.parse(CoreApi.getLang("en_us").asInstanceOf[scala.scalajs.js.Dynamic
+      ])))
     ReactDOM.render(router(), dom.document.getElementById("root"))
     /*if (dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
       dom.window.location.href = "/"

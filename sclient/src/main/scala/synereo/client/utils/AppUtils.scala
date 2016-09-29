@@ -1,5 +1,7 @@
 package synereo.client.utils
 
+import synereo.client.services.SYNEREOCircuit
+
 /**
   * Created by shubham.k on 29-07-2016.
   */
@@ -7,6 +9,11 @@ object AppUtils {
   val MESSAGE_POST_LABEL = "MESSAGEPOSTLABEL"
   val BTC_SATOSHI = 100000000
   val ALL_CONTACTS_ID  = "ALL_CONTACTS_ID"
+
+  def getFromLang(str:String): String = {
+    val langRootModel = SYNEREOCircuit.zoom(_.language.language).value
+    langRootModel.selectDynamic(str).toString
+  }
 /*
   def handleInitialSessionPingRes(response: String): Unit = {
     var cnxnSeq: Seq[ConnectionsModel] = Nil

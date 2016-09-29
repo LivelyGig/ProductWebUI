@@ -5,17 +5,19 @@ import diode._
 import diode.data._
 import diode.react.ReactConnector
 import shared.models.UserModel
+import synereo.client.handlers.I18NHandler
 import synereo.client.handlers.AppHandler
 import synereo.client.handlers.IntroductionHandler
 import synereo.client.rootmodels._
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
-                     searches: SearchesRootModel, introduction: IntroRootModel, sessionRootModel: SessionRootModel, appRootModel : AppRootModel)
+                     searches: SearchesRootModel, introduction: IntroRootModel, sessionRootModel: SessionRootModel,
+                     appRootModel: AppRootModel, language: I18NRootModel)
 
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(ConnectionsRootModel(Nil),
-    UserModel(), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(),AppRootModel())
+    UserModel(), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(), AppRootModel(), I18NRootModel())
 
   // combine all handlers into one
   override protected val actionHandler = composeHandlers(
@@ -25,6 +27,7 @@ object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] 
     new MessagesHandler(zoomRW(_.messages)((m, v) => m.copy(messages = v))),
     new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v))),
     new SessionHandler(zoomRW(_.sessionRootModel)((m, v) => m.copy(sessionRootModel = v))),
-    new AppHandler(zoomRW(_.appRootModel)((m,v) => m.copy(appRootModel = v)))
+    new AppHandler(zoomRW(_.appRootModel)((m, v) => m.copy(appRootModel = v))),
+    new I18NHandler(zoomRW(_.language)((m, v) => m.copy(language = v)))
   )
 }

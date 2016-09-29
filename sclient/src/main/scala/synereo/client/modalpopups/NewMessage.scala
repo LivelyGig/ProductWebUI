@@ -126,6 +126,11 @@ object NewMessageForm {
       t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
     }
 
+    /**
+      *
+      * @param value contains list of string seperated by white space which is user entered text from text area
+      * @return strings which contains hashtags from the text
+      */
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
@@ -142,6 +147,9 @@ object NewMessageForm {
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
 
+    /**
+      * * @return all label texts to post to server
+      */
     def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
       //    println(s"filtered labels from selectize ${filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))}")
@@ -150,6 +158,11 @@ object NewMessageForm {
       allLabels.distinct
     }
 
+    /**
+      *
+      * @param e
+      * @return delete label once clicked cross on label bubble
+      */
     def deleteInlineLabel(e: ReactEventI) = {
       val value = e.target.parentElement.getAttribute("data-count")
       val state = t.state.runNow()
@@ -204,7 +217,9 @@ object NewMessageForm {
     }
   }
 
-
+  /**
+    * instantiate connectionSelectize enabling @all_Contacts feature looking at nonEmpty circuit connections value
+    */
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new MessagePostContent()))
     .backend(new NewMessageBackend(_))

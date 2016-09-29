@@ -6,12 +6,17 @@ import upickle.default._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import scala.util.{Try}
+import scala.util.Try
 import scala.language.postfixOps
 import org.scalajs.dom.ext.Ajax
+import shared.Api
 import shared.models.{EmailValidationModel, SignUpModel, UserModel}
 import synereo.client.facades.SRPClient
 import synereo.client.sessionitems.SessionItems
+import boopickle.Default._
+import autowire._
+
+import scala.scalajs.js.JSON
 
 case class ApiError(response: String) extends Exception
 
@@ -152,6 +157,10 @@ object CoreApi {
     val requestContent = upickle.default.write(ApiRequest(ApiTypes.requestTypes.SEND_AMPS_REQUEST,
       SendAmpsRequest(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, amount, to)))
     ajaxPost(requestContent)
+  }
+
+  def getLang(lang: String):scalajs.js.Dynamic = {
+    PlayAjaxClient[Api].getLang(lang).call().map( e => e.toString).asInstanceOf[scalajs.js.Dynamic]
   }
 
 }
