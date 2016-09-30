@@ -409,7 +409,9 @@ object SynereoCommanStylesCSS {
     val userNameOverflow = style(
       whiteSpace.nowrap,
       overflow.hidden,
-      textOverflow.:=("ellipsis")
+      textOverflow.:=("ellipsis"),
+      media.maxWidth(360.px)-
+      fontSize(13.px)
     )
 
     val paddingLeft15p = style(
