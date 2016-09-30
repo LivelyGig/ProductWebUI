@@ -1,8 +1,15 @@
 {
-	"WHAT_IS_SYNEREO":"What is synereo",
-	"WATCH_THE_VIDEO": "watch the video",
-	"ABOUT": "About",
-	"CHANGE_PROFILE_PICTURE": "Change profile picture",
-	"NODE_SETTINGS": "Node settings",
-	"SIGN_OUT": "Sign out"
+  "LANG_NAME": "EN_US",
+  "WHAT_IS_SYNEREO": "What is synereo",
+  "WATCH_THE_VIDEO": "watch the video",
+  "ABOUT": "About",
+  "CHANGE_PROFILE_PICTURE": "Change profile picture",
+  "NODE_SETTINGS": "Node settings",
+  "SIGN_OUT": "Sign out",
+  "LOGIN": "Log In",
+  "EDIT_API_DETAILS": "Edit API details",
+  "USERNAME": "username",
+  "PASSWORD": "password",
+  "DON'T HAVE AN ACCOUNT?": "Don't have an account?",
+  "VERIFY YOUR TOKEN": "verify your token"
 }

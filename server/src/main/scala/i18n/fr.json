@@ -1,8 +1,15 @@
 {
-	"WHAT_IS_SYNEREO" : "QU'EST-CE QUE SYNEREO",
-	"WATCH_THE_VIDEO" : "VOIR LA VIDÉO",
-	"ABOUT" : "SUR",
-	"CHANGE_PROFILE_PICTURE" : "MODIFIER LA PHOTO DE PROFIL",
-	"NODE_SETTINGS" : "REGLAGES NODE",
-	"SIGN_OUT" : "SE DÉCONNECTER"
+  "LANG_NAME": "French",
+  "WHAT_IS_SYNEREO": "QU'EST-CE QUE SYNEREO",
+  "WATCH_THE_VIDEO": "VOIR LA VIDÉO",
+  "ABOUT": "SUR",
+  "CHANGE_PROFILE_PICTURE": "MODIFIER LA PHOTO DE PROFIL",
+  "NODE_SETTINGS": "REGLAGES NODE",
+  "SIGN_OUT": "SE DÉCONNECTER",
+  "LOGIN": "s'identifier",
+  "EDIT_API_DETAILS": "Modifier les détails de l'API",
+  "USERNAME": "Nom d'utilisateur",
+  "PASSWORD": "mot de passe",
+  "DON'T HAVE AN ACCOUNT?": "ne pas avoir un compte?",
+  "VERIFY YOUR TOKEN": "vérifier votre jeton"
 }

@@ -1,12 +1,11 @@
 package synereo.client.modules
 
-
 import synereo.client.components._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{AboutInfoModal, NewMessage, NodeSettingModal, ProfileImageUploaderForm}
+import synereo.client.modalpopups.NewMessage
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
@@ -14,7 +13,6 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -23,15 +21,11 @@ import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
 import synereo.client.utils.{AppUtils, ContentUtils, I18N}
-
 import scala.concurrent.ExecutionContext.Implicits.global
-import boopickle.Default._
 import diode.ModelR
-
 import scala.scalajs.js
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success, Try}
-
 
 //scalastyle:off
 object MainMenu {
@@ -42,6 +36,7 @@ object MainMenu {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   class ViewLang
+
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
   case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
@@ -57,8 +52,9 @@ object MainMenu {
     def mounted() = Callback {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
+
     def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
-      t.modState(s =>s.copy(lang = reader.value)).runNow()
+      t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
 
@@ -78,7 +74,7 @@ object MainMenu {
     }
 
     def changeLang(lang: String): react.Callback = Callback {
-      CoreApi.getLang(lang).onComplete{
+      CoreApi.getLang(lang).onComplete {
         case Success(res) => SYNEREOCircuit.dispatch(ChangeLang(JSON.parse(res)))
         case Failure(_) => logger.log.error(s"failed to load language for ${lang}")
       }
@@ -151,20 +147,20 @@ object MainMenu {
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> scope.backend.showAboutInfoModal())(AppUtils.getFromLang("ABOUT"))),
                       <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())("Change profile picture")),
-                      <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal()) ("Node settings")),
+                      <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal())("Node settings")),
                       <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign out"))
 
-                  )
-                  //                  if (state.showProfileImageUploadModal)
-                  //                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.showImageUploadModal, "Profile Image Uploader", userProxy)))
-                  //                  else if (state.showNodeSettingModal)
-                  //                    NodeSettingModal(NodeSettingModal.Props($.backend.showNodeSettingModal))
-                  //                  else if (state.showAboutInfoModal)
-                  //                    AboutInfoModal(AboutInfoModal.Props($.backend.showAboutInfoModal))
-                  //                  else
-                  //                    Seq.empty[ReactElement]
-                  //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
-                )),
+                    )
+                    //                  if (state.showProfileImageUploadModal)
+                    //                    userProxy(userProxy => ProfileImageUploaderForm(ProfileImageUploaderForm.Props($.backend.showImageUploadModal, "Profile Image Uploader", userProxy)))
+                    //                  else if (state.showNodeSettingModal)
+                    //                    NodeSettingModal(NodeSettingModal.Props($.backend.showNodeSettingModal))
+                    //                  else if (state.showAboutInfoModal)
+                    //                    AboutInfoModal(AboutInfoModal.Props($.backend.showAboutInfoModal))
+                    //                  else
+                    //                    Seq.empty[ReactElement]
+                    //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
+                  )),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
                   NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
@@ -178,29 +174,29 @@ object MainMenu {
                 //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
                 //                renderLang.asInstanceOf[I18N].
                 //                I18N.En.MainMenu.WATCH_THE_VIDEO
-               state.lang.selectDynamic("WATCH_THE_VIDEO").asInstanceOf[String]
+                state.lang.selectDynamic("WATCH_THE_VIDEO").toString
               )
             ),
             <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 state.lang.selectDynamic("WHAT_IS_SYNEREO").toString
-//                AppUtils.getFromLang("WHAT_IS_SYNEREO")
+                //                AppUtils.getFromLang("WHAT_IS_SYNEREO")
               )
-            ),
-            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French")),
-            <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/)(
-              <.div()(
-                <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
-                  "Change Language"
-                ),
-                // <.div(^.className := "dropdown-arrow-small"),
-                <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                  <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.en_us))("En-US")),
-                  <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French"))
-                )
-              ))
+            )
           )
-        }
+        },
+        <.div(SynereoCommanStylesCSS.Style.changeLanguageDropdownContainer)(
+          <.button(^.className := "btn btn-default", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.changeLangBtn)(
+            state.lang.selectDynamic("LANG_NAME").toString match {
+              case "undefined" => "EN_US"
+              case _ => state.lang.selectDynamic("LANG_NAME").toString
+            }, Icon.caretDown
+          ),
+          <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.langSelectMenu)(
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.en_us))("En-US")),
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French"))
+          )
+        )
       )
     })
     .componentDidMount(scope => scope.backend.mounted())

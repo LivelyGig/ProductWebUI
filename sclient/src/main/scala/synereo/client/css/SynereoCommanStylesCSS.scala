@@ -33,6 +33,17 @@ object SynereoCommanStylesCSS {
       media.maxWidth(617.px) -
         width(50.%%)
     )
+    val changeLanguageDropdownContainer = style(
+      position.fixed,
+      right.`0`,
+      top.`0`
+    )
+    val changeLangBtn = style(
+      padding.`0`.important,
+      backgroundColor.transparent.important,
+      color.white,
+      border.`0`
+    )
     val labelSelectizeNavbar = style(
       width(480.px),
       display.inlineBlock,
@@ -75,7 +86,7 @@ object SynereoCommanStylesCSS {
 
       //      marginTop(8.px),
       marginTop(12.%%),
-//      marginRight(15.px),
+      //      marginRight(15.px),
 
       //      marginRight(-4.px),
       //      height(50.px),
@@ -124,7 +135,7 @@ object SynereoCommanStylesCSS {
         width(233.px),
       float.right,
 
-      media.maxWidth(545.px) -(
+      media.maxWidth(545.px) - (
         marginTop(65.px),
         width(100.%%)
         )
@@ -225,6 +236,13 @@ object SynereoCommanStylesCSS {
       width.auto.important,
       minHeight.auto.important,
       right.`0`.important
+    )
+    val langSelectMenu = style(
+      //      width.auto.important,
+      //      minHeight.auto.important,
+      right.`0`.important,
+      left(-100.px)
+
     )
     val imgLogo = style(
       marginTop(5.px),
@@ -412,22 +430,23 @@ object SynereoCommanStylesCSS {
       paddingLeft(17.%%).important
     )
 
-    val lftHeightPost = style (
-//      height(50.vh),
+    val lftHeightPost = style(
+      //      height(50.vh),
       display.flex,
       alignItems.center
     )
 
-    val marginTop20px = style (
+    val marginTop20px = style(
       marginTop(20.px)
     )
 
-    val lovePost = style (
+    val lovePost = style(
       height(100.px),
       marginTop(-70.px),
       marginLeft(51.px),
       opacity(0.3),
-      background := rgba(0,0,0,0.5)
+      background := rgba(0, 0, 0, 0.5)
     )
   }
+
 }
