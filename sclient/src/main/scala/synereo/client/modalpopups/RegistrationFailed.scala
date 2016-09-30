@@ -56,8 +56,8 @@ object RegistrationFailed {
               <.div(^.className := "row")(
                 <.div()(
                   <.div(LoginCSS.Style.message)(P.registrationErrorMsg),
-                  <.div(^.className := "pull-right")(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.SignUpBtn, ^.onClick --> t.backend.hide)("Try again")),
-                  <.div(^.className := "pull-right", SynereoCommanStylesCSS.Style.marginRight15px)(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.SignUpBtn, ^.onClick --> t.backend.login)("Login"))
+                  <.div(^.className := "pull-right")(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.signUpBtn, ^.onClick --> t.backend.hide)("Try again")),
+                  <.div(^.className := "pull-right", SynereoCommanStylesCSS.Style.marginRight15px)(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.signUpBtn, ^.onClick --> t.backend.login)("Login"))
                 )
               )
             )

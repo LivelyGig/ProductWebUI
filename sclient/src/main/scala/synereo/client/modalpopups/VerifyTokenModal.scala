@@ -28,7 +28,7 @@ import scala.scalajs.js
 object VerifyTokenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  val addBtn: js.Object = "#addBtn"
+  val editApiDetailBtn: js.Object = "#editApiDetailBtn"
 
   case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
@@ -65,7 +65,7 @@ object VerifyTokenModal {
 
 
     def closeAPITextbox(e: ReactEventI) = {
-      $(addBtn).show()
+      $(editApiDetailBtn).show()
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
@@ -119,12 +119,12 @@ object VerifyTokenModal {
                         <.div(^.className := "help-block with-errors"),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
-                          $(addBtn).show()
+                          $(editApiDetailBtn).show()
                         })(Icon.check)
                       )
                     ),
-                    <.button(^.id := "addBtn", ^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
-                      $(addBtn).hide()
+                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button",LoginCSS.Style.editApiDetailBtn , ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                      $(editApiDetailBtn).hide()
                     })("Edit API details")
                   ),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",

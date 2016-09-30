@@ -102,7 +102,7 @@ object AboutInfoModal {
             ),
 
             <.div(^.className := "row pull-right")(
-              <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "OK")
+              <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "OK")
             ),
             <.div(bss.modal.footer)()
           )

@@ -50,7 +50,7 @@ object AccountValidationFailed {
               <.div()("Validation code you entered is incorrect, please check your email and enter valid code"),
               //<.div()( <.button(^.tpe := "button",^.className:="btn",   ^.onClick-->hide )("Try again"))
               <.div(^.className := "pull-right")(
-                <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Try again")
+                <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Try again")
               )
             ),
             <.div(bss.modal.footer)()

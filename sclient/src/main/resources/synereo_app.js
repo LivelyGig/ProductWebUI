@@ -1,5 +1,4 @@
-var ScrollSpeedMonitor = (function()
-{
+var ScrollSpeedMonitor = (function(){
     var self = this;
 
     function ScrollSpeedMonitor (callbackMethod)
@@ -80,9 +79,9 @@ window.onload = function() {
 });
 };
 $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     applyStylingToHomeFeed();
     var hoverInterval=  setInterval(function(){
-        $('[data-toggle="tooltip"]').tooltip();
       // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
       var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
 //        console.log('Scroll speed: ' + speedInPxPerMs);

@@ -16,20 +16,39 @@ object LoginCSS {
     val loginPageContainerMain = style(
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Synereo_LogIn_AmpGame.jpg\")",
-      marginTop(-53.px)
+      marginTop(-53.px),
+      media.maxWidth(768.px) -
+        marginTop(-61.px)
     )
     val loginContainer = style(
       height(620.px),
       width(600.px),
       paddingTop(135.px),
       backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
-      backgroundSize := 100.%%
+      backgroundSize := 100.%%,
+      media.maxWidth(767.px)(
+        marginLeft(6.%%),
+        backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")"
+      ),
+      media.maxWidth(420.px)(
+        paddingTop.`0`.important,
+        maxWidth(280 px),
+        marginTop(70.px),
+        backgroundRepeat := "no-repeat"
+      )
+
     )
     val loginImg = style(
       height(120.px),
       width(117.px),
       marginTop(-31.%%),
-      marginLeft(36.9.%%)
+      marginLeft(36.9.%%),
+      media.maxWidth(420.px)(
+        width(47.px),
+        height(50.px),
+        marginLeft(39.8.%%),
+        marginTop.`0`.important
+      )
     )
 
     val loginScreenBgImage = style(
@@ -71,7 +90,11 @@ object LoginCSS {
       fontSize(52.px),
       fontFamily :=! "karla",
       textAlign.center,
-      marginBottom(30.px)
+      marginBottom(30.px),
+      media.maxWidth(420.px)(
+        fontSize(20.px),
+        marginBottom(10.px)
+      )
     )
     val iconStylePasswordInputBox = style(
       backgroundColor.transparent.important,
@@ -222,7 +245,13 @@ object LoginCSS {
         backgroundColor.transparent.important
       ),
       border.none.important,
-      fontFamily :=! "karla"
+      fontFamily :=! "karla",
+      media.maxWidth(420.px)(
+        textAlign.center,
+        marginTop(8.px),
+        fontSize(16.px),
+        float.none
+      )
     )
     val verifyUserBtnLoginModal = style(
       display.block,
@@ -245,7 +274,13 @@ object LoginCSS {
         backgroundColor.transparent.important
       ),
       border.none.important,
-      fontFamily :=! "karla"
+      fontFamily :=! "karla",
+      media.maxWidth(420.px)(
+        textAlign.center,
+        marginTop(8.px),
+        fontSize(16.px),
+        float.none
+      )
     )
 
     val requestInviteBtn = style(
@@ -269,9 +304,6 @@ object LoginCSS {
       )
     )
     val requestInviteBtnLoginModal = style(
-      //      position.absolute,
-      //      right(45.%%),
-      //      bottom(7.%%),
       backgroundColor.transparent,
       color(c"#fff"),
       opacity(0.7),
@@ -333,8 +365,22 @@ object LoginCSS {
       color(c"#fff"),
       fontFamily :=! "karla",
       float.right,
-      marginTop(25.px)
-      //      marginBottom(30.px)
+      marginTop(25.px),
+      media.maxWidth(420.px)(
+        textAlign.center,
+        &.hover(
+          color(c"#cc3300")
+        ),
+        backgroundColor(c"#ff806c"),
+        height.auto.important,
+        width.auto.important,
+        fontSize(16.px),
+        padding(5.px, 10.px),
+        color(c"#fff"),
+        fontFamily :=! "karla",
+        float.right,
+        marginTop(5.px)
+      )
     )
     val apiSubmitBtn = style(
       backgroundColor(c"#ff806c"),
@@ -345,11 +391,23 @@ object LoginCSS {
       marginBottom(40.px)
     )
     val loginFormInputText = style(
-      marginBottom(22.px)
+      marginBottom(22.px),
+      media.maxWidth(420.px)(
+        marginBottom(5.px)
+      )
+
     )
 
     val apiDetailsContainer = style(
-      height(50.px)
+      height(50.px),
+      media.maxWidth(420.px)(
+        height(30.px)
+      )
+    )
+    val editApiDetailBtn = style(
+      media.maxWidth(420.px)(
+        fontSize(10.px)
+      )
     )
   }
 

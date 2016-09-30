@@ -75,7 +75,7 @@ object SynereoCommanStylesCSS {
 
       //      marginTop(8.px),
       marginTop(12.%%),
-//      marginRight(15.px),
+      //      marginRight(15.px),
 
       //      marginRight(-4.px),
       //      height(50.px),
@@ -124,7 +124,7 @@ object SynereoCommanStylesCSS {
         width(233.px),
       float.right,
 
-      media.maxWidth(545.px) -(
+      media.maxWidth(545.px) - (
         marginTop(65.px),
         width(100.%%)
         )
@@ -295,7 +295,11 @@ object SynereoCommanStylesCSS {
       paddingLeft(46.px),
       paddingRight(46.px),
       paddingBottom(0.px),
-      paddingTop(0.px)
+      paddingTop(0.px),
+      media.maxWidth(420.px)(
+        paddingLeft(10.px),
+        paddingRight(10.px)
+      )
     )
 
     val loading = style(
@@ -412,22 +416,23 @@ object SynereoCommanStylesCSS {
       paddingLeft(17.%%).important
     )
 
-    val lftHeightPost = style (
-//      height(50.vh),
+    val lftHeightPost = style(
+      //      height(50.vh),
       display.flex,
       alignItems.center
     )
 
-    val marginTop20px = style (
+    val marginTop20px = style(
       marginTop(20.px)
     )
 
-    val lovePost = style (
+    val lovePost = style(
       height(100.px),
       marginTop(-70.px),
       marginLeft(51.px),
       opacity(0.3),
-      background := rgba(0,0,0,0.5)
+      background := rgba(0, 0, 0, 0.5)
     )
   }
+
 }

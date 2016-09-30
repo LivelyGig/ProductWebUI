@@ -45,21 +45,36 @@ object SignupCSS {
       backgroundColor.transparent.important,
       border.none.important,
       paddingLeft(4.px),
-      textDecoration:="underline",
-//      textDecorationLine.underline,
+      textDecoration := "underline",
+      //      textDecorationLine.underline,
       fontSize(14.px),
       fontWeight.lighter,
       marginTop(-1.px),
       &.hover(
-        textDecoration:="underline"
+        textDecoration := "underline"
       )
 
     )
-    val SignUpBtn = style(
+    val signUpBtn = style(
       backgroundColor(c"#FF806C"),
       height(58.px),
       fontSize(22.px),
-      fontFamily :=! "karla"
+      fontFamily :=! "karla",
+      media.maxWidth(420.px)(
+        textAlign.center,
+        &.hover(
+          color(c"#cc3300")
+        ),
+        backgroundColor(c"#ff806c"),
+        height.auto.important,
+        width.auto.important,
+        fontSize(16.px),
+        padding(5.px, 10.px),
+        color(c"#fff"),
+        fontFamily :=! "karla",
+        float.right,
+        marginTop(5.px)
+      )
     )
     val verifyBtn = style(
       backgroundColor(c"#FF806C"),
@@ -75,7 +90,12 @@ object SignupCSS {
       opacity(0.65),
       textAlign.center,
       marginBottom(30.px),
-      marginTop(20.px)
+      marginTop(20.px),
+      media.maxWidth(420.px)(
+        fontSize(20.px),
+        marginBottom(10.px)
+      )
+
     )
     val checkBoxTermsAndCond = style(
       width(20.px),
@@ -100,18 +120,11 @@ object SignupCSS {
       fontSize(20.px),
       fontFamily :=! "karla",
       height(50.px),
-      //      marginBottom(20.px),
-      color(c"#000") /*,
-      opacity(0.4)*/
-      //      backgroundColor(c"#022639"),
-      //      borderRadius(5.px),
-      //      border(1.px, solid, c"#3C4346"),
-      //      height(40.px),
-      //      padding(4.%%),
-      //      fontSize(18.px),
-      //      color.white,
-      //      width(70.%%),
-      //      margin.auto.important
+      color(c"#000"),
+      media.maxWidth(420.px)(
+        fontSize(10.px),
+        height.auto.important
+      )
     )
     val SignupformFooter = style(
       color(c"#35b0e2"),
@@ -131,9 +144,6 @@ object SignupCSS {
         backgroundColor.transparent,
         color(c"#35b0e2")
       )
-    )
-    val signUpBtn = style(
-      margin(30.px)
     )
   }
 

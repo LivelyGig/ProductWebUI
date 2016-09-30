@@ -47,7 +47,7 @@ import synereo.client.components.Bootstrap._
 //            <.div(^.className := "row")(
 //              <.div()(
 //                <.div(^.className := "pull-right")(
-//                  <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> hide, "Login")
+//                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> hide, "Login")
 //                )
 //              )
 //            )
@@ -104,7 +104,7 @@ object AccountValidationSuccess {
             <.div(^.className := "row")(
               <.div()(
                 <.div(^.className := "pull-right")(
-                  <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Login")
+                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Login")
                 )
               )
             )
