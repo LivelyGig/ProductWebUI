@@ -13,7 +13,7 @@ import synereo.client.handlers._
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
 
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
@@ -22,7 +22,11 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.{AppUtils, ContentUtils}
+import synereo.client.utils.{AppUtils, ContentUtils, I18N}
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import boopickle.Default._
+import diode.ModelR
 
 import scala.scalajs.js
 import scala.scalajs.js.JSON
@@ -37,10 +41,11 @@ object MainMenu {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
+  class ViewLang
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
   case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
-                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
+                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false, lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class MainMenuBackend(t: BackendScope[Props, State]) {
 
@@ -49,6 +54,12 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
+    def mounted() = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
+    }
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s =>s.copy(lang = reader.value)).runNow()
+    }
 
 
     def showImageUploadModal(): react.Callback = Callback {
@@ -65,12 +76,19 @@ object MainMenu {
       logger.log.debug("main menu showNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
     }
+
+    def changeLang(lang: String): react.Callback = Callback {
+      CoreApi.getLang(lang).onComplete{
+        case Success(res) => SYNEREOCircuit.dispatch(ChangeLang(JSON.parse(res)))
+        case Failure(_) => logger.log.error(s"failed to load language for ${lang}")
+      }
+    }
   }
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")
     .initialState(State())
     .backend(new MainMenuBackend(_))
-    .renderPS(($, props, state) => {
+    .renderPS((scope, props, state) => {
 
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       <.div(^.className := "container-fluid")(
@@ -103,47 +121,6 @@ object MainMenu {
                     }
                   )
                 ),
-                //                <.li(
-                //                  <.div(^.className := "dropdown")(
-                //                    <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
-                //                    ^.onMouseOver ==>$.props.displayMenu*/)(MIcon.speakerNotes),
-                //                    <.div(^.className := "dropdown-arrow"),
-                //                    <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.dropdownMenu)(
-                //                      <.li(^.className := "hide")(props.ctl.link(MarketPlaceLOC)("Redirect to MarketPlace")),
-                //                      <.li(^.className := "hide")(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out")),
-                //                      <.li(<.div("Using", SynereoCommanStylesCSS.Style.dropDownLIHeading), (<.span(^.className := "pull-right")((Icon.connectdevelop))),
-                //                        <.ul(^.className := "list-unstyled nav-pills")(
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
-                //                        )),
-                //                      <.br(),
-                //                      <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("My apps 16"),
-                //                      <.li(
-                //                        <.div("More apps", SynereoCommanStylesCSS.Style.dropDownLIHeading),
-                //                        <.ul(^.className := "list-unstyled nav-pills")(
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("LivelyPay"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Yoy @ you"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", SynereoCommanStylesCSS.Style.marginLeftTwentyFive, ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress", SynereoCommanStylesCSS.Style.marginLeftFifteen))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress"))),
-                //                          <.li(SynereoCommanStylesCSS.Style.dropdownIcon)(<.img(^.src := "./assets/synereo-images/AppIcon.png", ^.className := "img-responsive inline-block"), <.br(), (<.span("Wordpress")))
-                //                        )
-                //                      ),
-                //                      <.div(^.className := "col-md-12 text-center", SynereoCommanStylesCSS.Style.dropdownLiMenuSeperator)("More From market")
-                //                    )
-                //                  )
-                //                ),
-                //                <.li(/*,SynereoCommanStylesCSS.Style.*/)(
-                //                  <.div(^.className := "dropdown")(
-                //                    <.button(^.className := "btn dropdown-toggle", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)((MIcon.chatBubble)),
-                //                    <.div(^.className := "dropdown-arrow-small"),
-                //                    <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                //                      <.li(props.ctl.link(MarketPlaceLOC)("MarketPlace")),
-                //                      <.li(<.a(^.onClick --> Callback(SYNEREOCircuit.dispatch(LogoutUser())))("Sign Out"))
-                //                    )
-                //                  )
-                //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
                   //                  if (model.name.length() < 10) {
                   <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
@@ -172,9 +149,9 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(AppUtils.getFromLang("ABOUT"))),
-                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())("Change profile picture")),
-                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal()) ("Node settings")),
+                      <.li(<.a(^.onClick --> scope.backend.showAboutInfoModal())(AppUtils.getFromLang("ABOUT"))),
+                      <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())("Change profile picture")),
+                      <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal()) ("Node settings")),
                       <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign out"))
 
                   )
@@ -201,18 +178,32 @@ object MainMenu {
                 //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
                 //                renderLang.asInstanceOf[I18N].
                 //                I18N.En.MainMenu.WATCH_THE_VIDEO
-                AppUtils.getFromLang("WATCH_THE_VIDEO")
+               state.lang.selectDynamic("WATCH_THE_VIDEO").asInstanceOf[String]
               )
             ),
             <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                AppUtils.getFromLang("WHAT_IS_SYNEREO")
+                state.lang.selectDynamic("WHAT_IS_SYNEREO").toString
+//                AppUtils.getFromLang("WHAT_IS_SYNEREO")
               )
-            )
+            ),
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French")),
+            <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/)(
+              <.div()(
+                <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
+                  "Change Language"
+                ),
+                // <.div(^.className := "dropdown-arrow-small"),
+                <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
+                  <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.en_us))("En-US")),
+                  <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French"))
+                )
+              ))
           )
         }
       )
     })
+    .componentDidMount(scope => scope.backend.mounted())
     .build
 
   def apply(props: Props) = MainMenu(props)

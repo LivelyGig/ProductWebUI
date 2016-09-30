@@ -12,7 +12,7 @@ import synereo.client.rootmodels._
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
                      searches: SearchesRootModel, introduction: IntroRootModel, sessionRootModel: SessionRootModel,
-                     appRootModel: AppRootModel, language: I18NRootModel)
+                     appRootModel: AppRootModel, i18n: I18NRootModel)
 
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
@@ -28,6 +28,6 @@ object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] 
     new IntroductionHandler(zoomRW(_.introduction)((m, v) => m.copy(introduction = v))),
     new SessionHandler(zoomRW(_.sessionRootModel)((m, v) => m.copy(sessionRootModel = v))),
     new AppHandler(zoomRW(_.appRootModel)((m, v) => m.copy(appRootModel = v))),
-    new I18NHandler(zoomRW(_.language)((m, v) => m.copy(language = v)))
+    new I18NHandler(zoomRW(_.i18n)((m, v) => m.copy(i18n = v)))
   )
 }
