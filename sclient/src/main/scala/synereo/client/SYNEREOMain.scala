@@ -153,8 +153,7 @@ object SYNEREOMain extends js.JSApp {
     val router = Router(BaseUrl(dom.window.location.href.takeWhile(_ != '#')), routerConfig)
     // tell React to render the router in the document body
     //ReactDOM.render(router(), dom.document.getElementById("root"))
-    SYNEREOCircuit.dispatch(ChangeLang(scalajs.js.JSON.parse(CoreApi.getLang("en_us").asInstanceOf[scala.scalajs.js.Dynamic
-      ])))
+//    SYNEREOCircuit.dispatch(ChangeLang(scalajs.js.JSON.parse(I18N.en)))
     ReactDOM.render(router(), dom.document.getElementById("root"))
     /*if (dom.window.sessionStorage.getItem(SessionItems.MessagesViewItems.MESSAGES_SESSION_URI) == null) {
       dom.window.location.href = "/"

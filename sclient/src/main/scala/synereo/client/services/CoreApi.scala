@@ -4,7 +4,7 @@ import shared.dtos._
 import org.scalajs.dom._
 import upickle.default._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.util.Try
 import scala.language.postfixOps
@@ -159,8 +159,8 @@ object CoreApi {
     ajaxPost(requestContent)
   }
 
-  def getLang(lang: String):scalajs.js.Dynamic = {
-    PlayAjaxClient[Api].getLang(lang).call().map( e => e.toString).asInstanceOf[scalajs.js.Dynamic]
+  def getLang(lang: String):Future[String] = {
+    PlayAjaxClient[Api].getLang(lang).call()
   }
 
 }

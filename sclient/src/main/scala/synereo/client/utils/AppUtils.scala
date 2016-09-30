@@ -11,7 +11,8 @@ object AppUtils {
   val ALL_CONTACTS_ID  = "ALL_CONTACTS_ID"
 
   def getFromLang(str:String): String = {
-    val langRootModel = SYNEREOCircuit.zoom(_.language.language).value
+    val langRootModel = SYNEREOCircuit.zoom(_.i18n.language).value
+    println(langRootModel.selectDynamic(str).toString)
     langRootModel.selectDynamic(str).toString
   }
 /*
