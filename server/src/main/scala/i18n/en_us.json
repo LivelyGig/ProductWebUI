@@ -11,5 +11,14 @@
   "USERNAME": "username",
   "PASSWORD": "password",
   "DON'T HAVE AN ACCOUNT?": "Don't have an account?",
-  "VERIFY YOUR TOKEN": "verify your token"
+  "VERIFY YOUR TOKEN": "verify your token",
+  "API-SERVER": "API-Server",
+  "SIGN_UP": "Sign up",
+  "EMAIL_ADDRESS": "Email address",
+  "CONFIRM_PASSWORD": "Confirm password",
+  "I'M_COOL_WITH_THE": "I'm cool with the",
+  "TERMS_OF_SERVICE": "Terms of service",
+  "PASSWORD_CONDITION": "Must be 6 characters long and include at least one number or symbol",
+  "CREATING_ACCOUNT_ON_NODE": "Creating account on node",
+  "HOW_ACCOUNTS_WORKS": "How do accounts work across nodes?"
 }

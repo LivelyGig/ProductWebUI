@@ -15,6 +15,13 @@ class ApiService extends Api {
   }
 
   override def getLang(lang: String): String = {
-      scala.io.Source.fromFile(s"server/src/main/scala/i18n/${lang}.json").getLines().map(_.trim).mkString
+    println("in getLang")
+      try {
+        scala.io.Source.fromFile(s"server/src/main/scala/i18n/${lang}.json").getLines().map(_.trim).mkString
+      } catch {
+        case e:Exception =>
+          println(e.getMessage)
+          ""
+      }
   }
 }

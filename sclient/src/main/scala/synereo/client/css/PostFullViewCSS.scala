@@ -4,7 +4,7 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 3/22/2016.
+  * Created by mandar.k on 3/22/2016.
   */
 object PostFullViewCSS {
 

@@ -194,7 +194,9 @@ object MainMenu {
           ),
           <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.langSelectMenu)(
             <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.en_us))("En-US")),
-            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French"))
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French")),
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.ch_man))("Chinese"))
+
           )
         )
       )

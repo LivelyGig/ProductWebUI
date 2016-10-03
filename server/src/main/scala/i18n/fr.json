@@ -11,5 +11,14 @@
   "USERNAME": "Nom d'utilisateur",
   "PASSWORD": "mot de passe",
   "DON'T HAVE AN ACCOUNT?": "ne pas avoir un compte?",
-  "VERIFY YOUR TOKEN": "vérifier votre jeton"
+  "VERIFY YOUR TOKEN": "vérifier votre jeton",
+  "API-SERVER": "API-Server",
+  "SIGN_UP": "S'inscrire",
+  "EMAIL_ADDRESS": "Adresse e-mail",
+  "CONFIRM_PASSWORD": "Confirmer mot de passe",
+  "I'M_COOL_WITH_THE": "Je suis cool avec le",
+  "TERMS_OF_SERVICE": "Conditions d'utilisation",
+  "PASSWORD_CONDITION": "Doit être 6 caractères et inclure au moins un chiffre ou un symbole",
+  "CREATING_ACCOUNT_ON_NODE": "Création de compte sur le noeud",
+  "HOW_ACCOUNTS_WORKS": "Comment les comptes fonctionnent à travers les nœuds?"
 }

@@ -9,7 +9,7 @@ import scala.language.existentials
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 6/2/2016.
+  * Created by mandar.k on 6/2/2016.
   */
 //scalastyle:off
 object UserPersona {

@@ -1,7 +1,7 @@
 package synereo.client.modules
 
 /**
-  * Created by Mandar on 4/8/2016.
+  * Created by mandar.k on 4/8/2016.
   */
 
 import japgolly.scalajs.react._

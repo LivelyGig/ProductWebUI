@@ -9,6 +9,7 @@ import synereo.client.handlers.I18NHandler
 import synereo.client.handlers.AppHandler
 import synereo.client.handlers.IntroductionHandler
 import synereo.client.rootmodels._
+import synereo.client.utils.I18N
 
 case class RootModel(connections: ConnectionsRootModel, user: UserModel, messages: Pot[MessagesRootModel],
                      searches: SearchesRootModel, introduction: IntroRootModel, sessionRootModel: SessionRootModel,
@@ -17,7 +18,7 @@ case class RootModel(connections: ConnectionsRootModel, user: UserModel, message
 object SYNEREOCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // initial application model
   override protected def initialModel = RootModel(ConnectionsRootModel(Nil),
-    UserModel(), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(), AppRootModel(), I18NRootModel())
+    UserModel(), Empty, SearchesRootModel(Nil), IntroRootModel(Nil), SessionRootModel(), AppRootModel(), I18NRootModel(scalajs.js.JSON.parse(I18N.en_us)))
 
   // combine all handlers into one
   override protected val actionHandler = composeHandlers(
