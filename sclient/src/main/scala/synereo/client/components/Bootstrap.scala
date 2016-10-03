@@ -122,7 +122,7 @@ object Bootstrap {
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> P.backdrop, "keyboard" -> P.keyboard, "show" -> true))
+        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> (if(P.id=="loginContainer")false else P.backdrop), "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })

@@ -59,8 +59,8 @@ object SynereoCommanStylesCSS {
       backgroundColor(rgba(0, 0, 0, 0.5)),
       position.absolute,
       top.`0`,
-      left.`0`,
-      zIndex(100)
+      left.`0`
+//      zIndex(100)
     )
 
     val userNameTopMenubar = style(
