@@ -28,7 +28,6 @@ object LoginErrorModal {
   case class State(showLogin: Boolean = false,
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
-  )
 
   class LoginErrorBackend(t: BackendScope[Props, State]) {
     def closeForm = {
