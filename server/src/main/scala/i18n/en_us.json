@@ -10,7 +10,7 @@
   "EDIT_API_DETAILS": "Edit API details",
   "USERNAME": "username",
   "PASSWORD": "password",
-  "DON'T HAVE AN ACCOUNT?": "Don't have an account?",
+  "DON'T_HAVE_AN_ACCOUNT?": "Don't have an account?",
   "VERIFY YOUR TOKEN": "verify your token",
   "API-SERVER": "API-Server",
   "SIGN_UP": "Sign up",
@@ -20,5 +20,11 @@
   "TERMS_OF_SERVICE": "Terms of service",
   "PASSWORD_CONDITION": "Must be 6 characters long and include at least one number or symbol",
   "CREATING_ACCOUNT_ON_NODE": "Creating account on node",
-  "HOW_ACCOUNTS_WORKS": "How do accounts work across nodes?"
+  "HOW_ACCOUNTS_WORKS": "How do accounts work across nodes?",
+  "VERIFY_TOKEN": "Verify Token",
+  "CHECK_EMAIL_REGISTERED": "Check the email you have registered with us for the verification code.",
+  "VERIFY": "Verify",
+  "VERIFICATION_CODE": "Verification code",
+  "ERROR": "Error",
+  "API_HOST_UNREACHABLE": "The Api host you provided is unreachable, Please provide a new one!"
 }

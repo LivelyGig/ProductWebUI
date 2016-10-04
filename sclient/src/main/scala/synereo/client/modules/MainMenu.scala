@@ -39,8 +39,10 @@ object MainMenu {
 
   case class Props(ctl: RouterCtl[Loc], currentLoc: Loc, proxy: ModelProxy[UserModel])
 
-  case class State(labelSelectizeId: String = "labelSelectizeInputId", showProfileImageUploadModal: Boolean = false,
-                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false, lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
+  case class State(labelSelectizeId: String = "labelSelectizeInputId",
+                   showProfileImageUploadModal: Boolean = false,
+                   showNodeSettingModal: Boolean = false,
+                   showAboutInfoModal: Boolean = false, lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class MainMenuBackend(t: BackendScope[Props, State]) {
 
@@ -194,9 +196,9 @@ object MainMenu {
           ),
           <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.langSelectMenu)(
             <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.en_us))("En-US")),
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.ch_man))("Chinese")),
             <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.fr))("French")),
-            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.ch_man))("Chinese"))
-
+            <.li(<.a(^.onClick --> scope.backend.changeLang(I18N.Lang.hindi))("Hindi"))
           )
         )
       )

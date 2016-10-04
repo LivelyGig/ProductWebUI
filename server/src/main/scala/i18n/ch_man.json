@@ -10,7 +10,7 @@
   "EDIT_API_DETAILS": "编辑API的细节",
   "USERNAME": "用户名",
   "PASSWORD": "密码",
-  "DON'T HAVE AN ACCOUNT?": "还没有账号？",
+  "DON'T_HAVE_AN_ACCOUNT?": "还没有账号？",
   "VERIFY YOUR TOKEN": "验证令牌",
   "API-SERVER": "API - 服务器",
   "SIGN_UP": "注册",
