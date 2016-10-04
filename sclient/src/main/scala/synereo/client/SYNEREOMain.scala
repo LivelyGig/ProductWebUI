@@ -117,10 +117,13 @@ object SYNEREOMain extends js.JSApp {
               <.span(^.color := "white")(Icon.thList)
             ),
             if (r.page == DashboardLoc || r.page == SynereoLoc) {
-              <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
+              c.link(DashboardLoc)(
+              <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
+              <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png"))
             } else {
               c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
-                <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png")
+                <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
+                <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png")
               )
             }
           ),

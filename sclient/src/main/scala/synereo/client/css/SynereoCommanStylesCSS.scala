@@ -229,12 +229,30 @@ object SynereoCommanStylesCSS {
     val imgLogo = style(
       marginTop(5.px),
       padding(5.px),
-      maxHeight(48.px)
+      maxHeight(48.px),
+      media.maxWidth(420.px)-
+      display.none,
+      media.minWidth(421.px)-
+      display.initial
+
     )
     val imgLogoOtherLoc = style(
       marginTop(4.px),
       padding(5.px),
-      maxHeight(54.px)
+      maxHeight(54.px),
+      media.maxWidth(420.px)-
+        display.none,
+      media.minWidth(421.px)-
+        display.initial
+    )
+    val imgSmallLogo = style (
+      marginTop(5.px),
+      padding(5.px),
+      maxHeight(48.px),
+      media.maxWidth(420.px)-
+        display.initial,
+      media.minWidth(421.px)-
+        display.none
     )
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
