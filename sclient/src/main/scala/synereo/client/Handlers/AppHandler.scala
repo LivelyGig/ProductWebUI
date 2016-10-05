@@ -17,6 +17,8 @@ case class ToggleAboutInfoModal()
 
 case class ToggleNodeSettingModal()
 
+case class ToggleNewMessageModal()
+
 case class CloseAllPopUp()
 
 class AppHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(modelRW) {
@@ -28,6 +30,10 @@ class AppHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(mod
       logger.log.debug(s"ToggleImageUploadModal in handler ${value.showProfileImageUploadModal}")
       updated(value.copy(showProfileImageUploadModal = !value.showProfileImageUploadModal))
 
+    case ToggleNewMessageModal() =>
+      logger.log.debug(s"ToggleNewMessageModal in handler ${value.showProfileImageUploadModal}")
+      updated(value.copy(showNewMessageModal = !value.showNewMessageModal))
+
     case ToggleAboutInfoModal() =>
       logger.log.debug(s"ToggleAboutInfoModal in handler ${value.showAboutInfoModal}")
       updated(value.copy(showAboutInfoModal = !value.showAboutInfoModal))
@@ -37,6 +43,7 @@ class AppHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(mod
       updated(value.copy(showNodeSettingModal = !value.showNodeSettingModal))
 
     case CloseAllPopUp() =>
+      logger.log.debug(s"closing all popup in app module")
       updated(value.copy(showNodeSettingModal = false, showAboutInfoModal = false, showProfileImageUploadModal = false))
 
   }

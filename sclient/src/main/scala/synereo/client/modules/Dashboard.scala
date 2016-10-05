@@ -131,102 +131,102 @@ object Dashboard {
                       }
                     )
                   )
-                 /* <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
-                    for (i <- 1 to 6) yield {
-                      if (i % 2 != 0) {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
-                          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                              <.div(^.className := "col-md-1 pull-left")(
-                                <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                              ),
-                              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                <.div(DashboardCSS.Style.userNameDescription)(
-                                  <.span("James Gosling"),
-                                  <.span(MIcon.chevronRight),
-                                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                                  <.span("just now")
-                                ),
-                                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
-                              )
-                            ),
-                            <.div(^.className := "row")(
-                              <.div(^.className := "col-md-12")(
-                                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                                  <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                  <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                                    "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                                  <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                                    <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                                      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
-                                    ),
-                                    <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                                      <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
-                                    )
-                                  ),
-                                  <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                                    "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
-                                    (MIcon.moreHoriz)
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      } else {
-                        <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
-                          <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                              <.div(^.className := "col-md-1 pull-left")(
-                                <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                              ),
-                              <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                <.div(DashboardCSS.Style.userNameDescription)(
-                                  <.span("James Gosling"),
-                                  <.span(MIcon.chevronRight),
-                                  <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
-                                  <.span("just now")
-                                ),
-                                <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
-                              )
-                            ),
-                            <.div(^.className := "")(
-                              <.div(^.className := "row")(
-                                <.div(^.className := "col-md-12")(
-                                  <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
-                                  <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                                    <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                    <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
-                                      "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
-                                    <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                                      <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
-                                        // "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
-                                      ),
-                                      <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
-                                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
-                                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
-                                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
-                                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
-                                      )
-                                    ),
-                                    <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                                      "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
-                                      (MIcon.moreHoriz)
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      }
-                    }
-                  )*/
+                  /* <.ul(^.id := "homeFeedMediaList", ^.className := "media-list cards-list-home-feed", DashboardCSS.Style.homeFeedContainer, ^.onScroll ==> t.backend.handleScroll)(
+                     for (i <- 1 to 6) yield {
+                       if (i % 2 != 0) {
+                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
+                             <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                               <.div(^.className := "col-md-1 pull-left")(
+                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                               ),
+                               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                 <.div(DashboardCSS.Style.userNameDescription)(
+                                   <.span("James Gosling"),
+                                   <.span(MIcon.chevronRight),
+                                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                                   <.span("just now")
+                                 ),
+                                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
+                               )
+                             ),
+                             <.div(^.className := "row")(
+                               <.div(^.className := "col-md-12")(
+                                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                                   <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                                   <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                                     "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
+                                   <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                                     <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                                       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+                                     ),
+                                     <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                       <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
+                                       <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
+                                       <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
+                                       <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
+                                       <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                                     )
+                                   ),
+                                   <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                                     "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
+                                     (MIcon.moreHoriz)
+                                   )
+                                 )
+                               )
+                             )
+                           )
+                         )
+                       } else {
+                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
+                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
+                             <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                               <.div(^.className := "col-md-1 pull-left")(
+                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                               ),
+                               <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                 <.div(DashboardCSS.Style.userNameDescription)(
+                                   <.span("James Gosling"),
+                                   <.span(MIcon.chevronRight),
+                                   <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Ux love,party at new york"), <.br(),
+                                   <.span("just now")
+                                 ),
+                                 <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
+                               )
+                             ),
+                             <.div(^.className := "")(
+                               <.div(^.className := "row")(
+                                 <.div(^.className := "col-md-12")(
+                                   <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
+                                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
+                                     <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
+                                     <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                                       "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
+                                     <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                                       <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                                         // "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
+                                       ),
+                                       <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Iceland"),
+                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("SXSW"),
+                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Travel"),
+                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Landscape"),
+                                         <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)("Lorem")
+                                       )
+                                     ),
+                                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
+                                       "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-$i", ^.className := "glance-view-button", ^.onClick ==> t.backend.preventFullViewModalPopUP)(
+                                       (MIcon.moreHoriz)
+                                     )
+                                   )
+                                 )
+                               )
+                             )
+                           )
+                         )
+                       }
+                     }
+                   )*/
                 )
               )
             ) /*,
@@ -362,10 +362,10 @@ object HomeFeedList {
 
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
 
-        println( $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height())
+        println($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() + $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height())
         $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
       } else {
-        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height()/* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
       }
@@ -391,7 +391,7 @@ object HomeFeedList {
       if ($(collapsedPost).hasClass("in")) {
         collapsiblePost = $(targetLi).height().toString
         //println(s"Height = ${collapsiblePost}")
-//        $(rightPost).height(collapsiblePost)
+        //        $(rightPost).height(collapsiblePost)
       }
       Callback.empty
     }
@@ -471,33 +471,33 @@ object HomeFeedList {
                     if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
                       <.div(
                         <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", "))),
-                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
                           <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                            <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text),
-                                                <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                          <.span()(message.postContent.text)
-                        )
+                          <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.span()(message.postContent.text)
+                          )
                         )
                       )
-                    } else if(message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659){
+                    } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
                       <.div(
-                          <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
-                            <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                            <.div(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                          <.div(
                             <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", "))),
-                            <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text)),
-                            <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                              <.div()(message.postContent.text)
-                            )
+                            <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text)),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.div()(message.postContent.text)
                           )
+                        )
                       )
                     } else {
                       <.div(
-                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, senderName, receiverNames.mkString(", ")))(
                           <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                          <.div(^.id:="collapsePost",^.className:="textOverflowPost",DashboardCSS.Style.cardText)(message.postContent.text),
-                            <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                              <.span()(message.postContent.text)
+                          <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.span()(message.postContent.text)
                           )
                         )
                       )
@@ -505,7 +505,7 @@ object HomeFeedList {
 
                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                   if (message.postContent.text.length > 105) {
-                   // println(s"message length = ${message.postContent.subject}  ${}")
+                    // println(s"message length = ${message.postContent.subject}  ${}")
                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                       "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.preventFullViewModalPopUP(message))(
                       (MIcon.moreHoriz)
@@ -529,13 +529,13 @@ object HomeFeedList {
                   //                    if (S.showLovePost) <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) else <.div()
                   if (S.showLovePost) <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)() else <.div()
                 ),
-                <.div(^.className := "row", if (!S.showLovePost)SynereoCommanStylesCSS.Style.marginTop20px else ^.marginTop:="0.px")(
+                <.div(^.className := "row", if (!S.showLovePost) SynereoCommanStylesCSS.Style.marginTop20px else ^.marginTop := "0.px")(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   if (S.showCommentPost) <.div(
-                    <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("10"),
+                    <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("10"),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) ,
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")) ,
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
                   )
                   else
@@ -545,16 +545,15 @@ object HomeFeedList {
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
 
                   if (S.showCirclePost) <.div(
-                    <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("12"),
+                    <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("12"),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                     <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
 
-                  ) else
-                      <.div(^.className := "col-md-2")()
-
-
+                  )
+                  else
+                    <.div(^.className := "col-md-2")()
 
 
                 ),
@@ -562,14 +561,15 @@ object HomeFeedList {
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
                   if (S.showSharePost)
                     <.div(
-                       <.div(^.className := "col-md-2" ,DashboardCSS.Style.postDescription)("1"),
+                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("1"),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
 
-                    )  else
-                        <.div(^.className := "col-md-2")()
+                    )
+                  else
+                    <.div(^.className := "col-md-2")()
                 )
               )
             )
@@ -582,7 +582,7 @@ object HomeFeedList {
             AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified, S.senderAddress))
           }
           else if (S.showForwardPostForm) {
-            searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy, S.messagePost)))
+            searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy)))
           }
           else {
             <.span()
@@ -598,7 +598,7 @@ object HomeFeedList {
       )
     })
     .componentDidMount(scope => scope.backend.mounted())
-//    .componentDidUpdate(scope => scope.$.backend.preventFullViewModalPopUP(MessagePost()))
+    //    .componentDidUpdate(scope => scope.$.backend.preventFullViewModalPopUP(MessagePost()))
     .build
 
   def apply(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/) = MessagesList(Props(messages /*, rightPost*/))
