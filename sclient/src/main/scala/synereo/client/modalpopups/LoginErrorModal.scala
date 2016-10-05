@@ -8,13 +8,9 @@ import synereo.client.css.SynereoCommanStylesCSS
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
-import org.scalajs.dom
-import org.scalajs.dom._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
-import synereo.client.sessionitems.SessionItems
-
 import scala.scalajs.js
 
 /**
