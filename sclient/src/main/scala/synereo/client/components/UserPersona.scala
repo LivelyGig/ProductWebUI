@@ -30,7 +30,7 @@ object UserPersona {
     def render(props: Props) = {
       val model = props.proxy.value
       <.div(^.className := "row", NewMessageCSS.Style.PersonaContainerDiv)(
-        <.div(^.className := "col-md-2 col-sm-2", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+        <.div(^.className := "col-md-2 col-sm-2 col-xs-2", SynereoCommanStylesCSS.Style.paddingLeftZero)(
           <.img(^.alt := "UserImage", ^.src := model.imgSrc, ^.className := "img-responsive", NewMessageCSS.Style.userImage)
         ),
         <.div(^.className := "col-md-10", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero)(

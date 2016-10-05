@@ -99,7 +99,7 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
-    def updateContent(e: ReactEventI) =  {
+    def updateContent(e: ReactEventI) = {
       var value = e.target.value
       val words: Seq[String] = value.split(" ")
       var tagsCreatedInline: Seq[String] = Seq()
@@ -220,61 +220,62 @@ object NewMessageForm {
           id = "newMessage"
         ),
         <.form(^.onSubmit ==> t.backend.submitForm)(
-          <.div(
-            userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
-          ),
-          <.div(^.className := "row")(
-            <.div(^.id := S.connectionsSelectizeInputId)(
-              ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,
-                enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))
-            ),
-            <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
-            <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
-              LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
-            ),
-            <.div()(
-              <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
-            ),
-            <.div()(
-              <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
-            ),
-            <.div()
-          ),
-          <.div(^.className := "row")(
-            <.div()(
-              if (S.postMessage.imgSrc != "") {
-                <.img(^.src := S.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
-              } else {
-                <.div("")
-              }
-
-            ),
+          <.div(^.className := "container-fluid")(
             <.div(
-              <.ul(^.className := "list-inline")(
-                for (tag <- S.tags.zipWithIndex) yield
-                  <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
-                    <.ul(^.className := "list-inline",
-                      <.li(^.textTransform := "uppercase", tag._1),
-                      <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
-                        "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
-                      )
-                    )
-                  )
+              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
+            ),
+            <.div(^.className := "row")(
+              <.div(^.id := S.connectionsSelectizeInputId)(
+                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,
+                  enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))
+              ),
+              <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
+              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
+                LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
+              ),
+              <.div()(
+                <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
+              ),
+              <.div()(
+                <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
               )
             ),
-            <.div(^.className := "text-left text-muted")(
-              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-            ),
-            <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
-              <.div(^.className := "pull-left")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
-                <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc)
+            <.div(^.className := "row")(
+              <.div()(
+                if (S.postMessage.imgSrc != "") {
+                  <.img(^.src := S.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
+                } else {
+                  <.div("")
+                }
+
               ),
-              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
-              <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
-            )
-          ) //                <.div(bss.modal.footer)
+              <.div(
+                <.ul(^.className := "list-inline")(
+                  for (tag <- S.tags.zipWithIndex) yield
+                    <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
+                      <.ul(^.className := "list-inline",
+                        <.li(^.textTransform := "uppercase", tag._1),
+                        <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
+                          "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
+                        )
+                      )
+                    )
+                )
+              ),
+              <.div(^.className := "text-left text-muted")(
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
+              ),
+              <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+                <.div(^.className := "pull-left")(
+                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
+                  <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc)
+                ),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
+              )
+            ) //                <.div(bss.modal.footer)
+          )
         )
       )
 
