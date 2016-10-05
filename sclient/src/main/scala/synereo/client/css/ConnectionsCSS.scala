@@ -14,7 +14,7 @@ object ConnectionsCSS {
     val connectionsContainerMain = style(
       height(95.vh),
       overflowY.scroll.important,
-      paddingTop(60.px),
+//      paddingTop(60.px),
       paddingBottom(60.px),
       overflowX.hidden
     )
