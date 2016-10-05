@@ -1,12 +1,10 @@
 package synereo.client.components
 
-import com.sun.java.swing.plaf.windows.WindowsBorders.DashedBorder
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.ext.KeyCode
 import synereo.client.components.Icon._
 import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
-
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -15,8 +13,8 @@ import scalacss.ScalaCssReact._
 import scalacss.StyleA
 
 /**
- * Common Bootstrap components for scalajs-react
- */
+  * Common Bootstrap components for scalajs-react
+  */
 object Bootstrap {
 
   // shorthand for styles
@@ -71,7 +69,7 @@ object Bootstrap {
 
     // header and footer are functions, so that they can get access to the the hide() function for their buttons
     case class Props(header: (Callback) => ReactNode, /*footer: (Callback) => ReactNode,*/ closed: () => Callback, backdrop: String = "static",
-      keyboard: Boolean = true, addStyles: Seq[StyleA] = Seq(), id: String = "", CSSClass: String = "")
+                     keyboard: Boolean = true, addStyles: Seq[StyleA] = Seq(), id: String = "", CSSClass: String = "")
 
     val OuterRef = Ref("o")
 
@@ -104,11 +102,11 @@ object Bootstrap {
         val modalStyle = bss.modal
         <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
-            <.div( if(P.id == "newMessage")SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div() ,   modalStyle.dialog )(
-              <.div(if(P.id=="loginContainer")LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
+            <.div(if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(), modalStyle.dialog)(
+              <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
                 <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
-              //              <.div(modalStyle.footer, P.footer(hide))
+                //              <.div(modalStyle.footer, P.footer(hide))
               )
             )
           ))
@@ -122,7 +120,7 @@ object Bootstrap {
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> (if(P.id=="loginContainer")false else P.backdrop), "keyboard" -> P.keyboard, "show" -> true))
+        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> (if (P.id == "loginContainer") false else P.backdrop), "keyboard" -> P.keyboard, "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })

@@ -60,7 +60,7 @@ object SynereoCommanStylesCSS {
       position.absolute,
       top.`0`,
       left.`0`
-//      zIndex(100)
+      //      zIndex(100)
     )
 
     val userNameTopMenubar = style(
@@ -317,6 +317,10 @@ object SynereoCommanStylesCSS {
       media.maxWidth(420.px)(
         paddingLeft(10.px),
         paddingRight(10.px)
+      ),
+      media.maxWidth(920.px)(
+        paddingLeft(20.px),
+        paddingRight(20.px)
       )
     )
 
@@ -412,12 +416,18 @@ object SynereoCommanStylesCSS {
     //      width(100.%%)
     //    )
     val verticalAlignCenter = style(
-      /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
       paddingLeft(30.%%),
-      paddingRight(30.%%)
-
+      paddingRight(30.%%),
+      media.maxWidth(420 px)(
+        paddingLeft(10.px).important,
+        paddingRight(10.px).important
+      ),
+      media.maxWidth(768 px)(
+        paddingLeft(10.%%),
+        paddingRight(10.%%)
+      )
     )
 
     val featureHide = style(
@@ -428,8 +438,8 @@ object SynereoCommanStylesCSS {
       whiteSpace.nowrap,
       overflow.hidden,
       textOverflow.:=("ellipsis"),
-      media.maxWidth(360.px)-
-      fontSize(13.px)
+      media.maxWidth(360.px) -
+        fontSize(13.px)
     )
 
     val paddingLeft15p = style(

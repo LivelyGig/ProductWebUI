@@ -12,7 +12,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers._
 import synereo.client.logger
-import synereo.client.modalpopups.{AboutInfoModal, NodeSettingModal, ProfileImageUploaderForm, ServerErrorModal}
+import synereo.client.modalpopups.{AboutInfoModal, NodeSettingModal, ProfileImageUploaderForm, ServerErrorModal, NewMessageForm}
 import org.scalajs.dom.window
 
 import scalacss.ScalaCssReact._
@@ -44,20 +44,22 @@ object AppModule {
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
   val introductionProxy = SYNEREOCircuit.connect(_.introduction)
   val erroProxy = SYNEREOCircuit.connect(_.appRootModel)
+  val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   val searchContainer: js.Object = "#searchContainer"
 
   case class Props(view: String, proxy: ModelProxy[AppRootModel])
 
-  case class State(showErrorModal: Boolean = false, showProfileImageUploadModal: Boolean = false,
-                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
+  case class State(showErrorModal: Boolean = false,
+                   showProfileImageUploadModal: Boolean = false,
+                   showNodeSettingModal: Boolean = false,
+                   showAboutInfoModal: Boolean = false,
+                   showNewMessageModal: Boolean = false)
 
 
   class AppModuleBackend(t: BackendScope[Props, State]) {
     /**
       * do not try to change these callback methods using react.Callback or other ways of callbacks, popups wont work then
-      *
-      * @return
       */
     def hideProfileImageModal(): Callback = {
       logger.log.debug("hideProfileImageModal")
@@ -75,6 +77,12 @@ object AppModule {
       logger.log.debug("hideNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
       t.modState(s => s.copy(showNodeSettingModal = false))
+    }
+
+    def hideNewMessageModal(): Callback = {
+      logger.log.debug("hideNewMessageModal")
+      SYNEREOCircuit.dispatch(ToggleNewMessageModal())
+      t.modState(s => s.copy(showNewMessageModal = false))
     }
 
     def serverError(): Callback = {
@@ -127,6 +135,8 @@ object AppModule {
             }
             else if (P.proxy().showAboutInfoModal) {
               AboutInfoModal(AboutInfoModal.Props(t.backend.hideAboutInfoModal))
+            } else if (P.proxy().showNewMessageModal) {
+              searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.hideNewMessageModal, "New Message", searchesProxy)))
             }
             else
               Seq.empty[ReactElement]

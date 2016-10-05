@@ -54,6 +54,9 @@ object NewMessageCSS {
       ),
       &.focus(
         backgroundColor.transparent.important
+      ),
+      media.maxWidth(1024.px)(
+        fontSize(15.px)
       )
     )
     val PersonaContainerDiv = style(
@@ -100,8 +103,10 @@ object NewMessageCSS {
       )
     )
     val userNameOnDilogue = style(
-      fontSize(16 px)
-
+      fontSize(16 px),
+      media.maxWidth(1024.px)(
+        fontSize(10.px)
+      )
     )
     val postTagBtn = style(
       margin(5.px),

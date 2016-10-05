@@ -6,7 +6,7 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{AboutInfoModal, NewMessage, NodeSettingModal, ProfileImageUploaderForm}
+import synereo.client.modalpopups.{NewMessage}
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
@@ -14,7 +14,6 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -23,7 +22,6 @@ import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
 import synereo.client.utils.{ContentUtils, I18N}
-
 import scala.scalajs.js
 import scala.util.{Failure, Success, Try}
 
@@ -48,19 +46,6 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
-    //    def showImageUploadModal(): react.Callback = {
-    //      t.modState(s => s.copy(showProfileImageUploadModal = !s.showProfileImageUploadModal))
-    //    }
-    //
-    //    def showAboutInfoModal(): react.Callback = {
-    //      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
-    //    }
-    //
-    //    def showNodeSettingModal(): react.Callback = {
-    //      logger.log.debug("showNodeSettingModal")
-    //      t.modState(s => s.copy(showNodeSettingModal = true))
-    //    }
-
     def showImageUploadModal(): react.Callback = Callback {
       logger.log.debug("main menu showImageUploadModal")
       SYNEREOCircuit.dispatch(ToggleImageUploadModal())
@@ -75,6 +60,12 @@ object MainMenu {
       logger.log.debug("main menu showNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
     }
+
+    def showNewMessageModal(): react.Callback = Callback {
+      logger.log.debug("main menu showNewMessageModal")
+      SYNEREOCircuit.dispatch(ToggleNewMessageModal())
+    }
+
   }
 
 
@@ -90,7 +81,12 @@ object MainMenu {
             <.div(^.className := "label-selectize-container-main")(
               if (props.currentLoc == DashboardLoc) {
                 <.div(
-                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg), "", ""))),
+                  <.div(^.className := "pull-left")(
+                    <.button(^.className := "btn", ^.onClick --> $.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostButton,
+                      <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg)
+                    )
+                    //                      NewMessage (NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg), "", ""))
+                  ),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
