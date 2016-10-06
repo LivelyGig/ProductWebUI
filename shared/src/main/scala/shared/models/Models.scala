@@ -16,7 +16,8 @@ sealed trait Post {
 sealed trait PostContent
 
 case class MessagePost(uid: String = "", created: String = "", modified: String = "",
-                       labels: String = "", connections: Seq[Connection] = Nil, postContent: MessagePostContent ) extends Post {
+                       labels: String = "", connections: Seq[Connection] = Nil,postContent: MessagePostContent, sender: ConnectionsModel =
+                       ConnectionsModel(), receivers: Seq[ConnectionsModel] = Nil) extends Post {
   override def postType: String = "MessagePost"
   override def versionNumber: Int = 0
 }
@@ -56,7 +57,7 @@ case class EmployerProfile(name: String = "", website: String = "", tagline: Str
 
 case class ModeratorProfile(name: String = "", title: String = "", capabilities: String = "", commission: String = "") extends Person with PostContent
 
-case class ConnectionsModel(sessionURI: String, connection: Connection, name: String, imgSrc: String)
+case class ConnectionsModel(sessionURI: String = "", connection: Connection = Connection(), name: String = "", imgSrc: String = "")
 
 case class UserModel(name: String = "",
                      email: String = "",

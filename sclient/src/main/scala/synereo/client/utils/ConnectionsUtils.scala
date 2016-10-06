@@ -51,20 +51,20 @@ object ConnectionsUtils {
     ConnectionsModel("", cnxn.connection, name, imgSrc)
   }
 
-  def getSenderReceivers(senderUri: String, receiversUri: Seq[String]): (ConnectionsModel, Seq[ConnectionsModel]) = {
+  def getSenderReceivers(message: MessagePost): MessagePost = {
+    val senderUri = message.connections.last.target.split("/")(2)
+    val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
     val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
     val allCnxnModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
     val userCnxnModel = ConnectionsModel(sessionURI = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value,
       connection = ConnectionsUtils.getSelfConnnection(),
       name = "me",
       imgSrc = SYNEREOCircuit.zoom(_.user).value.imgSrc)
-    println(s"userId : $userId senderUri: $senderUri")
     if (userId == senderUri) {
-      (userCnxnModel,
-        allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+      message.copy(sender = userCnxnModel, receivers = allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
     } else {
-      (allCnxnModel.find(_.connection.target.contains(senderUri)).head,
-        Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+      message.copy(sender = allCnxnModel.find(_.connection.target.contains(senderUri)).head,
+        receivers = Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
     }
   }
 
