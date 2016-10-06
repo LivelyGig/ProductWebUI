@@ -34,7 +34,9 @@ object LoginCSS {
         paddingTop.`0`.important,
         maxWidth(280 px),
         marginTop(70.px),
-        backgroundRepeat := "no-repeat"
+        backgroundRepeat := "no-repeat",
+        marginLeft.auto.important,
+        marginRight.auto.important
       )
 
     )

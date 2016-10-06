@@ -71,9 +71,12 @@ object UserProfileViewCSS {
     )
     val nodeSettingSection = style(
       fontSize(20.px),
-      color.black
+      color.black,
+      media.maxWidth(420.px)(
+        fontSize(12.px)
+      )
     )
-    val aboutInfoSectionContainer= style(
+    val aboutInfoSectionContainer = style(
       marginBottom(15.px)
     )
     val inputText = style(
