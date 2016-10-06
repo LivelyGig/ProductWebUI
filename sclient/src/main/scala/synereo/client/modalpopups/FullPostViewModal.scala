@@ -131,7 +131,7 @@ object FullPostViewModal {
                   ),
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                      <.div(^.className := "col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-8 col-xs-12")(
+                      <.div(^.className := "col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
                         <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
                           <.h1(s"${P.messages.postContent.subject}") /*,
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/
@@ -292,7 +292,9 @@ object FullPostViewModal {
                   //                  <.span(MIcon.close, PostFullViewCSS.Style.closeIcon)
                 //  if (P.messages.postContent.imgSrc == "") {
                     // getMessage = message
-                    <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide, (MIcon.apply("close", "48")))
+                    <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide,
+                      <.span(PostFullViewCSS.Style.closeSIcon)(MIcon.apply("close", "24")), <.span(PostFullViewCSS.Style.closeLIcon)(MIcon.apply("close", "48"))
+                    )
                 //  }else{<.span()}
                     )
               )
