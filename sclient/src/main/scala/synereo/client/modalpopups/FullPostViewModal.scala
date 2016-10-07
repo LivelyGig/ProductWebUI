@@ -131,7 +131,7 @@ object FullPostViewModal {
                   ),
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                      <.div(^.className := "col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
+                      <.div(^.className := "col-md-offset-1 col-md-9 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
                         <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
                           <.h1(s"${P.messages.postContent.subject}") /*,
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/

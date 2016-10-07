@@ -137,7 +137,7 @@ object Dashboard {
                       if (i % 2 != 0) {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                            <.div(^.className := "", ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
                               <.div(^.className := "col-md-1 pull-left")(
                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                               ),
@@ -155,10 +155,10 @@ object Dashboard {
                               <.div(^.className := "col-md-12")(
                                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                                   <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                  <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                                  <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                                     "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                                   <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                                    <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                                    <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
                                       "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
                                     ),
                                     <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
@@ -181,7 +181,7 @@ object Dashboard {
                       } else {
                         <.li(^.id := s"home-feed-card-$i", ^.className := "media", DashboardCSS.Style.CardHolderLiElement, ^.onMouseEnter ==> t.backend.handleMouseEnterEvent /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/)(
                           <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
-                            <.div(^.className := "", ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                            <.div(^.className := "", ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
                               <.div(^.className := "col-md-1 pull-left")(
                                 <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                               ),
@@ -201,10 +201,10 @@ object Dashboard {
                                   <.img(^.src := "./assets/synereo-images/blogpostimg.png", ^.className := "img-responsive", DashboardCSS.Style.cardImage),
                                   <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                                     <.h3("The Beautiful Iceland", DashboardCSS.Style.cardHeading),
-                                    <.div(DashboardCSS.Style.cardText, ^.onClick ==> t.backend.openFullViewModalPopUP)("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
+                                    <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do " +
                                       "eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip "),
                                     <.div(^.id := s"collapse-post-$i", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                                      <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick ==> t.backend.openFullViewModalPopUP)(
+                                      <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
                                         // "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,"
                                       ),
                                       <.div(^.className := "col-md-12 text-uppercase", SynereoCommanStylesCSS.Style.paddingLeftZero)(
@@ -363,15 +363,27 @@ object HomeFeedList {
       $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
       t.modState(s => s.copy(showFullPostView = true, messagePost = message, fromSender = fromSender, toReceiver = toReceiver))
     }
+    
+//
+//    def openFullViewModalPopUP(e: ReactEvent): Callback = {
+//      $(dashboardContainerMain).removeClass("SynereoCommanStylesCSS_Style-overflowYScroll")
+//      t.modState(s => s.copy(showFullPostView = true/*, preventFullPostView = true*/))
+//    }
+
+
 
     def preventFullViewModalPopUP(message: MessagePost): Callback = {
       if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
+
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
-        println( $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height())
+
+        println($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() + $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height())
         $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
       } else {
-        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height()/* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
       }
 
       t.modState(s => s.copy(showFullPostView = false))
@@ -438,12 +450,13 @@ object HomeFeedList {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost /*, ^.onMouseEnter ==> mouseEntered*/)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
-                    /*if (imgContentOfMessagePost.length != 0)
-                      <.img(^.className := "media-object", ^.src := imgContentOfMessagePost, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    else if (senderName.equals("me"))
-                      <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    else
-                      <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)*/
+//                    if (imgContentOfMessagePost.length != 0)
+//                      <.img(^.className := "media-object", ^.src := imgContentOfMessagePost, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+//                    else if (senderName.equals("me"))
+//                      <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+//                    else
+//                      <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+
                     <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                   ),
                   <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
@@ -452,7 +465,8 @@ object HomeFeedList {
                       <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                     ),
                     <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
-                      <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
+                     // <.span(s"To  : ${receiverNames.mkString(", ")}")
+                        <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
                     if (message.sender.name.equals("me")) {
@@ -460,7 +474,8 @@ object HomeFeedList {
                     } else {
                       <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick --> t.backend.amplifyPost(message.sender.connection.source.split("/")(2)))(
+                        ^.onClick ==> t.backend.amplifyPost)(
+                        //<.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                       )
                     },
@@ -471,79 +486,47 @@ object HomeFeedList {
                     )
                   )
                 ),
+
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12")(
                     if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                      // getMessage = message
-                      <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))
+                      <.div(
+                        <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", "))),
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                          <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.span()(message.postContent.text)
+                          )
+                        )
+                      )
+                    } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
+                      <.div(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                          <.div(
+                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", "))),
+                            <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text)),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.div()(message.postContent.text)
+                          )
+                        )
+                      )
                     } else {
-                      // getMessage = null
-                      <.span("")
-                    },
-                    <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom,^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
-                      <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                      <.div(DashboardCSS.Style.cardText)(
-                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")) )(
-                            if (allWordsFrmMessageText.length == 1) {
-                              allWordsFrmMessageText(0)
-                            } else
-                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                allWordsFrmMessageText(b) + " "
-                              }
+                      <.div(
+                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message,message.sender.name,message.receivers.map(_.name).mkString(", ")))(
+                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+                          <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text),
+                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+                            <.span()(message.postContent.text)
                           )
-                        } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                          <.div(^.className := "col-md-9 col-sm-9 col-xs-12", PostFullViewCSS.Style.marginLeft15PX)(
-                            <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
-                              if (allWordsFrmMessageText.length == 1) {
-                                allWordsFrmMessageText(0)
-                              } else
-                                for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                  allWordsFrmMessageText(b) + " "
-                                }
-                            )
-                          )
-                        }
-                        else if (message.postContent.imgSrc == "") {
-                          <.div(DashboardCSS.Style.cardText, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
-                            if (allWordsFrmMessageText.length == 1) {
-                              allWordsFrmMessageText(0)
-                            } else
-                              for {b <- 0 to allWordsFrmMessageText.length - 1 if b <= 30} yield {
-                                allWordsFrmMessageText(b) + " "
-                              }
-                          )
+                        )
+                      )
+                    })),
 
-                        } else {
-                          <.div()
-                        },
-                        if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                          <.div(^.className := "col-md-3 col-sm-3 col-xs-12")(
-                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))
-                          )
-                        } else {
-                          Seq.empty[ReactElement]
-                        }
-                      )
-                    )
-                  )
-                ),
                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                  <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                    <.div(^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
-                      for {b <- 1 to allWordsFrmMessageText.length - 1 if b > 30} yield {
-                        allWordsFrmMessageText(b) + " "
-                      },
-                      <.div(^.className := "col-md-12 text-uppercase")(
-                        //                      for {label <- t.backend.filterLabelStrings(message.postContent.text.split(" +"))} yield {
-                        //                        <.button(^.`type` := "button", ^.className := "btn btn-primary text-uppercase", DashboardCSS.Style.cardPostTagBtn)(label)
-                        //                      }
-                      )
-                    )
-                  )
-                ),
-                <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
-                  if (allWordsFrmMessageText.length > 30) {
+                  if (message.postContent.text.length > 105) {
+                    // println(s"message length = ${message.postContent.subject}  ${}")
                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
                       "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.preventFullViewModalPopUP(message))(
                       (MIcon.moreHoriz)
