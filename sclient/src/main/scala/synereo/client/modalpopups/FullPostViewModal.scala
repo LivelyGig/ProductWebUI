@@ -95,7 +95,7 @@ object FullPostViewModal {
                   ),
                   <.ul(^.id := "fullViewModalNavBar", ^.className := "nav nav-tabs", PostFullViewCSS.Style.postedUserInfoNavModal)(
                     <.li(PostFullViewCSS.Style.postedUserAvatarDiv)(
-                      <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm,DashboardCSS.Style.verticalAlignInherit),
+                      <.img(^.src := P.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm,DashboardCSS.Style.verticalAlignInherit),
                       <.div(DashboardCSS.Style.userNameDescription)(
                         <.span(s"From : ${P.fromSender}"),
                         <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${P.toReceiver}"),<.br(),
