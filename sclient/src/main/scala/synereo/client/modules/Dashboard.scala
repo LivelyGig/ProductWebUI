@@ -333,7 +333,7 @@ object HomeFeedList {
               case None =>
                 Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
                   case Some(v) => logger.log.debug(v.content.reason)
-                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
+                  case None => logger.log.debug(s"Failed to parse the response on sending AMPs: $res")
                 }
             }
           case Failure(res) =>

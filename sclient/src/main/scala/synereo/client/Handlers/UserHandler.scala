@@ -17,7 +17,7 @@ case class LogoutUser()
 
 case class UpdateUserImage(imgSrc: String)
 
-case class BalanceChanged(newBalance: String, address: String)
+case class BalanceChanged(amp: String, btc: String, address: String)
 
 //case class PostUserUpdate(updateUserRequest: UpdateUserRequest)
 
@@ -31,14 +31,14 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       // todo: Cancel all subscribe request for all sessions
       //      window.sessionStorage.clear()
       window.location.href = "/"
-      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false,balance = "",address = ""))
+      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false, balanceAMP = "", balanceBTC = "",address = ""))
     }
 
     case UpdateUserImage(imgSrc) =>
       updated(value.copy(imgSrc = imgSrc))
 
-    case BalanceChanged(newBalance, address) => {
-      updated(value.copy(balance = newBalance, address = address))
+    case BalanceChanged(amp, btc, address) => {
+      updated(value.copy(balanceAMP = amp, balanceBTC = btc, address = address))
     }
 
     //    case PostUserUpdate(req) =>
