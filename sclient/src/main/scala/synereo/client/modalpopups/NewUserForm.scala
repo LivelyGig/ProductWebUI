@@ -60,14 +60,14 @@ object NewUserForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def mounted(): Callback = {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def updateName(e: ReactEventI) = {
@@ -130,7 +130,7 @@ object NewUserForm {
     .backend(new NewUserFormBackend(_))
     .renderPS((t, P, S) => {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
-      val nodeName = dom.window.location.hostname
+      val nodeName = dom.window.location.host
       val headerText = "Sign up"
       Modal(
         Modal.Props(
