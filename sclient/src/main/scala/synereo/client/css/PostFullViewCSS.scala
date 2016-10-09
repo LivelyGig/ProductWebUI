@@ -16,7 +16,8 @@ object PostFullViewCSS {
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
       marginTop(-20.px),
       marginLeft(-15.px),
-      overflowY.hidden
+      overflowY.hidden,
+      backgroundSize := "cover"
     )
 
     val fullPostViewLeftRightContainer = style(
