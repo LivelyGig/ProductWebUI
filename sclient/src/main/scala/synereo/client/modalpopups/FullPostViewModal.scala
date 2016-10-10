@@ -95,7 +95,7 @@ object FullPostViewModal {
                   ),
                   <.ul(^.id := "fullViewModalNavBar", ^.className := "nav nav-tabs", PostFullViewCSS.Style.postedUserInfoNavModal)(
                     <.li(PostFullViewCSS.Style.postedUserAvatarDiv)(
-                      <.img(^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm,DashboardCSS.Style.verticalAlignInherit),
+                      <.img(^.src := P.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm,DashboardCSS.Style.verticalAlignInherit),
                       <.div(DashboardCSS.Style.userNameDescription)(
                         <.span(s"From : ${P.fromSender}"),
                         <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${P.toReceiver}"),<.br(),
@@ -131,7 +131,7 @@ object FullPostViewModal {
                   ),
                   <.div(^.className := "row")(
                     <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                      <.div(^.className := "col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
+                      <.div(^.className := "col-md-offset-1 col-md-9 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
                         <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
                           <.h1(s"${P.messages.postContent.subject}") /*,
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/

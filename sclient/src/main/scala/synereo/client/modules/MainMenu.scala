@@ -30,7 +30,7 @@ import scala.util.{Failure, Success, Try}
 object MainMenu {
 
   val introductionConnectProxy = SYNEREOCircuit.connect(_.introduction)
-  val userProxy = SYNEREOCircuit.connect(_.user)
+//  val userProxy = SYNEREOMain.userProxy
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 

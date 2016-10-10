@@ -50,6 +50,7 @@ class MessagesHandler[M](modelRW: ModelRW[M, Pot[MessagesRootModel]]) extends Ac
           .processRes(messagesResponse)
           .filterNot(_.pageOfPosts.isEmpty)
           .flatMap(content => Try(upickle.default.read[MessagePost](content.pageOfPosts(0))).toOption)
+          .map(ConnectionsUtils.getSenderReceivers)
         MessagesRootModel(msg.sortWith((x, y) => Moment(x.created).isAfter(Moment(y.created))))
       }
       action.handleWith(this, updateF)(PotActionRetriable.handler())

@@ -36,7 +36,7 @@ object ConnectionsUtils {
   def getNameImgFromJson(jsonBlob: String): (String, String) = {
     val json = JSON.parse(jsonBlob)
     val name = json.name.asInstanceOf[String]
-    val imgSrc = if (jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else ""
+    val imgSrc = if (jsonBlob.contains("imgSrc")) json.imgSrc.asInstanceOf[String] else "./assets/synereo-images/default_avatar.jpg"
     (name, imgSrc)
   }
 
@@ -50,5 +50,56 @@ object ConnectionsUtils {
     val (name, imgSrc) = ConnectionsUtils.getNameImgFromJson(cnxn.introProfile)
     ConnectionsModel("", cnxn.connection, name, imgSrc)
   }
+
+  def getSenderReceivers(message: MessagePost): MessagePost = {
+    val senderUri = message.connections.last.target.split("/")(2)
+    val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
+    val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
+    val allCnxnModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+    val userCnxnModel = ConnectionsModel(sessionURI = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value,
+      connection = ConnectionsUtils.getSelfConnnection(),
+      name = "me",
+      imgSrc = SYNEREOCircuit.zoom(_.user).value.imgSrc)
+    if (userId == senderUri) {
+      message.copy(sender = userCnxnModel, receivers = allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+    } else {
+      message.copy(sender = allCnxnModel.find(_.connection.target.contains(senderUri)).head,
+        receivers = Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+    }
+  }
+
+  /*def getMessageDetails(message: MessagePost): (String, Seq[String], String, String) = {
+    val senderUri =   message.connections.head.source.split("/")(2)
+    val receiverUri = message.connections.tail.map(_.source.split("/")(2))
+    val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
+    val (sender, receivers) = if ()
+    val connections = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
+    var senderName = "unknown"
+    var imgContentOfMessagePost = ""
+    var sendAmpsTo = ""
+    var fromSenderUID = ""
+    var receiverNames: Seq[String] = Seq()
+    val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
+    if (userId == senderUri) {
+      fromSenderUID = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
+      senderName = "me"
+      sendAmpsTo = userId
+      for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.source.split("/")(2) && a.connection.target.split("/")(2) == b.target.split("/")(2))) yield {
+        receiverNames :+= a.name
+      }
+
+    } else {
+      for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
+        senderName = a.name
+        fromSenderUID = a.connection.source.split("/")(2)
+        imgContentOfMessagePost = a.imgSrc
+        sendAmpsTo = a.connection.target.split("/")(2)
+      }
+      // ToDo: Look up name of Sender and use friendly name
+      receiverNames :+= "me"
+    }
+    (senderName, receiverNames, imgContentOfMessagePost,fromSenderUID)
+  }*/
+
 }
 

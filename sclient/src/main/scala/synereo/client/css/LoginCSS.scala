@@ -17,6 +17,7 @@ object LoginCSS {
       height(100.vh),
       backgroundImage := "url(\"./assets/synereo-images/Synereo_LogIn_AmpGame.jpg\")",
       marginTop(-53.px),
+      backgroundSize := "cover",
       media.maxWidth(768.px) -
         marginTop(-61.px)
     )

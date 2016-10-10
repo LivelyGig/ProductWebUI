@@ -35,7 +35,7 @@ object LoginForm {
                    showConfirmAccountCreation: Boolean = false,
                    showNewUserForm: Boolean = false,
                    showNewInviteForm: Boolean = false,
-                   hostName: String = dom.window.location.hostname,
+                   hostName: String = dom.window.location.host,
                    portNumber: String = "9876",
                    apiURL: String = ""
                   )
@@ -97,7 +97,7 @@ object LoginForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def mounted(): Callback = {
@@ -105,7 +105,7 @@ object LoginForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def formClosed(state: LoginForm.State, props: LoginForm.Props): Callback = {

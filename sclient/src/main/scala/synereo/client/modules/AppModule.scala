@@ -94,6 +94,7 @@ object AppModule {
     }
 
     def didUpdate(): Callback = Callback {
+      $(dom.window).off("hashchange")
       //      SYNEREOCircuit.dispatch(CloseAllPopUp())
       //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
       //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()

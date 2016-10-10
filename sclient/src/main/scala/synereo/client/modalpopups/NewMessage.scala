@@ -114,7 +114,7 @@ object NewMessageForm {
         }
       )
       val tempNewTags = tagsCreatedInline.filter(_.matches("""([\p{Punct}&&[^.$]]|\b\p{IsLetter}{1,2}\b)\s*"""))
-      println(s"tempNewTags: $tempNewTags")
+      //      println(s"tempNewTags: $tempNewTags")
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
