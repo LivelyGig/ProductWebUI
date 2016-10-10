@@ -101,9 +101,9 @@ object Dashboard {
         <.div(^.className := "container-fluid", DashboardCSS.Style.homeFeedMainContainer)(
           <.div(^.className := "row")(
             //            <.div(^.className := "col-lg-3 col-md-3 col-sm-3 col-xs-12")("Hello"),
-            <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12", DashboardCSS.Style.paddingLeftRight)(
+            <.div(^.className := "col-lg-12 col-md-12 col-sm-12 col-xs-12", DashboardCSS.Style.paddingLRZero)(
               <.div(^.className := "row")(
-                <.div(^.className := "col-sm-12 col-md-12 col-lg-12", DashboardCSS.Style.paddingLeftRight)(
+                <.div(^.className := "col-sm-12 col-md-12 col-lg-12", DashboardCSS.Style.paddingLRZero)(
                   <.div(^.className := "text-center")(<.span(^.id := "messageLoader", ^.color.white, ^.className := "hidden", Icon.spinnerIconPulse)),
                   <.div(
                     P.proxy().renderFailed(ex => /*<.div(

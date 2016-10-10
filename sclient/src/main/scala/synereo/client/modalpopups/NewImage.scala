@@ -129,7 +129,7 @@ object ProfileImageUploaderForm {
       Modal(
         Modal.Props(
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.h1(^.className := "pull-left")(P.header)),
+            <.h4(^.className := "pull-left")(P.header)),
           closed = () => t.backend.formClosed(S, P),
           id = "newImage"
         ),

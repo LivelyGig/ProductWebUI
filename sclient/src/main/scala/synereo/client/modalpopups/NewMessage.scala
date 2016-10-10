@@ -106,16 +106,18 @@ object NewMessageForm {
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      val words: Seq[String] = value.split(" ")
-      var tagsCreatedInline: Seq[String] = Nil
-      words.foreach(
-        word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
-          tagsCreatedInline +:= word
-        }
-      )
-      val tempNewTags = tagsCreatedInline.filter(_.matches("""([\p{Punct}&&[^.$]]|\b\p{IsLetter}{1,2}\b)\s*"""))
-      //      println(s"tempNewTags: $tempNewTags")
+      val tagsCreatedInline = getTagsWithoutPuncuations(value.split(" ").filter(_.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")))
+      //      println(tagsCreatedInline)
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
+    }
+
+    /**
+      *
+      * @param hashTagsCreated :List of hashtags  which we fetched from text area depending on matched regular expr
+      * @return List of Tags with removed the punctuation marks
+      */
+    def getTagsWithoutPuncuations(hashTagsCreated: Seq[String]) = hashTagsCreated flatMap { tag =>
+      "[a-zA-Z]+".r findAllIn tag map (_.toLowerCase)
     }
 
 
@@ -125,12 +127,12 @@ object NewMessageForm {
 
     def mounted(): Callback = Callback {
       val props = t.props.runNow()
-      dom.window.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
+      dom.document.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
       t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
     }
 
     def willUnmount(): Callback = Callback {
-      dom.window.removeEventListener("hashchange", hashChangeEventFun, useCapture = true)
+      dom.document.removeEventListener("hashchange", hashChangeEventFun, useCapture = true)
     }
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -156,6 +158,7 @@ object NewMessageForm {
         filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId).map(label => s"#$label"))
       allLabels.distinct
     }
+
 
     def deleteInlineLabel(e: ReactEventI) = {
       val value = e.target.parentElement.getAttribute("data-count")
@@ -183,7 +186,6 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      val props = t.props.runNow()
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -240,7 +242,7 @@ object NewMessageForm {
                 LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
               ),
               <.div()(
-                <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
+                <.textarea(^.rows := 2, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
               ),
               <.div()(
                 <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)

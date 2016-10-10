@@ -60,7 +60,7 @@ object SignupCSS {
       height(58.px),
       fontSize(22.px),
       fontFamily :=! "karla",
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         textAlign.center,
         &.hover(
           color(c"#cc3300")
@@ -91,7 +91,7 @@ object SignupCSS {
       textAlign.center,
       marginBottom(30.px),
       marginTop(20.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
       )
@@ -121,7 +121,7 @@ object SignupCSS {
       fontFamily :=! "karla",
       height(50.px),
       color(c"#000"),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         fontSize(10.px),
         height.auto.important
       )

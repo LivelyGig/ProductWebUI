@@ -12,6 +12,14 @@ object SynereoCommanStylesCSS {
 
     import dsl._
 
+    val appContainerMain = style(
+      height(95.vh),
+      overflowY.scroll.important,
+      //      paddingTop(60.px),
+      paddingBottom(60.px),
+      overflowX.hidden
+    )
+
     val naviContainer = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -230,7 +238,7 @@ object SynereoCommanStylesCSS {
       marginTop(5.px),
       padding(5.px),
       maxHeight(48.px),
-      media.maxWidth(420.px)-
+      media.maxWidth(580.px)-
       display.none,
       media.minWidth(421.px)-
       display.initial
@@ -240,7 +248,7 @@ object SynereoCommanStylesCSS {
       marginTop(4.px),
       padding(5.px),
       maxHeight(54.px),
-      media.maxWidth(420.px)-
+      media.maxWidth(580.px)-
         display.none,
       media.minWidth(421.px)-
         display.initial
@@ -249,7 +257,7 @@ object SynereoCommanStylesCSS {
       marginTop(5.px),
       padding(5.px),
       maxHeight(48.px),
-      media.maxWidth(420.px)-
+      media.maxWidth(580.px)-
         display.initial,
       media.minWidth(421.px)-
         display.none
@@ -314,7 +322,7 @@ object SynereoCommanStylesCSS {
       paddingRight(46.px),
       paddingBottom(0.px),
       paddingTop(0.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         paddingLeft(10.px),
         paddingRight(10.px)
       ),

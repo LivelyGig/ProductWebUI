@@ -72,7 +72,7 @@ object UserProfileViewCSS {
     val nodeSettingSection = style(
       fontSize(20.px),
       color.black,
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         fontSize(12.px)
       )
     )
