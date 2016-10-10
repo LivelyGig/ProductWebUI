@@ -3,10 +3,10 @@ package synereo.client.modules
 
 import synereo.client.components._
 import diode.react.ModelProxy
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{NewMessage}
+
+//import synereo.client.modalpopups.{NewMessage}
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
@@ -195,7 +195,7 @@ object MainMenu {
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
-                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
+                  //                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
               )
             )

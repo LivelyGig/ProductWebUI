@@ -108,12 +108,12 @@ object NewMessageCSS {
         fontSize(10.px)
       )
     )
-    val postTagBtn = style(
+    val createPostTagBtn = style(
       margin(5.px),
       fontFamily :=! "karla",
       fontWeight.normal,
       fontSize(12.px),
-      textTransform.capitalize,
+      //      textTransform.capitalize,
       backgroundColor.transparent.important,
       height(38.px),
       color(c"#000"),

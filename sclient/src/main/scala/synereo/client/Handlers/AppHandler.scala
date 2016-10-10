@@ -44,7 +44,7 @@ class AppHandler[M](modelRW: ModelRW[M, AppRootModel]) extends ActionHandler(mod
 
     case CloseAllPopUp() =>
       logger.log.debug(s"closing all popup in app module")
-      updated(value.copy(showNodeSettingModal = false, showAboutInfoModal = false, showProfileImageUploadModal = false))
+      updated(value.copy(showNodeSettingModal = false, showAboutInfoModal = false, showProfileImageUploadModal = false, showNewMessageModal = false))
 
   }
 
