@@ -1,19 +1,15 @@
 package synereo.client.modules
 
-
-import japgolly.scalajs.react.{Callback, ReactComponentB, _}
 import diode.react.ModelProxy
 import synereo.client.css.ConnectionsCSS
-import synereo.client.services.SYNEREOCircuit
 import org.querki.jquery._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers._
 import synereo.client.logger
-import synereo.client.modalpopups.{AboutInfoModal, NodeSettingModal, ProfileImageUploaderForm, ServerErrorModal, NewMessageForm}
-import org.scalajs.dom.window
+import synereo.client.modalpopups._
 
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
@@ -21,12 +17,10 @@ import japgolly.scalajs.react.{Callback, _}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
-import japgolly.scalajs.react
 import org.scalajs.dom
 
-
 /**
-  * Created by a4tech on 5/24/2016.
+  * Created by mandar.k on 5/24/2016.
   */
 //scalastyle:off
 object AppModule {
@@ -100,6 +94,7 @@ object AppModule {
     }
 
     def didUpdate(): Callback = Callback {
+      $(dom.window).off("hashchange")
       //      SYNEREOCircuit.dispatch(CloseAllPopUp())
       //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
       //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()

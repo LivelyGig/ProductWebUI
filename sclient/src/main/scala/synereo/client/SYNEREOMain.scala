@@ -55,6 +55,11 @@ object SYNEREOMain extends js.JSApp {
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
+  /**
+    * all diode connect proxy
+    * there proxy are used in case when a component wants to connect to a rootmodel of the application
+    * so as to listen changes into model and read/write to/from model.
+    */
   val userProxy = SYNEREOCircuit.connect(_.user)
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)

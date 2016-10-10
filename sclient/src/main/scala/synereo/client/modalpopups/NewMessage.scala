@@ -1,21 +1,13 @@
 package synereo.client.modalpopups
 
-import java.util.UUID
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react
 import shared.models.{Label, MessagePost, MessagePostContent}
-import japgolly.scalajs.react._
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
-import shared.dtos.LabelPost
 import synereo.client.components.GlobalStyles
-import synereo.client.components.Icon.Icon
 import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
-import synereo.client.services.SYNEREOCircuit
 
-import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -23,7 +15,8 @@ import synereo.client.utils.{ConnectionsUtils, ContentUtils, LabelsUtils, Messag
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import org.querki.jquery._
-import org.scalajs.dom.raw.{FileReader, UIEvent}
+import org.scalajs.dom
+import org.scalajs.dom.raw.{FileReader, HashChangeEvent, UIEvent}
 import shared.dtos.LabelPost
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.SearchesModelHandler
@@ -34,58 +27,63 @@ import synereo.client.facades.SynereoSelectizeFacade
 import scala.scalajs.js
 
 //scalastyle:off
-object NewMessage {
-  @inline private def bss = GlobalStyles.bootstrapStyles
-
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
-
-  case class State(showNewMessageForm: Boolean = false)
-
-  val searchesProxy = SYNEREOCircuit.connect(_.searches)
-
-  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-  }
-
-  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-    def mounted(props: Props): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
-    }
-
-    def addNewMessageForm(): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = true))
-    }
-
-    def addMessage(): Callback = {
-      t.modState(s => s.copy(showNewMessageForm = false))
-    }
-  }
-
-  val component = ReactComponentB[Props]("NewMessage")
-    .initialState(State())
-    .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      val B = $.backend
-      <.div(
-        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-        if (S.showNewMessageForm) searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
-        else
-          Seq.empty[ReactElement]
-      )
-    })
-    .configure(OnUnmount.install)
-    .build
-
-  def apply(props: Props) = component(props)
-}
+//object NewMessage {
+//  @inline private def bss = GlobalStyles.bootstrapStyles
+//
+//  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
+//
+//  case class State(showNewMessageForm: Boolean = false)
+//
+//  val searchesProxy = SYNEREOCircuit.connect(_.searches)
+//
+//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
+//  }
+//
+//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
+//    def mounted(props: Props): Callback = {
+//      t.modState(s => s.copy(showNewMessageForm = true))
+//    }
+//
+//    def addNewMessageForm(): Callback = {
+//      t.modState(s => s.copy(showNewMessageForm = true))
+//    }
+//
+//    def addMessage(): Callback = {
+//      t.modState(s => s.copy(showNewMessageForm = false))
+//    }
+//  }
+//
+//  val component = ReactComponentB[Props]("NewMessage")
+//    .initialState(State())
+//    .backend(new Backend(_))
+//    .renderPS(($, P, S) => {
+//      val B = $.backend
+//      <.div(
+//        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
+//        if (S.showNewMessageForm) searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
+//        else
+//          Seq.empty[ReactElement]
+//      )
+//    })
+//    .configure(OnUnmount.install)
+//    .build
+//
+//  def apply(props: Props) = component(props)
+//}
 
 object NewMessageForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback, header: String, proxy: ModelProxy[SearchesRootModel], messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()))
+  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback,
+                   header: String,
+                   proxy: ModelProxy[SearchesRootModel],
+                   messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()))
 
-  case class State(postMessage: MessagePostContent, postNewMessage: Boolean = false,
+  case class State(postMessage: MessagePostContent,
+                   postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
-                   labelsSelectizeInputId: String = "labelsSelectizeInputId", tags: Seq[String] = Seq())
+                   labelsSelectizeInputId: String = "labelsSelectizeInputId",
+                   tags: Seq[String] = Seq())
 
   val userProxy = SYNEREOCircuit.connect(_.user)
 
@@ -99,15 +97,24 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
+    val hashChangeEventFun: js.Function1[HashChangeEvent, Unit] = (e: HashChangeEvent) => {
+      println("inside the hashChangeEventFun")
+      if (e.newURL != e.oldURL) {
+        dom.window.alert("changes you have made will not be saved ")
+      }
+    }
+
     def updateContent(e: ReactEventI) = {
-      var value = e.target.value
+      val value = e.target.value
       val words: Seq[String] = value.split(" ")
-      var tagsCreatedInline: Seq[String] = Seq()
+      var tagsCreatedInline: Seq[String] = Nil
       words.foreach(
         word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
-          tagsCreatedInline = tagsCreatedInline :+ word
+          tagsCreatedInline +:= word
         }
       )
+      val tempNewTags = tagsCreatedInline.filter(_.matches("""([\p{Punct}&&[^.$]]|\b\p{IsLetter}{1,2}\b)\s*"""))
+      //      println(s"tempNewTags: $tempNewTags")
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
@@ -116,15 +123,14 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    //    def willUnmount(): Callback = Callback {
-    //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-    //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-    //    }
-
     def mounted(): Callback = Callback {
       val props = t.props.runNow()
-      //      println(s"messagePost from Props : ${props.messagePost} ")
+      dom.window.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
       t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
+    }
+
+    def willUnmount(): Callback = Callback {
+      dom.window.removeEventListener("hashchange", hashChangeEventFun, useCapture = true)
     }
 
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
@@ -252,9 +258,9 @@ object NewMessageForm {
               <.div(
                 <.ul(^.className := "list-inline")(
                   for (tag <- S.tags.zipWithIndex) yield
-                    <.li(^.className := "btn btn-primary", NewMessageCSS.Style.postTagBtn,
+                    <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
-                        <.li(^.textTransform := "uppercase", tag._1),
+                        <.li(/*^.textTransform := "uppercase", */ tag._1),
                         <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
                           "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
                         )
@@ -284,11 +290,9 @@ object NewMessageForm {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal
       }
-      //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted())
-    //    .componentWillUnmount(scope => scope.backend.willUnmount)
-    //      .shouldComponentUpdate(scope => false)
+    .componentWillUnmount(scope => scope.backend.willUnmount())
     .build
 
   def apply(props: Props) = component(props)
