@@ -224,7 +224,8 @@ object SynereoCommanStylesCSS {
     val userActionsMenu = style(
       width.auto.important,
       minHeight.auto.important,
-      right.`0`.important
+      right.`0`.important,
+      backgroundColor.white.important
     )
     val imgLogo = style(
       marginTop(5.px),
@@ -462,6 +463,16 @@ object SynereoCommanStylesCSS {
       marginLeft(51.px),
       opacity(0.3),
       background := rgba(0, 0, 0, 0.5)
+    )
+
+    val naviCollapse = style (
+      media.maxWidth(768.px)- (
+      backgroundColor( rgb(46, 110, 142)),
+      position.absolute,
+      top(57.px),
+      left(0.px),
+      width(100.%%),
+      zIndex(9))
     )
   }
 
