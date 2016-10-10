@@ -132,7 +132,7 @@ object SYNEREOMain extends js.JSApp {
               )
             }
           ),
-          <.div(^.id := "navi-collapse", ^.className := "collapse navbar-collapse")(
+          <.div(^.id := "navi-collapse",SynereoCommanStylesCSS.Style.naviCollapse, ^.className := "collapse navbar-collapse")(
             userProxy(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
