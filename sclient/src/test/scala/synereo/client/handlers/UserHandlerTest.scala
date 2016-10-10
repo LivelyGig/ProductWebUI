@@ -48,10 +48,10 @@ class UserHandlerTest extends UnitTest("UserHandlerTest") {
   }
 
   "BalanceChanged" should "Updated AMP balance should not be null" in {
-    val result = handler.handle(BalanceChanged(newUserModel.balance, newUserModel.address))
+    val result = handler.handle(BalanceChanged(newUserModel.balanceAMP, newUserModel.balanceBTC, newUserModel.address))
     result match {
       case ModelUpdate(newValue) =>
-        assert(newValue.balance != null, newValue.address != null)
+        assert(newValue.balanceAMP != null, newValue.address != null)
       case _ => assert(true)
     }
   }
