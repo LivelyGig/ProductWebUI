@@ -15,11 +15,11 @@ object NewMessageCSS {
 
     val textAreaNewMessage = style(
       width(100.%%),
-      marginTop(25.px),
+      marginTop(16.px),
       marginBottom(10.px),
       border.none.important,
       resize.none.important,
-      fontSize(20 px)
+      fontSize(18.px)
     )
     val newMessageActionsContainerDiv = style(
       //      marginTop(30.px),

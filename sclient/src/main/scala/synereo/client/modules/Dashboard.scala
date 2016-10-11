@@ -264,7 +264,8 @@ object HomeFeedList {
                    fromSender: String = "", toReceiver: String = "", senderAddress: String = "", showLovePost: Boolean = false,
                    showCommentPost: Boolean = false,
                    showCirclePost: Boolean = false,
-                   showSharePost: Boolean = false
+                   showSharePost: Boolean = false,
+                   showReplyPostForm : Boolean = false
                   )
 
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
@@ -348,9 +349,18 @@ object HomeFeedList {
       t.modState(state => state.copy(showForwardPostForm = true, messagePost = message))
     }
 
+    def replyPost(message: MessagePost): Callback = {
+      logger.log.debug("replying a Post")
+      t.modState(state => state.copy(showReplyPostForm = true, messagePost = message))
+    }
+
     def postForwarded(): Callback = {
       logger.log.debug("postForwarded")
       t.modState(state => state.copy(showForwardPostForm = false))
+    }
+    def postReplyed(): Callback = {
+      logger.log.debug("postRepled")
+      t.modState(state => state.copy(showReplyPostForm = false))
     }
 
 
@@ -483,6 +493,11 @@ object HomeFeedList {
                       "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
                       ^.onClick --> t.backend.forwardPost(message))(
                       <.span(Icon.mailForward)
+                    ),
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Reply Post", "data-placement".reactAttr := "right",
+                      ^.onClick --> t.backend.replyPost(message))(
+                      <.span(Icon.mailReply)
                     )
                   )
                 ),
@@ -610,7 +625,9 @@ object HomeFeedList {
           else if (S.showForwardPostForm) {
             searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy, S.messagePost)))
           }
-          else {
+          else if (S.showReplyPostForm) {
+            searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postReplyed, "Reply", searchesProxy, S.messagePost,S.showReplyPostForm)))
+          } else {
             <.span()
           }
         ),

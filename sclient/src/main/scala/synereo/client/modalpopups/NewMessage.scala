@@ -17,6 +17,7 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom.raw.{FileReader, HashChangeEvent, UIEvent}
+import org.widok.moment.Moment
 import shared.dtos.LabelPost
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.SearchesModelHandler
@@ -77,7 +78,8 @@ object NewMessageForm {
   case class Props(submitHandler: ( /*PostMessage*/ ) => Callback,
                    header: String,
                    proxy: ModelProxy[SearchesRootModel],
-                   messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()))
+                   messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
+                   replyPost : Boolean = false)
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
@@ -123,10 +125,19 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(): Callback = Callback {
+    def mounted(): Callback =  {
       val props = t.props.runNow()
       dom.window.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
-      t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject))).runNow()
+
+      if(props.replyPost){
+        println("In replyPost")
+        var contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \n From : ${props.messagePost.sender.name} \n To : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n  "
+       t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}" )))
+
+      }else{
+        println("In forwardPost")
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject)))
+      }
     }
 
     def willUnmount(): Callback = Callback {
@@ -286,12 +297,12 @@ object NewMessageForm {
       )
 
     })
+    .componentWillMount(scope => scope.backend.mounted())
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal
       }
     })
-    .componentDidMount(scope => scope.backend.mounted())
     .componentWillUnmount(scope => scope.backend.willUnmount())
     .build
 
