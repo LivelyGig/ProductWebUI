@@ -148,9 +148,9 @@ object MainMenu {
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> scope.backend.showAboutInfoModal())(AppUtils.getFromLang("ABOUT"))),
-                      <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())("Change profile picture")),
-                      <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal())("Node settings")),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign out"))
+                      <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())(AppUtils.getFromLang("CHANGE_PROFILE_PICTURE"))),
+                      <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal())(AppUtils.getFromLang("NODE_SETTINGS"))),
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(AppUtils.getFromLang("SIGN_OUT")))
 
                     )
                     //                  if (state.showProfileImageUploadModal)

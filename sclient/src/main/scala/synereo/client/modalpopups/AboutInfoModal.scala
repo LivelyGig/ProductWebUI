@@ -1,9 +1,11 @@
 package synereo.client.modalpopups
 
+import diode.ModelR
 import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{SignupCSS, UserProfileViewCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.utils.ConnectionsUtils
@@ -12,8 +14,10 @@ import shared.dtos.{ApiResponse, VersionInfoResponse}
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
+import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.scalajs.js
 import scala.util.{Failure, Success}
 
 //scalastyle:off
@@ -23,20 +27,25 @@ object AboutInfoModal {
 
   case class Props(submitHandler: () => Callback)
 
-  case class State(versionInfo: VersionInfoResponse)
+  case class State(versionInfo: VersionInfoResponse, lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class AboutInfoModalBackend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
+
     def mounted(props: AboutInfoModal.Props) = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       logger.log.debug(s"AboutInfoModal mounted")
       CoreApi.getVersionInfo().onComplete {
         case Success(res) =>
           try {
-            val versionInfoFromAjax = upickle.default.read[ApiResponse[VersionInfoResponse]](res).content
-            t.modState(state => state.copy(versionInfo = versionInfoFromAjax)).runNow()
+            val versionInfoResponse = upickle.default.read[ApiResponse[VersionInfoResponse]](res).content
+            t.modState(state => state.copy(versionInfo = versionInfoResponse)).runNow()
           } catch {
             case e: Exception => logger.log.error("Exception in read VersionInfoResponse")
           }
@@ -67,14 +76,13 @@ object AboutInfoModal {
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Agent UID: ${agentUID.head}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Wallet Address: $ampAddress"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(""),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)("Build Information"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- Gloseval Version: ${versionInfo.glosevalVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- Scala Version: ${versionInfo.scalaVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- MongoDB Version: ${versionInfo.mongoDBVersion}"),
-            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"- RabbitMQ Version: ${versionInfo.rabbitMQVersion} "),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("AGENT_UID").toString}${agentUID.head}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}$ampAddress"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("BUILD_INFORMATION").toString}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("GLOSEVAL_VERSION").toString}${versionInfo.glosevalVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("SCALA_VERSION").toString}${versionInfo.scalaVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("MONGODB_VERSION").toString}${versionInfo.mongoDBVersion}"),
+            <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString}${versionInfo.rabbitMQVersion} "),
             <.div(^.className := "row pull-right")(
               <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "Ok")
             ),

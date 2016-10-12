@@ -192,7 +192,6 @@ object LoginView {
 
     def processLoginFailed(responseStr: String): Unit = {
       val loginError = upickle.default.read[ApiResponse[InitializeSessionErrorResponse]](responseStr)
-
       $(loginLoader).addClass("hidden")
       println("login error")
       t.modState(s => s.copy(showLoginFailed = true, loginErrorMessage = loginError.content.reason)).runNow()

@@ -189,7 +189,7 @@ object NewUserForm {
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
               <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true), <.label(^.`for` := "termsOfServices", ^.fontSize := "14.px")
-              (state.lang.selectDynamic("I'M_COOL_WITH_THE").toString),
+              (state.lang.selectDynamic("IM_COOL_WITH_THE").toString),
               Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), state.lang.selectDynamic("TERMS_OF_SERVICE").toString)
             )
           ),

@@ -215,7 +215,7 @@ object LoginForm {
           )
         ),
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
-          Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), state.lang.selectDynamic("DON'T_HAVE_AN_ACCOUNT?").toString),
+          Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), state.lang.selectDynamic("DONT_HAVE_AN_ACCOUNT?").toString),
           Button(Button.Props(t.backend.showVerifyEmailModal(), CommonStyle.default, Seq(LoginCSS.Style.verifyUserBtnLoginModal), "", ""), state.lang.selectDynamic("VERIFY YOUR TOKEN").toString)
           //Button(Button.Props(t.backend.addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
           //RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))

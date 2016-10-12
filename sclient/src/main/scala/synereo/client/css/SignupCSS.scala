@@ -28,7 +28,7 @@ object SignupCSS {
       marginTop(-15.px),
       marginBottom(25.px)
     )
-    val accountValidationSuccessText = style(
+    val accountValidationSuccessHeading = style(
       fontSize(2.4.em)
     )
     val verificationMessageContainer = style(
