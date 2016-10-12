@@ -345,21 +345,21 @@ object HomeFeedList {
     }
 
     def forwardPost(message: MessagePost): Callback = {
-      logger.log.debug("forwarding a Post")
+//      logger.log.debug("forwarding a Post")
       t.modState(state => state.copy(showForwardPostForm = true, messagePost = message))
     }
 
     def replyPost(message: MessagePost): Callback = {
-      logger.log.debug("replying a Post")
+//      logger.log.debug("replying a Post")
       t.modState(state => state.copy(showReplyPostForm = true, messagePost = message))
     }
 
     def postForwarded(): Callback = {
-      logger.log.debug("postForwarded")
+//      logger.log.debug("postForwarded")
       t.modState(state => state.copy(showForwardPostForm = false))
     }
     def postReplyed(): Callback = {
-      logger.log.debug("postRepled")
+//      logger.log.debug("postRepled")
       t.modState(state => state.copy(showReplyPostForm = false))
     }
 

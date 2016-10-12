@@ -100,7 +100,7 @@ object NewMessageForm {
     }
 
     val hashChangeEventFun: js.Function1[HashChangeEvent, Unit] = (e: HashChangeEvent) => {
-      println("inside the hashChangeEventFun")
+//      println("inside the hashChangeEventFun")
       if (e.newURL != e.oldURL) {
         dom.window.alert("changes you have made will not be saved ")
       }
@@ -130,12 +130,12 @@ object NewMessageForm {
       dom.window.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
 
       if(props.replyPost){
-        println("In replyPost")
-        var contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \n From : ${props.messagePost.sender.name} \n To : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n  "
+//        println("In replyPost")
+        var contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}" )))
 
       }else{
-        println("In forwardPost")
+//        println("In forwardPost")
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject)))
       }
     }
