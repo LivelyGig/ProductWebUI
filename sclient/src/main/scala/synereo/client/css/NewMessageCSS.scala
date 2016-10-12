@@ -61,7 +61,10 @@ object NewMessageCSS {
     )
     val PersonaContainerDiv = style(
       marginTop.`0`,
-      marginBottom(20.px)
+      marginBottom(20.px),
+      media.maxWidth(580.px)(
+        marginTop(-30.px)
+      )
     )
     val newMessageCancelBtn = style(
       backgroundColor.transparent.important,

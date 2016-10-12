@@ -31,7 +31,7 @@ object LoginCSS {
         marginLeft(6.%%),
         backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")"
       ),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         paddingTop.`0`.important,
         maxWidth(280 px),
         marginTop(70.px),
@@ -46,7 +46,7 @@ object LoginCSS {
       width(117.px),
       marginTop(-31.%%),
       marginLeft(36.9.%%),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         width(47.px),
         height(50.px),
         marginLeft(39.8.%%),
@@ -94,7 +94,7 @@ object LoginCSS {
       fontFamily :=! "karla",
       textAlign.center,
       marginBottom(30.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
       )
@@ -249,7 +249,7 @@ object LoginCSS {
       ),
       border.none.important,
       fontFamily :=! "karla",
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         textAlign.center,
         marginTop(8.px),
         fontSize(16.px),
@@ -278,7 +278,7 @@ object LoginCSS {
       ),
       border.none.important,
       fontFamily :=! "karla",
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         textAlign.center,
         marginTop(8.px),
         fontSize(16.px),
@@ -369,7 +369,7 @@ object LoginCSS {
       fontFamily :=! "karla",
       float.right,
       marginTop(25.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         textAlign.center,
         &.hover(
           color(c"#cc3300")
@@ -395,7 +395,7 @@ object LoginCSS {
     )
     val loginFormInputText = style(
       marginBottom(22.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         marginBottom(5.px)
       )
 
@@ -403,12 +403,12 @@ object LoginCSS {
 
     val apiDetailsContainer = style(
       height(50.px),
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         height(30.px)
       )
     )
     val editApiDetailBtn = style(
-      media.maxWidth(420.px)(
+      media.maxWidth(580.px)(
         fontSize(10.px)
       )
     )

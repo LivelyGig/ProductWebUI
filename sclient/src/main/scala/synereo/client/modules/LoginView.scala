@@ -119,11 +119,17 @@ object LoginView {
         }
         t.modState(s => s.copy(showNewUserForm = false))
       } else if (showLoginForm) {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       } else if (showTermsOfServicesForm) {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = false, showTermsOfServicesForm = true))
       }
       else {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }

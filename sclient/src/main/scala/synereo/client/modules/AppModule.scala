@@ -1,7 +1,7 @@
 package synereo.client.modules
 
 import diode.react.ModelProxy
-import synereo.client.css.ConnectionsCSS
+import synereo.client.css.{ConnectionsCSS, SynereoCommanStylesCSS}
 import org.querki.jquery._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react._
@@ -108,7 +108,7 @@ object AppModule {
     .backend(new AppModuleBackend(_))
     .renderPS((t, P, S) => {
       <.div(
-        <.div(^.id := "appContainer", ConnectionsCSS.Style.connectionsContainerMain)(
+        <.div(^.id := "appContainer", SynereoCommanStylesCSS.Style.appContainerMain)(
           <.div()(
             //Left Sidebar
             <.div(^.id := "searchContainer", ^.className := "sidebar sidebar-left sidebar-animate sidebar-lg-show ",
