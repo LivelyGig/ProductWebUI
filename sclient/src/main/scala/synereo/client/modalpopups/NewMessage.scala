@@ -135,8 +135,10 @@ object NewMessageForm {
        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}" )))
 
       }else{
+//        props.messagePost.receivers = Nil
 //        println("In forwardPost")
-        t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = props.messagePost.postContent.subject)))
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
+          subject = props.messagePost.postContent.subject)))
       }
     }
 
@@ -243,8 +245,9 @@ object NewMessageForm {
             ),
             <.div(^.className := "row")(
               <.div(^.id := S.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,
-                  enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))
+                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,Option(0),P.messagePost.receivers,P.replyPost,
+                  enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))//,
+
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
               <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
