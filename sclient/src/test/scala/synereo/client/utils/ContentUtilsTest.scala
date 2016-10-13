@@ -49,10 +49,10 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
     val balChanged = MockData.balChanged
     contentUtils.processRes(balChanged)
     Then("the user root model is updated with the changed balance")
-    assert(SYNEREOCircuit.zoom(_.user.balance.nonEmpty).value)
+    assert(SYNEREOCircuit.zoom(_.user.balanceAMP.nonEmpty).value)
     And("the updated balance is same as the changed balance from response")
     val apiResponse = upickle.default.read[Seq[ApiResponse[BalanceChange]]](balChanged)
-    assert(SYNEREOCircuit.zoom(_.user.balance).value == apiResponse(0).content.newBalance)
+    assert(SYNEREOCircuit.zoom(_.user.balanceAMP).value == apiResponse(0).content.amp)
   }
   it should "extract add new connection" in {
     Given("response json contains connect notification")
@@ -69,8 +69,8 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
   "sortContent" should "give a tuple with different types for mixed responses" in {
     val mixedRes = MockData.mixedReponse
     val responseArray = upickle.json.read(mixedRes).arr.map(e => upickle.json.write(e))
-    val (cnxn, msg, intro, cnctNot, balanceChanged) = contentUtils.sortContent(responseArray)
-    assert(cnxn.nonEmpty && msg.nonEmpty && intro.nonEmpty && cnctNot.nonEmpty && balanceChanged.nonEmpty)
+    val (cnxn, msg, intro, cnctNot) = contentUtils.sortContent(responseArray)
+    assert(cnxn.nonEmpty && msg.nonEmpty && intro.nonEmpty && cnctNot.nonEmpty)
   }
 
 

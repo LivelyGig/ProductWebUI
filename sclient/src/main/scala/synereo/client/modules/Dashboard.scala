@@ -317,10 +317,14 @@ object HomeFeedList {
       ).map(_.replace("#", "")).distinct
     }
 
-    def amplifyPost(senderAddress: String): Callback = {
-//      logger.log.debug("amplifyPost called")
-//      val senderAddress = e.target.id
-      t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
+    def amplifyPost(message: MessagePost): Callback = {
+     logger.log.debug("amplifyPost called")
+     var senderAddress = ""
+      val connections = SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
+      for (b <- message.connections; a <- connections; if (a.connection.source.split("/")(2) == b.target.split("/")(2) && a.connection.target.split("/")(2) == b.source.split("/")(2))) yield {
+        senderAddress = a.connection.target.split("/")(2)
+      }
+     t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
     }
 
     def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
@@ -334,7 +338,7 @@ object HomeFeedList {
               case None =>
                 Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
                   case Some(v) => logger.log.debug(v.content.reason)
-                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
+                  case None => logger.log.debug(s"Failed to parse the response on sending AMPs: $res")
                 }
             }
           case Failure(res) =>
@@ -484,7 +488,7 @@ object HomeFeedList {
                     } else {
                       <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick ==> t.backend.amplifyPost)(
+                        ^.onClick --> t.backend.amplifyPost(message))(
                         //<.img(^.id := sendAmpsTo, ^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                       )
