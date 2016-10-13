@@ -56,7 +56,7 @@ object ConnectionsUtils {
   }
 
   def getSenderReceivers(message: MessagePost): MessagePost = {
-    println(s"message: $message")
+//    println(s"message: $message")
     try {
       val senderUri = message.connections.last.target.split("/")(2)
       val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
