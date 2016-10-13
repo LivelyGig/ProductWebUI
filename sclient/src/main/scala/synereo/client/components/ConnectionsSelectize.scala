@@ -52,21 +52,11 @@ object ConnectionsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil , replyPost : Boolean = false,
+  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil, replyPost: Boolean = false,
                    enableAllContacts: Boolean = false)
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
-//  def replyPost (props: Props) = {
-//    val cnxns = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
-//    for(receiver <-props.receivers) yield  {
-//     var getcnxn =  cnxns.filter(r => r.connection == receiver.connection)
-//      if(getcnxn != null){
-//        println("In getcnxn ")
-//        $(s"${props.parentIdentifier}-selectize".asInstanceOf[js.Object]).
-//      }
-//    }
-//  }
 
   case class Backend(t: BackendScope[Props, State]) {
     //    def initializeTagsInput(): Unit = {
@@ -126,52 +116,51 @@ object ConnectionsSelectize {
     }
 
     def render(props: Props, state: State) = {
-//      if (props.enableAllContacts) {
-//        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
-//          <.option(^.value := "")("Select"),
-//          <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@All_Contacts"),
-//          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
-//            ^.key := connection.connection.target)(
-//            if (connection.name.startsWith("@")) {
-//              s"${connection.name}"
-//            } else {
-//              s"@${connection.name}"
-//            })
-//        )
-//      } else {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
-          <.option(^.value := "")("Select"),
-          for (connection <- state.connections) yield {
 
-            for (receiver <- props.receivers) yield {
-            if(/*props.replyPost==true &&*/ receiver.connection == connection.connection){
-//              println("Got receiver")
-//              println(connection.name)
-              <.option(^.value := upickle.default.write(connection.connection),
-                ^.key := connection.connection.target,"selected".reactAttr := "selected")(
-                if (connection.name.startsWith("@")) {
-                  s"${connection.name}"
-                } else {
-                  s"@${connection.name}"
-                })
-            } else
-            {
-//              println("no receiver matched with connection")
-//              println(connection.name)
-              <.option(^.value := upickle.default.write(connection.connection),
-                ^.key := connection.connection.target) (
-                if (connection.name.startsWith("@")) {
-                  s"${connection.name}"
-                } else {
-                  s"@${connection.name}"
-                })
+      if (props.replyPost == true) {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple:=true, ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+          <.option(^.value := "")("Select"),
+          for (receiver <- props.receivers) yield {
+            for ( connection <- state.connections  ; if receiver.connection == connection.connection  ) yield {
+                //println(s"connection matched${connection.name}")
+                <.option(^.value := upickle.default.write(connection.connection),
+                  ^.key := connection.connection.target, ^.selected := true)(
+                  if (connection.name.startsWith("@")) {
+                    s"${connection.name}"
+                  } else {
+                    s"@${connection.name}"
+                  })
+
             }
           }
-          }
         )
+
+      } else if (props.enableAllContacts) {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
+          <.option(^.value := "")("Select"),
+          <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@All_Contacts"),
+          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
+            ^.key := connection.connection.target)(
+            if (connection.name.startsWith("@")) {
+              s"${connection.name}"
+            } else {
+              s"@${connection.name}"
+            })
+        )
+      } else {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
+          <.option(^.value := "")("Select"),
+          for (connection <- state.connections) yield
+            <.option(^.value := upickle.default.write(connection.connection),
+              ^.key := connection.connection.target)(
+              if (connection.name.startsWith("@")) {
+                s"${connection.name}"
+              } else {
+                s"@${connection.name}"
+              }))
       }
 
-//    }
+    }
   }
 
 
