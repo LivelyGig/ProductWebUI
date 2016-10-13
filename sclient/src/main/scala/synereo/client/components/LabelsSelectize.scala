@@ -44,7 +44,7 @@ object LabelsSelectize {
       val parentIdentifier = t.props.runNow().parentIdentifier
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       if ($(selectState).length < 1) {
-        val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
+        //        val selectizeInput: js.Object = s"#${t.props.runNow().parentIdentifier}-selectize"
         //        $(selectizeInput).selectize(SelectizeConfig
         //          .create(true)
         //          .maxItems(3)
@@ -54,18 +54,18 @@ object LabelsSelectize {
 
     }
 
-    def getSelectedValues = Callback {
-      val selectState: js.Object = "#selectize"
-      val getSelectedValue = $(selectState).find("option").text()
-      //      println(getSelectedValue)
-    }
+    //    def getSelectedValues = Callback {
+    //      val selectState: js.Object = "#selectize"
+    //      val getSelectedValue = $(selectState).find("option").text()
+    //      println(getSelectedValue)
+    //    }
 
     def mounted(props: Props): Callback = Callback {
       initializeTagsInput()
     }
 
     def render(props: Props, state: State) = {
-      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag", ^.onChange --> getSelectedValues)(
+      <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Use # for tag" /*, ^.onChange --> getSelectedValues*/)(
         <.option(^.value := "")("Select"),
         //          props.proxy().render(searchesRootModel => searchesRootModel.se)
         for (label <- SYNEREOCircuit.zoom(_.searches.searchesModel).value) yield {

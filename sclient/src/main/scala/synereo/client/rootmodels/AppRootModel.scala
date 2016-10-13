@@ -10,4 +10,5 @@ case class AppRootModel(isServerError: Boolean = false,
                         showProfileImageUploadModal: Boolean = false,
                         showNodeSettingModal: Boolean = false,
                         showAboutInfoModal: Boolean = false,
-                        showNewMessageModal: Boolean = false)
+                        showNewMessageModal: Boolean = false,
+                        preventNavigation:Boolean = false)

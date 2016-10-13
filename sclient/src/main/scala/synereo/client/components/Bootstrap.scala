@@ -5,6 +5,9 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.ext.KeyCode
 import synereo.client.components.Icon._
 import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
+import synereo.client.handlers.UnsetPreventNavigation
+import synereo.client.services.SYNEREOCircuit
+import diode.AnyAction._
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -87,6 +90,8 @@ object Bootstrap {
       def hidden(e: JQueryEventObject): js.Any = {
         // inform the owner of the component that the modal was closed/hidden
         t.props.runNow().closed().runNow()
+        //instruct bootstrap to unset navigation handler with back and reload button attached through setPreventNavigation in various form examples
+        SYNEREOCircuit.dispatch(UnsetPreventNavigation())
       }
 
       def modalClose(e: ReactKeyboardEvent): Callback = {

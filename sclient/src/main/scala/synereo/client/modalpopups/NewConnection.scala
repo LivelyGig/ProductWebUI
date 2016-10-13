@@ -8,6 +8,7 @@ import synereo.client.components.Bootstrap.Modal
 import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon._
 import synereo.client.css._
+import diode.AnyAction._
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,6 +21,7 @@ import synereo.client.components.{ConnectionsSelectize, _}
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.{ConnectionsUtils, ContentUtils}
 import synereo.client.components.Bootstrap._
+import synereo.client.handlers.{SetPreventNavigation}
 import scala.scalajs.js
 
 // scalastyle:off
@@ -186,10 +188,12 @@ object ConnectionsForm {
 
     def updateContent(e: ReactEventI): react.Callback = {
       val value = e.target.value
+      SYNEREOCircuit.dispatch(SetPreventNavigation())
       t.modState(s => s.copy(introConnections = s.introConnections.copy(bMessage = value, aMessage = value)))
     }
 
     def updateAgentUid(e: ReactEventI): react.Callback = {
+      SYNEREOCircuit.dispatch(SetPreventNavigation())
       val value = e.target.value
       t.modState(s => s.copy(agentUid = value))
     }

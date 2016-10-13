@@ -10,7 +10,6 @@ import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers._
 import synereo.client.logger
 import synereo.client.modalpopups._
-
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import japgolly.scalajs.react.{Callback, _}
@@ -18,6 +17,7 @@ import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
 import org.scalajs.dom
+import org.scalajs.dom.raw.HashChangeEvent
 
 /**
   * Created by mandar.k on 5/24/2016.
@@ -56,25 +56,25 @@ object AppModule {
       * do not try to change these callback methods using react.Callback or other ways of callbacks, popups wont work then
       */
     def hideProfileImageModal(): Callback = {
-      logger.log.debug("hideProfileImageModal")
+      //      logger.log.debug("hideProfileImageModal")
       SYNEREOCircuit.dispatch(ToggleImageUploadModal())
       t.modState(s => s.copy(showProfileImageUploadModal = false))
     }
 
     def hideAboutInfoModal(): Callback = {
-      logger.log.debug("hideAboutInfoModal")
+      //      logger.log.debug("hideAboutInfoModal")
       SYNEREOCircuit.dispatch(ToggleAboutInfoModal())
       t.modState(s => s.copy(showAboutInfoModal = false))
     }
 
     def hideNodeSettingModal(): Callback = {
-      logger.log.debug("hideNodeSettingModal")
+      //      logger.log.debug("hideNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
       t.modState(s => s.copy(showNodeSettingModal = false))
     }
 
     def hideNewMessageModal(): Callback = {
-      logger.log.debug("hideNewMessageModal")
+      //      logger.log.debug("hideNewMessageModal")
       SYNEREOCircuit.dispatch(ToggleNewMessageModal())
       t.modState(s => s.copy(showNewMessageModal = false))
     }
@@ -84,22 +84,16 @@ object AppModule {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
+
     def mounted(props: AppModule.Props) = Callback {
       logger.log.debug("app module mounted")
       val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       if (userSessionUri.length < 1) {
         SYNEREOCircuit.dispatch(LogoutUser())
       }
-
     }
 
     def didUpdate(): Callback = Callback {
-      $(dom.window).off("hashchange")
-      //      SYNEREOCircuit.dispatch(CloseAllPopUp())
-      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $("[role='dialog']".asInstanceOf[js.Object]).remove()
-      //      ReactDOM.unmountComponentAtNode(org.scalajs.dom.document.getElementById("naviContainer"));
     }
   }
 
