@@ -25,6 +25,10 @@ object ConnectionsUtils {
     Connection(sourceStr, "alias", sourceStr)
   }
 
+  def getErrorConnection(): Connection = {
+    Connection("alias://ERROR/alias", "alias", "alias://ERROR/alias")
+  }
+
   def getCnxnForReq(cnxn: Seq[Connection]): Seq[Connection] = {
     if (cnxn.isEmpty) {
       SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection) ++ Seq(getSelfConnnection())
@@ -52,19 +56,26 @@ object ConnectionsUtils {
   }
 
   def getSenderReceivers(message: MessagePost): MessagePost = {
-    val senderUri = message.connections.last.target.split("/")(2)
-    val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
-    val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
-    val allCnxnModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
-    val userCnxnModel = ConnectionsModel(sessionURI = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value,
-      connection = ConnectionsUtils.getSelfConnnection(),
-      name = "me",
-      imgSrc = SYNEREOCircuit.zoom(_.user).value.imgSrc)
-    if (userId == senderUri) {
-      message.copy(sender = userCnxnModel, receivers = allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
-    } else {
-      message.copy(sender = allCnxnModel.find(_.connection.target.contains(senderUri)).head,
-        receivers = Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+    println(s"message: $message")
+    try {
+      val senderUri = message.connections.last.target.split("/")(2)
+      val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
+      val userId = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)
+      val allCnxnModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
+      val userCnxnModel = ConnectionsModel(sessionURI = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value,
+        connection = ConnectionsUtils.getSelfConnnection(),
+        name = "me",
+        imgSrc = SYNEREOCircuit.zoom(_.user).value.imgSrc)
+      if (userId == senderUri) {
+        message.copy(sender = userCnxnModel, receivers = allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+      } else {
+        message.copy(sender = allCnxnModel.find(_.connection.target.contains(senderUri)).head,
+          receivers = Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
+      }
+    } catch {
+      case e:Exception =>
+        // dirty hack for json not containing the connections
+        message.copy(sender = ConnectionsModel(name = "UNKNOWN", connection = getErrorConnection()), receivers = Seq(ConnectionsModel(name = "UNKNOWN", connection = getErrorConnection())))
     }
   }
 

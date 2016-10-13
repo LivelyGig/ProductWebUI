@@ -448,7 +448,7 @@ object HomeFeedList {
     .backend(new HomeFeedListBackend(_))
     .renderPS((t, P, S) => {
       def renderMessages(message: MessagePost) = {
-        val allWordsFrmMessageText = message.postContent.text.split(" ")
+//        val allWordsFrmMessageText = message.postContent.text.split(" ")
 //        val (sender, receivers) = ConnectionsUtils.getSenderReceivers()
 //          receivers.foreach(e => println(e.name))
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement /*, ^.onMouseLeave ==> handleMouseLeaveEvent*/ , ^.onMouseEnter ==> t.backend.handleMouseEnterEvent)(
