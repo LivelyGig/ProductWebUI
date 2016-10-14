@@ -5,27 +5,24 @@ import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
-
 import scala.scalajs.js
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
-
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
 import scalacss.mutable.GlobalRegistry
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
-import synereo.client.handlers.CloseAllPopUp
+import synereo.client.handlers.{CloseAllPopUp, UnsetPreventNavigation}
 import synereo.client.sessionitems.SessionItems
 
-
+// scalastyle:off
 @JSExport("SYNEREOMain")
 object SYNEREOMain extends js.JSApp {
 
@@ -55,6 +52,16 @@ object SYNEREOMain extends js.JSApp {
     $(searchContainer).toggleClass("sidebar-left sidebar-animate sidebar-lg-show")
   }
 
+  val setWarningsBeforeUnload: js.Function1[JQueryEventObject, Any] = (e: JQueryEventObject) => {
+    //      println("setWarningsBeforeUnload")
+    //    println(SYNEREOCircuit.zoom(_.appRootModel.preventNavigation).value)
+    if (SYNEREOCircuit.zoom(_.appRootModel.preventNavigation).value) {
+      ""
+    } else {
+      e.preventDefault()
+    }
+  }
+
   /**
     * all diode connect proxy
     * there proxy are used in case when a component wants to connect to a rootmodel of the application
@@ -79,14 +86,14 @@ object SYNEREOMain extends js.JSApp {
       | staticRoute("#marketplace", MarketPlaceLOC) ~> renderR(ctl => appProxy(proxy => AppModule(AppModule.Props(AppModule.MARKETPLACE_VIEW, proxy)))))
       .notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
       .onPostRender((prev, cur) => /*Callback.log(s"Page changing from $prev to $cur."*/
-        Callback{
+        Callback {
+          SYNEREOCircuit.dispatch(UnsetPreventNavigation())
           $(".modal-backdrop".asInstanceOf[js.Object]).remove()
           SYNEREOCircuit.dispatch(CloseAllPopUp()
-        )}
+          )
+        }
       )
   }.renderWith(layout)
-
-  // scalastyle:off
 
   // base layout for all pages
   def layout(c: RouterCtl[Loc], r: Resolution[Loc]) = {
@@ -123,8 +130,8 @@ object SYNEREOMain extends js.JSApp {
             ),
             if (r.page == DashboardLoc || r.page == SynereoLoc) {
               c.link(DashboardLoc)(
-              <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
-              <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png"))
+                <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
+                <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png"))
             } else {
               c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
                 <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
@@ -132,7 +139,7 @@ object SYNEREOMain extends js.JSApp {
               )
             }
           ),
-          <.div(^.id := "navi-collapse",SynereoCommanStylesCSS.Style.naviCollapse, ^.className := "collapse navbar-collapse")(
+          <.div(^.id := "navi-collapse", SynereoCommanStylesCSS.Style.naviCollapse, ^.className := "collapse navbar-collapse")(
             userProxy(proxy => MainMenu(MainMenu.Props(c, r.page, proxy)))
           )
         ),
@@ -146,9 +153,12 @@ object SYNEREOMain extends js.JSApp {
 
   @JSExport
   def main(): Unit = {
-    log.warn("Application starting")
+    log.warn("Synereo starting")
     // send log messages also to the server
     log.enableServerLogging("/logging")
+    //bind beforeunload event listner for warnings across forms(see bootstrap component hidden method) when editing them
+    //the forms components seperately set and unset the event retun type refer setWarningsBeforeUnload method
+    $(dom.window).on("beforeunload", setWarningsBeforeUnload)
     //    log.disableServerLogging()
     log.info("This message goes to server as well")
     // create stylesheet

@@ -1,13 +1,11 @@
 package synereo.client.modalpopups
 
-
 import diode.react.ModelProxy
 import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -15,16 +13,15 @@ import synereo.client.utils.{ConnectionsUtils, ContentUtils, LabelsUtils, Messag
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import org.querki.jquery._
-import org.scalajs.dom
-import org.scalajs.dom.raw.{FileReader, HashChangeEvent, UIEvent}
+import org.scalajs.dom.raw.{FileReader, UIEvent}
 import org.widok.moment.Moment
 import shared.dtos.LabelPost
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
-import synereo.client.handlers.SearchesModelHandler
+import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
-
+import diode.AnyAction._
 import scala.scalajs.js
 
 //scalastyle:off
@@ -79,7 +76,7 @@ object NewMessageForm {
                    header: String,
                    proxy: ModelProxy[SearchesRootModel],
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
-                   replyPost : Boolean = false)
+                   replyPost: Boolean = false)
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
@@ -87,7 +84,7 @@ object NewMessageForm {
                    labelsSelectizeInputId: String = "labelsSelectizeInputId",
                    tags: Seq[String] = Seq())
 
-  val userProxy = SYNEREOCircuit.connect(_.user)
+  private val userProxy = SYNEREOCircuit.connect(_.user)
 
   case class NewMessageBackend(t: BackendScope[Props, State]) {
     def hide = Callback {
@@ -96,28 +93,25 @@ object NewMessageForm {
 
     def updateSubject(e: ReactEventI) = {
       val value = e.target.value
+      SYNEREOCircuit.dispatch(SetPreventNavigation())
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
-    }
-
-    val hashChangeEventFun: js.Function1[HashChangeEvent, Unit] = (e: HashChangeEvent) => {
-//      println("inside the hashChangeEventFun")
-      if (e.newURL != e.oldURL) {
-        dom.window.alert("changes you have made will not be saved ")
-      }
     }
 
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
-      val words: Seq[String] = value.split(" ")
-      var tagsCreatedInline: Seq[String] = Nil
-      words.foreach(
-        word => if (word.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")) {
-          tagsCreatedInline +:= word
-        }
-      )
-      val tempNewTags = tagsCreatedInline.filter(_.matches("""([\p{Punct}&&[^.$]]|\b\p{IsLetter}{1,2}\b)\s*"""))
-      //      println(s"tempNewTags: $tempNewTags")
+      SYNEREOCircuit.dispatch(SetPreventNavigation())
+      //      val tagsCreatedInline = getTagsWithoutPunctuations(value.split(" ").filter(_.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")).distinct)
+      val tagsCreatedInline = getTagsWithoutPunctuations(filterLabelStrings(value.split(" ")))
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
+    }
+
+    /**
+      *
+      * @param hashTagsCreated :List of hashtags  which we fetched from text area depending on matched regular expr
+      * @return List of Tags with removed the punctuation marks
+      */
+    def getTagsWithoutPunctuations(hashTagsCreated: Seq[String]) = hashTagsCreated flatMap { tag =>
+      "[a-zA-Z]+".r findAllIn tag map (_.toLowerCase)
     }
 
 
@@ -125,47 +119,45 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(): Callback =  {
+    def mounted(): Callback = {
       val props = t.props.runNow()
-      dom.window.addEventListener("hashchange", hashChangeEventFun, useCapture = true)
+      if (props.replyPost) {
+        //        println("In replyPost")
+        val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}")))
 
-      if(props.replyPost){
-//        println("In replyPost")
-        var contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
-       t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}" )))
-
-      }else{
+      } else {
 //        props.messagePost.receivers = Nil
-//        println("In forwardPost")
+        //        println("In forwardPost")
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject = props.messagePost.postContent.subject)))
       }
     }
 
     def willUnmount(): Callback = Callback {
-      dom.window.removeEventListener("hashchange", hashChangeEventFun, useCapture = true)
+      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
     }
 
+    /**
+      *
+      * @param value
+      * @return unique filtered labels without the hash symbol
+      */
     def filterLabelStrings(value: Seq[String]): Seq[String] = {
       value.filter(
         _.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")
       ).map(_.replace("#", "")).distinct
     }
 
-    def labelsTextFromMsg: Seq[String] = {
-      filterLabelStrings(t.state.runNow().postMessage.text.split(" +"))
-    }
-
     def labelsToPostMsg: Seq[Label] = {
-      val textSeq = labelsTextFromMsg ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
-      //      println(s"labelsToPostMsg ${textSeq.distinct}")
+      val state = t.state.runNow()
+      val textSeq = state.tags ++ filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(t.state.runNow().labelsSelectizeInputId))
       textSeq.distinct.map(LabelsUtils.getLabelModel)
     }
 
     def getAllLabelsText: Seq[String] = {
       val (props, state) = (t.props.runNow(), t.state.runNow())
-      //    println(s"filtered labels from selectize ${filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId))}")
-      val allLabels = props.proxy().searchesModel.map(e => e.text) ++ labelsTextFromMsg ++
+      val allLabels = props.proxy().searchesModel.map(e => e.text) ++ state.tags ++
         filterLabelStrings(LabelsSelectize.getLabelsTxtFromSelectize(state.labelsSelectizeInputId).map(label => s"#$label"))
       allLabels.distinct
     }
@@ -173,11 +165,11 @@ object NewMessageForm {
     def deleteInlineLabel(e: ReactEventI) = {
       val value = e.target.parentElement.getAttribute("data-count")
       val state = t.state.runNow()
-      val newlist = for {
+      val ListWithTagsDeleted = for {
         (x, i) <- state.tags.zipWithIndex
         if i != value.toInt
       } yield x
-      t.modState(state => state.copy(tags = newlist))
+      t.modState(state => state.copy(tags = ListWithTagsDeleted))
     }
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
@@ -196,7 +188,6 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-      val props = t.props.runNow()
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
         $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
@@ -204,7 +195,6 @@ object NewMessageForm {
       } else {
         $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
-        //        val labelsToPost = (props.proxy().searchesModel.map(e => e.text) union allLabelsText distinct) diff props.proxy().searchesModel.map(e => e.text)
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
@@ -214,7 +204,6 @@ object NewMessageForm {
         } else {
           ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
-        //          SYNEREOCircuit.dispatch(PostLabelsAndMsg(allLabelsText, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg)))
         t.modState(s => s.copy(postNewMessage = true))
       }
     }
