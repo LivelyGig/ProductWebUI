@@ -27,7 +27,10 @@ object Dashboard {
 
   case class Props(proxy: ModelProxy[Pot[MessagesRootModel]], loginLoader: String = "loginLoader")
 
-  case class State(ShowFullPostView: Boolean = false, preventFullPostView: Boolean = true, showErrorModal: Boolean = false)
+  case class State(ShowFullPostView: Boolean = false,
+                   preventFullPostView: Boolean = true,
+                   showErrorModal: Boolean = false
+                  )
 
   class DashboardBackend(t: BackendScope[Dashboard.Props, Dashboard.State]) {
 
@@ -96,9 +99,14 @@ object HomeFeedList {
 
   case class Props(messages: Seq[MessagePost] /*, rightPost: (Boolean) => Callback*/)
 
-  case class State(showFullPostView: Boolean = false, showAmplifyPostForm: Boolean = false, showForwardPostForm: Boolean = false,
+  case class State(showFullPostView: Boolean = false,
+                   showAmplifyPostForm: Boolean = false,
+                   showForwardPostForm: Boolean = false,
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
-                   fromSender: String = "", toReceiver: String = "", senderAddress: String = "", showLovePost: Boolean = false,
+                   fromSender: String = "",
+                   toReceiver: String = "",
+                   senderAddress: String = "",
+                   showLovePost: Boolean = false,
                    showCommentPost: Boolean = false,
                    showCirclePost: Boolean = false,
                    showSharePost: Boolean = false,
@@ -161,7 +169,7 @@ object HomeFeedList {
       t.modState(s => s.copy(showFullPostView = true, messagePost = message, fromSender = fromSender, toReceiver = toReceiver))
     }
 
-    def preventFullViewModalPopUP(message: MessagePost): Callback = {
+    def showPeekView(message: MessagePost): Callback = {
       if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
@@ -210,22 +218,15 @@ object HomeFeedList {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
-                    //                    if (imgContentOfMessagePost.length != 0)
-                    //                      <.img(^.className := "media-object", ^.src := imgContentOfMessagePost, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    //                    else if (senderName.equals("me"))
-                    //                      <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    //                    else
-                    //                      <.img(^.className := "media-object", ^.src := "./assets/synereo-images/default_avatar.jpg", ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-
                     <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                   ),
                   <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                     <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
-                      <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := message.sender.connection.source.split("/")(2), "data-placement".reactAttr := "right")(s"From  : ${message.sender.name}"),
+                      <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := message.sender.connection.source.split("/")(2),
+                        "data-placement".reactAttr := "right")(s"From  : ${message.sender.name}"),
                       <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                     ),
                     <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
-                      // <.span(s"To  : ${receiverNames.mkString(", ")}")
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
@@ -287,16 +288,15 @@ object HomeFeedList {
                         )
                       )
                     })),
-
                 <.div(DashboardCSS.Style.cardDescriptionContainerDiv)(
                   if (message.postContent.text.length > 105) {
                     <.button(SynereoCommanStylesCSS.Style.synereoBlueText, DashboardCSS.Style.homeFeedCardBtn,
-                      "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.preventFullViewModalPopUP(message))(
+                      "data-toggle".reactAttr := "collapse", "data-target".reactAttr := s"#collapse-post-${message.uid}", ^.className := "glance-view-button", ^.onClick --> t.backend.showPeekView(message))(
                       (MIcon.moreHoriz)
                     )
                   }
                   else {
-                    <.span()
+                    Seq.empty[ReactElement]
                   }
                 )
               )
@@ -311,44 +311,42 @@ object HomeFeedList {
                 ),
                 <.div(^.className := "row", if (!state.showLovePost) SynereoCommanStylesCSS.Style.marginTop20px else ^.marginTop := "0.px")(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
-                  if (state.showCommentPost) <.div(
-                    <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("10"),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
-                  )
+                  if (state.showCommentPost)
+                    <.div(
+                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "10"),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                    )
                   else
-                    <.div(^.className := "col-md-2")()
-
-
+                    Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
-                  if (state.showCirclePost) <.div(
-                    <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("12"),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                    <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
-
-                  )
+                  if (state.showCirclePost)
+                    <.div(
+                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "12"),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                    )
                   else
-                    <.div(^.className := "col-md-2")()
+                    Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
                   if (state.showSharePost)
                     <.div(
-                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription)("1"),
+                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "1"),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
-
                     )
                   else
-                    <.div(^.className := "col-md-2")()
+                    Seq.empty[ReactElement]
                 )
               )
             )

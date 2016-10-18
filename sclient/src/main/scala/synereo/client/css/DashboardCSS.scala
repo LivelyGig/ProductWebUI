@@ -235,12 +235,12 @@ object DashboardCSS {
       color(c"#000"),
       lineHeight(1.25.em),
       letterSpacing(0.5.px),
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)(
         fontSize(24.px)
-        ),
-      media.maxWidth(767.px) - (
+      ),
+      media.maxWidth(767.px)(
         fontSize(21.px)
-        )
+      )
     )
     val sidebarNavStyle = style(
       fontSize(17.px)

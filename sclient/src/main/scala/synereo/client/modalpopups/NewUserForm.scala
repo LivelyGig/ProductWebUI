@@ -188,7 +188,7 @@ object NewUserForm {
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
               <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true), <.label(^.`for` := "termsOfServices", ^.fontSize := "14.px")("I'm cool with the"),
-              Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), "Terms of Service ")
+              Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), "Terms of Use ")
             )
           ),
           <.div()(

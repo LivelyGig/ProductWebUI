@@ -120,14 +120,8 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val mainMenuNavbar = style(
-      //      position.absolute,
-      //      paddingTop(6.px),
-      //      paddingRight(20.px),
       right.`0`,
-      //  media.maxWidth(767.px) -
-      // marginTop(65.px)
-      //      zIndex(100)
-      //      backgroundColor(c"#277490")
+     // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
       media.minWidth(546.px).maxWidth(766.px) -
         width(233.px),
       float.right,
