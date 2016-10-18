@@ -80,6 +80,7 @@ object LoginView {
     //    }
 
     def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+     // console.log(s"addnewUser addNewAgent ${addNewAgent} showLoginForm ${showLoginForm} showTermsOfService ${showTermsOfServicesForm}")
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       //      log.debug(s"addNewUser userModel : ${signUpModel}")
@@ -190,7 +191,6 @@ object LoginView {
           window.location.replace("#dashboard")
           log.debug("login successful")
         case Failure(res) =>
-          console.log(s"login failure : ${res.getMessage}")
           processServerError(res.getMessage)
       }
     }
@@ -235,17 +235,17 @@ object LoginView {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
             }
-
           case Failure(res) =>
             log.debug(s"ConfirmAccountCreationAPI failure: ${res.getMessage}")
             t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
-      } else if (showLoginForm) {
-        t.modState(s => s.copy(showLoginForm = true))
-      }
+      } /*else if (showLoginForm) {
+        console.log("In showlogin")
+        t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = false))
+      }*/
       else {
-        t.modState(s => s.copy(showConfirmAccountCreation = false))
+        t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = true))
       }
     }
 
