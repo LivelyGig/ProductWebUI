@@ -2,19 +2,20 @@
 resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"
 
 
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.11") //"0.6.8"
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.12") //"0.6.11"
 
 libraryDependencies += "org.webjars.bower" % "jasmine" % "2.4.1" % "runtime"
 
 addSbtPlugin("com.joescii" % "sbt-js-test" % "0.2.0")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-less" %  "1.0.6")  // "1.0.6"
+addSbtPlugin("com.typesafe.sbt" % "sbt-less" %  "1.1.0")  // "1.0.6"
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.1"   )  // "1.0.0"
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.4")  // "1.1.1"
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.1")
 
 addSbtPlugin("com.vmunier" % "sbt-play-scalajs" %  "0.3.1")  //"0.3.0"
+//addSbtPlugin("com.vmunier" % "sbt-web-scalajs" % "1.0.2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.1") //"1.1.0"
 
