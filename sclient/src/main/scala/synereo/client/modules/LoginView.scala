@@ -355,7 +355,7 @@ object LoginView {
           ),
           <.div()(
             if (s.showTermsOfServicesForm) {
-              TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Services"))
+              TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Use"))
             }
             else if (s.showLoginForm) {
               LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
