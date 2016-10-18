@@ -4,7 +4,7 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 3/22/2016.
+  * Created by mandar.k on 3/22/2016.
   */
 object PostFullViewCSS {
 
@@ -91,7 +91,8 @@ object PostFullViewCSS {
     )
     val postDescription = style(
       fontSize(1.1.em),
-      paddingBottom(30.px)
+      paddingBottom(30.px),
+      whiteSpace.preWrap
     )
     val postedUserInfoContainerDiv = style(
       //      marginLeft(11.2.%%),

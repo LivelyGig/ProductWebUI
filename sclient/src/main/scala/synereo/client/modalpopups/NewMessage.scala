@@ -236,7 +236,6 @@ object NewMessageForm {
               <.div(^.id := S.connectionsSelectizeInputId)(
                 ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,Option(0),P.messagePost.receivers,P.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))//,
-
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
               <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(

@@ -64,7 +64,7 @@ object SYNEREOMain extends js.JSApp {
 
   /**
     * all diode connect proxy
-    * there proxy are used in case when a component wants to connect to a rootmodel of the application
+    * these proxy are used in case when a component wants to connect to a rootmodel of the application
     * so as to listen changes into model and read/write to/from model.
     */
   val userProxy = SYNEREOCircuit.connect(_.user)
