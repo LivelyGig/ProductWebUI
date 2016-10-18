@@ -256,6 +256,7 @@ object DashboardCSS {
     val cardText = style(
       fontFamily :=! "lora",
       fontWeight.normal,
+      whiteSpace.preWrap,
       wordWrap.breakWord,
       whiteSpace.preWrap,
       opacity(0.95),

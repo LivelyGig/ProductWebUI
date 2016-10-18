@@ -239,28 +239,28 @@ object SynereoCommanStylesCSS {
       marginTop(5.px),
       padding(5.px),
       maxHeight(48.px),
-      media.maxWidth(580.px)-
-      display.none,
-      media.minWidth(421.px)-
-      display.initial
+      media.maxWidth(580.px) -
+        display.none,
+      media.minWidth(421.px) -
+        display.initial
 
     )
     val imgLogoOtherLoc = style(
       marginTop(4.px),
       padding(5.px),
       maxHeight(54.px),
-      media.maxWidth(580.px)-
+      media.maxWidth(580.px) -
         display.none,
-      media.minWidth(421.px)-
+      media.minWidth(421.px) -
         display.initial
     )
-    val imgSmallLogo = style (
+    val imgSmallLogo = style(
       marginTop(5.px),
       padding(5.px),
       maxHeight(48.px),
-      media.maxWidth(580.px)-
+      media.maxWidth(580.px) -
         display.initial,
-      media.minWidth(421.px)-
+      media.minWidth(421.px) -
         display.none
     )
     val bottomBorderOnePx = style(
@@ -457,7 +457,7 @@ object SynereoCommanStylesCSS {
 
     val lftHeightPost = style(
       //      height(50.vh),
-      display.flex,
+      //      display.flex,
       alignItems.center
     )
 
@@ -473,14 +473,14 @@ object SynereoCommanStylesCSS {
       background := rgba(0, 0, 0, 0.5)
     )
 
-    val naviCollapse = style (
-      media.maxWidth(768.px)- (
-      backgroundColor( rgb(46, 110, 142)),
-      position.absolute,
-      top(57.px),
-      left(0.px),
-      width(100.%%),
-      zIndex(9))
+    val naviCollapse = style(
+      media.maxWidth(768.px) - (
+        backgroundColor(rgb(46, 110, 142)),
+        position.absolute,
+        top(57.px),
+        left(0.px),
+        width(100.%%),
+        zIndex(9))
     )
   }
 
