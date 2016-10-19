@@ -66,7 +66,7 @@ object ConnectionsList {
             }
           ),
           <.div(^.className := "media-body",
-            <.h4(^.className := "media-heading", ^.wordBreak := "break-all")(
+            <.h4(^.className := "media-heading", ^.wordBreak := "break-word")(
               if (connection.name.nonEmpty) {
                 connection.name
               } else {

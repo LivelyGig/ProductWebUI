@@ -125,7 +125,6 @@ object LoginForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
-
           closed = () => t.backend.formClosed(S, P),
           addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false, id = "loginContainer"
         ),

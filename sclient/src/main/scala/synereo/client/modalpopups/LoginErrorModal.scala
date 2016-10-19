@@ -2,7 +2,7 @@ package synereo.client.modalpopups
 
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
-import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{SynereoCommanStylesCSS}
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._

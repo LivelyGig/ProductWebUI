@@ -36,7 +36,7 @@ object UserPersona {
         <.div(^.className := "col-md-10", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero)(
           <.div(^.className := "")(
             <.button(^.className := "btn", ^.`type` := "button", NewMessageCSS.Style.changePersonaBtn)("Change posting persona", <.span(^.className := "caret", ^.color.blue)),
-            <.div(^.className := "pull-right")(MIcon.apply("more_vert", "24"))
+            <.div(^.className := "pull-right hidden-xs")(MIcon.apply("more_vert", "24"))
           )
         ),
         <.div(NewMessageCSS.Style.userNameOnDilogue)(

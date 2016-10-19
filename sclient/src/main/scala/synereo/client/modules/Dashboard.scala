@@ -230,15 +230,15 @@ object HomeFeedList {
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                    if (message.sender.name.equals("me")) {
-                      <.span()
-                    } else {
-                      <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                        "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick ==> t.backend.amplifyPost)(
-                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                      )
-                    },
+                    //                    if (message.sender.name.equals("me")) {
+                    //                      <.span()
+                    //                    } else {
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+                      ^.onClick ==> t.backend.amplifyPost)(
+                      <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
+                    ),
+                    //                    }
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                       "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
                       ^.onClick --> t.backend.forwardPost(message))(
