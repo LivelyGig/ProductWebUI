@@ -17,7 +17,7 @@ import synereo.client.sessionitems.SessionItems
 import scala.scalajs.js
 
 //scalastyle:off
-object NewUserForm {
+object SignUpForm {
 
   //  var addNewUserState: Boolean = false
   val editApiDetailBtn: js.Object = "#editApiDetailBtn"
@@ -111,7 +111,7 @@ object NewUserForm {
         t.modState(s => s.copy(addNewUser = true))
     }
 
-    def formClosed(state: NewUserForm.State, props: NewUserForm.Props): Callback = {
+    def formClosed(state: SignUpForm.State, props: SignUpForm.Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(state.addNewUser)
       signUpModelUpdate = state.signUpModel
@@ -176,33 +176,33 @@ object NewUserForm {
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := S.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
               ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6"),
-            <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ ^.className := "help-block")("Must be 6 characters long and include at least one number or symbol")
-          ),
-          <.div(^.className := "form-group")(
-            <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr := "#Password",
-              ^.value := S.signUpModel.confirmPassword, ^.className := "form-control", "data-match-error".reactAttr := "Passwords do not match",
-              ^.onChange ==> t.backend.updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password"),
-            <.div(^.className := "help-block with-errors")
-          ),
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-              <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true), <.label(^.`for` := "termsOfServices", ^.fontSize := "14.px")("I'm cool with the"),
-              Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), "Terms of Use ")
+            <.div(/*, ^.className := "col-md-12 text-center",*/ SignupCSS.Style.passwordTextInfo ,^.className := "help-block")("Must be 6 characters long and include at least one number or symbol")
+        ),
+        <.div(^.className := "form-group")(
+          <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr := "#Password",
+            ^.value := S.signUpModel.confirmPassword, ^.className := "form-control", "data-match-error".reactAttr := "Passwords do not match",
+            ^.onChange ==> t.backend.updateConfirmPassword, ^.required := true, ^.placeholder := "Confirm password"),
+          <.div(^.className := "help-block with-errors")
+        ),
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
+            <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true), <.label(^.`for` := "termsOfServices",SignupCSS.Style.iAmCool)("I'm cool with the"),
+            Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", ""), "Terms of Use ")
+          )
+        ),
+        <.div()(
+          <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
+            <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
+              <.div(^.className := "text-left")("Creating account on node: ", <.span(nodeName)),
+              <.span(SignupCSS.Style.howAccountsWorkLink)("How do accounts work across nodes?")
+            ),
+            <.div(^.className := "pull-right", ^.className := "form-group")(
+              <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hideModal, "Sign up")
             )
-          ),
-          <.div()(
-            <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
-              <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
-                <.div(^.className := "text-left")("Creating account on node: ", <.span(nodeName)),
-                <.span(SignupCSS.Style.howAccountsWorkLink)("How do accounts work across nodes?")
-              ),
-              <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hideModal, "Sign up")
-              )
-            )
-          ),
-          <.div(bss.modal.footer)()
-        )
+          )
+        ),
+        <.div(bss.modal.footer)()
+      )
       )
     })
     .componentDidMount(scope => scope.backend.mounted())

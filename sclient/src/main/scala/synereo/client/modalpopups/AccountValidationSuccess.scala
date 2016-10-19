@@ -67,7 +67,6 @@ import synereo.client.components.Bootstrap._
 //}
 
 
-
 object AccountValidationSuccess {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -99,18 +98,20 @@ object AccountValidationSuccess {
           header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
           closed = () => t.backend.formClosed(S, P)
         ),
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row")(
-              <.div()(
-                <.div(^.className := "pull-right")(
-                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Login")
+        <.div(^.className := "container-fluid")(
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div(^.className := "row")(
+                <.div()(
+                  <.div(^.className := "pull-right")(
+                    <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Login")
+                  )
                 )
               )
             )
-          )
-        ),
-        <.div(bss.modal.footer)()
+          ),
+          <.div(bss.modal.footer)()
+        )
       )
     })
     .build

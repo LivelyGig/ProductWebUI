@@ -361,7 +361,7 @@ object LoginView {
               LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
             }
             else if (s.showNewUserForm) {
-              NewUserForm(NewUserForm.Props(t.backend.addNewUser))
+              SignUpForm(SignUpForm.Props(t.backend.addNewUser))
             }
             else if (s.showNewInviteForm) {
               PostNewInvite(PostNewInvite.Props(t.backend.closeRequestInvitePopup))

@@ -55,7 +55,10 @@ object DashboardCSS {
       backgroundColor(c"#FF6F12 ").important,
       fontSize(22.px),
       color.white.important,
-      margin(45.px, 0.px)
+      margin(45.px, 0.px),
+      media.maxWidth(580.px)(
+        margin(15.px, 0.px)
+      )
     )
     val confirmIntroReqBtn = style(
       backgroundColor.transparent,

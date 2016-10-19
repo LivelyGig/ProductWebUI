@@ -15,6 +15,12 @@ object SignupCSS {
       backgroundColor(c"#012e3d"),
       top(20.px)
     )
+    val iAmCool = style(
+      fontSize(14.px),
+      media.maxWidth(580.px)(
+        fontSize(10.px)
+      )
+    )
     val termsAndServicesContainer = style(
       opacity(0.65)
     )
@@ -29,7 +35,10 @@ object SignupCSS {
       marginBottom(25.px)
     )
     val accountValidationSuccessText = style(
-      fontSize(2.4.em)
+      fontSize(2.4.em),
+      media.maxWidth(580.px)(
+        fontSize(20.px)
+      )
     )
     val verificationMessageContainer = style(
       marginBottom(30.px)
@@ -46,12 +55,13 @@ object SignupCSS {
       border.none.important,
       paddingLeft(4.px),
       textDecoration := "underline",
-      //      textDecorationLine.underline,
       fontSize(14.px),
-      fontWeight.lighter,
       marginTop(-1.px),
       &.hover(
         textDecoration := "underline"
+      ),
+      media.maxWidth(580.px)(
+        fontSize(10.px)
       )
 
     )
@@ -103,13 +113,11 @@ object SignupCSS {
       margin(2.px)
     )
     val passwordTextInfo = style(
-      marginTop(-15.px),
-      marginLeft(-33.px),
-      marginBottom(5.px),
       fontFamily :=! "karla",
-      opacity(0.5),
       padding.`0`.important,
-      fontSize(0.9.em)
+      media.maxWidth(580.px)(
+        fontSize(10.px)
+      )
     )
     val signUpModalStyle = style(
       marginTop(50.px),
