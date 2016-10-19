@@ -6,7 +6,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{LoginCSS, SignupCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -14,7 +13,6 @@ import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
 import synereo.client.components._
-
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 import synereo.client.sessionitems.SessionItems
@@ -123,7 +121,7 @@ object VerifyTokenModal {
                         })(Icon.check)
                       )
                     ),
-                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button",LoginCSS.Style.editApiDetailBtn , ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button", LoginCSS.Style.editApiDetailBtn, ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
                       $(editApiDetailBtn).hide()
                     })("Edit API details")
                   ),

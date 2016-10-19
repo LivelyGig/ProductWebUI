@@ -181,7 +181,7 @@ object MainMenu {
                       <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(I18N.En.MainMenu.DROPDOWN_ABOUT)),
                       <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(I18N.En.MainMenu.DROPDOWN_CHANGE_PROFILE_PICTURE)),
                       <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), I18N.En.MainMenu.DROPDOWN_NODE_SETTINGS)),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(I18N.En.MainMenu.SIGN_OUT))
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(I18N.En.MainMenu.LOG_OUT))
                     )
                   )
                   //                  if (state.showProfileImageUploadModal)

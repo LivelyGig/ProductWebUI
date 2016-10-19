@@ -3,11 +3,7 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.models.UserModel
-import synereo.client.components.Bootstrap._
-import synereo.client.components._
-import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-import synereo.client.sessionitems.SessionItems
-
+import synereo.client.css.{LoginCSS, SignupCSS}
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._

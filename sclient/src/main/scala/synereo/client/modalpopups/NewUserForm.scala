@@ -4,7 +4,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._

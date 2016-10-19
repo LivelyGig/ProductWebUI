@@ -1,19 +1,15 @@
 package synereo.client.modalpopups
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scala.scalajs.js
-import synereo.client.components.Bootstrap.{Modal, _}
-import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import scala.language.reflectiveCalls
-import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
-import shared.dtos.{JsonBlob, UpdateUserRequest}
+import shared.dtos.{ UpdateUserRequest}
 import shared.models.UserModel
 import japgolly.scalajs.react
 import japgolly.scalajs.react._

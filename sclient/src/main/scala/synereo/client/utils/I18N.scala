@@ -13,7 +13,7 @@ object I18N {
       val DROPDOWN_ABOUT = "About"
       val DROPDOWN_CHANGE_PROFILE_PICTURE = "Change Profile Picture"
       val DROPDOWN_NODE_SETTINGS = "Node Settings"
-      val SIGN_OUT = "Sign Out"
+      val LOG_OUT = "Log Out"
     }
 
   }
