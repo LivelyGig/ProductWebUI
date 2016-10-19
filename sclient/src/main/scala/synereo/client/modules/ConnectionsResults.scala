@@ -1,12 +1,13 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, ReactComponentB}
+import japgolly.scalajs.react._
 import synereo.client.rootmodels.ConnectionsRootModel
 import diode.react._
 import synereo.client.css._
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.NewConnection
+
 import scalacss.ScalaCssReact._
 
 /**
@@ -52,8 +53,22 @@ object ConnectionsList {
 
   case class ConnectionListProps(connections: Seq[ConnectionsModel])
 
+  case class State(showAmplifyPostForm : Boolean = false , senderAddress : String  ="")
+
+  class Backend(t: BackendScope[ConnectionListProps, State]) {
+
+    def amplifyPost(senderAddress: String): Callback = {
+      t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
+    }
+    /*def mounted(props: Props): Callback =
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))*/
+  }
+
+
   val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionsList")
-    .render_P(p => {
+    .initialState_P(p => State())
+    .backend(new Backend(_))
+    .renderPS((b,p,s) => {
       def renderConnections(connection: ConnectionsModel) = {
         <.li(^.className := "media well", ConnectionsCSS.Style.fullUserDescription,
           <.div(^.className := "media-left")(
@@ -65,13 +80,18 @@ object ConnectionsList {
                 + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
             }
           ),
-          <.div(^.className := "media-body",
+          <.div(^.className := "media-body", ConnectionsCSS.Style.connectionBody,
             <.h4(^.className := "media-heading", ^.wordBreak := "break-word")(
               if (connection.name.nonEmpty) {
                 connection.name
               } else {
                 <.span()
               }
+            ),
+            <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+              "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+              ^.onClick ==> b.backend.amplifyPost)(
+              <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
             )
           )
         )

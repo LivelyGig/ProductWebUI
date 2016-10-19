@@ -67,6 +67,9 @@ object ConnectionsCSS {
       display.none
     )
 
+    val connectionBody = style (
+      verticalAlign.bottom
+    )
 
   }
 
