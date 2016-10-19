@@ -211,10 +211,10 @@ object HomeFeedList {
       def renderMessages(message: MessagePost) = {
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement)(
           <.div(^.className := "row")(
-            <.div(^.className := "col-md-3 col-sm-3")(
+            <.div(^.className := "col-md-3 col-sm-2")(
               ""
             ),
-            <.div(^.className := "col-md-6 col-sm-6")(
+            <.div(^.className := "col-md-6 col-sm-8")(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
@@ -301,7 +301,7 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
+            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-2 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
               <.div(^.id := "trans")(
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2",

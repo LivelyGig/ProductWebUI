@@ -51,6 +51,10 @@ object LoginCSS {
         height(50.px),
         marginLeft(39.8.%%),
         marginTop.`0`.important
+      ),
+      media.width(768.px)(
+        marginTop(-27.5.%%),
+        marginLeft(38.1.%%)
       )
     )
 
@@ -365,8 +369,8 @@ object LoginCSS {
       width(142.px),
       fontSize(30.px),
       padding(0.px, 0.px, 7.px, 0.px),
-    border.none,
-    lineHeight(40.px),
+      border.none,
+      lineHeight(40.px),
       color(c"#fff"),
       fontFamily :=! "karla",
       float.right,
