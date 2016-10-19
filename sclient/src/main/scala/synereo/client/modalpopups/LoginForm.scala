@@ -194,12 +194,12 @@ object LoginForm {
                 <.div(LoginCSS.Style.loginFormInputText)(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
-                    ^.placeholder := "username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := S.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
+                    ^.placeholder := "Username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := S.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   // <.label(LoginCSS.Style.loginFormLabel)("Password"),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "Password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := S.userModel.password, ^.onChange ==> t.backend.updatePassword, ^.required := true),
                   <.div(^.className := "help-block with-errors")
                 ),
