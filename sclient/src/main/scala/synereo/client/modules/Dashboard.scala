@@ -170,32 +170,51 @@ object HomeFeedList {
     }
 
     def showPeekView(message: MessagePost): Callback = {
-      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
-        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
-        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
-        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
-      } else {
-        $(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
-        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
+//      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
+//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
+//        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+//      } else {
+//        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
+//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
+//      }
+
+      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").hasClass("hidden")) {
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
+      } else {
+        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
       }
 
       t.modState(s => s.copy(showFullPostView = false))
     }
 
     def showRightPost(getRightPost: String): Callback = {
+      val state = t.state.runNow()
       getRightPost match {
         case SHOWLOVEPOST => {
-          t.modState(s => s.copy(showLovePost = true, showSharePost = false, showCirclePost = false, showCommentPost = false))
+          if(state.showLovePost)
+            t.modState(s => s.copy(showLovePost = false, showSharePost = false, showCirclePost = false, showCommentPost = false))
+          else
+            t.modState(s => s.copy(showLovePost = true, showSharePost = false, showCirclePost = false, showCommentPost = false))
         }
         case SHOWCOMMENTPOST => {
-          t.modState(s => s.copy(showCommentPost = true, showSharePost = false, showCirclePost = false, showLovePost = false))
+          if(state.showCommentPost)
+            t.modState(s => s.copy(showCommentPost = false, showSharePost = false, showCirclePost = false, showLovePost = false))
+          else
+            t.modState(s => s.copy(showCommentPost = true, showSharePost = false, showCirclePost = false, showLovePost = false))
         }
         case SHOWCIRCLEPOST => {
-          t.modState(s => s.copy(showCirclePost = true, showCommentPost = false, showLovePost = false, showSharePost = false))
+          if(state.showCirclePost)
+            t.modState(s => s.copy(showCirclePost = false, showCommentPost = false, showLovePost = false, showSharePost = false))
+          else
+            t.modState(s => s.copy(showCirclePost = true, showCommentPost = false, showLovePost = false, showSharePost = false))
         }
         case SHOWSHAREPOST => {
-          t.modState(s => s.copy(showSharePost = true, showCirclePost = false, showCommentPost = false, showLovePost = false))
+          if(state.showSharePost)
+            t.modState(s => s.copy(showSharePost = false, showCirclePost = false, showCommentPost = false, showLovePost = false))
+          else
+            t.modState(s => s.copy(showSharePost = true, showCirclePost = false, showCommentPost = false, showLovePost = false))
         }
         case _ => {
           t.modState(s => s.copy(showSharePost = false, showCirclePost = false, showCommentPost = false, showLovePost = false))
@@ -214,7 +233,7 @@ object HomeFeedList {
             <.div(^.className := "col-md-3 col-sm-3")(
               ""
             ),
-            <.div(^.className := "col-md-6 col-sm-6")(
+            <.div(^.className := "col-md-6 col-sm-6 showRightPost")(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
@@ -222,7 +241,11 @@ object HomeFeedList {
                   ),
                   <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                     <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
-                      <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr := message.sender.connection.source.split("/")(2),
+                      <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr :=
+                        (if(message.sender.name == "me")
+                          message.sender.connection.source.split("/")(2)
+                        else
+                          message.sender.connection.target.split("/")(2)),
                         "data-placement".reactAttr := "right")(s"From  : ${message.sender.name}"),
                       <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
                     ),
@@ -301,15 +324,23 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 hidden", SynereoCommanStylesCSS.Style.lftHeightPost)(
+            <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 ", SynereoCommanStylesCSS.Style.lftHeightPost)(
               <.div(^.id := "trans")(
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2",
                     <.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showLovePost"))
                   ),
-                  if (state.showLovePost) <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)() else <.div()
+                  if (state.showLovePost)// <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)()
+                    <.div(
+                      <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "10"),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                    )
+                  else <.div()
                 ),
-                <.div(^.className := "row", if (!state.showLovePost) SynereoCommanStylesCSS.Style.marginTop20px else ^.marginTop := "0.px")(
+                <.div(^.className := "row", /*if (!state.showLovePost)*/ SynereoCommanStylesCSS.Style.marginTop20px/* else ^.marginTop := "0.px"*/)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   if (state.showCommentPost)
                     <.div(
