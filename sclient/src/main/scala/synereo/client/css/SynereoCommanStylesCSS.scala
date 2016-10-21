@@ -468,7 +468,7 @@ object SynereoCommanStylesCSS {
     )
 
     val naviCollapse = style(
-      media.maxWidth(768.px) - (
+      media.maxWidth(767.px) - (
         backgroundColor(rgb(46, 110, 142)),
         position.absolute,
         top(57.px),
