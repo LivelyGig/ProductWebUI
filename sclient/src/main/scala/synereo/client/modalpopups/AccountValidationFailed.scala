@@ -47,7 +47,7 @@ object AccountValidationFailed {
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
-                <.div()("Validation code you entered is incorrect, please check your email and enter valid code"),
+                <.div()(^.fontSize := "18.px", "Validation code you entered is incorrect, please check your email and enter valid code"),
                 //<.div()( <.button(^.tpe := "button",^.className:="btn",   ^.onClick-->hide )("Try again"))
                 <.div(^.className := "pull-right")(
                   <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Try again")

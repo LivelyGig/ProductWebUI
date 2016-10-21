@@ -33,13 +33,6 @@ import scala.util.{Failure, Success}
 
 object LoginView {
 
-  val LOGIN_ERROR = "LOGIN_ERROR"
-  val SERVER_ERROR = "SERVER_ERROR"
-  val SUCCESS = "SUCCESS"
-  val loginLoader: js.Object = "#loginLoader"
-  val loadingScreen: js.Object = "#loadingScreen"
-  var isUserVerified = false
-
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props()
@@ -71,16 +64,8 @@ object LoginView {
       t.modState(s => s.copy(showLoginForm = true))
     }
 
-    //    def addLoginForm(): Callback = {
-    //      t.modState(s => s.copy(showLoginForm = true))
-    //    }
-
-    //    def addNewAgentForm(): Callback = {
-    //      t.modState(s => s.copy(showNewUserForm = true))
-    //    }
-
     def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
-     // console.log(s"addnewUser addNewAgent ${addNewAgent} showLoginForm ${showLoginForm} showTermsOfService ${showTermsOfServicesForm}")
+      // console.log(s"addnewUser addNewAgent ${addNewAgent} showLoginForm ${showLoginForm} showTermsOfService ${showTermsOfServicesForm}")
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       //      log.debug(s"addNewUser userModel : ${signUpModel}")
@@ -245,7 +230,7 @@ object LoginView {
         t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = false))
       }*/
       else {
-        t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = true))
+        t.modState(s => s.copy(showConfirmAccountCreation = false, showLoginForm = true))
       }
     }
 
@@ -358,7 +343,7 @@ object LoginView {
               TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Use"))
             }
             else if (s.showLoginForm) {
-              LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
+              LoginForm(LoginForm.Props(t.backend.loginUser, t.backend.isUserVerified))
             }
             else if (s.showNewUserForm) {
               SignUpForm(SignUpForm.Props(t.backend.addNewUser))
