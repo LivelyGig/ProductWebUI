@@ -14,9 +14,25 @@ object ConnectionsCSS {
     val connectionsContainerMain = style(
       height(95.vh),
       overflowY.scroll.important,
-      paddingTop(60.px),
+      //      paddingTop(60.px),
       paddingBottom(60.px),
       overflowX.hidden
+    )
+    val inviteConnectionsBtn = style(
+      fontSize(24.px),
+      backgroundColor(c"#FFFFFF"),
+      color(c"#000"),
+      width(250.px),
+      height(60.px),
+      marginBottom(30.px),
+      marginLeft.auto,
+      marginRight.auto,
+      display.block,
+      media.maxWidth(786.px)(
+        fontSize(14.px),
+        width.auto.important,
+        height.auto.important
+      )
     )
     val connectionAvatar = style(
       width(70.px),
@@ -45,13 +61,15 @@ object ConnectionsCSS {
     val fullDescUL = style(
       padding(0.%%, 7.%%),
       media.minWidth(1600.px).maxWidth(1930.px) -
-      margin(10.px, 40.px)
-
+        margin(10.px, 40.px)
     )
     val hidden = style(
       display.none
     )
 
+    val connectionBody = style (
+      verticalAlign.bottom
+    )
 
   }
 

@@ -1,32 +1,26 @@
 package synereo.client.modules
 
-
-import japgolly.scalajs.react.{Callback, ReactComponentB, _}
 import diode.react.ModelProxy
-import synereo.client.css.ConnectionsCSS
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.css.{ConnectionsCSS, SynereoCommanStylesCSS}
 import org.querki.jquery._
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
+import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.AppRootModel
 import synereo.client.handlers._
 import synereo.client.logger
-import synereo.client.modalpopups.{AboutInfoModal, NodeSettingModal, ProfileImageUploaderForm, ServerErrorModal}
-import org.scalajs.dom.window
-
+import synereo.client.modalpopups._
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
 import japgolly.scalajs.react.{Callback, _}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
-import japgolly.scalajs.react
 import org.scalajs.dom
-
+import org.scalajs.dom.raw.HashChangeEvent
 
 /**
-  * Created by a4tech on 5/24/2016.
+  * Created by mandar.k on 5/24/2016.
   */
 //scalastyle:off
 object AppModule {
@@ -44,37 +38,45 @@ object AppModule {
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
   val introductionProxy = SYNEREOCircuit.connect(_.introduction)
   val erroProxy = SYNEREOCircuit.connect(_.appRootModel)
+  val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   val searchContainer: js.Object = "#searchContainer"
 
   case class Props(view: String, proxy: ModelProxy[AppRootModel])
 
-  case class State(showErrorModal: Boolean = false, showProfileImageUploadModal: Boolean = false,
-                   showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
+  case class State(showErrorModal: Boolean = false,
+                   showProfileImageUploadModal: Boolean = false,
+                   showNodeSettingModal: Boolean = false,
+                   showAboutInfoModal: Boolean = false,
+                   showNewMessageModal: Boolean = false)
 
 
   class AppModuleBackend(t: BackendScope[Props, State]) {
     /**
       * do not try to change these callback methods using react.Callback or other ways of callbacks, popups wont work then
-      *
-      * @return
       */
     def hideProfileImageModal(): Callback = {
-      logger.log.debug("hideProfileImageModal")
+      //      logger.log.debug("hideProfileImageModal")
       SYNEREOCircuit.dispatch(ToggleImageUploadModal())
       t.modState(s => s.copy(showProfileImageUploadModal = false))
     }
 
     def hideAboutInfoModal(): Callback = {
-      logger.log.debug("hideAboutInfoModal")
+      //      logger.log.debug("hideAboutInfoModal")
       SYNEREOCircuit.dispatch(ToggleAboutInfoModal())
       t.modState(s => s.copy(showAboutInfoModal = false))
     }
 
     def hideNodeSettingModal(): Callback = {
-      logger.log.debug("hideNodeSettingModal")
+      //      logger.log.debug("hideNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
       t.modState(s => s.copy(showNodeSettingModal = false))
+    }
+
+    def hideNewMessageModal(): Callback = {
+      //      logger.log.debug("hideNewMessageModal")
+      SYNEREOCircuit.dispatch(ToggleNewMessageModal())
+      t.modState(s => s.copy(showNewMessageModal = false))
     }
 
     def serverError(): Callback = {
@@ -82,21 +84,16 @@ object AppModule {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
+
     def mounted(props: AppModule.Props) = Callback {
       logger.log.debug("app module mounted")
       val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       if (userSessionUri.length < 1) {
         SYNEREOCircuit.dispatch(LogoutUser())
       }
-
     }
 
     def didUpdate(): Callback = Callback {
-      //      SYNEREOCircuit.dispatch(CloseAllPopUp())
-      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-      //      $("[role='dialog']".asInstanceOf[js.Object]).remove()
-      //      ReactDOM.unmountComponentAtNode(org.scalajs.dom.document.getElementById("naviContainer"));
     }
   }
 
@@ -105,7 +102,7 @@ object AppModule {
     .backend(new AppModuleBackend(_))
     .renderPS((t, P, S) => {
       <.div(
-        <.div(^.id := "appContainer", ConnectionsCSS.Style.connectionsContainerMain)(
+        <.div(^.id := "appContainer", SynereoCommanStylesCSS.Style.appContainerMain)(
           <.div()(
             //Left Sidebar
             <.div(^.id := "searchContainer", ^.className := "sidebar sidebar-left sidebar-animate sidebar-lg-show ",
@@ -127,6 +124,8 @@ object AppModule {
             }
             else if (P.proxy().showAboutInfoModal) {
               AboutInfoModal(AboutInfoModal.Props(t.backend.hideAboutInfoModal))
+            } else if (P.proxy().showNewMessageModal) {
+              searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.hideNewMessageModal, "New Message", searchesProxy)))
             }
             else
               Seq.empty[ReactElement]

@@ -5,5 +5,10 @@ package synereo.client.rootmodels
   */
 
 
-case class AppRootModel(isServerError: Boolean = false, serverErrorMsg: String = "", showProfileImageUploadModal: Boolean = false,
-                        showNodeSettingModal: Boolean = false, showAboutInfoModal: Boolean = false)
+case class AppRootModel(isServerError: Boolean = false,
+                        serverErrorMsg: String = "",
+                        showProfileImageUploadModal: Boolean = false,
+                        showNodeSettingModal: Boolean = false,
+                        showAboutInfoModal: Boolean = false,
+                        showNewMessageModal: Boolean = false,
+                        preventNavigation:Boolean = false)

@@ -3,11 +3,7 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.models.UserModel
-import synereo.client.components.Bootstrap._
-import synereo.client.components._
-import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-import synereo.client.sessionitems.SessionItems
-
+import synereo.client.css.{LoginCSS, SignupCSS}
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -26,7 +22,7 @@ import synereo.client.sessionitems.SessionItems
 object LoginForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  val addBtn: js.Object = "#addBtn"
+  val editApiDetailBtn: js.Object = "#editApiDetailBtn"
   val Name: js.Object = "#Name"
 
   case class Props(submitHandler: (UserModel, Boolean, Boolean, Boolean, Boolean) => Callback, isUserVerified: Boolean = false)
@@ -35,7 +31,7 @@ object LoginForm {
                    showConfirmAccountCreation: Boolean = false,
                    showNewUserForm: Boolean = false,
                    showNewInviteForm: Boolean = false,
-                   hostName: String = dom.window.location.hostname,
+                   hostName: String = dom.window.location.host,
                    portNumber: String = "9876",
                    apiURL: String = ""
                   )
@@ -93,11 +89,11 @@ object LoginForm {
     }
 
     def closeAPITextbox(e: ReactEventI) = {
-      $(addBtn).show()
+      $(editApiDetailBtn).show()
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def mounted(): Callback = {
@@ -105,7 +101,7 @@ object LoginForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def formClosed(state: LoginForm.State, props: LoginForm.Props): Callback = {
@@ -125,7 +121,6 @@ object LoginForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", ^.className := "hide", bss.close, ^.onClick --> hide, Icon.close), <.div(/*SignupCSS.Style.signUpHeading*/)(/*headerText*/)), /*<.div()(headerText)),*/
-
           closed = () => t.backend.formClosed(S, P),
           addStyles = Seq(LoginCSS.Style.loginModalStyle), keyboard = false, id = "loginContainer"
         ),
@@ -182,24 +177,24 @@ object LoginForm {
                         <.div(^.className := "help-block with-errors"),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
-                          $(addBtn).show()
+                          $(editApiDetailBtn).show()
                         })(Icon.check)
                       )
                     ),
-                    <.button(^.id := "addBtn", ^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
-                      $(addBtn).hide()
+                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button",LoginCSS.Style.editApiDetailBtn ,^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                      $(editApiDetailBtn).hide()
                     })("Edit API details")
                   )
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
-                    ^.placeholder := "username", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := S.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
+                    ^.placeholder := "Email", "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := S.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   // <.label(LoginCSS.Style.loginFormLabel)("Password"),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := "Password", ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := S.userModel.password, ^.onChange ==> t.backend.updatePassword, ^.required := true),
                   <.div(^.className := "help-block with-errors")
                 ),

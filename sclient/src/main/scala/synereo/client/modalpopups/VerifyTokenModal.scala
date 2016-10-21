@@ -6,7 +6,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{LoginCSS, SignupCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -14,7 +13,6 @@ import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
 import synereo.client.components._
-
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 import synereo.client.sessionitems.SessionItems
@@ -28,7 +26,7 @@ import scala.scalajs.js
 object VerifyTokenModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  val addBtn: js.Object = "#addBtn"
+  val editApiDetailBtn: js.Object = "#editApiDetailBtn"
 
   case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
@@ -65,18 +63,18 @@ object VerifyTokenModal {
 
 
     def closeAPITextbox(e: ReactEventI) = {
-      $(addBtn).show()
+      $(editApiDetailBtn).show()
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
     def mounted(): Callback = {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
     }
 
 
@@ -119,12 +117,12 @@ object VerifyTokenModal {
                         <.div(^.className := "help-block with-errors"),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
                         <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
-                          $(addBtn).show()
+                          $(editApiDetailBtn).show()
                         })(Icon.check)
                       )
                     ),
-                    <.button(^.id := "addBtn", ^.`type` := "button", ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
-                      $(addBtn).hide()
+                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button", LoginCSS.Style.editApiDetailBtn, ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                      $(editApiDetailBtn).hide()
                     })("Edit API details")
                   ),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",

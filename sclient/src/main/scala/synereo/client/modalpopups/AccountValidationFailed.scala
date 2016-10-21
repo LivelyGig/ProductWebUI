@@ -43,17 +43,18 @@ object AccountValidationFailed {
           header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(SignupCSS.Style.signUpHeading)(headerText)),
           closed = () => t.backend.formClosed(S, P)
         ),
-
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div()(
-              <.div()("Validation code you entered is incorrect, please check your email and enter valid code"),
-              //<.div()( <.button(^.tpe := "button",^.className:="btn",   ^.onClick-->hide )("Try again"))
-              <.div(^.className := "pull-right")(
-                <.button(^.tpe := "button", SignupCSS.Style.SignUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Try again")
-              )
-            ),
-            <.div(bss.modal.footer)()
+        <.div(^.className := "container-fluid")(
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div()(
+                <.div()("Validation code you entered is incorrect, please check your email and enter valid code"),
+                //<.div()( <.button(^.tpe := "button",^.className:="btn",   ^.onClick-->hide )("Try again"))
+                <.div(^.className := "pull-right")(
+                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Try again")
+                )
+              ),
+              <.div(bss.modal.footer)()
+            )
           )
         )
       )

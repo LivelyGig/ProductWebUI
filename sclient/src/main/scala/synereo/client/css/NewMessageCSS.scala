@@ -15,11 +15,11 @@ object NewMessageCSS {
 
     val textAreaNewMessage = style(
       width(100.%%),
-      marginTop(25.px),
+      marginTop(16.px),
       marginBottom(10.px),
       border.none.important,
       resize.none.important,
-      fontSize(20 px)
+      fontSize(18.px)
     )
     val newMessageActionsContainerDiv = style(
       //      marginTop(30.px),
@@ -54,11 +54,17 @@ object NewMessageCSS {
       ),
       &.focus(
         backgroundColor.transparent.important
+      ),
+      media.maxWidth(1024.px)(
+        fontSize(15.px)
       )
     )
     val PersonaContainerDiv = style(
       marginTop.`0`,
-      marginBottom(20.px)
+      marginBottom(20.px),
+      media.maxWidth(580.px)(
+        marginTop(-30.px)
+      )
     )
     val newMessageCancelBtn = style(
       backgroundColor.transparent.important,
@@ -100,15 +106,17 @@ object NewMessageCSS {
       )
     )
     val userNameOnDilogue = style(
-      fontSize(16 px)
-
+      fontSize(16 px),
+      media.maxWidth(1024.px)(
+        fontSize(10.px)
+      )
     )
-    val postTagBtn = style(
+    val createPostTagBtn = style(
       margin(5.px),
       fontFamily :=! "karla",
       fontWeight.normal,
       fontSize(12.px),
-      textTransform.capitalize,
+      //      textTransform.capitalize,
       backgroundColor.transparent.important,
       height(38.px),
       color(c"#000"),

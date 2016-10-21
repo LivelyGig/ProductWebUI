@@ -1,17 +1,19 @@
 package synereo.client.modules
 
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{BackendScope, ReactComponentB}
+import japgolly.scalajs.react._
 import synereo.client.rootmodels.ConnectionsRootModel
 import diode.react._
 import synereo.client.css._
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.NewConnection
+
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 5/18/2016.
+  * Created by mandar.k on 5/18/2016.
   */
+//scalastyle:off
 object ConnectionsResults {
 
   case class Props(proxy: ModelProxy[ConnectionsRootModel])
@@ -27,40 +29,19 @@ object ConnectionsResults {
   val component = ReactComponentB[Props]("ConnectionsResults")
     .initialState(State())
     .backend(new Backend(_))
-    .renderPS(($, P, S) => {
-      <.div(^.id := "connectionsContainerMain")(
-        //        <.div(^.className := "row")(
-        //          //Left Sidebar
-        //          <.div(^.id := "searchContainer", ^.className := "col-md-2 sidebar sidebar-left sidebar-animate sidebar-lg-show ")(
-        //            Sidebar(Sidebar.Props())
-        //          )
-        //        ),
+    .renderPS(($, props, state) => {
+      <.div(^.className := "container-fluid")(
         <.div(^.className := "row",
           <.div(^.className := "col-md-12",
-            NewConnection(NewConnection.Props("", Seq(DashboardCSS.Style.inviteFrndBtn), "", "Invite Connections"))
+            NewConnection(NewConnection.Props("", Seq(ConnectionsCSS.Style.inviteConnectionsBtn), "", "Invite Connections"))
           )
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-xs-12 col -sm -12")(
-            ConnectionList(P.proxy().connectionsResponse)
-            /*P.proxy().render(connectionsRootModel =>
-              ConnectionList(connectionsRootModel.connectionsResponse)),
-            P.proxy().renderFailed(ex => <.div("NO CONNECTIONS FOUND", SynereoCommanStylesCSS.Style.renderFailedMessage)),
-            if (P.proxy().isEmpty) {
-              if (!P.proxy().isFailed) {
-                <.div(
-                  <.div(<.span(^.id := "loginLoader", SynereoCommanStylesCSS.Style.loading, ^.className := "", Icon.spinnerIconPulse))
-                  //                  <.div("Loading")
-                )
-              } else {
-                <.div()
-              }
-            } else {
-              <.div(/*"data loaded"*/)
-            }*/
+            ConnectionsList(props.proxy().connectionsResponse)
           )
         )
-      ) //connectionsContainerMain
+      )
     })
     //    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
@@ -68,12 +49,26 @@ object ConnectionsResults {
   def apply(proxy: ModelProxy[ConnectionsRootModel]) = component(Props(proxy))
 }
 
-object ConnectionList {
+object ConnectionsList {
 
   case class ConnectionListProps(connections: Seq[ConnectionsModel])
 
-  val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
-    .render_P(p => {
+  case class State(showAmplifyPostForm : Boolean = false , senderAddress : String  ="")
+
+  class Backend(t: BackendScope[ConnectionListProps, State]) {
+
+    def amplifyPost(senderAddress: String): Callback = {
+      t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
+    }
+    /*def mounted(props: Props): Callback =
+      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))*/
+  }
+
+
+  val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionsList")
+    .initialState_P(p => State())
+    .backend(new Backend(_))
+    .renderPS((b,p,s) => {
       def renderConnections(connection: ConnectionsModel) = {
         <.li(^.className := "media well", ConnectionsCSS.Style.fullUserDescription,
           <.div(^.className := "media-left")(
@@ -85,20 +80,23 @@ object ConnectionList {
                 + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
             }
           ),
-          <.div(^.className := "media-body",
-            <.h4(^.className := "media-heading")(
-              if (!connection.name.isEmpty) {
+          <.div(^.className := "media-body", ConnectionsCSS.Style.connectionBody,
+            <.h4(^.className := "media-heading", ^.wordBreak := "break-word")(
+              if (connection.name.nonEmpty) {
                 connection.name
               } else {
                 <.span()
               }
+            ),
+            <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
+              "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
+              ^.onClick ==> b.backend.amplifyPost)(
+              <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
             )
           )
         )
       }
-      <.div(^.className := "col-md-12",
-        <.ul(^.className := "media-list", ConnectionsCSS.Style.fullDescUL)(p.connections map renderConnections)
-      )
+      <.ul(^.className := "media-list", ConnectionsCSS.Style.fullDescUL)(p.connections map renderConnections)
     })
     .build
 

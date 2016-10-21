@@ -1,13 +1,10 @@
-var ScrollSpeedMonitor = (function()
-{
+var ScrollSpeedMonitor = (function() {
     var self = this;
 
-    function ScrollSpeedMonitor (callbackMethod)
-    {
+    function ScrollSpeedMonitor (callbackMethod) {
         callback = callbackMethod;
 
-        $("#appContainer").scroll(function(e)
-        {
+        $("#appContainer").scroll(function(e) {
             var scrollTop = $(this).scrollTop();
             didScroll(new Date().getTime(), scrollTop);
         });
@@ -20,17 +17,14 @@ var ScrollSpeedMonitor = (function()
 
     this.thisMinimumTrackingDelayInMs = 25;
 
-    function didScroll (timeStamp, scrollTop)
-    {
-        if (lastDate + self.thisMinimumTrackingDelayInMs <= timeStamp)
-        {
+    function didScroll (timeStamp, scrollTop) {
+        if (lastDate + self.thisMinimumTrackingDelayInMs <= timeStamp) {
             var offset = Math.abs(scrollTop - lastScrollTop);
             var direction = getDirection(scrollTop);
             var delayInMs = timeStamp - lastDate;
             var speedInPxPerMs = offset / delayInMs;
 
-            if (speedInPxPerMs > 0)
-            {
+            if (speedInPxPerMs > 0) {
 
                 callback(speedInPxPerMs, timeStamp, direction);
             }
@@ -39,15 +33,12 @@ var ScrollSpeedMonitor = (function()
         }
     };
 
-    function getDirection (scrollTop)
-    {
+    function getDirection (scrollTop) {
         var currentScrollTop = lastScrollTop;
         lastScrollTop = scrollTop;
 
-        if (currentScrollTop > -1)
-        {
-            if (currentScrollTop >= scrollTop)
-            {
+        if (currentScrollTop > -1) {
+            if (currentScrollTop >= scrollTop) {
                 return 'down';
             }
 
@@ -57,8 +48,7 @@ var ScrollSpeedMonitor = (function()
         return 'unknown';
     }
 
-    function reset ()
-    {
+    function reset () {
         direction = 'unknown';
         lastDate = -1;
         lastScrollTop = -1;
@@ -68,49 +58,39 @@ var ScrollSpeedMonitor = (function()
 }());
 
 window.onload = function() {
-  function applyStylingToHomeFeed(){
-    $("#homeFeedMediaList li").each(function(){
-      if ($(this).offset().top < 400 &&  $(this).offset().top > 100) {
+  var applyStylingToHomeFeed = function () {
+    $("#homeFeedMediaList li").each(function() {
+      if ($(this).offset().top > 100 && $(this).offset().top < 400) {
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-        $(this).css({"opacity":"1","transform": "scale(1.05)"});
+        $(this).css({"opacity":"1","transform": "scale(1.04,1.02)"});
         $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
         $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
     }
 });
 };
-$(document).ready(function() {
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip();
     applyStylingToHomeFeed();
-    var hoverInterval=  setInterval(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-      // $("#dashboardContainerMain").scroll(applyStylingToHomeFeed);
-      var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection){
-//        console.log('Scroll speed: ' + speedInPxPerMs);
-if (speedInPxPerMs > 3) {
-    $("#homeFeedMediaList li").css("opacity","0.2");
-}else{
-    applyStylingToHomeFeed();
-}
+    var checkScrollSpeedFun =  setInterval(function() {
+    var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection) {
+    //        console.log('Scroll speed: ' + speedInPxPerMs);
+    if (speedInPxPerMs > 3) {
+        $("#homeFeedMediaList li").css("opacity","0.2");
+    } else {
+        applyStylingToHomeFeed();
+    }
 });
-      $("#homeFeedMediaList li").hover(function(){
+      $("#homeFeedMediaList li").mouseenter(function() {
         $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
         $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-        $(this).css({"opacity":"1","transform": "scale(1.05)"});
+        $(this).css({"opacity":"1","transform": "scale(1.04,1.02)"});
         $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
         $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-    },
-    function(){
-     /*
-      $(this).prev().prev().css({"opacity":"0.35","transform": "scale(1)"});
-      $(this).prev().css({"opacity":"0.6","transform": "scale(1)"});
-      $(this).css({"opacity":"1","transform": "scale(1.05)"});
-      $(this).next().css({"opacity":"0.6","transform": "scale(1)"});
-      $(this).next().next().css({"opacity":"0.35","transform": "scale(1)"});
-      */
-  });
+    });
   }, 1000);
-    setTimeout(function(){
-      clearInterval(hoverInterval);
-  },100000000);
+    //    setTimeout(function() {
+    //      clearInterval(checkScrollSpeedFun);
+    //  },100000000);
 });
 };

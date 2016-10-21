@@ -80,11 +80,12 @@ object LoginView {
     //    }
 
     def addNewUser(signUpModel: SignUpModel, addNewAgent: Boolean = false, showLoginForm: Boolean = false, showTermsOfServicesForm: Boolean = false): Callback = {
+     // console.log(s"addnewUser addNewAgent ${addNewAgent} showLoginForm ${showLoginForm} showTermsOfService ${showTermsOfServicesForm}")
       $(loadingScreen).removeClass("hidden")
       $(loginLoader).removeClass("hidden")
       //      log.debug(s"addNewUser userModel : ${signUpModel}")
       if (addNewAgent) {
-        createUser(signUpModel.copy(email = signUpModel.email.toLowerCase)).onComplete {
+        createUser(signUpModel.copy(email = signUpModel.email.trim.toLowerCase)).onComplete {
           case Success(response) =>
             try {
               val s = upickle.default.read[ApiResponse[CreateUserResponse]](response)
@@ -119,11 +120,17 @@ object LoginView {
         }
         t.modState(s => s.copy(showNewUserForm = false))
       } else if (showLoginForm) {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
-      } else if (showTermsOfServicesForm){
-        t.modState(s => s.copy(showNewUserForm = false, showLoginForm=false, showTermsOfServicesForm = true))
+      } else if (showTermsOfServicesForm) {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
+        t.modState(s => s.copy(showNewUserForm = false, showLoginForm = false, showTermsOfServicesForm = true))
       }
       else {
+        $(loginLoader).addClass("hidden")
+        $(loadingScreen).addClass("hidden")
         t.modState(s => s.copy(showNewUserForm = false, showLoginForm = true))
       }
     }
@@ -151,7 +158,7 @@ object LoginView {
     def processLogin(userModel: UserModel): Callback = {
       $(loginLoader).removeClass("hidden")
       $(loadingScreen).removeClass("hidden")
-      CoreApi.agentLogin(userModel.copy(email = userModel.email.toLowerCase)).onComplete {
+      CoreApi.agentLogin(userModel.copy(email = userModel.email.trim.toLowerCase)).onComplete {
         case Success(response) =>
           validateInitializeSessionResponse(response) match {
             case SUCCESS => processSuccessfulLogin(response, userModel)
@@ -184,7 +191,6 @@ object LoginView {
           window.location.replace("#dashboard")
           log.debug("login successful")
         case Failure(res) =>
-          console.log(s"login failure : ${res.getMessage}")
           processServerError(res.getMessage)
       }
     }
@@ -229,17 +235,17 @@ object LoginView {
               case e: Exception =>
                 t.modState(s => s.copy(showAccountValidationFailed = true)).runNow()
             }
-
           case Failure(res) =>
             log.debug(s"ConfirmAccountCreationAPI failure: ${res.getMessage}")
             t.modState(s => s.copy(showErrorModal = true, loginErrorMessage = res.toString)).runNow()
         }
         t.modState(s => s.copy(showConfirmAccountCreation = false))
-      } else if (showLoginForm) {
-        t.modState(s => s.copy(showLoginForm = true))
-      }
+      } /*else if (showLoginForm) {
+        console.log("In showlogin")
+        t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = false))
+      }*/
       else {
-        t.modState(s => s.copy(showConfirmAccountCreation = false))
+        t.modState(s => s.copy(showConfirmAccountCreation = false,showLoginForm = true))
       }
     }
 
@@ -281,7 +287,7 @@ object LoginView {
     }
 
     def termsOfServices(): Callback = {
-      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true,showLoginForm = false))
+      t.modState(s => s.copy(showTermsOfServicesForm = false, showNewUserForm = true, showLoginForm = false))
     }
 
     def submitApiForm(e: ReactEventI) = {
@@ -346,17 +352,16 @@ object LoginView {
             //                )
             //              )
             //            )
-
           ),
           <.div()(
             if (s.showTermsOfServicesForm) {
-              TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Services"))
+              TermsOfServicesForm(TermsOfServicesForm.Props(t.backend.termsOfServices, "Terms of Use"))
             }
             else if (s.showLoginForm) {
               LoginForm(LoginForm.Props(t.backend.loginUser, isUserVerified))
             }
             else if (s.showNewUserForm) {
-              NewUserForm(NewUserForm.Props(t.backend.addNewUser))
+              SignUpForm(SignUpForm.Props(t.backend.addNewUser))
             }
             else if (s.showNewInviteForm) {
               PostNewInvite(PostNewInvite.Props(t.backend.closeRequestInvitePopup))

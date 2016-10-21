@@ -12,6 +12,14 @@ object SynereoCommanStylesCSS {
 
     import dsl._
 
+    val appContainerMain = style(
+      height(95.vh),
+      overflowY.scroll.important,
+      //      paddingTop(60.px),
+      paddingBottom(60.px),
+      overflowX.hidden
+    )
+
     val naviContainer = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -59,8 +67,8 @@ object SynereoCommanStylesCSS {
       backgroundColor(rgba(0, 0, 0, 0.5)),
       position.absolute,
       top.`0`,
-      left.`0`,
-      zIndex(100)
+      left.`0`
+      //      zIndex(100)
     )
 
     val userNameTopMenubar = style(
@@ -75,7 +83,7 @@ object SynereoCommanStylesCSS {
 
       //      marginTop(8.px),
       marginTop(12.%%),
-//      marginRight(15.px),
+      //      marginRight(15.px),
 
       //      marginRight(-4.px),
       //      height(50.px),
@@ -112,19 +120,13 @@ object SynereoCommanStylesCSS {
       display.inlineBlock
     )
     val mainMenuNavbar = style(
-      //      position.absolute,
-      //      paddingTop(6.px),
-      //      paddingRight(20.px),
       right.`0`,
-      //  media.maxWidth(767.px) -
-      // marginTop(65.px)
-      //      zIndex(100)
-      //      backgroundColor(c"#277490")
+     // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
       media.minWidth(546.px).maxWidth(766.px) -
         width(233.px),
       float.right,
 
-      media.maxWidth(545.px) -(
+      media.maxWidth(545.px) - (
         marginTop(65.px),
         width(100.%%)
         )
@@ -224,17 +226,36 @@ object SynereoCommanStylesCSS {
     val userActionsMenu = style(
       width.auto.important,
       minHeight.auto.important,
-      right.`0`.important
+      right.`0`.important,
+      backgroundColor.white.important
     )
     val imgLogo = style(
       marginTop(5.px),
       padding(5.px),
-      maxHeight(48.px)
+      maxHeight(48.px),
+      media.maxWidth(580.px) -
+        display.none,
+      media.minWidth(421.px) -
+        display.initial
+
     )
     val imgLogoOtherLoc = style(
       marginTop(4.px),
       padding(5.px),
-      maxHeight(54.px)
+      maxHeight(54.px),
+      media.maxWidth(580.px) -
+        display.none,
+      media.minWidth(421.px) -
+        display.initial
+    )
+    val imgSmallLogo = style(
+      marginTop(5.px),
+      padding(5.px),
+      maxHeight(48.px),
+      media.maxWidth(580.px) -
+        display.initial,
+      media.minWidth(421.px) -
+        display.none
     )
     val bottomBorderOnePx = style(
       borderBottom(1.px, solid, c"#B6BCCC")
@@ -295,7 +316,15 @@ object SynereoCommanStylesCSS {
       paddingLeft(46.px),
       paddingRight(46.px),
       paddingBottom(0.px),
-      paddingTop(0.px)
+      paddingTop(0.px),
+      media.maxWidth(580.px)(
+        paddingLeft(10.px),
+        paddingRight(10.px)
+      ),
+      media.maxWidth(920.px)(
+        paddingLeft(20.px),
+        paddingRight(20.px)
+      )
     )
 
     val loading = style(
@@ -390,12 +419,18 @@ object SynereoCommanStylesCSS {
     //      width(100.%%)
     //    )
     val verticalAlignCenter = style(
-      /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
       paddingLeft(30.%%),
-      paddingRight(30.%%)
-
+      paddingRight(30.%%),
+      media.maxWidth(420 px)(
+        paddingLeft(10.px).important,
+        paddingRight(10.px).important
+      ),
+      media.maxWidth(768 px)(
+        paddingLeft(10.%%),
+        paddingRight(10.%%)
+      )
     )
 
     val featureHide = style(
@@ -405,29 +440,42 @@ object SynereoCommanStylesCSS {
     val userNameOverflow = style(
       whiteSpace.nowrap,
       overflow.hidden,
-      textOverflow.:=("ellipsis")
+      textOverflow.:=("ellipsis"),
+      media.maxWidth(360.px) -
+        fontSize(13.px)
     )
 
     val paddingLeft15p = style(
       paddingLeft(17.%%).important
     )
 
-    val lftHeightPost = style (
-//      height(50.vh),
-      display.flex,
+    val lftHeightPost = style(
+      //      height(50.vh),
+      //      display.flex,
       alignItems.center
     )
 
-    val marginTop20px = style (
+    val marginTop20px = style(
       marginTop(20.px)
     )
 
-    val lovePost = style (
+    val lovePost = style(
       height(100.px),
       marginTop(-70.px),
       marginLeft(51.px),
       opacity(0.3),
-      background := rgba(0,0,0,0.5)
+      background := rgba(0, 0, 0, 0.5)
+    )
+
+    val naviCollapse = style(
+      media.maxWidth(767.px) - (
+        backgroundColor(rgb(46, 110, 142)),
+        position.absolute,
+        top(57.px),
+        left(0.px),
+        width(100.%%),
+        zIndex(9))
     )
   }
+
 }

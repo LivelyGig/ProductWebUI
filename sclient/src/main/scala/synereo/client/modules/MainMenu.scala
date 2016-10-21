@@ -3,10 +3,10 @@ package synereo.client.modules
 
 import synereo.client.components._
 import diode.react.ModelProxy
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.modalpopups.{AboutInfoModal, NewMessage, NodeSettingModal, ProfileImageUploaderForm}
+
+//import synereo.client.modalpopups.{NewMessage}
 import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
@@ -14,7 +14,6 @@ import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import shared.models.UserModel
 import synereo.client.services.SYNEREOCircuit
-
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -22,8 +21,7 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.ContentUtils
-
+import synereo.client.utils.{ContentUtils, I18N}
 import scala.scalajs.js
 import scala.util.{Failure, Success, Try}
 
@@ -32,7 +30,7 @@ import scala.util.{Failure, Success, Try}
 object MainMenu {
 
   val introductionConnectProxy = SYNEREOCircuit.connect(_.introduction)
-  val userProxy = SYNEREOCircuit.connect(_.user)
+//  val userProxy = SYNEREOMain.userProxy
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -48,19 +46,6 @@ object MainMenu {
       $(topBtn).toggleClass("topbar-left topbar-lg-show")
     }
 
-    //    def showImageUploadModal(): react.Callback = {
-    //      t.modState(s => s.copy(showProfileImageUploadModal = !s.showProfileImageUploadModal))
-    //    }
-    //
-    //    def showAboutInfoModal(): react.Callback = {
-    //      t.modState(s => s.copy(showAboutInfoModal = !s.showAboutInfoModal))
-    //    }
-    //
-    //    def showNodeSettingModal(): react.Callback = {
-    //      logger.log.debug("showNodeSettingModal")
-    //      t.modState(s => s.copy(showNodeSettingModal = true))
-    //    }
-
     def showImageUploadModal(): react.Callback = Callback {
       logger.log.debug("main menu showImageUploadModal")
       SYNEREOCircuit.dispatch(ToggleImageUploadModal())
@@ -75,6 +60,12 @@ object MainMenu {
       logger.log.debug("main menu showNodeSettingModal")
       SYNEREOCircuit.dispatch(ToggleNodeSettingModal())
     }
+
+    def showNewMessageModal(): react.Callback = Callback {
+      logger.log.debug("main menu showNewMessageModal")
+      SYNEREOCircuit.dispatch(ToggleNewMessageModal())
+    }
+
   }
 
 
@@ -83,7 +74,6 @@ object MainMenu {
     .backend(new MainMenuBackend(_))
     .renderPS(($, props, state) => {
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-      //      println(state"props proxy isLoggedIn : ${props.proxy().isLoggedIn}")
       <.div(^.className := "container-fluid")(
         if (props.proxy.value.isLoggedIn) {
           val model = props.proxy.value
@@ -91,7 +81,12 @@ object MainMenu {
             <.div(^.className := "label-selectize-container-main")(
               if (props.currentLoc == DashboardLoc) {
                 <.div(
-                  <.div(^.className := "pull-left")(NewMessage(NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif",SynereoCommanStylesCSS.Style.createPostImg), "", ""))),
+                  <.div(^.className := "pull-left")(
+                    <.button(^.className := "btn", ^.onClick --> $.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostButton,
+                      <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg)
+                    )
+                    //                      NewMessage (NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg), "", ""))
+                  ),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )
@@ -183,10 +178,10 @@ object MainMenu {
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
                     <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
-                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())("About")),
-                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(" Change Profile Picture ")),
-                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), "Node Settings")),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))("Sign Out"))
+                      <.li(<.a(^.onClick --> $.backend.showAboutInfoModal())(I18N.En.MainMenu.DROPDOWN_ABOUT)),
+                      <.li(<.a(^.onClick --> $.backend.showImageUploadModal())(I18N.En.MainMenu.DROPDOWN_CHANGE_PROFILE_PICTURE)),
+                      <.li(<.a(^.onClick --> $.backend.showNodeSettingModal(), I18N.En.MainMenu.DROPDOWN_NODE_SETTINGS)),
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(I18N.En.MainMenu.LOG_OUT))
                     )
                   )
                   //                  if (state.showProfileImageUploadModal)
@@ -200,7 +195,7 @@ object MainMenu {
                   //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
                 ),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
-                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
+                  //                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )
               )
             )
@@ -210,13 +205,12 @@ object MainMenu {
             <.li(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
                 //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.helpOutline),
-                "WHAT IS SYNEREO?"
+                I18N.En.MainMenu.WHAT_IS_SYNEREO
               )
             ),
             <.li(^.className := "", LoginCSS.Style.watchVideoBtn)(
               <.a(^.href := "http://www.synereo.com/", LoginCSS.Style.navLiAStyle)(
-                //                  <.span(LoginCSS.Style.navLiAIcon)(MIcon.playCircleOutline),
-                <.span("WATCH THE VIDEO")
+                I18N.En.MainMenu.WATCH_THE_VIDEO
               )
             )
           )

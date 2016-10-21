@@ -4,7 +4,7 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 3/22/2016.
+  * Created by mandar.k on 3/22/2016.
   */
 object PostFullViewCSS {
 
@@ -16,12 +16,14 @@ object PostFullViewCSS {
       backgroundImage := "url(\"./assets/synereo-images/globalBg-Darker.jpg\")",
       marginTop(-20.px),
       marginLeft(-15.px),
-      overflowY.hidden
+      overflowY.hidden,
+      backgroundSize := "cover"
     )
 
     val fullPostViewLeftRightContainer = style(
       height(100.vh),
-      cursor.pointer
+      cursor.pointer,
+      position.relative
     )
 
     val blogMainImage = style(
@@ -37,14 +39,23 @@ object PostFullViewCSS {
     )
     val postedImageContainerDiv = style()
     val modalCloseButton = style(
-      fontSize(60.px),
       //      color(c"#678892"),
       color(white),
       opacity(1),
       &.hover(
         color(c"#678892")
       ),
-      margin(20.px)
+      media.maxWidth(767.px) -
+        fontSize(48.px),
+      media.minWidth(768.px) -
+        fontSize(30.px),
+      verticalAlign.textTop,
+      position.absolute,
+      left(0.px),
+      right(0.px),
+      width(100.%%)
+      /*,
+   margin(20.px)*/
     )
     val glanceView = style(
       paddingTop(5.px),
@@ -80,7 +91,8 @@ object PostFullViewCSS {
     )
     val postDescription = style(
       fontSize(1.1.em),
-      paddingBottom(30.px)
+      paddingBottom(30.px),
+      whiteSpace.preWrap
     )
     val postedUserInfoContainerDiv = style(
       //      marginLeft(11.2.%%),
@@ -154,6 +166,19 @@ object PostFullViewCSS {
 
     val marginLeft15PX = style(
       marginLeft(-15.px)
+    )
+
+    val closeSIcon = style(
+      media.maxWidth(767.px) -
+        display.initial,
+      media.minWidth(768.px) -
+        display.none
+    )
+    val closeLIcon = style(
+      media.maxWidth(767.px) -
+        display.none,
+      media.minWidth(768.px) -
+        display.initial
     )
   }
 

@@ -60,8 +60,16 @@ lazy val client: Project = (project in file(pCompile))
     // libraryDependencies ++= Seq(
     // Dependencies.tests.scalajsenvs)
   )
-  .enablePlugins(ScalaJSPlugin, ScalaJSPlay)
+  .enablePlugins(ScalaJSPlugin, ScalaJSPlay,SbtWeb,/*ScalaJSWeb,*/JavaServerAppPackaging)
   .dependsOn(sharedJS)
+
+//lazy val server = project.settings(
+//  scalaJSProjects := Seq(client),
+//  pipelineStages in Assets := Seq(scalaJSPipeline)
+//).enablePlugins(SbtWeb)
+//
+//lazy val client = project.enablePlugins(ScalaJSPlugin, ScalaJSWeb)
+
 //// Indicate that unit tests will access the DOM
 //  requiresDOM := true
 //// Compile tests to JS using fast-optimisation
@@ -82,6 +90,7 @@ lazy val server = (project in file("server"))
     // connect to the client project
     scalaJSProjects := clients,
     pipelineStages := Seq(scalaJSProd, digest, gzip),
+//    pipelineStages in Assets := Seq(scalaJSPipeline),
     // compress CSS
     LessKeys.compress in Assets := true,
     includeFilter in(Assets, LessKeys.less) := lessFile,
@@ -127,8 +136,6 @@ lazy val ReleaseCmd = Command.command("release") {
     "set elideOptions in client := Seq()" ::
     state
 }
-
-// lazy val root = (project in file(".")).aggregate(client, server)
 
 // loads the Play server project at sbt startup
 onLoad in Global := (Command.process("project server", _: State)) compose (onLoad in Global).value

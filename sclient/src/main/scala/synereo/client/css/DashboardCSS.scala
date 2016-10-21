@@ -55,18 +55,10 @@ object DashboardCSS {
       backgroundColor(c"#FF6F12 ").important,
       fontSize(22.px),
       color.white.important,
-      margin(45.px, 0.px)
-    )
-    val inviteFrndBtn = style(
-      fontSize(24.px),
-      backgroundColor(c"#FFFFFF"),
-      color(c"#000"),
-      width(250.px),
-      height(60.px),
-      marginBottom(30.px),
-      marginLeft.auto,
-      marginRight.auto,
-      display.block
+      margin(45.px, 0.px),
+      media.maxWidth(580.px)(
+        margin(15.px, 0.px)
+      )
     )
     val confirmIntroReqBtn = style(
       backgroundColor.transparent,
@@ -106,11 +98,11 @@ object DashboardCSS {
     )
     val cardDescriptionContainerDiv = style(
       cursor.pointer,
-      media.minWidth(768.px) -(
+      media.minWidth(768.px) - (
         paddingLeft(65.px),
         paddingRight(65.px)
         ),
-      media.maxWidth(767.px) -(
+      media.maxWidth(767.px) - (
         paddingLeft(20.px),
         paddingRight(20.px)
         )
@@ -119,10 +111,10 @@ object DashboardCSS {
       //      margin(15.px, -30.px),
 
       overflowY.hidden.important,
-      media.minWidth(768.px) -(
+      media.minWidth(768.px) - (
         padding(15.px)
         ),
-      media.maxWidth(767.px) -(
+      media.maxWidth(767.px) - (
         padding(0.px, 18.px, 10.px, 18.px)
         )
     )
@@ -205,7 +197,7 @@ object DashboardCSS {
         )
     )
 
-    val postDescription = style (
+    val postDescription = style(
 
       display.inlineBlock,
       paddingTop(2.px),
@@ -246,12 +238,12 @@ object DashboardCSS {
       color(c"#000"),
       lineHeight(1.25.em),
       letterSpacing(0.5.px),
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)(
         fontSize(24.px)
-        ),
-      media.maxWidth(767.px) - (
+      ),
+      media.maxWidth(767.px)(
         fontSize(21.px)
-        )
+      )
     )
     val sidebarNavStyle = style(
       fontSize(17.px)
@@ -265,9 +257,11 @@ object DashboardCSS {
       marginTop(-30.px)
     )
     val cardText = style(
-
       fontFamily :=! "lora",
       fontWeight.normal,
+      whiteSpace.preWrap,
+      wordWrap.breakWord,
+      whiteSpace.preWrap,
       opacity(0.95),
       lineHeight(1.5.em),
       media.minWidth(768.px) - (
@@ -280,7 +274,10 @@ object DashboardCSS {
 
     val imgBorder = style(
       border(1.px, solid, gray),
-      borderRadius(6.px)
+      borderRadius(6.px),
+      float.right,
+      marginBottom(10.px),
+      marginTop(-10.px)
     )
     val ampTokenBtn = style(
       backgroundColor.transparent.important,
@@ -308,12 +305,13 @@ object DashboardCSS {
       paddingBottom(15.px)
     )
 
-
-    val paddingLeftRight = style(
-      media.maxWidth(767.px) -(
+    val paddingLRZero = style(
+      media.maxWidth(767.px) - (
         paddingLeft(0.px),
         paddingRight(0.px))
     )
+
+
   }
 
 }

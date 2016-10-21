@@ -27,11 +27,12 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
     case LoginUser(userModel) =>
       updated(userModel)
 
-    case LogoutUser() =>
+    case LogoutUser() =>{
       // todo: Cancel all subscribe request for all sessions
       //      window.sessionStorage.clear()
       window.location.href = "/"
-      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false))
+      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false,balance = "",address = ""))
+    }
 
     case UpdateUserImage(imgSrc) =>
       updated(value.copy(imgSrc = imgSrc))

@@ -33,6 +33,7 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
     val apires = upickle.default.read[Seq[ApiResponse[ConnectionProfileResponse]]](cnxnRes).map(e => ConnectionsUtils.getCnxnFromRes(e.content))
     assert(SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.contains(apires(0)))
   }
+
   it should "add introduction notifications to Intro" in {
     Given("response json contains notifications")
     val introNot = MockData.introNot

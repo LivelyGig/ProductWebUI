@@ -36,7 +36,7 @@ object ConnectionsSelectize {
 
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     val selectedCnxn = $(s"#${selectizeInputId} > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
-    if ($(selectedCnxn(0)).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID)
+    if (selectedCnxn.filter(s"[data-value='${AppUtils.ALL_CONTACTS_ID}']").length == 1)
       SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
     else {
       val extn = new JQueryExtensions(selectedCnxn)
@@ -52,9 +52,11 @@ object ConnectionsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, enableAllContacts: Boolean = false)
+  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil, replyPost: Boolean = false,
+                   enableAllContacts: Boolean = false)
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
+
 
   case class Backend(t: BackendScope[Props, State]) {
     //    def initializeTagsInput(): Unit = {
@@ -114,7 +116,26 @@ object ConnectionsSelectize {
     }
 
     def render(props: Props, state: State) = {
-      if (props.enableAllContacts) {
+
+      if (props.replyPost == true) {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple:=true, ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+          <.option(^.value := "")("Select"),
+          for (receiver <- props.receivers) yield {
+            for ( connection <- state.connections  ; if receiver.connection == connection.connection  ) yield {
+                //println(s"connection matched${connection.name}")
+                <.option(^.value := upickle.default.write(connection.connection),
+                  ^.key := connection.connection.target, ^.selected := true)(
+                  if (connection.name.startsWith("@")) {
+                    s"${connection.name}"
+                  } else {
+                    s"@${connection.name}"
+                  })
+
+            }
+          }
+        )
+
+      } else if (props.enableAllContacts) {
         <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
           <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@All_Contacts"),
@@ -127,16 +148,16 @@ object ConnectionsSelectize {
             })
         )
       } else {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
-          for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
-            ^.key := connection.connection.target)(
-            if (connection.name.startsWith("@")) {
-              s"${connection.name}"
-            } else {
-              s"@${connection.name}"
-            })
-        )
+          for (connection <- state.connections) yield
+            <.option(^.value := upickle.default.write(connection.connection),
+              ^.key := connection.connection.target)(
+              if (connection.name.startsWith("@")) {
+                s"${connection.name}"
+              } else {
+                s"@${connection.name}"
+              }))
       }
 
     }
