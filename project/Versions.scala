@@ -1,5 +1,4 @@
-object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions with JsVersions
-{
+object Versions extends WebJarsVersions with ScalaJSVersions with SharedVersions with JsVersions {
   val scalaVersion = "2.11.8"
   val appVersion = "1.0.1"
   val akkaHttpExtensions = "0.0.10"
@@ -21,8 +20,7 @@ trait ScalaJSVersions {
 }
 
 //versions for libs that are shared between client and server
-trait SharedVersions
-{
+trait SharedVersions {
   val upickle = "0.4.1" //"0.3.8"
   val scalatest = "3.0.0-M15"
   val autowire = "0.2.5"
@@ -33,7 +31,7 @@ trait SharedVersions
 }
 
 
-trait WebJarsVersions{
+trait WebJarsVersions {
 
   val bootstrap = "3.3.6"  //"3.3.7"
   val playScripts = "0.4.0" //  "0.5.0"
