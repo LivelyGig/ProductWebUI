@@ -19,8 +19,9 @@ import scala.scalajs.js
 //scalastyle:off
 object SignUpForm {
 
-  //  var addNewUserState: Boolean = false
   val editApiDetailBtn: js.Object = "#editApiDetailBtn"
+  var addNewUserState: Boolean = false
+  var signUpModelUpdate = new SignUpModel()
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -29,20 +30,20 @@ object SignUpForm {
   case class State(signUpModel: SignUpModel,
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
-                   showLoginForm: Boolean = true,
+                   showLoginForm: Boolean = false,
                    apiURL: String = ""
                   )
 
   case class NewUserFormBackend(t: BackendScope[Props, State]) {
 
-    var addNewUserState: Boolean = false
-    var signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
 
-    def hideModal = {
+    def hideModal = Callback  {
       addNewUserState = false
-      signUpModelUpdate = new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "", false)
-      t.modState(s => s.copy(showLoginForm = true))
+      signUpModelUpdate = new SignUpModel()
+       jQuery(t.getDOMNode()).modal("hide")
+    //  t.modState(s => s.copy(showLoginForm = true,addNewUser=false))
     }
+
 
     def hidecomponent = {
       // instruct Bootstrap to hide the modal
@@ -86,18 +87,7 @@ object SignUpForm {
     }
 
     def updatePassword(e: ReactEventI) = {
-    //  val passregex = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$".r
-
       val value = e.target.value
-//         val updatedPassword =   passregex.findAllIn(value)
-//      updatedPassword.foreach( e =>
-//       e  match {
-//        case Some(s) =>
-//        case None =>
-//      )
-
- //     }
-      //      println(value)
       t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
     }
 
@@ -130,12 +120,12 @@ object SignUpForm {
   }
 
   private val component = ReactComponentB[Props]("NewUserForm")
-    //    .initialState_P(p =>
-    //      if (addNewUserState)
-    //        State(new SignUpModel())
-    //      else
-    //        State(new SignUpModel()))
-    .initialState_P(p => State(new SignUpModel()))
+    .initialState_P(p =>
+    if (addNewUserState)
+      State(new SignUpModel(signUpModelUpdate.email, signUpModelUpdate.password, signUpModelUpdate.confirmPassword, signUpModelUpdate.name, signUpModelUpdate.lastName, signUpModelUpdate.createBTCWallet, signUpModelUpdate.isModerator,
+        signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
+    else
+      State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
     .backend(new NewUserFormBackend(_))
     .renderPS((t, P, S) => {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
@@ -145,7 +135,7 @@ object SignUpForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span()(
-            <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
             <.div(SignupCSS.Style.signUpHeading)(headerText)
           ),
           // this is called after the modal has been hidden (animation is completed)
@@ -185,7 +175,7 @@ object SignUpForm {
           ),
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := S.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
-              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6", "pattern".reactAttr := "^([a-zA-Z+]+[0-9+]+[&@!#+]+)$"),
+              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6", "pattern".reactAttr := "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,}$"),
             <.div(/*, ^.className := "col-md-12 text-center",*/ SignupCSS.Style.passwordTextInfo ,^.className := "help-block")("Must be 6 characters long and include at least one number or symbol")
         ),
         <.div(^.className := "form-group")(
@@ -207,7 +197,7 @@ object SignUpForm {
               <.span(SignupCSS.Style.howAccountsWorkLink)("How do accounts work across nodes?")
             ),
             <.div(^.className := "pull-right", ^.className := "form-group")(
-              <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hideModal, "Sign up")
+              <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.signUpBtn, ^.className := "btn",  "Sign up")
             )
           )
         ),
@@ -215,8 +205,14 @@ object SignUpForm {
       )
       )
     })
-    .componentDidMount(scope => scope.backend.mounted())
+    .componentDidMount(scope => {
+      println(s"DidMount ${scope.state}")
+      scope.state
+      scope.backend.mounted()
+
+    } )
     .componentDidUpdate(scope => Callback {
+      println(s"DidUpdate ${scope.currentState}")
       if (scope.currentState.addNewUser || scope.currentState.showTermsOfServicesForm) {
         scope.$.backend.hidecomponent
       }

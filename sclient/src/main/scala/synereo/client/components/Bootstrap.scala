@@ -94,8 +94,7 @@ object Bootstrap {
         SYNEREOCircuit.dispatch(UnsetPreventNavigation())
       }
 
-      def modalClose(e: ReactKeyboardEvent): Callback = {
-
+      def modalClose(e: ReactKeyboardEvent): Callback = Callback {
         def plainKey: CallbackOption[Unit] = // CallbackOption will stop if a key isn't matched
           CallbackOption.keyCodeSwitch(e) {
             case KeyCode.Escape => hide
@@ -103,12 +102,18 @@ object Bootstrap {
         plainKey >> e.preventDefaultCB
       }
 
+      def modalOnEscape(e: ReactKeyboardEvent): Callback = Callback {}
+
       def render(P: Props, C: PropsChildren) = {
         val modalStyle = bss.modal
-        <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true, ^.tabIndex := -1,
+        <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
+          ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
             <.div(if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(), modalStyle.dialog)(
-              <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> modalClose, ^.ref := OuterRef,
+              <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> (
+                if (P.id == "loginContainer")
+                  modalOnEscape
+                else modalClose), ^.ref := OuterRef,
                 <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
                 //              <.div(modalStyle.footer, P.footer(hide))
@@ -125,7 +130,9 @@ object Bootstrap {
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> (if (P.id == "loginContainer") false else P.backdrop), "keyboard" -> P.keyboard, "show" -> true))
+        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" ->  P.backdrop, "keyboard" ->
+          (if (P.id == "loginContainer") false else P.keyboard)
+          , "show" -> true))
         // register event listener to be notified when the modal is closed
         jQuery(scope.getDOMNode()).on("hidden.bs.modal", null, null, scope.backend.hidden _)
       })

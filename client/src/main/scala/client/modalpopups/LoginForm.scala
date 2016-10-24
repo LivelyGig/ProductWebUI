@@ -92,7 +92,8 @@ object LoginForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(DashBoardCSS.Style.modalHeaderText)(headerText)),
-          closed = () => formClosed(s, p)
+          closed = () => formClosed(s, p),
+          id = "loginContainer"
         ),
 
         <.form(^.id := "loginFormID", "data-toggle".reactAttr := "validator", ^.role := "form", ^.onSubmit ==> submitForm)(
@@ -153,9 +154,11 @@ object LoginForm {
     .initialState_P(p => State(new UserModel("", "", "")))
     .renderBackend[Backend]
     .componentDidMount(scope => Callback {
+      println(s"DidMount ${scope.state}")
       $(modal).on("shown.bs.modal", "", js.undefined, scope.backend.userNameFocus _)
     })
     .componentDidUpdate(scope => Callback {
+      println(s"DidUpdate ${scope.currentState}")
       if (scope.currentState.login || scope.currentState.showConfirmAccountCreation || scope.currentState.showNewAgentForm) {
         scope.$.backend.hide
       }
