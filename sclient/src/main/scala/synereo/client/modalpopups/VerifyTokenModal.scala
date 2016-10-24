@@ -37,10 +37,13 @@ object VerifyTokenModal {
   class VerifyTokenModalBackend(t: BackendScope[Props, State]) {
 
     def submitForm(e: ReactEventI) = {
-      e.preventDefault()
-      window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, t.state.runNow().apiURL)
-      // mark it as NOT cancelled (which is the default)
-      t.modState(s => s.copy(accountValidationFailed = true))
+      if ($("#verify-code-submit-btn".asInstanceOf[js.Object]).hasClass("disabled"))
+        t.modState(s => s.copy(accountValidationFailed = false))
+      else {
+        e.preventDefault()
+        window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, t.state.runNow().apiURL)
+        t.modState(s => s.copy(accountValidationFailed = true))
+      }
     }
 
     def hideModal = {
@@ -99,7 +102,7 @@ object VerifyTokenModal {
           closed = () => t.backend.formClosed(S, P),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm)(
+        <.form(^.onSubmit ==> t.backend.submitForm, "data-toggle".reactAttr := "validator", ^.role := "form")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
@@ -125,11 +128,12 @@ object VerifyTokenModal {
                       $(editApiDetailBtn).hide()
                     })("Edit API details")
                   ),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name",
-                    ^.placeholder := "Verification code", ^.value := S.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
+                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.required := true,
+                    ^.placeholder := "Verification code", "data-error".reactAttr := "Code can not be empty", ^.value := S.emailValidationModel.token, ^.onChange ==> t.backend.updateToken),
+                  <.div(^.className := "help-block with-errors")
                 ),
                 <.div(^.className := "pull-right")(
-                  <.button(^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", "Verify")
+                  <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", "Verify")
                 )
               ),
               <.div(bss.modal.footer)()

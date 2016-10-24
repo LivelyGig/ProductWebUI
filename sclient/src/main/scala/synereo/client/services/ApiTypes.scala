@@ -21,9 +21,8 @@ object ApiTypes {
     val UPDATE_ALIAS_LABEL_REQ = "updateAliasLabelsRequest"
     val ESTABLISH_CONNECTION_REQ = "establishConnectionRequest"
     val INTRODUCTION_CONFIRMATION_REQUEST = "introductionConfirmationRequest"
-    val FEEDEXPR = "feedExpr"
     val VERSION_INFO_REQUEST = "versionInfoRequest"
-    val CLOSE_SESSION_REQUEST ="closeSessionRequest"
+    val CLOSE_SESSION_REQUEST = "closeSessionRequest"
     val SEND_AMPS_REQUEST = "sendAmpsRequest"
   }
 
@@ -33,9 +32,9 @@ object ApiTypes {
     val CREATE_USER_ERROR = "createUserError"
     val SESSION_PONG = "sessionPong"
     val INTRODUCTION_NOTIFICATION = "introductionNotification"
-    val INTRODUCTION_CONFIRMATIONRESPONSE = "introductionConfirmationResponse"
+    val INTRODUCTION_CONFIRMATION_RESPONSE = "introductionConfirmationResponse"
     val CONNECT_NOTIFICATION = "connectNotification"
-    val BEGIN_INTRODUCTION = "beginIntroductionResponse"
+    val BEGIN_INTRODUCTION_RESPONSE = "beginIntroductionResponse"
     val INITIALIZE_SESSION = "initializeSessionResponse"
     val INITIALIZE_SESSION_STEP1_RESPONSE = "initializeSessionStep1Response"
     val INITIALIZE_SESSION_STEP2_RESPONSE = "initializeSessionStep2Response"
@@ -44,7 +43,6 @@ object ApiTypes {
     val SEND_AMPS_ERROR = "sendAmpsError"
     val BALANCE_CHANGED = "balanceChanged"
   }
-
 
 
 }

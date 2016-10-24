@@ -398,6 +398,7 @@ object HomeFeedList {
             Seq.empty[ReactElement]
           }
         ),
+        //homeFeedMediaList id is important see synereo_app.js
         <.ul(^.id := "homeFeedMediaList", ^.className := "media-list ", DashboardCSS.Style.homeFeedContainer)(
           props.messages map renderMessages
         )

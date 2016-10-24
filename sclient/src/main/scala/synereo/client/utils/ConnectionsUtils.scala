@@ -56,7 +56,7 @@ object ConnectionsUtils {
   }
 
   def getSenderReceivers(message: MessagePost): MessagePost = {
-//    println(s"message: $message")
+    //    println(s"message: $message")
     try {
       val senderUri = message.connections.last.target.split("/")(2)
       val receiversUri = message.connections.dropRight(1).map(_.target.split("/")(2))
@@ -73,7 +73,7 @@ object ConnectionsUtils {
           receivers = Seq(userCnxnModel) ++ allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
       }
     } catch {
-      case e:Exception =>
+      case e: Exception =>
         // dirty hack for json not containing the connections
         message.copy(sender = ConnectionsModel(name = "UNKNOWN", connection = getErrorConnection()), receivers = Seq(ConnectionsModel(name = "UNKNOWN", connection = getErrorConnection())))
     }
