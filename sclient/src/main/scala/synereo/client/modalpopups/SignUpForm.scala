@@ -86,7 +86,17 @@ object SignUpForm {
     }
 
     def updatePassword(e: ReactEventI) = {
+    //  val passregex = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$".r
+
       val value = e.target.value
+//         val updatedPassword =   passregex.findAllIn(value)
+//      updatedPassword.foreach( e =>
+//       e  match {
+//        case Some(s) =>
+//        case None =>
+//      )
+
+ //     }
       //      println(value)
       t.modState(s => s.copy(signUpModel = s.signUpModel.copy(password = value)))
     }
@@ -175,7 +185,7 @@ object SignUpForm {
           ),
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := S.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
-              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6"),
+              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := "Password", "data-minlength".reactAttr := "6", "pattern".reactAttr := "^([a-zA-Z+]+[0-9+]+[&@!#+]+)$"),
             <.div(/*, ^.className := "col-md-12 text-center",*/ SignupCSS.Style.passwordTextInfo ,^.className := "help-block")("Must be 6 characters long and include at least one number or symbol")
         ),
         <.div(^.className := "form-group")(
