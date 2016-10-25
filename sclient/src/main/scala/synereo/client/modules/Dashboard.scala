@@ -228,6 +228,7 @@ object HomeFeedList {
     .backend(new HomeFeedListBackend(_))
     .renderPS((t, props, state) => {
       def renderMessages(message: MessagePost) = {
+        //println(s"In dashboard ${message.sender.imgSrc}")
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-3 col-sm-2")(
@@ -237,7 +238,11 @@ object HomeFeedList {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
-                    <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                    if (message.connections.last.target.split("/")(2) == SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)) {
+                      <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                    } else {
+                      <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
+                    }
                   ),
                   <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                     <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(

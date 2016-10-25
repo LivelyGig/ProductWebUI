@@ -108,6 +108,7 @@ object ProfileImageUploaderForm {
         $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
         t.modState(s => s.copy(postNewImage = false))
       } else {
+        println(s"newmessage submitform  postUserUpdate call : state ${t.state.runNow().updateUserRequest}")
         ContentUtils.postUserUpdate(t.state.runNow().updateUserRequest)
         t.modState(s => s.copy(postNewImage = true))
       }
@@ -135,8 +136,10 @@ object ProfileImageUploaderForm {
               <.div(^.className := "row",
                 <.div(^.className := "col-md-12")(
                   if (S.updateUserRequest.jsonBlob.imgSrc.length < 2) {
+                    println(s"length less than 2 ${S.updateUserRequest.jsonBlob.imgSrc}")
                     <.img(^.src := P.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
+                    println(s"greater than 2  ${S.updateUserRequest.jsonBlob.imgSrc}")
                     <.img(^.src := S.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
                   }
 

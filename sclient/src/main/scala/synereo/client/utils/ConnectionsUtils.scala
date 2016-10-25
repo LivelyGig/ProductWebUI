@@ -66,6 +66,7 @@ object ConnectionsUtils {
         connection = ConnectionsUtils.getSelfConnnection(),
         name = "me",
         imgSrc = SYNEREOCircuit.zoom(_.user).value.imgSrc)
+//      println(s"imgSrc ${userCnxnModel.imgSrc}")
       if (userId == senderUri) {
         message.copy(sender = userCnxnModel, receivers = allCnxnModel.filter(e => receiversUri.contains(e.connection.target.split("/")(2))))
       } else {

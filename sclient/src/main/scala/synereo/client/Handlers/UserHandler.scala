@@ -34,8 +34,11 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false,balance = "",address = ""))
     }
 
-    case UpdateUserImage(imgSrc) =>
+    case UpdateUserImage(imgSrc) =>{
+      println(s"In Userhandler ${imgSrc}")
       updated(value.copy(imgSrc = imgSrc))
+    }
+
 
     case BalanceChanged(newBalance, address) => {
       updated(value.copy(balance = newBalance, address = address))

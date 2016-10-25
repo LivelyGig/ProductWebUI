@@ -283,12 +283,14 @@ object ContentUtils {
     var count = 1
     post()
     def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
-      case Success(response) =>
+      case Success(response) =>{
         logger.log.debug("user image update request successful")
         SYNEREOCircuit.dispatch(UpdateUserImage(req.jsonBlob.imgSrc))
+        println(s"In contentutils ${req}")
+      }
       case Failure(response) =>
         if (count == 3) {
-          //            logger.log.error("user update error")
+                     logger.log.error("user update error")
           SYNEREOCircuit.dispatch(ShowServerError(response.toString))
         } else {
           count = count + 1
