@@ -91,15 +91,20 @@ object ProfileImageUploaderForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      val reader = new FileReader()
-      reader.onload = (e: UIEvent) => {
-        val contents = reader.result.asInstanceOf[String]
-        val props = t.props.runNow()
-        val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
-        t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
+      if(value.size <= 1000000){
+        val reader = new FileReader()
+        reader.onload = (e: UIEvent) => {
+          val contents = reader.result.asInstanceOf[String]
+          val props = t.props.runNow()
+          val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
+          t.modState(s => s.copy( updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
+        }
+        reader.readAsDataURL(value)
+        $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#imageSize_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+      }else{
+        $("#imageSize_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
       }
-      reader.readAsDataURL(value)
-      $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
     }
 
     def submitForm(e: ReactEventI): Callback = {
@@ -136,10 +141,10 @@ object ProfileImageUploaderForm {
               <.div(^.className := "row",
                 <.div(^.className := "col-md-12")(
                   if (S.updateUserRequest.jsonBlob.imgSrc.length < 2) {
-                    println(s"length less than 2 ${S.updateUserRequest.jsonBlob.imgSrc}")
+//                    println(s"length less than 2 ${S.updateUserRequest.jsonBlob.imgSrc}")
                     <.img(^.src := P.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
                   } else {
-                    println(s"greater than 2  ${S.updateUserRequest.jsonBlob.imgSrc}")
+//                    println(s"greater than 2  ${S.updateUserRequest.jsonBlob.imgSrc}")
                     <.img(^.src := S.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
                   }
 
@@ -150,6 +155,9 @@ object ProfileImageUploaderForm {
                   <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
                   <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
                     "Please provide a picture to upload ... !!!"
+                  ),
+                  <.div(^.id := "imageSize_upload_error", ^.className := "hidden text-danger")(
+                    "Please provide a picture size less than or equal to 1 mb to upload ... !!!"
                   )
                 )
               ),
