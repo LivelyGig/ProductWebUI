@@ -4,7 +4,7 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar  on 3/11/2016.
+  * Created by mandar.k  on 3/11/2016.
   */
 object LoginCSS {
   val zero: Int = 0
@@ -390,6 +390,22 @@ object LoginCSS {
         float.right,
         marginTop(5.px)
       )
+    )
+    val modalTryAgainBtn = style(
+      textAlign.center,
+      &.hover(
+        color(c"#cc3300")
+      ),
+      backgroundColor(c"#ff806c"),
+      height(45.px),
+      width(142.px),
+      fontSize(30.px),
+      padding(0.px),
+      color(c"#fff"),
+      fontFamily :=! "karla",
+      float.right,
+      marginTop(25.px),
+      marginBottom(20.px)
     )
     val apiSubmitBtn = style(
       backgroundColor(c"#ff806c"),

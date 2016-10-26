@@ -3,7 +3,7 @@ package synereo.client.css
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 4/15/2016.
+  * Created by mandar.k on 4/15/2016.
   */
 object SignupCSS {
 

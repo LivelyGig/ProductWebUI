@@ -39,7 +39,7 @@ import synereo.client.components.Bootstrap._
 //      Modal(
 //        Modal.Props(
 //          // header contains a cancel button (X)
-//          header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
+//          header = hide => <.div(SignupCSS.Style.accountValidationSuccessHeading)(headerText),
 //          closed = () => formClosed(s, p)
 //        ),
 //        <.div(^.className := "row")(
@@ -86,7 +86,7 @@ object AccountValidationSuccess {
     }
   }
 
-  private val component = ReactComponentB[Props]("AccountValidationFailed")
+  private val component = ReactComponentB[Props]("AccountValidationSuccess")
     .initialState_P(p => State())
     .backend(new AccountValidationSuccessBackend(_))
     .renderPS((t, P, S) => {
@@ -95,7 +95,7 @@ object AccountValidationSuccess {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
+          header = hide => <.div(SignupCSS.Style.accountValidationSuccessHeading)(headerText),
           closed = () => t.backend.formClosed(S, P)
         ),
         <.div(^.className := "container-fluid")(

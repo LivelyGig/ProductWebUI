@@ -40,30 +40,30 @@ object LoginFailed {
   private val component = ReactComponentB[Props]("LoginFailed")
     .initialState_P(p => State())
     .backend(new LoginFailedBackend(_))
-      .renderPS((t,P,S)=>{
-        val headerText = "Login Failed"
-        Modal(
-          Modal.Props(
-            // header contains a cancel button (X)
-            header = hide => <.span(<.div()(headerText)),
-            closed = () => t.backend.formClosed(S, P)
-          ),
+    .renderPS((t, P, S) => {
+      val headerText = "Login Failed"
+      Modal(
+        Modal.Props(
+          // header contains a cancel button (X)
+          header = hide => <.h4()(headerText),
+          closed = () => t.backend.formClosed(S, P)
+        ),
 
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
-                <.div()(
-                  <.h3()(
-                    P.loginErrorMessage,/* "The username and password combination that you are using is not correct. Please check and try again."*/
-                    <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide, LoginCSS.Style.modalLoginBtn,^.marginBottom:="20.px")("Try again"))
-                  )
+        <.div(^.className := "row")(
+          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+            <.div(^.className := "row")(
+              <.div()(
+                <.h3()(
+                  P.loginErrorMessage,
+                  <.div(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide, LoginCSS.Style.modalTryAgainBtn)("Try again"))
                 )
               )
             )
-          ),
-          <.div(bss.modal.footer)()
-        )
-      })
+          )
+        ),
+        <.div(bss.modal.footer)()
+      )
+    })
     .build
 
   def apply(props: Props) = component(props)

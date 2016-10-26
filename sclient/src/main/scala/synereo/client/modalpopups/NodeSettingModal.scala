@@ -3,15 +3,22 @@ package synereo.client.modalpopups
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css._
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import java.util.UUID
-import shared.models.ServerModel
+
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
+import scala.concurrent.ExecutionContext.Implicits.global
+import boopickle.Default._
 import scala.scalajs.js
 import org.querki.jquery._
+import shared.Api
+import synereo.client.services.PlayAjaxClient
+import autowire._
+import shared.dtos.ServerModel
 
 
 /**
@@ -25,13 +32,26 @@ object NodeSettingModal {
 
   case class State(DSLCommLinkClient: Seq[ServerModel] = Nil, DSLEvaluator: Seq[ServerModel] = Nil,
                    DSLEvaluatorPreferredSupplier: Seq[ServerModel] = Nil, BFactoryCommLinkServer: Seq[ServerModel] = Nil,
-                   BFactoryCommLinkClient: Seq[ServerModel] = Nil, BFactoryEvaluator: Seq[ServerModel] = Nil)
+                   BFactoryCommLinkClient: Seq[ServerModel] = Nil, BFactoryEvaluator: Seq[ServerModel] = Nil, formSubmit: Boolean = false)
 
   class NodeSettingModalBackend(t: BackendScope[Props, State]) {
 
 
-    def closeForm = Callback {
+    def closeForm =  {
       jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def submitForm(e: ReactEventI) = {
+      e.preventDefault()
+      val state = t.state.runNow()
+      val serversToPost = state.BFactoryCommLinkClient.map(e => e.copy(serverType = "BFactoryCommLinkClient")) ++
+        state.BFactoryCommLinkServer.map(e => e.copy(serverType = "BFactoryCommLinkServer")) ++
+        state.BFactoryEvaluator.map(e => e.copy(serverType = "BFactoryEvaluator")) ++
+        state.DSLCommLinkClient.map(e => e.copy(serverType = "DSLCommLinkClient")) ++
+        state.DSLEvaluator.map(e => e.copy(serverType = "DSLEvaluator")) ++
+        state.DSLEvaluatorPreferredSupplier.map(e => e.copy(serverType = "DSLEvaluatorPreferredSupplier"))
+      PlayAjaxClient[Api].postServers(serversToPost).call()
+      t.modState(s => s.copy(formSubmit = true))
     }
 
     def modalClosed(state: State, props: Props): Callback = {
@@ -39,7 +59,7 @@ object NodeSettingModal {
     }
 
     def getNewServerModel(): ServerModel = {
-      ServerModel(UUID.randomUUID().toString.replaceAll("-", ""), "", true)
+      ServerModel(UUID.randomUUID().toString.replaceAll("-", ""), "", true, "")
     }
 
     def mounted(props: Props): Callback = {
@@ -48,7 +68,6 @@ object NodeSettingModal {
     }
 
     def addNewServer(id: String): Callback = {
-      println("in ad ")
       id match {
         case "DSLCommLinkClient" => t.modState(s => s.copy(DSLCommLinkClient = s.DSLCommLinkClient ++ Seq(getNewServerModel())))
         case "DSLEvaluator" => t.modState(s => s.copy(DSLEvaluator = s.DSLEvaluator ++ Seq(getNewServerModel())))
@@ -141,7 +160,7 @@ object NodeSettingModal {
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(headerText)),
           closed = () => t.backend.modalClosed(state, props)
         ),
-        <.div(^.className := "container-fluid")(
+        <.form(^.onSubmit ==> t.backend.submitForm)(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12")(
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, ^.id := "DSLCommLinkClient", ^.id := "DSLCommLinkClient",
@@ -282,13 +301,19 @@ object NodeSettingModal {
                 }
               ),
               <.div(^.className := "text-right")(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Submit"),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.closeForm, "Cancel")
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn /*,  ^.onClick --> t.backend.submitForm*/ , "Submit"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> Callback{t.backend.closeForm}, "Cancel")
               )
             )
           )
         )
       )
+    })
+    .componentDidUpdate(scope => Callback {
+      if (scope.currentState.formSubmit) {
+        scope.$.backend.closeForm
+      }
+      //      scope.$.backend.createHashtag(scope.currentState.postMessage.text)
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build

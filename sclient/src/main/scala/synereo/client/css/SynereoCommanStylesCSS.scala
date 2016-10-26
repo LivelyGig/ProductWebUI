@@ -4,7 +4,7 @@ import scalacss.Defaults._
 import scala.language.postfixOps
 
 /**
-  * Created by Mandar on 3/23/2016.
+  * Created by mandar.k on 3/23/2016.
   */
 object SynereoCommanStylesCSS {
 
@@ -40,6 +40,17 @@ object SynereoCommanStylesCSS {
       width(67.%%),
       media.maxWidth(617.px) -
         width(50.%%)
+    )
+    val changeLanguageDropdownContainer = style(
+      position.fixed,
+      right.`0`,
+      top.`0`
+    )
+    val changeLangBtn = style(
+      padding.`0`.important,
+      backgroundColor.transparent.important,
+      color.white,
+      border.`0`
     )
     val labelSelectizeNavbar = style(
       width(480.px),
@@ -228,6 +239,13 @@ object SynereoCommanStylesCSS {
       minHeight.auto.important,
       right.`0`.important,
       backgroundColor.white.important
+    )
+    val langSelectMenu = style(
+      //      width.auto.important,
+      //      minHeight.auto.important,
+      right.`0`.important,
+      left(-100.px)
+
     )
     val imgLogo = style(
       marginTop(5.px),

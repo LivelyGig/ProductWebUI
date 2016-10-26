@@ -11,7 +11,7 @@ import synereo.client.components._
 import synereo.client.css.{SynereoCommanStylesCSS, DashboardCSS}
 
 /**
-  * Created by Mandar on 4/21/2016.
+  * Created by mandar.k on 4/21/2016.
   */
 object TopMenuBar {
   @inline private def bss = GlobalStyles.bootstrapStyles

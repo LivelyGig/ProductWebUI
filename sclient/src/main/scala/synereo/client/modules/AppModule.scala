@@ -17,7 +17,7 @@ import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
 import org.scalajs.dom
-import org.scalajs.dom.raw.HashChangeEvent
+
 
 /**
   * Created by mandar.k on 5/24/2016.
@@ -84,13 +84,13 @@ object AppModule {
       t.modState(s => s.copy(showErrorModal = false))
     }
 
-
     def mounted(props: AppModule.Props) = Callback {
       logger.log.debug("app module mounted")
       val userSessionUri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       if (userSessionUri.length < 1) {
         SYNEREOCircuit.dispatch(LogoutUser())
       }
+
     }
 
     def didUpdate(): Callback = Callback {

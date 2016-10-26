@@ -28,7 +28,6 @@ object AmplifyPostModal {
   case class State(showAmplifyPostForm: Boolean = false)
 
 
-
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
@@ -46,13 +45,13 @@ object AmplifyPostModal {
     }
   }
 
-  val component = ReactComponentB[Props]("NewMessage")
+  val component = ReactComponentB[Props]("AmplifyPostModal")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
       <.div()(
-        Button(Button.Props(B.showAmplifyPostForm(), CommonStyle.default, P.addStyles, "", P.title, className = "")/*, P.reactChildElement*/),
+        Button(Button.Props(B.showAmplifyPostForm(), CommonStyle.default, P.addStyles, "", P.title, className = "") /*, P.reactChildElement*/),
         if (S.showAmplifyPostForm)
           AmplifyPostForm(AmplifyPostForm.Props(B.postAmplified, P.modalId))
         else
@@ -60,12 +59,7 @@ object AmplifyPostModal {
       )
     })
     .configure(OnUnmount.install)
-    .componentDidUpdate(scope => Callback {
-      //      $("body".asInstanceOf[js.Object]).removeClass("modal-open")
-      //      $("body".asInstanceOf[js.Object]).find(".modal-backdrop").remove()
-      //      $(".modal-backdrop".asInstanceOf[js.Object]).remove()
-
-    })
+    .componentDidUpdate(scope => Callback {})
     .build
 
   def apply(props: Props) = component(props)
@@ -108,7 +102,7 @@ object AmplifyPostForm {
     def updateAmount(e: ReactEventI) = {
       //val amount = e.target.value
       //val amount = s""+ "%06.4f".format(e.target.value.toString.toFloat*100000000)
-      val amount = s""+ (e.target.value.toString.toFloat*synereo.client.utils.AppUtils.BTC_SATOSHI)
+      val amount = s"" + (e.target.value.toString.toFloat * synereo.client.utils.AppUtils.BTC_SATOSHI)
       t.modState(state => state.copy(amount = amount))
     }
   }
