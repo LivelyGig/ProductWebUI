@@ -4,7 +4,6 @@ import diode.ModelR
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.SignupCSS
-import scala.scalajs.js
 import scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -60,7 +59,6 @@ object AccountValidationFailed {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.div()(
               <.div()(^.fontSize := "18.px", "Validation code you entered is incorrect, please check your email and enter valid code"),
-              //<.div()( <.button(^.tpe := "button",^.className:="btn",   ^.onClick-->hide )("Try again"))
               <.div(^.className := "pull-right")(
                 <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("TRY_AGAIN").toString)
               )

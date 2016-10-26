@@ -5,7 +5,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -16,7 +15,6 @@ import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.sessionitems.SessionItems
-
 import scala.scalajs.js
 
 //scalastyle:off
@@ -113,8 +111,8 @@ object SignUpForm {
       e.preventDefault()
       val state = t.state.runNow()
       window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
-      val SignUp: js.Object = "#SignUp"
-      if ($(SignUp).hasClass("disabled"))
+      val signUpBtnId: js.Object = "#signUpBtnId"
+      if ($(signUpBtnId).hasClass("disabled"))
         t.modState(s => s.copy(addNewUser = false))
       else
         t.modState(s => s.copy(addNewUser = true))
@@ -207,7 +205,7 @@ object SignUpForm {
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "SignUp", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hideModal, state.lang.selectDynamic("SIGN_UP").toString)
+                <.button(^.tpe := "submit", ^.id := "signUpBtnId", SignupCSS.Style.signUpBtn, ^.className := "btn",  state.lang.selectDynamic("SIGN_UP").toString)
               )
             )
           ),

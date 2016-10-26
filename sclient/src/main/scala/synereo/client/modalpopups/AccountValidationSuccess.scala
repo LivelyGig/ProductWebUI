@@ -95,7 +95,7 @@ object AccountValidationSuccess {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.div(SignupCSS.Style.accountValidationSuccessHeading)(headerText),
+          header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
           closed = () => t.backend.formClosed(S, P)
         ),
         <.div(^.className := "container-fluid")(

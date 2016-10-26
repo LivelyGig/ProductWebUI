@@ -196,7 +196,7 @@ object LoginForm {
                 <.div(LoginCSS.Style.loginFormInputText)(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Bruh, that email address is invalid",
-                    ^.placeholder := state.lang.selectDynamic("USERNAME").toString, "data-error".reactAttr := "Username is required", "ref".reactAttr := "", ^.value := state.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
+                    ^.placeholder := state.lang.selectDynamic("EMAIL").toString, "data-error".reactAttr := "Email is required", "ref".reactAttr := "", ^.value := state.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 <.div(LoginCSS.Style.loginFormInputText)(

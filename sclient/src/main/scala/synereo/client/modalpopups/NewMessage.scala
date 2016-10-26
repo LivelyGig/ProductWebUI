@@ -122,21 +122,18 @@ object NewMessageForm {
     def mounted(): Callback = {
       val props = t.props.runNow()
       if (props.replyPost) {
-        //        println("In replyPost")
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}")))
 
       } else {
-//        props.messagePost.receivers = Nil
-        //        println("In forwardPost")
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject = props.messagePost.postContent.subject)))
       }
     }
 
-    def willUnmount(): Callback = Callback {
-      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
-    }
+//    def willUnmount(): Callback = Callback {
+//      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
+//    }
 
     /**
       *
@@ -234,8 +231,8 @@ object NewMessageForm {
             ),
             <.div(^.className := "row")(
               <.div(^.id := S.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize,Option(0),P.messagePost.receivers,P.replyPost,
-                  enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty))//,
+                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), P.messagePost.receivers, P.replyPost,
+                  enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
               <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
@@ -282,7 +279,7 @@ object NewMessageForm {
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
               )
-            ) //                <.div(bss.modal.footer)
+            )
           )
         )
       )
@@ -294,7 +291,7 @@ object NewMessageForm {
         scope.$.backend.hideModal
       }
     })
-    .componentWillUnmount(scope => scope.backend.willUnmount())
+//    .componentWillUnmount(scope => scope.backend.willUnmount())
     .build
 
   def apply(props: Props) = component(props)

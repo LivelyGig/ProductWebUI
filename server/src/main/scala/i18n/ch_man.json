@@ -8,7 +8,7 @@
   "SIGN_OUT": "退出",
   "LOGIN": "登录",
   "EDIT_API_DETAILS": "编辑API详细信息",
-  "USERNAME": "用户名",
+  "EMAIL": "用户名",
   "PASSWORD": "密码",
   "DONT_HAVE_AN_ACCOUNT?": "没有帐户？",
   "VERIFY YOUR TOKEN": "验证您的令牌",

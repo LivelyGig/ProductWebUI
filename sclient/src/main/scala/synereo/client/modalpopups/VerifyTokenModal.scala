@@ -86,6 +86,7 @@ object VerifyTokenModal {
         t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}")).runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
+
     def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
@@ -111,43 +112,43 @@ object VerifyTokenModal {
           closed = () => t.backend.formClosed(state, props),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm, "data-toggle".reactAttr := "validator", ^.role := "form")(
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div()(
-                <.div(SignupCSS.Style.verificationMessageContainer)(
-                  <.h4(state.lang.selectDynamic("CHECK_EMAIL_REGISTERED").toString) /*,
+        <.div(^.className := "container-fluid")(
+          <.form(^.onSubmit ==> t.backend.submitForm, "data-toggle".reactAttr := "validator", ^.role := "form")(
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+                <.div()(
+                  <.div(SignupCSS.Style.verificationMessageContainer)(
+                    <.h4(state.lang.selectDynamic("CHECK_EMAIL_REGISTERED").toString) /*,
                   <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")*/
-                ),
-                <.div(SignupCSS.Style.verificationMessageContainer)(
-                  <.div(LoginCSS.Style.loginFormInputText, LoginCSS.Style.apiDetailsContainer)(
-                    <.div(^.id := "addLabel", ^.className := "collapse")(
-                      <.div(^.className := "input-group")(
-                        // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
-                        <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
-                          ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := state.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
-                        <.div(^.className := "help-block with-errors"),
-                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
-                        <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
-                          $(editApiDetailBtn).show()
-                        })(Icon.check)
-                      )
-                    ),
-                    <.button(^.id := "editApiDetailBtn", ^.`type` := "button", LoginCSS.Style.editApiDetailBtn, ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
-                      $(editApiDetailBtn).hide()
-                    })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
                   ),
-                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.required := true,
-                    ^.placeholder := state.lang.selectDynamic("VERIFICATION_CODE").toString, ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
-                ),"data-error".reactAttr := "Code can not be empty", ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken),
-                  <.div(^.className := "help-block with-errors")
-                ),
-                <.div(^.className := "pull-right")(
-                  <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn",state.lang.selectDynamic("VERIFY").toString)
-                )
+                  <.div(SignupCSS.Style.verificationMessageContainer)(
+                    <.div(LoginCSS.Style.loginFormInputText, LoginCSS.Style.apiDetailsContainer)(
+                      <.div(^.id := "addLabel", ^.className := "collapse")(
+                        <.div(^.className := "input-group")(
+                          // <.label(LoginCSS.Style.loginFormLabel)("API Server"),
+                          <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "apiserver", ^.className := "form-control",
+                            ^.placeholder := "API-Server", "data-error".reactAttr := "Server URL is required", "ref".reactAttr := "", ^.value := state.apiURL, ^.onChange ==> t.backend.updateAPIURL, ^.required := true),
+                          <.div(^.className := "help-block with-errors"),
+                          <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick ==> t.backend.closeAPITextbox)(Icon.times),
+                          <.span(^.className := "input-group-addon", ^.`type` := "button", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.className := "btn", ^.onClick --> Callback {
+                            $(editApiDetailBtn).show()
+                          })(Icon.check)
+                        )
+                      ),
+                      <.button(^.id := "editApiDetailBtn", ^.`type` := "button", LoginCSS.Style.editApiDetailBtn, ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
+                        $(editApiDetailBtn).hide()
+                      })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
+                    ),
+                    <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.required := true,
+                      ^.placeholder := state.lang.selectDynamic("VERIFICATION_CODE").toString, ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
+                  ), "data-error".reactAttr := "Code can not be empty", ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken),
+                <.div(^.className := "help-block with-errors")
               ),
-              <.div(bss.modal.footer)()
-            )
+              <.div(^.className := "pull-right")(
+                <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", state.lang.selectDynamic("VERIFY").toString)
+              )
+            ),
+            <.div(bss.modal.footer)()
           )
         )
       )

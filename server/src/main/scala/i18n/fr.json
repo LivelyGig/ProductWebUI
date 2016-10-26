@@ -8,7 +8,7 @@
   "SIGN_OUT": "Se déconnecter",
   "LOGIN": "S'identifier",
   "EDIT_API_DETAILS": "Modifier les détails de l'API",
-  "USERNAME": "Nom d'utilisateur",
+  "EMAIL": "Nom d'utilisateur",
   "PASSWORD": "mot de passe",
   "DONT_HAVE_AN_ACCOUNT?": "Ne pas avoir un compte?",
   "VERIFY YOUR TOKEN": "vérifier votre jeton",

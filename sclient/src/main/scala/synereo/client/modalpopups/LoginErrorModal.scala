@@ -3,8 +3,6 @@ package synereo.client.modalpopups
 import diode.ModelR
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
-import synereo.client.css.SynereoCommanStylesCSS
-
 import synereo.client.css.{SynereoCommanStylesCSS}
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
@@ -59,19 +57,20 @@ object LoginErrorModal {
 
           closed = () => t.backend.modalClosed(state, props)
         ),
-
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row")(
-              <.div()(
-                <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(props.loginError)
-              ),
-              <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 text-center")(
-                    <.div()(
-                      <.h5(state.lang.selectDynamic("API_HOST_UNREACHABLE").toString),
-                      <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close")
+        <.div(^.className := "container-fluid")(
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div(^.className := "row")(
+                <.div()(
+                  <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(props.loginError)
+                ),
+                <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
+                  <.div(^.className := "row")(
+                    <.div(^.className := "col-md-12 text-center")(
+                      <.div()(
+                        <.h5(state.lang.selectDynamic("API_HOST_UNREACHABLE").toString),
+                        <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close")
+                      )
                     )
                   )
                 )
@@ -80,7 +79,6 @@ object LoginErrorModal {
           )
         )
       )
-
     })
     .componentDidMount(scope => scope.backend.mounted())
     .build
