@@ -6,6 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -15,13 +16,14 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
 import org.widok.moment.Moment
-import shared.dtos.LabelPost
+import shared.dtos.{JsonBlob, LabelPost}
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
 import diode.AnyAction._
+
 import scala.scalajs.js
 
 //scalastyle:off
@@ -174,13 +176,18 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      //    println(s"value of img = ${value.size}")
-      val reader = new FileReader()
-      reader.onload = (e: UIEvent) => {
-        val contents = reader.result.asInstanceOf[String]
-        t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
+      if(value.size <= 5000000){
+        val reader = new FileReader()
+        reader.onload = (e: UIEvent) => {
+          val contents = reader.result.asInstanceOf[String]
+          t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
+        }
+        reader.readAsDataURL(value)
+        $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#imageSize_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+      }else{
+        $("#imageSize_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
       }
-      reader.readAsDataURL(value)
     }
 
     def fromSelecize(): Callback = Callback {}
@@ -277,7 +284,13 @@ object NewMessageForm {
                 <.div(^.className := "pull-left")(
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc)
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
+                  <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                    "Please provide a picture/file to upload ... !!!"
+                  ),
+                  <.div(^.id := "imageSize_upload_error", ^.className := "hidden text-danger")(
+                    "Please provide a picture/file size less than or equal to 5 mb to upload ... !!!"
+                  )
                 ),
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
                 <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
