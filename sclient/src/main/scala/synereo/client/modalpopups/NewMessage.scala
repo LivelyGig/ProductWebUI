@@ -133,9 +133,9 @@ object NewMessageForm {
       }
     }
 
-//    def willUnmount(): Callback = Callback {
-//      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
-//    }
+    //    def willUnmount(): Callback = Callback {
+    //      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
+    //    }
 
     /**
       *
@@ -171,9 +171,13 @@ object NewMessageForm {
       t.modState(state => state.copy(tags = ListWithTagsDeleted))
     }
 
+    def clearImage(e: ReactEventI) = {
+      t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = "")))
+    }
+
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      if(value.size <= 5000000){
+      if (value.size <= 5000000) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
@@ -182,7 +186,7 @@ object NewMessageForm {
         reader.readAsDataURL(value)
         $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
         $("#imageSize_upload_error".asInstanceOf[js.Object]).addClass("hidden")
-      }else{
+      } else {
         $("#imageSize_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
       }
     }
@@ -279,9 +283,9 @@ object NewMessageForm {
               ),
               <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
                 <.div(^.className := "pull-left")(
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, SynereoCommanStylesCSS.Style.featureHide, <.span(Icon.camera)),
+                  <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
                     "Please provide a picture/file to upload ... !!!"
                   ),
@@ -304,7 +308,7 @@ object NewMessageForm {
         scope.$.backend.hideModal
       }
     })
-//    .componentWillUnmount(scope => scope.backend.willUnmount())
+    //    .componentWillUnmount(scope => scope.backend.willUnmount())
     .build
 
   def apply(props: Props) = component(props)
