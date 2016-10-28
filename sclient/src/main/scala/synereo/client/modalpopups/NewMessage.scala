@@ -5,7 +5,7 @@ import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
-import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{NewMessageCSS}
 
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -16,13 +16,14 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
 import org.widok.moment.Moment
-import shared.dtos.{JsonBlob, LabelPost}
+import shared.dtos.{LabelPost}
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
 import diode.AnyAction._
+import diode.ModelR
 
 import scala.scalajs.js
 
@@ -84,7 +85,8 @@ object NewMessageForm {
                    postNewMessage: Boolean = false,
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
                    labelsSelectizeInputId: String = "labelsSelectizeInputId",
-                   tags: Seq[String] = Seq())
+                   tags: Seq[String] = Seq(),
+                   lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   private val userProxy = SYNEREOCircuit.connect(_.user)
 
@@ -97,6 +99,10 @@ object NewMessageForm {
       val value = e.target.value
       SYNEREOCircuit.dispatch(SetPreventNavigation())
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
+    }
+
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
     def updateContent(e: ReactEventI) = {
@@ -123,6 +129,7 @@ object NewMessageForm {
 
     def mounted(): Callback = {
       val props = t.props.runNow()
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       if (props.replyPost) {
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}")))
@@ -132,10 +139,6 @@ object NewMessageForm {
           subject = props.messagePost.postContent.subject)))
       }
     }
-
-    //    def willUnmount(): Callback = Callback {
-    //      //      dom.window.removeEventListener("beforeunload", setWarningsBeforeUnload, useCapture = true)
-    //    }
 
     /**
       *
@@ -225,14 +228,14 @@ object NewMessageForm {
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new MessagePostContent()))
     .backend(new NewMessageBackend(_))
-    .renderPS((t, P, S) => {
-      val headerText = P.header
+    .renderPS((t, props, state) => {
+      val headerText = props.header
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => t.backend.formClosed(S, P),
+          closed = () => t.backend.formClosed(state, props),
           id = "newMessage"
         ),
         <.form(^.onSubmit ==> t.backend.submitForm)(
@@ -241,33 +244,33 @@ object NewMessageForm {
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
             ),
             <.div(^.className := "row")(
-              <.div(^.id := S.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(S.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), P.messagePost.receivers, P.replyPost,
+              <.div(^.id := state.connectionsSelectizeInputId)(
+                ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
-              <.div(^.id := "cnxnError", ^.className := "hidden text-danger", "Please provide atleast 1 Connection... !!!"),
-              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := S.labelsSelectizeInputId)(
-                LabelsSelectize(LabelsSelectize.Props(S.labelsSelectizeInputId))
+              <.div(^.id := "cnxnError", ^.className := "hidden text-danger",
+                state.lang.selectDynamic("PROVIDE_ATLEAST_ONE_CONNECTION").toString),
+              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId)(
+                LabelsSelectize(LabelsSelectize.Props(state.labelsSelectizeInputId))
               ),
               <.div()(
-                <.textarea(^.rows := 1, ^.placeholder := "Title your post", ^.value := S.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
+                <.textarea(^.rows := 1, ^.placeholder := state.lang.selectDynamic("TITLE_YOUR_POST").toString, ^.value := state.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
               ),
               <.div()(
-                <.textarea(^.rows := 4, ^.placeholder := "Your thoughts. ", ^.value := S.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
+                <.textarea(^.rows := 4, ^.placeholder := state.lang.selectDynamic("YOUR_THOUGHTS").toString, ^.value := state.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
               )
             ),
             <.div(^.className := "row")(
               <.div()(
-                if (S.postMessage.imgSrc != "") {
-                  <.img(^.src := S.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
+                if (state.postMessage.imgSrc != "") {
+                  <.img(^.src := state.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
                 } else {
-                  <.div("")
+                  <.span()
                 }
-
               ),
               <.div(
                 <.ul(^.className := "list-inline")(
-                  for (tag <- S.tags.zipWithIndex) yield
+                  for (tag <- state.tags.zipWithIndex) yield
                     <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
                         <.li(/*^.textTransform := "uppercase", */ tag._1),
@@ -287,20 +290,21 @@ object NewMessageForm {
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
                   <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
-                    "Please provide a picture/file to upload ... !!!"
+                    state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),
                   <.div(^.id := "imageSize_upload_error", ^.className := "hidden text-danger")(
-                    "Please provide a picture/file size less than or equal to 5 mb to upload ... !!!"
+                    state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_LESS_THAN_FIVE_MB_UPLOAD").toString
                   )
                 ),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel"),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn, /*^.onClick --> hide, */ "Create")
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
+                  ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn,
+                  state.lang.selectDynamic("CREATE_POST").toString)
               )
             )
           )
         )
       )
-
     })
     .componentWillMount(scope => scope.backend.mounted())
     .componentDidUpdate(scope => Callback {
@@ -308,7 +312,6 @@ object NewMessageForm {
         scope.$.backend.hideModal
       }
     })
-    //    .componentWillUnmount(scope => scope.backend.willUnmount())
     .build
 
   def apply(props: Props) = component(props)

@@ -28,8 +28,6 @@ import scala.scalajs.js
 object ConfirmIntroReqModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  //  val introductionProxy = SYNEREOCircuit.connect(_.introduction)
-
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), reactChildElement: ReactTag = <.span(), title: String, introduction: Introduction)
 
   case class State(showNewIntroForm: Boolean = false)
@@ -46,7 +44,7 @@ object ConfirmIntroReqModal {
       t.modState(s => s.copy(showNewIntroForm = true))
     }
 
-    def introConfirmed(/*postMessage:PostMessage*/): Callback = {
+    def introConfirmed(): Callback = {
       t.modState(s => s.copy(showNewIntroForm = false))
     }
   }
@@ -71,27 +69,19 @@ object ConfirmIntroReqModal {
   def apply(props: Props) = component(props)
 }
 
-// #todo think about better way for getting data from selectize input
-// so that you don't have to pass the parentId explicitly
 object ConfirmIntroReqForm {
-  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback, header: String, introduction: Introduction)
 
-  case class State(confirmIntroReq: Boolean = false,lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
+  case class State(confirmIntroReq: Boolean = false, lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get  event target source and modify only accepted field of case class
   case class ConfirmIntroReqBackend(t: BackendScope[Props, State]) {
     def hide: Callback = Callback {
-      //      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val props = t.props.runNow()
       val introConfirmReq = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = false)
-      //      CoreApi.postIntroduction(introConfirmReq).onComplete {
-      //        case Success(response) =>
-      //
-      //      }
       SYNEREOCircuit.dispatch(UpdateIntroductionsModel(introConfirmReq))
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -106,50 +96,52 @@ object ConfirmIntroReqForm {
 
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
-      //      val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val props = t.props.runNow()
       val content = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
       SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
       t.modState(s => s.copy(confirmIntroReq = true))
     }
+
     def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
     def formClosed(state: ConfirmIntroReqForm.State, props: ConfirmIntroReqForm.Props): Callback = {
-      props.submitHandler(/*state.postMessage*/)
+      props.submitHandler()
     }
   }
 
 
-  private val component = ReactComponentB[Props]("PostNewMessage")
+  private val component = ReactComponentB[Props]("ConfirmIntroReqForm")
     .initialState_P(p => State())
     .backend(new ConfirmIntroReqBackend(_))
     .renderPS((t, P, S) => {
       val headerText = P.header
       Modal(
         Modal.Props(
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.div( s"${S.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
+          header = hide => <.div(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(s"${S.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
           closed = () => t.backend.formClosed(S, P),
           addStyles = Seq()
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm)(
-          <.div(^.className := "row", ^.fontSize := "0.8.em")(
-            <.div(^.className := "col-md-12")(
-              <.div(P.introduction.message),
-              <.div(
-                s"From : ${JSON.parse(P.introduction.introProfile).name.asInstanceOf[String]}", <.br,
-                "Date : Mon July 27 2016 ", <.br
-              )
-            ),
-            <.div()(
-              <.div(^.className := "text-right")(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/
-                  s"${S.lang.selectDynamic("ACCEPT").toString}"),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide,
-                  s"${S.lang.selectDynamic("REJECT").toString}")
+        <.div(^.className := "container-fluid")(
+          <.form(^.onSubmit ==> t.backend.submitForm)(
+            <.div(^.className := "row", ^.fontSize := "0.8.em")(
+              <.div(^.className := "col-md-12")(
+                <.div(P.introduction.message),
+                <.div(
+                  s"From : ${JSON.parse(P.introduction.introProfile).name.asInstanceOf[String]}", <.br,
+                  "Date : Mon July 27 2016 ", <.br
+                )
+              ),
+              <.div()(
+                <.div(^.className := "text-right")(
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/
+                    s"${S.lang.selectDynamic("ACCEPT").toString}"),
+                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide,
+                    s"${S.lang.selectDynamic("REJECT").toString}")
+                )
               )
             )
           )

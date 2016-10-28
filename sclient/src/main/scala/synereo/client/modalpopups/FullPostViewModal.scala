@@ -4,9 +4,7 @@ import diode.ModelR
 import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.{DashboardCSS, PostFullViewCSS, SignupCSS, SynereoCommanStylesCSS}
-
-import scala.util.{Failure, Success}
+import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import shared.models.MessagePost
@@ -78,12 +76,11 @@ object FullPostViewModal {
   private val component = ReactComponentB[Props]("FullPostViewModal")
     .initialState_P(p => State())
     .backend(new FullPostViewBackend(_))
-    .renderPS((t, P, S) => {
+    .renderPS((t, props, state) => {
       Modal(
         Modal.Props(
-          // header contains a cancel button (X)
           header = hide => <.span() /*(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.div(SignupCSS.Style.signUpHeading))*/ ,
-          closed = () => t.backend.modalClosed(S, P),
+          closed = () => t.backend.modalClosed(state, props),
           CSSClass = "full-post-view-modal"
         ),
         <.div(
@@ -92,9 +89,9 @@ object FullPostViewModal {
               <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer, ^.onClick --> t.backend.hide)(" "),
               <.div(^.className := "col-md-10 col-sm-10 col-xs-8")(
                 <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
-                  if (P.messages.postContent.imgSrc != "" && P.messages.postContent.imgSrc.size > 80659) {
+                  if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size > 80659) {
                     // getMessage = message
-                    <.img(^.id := "fullViewImage", ^.src := P.messages.postContent.imgSrc, PostFullViewCSS.Style.blogMainImage)
+                    <.img(^.id := "fullViewImage", ^.src := props.messages.postContent.imgSrc, PostFullViewCSS.Style.blogMainImage)
                   } else {
                     // getMessage = null
                     <.span("")
@@ -103,13 +100,13 @@ object FullPostViewModal {
                 ),
                 <.ul(^.id := "fullViewModalNavBar", ^.className := "nav nav-tabs", PostFullViewCSS.Style.postedUserInfoNavModal)(
                   <.li(PostFullViewCSS.Style.postedUserAvatarDiv)(
-                    <.img(^.src := P.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm, DashboardCSS.Style.verticalAlignInherit),
+                    <.img(^.src := props.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm, DashboardCSS.Style.verticalAlignInherit),
                     <.div(DashboardCSS.Style.userNameDescription)(
-                      <.span(s"From : ${P.fromSender}"),
-                      <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${P.toReceiver}"), <.br(),
+                      <.span(s"From : ${props.fromSender}"),
+                      <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${props.toReceiver}"), <.br(),
                       //                        <.span(MIcon.chevronRight),
                       //                        <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
-                      <.span("data-toggle".reactAttr := "tooltip", "title".reactAttr := P.messages.created, "data-placement".reactAttr := "right")(Moment(P.messages.created).format("LLL").toLocaleString)
+                      <.span("data-toggle".reactAttr := "tooltip", "title".reactAttr := props.messages.created, "data-placement".reactAttr := "right")(Moment(props.messages.created).format("LLL").toLocaleString)
                     )
                   ),
                   <.li(PostFullViewCSS.Style.smallLiContainerUserActions)(
@@ -141,23 +138,21 @@ object FullPostViewModal {
                   <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
                     <.div(^.className := "col-md-offset-1 col-md-9 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
                       <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
-                        <.h1(s"${P.messages.postContent.subject}") /*,
+                        <.h1(s"${props.messages.postContent.subject}") /*,
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/
                       ),
                       <.div(^.className := "row", PostFullViewCSS.Style.postDescription)(
-                        if (P.messages.postContent.imgSrc != "" && P.messages.postContent.imgSrc.size < 80659) {
+                        if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size < 80659) {
                           <.div(
                             <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
-                              s"${P.messages.postContent.text}"
+                              s"${props.messages.postContent.text}"
                             ),
                             <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
-                              <.img(^.src := P.messages.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder))
+                              <.img(^.src := props.messages.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder))
                           )
                         } else {
-                          s"${P.messages.postContent.text}"
+                          s"${props.messages.postContent.text}"
                         }
-
-
                       ) /*,
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsEditorsDiv)(
@@ -298,7 +293,7 @@ object FullPostViewModal {
               ),
               <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer, ^.onClick --> t.backend.hide)(
                 //                  <.span(MIcon.close, PostFullViewCSS.Style.closeIcon)
-                //  if (P.messages.postContent.imgSrc == "") {
+                //  if (props.messages.postContent.imgSrc == "") {
                 // getMessage = message
                 <.button(^.id := "modal-close-button", ^.tpe := "button", bss.close, PostFullViewCSS.Style.modalCloseButton, ^.onClick --> t.backend.hide,
                   <.span(PostFullViewCSS.Style.closeSIcon)(MIcon.apply("close", "24")), <.span(PostFullViewCSS.Style.closeLIcon)(MIcon.apply("close", "48"))

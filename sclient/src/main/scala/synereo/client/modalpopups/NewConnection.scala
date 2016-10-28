@@ -9,6 +9,8 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon._
 import synereo.client.css._
 import diode.AnyAction._
+import diode.ModelR
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -18,10 +20,11 @@ import japgolly.scalajs.react.{Callback, _}
 import org.querki.jquery._
 import shared.models.ConnectionsModel
 import synereo.client.components.{ConnectionsSelectize, _}
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.utils.{ConnectionsUtils, ContentUtils}
 import synereo.client.components.Bootstrap._
-import synereo.client.handlers.{SetPreventNavigation}
+import synereo.client.handlers.SetPreventNavigation
+
 import scala.scalajs.js
 
 // scalastyle:off
@@ -50,19 +53,18 @@ object NewConnection {
     }
   }
 
-  val component = ReactComponentB[Props]("Connections")
+  val component = ReactComponentB[Props]("NewConnection")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(/*ProjectCSS.Style.displayInitialbtn*/)(
+      <.div(
         Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), P.title),
-        if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, "Introduce Connections"))
+        if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, P.title))
         else
           Seq.empty[ReactElement]
       )
     })
-    //  .componentDidMount(scope => scope.backend.mounted(scope.props))
     .configure(OnUnmount.install)
     .build
 
@@ -70,15 +72,20 @@ object NewConnection {
 }
 
 object ConnectionsForm {
-  // shorthand for styles
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: () => Callback, header: String)
+  case class Props(submitHandler: () => Callback,
+                   header: String)
 
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(),
-                   establishConnection: EstablishConnection = EstablishConnection(), introduceUsers: Boolean = true,
-                   chkCnxnNewUser: Boolean = true, chkCnxnExstUser: Boolean = false, agentUid: String = "", userName: String = "")
+                   establishConnection: EstablishConnection = EstablishConnection(),
+                   introduceUsers: Boolean = true,
+                   chkCnxnNewUser: Boolean = true,
+                   chkCnxnExstUser: Boolean = false,
+                   agentUid: String = "",
+                   userName: String = "",
+                   lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   val connectionSelectize = SYNEREOCircuit.connect(_.connections)
 
@@ -99,6 +106,7 @@ object ConnectionsForm {
     }
 
     def mounted(props: ConnectionsForm.Props): Callback = {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       val usr = SYNEREOCircuit.zoom(_.user).value.name
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
       t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg)))
@@ -142,7 +150,6 @@ object ConnectionsForm {
       if (connections.length == 2) {
         val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
           sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
-        //        SYNEREOCircuit.dispatch(PostNewConnection(content))
         ContentUtils.postNewConnection(content)
         t.modState(s => s.copy(postConnection = true))
       } else {
@@ -163,7 +170,6 @@ object ConnectionsForm {
           val content = state.establishConnection.copy(sessionURI = uri,
             aURI = ConnectionsUtils.getSelfConnnection().source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
-          //          SYNEREOCircuit.dispatch(PostNewConnection(content))
           ContentUtils.postNewConnection(content)
           t.modState(s => s.copy(postConnection = true))
       }
@@ -173,16 +179,14 @@ object ConnectionsForm {
       e.preventDefault()
       val state = t.state.runNow()
       if (state.introduceUsers) {
-        introduceTwoUsers
+        introduceTwoUsers()
       }
       else {
-        establishConnection
+        establishConnection()
       }
     }
 
     def formClosed(state: ConnectionsForm.State, props: ConnectionsForm.Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
-      //      println(state.postConnection)
       props.submitHandler()
     }
 
@@ -198,41 +202,41 @@ object ConnectionsForm {
       t.modState(s => s.copy(agentUid = value))
     }
 
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
+
   }
 
   private val component = ReactComponentB[Props]("PostConnections")
     .initialState_P(p => State())
     .backend(new ConnectionsFormBackend(_))
-    .renderPS((t, P, S) => {
-
-      val headerText = P.header
+    .renderPS((t, props, state) => {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(props.header)),
           // this is called after the modal has been hidden (animation is completed)
-          closed = () => t.backend.formClosed(S, P)
+          closed = () => t.backend.formClosed(state, props)
         ),
         <.form(^.onSubmit ==> t.backend.submitForm)(
           <.div(^.className := "container-fluid")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := S.chkCnxnNewUser, ^.onChange ==> t.backend.chkCnxnExstandOther),
-                  " Introduce your existing connections to each other."), <.br(),
-                <.div(^.marginLeft := "15px", (!S.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
+                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := state.chkCnxnNewUser, ^.onChange ==> t.backend.chkCnxnExstandOther),
+                  state.lang.selectDynamic("INTRODUCE_YOUR_EXISTING_CONNECTIONS_TO_EACH_OTHER").toString), <.br(),
+                <.div(^.marginLeft := "15px", (!state.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
                   <.div(<.h5("Connections:")),
-                  <.div(^.id := s"${S.selectizeInputId}")(
-                    //  SYNEREOCircuit.connect(_.connections)(conProxy => ConnectionsSelectize(ConnectionsSelectize.Props(conProxy, s"${s.selectizeInputId}")))
-                    ConnectionsSelectize(ConnectionsSelectize.Props(s"${S.selectizeInputId}", t.backend.fromSelecize, Option(2)))
+                  <.div(^.id := s"${state.selectizeInputId}")(
+                    ConnectionsSelectize(ConnectionsSelectize.Props(s"${state.selectizeInputId}", t.backend.fromSelecize, Option(2)))
                   ),
                   <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
-                  ("Please provide Only 2 Connections... !!!"),
-                  <.div((!S.introduceUsers) ?= ConnectionsCSS.Style.hidden,
+                  (state.lang.selectDynamic("PLEASE_PROVIDE_ONLY_TWO_CONNECTIONS").toString),
+                  <.div((!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,
                     <.div(<.h5("Introduction:")),
                     <.div()(
                       <.textarea(^.rows := 6,
-                        ^.value := S.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
-                      //                  <.div(s.introConnections.aMessage)
+                        ^.value := state.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
                     )
 
                   )
@@ -240,8 +244,8 @@ object ConnectionsForm {
                 //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
                 // " Invite new user(s) to sign up and  connect with you."), <.br(),
 
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", /*^.checked := S.chkCnxnExstUser,*/ ^.onChange ==> t.backend.chkCnxnExstUser),
-                  " Introduce yourself to existing user(s)."), <.br()
+                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", /*^.checked := state.chkCnxnExstUser,*/ ^.onChange ==> t.backend.chkCnxnExstUser),
+                  state.lang.selectDynamic("INTRODUCE_YOURSELF_TO_EXISTING_USER").toString), <.br()
 
               ),
 
@@ -251,12 +255,12 @@ object ConnectionsForm {
               //              )
               //            }
               //            else if (s.introduceTwoUsers == true) {
-              if (S.chkCnxnExstUser == true) {
+              if (state.chkCnxnExstUser == true) {
                 <.div(^.marginLeft := "15px")(
                   <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
-                    ^.value := S.agentUid, ^.onChange ==> t.backend.updateAgentUid),
+                    ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
                   <.div(^.id := "agentFieldError", ^.className := "hidden")
-                  ("User with this uid is already added as your connection")
+                  (state.lang.selectDynamic("USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION").toString)
                 )
               }
               else

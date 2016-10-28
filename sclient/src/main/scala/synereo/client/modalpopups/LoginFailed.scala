@@ -4,22 +4,22 @@ package synereo.client.modalpopups
   * Created by mandar.k on 6/10/2016.
   */
 
-import synereo.client.components.{GlobalStyles, Icon}
+import diode.ModelR
+import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+import synereo.client.css.LoginCSS
 
-import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{RootModel, SYNEREOCircuit}
 
 import scala.scalajs.js
 
-
+//scalastyle:off
 object LoginFailed {
   // shorthand fo
   @inline private def bss = GlobalStyles.bootstrapStyles
@@ -33,9 +33,15 @@ object LoginFailed {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
+    def mounted(): Callback = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
+    }
+
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
 
     def formClosed(state: LoginFailed.State, props: LoginFailed.Props): Callback = {
-      // call parent handler with the new item and whether form was OK or cancelled
       props.submitHandler()
     }
 
@@ -44,30 +50,33 @@ object LoginFailed {
   private val component = ReactComponentB[Props]("LoginFailed")
     .initialState_P(p => State())
     .backend(new LoginFailedBackend(_))
-    .renderPS((t, P, S) => {
-      val headerText = "Login Failed"
+    .renderPS((t, props, state) => {
+      val headerText = state.lang.selectDynamic("ERROR").toString
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.h4()(headerText),
-          closed = () => t.backend.formClosed(S, P)
+          closed = () => t.backend.formClosed(state, props)
         ),
-
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div(^.className := "row")(
-              <.div()(
-                <.h3()(
-                  P.loginErrorMessage,
-                  <.div(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide, LoginCSS.Style.modalTryAgainBtn)("Try again"))
+        <.div(^.className := "container-fluid")(
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div(^.className := "row")(
+                <.div()(
+                  <.h3()(
+                    props.loginErrorMessage,
+                    <.div(<.button(^.tpe := "button", ^.className := "btn",
+                      ^.onClick --> t.backend.hide, LoginCSS.Style.modalTryAgainBtn)(state.lang.selectDynamic("TRY_AGAIN").toString))
+                  )
                 )
               )
             )
-          )
-        ),
-        <.div(bss.modal.footer)()
+          ),
+          <.div(bss.modal.footer)()
+        )
       )
     })
+    .componentDidMount(scope => scope.backend.mounted())
     .build
 
   def apply(props: Props) = component(props)

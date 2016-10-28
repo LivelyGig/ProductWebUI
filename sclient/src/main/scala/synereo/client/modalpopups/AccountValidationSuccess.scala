@@ -100,14 +100,14 @@ object AccountValidationSuccess {
   private val component = ReactComponentB[Props]("AccountValidationSuccess")
     .initialState_P(p => State())
     .backend(new AccountValidationSuccessBackend(_))
-    .renderPS((t, P, S) => {
+    .renderPS((t, props, state) => {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText =  s"${S.lang.selectDynamic("ACCOUNT_VALIDATION_SUCCESS").toString}"
+      val headerText = s"${state.lang.selectDynamic("ACCOUNT_VALIDATION_SUCCESS").toString}"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
-          closed = () => t.backend.formClosed(S, P)
+          closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
           <.div(^.className := "row")(
@@ -115,7 +115,8 @@ object AccountValidationSuccess {
               <.div(^.className := "row")(
                 <.div()(
                   <.div(^.className := "pull-right")(
-                    <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, "Login")
+                    <.button(^.tpe := "button", SignupCSS.Style.signUpBtn,
+                      ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("LOGIN").toString)
                   )
                 )
               )

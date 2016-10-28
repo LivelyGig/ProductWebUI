@@ -55,7 +55,7 @@ object RegistrationFailed {
     .initialState_P(p => State())
     .backend(new RegistrationFailedBackend(_))
     .renderPS((t, props, state) => {
-      val headerText = state.lang.selectDynammic("REGISTRATION_FAILED").toString
+      val headerText = state.lang.selectDynamic("REGISTRATION_FAILED").toString
       Modal(
         Modal.Props(
           // header contains a cancel button (X)

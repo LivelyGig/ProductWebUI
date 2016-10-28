@@ -37,8 +37,7 @@ object VerifyTokenModal {
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false,
                    portNumber: String = "9876",
                    apiURL: String = "",
-                   lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
-                  )
+                   lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class VerifyTokenModalBackend(t: BackendScope[Props, State]) {
 

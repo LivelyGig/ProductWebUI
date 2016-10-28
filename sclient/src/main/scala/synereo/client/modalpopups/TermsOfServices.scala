@@ -1,9 +1,7 @@
 package synereo.client.modalpopups
 
-import diode.react.ModelProxy
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{LoginCSS, UserProfileViewCSS}
@@ -37,7 +35,7 @@ object TermsOfServices {
       t.modState(s => s.copy(showTernsOfServicesForm = true))
     }
 
-    def addTermsOfServices(/*submitForm:PostMessage*/): Callback = {
+    def addTermsOfServices(): Callback = {
       t.modState(s => s.copy(showTernsOfServicesForm = false))
     }
   }
@@ -105,13 +103,16 @@ object TermsOfServicesForm {
             <.h4(^.className := "pull-left")(P.header)),
           closed = () => t.backend.formClosed(S, P)
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm)(
-          <.iframe(^.width:="100%", ^.src := "assets/terms_of_service.html"),
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12")(
-              <.div(^.className := "row",
-                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
-                  <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide, LoginCSS.Style.modalLoginBtn, ^.marginBottom := "20.px")("Back"))
+        <.div(^.className := "container-fluid")(
+          <.form(^.onSubmit ==> t.backend.submitForm)(
+            <.iframe(^.width := "100%", ^.src := "assets/terms_of_service.html"),
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12")(
+                <.div(^.className := "row",
+                  <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
+                    <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide,
+                      LoginCSS.Style.modalLoginBtn, ^.marginBottom := "20.px")("Back"))
+                  )
                 )
               )
             )

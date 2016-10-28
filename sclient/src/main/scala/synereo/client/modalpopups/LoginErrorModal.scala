@@ -15,6 +15,7 @@ import scala.scalajs.js
 /**
   * Created by mandar.k on 4/13/2016.
   */
+//scalastyle:off
 object LoginErrorModal {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
@@ -69,7 +70,8 @@ object LoginErrorModal {
                     <.div(^.className := "col-md-12 text-center")(
                       <.div()(
                         <.h5(state.lang.selectDynamic("API_HOST_UNREACHABLE").toString),
-                        <.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close")
+                        <.button(^.tpe := "button", ^.className := "btn btn-default",
+                          ^.onClick --> t.backend.closeForm)(state.lang.selectDynamic("CLOSE").toString)
                       )
                     )
                   )

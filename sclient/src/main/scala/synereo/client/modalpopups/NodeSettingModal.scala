@@ -24,13 +24,18 @@ import shared.dtos.ServerModel
   */
 //scalastyle:off
 object NodeSettingModal {
+
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback)
 
-  case class State(DSLCommLinkClient: Seq[ServerModel] = Nil, DSLEvaluator: Seq[ServerModel] = Nil,
-                   DSLEvaluatorPreferredSupplier: Seq[ServerModel] = Nil, BFactoryCommLinkServer: Seq[ServerModel] = Nil,
-                   BFactoryCommLinkClient: Seq[ServerModel] = Nil, BFactoryEvaluator: Seq[ServerModel] = Nil, formSubmit: Boolean = false)
+  case class State(DSLCommLinkClient: Seq[ServerModel] = Nil,
+                   DSLEvaluator: Seq[ServerModel] = Nil,
+                   DSLEvaluatorPreferredSupplier: Seq[ServerModel] = Nil,
+                   BFactoryCommLinkServer: Seq[ServerModel] = Nil,
+                   BFactoryCommLinkClient: Seq[ServerModel] = Nil,
+                   BFactoryEvaluator: Seq[ServerModel] = Nil,
+                   formSubmit: Boolean = false)
 
   class NodeSettingModalBackend(t: BackendScope[Props, State]) {
 

@@ -7,7 +7,6 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -87,7 +86,6 @@ object AmplifyPostForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val state = t.state.runNow()
       t.modState(state => state.copy(isAmplified = true))
     }
 
@@ -118,29 +116,29 @@ object AmplifyPostForm {
   private val component = ReactComponentB[Props]("AmplifyPostForm")
     .initialState_P(p => State())
     .backend(new AmplifyPostBackend(_))
-    .renderPS((t, P, S) => {
+    .renderPS((t, props, state) => {
 
-      val headerText = s"${S.lang.selectDynamic("AMPLIFY").toString}"
+      val headerText = s"${state.lang.selectDynamic("AMPLIFY").toString}"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.h4(^.className := "text-left", headerText),
-          closed = () => t.backend.modalClosed(S, P),
-          id = P.modalId
+          closed = () => t.backend.modalClosed(state, props),
+          id = props.modalId
         ),
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
               <.div()(
                 <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder :=s"${S.lang.selectDynamic("AMPS_TO_DONATE").toString}"
+                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder :=s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}"
                     , ^.onChange ==> t.backend.updateAmount)
                 ),
                 <.div(^.className := "text-right")(
                   <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal,
-                    s"${S.lang.selectDynamic("AMPLIFY_BTN").toString}"),
+                    s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal,
-                    s"${S.lang.selectDynamic("CANCEL_BTN").toString}")
+                    s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
                 )
               )
             )

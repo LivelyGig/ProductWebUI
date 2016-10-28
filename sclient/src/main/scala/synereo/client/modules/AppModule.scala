@@ -37,7 +37,7 @@ object AppModule {
   val connectionProxy = SYNEREOCircuit.connect(_.connections)
   val messagesProxy = SYNEREOCircuit.connect(_.messages)
   val introductionProxy = SYNEREOCircuit.connect(_.introduction)
-  val erroProxy = SYNEREOCircuit.connect(_.appRootModel)
+  val errorProxy = SYNEREOCircuit.connect(_.appRootModel)
   val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
   val searchContainer: js.Object = "#searchContainer"

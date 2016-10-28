@@ -47,7 +47,7 @@ object AccountValidationFailed {
     .initialState_P(p => State())
     .backend(new AccountValidationFailedBacked(_))
     .renderPS((t, props, state) => {
-      val headerText = "Error"
+      val headerText = state.lang.selectDynamic("ERROR").toString
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
