@@ -8,12 +8,16 @@ import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
+import synereo.client.services.SYNEREOCircuit
+
+import scala.scalajs.js
 
 
 object LoginFailed {
@@ -22,7 +26,7 @@ object LoginFailed {
 
   case class Props(submitHandler: () => Callback, loginErrorMessage: String = "")
 
-  case class State()
+  case class State(lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class LoginFailedBackend(t: BackendScope[Props, State]) {
 

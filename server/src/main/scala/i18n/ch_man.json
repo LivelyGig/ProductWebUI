@@ -34,5 +34,14 @@
   "GLOSEVAL_VERSION": "- Gloseval版本：",
   "SCALA_VERSION": "- Scala版本：",
   "MONGODB_VERSION": "- MongoDB版本：",
-  "RABBITMQ_VERSION": "- RabbitMQ版本： "
+  "RABBITMQ_VERSION": "- RabbitMQ版本： ",
+  "ACCOUNT_VALIDATION_SUCCESS" : "帐户验证成功",
+  "AMPLIFY" : "放大",
+  "AMPS_TO_DONATE" : "安培捐赠",
+  "AMPLIFY_BTN" : "放大",
+  "CANCEL_BTN" : "取消",
+  "INTRODUCTION_REQUEST": "介绍请求",
+  "ACCEPT" :"接受",
+  "REJECT" : "拒绝"
+
 }

@@ -1,11 +1,13 @@
 package synereo.client.modalpopups
 
+import diode.ModelR
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
 import synereo.client.components.Bootstrap.Modal
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -15,6 +17,7 @@ import org.querki.jquery._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
+import synereo.client.services.{RootModel, SYNEREOCircuit}
 
 /**
   * Created by mandar.k on 8/17/2016.
@@ -71,7 +74,7 @@ object AmplifyPostForm {
 
   case class Props(submitHandler: (String, String, Boolean) => Callback, senderAddress: String = "", modalId: String = "")
 
-  case class State(isAmplified: Boolean = false, amount: String = "")
+  case class State(isAmplified: Boolean = false, amount: String = "",lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class AmplifyPostBackend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -95,7 +98,12 @@ object AmplifyPostForm {
         false
     }
 
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
+
     def mounted(props: AmplifyPostForm.Props) = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       logger.log.debug("AmplifyPostForm mounted")
     }
 
@@ -112,7 +120,7 @@ object AmplifyPostForm {
     .backend(new AmplifyPostBackend(_))
     .renderPS((t, P, S) => {
 
-      val headerText = "Amplify"
+      val headerText = s"${S.lang.selectDynamic("AMPLIFY").toString}"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -125,11 +133,14 @@ object AmplifyPostForm {
             <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
               <.div()(
                 <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Amps to donate", ^.onChange ==> t.backend.updateAmount)
+                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder :=s"${S.lang.selectDynamic("AMPS_TO_DONATE").toString}"
+                    , ^.onChange ==> t.backend.updateAmount)
                 ),
                 <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal, "Amplify"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal, "Cancel")
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal,
+                    s"${S.lang.selectDynamic("AMPLIFY_BTN").toString}"),
+                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal,
+                    s"${S.lang.selectDynamic("CANCEL_BTN").toString}")
                 )
               )
             )

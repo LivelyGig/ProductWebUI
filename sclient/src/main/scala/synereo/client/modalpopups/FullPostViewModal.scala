@@ -1,9 +1,11 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.{GlobalStyles}
+import diode.ModelR
+import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SignupCSS, SynereoCommanStylesCSS}
+
 import scala.util.{Failure, Success}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -13,6 +15,8 @@ import org.querki.jquery._
 import org.widok.moment.Moment
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
+import synereo.client.services.{RootModel, SYNEREOCircuit}
+
 import scala.scalajs.js
 
 /**
@@ -24,7 +28,7 @@ object FullPostViewModal {
 
   case class Props(submitHandler: () => Callback, messages: MessagePost, fromSender: String = "", toReceiver: String = "")
 
-  case class State()
+  case class State(lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class FullPostViewBackend(t: BackendScope[Props, State]) {
     val fullPostViewContainer: js.Object = "#fullPostViewContainer"
@@ -33,7 +37,12 @@ object FullPostViewModal {
     val modalCloseButton: js.Object = "#modal-close-button"
     var scrollY: Int = 0
 
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
+
     def mounted() = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       //      println(s"Dashboard height ${$(dashboardContainerMain).height()}")
       //      $(fullPostViewContainer).height($(dashboardContainerMain).height() + 25)
 

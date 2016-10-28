@@ -25,6 +25,8 @@
   "CHECK_EMAIL_REGISTERED": "Check the email you have registered with us for the verification code.",
   "VERIFY": "Verify",
   "VERIFICATION_CODE": "Verification code",
+  "VALIDATION_CODE_IS_INCORRECT": "Validation code you entered is incorrect, please check your email and enter valid code",
+  "REGISTRATION_FAILED": "Registration Failed",
   "ERROR": "Error",
   "API_HOST_UNREACHABLE": "The Api host you provided is unreachable, Please provide a new one!",
   "TRY_AGAIN": "Try again",
@@ -34,5 +36,13 @@
   "GLOSEVAL_VERSION": "- Gloseval Version: ",
   "SCALA_VERSION": "- Scala Version: ",
   "MONGODB_VERSION": "- MongoDB Version: ",
-  "RABBITMQ_VERSION": "- RabbitMQ Version: "
+  "RABBITMQ_VERSION": "- RabbitMQ Version: ",
+  "ACCOUNT_VALIDATION_SUCCESS": "Account valiation success",
+  "AMPLIFY": "Amplify",
+  "AMPS_TO_DONATE": "Amps to donate",
+  "AMPLIFY_BTN": "Amplify",
+  "CANCEL_BTN": "Cancel",
+  "INTRODUCTION_REQUEST": "Introduction Request",
+  "ACCEPT": "Accept",
+  "REJECT": "Reject"
 }

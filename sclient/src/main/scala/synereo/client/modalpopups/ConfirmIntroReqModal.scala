@@ -4,8 +4,7 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
 import synereo.client.components.{GlobalStyles, _}
-import shared.dtos.{Introduction}
-import diode.AnyAction._
+import shared.dtos.Introduction
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -17,8 +16,10 @@ import shared.dtos.IntroConfirmReq
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.handlers.UpdateIntroductionsModel
-import synereo.client.services.SYNEREOCircuit
+import synereo.client.services.{RootModel, SYNEREOCircuit}
 import diode.AnyAction._
+import diode.ModelR
+import scala.scalajs.js
 
 /**
   * Created by mandar.k on 6/29/2016.
@@ -78,7 +79,7 @@ object ConfirmIntroReqForm {
 
   case class Props(submitHandler: () => Callback, header: String, introduction: Introduction)
 
-  case class State(confirmIntroReq: Boolean = false)
+  case class State(confirmIntroReq: Boolean = false,lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   //    toDo: Think of some better logic to reduce verbosity in accept on form submit or reject --> hide like get  event target source and modify only accepted field of case class
   case class ConfirmIntroReqBackend(t: BackendScope[Props, State]) {
@@ -100,6 +101,7 @@ object ConfirmIntroReqForm {
     }
 
     def mounted(props: ConfirmIntroReqForm.Props): Callback = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
     def submitForm(e: ReactEventI): react.Callback = {
@@ -110,6 +112,9 @@ object ConfirmIntroReqForm {
       val content = IntroConfirmReq(uri, alias = "alias", props.introduction.introSessionId, props.introduction.correlationId, accepted = true)
       SYNEREOCircuit.dispatch(UpdateIntroductionsModel(content))
       t.modState(s => s.copy(confirmIntroReq = true))
+    }
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
     def formClosed(state: ConfirmIntroReqForm.State, props: ConfirmIntroReqForm.Props): Callback = {
@@ -126,7 +131,7 @@ object ConfirmIntroReqForm {
       Modal(
         Modal.Props(
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.div("Introduction Request")),
+            <.div( s"${S.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
           closed = () => t.backend.formClosed(S, P),
           addStyles = Seq()
         ),
@@ -141,8 +146,10 @@ object ConfirmIntroReqForm {
             ),
             <.div()(
               <.div(^.className := "text-right")(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Accept"),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Reject")
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/
+                  s"${S.lang.selectDynamic("ACCEPT").toString}"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide,
+                  s"${S.lang.selectDynamic("REJECT").toString}")
               )
             )
           )

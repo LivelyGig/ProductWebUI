@@ -1,16 +1,18 @@
 package synereo.client.modalpopups
 
-import synereo.client.components.{GlobalStyles, Icon}
+import diode.ModelR
+import synereo.client.components.{GlobalStyles}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
-
-import scala.util.{Failure, Success}
+import synereo.client.css.{SignupCSS}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
+import synereo.client.services.{RootModel, SYNEREOCircuit}
+
+import scala.scalajs.js
 
 /**
   * Created by bhagyashree.b on 4/19/2016.
@@ -73,11 +75,20 @@ object AccountValidationSuccess {
 
   case class Props(submitHandler: () => Callback)
 
-  case class State()
+  case class State(lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class AccountValidationSuccessBackend(t: BackendScope[Props, State]) {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
+    }
+
+    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
+    }
+
+    def mounted(props: Props) = Callback {
+      SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
+
     }
 
     def formClosed(state: AccountValidationSuccess.State, props: AccountValidationSuccess.Props): Callback = {
@@ -91,7 +102,7 @@ object AccountValidationSuccess {
     .backend(new AccountValidationSuccessBackend(_))
     .renderPS((t, P, S) => {
       // log.debug(s"User is ${if (s.item.id == "") "adding" else "editing"} a todo")
-      val headerText = "Account Validation Success"
+      val headerText =  s"${S.lang.selectDynamic("ACCOUNT_VALIDATION_SUCCESS").toString}"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
@@ -114,6 +125,7 @@ object AccountValidationSuccess {
         )
       )
     })
+    .componentDidMount(scope => scope.backend.mounted(scope.props))
     .build
 
   def apply(props: Props) = component(props)

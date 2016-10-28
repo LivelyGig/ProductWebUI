@@ -55,17 +55,17 @@ object AccountValidationFailed {
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
-        <.div(^.className := "row")(
-          <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-            <.div()(
-              <.div()(^.fontSize := "18.px", "Validation code you entered is incorrect, please check your email and enter valid code"),
-              <.div(^.className := "pull-right")(
-                <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("TRY_AGAIN").toString)
-              )
-            ),
-            <.div(bss.modal.footer)()
+          <.div(^.className := "row")(
+            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
+              <.div()(
+                <.div()(^.fontSize := "18.px", state.lang.selectDynamic("VALIDATION_CODE_IS_INCORRECT").toString),
+                <.div(^.className := "pull-right")(
+                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("TRY_AGAIN").toString)
+                )
+              ),
+              <.div(bss.modal.footer)()
+            )
           )
-        )
         )
       )
     })
