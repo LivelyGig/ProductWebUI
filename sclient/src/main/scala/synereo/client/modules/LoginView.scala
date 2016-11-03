@@ -166,7 +166,7 @@ object LoginView {
       CoreApi.sessionPing(response.content.sessionURI).onComplete {
         case Success(res) =>
           SYNEREOCircuit.dispatch(LoginUser(UserModel(name = response.content.jsonBlob.getOrElse("name", ""),
-            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email, balance = response.content.balance, address = response.content.address /*, sessionUri = response.content.sessionURI*/)))
+            imgSrc = response.content.jsonBlob.getOrElse("imgSrc", ""), isLoggedIn = true, email = userModel.email, networkMode = response.content.bitcoinNetworkMode/*, sessionUri = response.content.sessionURI*/)))
           ContentUtils.processRes(res)
           SYNEREOCircuit.dispatch(CreateLabels(response.content.listOfLabels))
           //          SYNEREOCircuit.dispatch(AttachPinger())

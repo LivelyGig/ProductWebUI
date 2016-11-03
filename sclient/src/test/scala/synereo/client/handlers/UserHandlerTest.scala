@@ -14,7 +14,7 @@ import synereo.client.UnitTest
 class UserHandlerTest extends UnitTest("UserHandlerTest") {
   val handler = new UserHandler(new RootModelRW(UserModel()))
 
-  val newUserModel = UserModel("name", "email", "password", false, "imgSrc", "confirmPassword", true, "balance", "address")
+  val newUserModel = UserModel("name", "email", "password", false, "imgSrc", "confirmPassword", true, "10.00", "10.00", "address")
 
   "LoginUser" should "Login details" in {
 
@@ -48,10 +48,10 @@ class UserHandlerTest extends UnitTest("UserHandlerTest") {
   }
 
   "BalanceChanged" should "Updated AMP balance should not be null" in {
-    val result = handler.handle(BalanceChanged(newUserModel.balance, newUserModel.address))
+    val result = handler.handle(BalanceChanged(newUserModel.balanceAmp, newUserModel.balanceBtc, newUserModel.address))
     result match {
       case ModelUpdate(newValue) =>
-        assert(newValue.balance != null, newValue.address != null)
+        assert(newValue.balanceAmp != "0.00" && newValue.balanceAmp != "0.00" && newValue.address != "n/a")
       case _ => assert(true)
     }
   }

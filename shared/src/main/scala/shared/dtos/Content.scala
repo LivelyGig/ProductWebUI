@@ -39,8 +39,8 @@ case class ErrorResponse(reason: String) extends Content
 case class InitializeSession(agentURI: String) extends Content
 
 case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String],
-                                     listOfConnections: Seq[Connection], lastActiveLabel: String, balance: String="", address: String="",
-                                     jsonBlob: Map[String, String])
+                                     listOfConnections: Seq[Connection], lastActiveLabel: String,
+                                     jsonBlob: Map[String, String], bitcoinNetworkMode: String)
 
 case class InitializeSessionResponseCheck(M2: String)
 
@@ -100,7 +100,7 @@ case class VersionInfoResponse(glosevalVersion: String = "", scalaVersion: Strin
 
 case class CloseSessionRequest(sessionURI: String = "") extends Content
 
-case class BalanceChange(sessionURI: String , address: String , tx: String , prevBalance: String , newBalance: String )
+case class OmniBalanceResponse(sessionURI: String , amp: String, btc: String, address: String)
 
 case class SendAmpsRequest(sessionURI: String, amount: String, target: String) extends Content {
   require(amount.nonEmpty, "Amount of AMPs should be non-zero!")

@@ -125,16 +125,10 @@ object HomeFeedList {
         logger.log.debug(s"Sending $amount AMPs to $to")
         CoreApi.sendAmps(amount, to).onComplete {
           case Success(res) =>
-            Try(upickle.default.read[ApiResponse[SendAmpsResponse]](res)).toOption match {
-              case Some(v) => logger.log.debug(v.content.transaction)
-              case None =>
-                Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
-                  case Some(v) => logger.log.debug(v.content.reason)
-                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
-                }
-            }
+            if(res.contains("OK")) logger.log.debug(s"$amount AMPs were successfully sent.")
+            else logger.log.debug(s"Failed to parse the response on sending AMPs: $res.")
           case Failure(res) =>
-            logger.log.debug(s"sending AMPs failed: $res")
+            logger.log.debug(s"Sending AMPs failed: $res.")
         }
       }
       t.modState(s => s.copy(showAmplifyPostForm = false))
@@ -263,7 +257,7 @@ object HomeFeedList {
                     } else {
                       <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick ==> t.backend.amplifyPost)(
+                        ^.onClick --> t.backend.amplifyPost(message.sender.connection.target.split("/")(2)))(
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                       )
                     },
