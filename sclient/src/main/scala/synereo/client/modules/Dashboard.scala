@@ -238,7 +238,7 @@ object HomeFeedList {
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-1 pull-left")(
-                    if (message.connections.last.target.split("/")(2) == SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)) {
+                    if (message.sender.connection.target.split("/")(2) == SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)) {
                       <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                     } else {
                       <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
