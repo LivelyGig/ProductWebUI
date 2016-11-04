@@ -38,10 +38,10 @@ object ContentUtils {
     */
   def processRes(response: String): Seq[ResponseContent] = {
     // process response
-    val responseArray = upickle.json.read(response).arr.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
-    val balanceChangedResponse: Seq[String] = responseArray.filter(_.contains("balanceChanged"))
-    if(balanceChangedResponse.nonEmpty) {
-      val content = upickle.default.read[ApiResponse[BalanceChange]](balanceChangedResponse.head).content
+    val responseArray = upickle.json.read(response).arr.distinct.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
+    val omniBalanceResponse = responseArray.filter(_.contains("omniBalanceResponse"))
+    if(omniBalanceResponse.nonEmpty) {
+      val content = upickle.default.read[ApiResponse[OmniBalanceResponse]](omniBalanceResponse.head).content
       SYNEREOCircuit.dispatch(BalanceChanged(content.amp, content.btc, content.address))
     }
     val (cnxn, postContent, intro, cnctNot) = sortContent(responseArray)

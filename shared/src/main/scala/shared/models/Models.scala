@@ -66,11 +66,10 @@ case class UserModel(name: String = "",
                      imgSrc: String = "",
                      confirmPassword: String = "",
                      isAvailable:Boolean=true,
-                     balanceAMP: String = "",
-                     balanceBTC: String = "",
-                     address: String = "",
-                     networkMode: String = "TestNet",
-                     sessionUri: String = "")
+                     balanceAmp: String = "0.00",
+                     balanceBtc: String = "0.00",
+                     address: String = "n/a",
+                     networkMode: String = "TestNet")
 
 case class SignUpModel(email: String = "",
                        password: String = "",

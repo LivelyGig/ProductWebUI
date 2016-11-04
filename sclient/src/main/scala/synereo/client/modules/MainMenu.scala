@@ -180,12 +180,7 @@ object MainMenu {
                       "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                       <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                       //                        <.span(Icon.cogs),
-                      //<.span(model.balance)
-                      <.span(showNiceZeroBalance(model.balanceAMP) + " / " + showNiceZeroBalance(model.balanceBTC))
-//                        Try ("%06.4f".format((model.balance).toString.toFloat/synereo.client.utils.AppUtils.BTC_SATOSHI)) match {
-//                        case Success(a) => a
-//                        case Failure(b) => "0"
-//                      }  )
+                      <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
                     )
                   )
                 ),
@@ -254,6 +249,6 @@ object MainMenu {
     })
     .componentDidMount(scope => scope.backend.mounted())
     .build
-  def showNiceZeroBalance(b: String): String = if (b.equals("0E-8")) "0.00000000" else b
+
   def apply(props: Props) = MainMenu(props)
 }

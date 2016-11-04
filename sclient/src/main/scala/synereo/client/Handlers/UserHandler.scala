@@ -31,7 +31,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
       // todo: Cancel all subscribe request for all sessions
       //      window.sessionStorage.clear()
       window.location.href = "/"
-      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false, balanceAMP = "", balanceBTC = "",address = ""))
+      updated(UserModel(email = "", name = "", imgSrc = "", isLoggedIn = false, balanceAmp = "0.00", balanceBtc = "0.00", address = "n/a"))
     }
 
     case UpdateUserImage(imgSrc) =>{
@@ -41,7 +41,7 @@ class UserHandler[M](modelRW: ModelRW[M, UserModel]) extends ActionHandler(model
 
 
     case BalanceChanged(amp, btc, address) => {
-      updated(value.copy(balanceAMP = amp, balanceBTC = btc, address = address))
+      updated(value.copy(balanceAmp = amp, balanceBtc = btc, address = address))
     }
 
     //    case PostUserUpdate(req) =>

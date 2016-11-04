@@ -41,7 +41,7 @@ object ApiTypes {
     val EVAL_SUBSCRIBE_RESPONSE = "evalSubscribeResponse"
     val SEND_AMPS_RESPONSE = "sendAmpsResponse"
     val SEND_AMPS_ERROR = "sendAmpsError"
-    val BALANCE_CHANGED = "balanceChanged"
+    val OMNI_BALANCE_RESPONSE = "omniBalanceResponse"
   }
 
 

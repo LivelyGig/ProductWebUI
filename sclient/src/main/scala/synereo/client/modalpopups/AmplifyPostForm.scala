@@ -108,9 +108,7 @@ object AmplifyPostForm {
     }
 
     def updateAmount(e: ReactEventI) = {
-      //val amount = e.target.value
-      //val amount = s""+ "%06.4f".format(e.target.value.toString.toFloat*100000000)
-      val amount = s"" + (e.target.value.toString.toFloat * synereo.client.utils.AppUtils.BTC_SATOSHI)
+      val amount = e.target.value
       t.modState(state => state.copy(amount = amount))
     }
   }

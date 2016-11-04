@@ -49,10 +49,10 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
     val balChanged = MockData.balChanged
     contentUtils.processRes(balChanged)
     Then("the user root model is updated with the changed balance")
-    assert(SYNEREOCircuit.zoom(_.user.balanceAMP.nonEmpty).value)
+    assert(SYNEREOCircuit.zoom(_.user.balanceAmp.nonEmpty).value)
     And("the updated balance is same as the changed balance from response")
-    val apiResponse = upickle.default.read[Seq[ApiResponse[BalanceChange]]](balChanged)
-    assert(SYNEREOCircuit.zoom(_.user.balanceAMP).value == apiResponse(0).content.amp)
+    val apiResponse = upickle.default.read[Seq[ApiResponse[OmniBalanceResponse]]](balChanged)
+    assert(SYNEREOCircuit.zoom(_.user.balanceAmp).value == apiResponse(0).content.amp)
   }
   it should "extract add new connection" in {
     Given("response json contains connect notification")
