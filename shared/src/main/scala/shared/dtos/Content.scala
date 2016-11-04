@@ -40,7 +40,7 @@ case class InitializeSession(agentURI: String) extends Content
 
 case class InitializeSessionResponse(sessionURI: String, listOfAliases: Seq[String], defaultAlias: String, listOfLabels: Seq[String],
                                      listOfConnections: Seq[Connection], lastActiveLabel: String,
-                                     jsonBlob: Map[String, String], bitcoinNetworkMode: String)
+                                     jsonBlob: Map[String, String], bitcoinNetworkMode: String = "")
 
 case class InitializeSessionResponseCheck(M2: String)
 
