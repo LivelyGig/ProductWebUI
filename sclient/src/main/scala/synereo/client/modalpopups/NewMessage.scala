@@ -245,7 +245,7 @@ object NewMessageForm {
             ),
             <.div(^.className := "row")(
               <.div(^.id := state.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.replyPost,
+                ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender , props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
               <.div(^.id := "cnxnError", ^.className := "hidden text-danger",

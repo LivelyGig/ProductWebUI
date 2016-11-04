@@ -52,8 +52,8 @@ object ConnectionsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil, replyPost: Boolean = false,
-                   enableAllContacts: Boolean = false)
+  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil,
+                   sender: ConnectionsModel = ConnectionsModel(), replyPost: Boolean = false, enableAllContacts: Boolean = false)
 
   case class State(connections: Seq[ConnectionsModel] = Nil)
 
@@ -116,22 +116,31 @@ object ConnectionsSelectize {
     }
 
     def render(props: Props, state: State) = {
-
       if (props.replyPost == true) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple:=true, ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple := true, ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
           <.option(^.value := "")("Select"),
           for (receiver <- props.receivers) yield {
-            for ( connection <- state.connections  ; if receiver.connection == connection.connection  ) yield {
-                //println(s"connection matched${connection.name}")
-                <.option(^.value := upickle.default.write(connection.connection),
-                  ^.key := connection.connection.target, ^.selected := true)(
-                  if (connection.name.startsWith("@")) {
-                    s"${connection.name}"
-                  } else {
-                    s"@${connection.name}"
-                  })
-
+            for (connection <- state.connections; if receiver.connection == connection.connection) yield {
+              //              println(s"connection matched${connection.name}")
+              <.option(^.value := upickle.default.write(connection.connection),
+                ^.key := connection.connection.target, ^.selected := true)(
+                if (connection.name.startsWith("@")) {
+                  s"${connection.name}"
+                } else {
+                  s"@${connection.name}"
+                })
             }
+          },
+          if (props.sender != null && props.sender.name != "me") {
+            <.option(^.value := upickle.default.write(props.sender.connection),
+              ^.key := props.sender.connection.target, ^.selected := true)(
+              if (props.sender.name.startsWith("@")) {
+                s"${props.sender.name}"
+              } else {
+                s"@${props.sender.name}"
+              })
+          } else {
+            <.option()
           }
         )
 
