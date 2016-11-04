@@ -30,6 +30,7 @@ object AmplifyPostModal {
   case class State(showAmplifyPostForm: Boolean = false)
 
 
+
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
   }
 
@@ -86,6 +87,7 @@ object AmplifyPostForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
+      val state = t.state.runNow()
       t.modState(state => state.copy(isAmplified = true))
     }
 
