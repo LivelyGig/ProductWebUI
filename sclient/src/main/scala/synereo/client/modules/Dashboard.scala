@@ -119,22 +119,37 @@ object HomeFeedList {
       t.modState(state => state.copy(showAmplifyPostForm = true, senderAddress = senderAddress))
     }
 
+    /*    def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
+          logger.log.debug("postAmplified called ")
+          if (isAmplified) {
+            logger.log.debug(s"Sending $amount AMPs to $to")
+            CoreApi.sendAmps(amount, to).onComplete {
+              case Success(res) =>
+                Try(upickle.default.read[ApiResponse[SendAmpsResponse]](res)).toOption match {
+                  case Some(v) => logger.log.debug(v.content.transaction)
+                  case None =>
+                    Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
+                      case Some(v) => logger.log.debug(v.content.reason)
+                      case None => logger.log.debug("Failed to parse the response on sending AMPs")
+                    }
+                }
+              case Failure(res) =>
+                logger.log.debug(s"sending AMPs failed: $res")
+            }
+          }
+          t.modState(s => s.copy(showAmplifyPostForm = false))
+        }*/
+
     def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
       logger.log.debug("postAmplified called ")
       if (isAmplified) {
         logger.log.debug(s"Sending $amount AMPs to $to")
         CoreApi.sendAmps(amount, to).onComplete {
           case Success(res) =>
-            Try(upickle.default.read[ApiResponse[SendAmpsResponse]](res)).toOption match {
-              case Some(v) => logger.log.debug(v.content.transaction)
-              case None =>
-                Try(upickle.default.read[ApiResponse[ErrorResponse]](res)).toOption match {
-                  case Some(v) => logger.log.debug(v.content.reason)
-                  case None => logger.log.debug("Failed to parse the response on sending AMPs")
-                }
-            }
+            if (res.contains("OK")) logger.log.debug(s"$amount AMPs were successfully sent.")
+            else logger.log.debug(s"Failed to parse the response on sending AMPs: $res.")
           case Failure(res) =>
-            logger.log.debug(s"sending AMPs failed: $res")
+            logger.log.debug(s"Sending AMPs failed: $res.")
         }
       }
       t.modState(s => s.copy(showAmplifyPostForm = false))
@@ -170,15 +185,15 @@ object HomeFeedList {
     }
 
     def showPeekView(message: MessagePost): Callback = {
-//      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
-//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
-//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
-//        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
-//      } else {
-//        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
-//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
-//        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
-//      }
+      //      if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").hasClass("hidden")) {
+      //        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").addClass("hidden")
+      //        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").removeClass("hidden")
+      //        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /*+   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+      //      } else {
+      //        //$(rightPost).height($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).height() /* +   $(s"#collapse-post-${message.uid}".asInstanceOf[js.Object]).height()*/)
+      //        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#rightPost").addClass("hidden")
+      //        $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
+      //      }
 
       if ($(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").hasClass("hidden")) {
         $(s"#home-feed-card-${message.uid}".asInstanceOf[js.Object]).find("#collapsePost").removeClass("hidden")
@@ -193,25 +208,25 @@ object HomeFeedList {
       val state = t.state.runNow()
       getRightPost match {
         case SHOWLOVEPOST => {
-          if(state.showLovePost)
+          if (state.showLovePost)
             t.modState(s => s.copy(showLovePost = false, showSharePost = false, showCirclePost = false, showCommentPost = false))
           else
             t.modState(s => s.copy(showLovePost = true, showSharePost = false, showCirclePost = false, showCommentPost = false))
         }
         case SHOWCOMMENTPOST => {
-          if(state.showCommentPost)
+          if (state.showCommentPost)
             t.modState(s => s.copy(showCommentPost = false, showSharePost = false, showCirclePost = false, showLovePost = false))
           else
             t.modState(s => s.copy(showCommentPost = true, showSharePost = false, showCirclePost = false, showLovePost = false))
         }
         case SHOWCIRCLEPOST => {
-          if(state.showCirclePost)
+          if (state.showCirclePost)
             t.modState(s => s.copy(showCirclePost = false, showCommentPost = false, showLovePost = false, showSharePost = false))
           else
             t.modState(s => s.copy(showCirclePost = true, showCommentPost = false, showLovePost = false, showSharePost = false))
         }
         case SHOWSHAREPOST => {
-          if(state.showSharePost)
+          if (state.showSharePost)
             t.modState(s => s.copy(showSharePost = false, showCirclePost = false, showCommentPost = false, showLovePost = false))
           else
             t.modState(s => s.copy(showSharePost = true, showCirclePost = false, showCommentPost = false, showLovePost = false))
@@ -247,7 +262,7 @@ object HomeFeedList {
                   <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
                     <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
                       <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr :=
-                        (if(message.sender.name == "me")
+                        (if (message.sender.name == "me")
                           message.sender.connection.source.split("/")(2)
                         else
                           message.sender.connection.target.split("/")(2)),
@@ -263,7 +278,8 @@ object HomeFeedList {
                     } else {
                       <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick ==> t.backend.amplifyPost)(
+                        //                        ^.onClick ==> t.backend.amplifyPost)(
+                        ^.onClick --> t.backend.amplifyPost(message.sender.connection.target.split("/")(2)))(
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
                       )
                     },
@@ -335,7 +351,7 @@ object HomeFeedList {
                   <.div(^.className := "col-md-2",
                     <.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showLovePost"))
                   ),
-                  if (state.showLovePost)// <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)()
+                  if (state.showLovePost) // <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)()
                     <.div(
                       <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "10"),
                       <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
@@ -345,7 +361,7 @@ object HomeFeedList {
                     )
                   else <.div()
                 ),
-                <.div(^.className := "row", /*if (!state.showLovePost)*/ SynereoCommanStylesCSS.Style.marginTop20px/* else ^.marginTop := "0.px"*/)(
+                <.div(^.className := "row", /*if (!state.showLovePost)*/ SynereoCommanStylesCSS.Style.marginTop20px /* else ^.marginTop := "0.px"*/)(
                   <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   if (state.showCommentPost)
                     <.div(
