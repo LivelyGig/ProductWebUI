@@ -93,7 +93,7 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-      logger.log.info("new Image modal mounted")
+      logger.log.info("new image modal mounted")
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
@@ -103,6 +103,10 @@ object ProfileImageUploaderForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
+      if (value.`type` == "image/jpeg" || value.`type` == "image/png")
+        $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
+      else
+        $("#file-type-not-supported-error".asInstanceOf[js.Object]).removeClass("hidden")
       if (value.size <= 1000000) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
@@ -112,7 +116,7 @@ object ProfileImageUploaderForm {
           t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
         }
         reader.readAsDataURL(value)
-        $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#no-image-to-upload-error".asInstanceOf[js.Object]).addClass("hidden")
         $("#image-size-upload-error".asInstanceOf[js.Object]).addClass("hidden")
       } else {
         $("#image-size-upload-error".asInstanceOf[js.Object]).removeClass("hidden")
@@ -121,11 +125,17 @@ object ProfileImageUploaderForm {
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
+      if (!$("#no-image-to-upload-error".asInstanceOf[js.Object]).hasClass("hidden")
+        || !$("#file-type-not-supported-error".asInstanceOf[js.Object]).hasClass("hidden")
+        || !$("#image-size-upload-error".asInstanceOf[js.Object]).hasClass("hidden")
+      ) t.modState(s => s.copy(postNewImage = false))
       if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
-        $("#image_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
+        $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#image-size-upload-error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#no-image-to-upload-error".asInstanceOf[js.Object]).removeClass("hidden")
         t.modState(s => s.copy(postNewImage = false))
-      } else {
-        //        println(s"newmessage submitform  postUserUpdate call : state ${t.state.runNow().updateUserRequest}")
+      }
+      else {
         ContentUtils.postUserUpdate(t.state.runNow().updateUserRequest)
         t.modState(s => s.copy(postNewImage = true))
       }
@@ -136,7 +146,7 @@ object ProfileImageUploaderForm {
     }
   }
 
-  private val component = ReactComponentB[Props]("PostNewMessage")
+  private val component = ReactComponentB[Props]("ProfileImageUploaderForm")
     .initialState_P(p => State(new UpdateUserRequest()))
     .backend(new NewImgBackend(_))
     .renderPS((t, props, state) => {
@@ -162,12 +172,16 @@ object ProfileImageUploaderForm {
                 ),
                 <.div(^.className := "row",
                   <.div(^.className := "col-md-12")(
-                    <.input(^.`type` := "file", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
-                    <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                    <.input(^.`type` := "file", ^.id := "image-type-input", ^.accept := "image/*",
+                      ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
+                    <.div(^.id := "no-image-to-upload-error", ^.className := "hidden text-danger")(
                       state.lang.selectDynamic("PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD").toString
                     ),
                     <.div(^.id := "image-size-upload-error", ^.className := "hidden text-danger")(
                       state.lang.selectDynamic("PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD").toString
+                    ),
+                    <.div(^.id := "file-type-not-supported-error", ^.className := "hidden text-danger")(
+                      "only jpeg or png files can be uploaded... !!!"
                     )
                   )
                 ),
