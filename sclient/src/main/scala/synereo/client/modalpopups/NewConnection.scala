@@ -73,6 +73,7 @@ object NewConnection {
 
 object ConnectionsForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
+  val sendConnectionBtn: js.Object = "#sendConnectionBtn"
 
   case class Props(submitHandler: () => Callback,
                    header: String)
@@ -106,6 +107,7 @@ object ConnectionsForm {
     }
 
     def mounted(props: ConnectionsForm.Props): Callback = {
+      $("#newConnection".asInstanceOf[js.Object]).attr("data-toggle", "validator")
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       val usr = SYNEREOCircuit.zoom(_.user).value.name
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
@@ -147,7 +149,7 @@ object ConnectionsForm {
       val msg = state.introConnections.aMessage.replaceAll("/", "//")
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.selectizeInputId)
-      if (connections.length == 2) {
+      if (connections.length == 2  && !($(sendConnectionBtn).hasClass("disabled"))) {
         val content = state.introConnections.copy(aConnection = connections(0), bConnection = connections(1),
           sessionURI = uri, alias = "alias", aMessage = msg, bMessage = msg)
         ContentUtils.postNewConnection(content)
@@ -171,11 +173,15 @@ object ConnectionsForm {
             aURI = ConnectionsUtils.getSelfConnnection().source,
             bURI = s"agent://${state.agentUid}", label = "869b2062-d97b-42dc-af5d-df28332cdda1")
           ContentUtils.postNewConnection(content)
+          if(($(sendConnectionBtn).hasClass("disabled")))
           t.modState(s => s.copy(postConnection = true))
+          else
+          t.modState(s => s.copy(postConnection = false))
+
       }
     }
 
-    def submitForm(e: ReactEventI): react.Callback = {
+    def submitForm(e: ReactEventI)= {
       e.preventDefault()
       val state = t.state.runNow()
       if (state.introduceUsers) {
@@ -219,7 +225,7 @@ object ConnectionsForm {
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props)
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm)(
+        <.form(^.id:="newConnection","data-toggle".reactAttr := "validator", ^.role := "form",^.onSubmit ==> t.backend.submitForm)(
           <.div(^.className := "container-fluid")(
             <.div(^.className := "row")(
               <.div()(
@@ -235,8 +241,7 @@ object ConnectionsForm {
                   <.div((!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,
                     <.div(<.h5("Introduction:")),
                     <.div()(
-                      <.textarea(^.rows := 6,
-                        ^.value := state.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
+                      <.textarea(^.rows := 6,^.value := state.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
                     )
 
                   )
@@ -256,30 +261,29 @@ object ConnectionsForm {
               //            }
               //            else if (s.introduceTwoUsers == true) {
               if (state.chkCnxnExstUser == true) {
-                <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
-                    ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
+                <.div(^.marginLeft := "15px"/*,^.className := "form-group"*/)(
+                  <.input(^.`type` := "text", bss.formControl,  "data-error".reactAttr := "Please provide at-least 1 Connection",
+                    ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
+                    ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid,^.required := true),
+                 // <.div(^.className := "help-block with-errors"),
                   <.div(^.id := "agentFieldError", ^.className := "hidden")
-                  (state.lang.selectDynamic("USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION").toString)
+                  (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
                 )
               }
               else
                 <.div(),
-
-
-              //            }
-              <.div()(
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Send"),
+                //            }
+//              <.div()(
+                <.div(^.className := "text-right",^.className := "form-group")(
+                  <.button(^.id:="sendConnectionBtn",^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, "Send"),
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel")
                 )
-              )
+//              )
             ),
             <.div(bss.modal.footer)
           )
         )
       )
-
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {

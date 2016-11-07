@@ -49,7 +49,7 @@
   "INTRODUCE_YOUR_EXISTING_CONNECTIONS_TO_EACH_OTHER": "Introduce your existing connections to each other.",
   "PLEASE_PROVIDE_ONLY_TWO_CONNECTIONS": "Please provide Only 2 Connections... !!!",
   "INTRODUCE_YOURSELF_TO_EXISTING_USER": "Introduce yourself to existing user(s).",
-  "USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION": "User with this uid is already added as your connection",
+  "PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION": "Please provide at-least 1 Connection",
   "PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD": "Please provide a picture to upload ... !!!",
   "PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD": "Please provide a picture size less than or equal to 1 mb to upload ... !!!",
   "SET_PICTURE": "Set Picture",
