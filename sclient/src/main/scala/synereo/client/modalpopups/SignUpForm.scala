@@ -182,7 +182,7 @@ object SignUpForm {
           ),
           <.div(^.className := "form-group")(
             <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := state.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
-              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, "data-minlength".reactAttr := "6","pattern".reactAttr := "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{6,}$"),
+              ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, "data-minlength".reactAttr := "6","pattern".reactAttr := "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&.])[A-Za-z\\d$@$!%*#?&.]{6,}$"),
             <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/SignupCSS.Style.passwordTextInfo , ^.className := "help-block")(state.lang.selectDynamic("PASSWORD_CONDITION").toString)
           ),
           <.div(^.className := "form-group")(
@@ -201,7 +201,7 @@ object SignUpForm {
           <.div()(
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
               <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
-                <.div(^.className := "text-left")(state.lang.selectDynamic("CREATING_ACCOUNT_ON_NODE").toString, <.span(nodeName)),
+                <.div(^.className := "text-left")(state.lang.selectDynamic("CREATING_ACCOUNT_ON_NODE").toString, <.span(s"   ${nodeName}")),
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(

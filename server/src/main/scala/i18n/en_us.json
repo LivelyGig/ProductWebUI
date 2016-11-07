@@ -9,7 +9,7 @@
   "LOGIN": "Log In",
   "EDIT_API_DETAILS": "Edit API details",
   "EMAIL": "Email",
-  "PASSWORD": "password",
+  "PASSWORD": "Password",
   "DONT_HAVE_AN_ACCOUNT?": "Don't have an account?",
   "VERIFY YOUR TOKEN": "verify your token",
   "API-SERVER": "API-Server",
@@ -58,5 +58,6 @@
   "PROVIDE_A_PICTURE_FILE_LESS_THAN_FIVE_MB_UPLOAD": "Please provide a picture/file size less than or equal to 5 mb to upload ... !!!",
   "TITLE_YOUR_POST": "Title your post",
   "YOUR_THOUGHTS": "Your thoughts...",
-  "CREATE_POST": "Create"
+  "CREATE_POST": "Create",
+  "USERNAME" : "Username"
 }

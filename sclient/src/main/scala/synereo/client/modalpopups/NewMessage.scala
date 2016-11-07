@@ -273,13 +273,13 @@ object NewMessageForm {
                   for (tag <- state.tags.zipWithIndex) yield
                     <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
-                        <.li(/*^.textTransform := "uppercase", */ tag._1),
-                        <.li(/*<.span(^.className := "hidden", tag._2, ^.onClick ==> deleteInlineLabel),<.span*/
+                        <.li(^.textTransform := "uppercase",  tag._1),
+                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel),<.span(
                           "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
                         )
                       )
                     )
-                )
+                ))
               ),
               <.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
