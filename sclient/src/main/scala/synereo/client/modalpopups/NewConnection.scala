@@ -80,9 +80,7 @@ object ConnectionsForm {
   case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(),
                    establishConnection: EstablishConnection = EstablishConnection(),
-                   introduceUsers: Boolean = true,
-                   chkCnxnNewUser: Boolean = true,
-                   chkCnxnExstUser: Boolean = false,
+                   introTwoCnxns: Boolean = true,
                    agentUid: String = "",
                    userName: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
@@ -98,7 +96,8 @@ object ConnectionsForm {
     def fromSelecize(): Callback = {
       val cnxns = ConnectionsSelectize.getConnectionNames(t.state.runNow().selectizeInputId)
       val msg = if (cnxns.length > 1) {
-        s"Hi ${cnxns(0)} and ${cnxns(1)}, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
+        s"Hi ${cnxns(0)} and ${cnxns(1)}, \n He" +
+          s"re's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
       } else {
         s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
       }
@@ -109,26 +108,27 @@ object ConnectionsForm {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       val usr = SYNEREOCircuit.zoom(_.user).value.name
       val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
-      t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg)))
+      val onlyAdminConnected = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.size == 1
+      t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg), introTwoCnxns = !onlyAdminConnected))
+
     }
 
     def hideModal(): Unit = {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def chkCnxnExstUser(e: ReactEventI): react.Callback = {
+    /*def chkCnxnExstUser(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(chkCnxnExstUser = true, introduceUsers = false, chkCnxnNewUser = false))
-    }
+      t.modState(s => s.copy(chkCnxnExstUser = true, introduceUsers = false, introTwoCnxns = false))
+    }*/
 
-    def chkCnxnNewUser(e: ReactEventI): react.Callback = {
+    /*def chkCnxnNewUser(e: ReactEventI): react.Callback = {
       val state = t.state.runNow()
-      t.modState(s => s.copy(chkCnxnNewUser = true, introduceUsers = false, chkCnxnExstUser = false))
-    }
+      t.modState(s => s.copy(introTwoCnxns = true, introduceUsers = false, chkCnxnExstUser = false))
+    }*/
 
-    def chkCnxnExstandOther(e: ReactEventI): react.Callback = {
-      val state = t.state.runNow()
-      t.modState(s => s.copy(introduceUsers = true, chkCnxnNewUser = true, chkCnxnExstUser = false))
+    def toggleIntroTwoCnxns(introTwo: Boolean): react.Callback = {
+      t.modState(s => s.copy(introTwoCnxns = introTwo))
     }
 
     def getCnxn(uri: String): Option[ConnectionsModel] = {
@@ -178,7 +178,7 @@ object ConnectionsForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      if (state.introduceUsers) {
+      if (state.introTwoCnxns) {
         introduceTwoUsers()
       }
       else {
@@ -223,16 +223,16 @@ object ConnectionsForm {
           <.div(^.className := "container-fluid")(
             <.div(^.className := "row")(
               <.div()(
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := state.chkCnxnNewUser, ^.onChange ==> t.backend.chkCnxnExstandOther),
+                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(true)),
                   state.lang.selectDynamic("INTRODUCE_YOUR_EXISTING_CONNECTIONS_TO_EACH_OTHER").toString), <.br(),
-                <.div(^.marginLeft := "15px", (!state.introduceUsers == true) ?= ConnectionsCSS.Style.hidden)(
+                <.div(^.marginLeft := "15px", (state.introTwoCnxns == false) ?= ConnectionsCSS.Style.hidden)(
                   <.div(<.h5("Connections:")),
                   <.div(^.id := s"${state.selectizeInputId}")(
                     ConnectionsSelectize(ConnectionsSelectize.Props(s"${state.selectizeInputId}", t.backend.fromSelecize, Option(2)))
                   ),
                   <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
                   (state.lang.selectDynamic("PLEASE_PROVIDE_ONLY_TWO_CONNECTIONS").toString),
-                  <.div((!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,
+                  <.div(/*(!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,*/
                     <.div(<.h5("Introduction:")),
                     <.div()(
                       <.textarea(^.rows := 6,
@@ -244,27 +244,19 @@ object ConnectionsForm {
                 //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
                 // " Invite new user(s) to sign up and  connect with you."), <.br(),
 
-                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", /*^.checked := state.chkCnxnExstUser,*/ ^.onChange ==> t.backend.chkCnxnExstUser),
+                <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := !state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(false)),
                   state.lang.selectDynamic("INTRODUCE_YOURSELF_TO_EXISTING_USER").toString), <.br()
 
               ),
-
-              //            else if (s.chkCnxnNewUser == true) {
-              //              <.div()(
-              //                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "Please Enter Email ID")
-              //              )
-              //            }
-              //            else if (s.introduceTwoUsers == true) {
-              if (state.chkCnxnExstUser == true) {
-                <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
-                    ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
-                  <.div(^.id := "agentFieldError", ^.className := "hidden")
-                  (state.lang.selectDynamic("USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION").toString)
-                )
-              }
+              <.div(^.marginLeft := "15px", (state.introTwoCnxns == true) ?= ConnectionsCSS.Style.hidden)(
+                <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
+                  ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
+                <.div(^.id := "agentFieldError", ^.className := "hidden")
+                (state.lang.selectDynamic("USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION").toString)
+              ),
+              /*}
               else
-                <.div(),
+                <.div(),*/
 
 
               //            }

@@ -49,7 +49,7 @@ object ConfirmIntroReqModal {
     }
   }
 
-  val component = ReactComponentB[Props]("NewMessage")
+  val component = ReactComponentB[Props]("ConfirmIntroReqModal")
     .initialState(State())
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
