@@ -132,12 +132,12 @@ object SynereoCommanStylesCSS {
     )
     val mainMenuNavbar = style(
       right.`0`,
-     // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
+      // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
       media.minWidth(546.px).maxWidth(766.px) -
         width(233.px),
       float.right,
 
-      media.maxWidth(545.px) - (
+      media.maxWidth(545.px) -(
         marginTop(65.px),
         width(100.%%)
         )
@@ -427,6 +427,9 @@ object SynereoCommanStylesCSS {
     val marginRight15px = style(
       marginRight(15.px)
     )
+//    val marginTopMiddle= style (
+//      marginTop:="calc(100%-25%)"
+//    )
     val displayInline = style(
       display.inlineBlock
     )
@@ -486,7 +489,7 @@ object SynereoCommanStylesCSS {
     )
 
     val naviCollapse = style(
-      media.maxWidth(767.px) - (
+      media.maxWidth(767.px) -(
         backgroundColor(rgb(46, 110, 142)),
         position.absolute,
         top(57.px),
@@ -494,6 +497,70 @@ object SynereoCommanStylesCSS {
         width(100.%%),
         zIndex(9))
     )
+    /*Animation */
+
+    /*Message List Status Animation*/
+
+    val messageListStatusAnim = keyframes(
+      (0 %%) -> keyframe(marginLeft(-50.px), visibility.visible),
+      (100 %%) -> keyframe(marginLeft(0.px), visibility.visible)
+    )
+
+    val animLove = style(
+      animationName(messageListStatusAnim),
+      animationDuration := "0.40s",
+      animationDelay := "0.4s",
+      animationFillMode.forwards
+    )
+    val animComment = style(
+      animationName(messageListStatusAnim),
+      animationDuration := "0.40s",
+      animationDelay := "0.3s",
+      animationFillMode.forwards
+    )
+    val animAmp_Circle = style(
+      animationName(messageListStatusAnim),
+      animationDuration := "0.40s",
+      animationDelay := "0.2s",
+      animationFillMode.forwards
+    )
+    val animShare= style(
+      animationName(messageListStatusAnim),
+      animationDuration := "0.40s",
+      animationDelay := "0.1s",
+      animationFillMode.forwards
+    )
+
+    /*Message Sub Icon Animation*/
+    val messageListSubStatusAnim = keyframes(
+      (0 %%) -> keyframe(opacity(0), visibility.visible),
+      (100 %%) -> keyframe(opacity(1), visibility.visible)
+    )
+    val animSubIconFirst = style(
+      animationName(messageListSubStatusAnim),
+      animationDuration := "0.60s",
+      animationDelay := "0.1s",
+      animationFillMode.forwards
+    )
+    val animSubIconSecond = style(
+      animationName(messageListSubStatusAnim),
+      animationDuration := "0.60s",
+      animationDelay := "0.2s",
+      animationFillMode.forwards
+    )
+    val animSubIconThird = style(
+      animationName(messageListSubStatusAnim),
+      animationDuration := "0.60s",
+      animationDelay := "0.3s",
+      animationFillMode.forwards
+    )
+    val animSubIconFourth = style(
+      animationName(messageListSubStatusAnim),
+      animationDuration := "0.60s",
+      animationDelay := "0.4s",
+      animationFillMode.forwards
+    )
+
   }
 
 }

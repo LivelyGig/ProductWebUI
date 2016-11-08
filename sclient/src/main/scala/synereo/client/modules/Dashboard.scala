@@ -324,56 +324,56 @@ object HomeFeedList {
               )
             ),
             <.div(^.id := "rightPost", ^.className := "col-md-2 col-sm-3 ", SynereoCommanStylesCSS.Style.lftHeightPost)(
-              <.div(^.id := "trans")(
+              <.div(^.id := "trans"/*,SynereoCommanStylesCSS.Style.marginTopMiddle*/)(
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
                   <.div(^.className := "col-md-2",
-                    <.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showLovePost"))
+                    <.img(^.src := "./assets/synereo-images/Love.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animLove, ^.onClick --> t.backend.showRightPost("showLovePost"))
                   ),
                   if (state.showLovePost) // <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)()
                     <.div(
                       <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "10"),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else <.div()
                 ),
                 <.div(^.className := "row", /*if (!state.showLovePost)*/ SynereoCommanStylesCSS.Style.marginTop20px /* else ^.marginTop := "0.px"*/)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCommentPost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Comment.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animComment, ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   if (state.showCommentPost)
                     <.div(
                       <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "10"),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showCirclePost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Amp_circle.gif", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animAmp_Circle, ^.onClick --> t.backend.showRightPost("showCirclePost"))),
                   if (state.showCirclePost)
                     <.div(
                       <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "12"),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost", ^.onClick --> t.backend.showRightPost("showSharePost"))),
+                  <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/Share.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animShare, ^.onClick --> t.backend.showRightPost("showSharePost"))),
                   if (state.showSharePost)
                     <.div(
                       <.div(^.className := "col-md-2", DashboardCSS.Style.postDescription, "1"),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost")),
-                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost"))
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2")(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", ^.className := "rightPost",SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]
