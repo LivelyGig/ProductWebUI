@@ -59,5 +59,6 @@
   "TITLE_YOUR_POST": "Title your post",
   "YOUR_THOUGHTS": "Your thoughts...",
   "CREATE_POST": "Create",
-  "USERNAME" : "Username"
+  "USERNAME" : "Username",
+  "ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED" :"only jpeg or png files can be uploaded... !!!"
 }
