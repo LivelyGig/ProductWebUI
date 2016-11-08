@@ -55,7 +55,7 @@
   "SET_PICTURE": "Set Picture",
   "PROVIDE_ATLEAST_ONE_CONNECTION": "Please provide atleast 1 Connection... !!!",
   "PROVIDE_A_PICTURE_FILE_TO_UPLOAD": "Please provide a picture/file to upload ... !!!",
-  "PROVIDE_A_PICTURE_FILE_LESS_THAN_FIVE_MB_UPLOAD": "Please provide a picture/file size less than or equal to 5 mb to upload ... !!!",
+  "PROVIDE_A_PICTURE_FILE_LESS_THAN_FOUR_MB_UPLOAD": "Please provide a picture/file size less than or equal to 4 mb to upload ... !!!",
   "TITLE_YOUR_POST": "Title your post",
   "YOUR_THOUGHTS": "Your thoughts...",
   "CREATE_POST": "Create",

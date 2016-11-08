@@ -182,7 +182,7 @@ object NewMessageForm {
         $("#file-type-not-supported-err".asInstanceOf[js.Object]).addClass("hidden")
       else
         $("#file-type-not-supported-err".asInstanceOf[js.Object]).removeClass("hidden")
-      if (value.size <= 5000000) {
+      if (value.size <= 4000000) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
