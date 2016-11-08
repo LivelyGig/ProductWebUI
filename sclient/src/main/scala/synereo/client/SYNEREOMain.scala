@@ -153,7 +153,7 @@ object SYNEREOMain extends js.JSApp {
 
   @JSExport
   def main(): Unit = {
-    log.warn("Synereo starting")
+    log.warn("synereo starting")
     // send log messages also to the server
     log.enableServerLogging("/logging")
     //bind beforeunload event listner for warnings across forms(see bootstrap component hidden method) when editing them

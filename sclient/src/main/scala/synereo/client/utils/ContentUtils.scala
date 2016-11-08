@@ -40,7 +40,7 @@ object ContentUtils {
     // process response
     val responseArray = upickle.json.read(response).arr.distinct.map(e => upickle.json.write(e)).filterNot(_.contains("sessionPong"))
     val omniBalanceResponse = responseArray.filter(_.contains("omniBalanceResponse"))
-    if(omniBalanceResponse.nonEmpty) {
+    if (omniBalanceResponse.nonEmpty) {
       val content = upickle.default.read[ApiResponse[OmniBalanceResponse]](omniBalanceResponse.head).content
       SYNEREOCircuit.dispatch(BalanceChanged(content.amp, content.btc, content.address))
     }
@@ -278,14 +278,14 @@ object ContentUtils {
     var count = 1
     post()
     def post(): Unit = CoreApi.updateUserRequest(req).onComplete {
-      case Success(response) =>{
+      case Success(response) => {
         logger.log.debug("user image update request successful")
         SYNEREOCircuit.dispatch(UpdateUserImage(req.jsonBlob.imgSrc))
-        println(s"In contentutils ${req}")
+        //        println(s"In contentutils ${req}")
       }
       case Failure(response) =>
         if (count == 3) {
-                     logger.log.error("user update error")
+          logger.log.error("user update error")
           SYNEREOCircuit.dispatch(ShowServerError(response.toString))
         } else {
           count = count + 1
