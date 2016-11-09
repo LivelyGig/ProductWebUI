@@ -205,7 +205,6 @@ object ConnectionsForm {
     def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
-
   }
 
   private val component = ReactComponentB[Props]("PostConnections")
@@ -252,7 +251,7 @@ object ConnectionsForm {
                 <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
                   ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
                 <.div(^.id := "agentFieldError", ^.className := "hidden")
-                (state.lang.selectDynamic("USER_WITH_THIS_UID_IS_ALREADY_ADDED_AS_YOUR_CONNECTION").toString)
+                (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
               ),
               /*}
               else

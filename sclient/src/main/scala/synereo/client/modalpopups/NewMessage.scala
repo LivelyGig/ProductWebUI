@@ -6,7 +6,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.css.{NewMessageCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -24,7 +23,6 @@ import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
 import diode.AnyAction._
 import diode.ModelR
-
 import scala.scalajs.js
 
 //scalastyle:off
@@ -180,17 +178,21 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
-      if (value.size <= 5000000) {
+      if (value.`type` == "image/jpeg" || value.`type` == "image/png")
+        $("#file-type-not-supported-err".asInstanceOf[js.Object]).addClass("hidden")
+      else
+        $("#file-type-not-supported-err".asInstanceOf[js.Object]).removeClass("hidden")
+      if (value.size <= 4000000) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
           t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
         }
         reader.readAsDataURL(value)
-        $("#image_upload_error".asInstanceOf[js.Object]).addClass("hidden")
-        $("#imageSize_upload_error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#no-image-upload-err".asInstanceOf[js.Object]).addClass("hidden")
+        $("#image-size-upload-err".asInstanceOf[js.Object]).addClass("hidden")
       } else {
-        $("#imageSize_upload_error".asInstanceOf[js.Object]).removeClass("hidden")
+        $("#image-size-upload-err".asInstanceOf[js.Object]).removeClass("hidden")
       }
     }
 
@@ -201,10 +203,10 @@ object NewMessageForm {
       val state = t.state.runNow()
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
-        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+        $("#cnxn-error".asInstanceOf[js.Object]).removeClass("hidden")
         t.modState(s => s.copy(postNewMessage = false))
       } else {
-        $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+        $("#cnxn-error".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
@@ -248,7 +250,7 @@ object NewMessageForm {
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender , props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
-              <.div(^.id := "cnxnError", ^.className := "hidden text-danger",
+              <.div(^.id := "cnxn-error", ^.className := "hidden text-danger",
                 state.lang.selectDynamic("PROVIDE_ATLEAST_ONE_CONNECTION").toString),
               <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId)(
                 LabelsSelectize(LabelsSelectize.Props(state.labelsSelectizeInputId))
@@ -289,11 +291,14 @@ object NewMessageForm {
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
                   <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
-                  <.div(^.id := "image_upload_error", ^.className := "hidden text-danger")(
+                  <.div(^.id := "no-image-upload-err", ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),
-                  <.div(^.id := "imageSize_upload_error", ^.className := "hidden text-danger")(
+                  <.div(^.id := "image-size-upload-err", ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_LESS_THAN_FIVE_MB_UPLOAD").toString
+                  ),
+                  <.div(^.id := "file-type-not-supported-err", ^.className := "hidden text-danger")(
+                    state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,

@@ -93,7 +93,7 @@ object ProfileImageUploaderForm {
     }
 
     def mounted(): Callback = Callback {
-      logger.log.info("new image modal mounted")
+      logger.log.debug("new image modal mounted")
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
@@ -181,7 +181,7 @@ object ProfileImageUploaderForm {
                       state.lang.selectDynamic("PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD").toString
                     ),
                     <.div(^.id := "file-type-not-supported-error", ^.className := "hidden text-danger")(
-                      "only jpeg or png files can be uploaded... !!!"
+                      state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                     )
                   )
                 ),
