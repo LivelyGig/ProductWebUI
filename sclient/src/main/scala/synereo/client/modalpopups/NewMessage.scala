@@ -247,7 +247,7 @@ object NewMessageForm {
             ),
             <.div(^.className := "row")(
               <.div(^.id := state.connectionsSelectizeInputId)(
-                ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender , props.replyPost,
+                ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
               <.div(^.id := "cnxn-error", ^.className := "hidden text-danger",
@@ -266,6 +266,8 @@ object NewMessageForm {
               <.div()(
                 if (state.postMessage.imgSrc != "") {
                   <.img(^.src := state.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
+                } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+                  <.img(^.src := props.messagePost.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px")
                 } else {
                   <.span()
                 }
@@ -275,13 +277,13 @@ object NewMessageForm {
                   for (tag <- state.tags.zipWithIndex) yield
                     <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
-                        <.li(^.textTransform := "uppercase",  tag._1),
-                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel),<.span(
+                        <.li(^.textTransform := "uppercase", tag._1),
+                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel), <.span(
                           "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
                         )
+                        )
                       )
-                    )
-                ))
+                    ))
               ),
               <.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
