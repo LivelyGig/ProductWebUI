@@ -139,7 +139,7 @@ object SynereoCommanStylesCSS {
 //     marginTop(65.px)
 //    ),
       media.maxWidth(545.px)(
-       // marginTop(65.px),
+//        marginTop(65.px),
         width(100.%%)
       )
     )
@@ -200,7 +200,6 @@ object SynereoCommanStylesCSS {
       marginBottom(5.%%),
       display.inlineBlock
     )
-
     val userNameNavBar = style(
       color(c"#FFFFFF"),
       padding(5.px, 5.px),
@@ -213,8 +212,6 @@ object SynereoCommanStylesCSS {
       media.maxWidth(545.px) -
         width.auto
     )
-
-
     val ampsDropdownToggleBtn = style(
       //      width(110.px),
       //      border(1.px, solid, transparent),
@@ -431,9 +428,9 @@ object SynereoCommanStylesCSS {
     val marginRight15px = style(
       marginRight(15.px)
     )
-//    val marginTopMiddle= style (
-//      marginTop:="calc(100%-25%)"
-//    )
+    //    val marginTopMiddle= style (
+    //      marginTop:="calc(100%-25%)"
+    //    )
     val displayInline = style(
       display.inlineBlock
     )
@@ -517,40 +514,57 @@ object SynereoCommanStylesCSS {
         width(100.%%),
         zIndex(9))
     )
+
+    val rightPost= style (
+      borderRadius(50.%%),
+      transition:="all 1.5s ease",
+      backgroundColor(c"#bfbfbf"),
+      height(30.px),
+      width(30.px),
+      visibility.hidden,
+      media.minWidth(768.px).maxWidth(1200.px)(
+        height(18.px),
+        width(18.px)
+      ),
+      media.maxWidth(768.px)(
+        display.none
+      )
+    )
+    val rightAnimDiv= style (
+      media.minWidth(768.px).maxWidth(1200.px)(
+        paddingLeft(2.2%%)
+      )
+    )
     /*Animation */
-
     /*Message List Status Animation*/
-
     val messageListStatusAnim = keyframes(
       (0 %%) -> keyframe(marginLeft(-50.px), visibility.visible),
       (100 %%) -> keyframe(marginLeft(0.px), visibility.visible)
     )
-
     val animLove = style(
       animationName(messageListStatusAnim),
-      animationDuration := "0.40s",
-      animationDelay := "0.4s",
+      animationDuration :=! "0.40s",
+      animationDelay :=! "0.4s",
       animationFillMode.forwards
     )
     val animComment = style(
       animationName(messageListStatusAnim),
-      animationDuration := "0.40s",
-      animationDelay := "0.3s",
+      animationDuration :=! "0.40s",
+      animationDelay :=! "0.3s",
       animationFillMode.forwards
     )
     val animAmp_Circle = style(
       animationName(messageListStatusAnim),
-      animationDuration := "0.40s",
-      animationDelay := "0.2s",
+      animationDuration :=! "0.40s",
+      animationDelay :=! "0.2s",
       animationFillMode.forwards
     )
     val animShare= style(
       animationName(messageListStatusAnim),
-      animationDuration := "0.40s",
-      animationDelay := "0.1s",
+      animationDuration :=! "0.40s",
+      animationDelay :=! "0.1s",
       animationFillMode.forwards
     )
-
     /*Message Sub Icon Animation*/
     val messageListSubStatusAnim = keyframes(
       (0 %%) -> keyframe(opacity(0), visibility.visible),
@@ -558,26 +572,26 @@ object SynereoCommanStylesCSS {
     )
     val animSubIconFirst = style(
       animationName(messageListSubStatusAnim),
-      animationDuration := "0.60s",
-      animationDelay := "0.1s",
+      animationDuration :=! "0.60s",
+      animationDelay :=! "0.1s",
       animationFillMode.forwards
     )
     val animSubIconSecond = style(
       animationName(messageListSubStatusAnim),
-      animationDuration := "0.60s",
-      animationDelay := "0.2s",
+      animationDuration :=! "0.60s",
+      animationDelay :=! "0.2s",
       animationFillMode.forwards
     )
     val animSubIconThird = style(
       animationName(messageListSubStatusAnim),
-      animationDuration := "0.60s",
-      animationDelay := "0.3s",
+      animationDuration :=! "0.60s",
+      animationDelay :=! "0.3s",
       animationFillMode.forwards
     )
     val animSubIconFourth = style(
       animationName(messageListSubStatusAnim),
-      animationDuration := "0.60s",
-      animationDelay := "0.4s",
+      animationDuration :=! "0.60s",
+      animationDelay :=! "0.4s",
       animationFillMode.forwards
     )
     val userNameNavBarBubbleImage=style(
