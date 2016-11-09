@@ -111,7 +111,7 @@ object MainMenu {
                 <.span()
               }
             ),
-            <.div(^.className := "nav navbar-nav navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"), */ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+            <.div(^.className := "nav navbar-nav  navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"),*/ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
                 <.li(
                   introductionConnectProxy(introProxy =>
@@ -167,30 +167,32 @@ object MainMenu {
                 //                  )
                 //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
+                  <.span(<.img(^.className:="hidden-xss img-responsive",^.src:="./assets/synereo-images/bubble.png",SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
                   //                  if (model.name.length() < 10) {
-                  <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
-                  //                  }
-                  //                  else {
-                  //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
-                  //                  }
-                  <.div(^.className := "text-center")(
-                    <.span(model.networkMode.toUpperCase),
-                    <.div(^.id := "topbarBtn", /* ^.`type` := "button", ^.className := "btn",*/ SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
-                      /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
-                      <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
-                      //                        <.span(Icon.cogs),
-                      <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
+                  <.span(SynereoCommanStylesCSS.Style.userNameNavBarText,<.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
+                    //                  }
+                    //                  else {
+                    //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
+                    //                  }
+                    <.div(^.className := "text-center")(
+                      <.span(model.networkMode.toUpperCase),
+                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
+                        /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
+                        "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
+                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
+                        //                        <.span(Icon.cogs),
+                        <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
+                      )
                     )
                   )
                 ),
-                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/)(
+                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
                   <.div()(
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)
                     ),
                     // <.div(^.className := "dropdown-arrow-small"),
-                    <.ul(^.className := "dropdown-menu", SynereoCommanStylesCSS.Style.userActionsMenu)(
+                    <.ul(^.className := "dropdown-menu ", SynereoCommanStylesCSS.Style.userActionsMenu)(
                       <.li(<.a(^.onClick --> scope.backend.showAboutInfoModal())(state.lang.selectDynamic("ABOUT").toString)),
                       <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())(state.lang.selectDynamic("CHANGE_PROFILE_PICTURE").toString)),
                       <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal())(state.lang.selectDynamic("NODE_SETTINGS").toString)),
@@ -206,7 +208,8 @@ object MainMenu {
                     //                  else
                     //                    Seq.empty[ReactElement]
                     //NewImage(NewImage.Props("", Seq(UserProfileViewCSS.Style.newImageBtn), Icon.camera, "", "", <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)))
-                  )),
+                  )
+                ),
                 <.li(SynereoCommanStylesCSS.Style.featureHide)(
                   //                  NewMessage(NewMessage.Props("Create a post", Seq(SynereoCommanStylesCSS.Style.createPostButton), /*Icon.envelope*/ "", "create-post-button", "create-post-button", (<.span(^.className := "vertical-text-post-btn", "POST"))))
                 )

@@ -39,7 +39,7 @@ object SynereoCommanStylesCSS {
       display.inlineBlock,
       width(67.%%),
       media.maxWidth(617.px) -
-        width(50.%%)
+        width(70.%%)
     )
     val changeLanguageDropdownContainer = style(
       position.fixed,
@@ -110,7 +110,9 @@ object SynereoCommanStylesCSS {
       &.focus(
         backgroundColor(transparent),
         color(white)
-      )
+      ),
+      media.maxHeight(776.px) -
+        paddingLeft(0.px)
       //      &.hover(
       //        width(135.px),
       //        backgroundColor(c"#2283AE"),
@@ -133,14 +135,13 @@ object SynereoCommanStylesCSS {
     val mainMenuNavbar = style(
       right.`0`,
       // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
-      media.minWidth(546.px).maxWidth(766.px) -
-        width(233.px),
-      float.right,
-
-      media.maxWidth(545.px) -(
+    media.minWidth(545.px).maxWidth(766.px)(
+     marginTop(65.px)
+    ),
+      media.maxWidth(545.px)(
         marginTop(65.px),
         width(100.%%)
-        )
+      )
     )
     val renderFailedMessage = style(
       marginTop(40.px),
@@ -199,18 +200,21 @@ object SynereoCommanStylesCSS {
       marginBottom(5.%%),
       display.inlineBlock
     )
+
     val userNameNavBar = style(
-      color(c"#FFFFFF "),
+      color(c"#FFFFFF"),
       padding(5.px, 5.px),
       media.maxWidth(1250.px) -
         fontSize(16.px),
       media.minWidth(1251.px) -
         fontSize(20.px),
-      media.maxWidth(1050.px).minWidth(546.px) -
-        width(130.px),
+      media.maxWidth(776.px).minWidth(546.px) -
+        width(40.%%),
       media.maxWidth(545.px) -
         width.auto
     )
+
+
     val ampsDropdownToggleBtn = style(
       //      width(110.px),
       //      border(1.px, solid, transparent),
@@ -459,11 +463,27 @@ object SynereoCommanStylesCSS {
     )
 
     val userNameOverflow = style(
-      whiteSpace.nowrap,
+      //whiteSpace.nowrap,
       overflow.hidden,
+      width(130.px),
+      padding(4.px),
+      fontSize(14.px),
+      wordWrap:="break-word",
       textOverflow.:=("ellipsis"),
-      media.maxWidth(360.px) -
-        fontSize(13.px)
+      media.maxWidth(350.px) -
+      width(100.%%),
+      media.minWidth(321.px).maxWidth(376.px) -
+         fontSize(13.px),
+      media.minWidth(462.px).maxWidth(766.px) -
+       width(100%%)
+
+//      width(130.px),
+//      media.minWidth(776.px) -
+//        width(150.px)
+
+      // ,
+      //   media.maxWidth(766.px) -
+      // maxWidth.inherit
     )
 
     val paddingLeft15p = style(
@@ -559,6 +579,22 @@ object SynereoCommanStylesCSS {
       animationDuration := "0.60s",
       animationDelay := "0.4s",
       animationFillMode.forwards
+    )
+    val userNameNavBarBubbleImage=style(
+      maxWidth(250.px),
+      marginTop(-5.px),
+      right(0.px),
+      position.fixed,
+      media.maxWidth(766.px) -
+        display.none,
+      media.minWidth(766.px).maxWidth(850.px) -
+      marginTop(-9.px)
+    )
+    val userNameNavBarText=style(
+      position.relative
+    )
+    val mainMenuUserActionDropdownLi=style(
+      float.right
     )
 
   }
