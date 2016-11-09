@@ -7,7 +7,6 @@ import diode.react._
 import synereo.client.css._
 import shared.models.ConnectionsModel
 import synereo.client.modalpopups.NewConnection
-
 import scalacss.ScalaCssReact._
 
 /**

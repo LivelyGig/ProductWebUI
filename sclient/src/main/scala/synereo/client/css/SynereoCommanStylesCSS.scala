@@ -135,11 +135,11 @@ object SynereoCommanStylesCSS {
     val mainMenuNavbar = style(
       right.`0`,
       // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
-    media.minWidth(545.px).maxWidth(766.px)(
-     marginTop(65.px)
-    ),
+//    media.minWidth(545.px).maxWidth(766.px)(
+//     marginTop(65.px)
+//    ),
       media.maxWidth(545.px)(
-        marginTop(65.px),
+       // marginTop(65.px),
         width(100.%%)
       )
     )
@@ -594,8 +594,10 @@ object SynereoCommanStylesCSS {
       position.relative
     )
     val mainMenuUserActionDropdownLi=style(
-      float.right
+      float.right.important,
+      textAlign.right
     )
+
 
   }
 
