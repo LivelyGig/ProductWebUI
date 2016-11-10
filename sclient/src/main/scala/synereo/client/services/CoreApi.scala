@@ -3,7 +3,6 @@ package synereo.client.services
 import shared.dtos._
 import org.scalajs.dom._
 import upickle.default._
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.util.Try

@@ -1,15 +1,5 @@
 package synereo.client.modules
 
-//import shared.models.UserModel
-//import synereo.client.css.{ConnectionsCSS, UserProfileViewCSS}
-//import diode.react._
-//import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-//import japgolly.scalajs.react._
-//import japgolly.scalajs.react.vdom.prefix_<^._
-//import shared.models.{ConnectionsModel}
-//import synereo.client.utils.ConnectionsUtils
-//import scalacss.ScalaCssReact._
-
 
 /**
   * Created by bhagyashree.b on 2016-07-01.

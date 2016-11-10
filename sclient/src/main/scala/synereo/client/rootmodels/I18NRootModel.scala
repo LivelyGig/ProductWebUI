@@ -1,7 +1,6 @@
 package synereo.client.rootmodels
 
 import synereo.client.utils.I18N
-
 import scala.scalajs.js.Dynamic
 
 /**

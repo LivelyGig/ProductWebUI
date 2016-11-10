@@ -9,7 +9,6 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.SYNEREOMain.{Loc, SynereoLoc}
 import synereo.client.components.GlobalStyles
-
 import scalacss.ScalaCssReact._
 import synereo.client.components._
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}

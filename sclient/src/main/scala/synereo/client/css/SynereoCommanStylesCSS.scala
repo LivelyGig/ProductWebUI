@@ -608,8 +608,10 @@ object SynereoCommanStylesCSS {
       position.relative
     )
     val mainMenuUserActionDropdownLi=style(
-      float.right
+      float.right.important,
+      textAlign.right
     )
+
 
   }
 
