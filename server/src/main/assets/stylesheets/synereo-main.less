@@ -706,6 +706,7 @@ transform: translate(0,0); */
   zoom: 1;
   *display: inline;
 }
+//overriden this class specific for labels selectize word break property added
 .selectize-control.multi .selectize-input > div {
   cursor: pointer;
   margin: 0 3px 3px 0;
@@ -714,6 +715,8 @@ transform: translate(0,0); */
   background: #2EAEE3;
   color: #303030;
   border: 0 solid #d0d0d0;
+  //added below property
+  word-break: break-all;
 }
 .selectize-control.multi .selectize-input > div.active {
   background: #e8e8e8;
@@ -740,6 +743,12 @@ transform: translate(0,0); */
   -webkit-user-select: auto !important;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
+}
+//overriden this class specific for labels selectize
+#labelsSelectizeInputId .selectize-input > input {
+width:100% !important;
+    word-break: break-word;
+
 }
 .selectize-input > input::-ms-clear {
   display: none;
@@ -936,10 +945,11 @@ transform: translate(0,0); */
  }
 }
 @media (max-width: 767px)   {
- .label-selectize-container-main{
+ .label-selectize-container-main {
   left: 15px;
   right: 40%;
   width : 100%;
+  position : relative;
 }
 }
 @media (max-width: 545px)   {
@@ -972,21 +982,10 @@ transform: translate(0,0); */
    max-width:270px !important;
 }
 
-
-.rightPost {
-  border-radius: 50%;
-  transition: all 1.5s ease;
-  background-color: #bfbfbf;
-  height: 30px;
-  width: 30px;
-  visibility: hidden;
- }
-
 .trans{
   transform: translateX(200px);
   transition: all 1.5s ease-in-out;
 }
-
 .textOverflowPost {
   display: block;
   display: -webkit-box;
@@ -998,7 +997,6 @@ transform: translate(0,0); */
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 #rightPost {
 display : none;
 }

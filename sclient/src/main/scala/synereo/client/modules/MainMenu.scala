@@ -85,6 +85,7 @@ object MainMenu {
         case Failure(_) => logger.log.error(s"failed to load language for ${lang}")
       }
     }
+
   }
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")

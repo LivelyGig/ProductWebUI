@@ -2,20 +2,16 @@ package synereo.client.modules
 
 
 import java.util.UUID
-
 import japgolly.scalajs.react._
 import shared.models.ConnectionsModel
 import synereo.client.utils.ConnectionsUtils
 import synereo.client.css.UserProfileViewCSS
 import synereo.client.components.Icon
 import org.querki.jquery.$
-
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.vdom.prefix_<^._
-
 import scala.scalajs.js
 import java.util.UUID
-
 import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.ServerModel

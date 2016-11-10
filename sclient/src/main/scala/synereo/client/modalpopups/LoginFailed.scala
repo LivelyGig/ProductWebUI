@@ -9,7 +9,6 @@ import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.LoginCSS
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._

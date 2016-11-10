@@ -7,7 +7,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{LoginCSS, SignupCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -15,12 +14,10 @@ import org.querki.jquery._
 import org.scalajs.dom
 import org.scalajs.dom._
 import synereo.client.components._
-
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.sessionitems.SessionItems
-
 import scala.scalajs.js
 
 /**
