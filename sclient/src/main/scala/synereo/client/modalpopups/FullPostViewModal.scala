@@ -1,10 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{DashboardCSS, PostFullViewCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import shared.models.MessagePost
@@ -35,7 +36,7 @@ object FullPostViewModal {
     val modalCloseButton: js.Object = "#modal-close-button"
     var scrollY: Int = 0
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

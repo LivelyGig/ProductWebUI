@@ -1,10 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.models.UserModel
 import synereo.client.css.{LoginCSS, SignupCSS}
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -97,7 +98,7 @@ object LoginForm {
       else
         t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
     }
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

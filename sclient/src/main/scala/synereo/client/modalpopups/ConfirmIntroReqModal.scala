@@ -5,10 +5,12 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
 import synereo.client.components.{GlobalStyles, _}
 import shared.dtos.Introduction
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
+
 import scala.scalajs.js.JSON
 import japgolly.scalajs.react
 import japgolly.scalajs.react.{Callback, _}
@@ -18,7 +20,8 @@ import synereo.client.components.Bootstrap._
 import synereo.client.handlers.UpdateIntroductionsModel
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import diode.AnyAction._
-import diode.ModelR
+import diode.{ModelR, ModelRO}
+
 import scala.scalajs.js
 
 /**
@@ -103,7 +106,7 @@ object ConfirmIntroReqForm {
       t.modState(s => s.copy(confirmIntroReq = true))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

@@ -1,12 +1,13 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
 import synereo.client.components.Bootstrap.Modal
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -98,7 +99,7 @@ object AmplifyPostForm {
         false
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

@@ -1,9 +1,10 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.SignupCSS
+
 import scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -11,6 +12,8 @@ import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
+
+import scala.scalajs.js
 
 /**
   * Created by bhagyashree.b on 4/19/2016.
@@ -29,7 +32,7 @@ object AccountValidationFailed {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

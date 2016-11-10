@@ -1,10 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.css.{SignupCSS, UserProfileViewCSS}
+
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -33,7 +34,7 @@ object AboutInfoModal {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

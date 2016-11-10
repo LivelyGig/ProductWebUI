@@ -10,6 +10,7 @@ import SYNEREOMain._
 import synereo.client.handlers._
 import shared.models.UserModel
 import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
+
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -18,10 +19,12 @@ import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
 import synereo.client.utils.{AppUtils, ContentUtils, I18N}
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
+
 import scala.scalajs.js
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success, Try}
@@ -52,7 +55,7 @@ object MainMenu {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

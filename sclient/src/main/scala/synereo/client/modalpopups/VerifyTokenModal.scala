@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import synereo.client.components.{GlobalStyles, Icon}
 import shared.models.EmailValidationModel
 import japgolly.scalajs.react._
@@ -86,7 +86,7 @@ object VerifyTokenModal {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

@@ -33,3 +33,6 @@ doc/_book
 # web hook/service
 #.travis.yml
 
+#node modules
+node_modules/
+
