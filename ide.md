@@ -7,7 +7,7 @@ development project. Many open source components are used to develop the applica
 Scala-Tags, Autowire, Boopickle etc. This is based on design by Otto Chrons and for more detail visit [here]
 (https://github.com/ochrons/scalajs-spa-tutorial) and [here](http://ochrons.github.io/scalajs-spa-tutorial/). 
 Another important library called scalajs-react can be found [here](https://japgolly.github.io/scalajs-react/) 
-and [here](https://github.com/vmunier/play-with-scalajs-example). Also dependent on [Play server](https://www.playframework.com/)
+and [here](https://github.com/vmunier/play-with-scalajs-example) and also is dependent on [Play server](https://www.playframework.com/)
 
 See also the Synereo document [here](https://docs.google.com/document/d/1F4mXkuO_54oKv_02x6v9UUcycNWJFWUExL8KQNMuGr8/edit).
 
@@ -44,99 +44,44 @@ Note: You may need to add Javac (JDK_Install_Location\bin) command and sbt to th
 ####Setting up IDE
 For setting up project you just need to create the project from existing sources. More details regarding the same procedure can be found at the following links:  Creating a Project by Importing Existing Sources, Creating and Running Your Scala Application and Getting Started with SBT. Please follow step by step instruction for setting up the project:
 
+ * Open Intellij Idea and goto File > New >  Project from Version Control > Github (This is important - Please don’t start from dashboard area)
+ * In the dialog box enter the url https://github.com/LivelyGig/ProductWebUI.git and give the folder location as below
+ * Once cloned open build.sbt in ProductWebUI folder and click on setup jdk
 
-Open Intellij Idea and goto File > New >  Project from Version Control > Github (This is important - Please don’t start from dashboard area)
-In the dialog box enter the url https://github.com/LivelyGig/ProductWebUI.git and give the folder location as below
+ * In the dialog box browse and set jdk to 1.8.0_66 (after installation from prior download - provide the installation location if needed)
+ * Once that done click on import project. At this point SBT will start  refreshing the dependencies.
+ * Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA windows as show below
 
+ * After terminal window appears type the following setup of command 
+ * Navigate to project folder “cd ProductWebUI” 
+ * Run sbt (Assumption that sbt is successfully installed in the system)
+ * At this point sbt picks up the build definition from “build.sbt” and start setting up the project. It imports all the dependencies defined under project folder in Settings, scala file and start the play server. After successful execution of “sbt” command a “[Server] $” prompt will appear on the command terminal window
+ * On new prompt execute “run” command. 
 
+ * This will start compilation of scala sources and start the server at default port 9000.
 
-Once cloned open build.sbt in ProductWebUI folder and click on setup jdk
-
-
-
-
-
-
-
-
-
-
-
-In the dialog box browse and set jdk to 1.8.0_66 (after installation from prior download - provide the installation location if needed)
-
-
-
-
-
-Once that done click on import project. At this point SBT will start  refreshing the dependencies.
-
-
-
-
-
-Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA windows as show below
-
-After terminal window appears type the following setup of command 
-Navigate to project folder “cd ProductWebUI” 
-Run sbt (Assumption that sbt is successfully installed in the system)
-
-
-
-At this point sbt picks up the build definition from “build.sbt” and start setting up the project. It imports all the dependencies defined under project folder in Settings, scala file and start the play server. After successful execution of “sbt” command a “[Server] $” prompt will appear on the command terminal window
-On new prompt execute “run” command. 
-
-This will start compilation of scala sources and start the server at default port 9000.
-
-
-
-Navigate to localhost:9000 in your browser.
+ * Navigate to localhost:9000 in your browser.
  
+ * The server now start compiling the code to on single fast-opt.js file and you should see the dashboard.
 
+#### Other Note 
 
+In IntelliJ, this project is not sett up as SBT/Scala project and all unresolved item appeared in IntelliJ while trying to edit scala files. This can me remidiate by:
 
-The server now start compiling the code to on single fast-opt.js file and you should see the dashboard.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Appendix - IntelliJ not setting up as SBT/Scala project and all unresolved item appeared in you IntelliJ while trying to edit scala files then please follow the steps below:
-Update sbt.xml file in .idea folder with the following and save the file (auto saved)
+ * Update sbt.xml file in .idea folder with the following and save the file (auto saved)
+ 
+```
 <option name="linkedExternalProjectsSettings">
- <SbtProjectSettings>
-   <option name="createEmptyContentRootDirectories" value="true" />
-   <option name="externalProjectPath" value="$PROJECT_DIR$" />
-   <option name="resolveSbtClassifiers" value="true" />
-   <option name="useAutoImport" value="true" />
-   <option name="useOurOwnAutoImport" value="true" />
- </SbtProjectSettings>
+  <SbtProjectSettings>
+    <option name="createEmptyContentRootDirectories" value="true" />
+    <option name="externalProjectPath" value="$PROJECT_DIR$" />
+    <option name="resolveSbtClassifiers" value="true" />
+    <option name="useAutoImport" value="true" />
+    <option name="useOurOwnAutoImport" value="true" />
+  </SbtProjectSettings>
 </option>
+```
 
-
-Re-start your project (Restart IntelliJ) and you will notice “SBT” on the right side upper corner for build (see screen shot)
-
-
-
-
-
- Select “SBT” as shown in the screenshot and you will notice SBT dependencies are being processed (message can be seen on the status bar at the bottom of IntelliJ)
-
-
-
+ * Re-start your project (Restart IntelliJ) and you will notice “SBT” on the right side upper corner for build (see screen shot)
+ 
+* Select “SBT” as shown in the screenshot and you will notice SBT dependencies are being processed (message can be seen on the status bar at the bottom of IntelliJ)
