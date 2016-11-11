@@ -9,7 +9,7 @@ import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
 import shared.models.UserModel
-import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
@@ -18,16 +18,16 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.{AppUtils, ContentUtils, I18N}
+import synereo.client.utils.{ContentUtils, I18N}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import diode.{ModelR, ModelRO}
+import diode.ModelRO
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSON
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 //scalastyle:off
 object MainMenu {
@@ -171,9 +171,9 @@ object MainMenu {
                 //                  )
                 //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  <.span(<.img(^.className:="hidden-xss img-responsive",^.src:="./assets/synereo-images/bubble.png",SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
+                  <.span(<.img(^.className := "hidden-xss img-responsive", ^.src := "./assets/synereo-images/bubble.png", SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
                   //                  if (model.name.length() < 10) {
-                  <.span(SynereoCommanStylesCSS.Style.userNameNavBarText,<.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
+                  <.span(SynereoCommanStylesCSS.Style.userNameNavBarText, <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
                     //                  }
                     //                  else {
                     //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
@@ -190,7 +190,7 @@ object MainMenu {
                     )
                   )
                 ),
-                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
+                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/ SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
                   <.div()(
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)
