@@ -51,14 +51,13 @@ For setting up project you just need to create the project from existing sources
  * Once cloned process is completed then open build.sbt in ProductWebUI folder and click on setup jdk. In the dialog box browse and set installed jdk(downloaded and installed or if had existing installation)
  ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup3.png)
  * Once that done click on import project. At this point SBT will start  refreshing the dependencies.
- * Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA windows as show below
- ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup4.png)
-
- * After terminal window appears enter commands as below (Assumption that sbt is successfully installed in the system). In this, sbt picks up the build definition from “build.sbt” file and start setting up the project. "sbt" will download all dependenices and will start play server after compling source code. This will also start the server at default port 9000.
+ * Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA window and enter commands as below after terminal window appears (Assumption that sbt is successfully installed in the system). In this case, sbt will pick up the build definition from “build.sbt” file, start setting up the project, download all dependenices and start play server after compling source code. This will also start the server at default port - 9000.
  ```
  cd ProductWebUI” 
  sbt  run 
  ```
+ ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup4.png)
+
  * Navigate to localhost:9000 in your browser and follow onscreen instructions.
  
 #### Other Note 
@@ -81,6 +80,7 @@ In IntelliJ, this project is not set up correctly as SBT/Scala project and all u
 ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup5.png)
 
  * Re-start your project (Restart IntelliJ) and you will notice “SBT” on the right side upper corner for build (see screen shot)
+ 
 ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup6.png)
  
 * Select “SBT” as shown in the screenshot and you will notice SBT dependencies are being processed (message can be seen on the status bar at the bottom of IntelliJ)
