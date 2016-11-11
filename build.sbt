@@ -25,6 +25,7 @@ lazy val client: Project = (project in file("sclient"))
     version := Versions.appVersion,
     scalaVersion := Versions.scalaVersion,
     scalacOptions ++= Settings.scalacOptions,
+    resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"),
     libraryDependencies ++= Settings.scalajsDependencies.value,
     // by default we do development build, no eliding
     elideOptions := Seq(),
