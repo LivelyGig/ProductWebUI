@@ -52,7 +52,7 @@ For setting up project you just need to create the project from existing sources
  ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup3.png)
  * Once that done click on import project. At this point SBT will start  refreshing the dependencies.
  * Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA windows as show below
- ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ids-ui-setup4.png)
+ ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup4.png)
 
  * After terminal window appears enter commands as below (Assumption that sbt is successfully installed in the system). In this, sbt picks up the build definition from “build.sbt” file and start setting up the project. "sbt" will download all dependenices and will start play server after compling source code. This will also start the server at default port 9000.
  ```
@@ -78,7 +78,9 @@ In IntelliJ, this project is not set up correctly as SBT/Scala project and all u
   </SbtProjectSettings>
 </option>
 ```
+![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup5.png)
 
  * Re-start your project (Restart IntelliJ) and you will notice “SBT” on the right side upper corner for build (see screen shot)
+![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup6.png)
  
 * Select “SBT” as shown in the screenshot and you will notice SBT dependencies are being processed (message can be seen on the status bar at the bottom of IntelliJ)
