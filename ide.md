@@ -7,7 +7,7 @@ development project. Many open source components are used to develop the applica
 Scala-Tags, Autowire, Boopickle etc. This is based on design by Otto Chrons and for more detail visit [here]
 (https://github.com/ochrons/scalajs-spa-tutorial) and [here](http://ochrons.github.io/scalajs-spa-tutorial/). 
 Another important library called scalajs-react can be found [here](https://japgolly.github.io/scalajs-react/) 
-and [here](https://github.com/vmunier/play-with-scalajs-example)
+and [here](https://github.com/vmunier/play-with-scalajs-example). Also dependent on [Play server](https://www.playframework.com/)
 
 See also the Synereo document [here](https://docs.google.com/document/d/1F4mXkuO_54oKv_02x6v9UUcycNWJFWUExL8KQNMuGr8/edit).
 
@@ -31,17 +31,18 @@ Application is broadly divided into three folders: client, server, and shared.
   More details on the server implementation can be found here
 
 ####Prerequisites
-This project uses Play 2.4.x which depends on Java 8, so make sure you are using JVM 8 or later. It relies on 
-SBT as a build tool for building the project. This project uses following framework and code base:
-LivelyGig github.com repository location: here  
-Java 8 (java version “1.8.0_66”). Download can be found here.
+The following softwares are required to setup and compile. It uses Play 2.4.x which depends on Java 8, so make sure you are using JVM 8 or later. 
+ * LivelyGig UI [source](https://github.com/LivelyGig/ProductWebUI)  
+ * [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) .
 Play 2.4.4 which depends on Java 8 (JVM 8 or later). Download can be found here.
-SBT as a build tool for building the project.(version 0.13.9) and download from http://www.scala-sbt.org/download.html 
-Add Javac (JDK_Install_Location\bin) command and sbt to the path for the user or system. 
+ * [sbt](http://www.scala-sbt.org/download.html) - Scala Build Tool (SBT) as a build tool to organize library
+ * [IntelliJ IDE](https://www.jetbrains.com/idea/#chooseYourEdition)
+
+Note: You may need to add Javac (JDK_Install_Location\bin) command and sbt to the execution path. 
 
 
-Setting up IDE
-Our current integrated development environment currently is Intellij Idea (version 15.0.2 latest version at the time of writing this documentation). For setting up project you just need to create the project from existing sources. More details regarding the same procedure can be found at the following links:  Creating a Project by Importing Existing Sources, Creating and Running Your Scala Application and Getting Started with SBT. Please follow step by step instruction for setting up the project:
+####Setting up IDE
+For setting up project you just need to create the project from existing sources. More details regarding the same procedure can be found at the following links:  Creating a Project by Importing Existing Sources, Creating and Running Your Scala Application and Getting Started with SBT. Please follow step by step instruction for setting up the project:
 
 
 Open Intellij Idea and goto File > New >  Project from Version Control > Github (This is important - Please don’t start from dashboard area)
