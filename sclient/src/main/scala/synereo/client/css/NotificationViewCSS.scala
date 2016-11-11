@@ -11,11 +11,18 @@ object NotificationViewCSS {
 
     import dsl._
 
-//    val notificationViewContainerMain = style(
-//      height(97.vh),
-//      overflowY.scroll.important,
-//      overflowX.hidden
-//    )
+    //    val notificationViewContainerMain = style(
+    //      height(97.vh),
+    //      overflowY.scroll.important,
+    //      overflowX.hidden
+    //    )
+    val messageContent = style(
+      whiteSpace.nowrap.important
+    )
+    val messageContentText = style(
+      whiteSpace.preWrap,
+      wordWrap.breakWord
+    )
     val notificationCard = style(
       paddingTop(15.px),
       paddingBottom(15.px),

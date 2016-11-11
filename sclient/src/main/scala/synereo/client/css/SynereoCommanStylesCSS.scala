@@ -473,14 +473,6 @@ object SynereoCommanStylesCSS {
         fontSize(13.px),
       media.minWidth(462.px).maxWidth(766.px) -
         width(100 %%)
-
-      //      width(130.px),
-      //      media.minWidth(776.px) -
-      //        width(150.px)
-
-      // ,
-      //   media.maxWidth(766.px) -
-      // maxWidth.inherit
     )
 
     val paddingLeft15p = style(
