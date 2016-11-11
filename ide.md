@@ -45,27 +45,22 @@ For setting up project you just need to create the project from existing sources
 
  * Open Intellij Idea and goto File > New >  Project from Version Control > Github (This is important - Please don’t start from dashboard area)
  ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup1.png)
- * In the dialog box enter the url https://github.com/LivelyGig/ProductWebUI.git and give the folder location as below
+ * In the dialog box enter the url https://github.com/LivelyGig/ProductWebUI.git and give the folder location as below (default location)
+ 
  ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup2.png)
- * Once cloned open build.sbt in ProductWebUI folder and click on setup jdk
+ * Once cloned process is completed then open build.sbt in ProductWebUI folder and click on setup jdk. In the dialog box browse and set installed jdk(downloaded and installed or if had existing installation)
  ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ide-ui-setup3.png)
-
- * In the dialog box browse and set jdk to 1.8.0_66 (after installation from prior download - provide the installation location if needed)
  * Once that done click on import project. At this point SBT will start  refreshing the dependencies.
  * Open “Terminal Command” window tab by navigating to lower left side of IntelliJ IDEA windows as show below
+ ![](https://github.com/synereo/docs/blob/master/images/ide-ui/ids-ui-setup4.png)
 
- * After terminal window appears type the following setup of command 
- * Navigate to project folder “cd ProductWebUI” 
- * Run sbt (Assumption that sbt is successfully installed in the system)
- * At this point sbt picks up the build definition from “build.sbt” and start setting up the project. It imports all the dependencies defined under project folder in Settings, scala file and start the play server. After successful execution of “sbt” command a “[Server] $” prompt will appear on the command terminal window
- * On new prompt execute “run” command. 
-
- * This will start compilation of scala sources and start the server at default port 9000.
-
- * Navigate to localhost:9000 in your browser.
+ * After terminal window appears enter commands as below (Assumption that sbt is successfully installed in the system). In this, sbt picks up the build definition from “build.sbt” file and start setting up the project. "sbt" will download all dependenices and will start play server after compling source code. This will also start the server at default port 9000.
+ ```
+ cd ProductWebUI” 
+ sbt  run 
+ ```
+ * Navigate to localhost:9000 in your browser and follow onscreen instructions.
  
- * The server now start compiling the code to on single fast-opt.js file and you should see the dashboard.
-
 #### Other Note 
 
 In IntelliJ, this project is not set up correctly as SBT/Scala project and all unresolved item appeared in IntelliJ while trying to edit scala files. This can me remidiate by:
