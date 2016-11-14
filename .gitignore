@@ -36,3 +36,4 @@ doc/_book
 #node modules
 node_modules/
 
+*.patch
