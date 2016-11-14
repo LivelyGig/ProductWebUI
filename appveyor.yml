@@ -11,6 +11,7 @@ environment:
 install:
   - ps: . "scripts\appveyor.ps1"
 
+
 cache:
   - C:\Users\appveyor\.ivy2
   - C:\Users\appveyor\.sbt
