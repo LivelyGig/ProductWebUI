@@ -17,7 +17,7 @@ cache:
   - C:\Users\appveyor\.sbt
 
 build_script:
-  - ps: sbt fastOptJS
+  - ps: sbt fullOptJS
 
 test_script:
   - ps: sbt test
