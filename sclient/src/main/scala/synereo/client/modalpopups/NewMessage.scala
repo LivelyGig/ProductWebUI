@@ -5,7 +5,8 @@ import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
-import synereo.client.css.{NewMessageCSS}
+import synereo.client.css.NewMessageCSS
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -15,14 +16,15 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
 import org.widok.moment.Moment
-import shared.dtos.{LabelPost}
+import shared.dtos.LabelPost
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
 import diode.AnyAction._
-import diode.ModelR
+import diode.{ModelR, ModelRO}
+
 import scala.scalajs.js
 
 //scalastyle:off
@@ -81,7 +83,10 @@ object NewMessageForm {
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
+                   //keep this selectize id same as, a css class is used for@allContacts hide list feature
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
+                   //keep this selectize id same as, a css class has been overiden for avoiding overflowing contents out of window using this id
+                   //see synereo-main.less for more details
                    labelsSelectizeInputId: String = "labelsSelectizeInputId",
                    tags: Seq[String] = Seq(),
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
@@ -99,7 +104,7 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
@@ -246,15 +251,16 @@ object NewMessageForm {
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
             ),
             <.div(^.className := "row")(
-              <.div(^.id := state.connectionsSelectizeInputId)(
+              <.div(^.id := state.connectionsSelectizeInputId, ^.width := "100%")(
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
               <.div(^.id := "cnxn-error", ^.className := "hidden text-danger",
                 state.lang.selectDynamic("PROVIDE_ATLEAST_ONE_CONNECTION").toString),
-              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId)(
+              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId, ^.width := "100%")(
                 LabelsSelectize(LabelsSelectize.Props(state.labelsSelectizeInputId))
-              ),
+              )),
+            <.div(^.className := "row")(
               <.div()(
                 <.textarea(^.rows := 1, ^.placeholder := state.lang.selectDynamic("TITLE_YOUR_POST").toString, ^.value := state.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
               ),

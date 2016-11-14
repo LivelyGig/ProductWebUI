@@ -23,7 +23,7 @@ object SearchesModelHandler {
       SearchesRootModel(searchesModel = model)
     } catch {
       case e: Exception =>
-        println("error in method getsearchesModel")
+        logger.log.error("error in method getsearchesModel")
         SearchesRootModel(Nil)
     }
   }

@@ -5,22 +5,26 @@ import synereo.client.css.{AppCSS, SynereoCommanStylesCSS}
 import synereo.client.modules._
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.logger._
+
 import scala.scalajs.js
 import japgolly.scalajs.react.extra.router._
 import org.querki.jquery._
 import org.scalajs.dom
+
 import scala.scalajs.js.annotation.JSExport
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import scalacss.mutable.GlobalRegistry
+
 import scala.scalajs.js
 import scala.scalajs.js.timers._
 import diode.AnyAction._
 import synereo.client.handlers.{CloseAllPopUp, UnsetPreventNavigation}
 import synereo.client.sessionitems.SessionItems
+
+import scalacss.internal.mutable.GlobalRegistry
 
 // scalastyle:off
 @JSExport("SYNEREOMain")

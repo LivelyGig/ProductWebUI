@@ -34,7 +34,7 @@ object Settings {
 
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
-    "com.vmunier" %% "play-scalajs-scripts" % Versions.playScripts,
+    "com.vmunier" %% "scalajs-scripts" % Versions.scalajsScripts,
     "org.webjars" % "font-awesome" % Versions.fontAwesome % Provided,
     "org.webjars" % "bootstrap" % Versions.bootstrap % Provided,
     "org.json4s" %% "json4s-jackson" % Versions.json4s
@@ -53,9 +53,9 @@ object Settings {
     "org.querki" %%% "bootstrap-datepicker-facade" % Versions.datePickerFacade,
     "org.denigma" %%% "selectize-facade" % Versions.selectizeFacade,
     "io.github.widok" %%% "scala-js-momentjs" % Versions.momentJSFacade,
-    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test",
     "com.lihaoyi" %%% "upickle" % Versions.upickle,
-    "com.github.japgolly.scalajs-react" %%% "test" % Versions.test % "test"
+    "com.github.japgolly.scalajs-react" %%% "test" % Versions.test % "test",
+    "org.scalatest" %%% "scalatest" % Versions.scalaTest % "test"
   ))
 
   /** Dependencies for external JS libs that are bundled into a single .js file according to dependency order */

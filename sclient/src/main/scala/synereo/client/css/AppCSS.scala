@@ -1,6 +1,6 @@
 package synereo.client.css
 
-import scalacss.mutable.GlobalRegistry
+import scalacss.internal.mutable.GlobalRegistry
 
 /**
   * Created by shubham.k on 11/24/2015.

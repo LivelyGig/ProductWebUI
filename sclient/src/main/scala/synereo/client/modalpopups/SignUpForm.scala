@@ -1,10 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -15,6 +16,7 @@ import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.sessionitems.SessionItems
+
 import scala.scalajs.js
 
 //scalastyle:off
@@ -56,7 +58,7 @@ object SignUpForm {
       t.modState(s => s.copy(apiURL = value))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
@@ -129,8 +131,16 @@ object SignUpForm {
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
     if (addNewUserState)
-      State(new SignUpModel(signUpModelUpdate.email, signUpModelUpdate.password, signUpModelUpdate.confirmPassword, signUpModelUpdate.name, signUpModelUpdate.lastName, signUpModelUpdate.createBTCWallet, signUpModelUpdate.isModerator,
-        signUpModelUpdate.isClient, signUpModelUpdate.isFreelancer, signUpModelUpdate.canReceiveEmailUpdates))
+      State(new SignUpModel(signUpModelUpdate.email,
+        "",
+        "",
+        signUpModelUpdate.name,
+        signUpModelUpdate.lastName,
+        signUpModelUpdate.createBTCWallet,
+        signUpModelUpdate.isModerator,
+        signUpModelUpdate.isClient,
+        signUpModelUpdate.isFreelancer,
+        signUpModelUpdate.canReceiveEmailUpdates))
     else
       State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
     .backend(new NewUserFormBackend(_))

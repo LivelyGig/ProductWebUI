@@ -9,7 +9,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon._
 import synereo.client.css._
 import diode.AnyAction._
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -203,7 +203,7 @@ object ConnectionsForm {
       t.modState(s => s.copy(agentUid = value))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
   }

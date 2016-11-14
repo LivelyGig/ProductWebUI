@@ -1,15 +1,17 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.GlobalStyles
-import synereo.client.css.{SynereoCommanStylesCSS}
+import synereo.client.css.SynereoCommanStylesCSS
+
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
+
 import scala.scalajs.js
 
 /**
@@ -39,7 +41,7 @@ object LoginErrorModal {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

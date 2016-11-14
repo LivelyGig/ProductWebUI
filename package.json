@@ -1,0 +1,23 @@
+{
+  "name": "synereo",
+  "version": "0.7.8",
+  "description": "Synereo client",
+  "main": "index.js",
+  "dependencies": {
+    "jsdom": "^9.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LivelyGig/ProductWebUI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LivelyGig/ProductWebUI/issues"
+  },
+  "homepage": "https://github.com/LivelyGig/ProductWebUI#readme"
+}

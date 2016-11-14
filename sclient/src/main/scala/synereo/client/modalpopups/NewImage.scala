@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.prefix_<^._
 
@@ -97,7 +97,7 @@ object ProfileImageUploaderForm {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 

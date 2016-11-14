@@ -124,7 +124,13 @@ object ConnectionsList {
 
             <.div(^.className := "col-md-7 col-sm-7 col-xs-7 col-lg-7", ConnectionsCSS.Style.connectionNameDiv)(<.h5(^.className := "", ^.wordBreak := "break-word", ConnectionsCSS.Style.connectionName)(
               if (connection.name.nonEmpty) {
-                connection.name
+                <.div(ConnectionsCSS.Style.connectionName,
+                  connection.name,
+                  <.div(ConnectionsCSS.Style.connectionInfoTooltip, ^.className := "infoTooltip",
+                    <.span()(s"UID: "),
+                    connection.connection.target.substring(8).split("/")(0)
+                  )
+                )
               } else {
                 <.span()
               }

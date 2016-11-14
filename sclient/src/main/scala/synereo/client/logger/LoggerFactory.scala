@@ -36,8 +36,8 @@ object LoggerFactory {
   lazy val popupAppender = new PopUpAppender
 
   /**
-   * Create a logger that outputs to browser console
-   */
+    * Create a logger that outputs to browser console
+    */
   def getLogger(name: String): Logger = {
     val nativeLogger = Log4JavaScript.log4javascript.getLogger(name)
     nativeLogger.addAppender(consoleAppender)
@@ -45,8 +45,8 @@ object LoggerFactory {
   }
 
   /**
-   * Create a logger that outputs to a separate popup window
-   */
+    * Create a logger that outputs to a separate popup window
+    */
   def getPopUpLogger(name: String): Logger = {
     val nativeLogger = Log4JavaScript.log4javascript.getLogger(name)
     nativeLogger.addAppender(popupAppender)
