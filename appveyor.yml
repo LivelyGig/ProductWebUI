@@ -21,3 +21,8 @@ build_script:
 
 test_script:
   - ps: sbt test
+
+branches:
+  only:
+    - master
+    - synereo
