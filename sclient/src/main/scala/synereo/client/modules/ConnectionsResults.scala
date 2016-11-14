@@ -82,7 +82,13 @@ object ConnectionsList {
           <.div(^.className := "media-body", ConnectionsCSS.Style.connectionBody,
             <.h4(^.className := "media-heading", ^.wordBreak := "break-word")(
               if (connection.name.nonEmpty) {
-                connection.name
+                <.div(ConnectionsCSS.Style.connectionName,
+                  connection.name,
+                  <.div(ConnectionsCSS.Style.connectionInfoTooltip, ^.className := "infoTooltip",
+                    <.span()(s"UID: "),
+                    connection.connection.target.substring(8).split("/")(0)
+                  )
+                )
               } else {
                 <.span()
               }

@@ -3,7 +3,6 @@ package synereo.client.components
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
-import org.scalajs.dom._
 import org.denigma.selectize._
 import org.querki.jquery.JQueryExtensions
 import scala.language.existentials
@@ -18,21 +17,6 @@ import synereo.client.utils.AppUtils
   */
 //scalastyle:off
 object ConnectionsSelectize {
-
-  //  def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
-  //    var selectedConnections = Seq[Connection]()
-  //    var allSelected: Boolean = false
-  //    val selector: js.Object = s"#${selectizeInputId} > .selectize-control> .selectize-input > div"
-  //    $(selector).each((ele: Element) =>
-  //      if ($(ele).attr("data-value").toString == AppUtils.ALL_CONTACTS_ID) {
-  //        allSelected = true
-  //        selectedConnections = selectedConnections ++ SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection)
-  //      } else if (!allSelected) {
-  //        selectedConnections :+= upickle.default.read[Connection]($(ele).attr("data-value").toString)
-  //      }
-  //    )
-  //    selectedConnections
-  //  }
 
   def getConnectionsFromSelectizeInput(selectizeInputId: String): Seq[Connection] = {
     val selectedCnxn = $(s"#${selectizeInputId} > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
@@ -52,57 +36,49 @@ object ConnectionsSelectize {
   }
 
 
-  case class Props(parentIdentifier: String, fromSelecize: () => Callback, option: Option[Int] = None, receivers: Seq[ConnectionsModel] = Nil,
-                   sender: ConnectionsModel = ConnectionsModel(), replyPost: Boolean = false, enableAllContacts: Boolean = false)
+  case class Props(parentIdentifier: String,
+                   fromSelecize: () => Callback,
+                   option: Option[Int] = None,
+                   receivers: Seq[ConnectionsModel] = Nil,
+                   sender: ConnectionsModel = ConnectionsModel(),
+                   replyPost: Boolean = false,
+                   enableAllContacts: Boolean = false)
 
-  case class State(connections: Seq[ConnectionsModel] = Nil)
+  case class State(connections: Seq[ConnectionsModel] = Nil,
+                   allContactsSelected: Boolean = false)
 
 
   case class Backend(t: BackendScope[Props, State]) {
-    //    def initializeTagsInput(): Unit = {
-    //      val props = t.props.runNow()
-    //      val parentIdentifier = props.parentIdentifier
-    //
-    //      val count = props.option match {
-    //        case Some(a) => a
-    //        case None => 7
-    //      }
-    //
-    //      val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
-    //      val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-    //      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", count, false)
-    //
-    //    }
 
     def initializeTagsInput(props: Props, state: State): Unit = {
-
       val parentIdentifier = t.props.runNow().parentIdentifier
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       val selectizeInput: js.Object = s"#${parentIdentifier}-selectize"
-      //      $(selectizeInput).selectize()
       $(selectizeInput).selectize(SelectizeConfig
         .maxItems(30)
         .plugins("remove_button")
         .onItemAdd((item: String, value: js.Dynamic) => {
+          val selectedCnxn = $(s"#connectionsSelectizeInputId > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
+          if (selectedCnxn.filter(s"[data-value='${AppUtils.ALL_CONTACTS_ID}']").length == 1)
+            $(".selectize-dropdown-content .option".asInstanceOf[js.Object]).addClass("hidden")
           props.fromSelecize().runNow()
           //          println("")
         })
         .onItemRemove((item: String) => {
+          val selectedCnxn = $(s"#connectionsSelectizeInputId > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
+          if (selectedCnxn.filter(s"[data-value='${AppUtils.ALL_CONTACTS_ID}']").length != 1)
+            $(".selectize-dropdown-content .option".asInstanceOf[js.Object]).removeClass("hidden")
           props.fromSelecize().runNow()
           //          println("")
         })
-
       )
-
     }
 
     def mounted(props: Props, state: State): Callback = Callback {
       initializeTagsInput(props, state)
-      //      SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.map(cnxnRes => cnxnRes.connection).foreach(println)
     }
 
     def getCnxnModel(): Seq[ConnectionsModel] = {
-
       try {
         SYNEREOCircuit.zoom(_.connections).value.connectionsResponse
       } catch {
@@ -116,12 +92,12 @@ object ConnectionsSelectize {
     }
 
     def render(props: Props, state: State) = {
-      if (props.replyPost == true) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple := true, ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo" /*, ^.onChange --> getSelectedValues*/)(
+      if (props.replyPost) {
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.multiple := true,
+          ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
           for (receiver <- props.receivers) yield {
             for (connection <- state.connections; if receiver.connection == connection.connection) yield {
-              //              println(s"connection matched${connection.name}")
               <.option(^.value := upickle.default.write(connection.connection),
                 ^.key := connection.connection.target, ^.selected := true)(
                 if (connection.name.startsWith("@")) {
@@ -145,7 +121,8 @@ object ConnectionsSelectize {
         )
 
       } else if (props.enableAllContacts) {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize",
+          ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
           <.option(^.value := AppUtils.ALL_CONTACTS_ID)("@All_Contacts"),
           for (connection <- state.connections) yield <.option(^.value := upickle.default.write(connection.connection),
@@ -157,7 +134,8 @@ object ConnectionsSelectize {
             })
         )
       } else {
-        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize", ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
+        <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize",
+          ^.className := "demo-default", ^.placeholder := "Recipients e.g. @Synereo")(
           <.option(^.value := "")("Select"),
           for (connection <- state.connections) yield
             <.option(^.value := upickle.default.write(connection.connection),
@@ -173,7 +151,7 @@ object ConnectionsSelectize {
   }
 
 
-  val component = ReactComponentB[Props]("SearchesConnectionList")
+  val component = ReactComponentB[Props]("ConnectionsSelectize")
     .initialState(State())
     .renderBackend[Backend]
     .componentDidMount(scope => scope.backend.mounted(scope.props, scope.state))

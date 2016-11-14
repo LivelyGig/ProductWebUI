@@ -86,7 +86,9 @@ object DashboardCSS {
     )
     val cardImage = style(
       //      paddingRight(65.px)s
-      width(100.%%)
+//      width(100.%%)
+      maxHeight(500.px),
+      margin.auto
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
@@ -311,7 +313,14 @@ object DashboardCSS {
         paddingRight(0.px))
     )
 
-
+    val cardPostImage = style(
+      height(500.px),
+      display.flex,
+      backgroundColor(black)
+    )
+    val cardImageContainer = style(
+      margin.auto,
+      width(100.%%)
+    )
   }
-
 }

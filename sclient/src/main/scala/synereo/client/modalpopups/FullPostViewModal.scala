@@ -90,9 +90,20 @@ object FullPostViewModal {
               <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer, ^.onClick --> t.backend.hide)(" "),
               <.div(^.className := "col-md-10 col-sm-10 col-xs-8")(
                 <.div(^.className := "row", PostFullViewCSS.Style.postedImageContainerDiv)(
-                  if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size > 80659) {
+
+
+
+
+                  if (props.messages.postContent.imgSrc != "" /*&& props.messages.postContent.imgSrc.size > 80659*/) {
                     // getMessage = message
-                    <.img(^.id := "fullViewImage", ^.src := props.messages.postContent.imgSrc, PostFullViewCSS.Style.blogMainImage)
+
+                    <.div(DashboardCSS.Style.cardPostImage)(
+                      <.div(DashboardCSS.Style.cardImageContainer)(
+                      //  <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))
+                          <.img(^.id := "fullViewImage", ^.src := props.messages.postContent.imgSrc, DashboardCSS.Style.cardImage ,^.className := "img-responsive")
+                      )
+                    )
+
                   } else {
                     // getMessage = null
                     <.span("")
@@ -143,18 +154,19 @@ object FullPostViewModal {
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/
                       ),
                       <.div(^.className := "row", PostFullViewCSS.Style.postDescription)(
-                        if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size < 80659) {
-                          <.div(
-                            <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
-                              s"${props.messages.postContent.text}"
-                            ),
-                            <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
-                              <.img(^.src := props.messages.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder))
-                          )
-                        } else {
+//                        if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size < 80659) {
+//                          <.div(
+//                            <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
+//                              s"${props.messages.postContent.text}"
+//                            ),
+//                            <.div(^.className := "col-md-4 col-sm-4 col-xs-4")(
+//                              <.img(^.src := props.messages.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder))
+//                          )
+//                        } else {
                           s"${props.messages.postContent.text}"
-                        }
-                      ) /*,
+                        //}
+                      )
+                      /*,
                         <.div(^.className := "row")(
                           <.div(^.className := "col-md-12", PostFullViewCSS.Style.tagsEditorsDiv)(
                             <.div(
@@ -288,7 +300,7 @@ object FullPostViewModal {
                       //                            )
                       //                          )
                       //                        )
-                    )
+                   )
                   )
                 )
               ),

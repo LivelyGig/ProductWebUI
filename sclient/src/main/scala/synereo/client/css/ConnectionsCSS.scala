@@ -67,10 +67,26 @@ object ConnectionsCSS {
       display.none
     )
 
-    val connectionBody = style (
+    val connectionBody = style(
       verticalAlign.bottom
     )
-
+    val connectionInfoTooltip = style(
+      visibility.hidden,
+      backgroundColor(rgba(0, 0, 0, 0.5)),
+      color(c"#fff"),
+      textAlign.left,
+      padding(10.px),
+      position.absolute,
+      zIndex(1),
+      margin(5.px, 0.px)
+    )
+    val connectionName = style {
+      &.hover(
+        unsafeChild(".infoTooltip")(
+          visibility.visible
+        )
+      )
+    }
   }
 
 }
