@@ -83,6 +83,7 @@ object NewMessageForm {
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
+                   //keep this selectize id same as, a css class is used for@allContacts hide list feature
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
                    //keep this selectize id same as, a css class has been overiden for avoiding overflowing contents out of window using this id
                    //see synereo-main.less for more details
@@ -250,13 +251,13 @@ object NewMessageForm {
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
             ),
             <.div(^.className := "row")(
-              <.div(^.id := state.connectionsSelectizeInputId,^.width:="100%")(
+              <.div(^.id := state.connectionsSelectizeInputId, ^.width := "100%")(
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
               <.div(^.id := "cnxn-error", ^.className := "hidden text-danger",
                 state.lang.selectDynamic("PROVIDE_ATLEAST_ONE_CONNECTION").toString),
-              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId,^.width:="100%")(
+              <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId, ^.width := "100%")(
                 LabelsSelectize(LabelsSelectize.Props(state.labelsSelectizeInputId))
               )),
             <.div(^.className := "row")(
@@ -282,13 +283,13 @@ object NewMessageForm {
                   for (tag <- state.tags.zipWithIndex) yield
                     <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
-                        <.li(^.textTransform := "uppercase",  tag._1),
-                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel),<.span(
+                        <.li(^.textTransform := "uppercase", tag._1),
+                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel), <.span(
                           "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
                         )
+                        )
                       )
-                    )
-                ))
+                    ))
               ),
               <.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
