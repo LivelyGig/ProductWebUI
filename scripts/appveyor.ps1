@@ -15,6 +15,6 @@ Write-Host "Installing sbt..."
 Write-Host "sbt installed" -ForegroundColor Green
 
 # Node
-Update-NodeJsInstallation$env:nodejs_version
+Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version)
 
 npm install
