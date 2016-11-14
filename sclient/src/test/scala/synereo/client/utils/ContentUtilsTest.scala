@@ -44,7 +44,7 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
     val apiResponse = upickle.default.read[Seq[ApiResponse[Introduction]]](introNot)
     assert(SYNEREOCircuit.zoom(_.introduction.introResponse).value.contains(apiResponse.head.content))
   }
-  it should "update the balance" in {
+  /*it should "update the balance" in {
     Given("response json contains balance changed")
     val balChanged = MockData.balChanged
     contentUtils.processRes(balChanged)
@@ -53,7 +53,7 @@ class ContentUtilsTest extends UnitTest("ContentUtils") {
     And("the updated balance is same as the changed balance from response")
     val apiResponse = upickle.default.read[Seq[ApiResponse[OmniBalanceResponse]]](balChanged)
     assert(SYNEREOCircuit.zoom(_.user.balanceAmp).value == apiResponse(0).content.amp)
-  }
+  }*/
   it should "extract add new connection" in {
     Given("response json contains connect notification")
     val cnctNot = MockData.cnctNot
