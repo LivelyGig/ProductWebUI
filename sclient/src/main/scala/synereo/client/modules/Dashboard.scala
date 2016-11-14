@@ -276,9 +276,13 @@ object HomeFeedList {
 
                 <.div(^.className := "row")(
                   <.div(^.className := "col-md-12")(
-                    if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size > 80659) {
+                    if (message.postContent.imgSrc != "" /*&& message.postContent.imgSrc.size > 80659*/) {
                       <.div(
-                        <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", "))),
+                        <.div(DashboardCSS.Style.cardPostImage)(
+                          <.div(DashboardCSS.Style.cardImageContainer)(
+                            <.img(^.src := message.postContent.imgSrc, ^.className := "img-responsive", DashboardCSS.Style.cardImage, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))
+                          )
+                        ),
                         <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
                           <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
                           <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text),
@@ -287,19 +291,20 @@ object HomeFeedList {
                           )
                         )
                       )
-                    } else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
-                      <.div(
-                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
-                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
-                          <.div(
-                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", "))),
-                            <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text)),
-                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
-                            message.postContent.text
-                          )
-                        )
-                      )
-                    } else {
+                    } //else if (message.postContent.imgSrc != "" && message.postContent.imgSrc.size < 80659) {
+//                      <.div(
+//                        <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
+//                          <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
+//                          <.div(
+//                            <.img(^.src := message.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px", DashboardCSS.Style.imgBorder, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", "))),
+//                            <.div(^.id := "collapsePost", ^.className := "textOverflowPost", DashboardCSS.Style.cardText)(message.postContent.text)),
+//                          <.div(^.id := s"collapse-post-${message.uid}", ^.className := "collapse", DashboardCSS.Style.cardText)(
+//                            message.postContent.text
+//                          )
+//                        )
+//                      )
+//                    }
+                    else {
                       <.div(
                         <.div(DashboardCSS.Style.cardDescriptionContainerDiv, DashboardCSS.Style.cardPaddingBottom, ^.onClick --> t.backend.openFullViewModalPopUP(message, message.sender.name, message.receivers.map(_.name).mkString(", ")))(
                           <.h3(message.postContent.subject, DashboardCSS.Style.cardHeading),
