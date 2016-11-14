@@ -29,7 +29,11 @@ object DashboardCSS {
     )
     val inputBtnRadius = style(
       border.none,
-      padding(0.6.em, 1.2.em, 1.em)
+      display.block,
+      float.right,
+      width(25.px),
+      height(25.px)
+
     )
     val cardPostTagBtn = style(
       margin(5.px),
