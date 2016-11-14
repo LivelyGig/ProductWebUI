@@ -114,7 +114,7 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav  navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"),*/ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
-                <.li(
+            /*    <.li(
                   introductionConnectProxy(introProxy =>
                     if (introProxy.value.introResponse.length != 0) {
                       //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
@@ -125,7 +125,7 @@ object MainMenu {
                       <.span()
                     }
                   )
-                ),
+                ),*/
                 //                <.li(
                 //                  <.div(^.className := "dropdown")(
                 //                    <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
@@ -183,7 +183,18 @@ object MainMenu {
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                         //                        <.span(Icon.cogs),
                         <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
-                      )
+                      ),
+                       <.span( introductionConnectProxy(introProxy =>
+                        if (introProxy.value.introResponse.length != 0) {
+                          //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                          <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+                            <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
+                          )
+                        } else {
+                          <.span()
+                        }
+                        )
+                    )
                     )
                   )
                 ),

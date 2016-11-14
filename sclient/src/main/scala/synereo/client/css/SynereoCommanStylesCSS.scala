@@ -596,13 +596,19 @@ object SynereoCommanStylesCSS {
     )
     val userNameNavBarBubbleImage=style(
       maxWidth(250.px),
-      marginTop(-5.px),
-      right(0.px),
-      position.fixed,
+      right(-72.px),
+      position.absolute,
       media.maxWidth(766.px) -
         display.none,
-      media.minWidth(766.px).maxWidth(850.px) -
+      media.minWidth(777.px).maxWidth(850.px) -
       marginTop(-9.px)
+      ,
+      media.minWidth(850.px) -
+        marginTop(-5.px),
+      media.minWidth(766.px).maxWidth(776.px) -
+      right(-126.px),
+      marginTop(-9.px)
+
     )
     val userNameNavBarText=style(
       position.relative

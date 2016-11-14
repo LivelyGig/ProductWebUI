@@ -58,12 +58,13 @@ object NewConnection {
     .backend(new Backend(_))
     .renderPS(($, P, S) => {
       val B = $.backend
-      <.div(
+      <.span(
         Button(Button.Props(B.addConnectionForm(), CommonStyle.default, P.addStyles, "", P.title, className = ""), P.title),
         if (S.showConnectionsForm) ConnectionsForm(ConnectionsForm.Props(B.addConnections, P.title))
         else
           Seq.empty[ReactElement]
       )
+
     })
     .configure(OnUnmount.install)
     .build
@@ -214,7 +215,7 @@ object ConnectionsForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(props.header)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4("Connect Friend"/*props.header*/)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props)
         ),
