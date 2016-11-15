@@ -8,7 +8,7 @@ import shared.dtos.Introduction
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.css.{DashboardCSS, NewMessageCSS}
+import synereo.client.css.{DashboardCSS, NewMessageCSS, NotificationViewCSS}
 import scala.scalajs.js.JSON
 import japgolly.scalajs.react
 import japgolly.scalajs.react.{Callback, _}
@@ -116,38 +116,34 @@ object ConfirmIntroReqForm {
   private val component = ReactComponentB[Props]("ConfirmIntroReqForm")
     .initialState_P(p => State())
     .backend(new ConfirmIntroReqBackend(_))
-    .renderPS((t, P, S) => {
-      val headerText = P.header
+    .renderPS((t, props, state) => {
+      //      val headerText = props.header
       Modal(
         Modal.Props(
           header = hide => <.div(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.div(s"${S.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
-          closed = () => t.backend.formClosed(S, P),
-          addStyles = Seq()
+            <.div(s"${state.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
+          closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
-            <.div(^.className := "row", ^.fontSize := "0.8.em")(
-              <.div(^.className := "col-md-12")(
-                <.div(P.introduction.message),
-                <.div(
-                  s"From : ${JSON.parse(P.introduction.introProfile).name.asInstanceOf[String]}", <.br,
+            <.div(^.className := "row")(
+              <.div(^.className := "col-md-12", NotificationViewCSS.Style.messageContent)(
+                <.div(^.className := "row", props.introduction.message),
+                <.div(^.className := "row",
+                  s"From : ${JSON.parse(props.introduction.introProfile).name.asInstanceOf[String]}", <.br,
                   "Date : Mon July 27 2016 ", <.br
                 )
               ),
-              <.div()(
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/
-                    s"${S.lang.selectDynamic("ACCEPT").toString}"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide,
-                    s"${S.lang.selectDynamic("REJECT").toString}")
-                )
+              <.div(^.className := "row text-right")(
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn,
+                  s"${state.lang.selectDynamic("ACCEPT").toString}"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
+                  ^.onClick --> t.backend.hide, s"${state.lang.selectDynamic("REJECT").toString}")
               )
             )
           )
         )
       )
-
     })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.confirmIntroReq) {

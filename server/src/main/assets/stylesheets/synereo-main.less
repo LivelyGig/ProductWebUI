@@ -746,8 +746,8 @@ transform: translate(0,0); */
 }
 //overriden this class specific for labels selectize
 #labelsSelectizeInputId .selectize-input > input {
-width:100% !important;
-    word-break: break-word;
+ width:100% !important;
+ word-break: break-word;
 
 }
 .selectize-input > input::-ms-clear {
@@ -979,7 +979,7 @@ width:100% !important;
 
 .fromSenderTooltip + .tooltip > .tooltip-inner {
   background-color: black;
-   max-width:270px !important;
+  max-width:270px !important;
 }
 
 .trans{
@@ -998,12 +998,34 @@ width:100% !important;
   text-overflow: ellipsis;
 }
 #rightPost {
-display : none;
+  display : none;
 }
 .showRightPost:hover + #rightPost {
-display : initial;
+  display : initial;
 }
-
+@media (max-width: 767px)   {
+  #trans {
+    display:none;
+  }
+  #rightPost {
+    display : initial;
+    width:0%;
+  }
+  .showRightPost:hover + #rightPost {
+    display : initial;
+    width:80%;
+  }
+  .showRightPost:hover + #rightPost #trans {
+    display : initial;
+  }
+  #rightPost:hover #trans {
+    display : initial;
+  }
+  #rightPost:hover {
+    display : initial;
+    width:80%;
+  }
+}
 #rightPost:hover {
-display : initial;
+  display : initial;
 }
