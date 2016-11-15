@@ -130,6 +130,10 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
+//    def updateImg: Unit = {
+//
+//    }
+
     def mounted(): Callback = {
       val props = t.props.runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
@@ -206,6 +210,10 @@ object NewMessageForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
+      val props = t.props.runNow()
+      if(state.postMessage.imgSrc==null)
+        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
         $("#cnxn-error".asInstanceOf[js.Object]).removeClass("hidden")
@@ -298,7 +306,7 @@ object NewMessageForm {
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value:="", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := "no-image-upload-err", ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),
