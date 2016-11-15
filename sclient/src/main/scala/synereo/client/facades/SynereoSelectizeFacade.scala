@@ -9,6 +9,6 @@ import scala.scalajs.js
 object SynereoSelectizeFacade extends js.Object {
   def addOption(selectizeId: String, text: String, value: String): js.Any = js.native
 
-  def initilizeSelectize(selectizeId: String, maximumItems: Int, allowCreate: Boolean = false): js.native = js.native
+  def initilizeSelectize(selectizeId: String, maximumItems: Int, maxCharLimit: Int, allowCreate: Boolean = false): js.native = js.native
 
 }

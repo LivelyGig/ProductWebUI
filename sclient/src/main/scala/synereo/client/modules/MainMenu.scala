@@ -9,7 +9,8 @@ import synereo.client.SYNEREOMain
 import SYNEREOMain._
 import synereo.client.handlers._
 import shared.models.UserModel
-import synereo.client.services.{CoreApi, RootModel, SYNEREOCircuit}
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scalacss.ScalaCssReact._
 import diode.AnyAction._
 import japgolly.scalajs.react
@@ -17,14 +18,16 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
 import synereo.client.logger
-import synereo.client.utils.{AppUtils, ContentUtils, I18N}
+import synereo.client.utils.{ContentUtils, I18N}
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import diode.ModelR
+import diode.ModelRO
 import synereo.client.components.Bootstrap.CommonStyle
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
+
 import scala.scalajs.js
 import scala.scalajs.js.JSON
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 
 //scalastyle:off
 object MainMenu {
@@ -52,7 +55,7 @@ object MainMenu {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
@@ -114,7 +117,7 @@ object MainMenu {
             ),
             <.div(^.className := "nav navbar-nav  navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"),*/ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
-                <.li(
+            /*    <.li(
                   introductionConnectProxy(introProxy =>
                     if (introProxy.value.introResponse.length != 0) {
                       //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
@@ -125,7 +128,7 @@ object MainMenu {
                       <.span()
                     }
                   )
-                ),
+                ),*/
                 //                <.li(
                 //                  <.div(^.className := "dropdown")(
                 //                    <.button(^.className := "btn btn-default dropdown-toggle userActionButton", SynereoCommanStylesCSS.Style.userActionButton, ^.`type` := "button", "data-toggle".reactAttr := "dropdown" /*,
@@ -168,9 +171,9 @@ object MainMenu {
                 //                  )
                 //                ),
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
-                  <.span(<.img(^.className:="hidden-xss img-responsive",^.src:="./assets/synereo-images/bubble.png",SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
+                  <.span(<.img(^.className := "hidden-xss img-responsive", ^.src := "./assets/synereo-images/bubble.png", SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
                   //                  if (model.name.length() < 10) {
-                  <.span(SynereoCommanStylesCSS.Style.userNameNavBarText,<.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
+                  <.span(SynereoCommanStylesCSS.Style.userNameNavBarText, <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
                     //                  }
                     //                  else {
                     //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
@@ -183,11 +186,22 @@ object MainMenu {
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                         //                        <.span(Icon.cogs),
                         <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
-                      )
+                      ),
+                       <.span( introductionConnectProxy(introProxy =>
+                        if (introProxy.value.introResponse.length != 0) {
+                          //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                          <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+                            <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
+                          )
+                        } else {
+                          <.span()
+                        }
+                        )
+                    )
                     )
                   )
                 ),
-                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
+                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/ SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
                   <.div()(
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)

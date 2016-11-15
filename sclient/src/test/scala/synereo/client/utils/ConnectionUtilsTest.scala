@@ -25,13 +25,13 @@ class ConnectionUtilsTest extends UnitTest("ConnectionUtils") {
 
   val connectionProfileResponse = ConnectionProfileResponse("sessionURI", connection, "\"jsonBlob\":\"{\\\"name\\\":\\\"c\\\"}\"")
 
-  "getCnxnForReq" should "give connection sequence with self connection added" in {
+  /*"getCnxnForReq" should "give connection sequence with self connection added" in {
     Given("sequence of connections ")
     SYNEREOCircuit.dispatch(SetSessionUri("sessionUri"))
     val response = ConnectionsUtils.getCnxnForReq(connections)
     val preVerified = connections ++ Seq(ConnectionsUtils.getSelfConnnection())
     assert(response == preVerified)
-  }
+  }*/
 
   it should "give the all connection along with self connection added" in {
     Given("no connection sequence")

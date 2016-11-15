@@ -12,7 +12,6 @@ import org.scalajs.dom._
 import synereo.client.facades.SynereoSelectizeFacade
 
 import scala.language.existentials
-import scala.collection.mutable.ListBuffer
 import scala.scalajs.js
 
 /**
@@ -28,19 +27,19 @@ object LabelsSelectize {
     } else {
       selectedLabels = Nil
     }
-
     selectedLabels
   }
 
-  var getSelectedValue = new ListBuffer[String]()
-
-  /*Seq[Label]()*/
   case class Props(parentIdentifier: String)
 
-  case class State(labels: Seq[Label] = Nil)
+  case class State(labels: Seq[Label] = Nil,
+                   maxItems: Int = 7,
+                   maxCharLimit: Int = 16,
+                   allowNewItemsCreation: Boolean = true)
 
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
+      val state = t.state.runNow()
       val parentIdentifier = t.props.runNow().parentIdentifier
       val selectState: js.Object = s"#$parentIdentifier > .selectize-control"
       if ($(selectState).length < 1) {
@@ -49,7 +48,7 @@ object LabelsSelectize {
         //          .create(true)
         //          .maxItems(3)
         //          .plugins("remove_button"))
-        SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", 7, true)
+        SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", state.maxItems, state.maxCharLimit, state.allowNewItemsCreation)
       }
 
     }

@@ -43,12 +43,15 @@ object ConnectionsLabelsSelectize {
 
   case class Props(parentIdentifier: String)
 
-  case class State()
+  case class State(maxItems: Int = 7,
+                   maxCharLimit: Int = 16,
+                   allowNewItemsCreation: Boolean = false)
 
   case class Backend(t: BackendScope[Props, State]) {
     def initializeTagsInput(): Unit = {
+      val state = t.state.runNow()
       val parentIdentifier = t.props.runNow().parentIdentifier
-      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", 7, false)
+      SynereoSelectizeFacade.initilizeSelectize(s"${parentIdentifier}-selectize", state.maxItems, state.maxCharLimit, state.allowNewItemsCreation)
     }
 
     def mounted(props: Props): Callback = Callback {

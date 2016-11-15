@@ -745,11 +745,10 @@ transform: translate(0,0); */
   box-shadow: none !important;
 }
 //overriden this class specific for labels selectize
-#labelsSelectizeInputId .selectize-input > input {
+/*#labelsSelectizeInputId .selectize-input > input {
  width:100% !important;
  word-break: break-word;
-
-}
+}*/
 .selectize-input > input::-ms-clear {
   display: none;
 }
@@ -864,7 +863,7 @@ transform: translate(0,0); */
 /*
  * end of selectize.css
  */
- #labelSelectizeId .selectize-input{
+/* #labelSelectizeId .selectize-input{
   background-color: transparent !important;
   border-top: 0 !important;
   border-bottom: 0 !important;
@@ -872,7 +871,7 @@ transform: translate(0,0); */
   border-left: 0 !important;
   border-radius: 0;
   border-bottom: 1px solid #95C9DE;
-}
+}*/
 .create-post-button{
   -webkit-transition: All 0.5s ease;
   -moz-transition: All 0.5s ease;
@@ -1028,4 +1027,22 @@ transform: translate(0,0); */
 }
 #rightPost:hover {
   display : initial;
+}
+
+.ConnectionPostsOuter{
+ box-shadow: 15px 0px 20px 0 #216b9a;
+margin-right : 0px
+}
+
+.privacyOptionDropdown:hover  .privacyOptionDropdownMenu {
+display : block
+}
+.popularTags {
+visibility : hidden
+}
+.posts {
+overflow : hidden
+}
+.Posts:hover  .popularTags {
+    visibility: visible
 }

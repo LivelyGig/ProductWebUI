@@ -135,11 +135,11 @@ object SynereoCommanStylesCSS {
     val mainMenuNavbar = style(
       right.`0`,
       // backgroundImage := "url(\"./assets/synereo-images/bubble.png\")",
-      //    media.minWidth(545.px).maxWidth(766.px)(
-      //     marginTop(65.px)
-      //    ),
+//    media.minWidth(545.px).maxWidth(766.px)(
+//     marginTop(65.px)
+//    ),
       media.maxWidth(545.px)(
-        //        marginTop(65.px),
+//        marginTop(65.px),
         width(100.%%)
       )
     )
@@ -294,7 +294,7 @@ object SynereoCommanStylesCSS {
     val paddingRightZero = style(
       paddingRight(0.px).important
     )
-    val dropdownIcon = style (
+    val dropdownIcon = style(
       margin(0 px, 25 px)
     )
     val paddingLeftZero = style(
@@ -472,11 +472,11 @@ object SynereoCommanStylesCSS {
       media.minWidth(321.px).maxWidth(376.px) -
         fontSize(13.px),
       media.minWidth(462.px).maxWidth(766.px) -
-        width(100%%)
+       width(100%%)
 
-      //      width(130.px),
-      //      media.minWidth(776.px) -
-      //        width(150.px)
+//      width(130.px),
+//      media.minWidth(776.px) -
+//        width(150.px)
 
       // ,
       //   media.maxWidth(766.px) -
@@ -518,7 +518,7 @@ object SynereoCommanStylesCSS {
     )
 
     val naviCollapse = style(
-      media.maxWidth(767.px) -(
+      media.maxWidth(767.px) - (
         backgroundColor(rgb(46, 110, 142)),
         position.absolute,
         top(57.px),
@@ -527,9 +527,9 @@ object SynereoCommanStylesCSS {
         zIndex(9))
     )
 
-    val rightPost= style (
+    val rightPost = style(
       borderRadius(50.%%),
-      transition:="all 1.5s ease",
+      transition := "all 1.5s ease",
       backgroundColor(c"#bfbfbf"),
       height(30.px),
       width(30.px),
@@ -543,7 +543,7 @@ object SynereoCommanStylesCSS {
         width(3.vmax)
       )
     )
-    val rightAnimDiv= style (
+    val rightAnimDiv = style(
       media.minWidth(768.px).maxWidth(1200.px)(
         paddingLeft(1.5%%)
       ),
@@ -673,20 +673,30 @@ object SynereoCommanStylesCSS {
 
       )
     )
-    val userNameNavBarBubbleImage=style(
+    val userNameNavBarBubbleImage = style(
       maxWidth(250.px),
+      right(-72.px),
+      position.absolute,
+      media.maxWidth(766.px) -
       marginTop(-5.px),
       right(0.px),
       position.fixed,
       media.maxWidth(767.px) -
         display.none,
-      media.minWidth(768.px).maxWidth(850.px) -
+      media.minWidth(777.px).maxWidth(850.px) -
         marginTop(-9.px)
+      ,
+      media.minWidth(850.px) -
+        marginTop(-5.px),
+      media.minWidth(766.px).maxWidth(776.px) -
+      right(-126.px),
+      marginTop(-9.px)
+
     )
-    val userNameNavBarText=style(
+    val userNameNavBarText = style(
       position.relative
     )
-    val mainMenuUserActionDropdownLi=style(
+    val mainMenuUserActionDropdownLi = style(
       float.right.important,
       textAlign.right
     )

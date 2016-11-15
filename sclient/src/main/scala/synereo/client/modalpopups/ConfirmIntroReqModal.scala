@@ -2,13 +2,15 @@ package synereo.client.modalpopups
 
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.Bootstrap.{Button, CommonStyle, _}
-import synereo.client.components.{GlobalStyles, _}
+import synereo.client.components.Bootstrap.{Button, CommonStyle}
+import synereo.client.components.GlobalStyles
 import shared.dtos.Introduction
+
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.css.{DashboardCSS, NewMessageCSS, NotificationViewCSS}
+
 import scala.scalajs.js.JSON
 import japgolly.scalajs.react
 import japgolly.scalajs.react.{Callback, _}
@@ -16,9 +18,10 @@ import shared.dtos.IntroConfirmReq
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.handlers.UpdateIntroductionsModel
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
-import diode.ModelR
+import diode.ModelRO
+
 import scala.scalajs.js
 
 /**
@@ -103,7 +106,7 @@ object ConfirmIntroReqForm {
       t.modState(s => s.copy(confirmIntroReq = true))
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
@@ -128,7 +131,7 @@ object ConfirmIntroReqForm {
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.div(^.className := "row")(
               <.div(^.className := "col-md-12", NotificationViewCSS.Style.messageContent)(
-                <.div(^.className := "row", props.introduction.message),
+                <.div(^.className := "row", NotificationViewCSS.Style.messageContentText, props.introduction.message),
                 <.div(^.className := "row",
                   s"From : ${JSON.parse(props.introduction.introProfile).name.asInstanceOf[String]}", <.br,
                   "Date : Mon July 27 2016 ", <.br

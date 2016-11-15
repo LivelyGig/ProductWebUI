@@ -1,19 +1,28 @@
 package synereo.client.components
 
 import synereo.client.components.Bootstrap.CommonStyle._
+
 import scalacss.Defaults._
-import scalacss.mutable
+import scalacss.internal.mutable
+import japgolly.univeq.UnivEq
+
+
+import synereo.client.components.Bootstrap.CommonStyle
+
 
 class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(r) {
 
   import dsl._
 
+  implicit val styleUnivEq: UnivEq[CommonStyle.Value] = new UnivEq[CommonStyle.Value] {}
+
   val csDomain = Domain.ofValues(default, primary, success, info, warning, danger)
 
   val contextDomain = Domain.ofValues(success, info, warning, danger)
 
-  def commonStyle[A](domain: Domain[A], base: String) = styleF(domain)(opt =>
-    styleS(addClassNames(base, s"$base-$opt")))
+  def commonStyle[A: UnivEq](domain: Domain[A], base: String) = styleF(domain)(opt =>
+    styleS(addClassNames(base, s"$base-$opt"))
+  )
 
   def styleWrap(classNames: String*) = style(addClassNames(classNames: _*))
 

@@ -1,4 +1,5 @@
-@(title: String)<!--(implicit environment: play.api.Environment)-->
+@(title: String)(implicit config: play.api.Configuration, env: play.api.Environment)
+@import views.html.tags._
 <!DOCTYPE html>
 
 <html lang="en">
@@ -7,32 +8,29 @@
     <title>@title</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-    <!--Livelygig Specific links and scripts-->
-        <!--<link rel="stylesheet" media="screen" href="@routes.Assets.at("/public","stylesheets/main.min.css")">-->
-        <!--<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("/public","images/favicon.ico")">-->
 
 
     <!--Synereo Specific links and scripts-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("/public","stylesheets/synereo-main.min.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("/public","synereo-images/faviconSynereo.ico")">
+    <link rel="stylesheet" media="screen" href="@_asset("stylesheets/synereo-main.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@_asset("synereo-images/faviconSynereo.ico")">
 
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/sjcl.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/srp.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/bitArray.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/bn.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/codecHex.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/codecString.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/sha256.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/sha512.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/aes.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/sjcl-core/random.js")"></script>
-    <script src="@routes.Assets.at("/public","javascripts/srp-client/srp-client.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/sjcl.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/srp.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/bitArray.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/bn.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/codecHex.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/codecString.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/sha256.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/sha512.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/aes.js")"></script>
+    <script src="@_asset("javascripts/srp-client/sjcl-core/random.js")"></script>
+    <script src="@_asset("javascripts/srp-client/srp-client.js")"></script>
 
 </head>
   <body>
        <div id="root">
        </div>
-       @playscalajs.html.scripts("client")
+       @scalajs.html.scripts(projectName = "client", name => _asset(name).toString, name => getClass.getResource(s"/public/$name") != null)
   </body>
 </html>

@@ -29,7 +29,11 @@ object DashboardCSS {
     )
     val inputBtnRadius = style(
       border.none,
-      padding(0.6.em, 1.2.em, 1.em)
+      display.block,
+      float.right,
+      width(25.px),
+      height(25.px)
+
     )
     val cardPostTagBtn = style(
       margin(5.px),
@@ -86,7 +90,9 @@ object DashboardCSS {
     )
     val cardImage = style(
       //      paddingRight(65.px)s
-      width(100.%%)
+//      width(100.%%)
+      maxHeight(500.px),
+      margin.auto
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
@@ -314,7 +320,14 @@ object DashboardCSS {
         paddingRight(0.px))
     )
 
-
+    val cardPostImage = style(
+      height(500.px),
+      display.flex,
+      backgroundColor(black)
+    )
+    val cardImageContainer = style(
+      margin.auto,
+      width(100.%%)
+    )
   }
-
 }

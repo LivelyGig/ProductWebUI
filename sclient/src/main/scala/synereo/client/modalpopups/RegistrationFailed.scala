@@ -1,6 +1,6 @@
 package synereo.client.modalpopups
 
-import diode.ModelR
+import diode.{ModelR, ModelRO}
 import synereo.client.components.GlobalStyles
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -33,7 +33,7 @@ object RegistrationFailed {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def updateLang(reader: ModelR[RootModel, js.Dynamic]) = {
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
