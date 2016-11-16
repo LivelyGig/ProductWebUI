@@ -224,8 +224,8 @@ object HomeFeedList {
       def renderMessages(message: MessagePost) = {
         //println(s"In dashboard ${message.sender.imgSrc}")
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement)(
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-3 col-sm-2")(
+          <.div(^.className := "row",SynereoCommanStylesCSS.Style.feedViewRow)(
+            <.div(^.className := "col-md-3 col-sm-2",SynereoCommanStylesCSS.Style.feedViewPostLeftDiv)(
               ""
             ),
             <.div(^.className := "col-md-6 col-sm-8 showRightPost")(
@@ -328,58 +328,58 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.id := "rightPost", ^.className := "col-sm-2 ", SynereoCommanStylesCSS.Style.lftHeightPost)(
-              <.div(^.id := "trans"/*,SynereoCommanStylesCSS.Style.marginTopMiddle*/)(
+            <.div(^.id := "rightPost", ^.className := "col-sm-2 ", SynereoCommanStylesCSS.Style.feedViewLftHeightPost)(
+              <.div(^.id := "trans",^.className := "row",SynereoCommanStylesCSS.Style.feedViewRightAnimDivStatusIconRow)(
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv,
-                    <.img(^.src := "./assets/synereo-images/Love.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animLove, ^.onClick --> t.backend.showRightPost("showLovePost"))
+                  <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon,
+                    <.img(^.src := "./assets/synereo-images/Love.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animLove, ^.onClick --> t.backend.showRightPost("showLovePost"))
                   ),
                   if (state.showLovePost) // <.div(^.className := "col-md-8", SynereoCommanStylesCSS.Style.lovePost)()
                     <.div(
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv, DashboardCSS.Style.postDescription, "10"),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFirst)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconSecond)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconThird)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFourth))
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol, DashboardCSS.Style.postDescription, "10"),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else Seq.empty[ReactElement]
 
                 ),
                 <.div(^.className := "row", /*if (!state.showLovePost)*/ SynereoCommanStylesCSS.Style.marginTop20px /* else ^.marginTop := "0.px"*/)(
-                  <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/Comment.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animComment, ^.onClick --> t.backend.showRightPost("showCommentPost"))),
+                  <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)(<.img(^.src := "./assets/synereo-images/Comment.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animComment, ^.onClick --> t.backend.showRightPost("showCommentPost"))),
                   if (state.showCommentPost)
                     <.div(
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv, DashboardCSS.Style.postDescription, "10"),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFirst)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconSecond)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconThird)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFourth))
+                      <.div(^.className := "col-md-2 col-xs-1 ",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol, DashboardCSS.Style.postDescription, "10"),
+                      <.div(^.className := "col-md-2 col-xs-1 ",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/Amp_circle.gif",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animAmp_Circle, ^.onClick --> t.backend.showRightPost("showCirclePost"))),
+                  <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)(<.img(^.src := "./assets/synereo-images/Amp_circle.gif",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animAmp_Circle, ^.onClick --> t.backend.showRightPost("showCirclePost"))),
                   if (state.showCirclePost)
                     <.div(
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv, DashboardCSS.Style.postDescription, "12"),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFirst)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconSecond)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconThird)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFourth))
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol, DashboardCSS.Style.postDescription, "12"),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]
                 ),
                 <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
-                  <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/Share.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animShare, ^.onClick --> t.backend.showRightPost("showSharePost"))),
+                  <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)(<.img(^.src := "./assets/synereo-images/Share.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animShare, ^.onClick --> t.backend.showRightPost("showSharePost"))),
                   if (state.showSharePost)
-                    <.div(SynereoCommanStylesCSS.Style.rightAnimDiv,
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv, DashboardCSS.Style.postDescription, "1"),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFirst)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconSecond)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconThird)),
-                      <.div(^.className := "col-xs-2",SynereoCommanStylesCSS.Style.rightAnimDiv)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.rightPost,SynereoCommanStylesCSS.Style.animSubIconFourth))
+                    <.div(
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol, DashboardCSS.Style.postDescription, "1"),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFirst)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconThird)),
+                      <.div(^.className := "col-md-2 col-xs-1",SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(<.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg",SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,SynereoCommanStylesCSS.Style.animSubIconFourth))
                     )
                   else
                     Seq.empty[ReactElement]

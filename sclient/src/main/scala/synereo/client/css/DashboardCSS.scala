@@ -5,7 +5,7 @@ import synereo.client.css.LoginCSS.Style._
 import scalacss.Defaults._
 
 /**
-  * Created by Mandar on 3/17/2016.
+  * Created by mandar.k on 3/17/2016.
   */
 
 object DashboardCSS {
@@ -198,13 +198,12 @@ object DashboardCSS {
       media.minWidth(768.px) - (
         fontSize(14.px)
         ),
-      media.maxWidth(767.px) - (
+      media.only.screen.maxDeviceWidth(767.px) - (
         fontSize(11.px)
         )
     )
 
     val postDescription = style(
-
       display.inlineBlock,
       paddingTop(2.px),
       fontFamily :=! "karla",
@@ -212,13 +211,18 @@ object DashboardCSS {
       lineHeight(1.5.em),
       color(c"#fff"),
       opacity(0.65),
-      media.minWidth(768.px) - (
-        fontSize(14.px)
+      media.minWidth(768.px).maxDeviceWidth(991.px) - (
+        fontSize(12.px),
+        width(12.px),
+        paddingLeft(5%%),
+        paddingRight(5%%)
         ),
       media.maxWidth(767.px) - (
-        fontSize(11.px)
+        fontSize(11.px),
+        position.absolute,
+        left(75%%),
+        width(12.px)
         )
-
     )
     val postActions = style(
       marginLeft(-10.px)
@@ -270,10 +274,10 @@ object DashboardCSS {
       whiteSpace.preWrap,
       opacity(0.95),
       lineHeight(1.5.em),
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)  (
         fontSize(21.px)
         ),
-      media.maxWidth(767.px) - (
+      media.maxWidth(767.px)  (
         fontSize(17.px)
         )
     )
