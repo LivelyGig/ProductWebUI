@@ -37,9 +37,18 @@ object SynereoCommanStylesCSS {
     val searchBoxContainer = style(
       marginTop(12.px),
       display.inlineBlock,
-      width(67.%%),
-      media.maxWidth(617.px) -
-        width(70.%%)
+      media.minWidth(1251.px).maxWidth(1440.px) -
+        width(88.%%),
+      media.minWidth(1441.px).maxWidth(1600.px) -
+        width(89.%%),
+      media.minWidth(1051.px).maxWidth(1250.px) -
+        width(86.%%),
+      media.minWidth(920.px).maxWidth(1050.px) -
+        width(80.%%),
+      media.maxWidth(919.px) -
+        width(77.%%),
+      media.minWidth(1601.px) -
+        width(90.%%)
     )
     val changeLanguageDropdownContainer = style(
       position.fixed,
@@ -397,9 +406,9 @@ object SynereoCommanStylesCSS {
       backgroundColor.transparent,
       border.none.important,
       borderRadius.`0`.important,
-      marginTop(-30.px),
-      marginLeft(10.px),
-      paddingTop(3.px),
+      marginTop(-10.px),
+      marginLeft(-10.px),
+      // paddingTop(3.px),
       paddingBottom(3.px),
       paddingLeft.`0`,
       paddingRight(6.px),
@@ -598,7 +607,7 @@ object SynereoCommanStylesCSS {
       media.minWidth(850.px) -
         marginTop(-5.px),
       media.minWidth(766.px).maxWidth(776.px) -
-      right(-126.px),
+        right(-126.px),
       marginTop(-9.px)
 
     )

@@ -215,7 +215,7 @@ object ConnectionsForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4("Connect Friend"/*props.header*/)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4("Connect Friend" /*props.header*/)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props)
         ),
@@ -235,18 +235,15 @@ object ConnectionsForm {
                   <.div(/*(!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,*/
                     <.div(<.h5("Introduction:")),
                     <.div()(
-                      <.textarea(^.rows := 6,
+                      <.textarea(^.rows := 6, ConnectionsCSS.Style.receipentsTextContainer,
                         ^.value := state.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
                     )
-
                   )
                 ),
                 //  <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.onChange ==> chkCnxnNewUser),
                 // " Invite new user(s) to sign up and  connect with you."), <.br(),
-
                 <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := !state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(false)),
                   state.lang.selectDynamic("INTRODUCE_YOURSELF_TO_EXISTING_USER").toString), <.br()
-
               ),
               <.div(^.marginLeft := "15px", (state.introTwoCnxns == true) ?= ConnectionsCSS.Style.hidden)(
                 <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
@@ -254,11 +251,6 @@ object ConnectionsForm {
                 <.div(^.id := "agentFieldError", ^.className := "hidden")
                 (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
               ),
-              /*}
-              else
-                <.div(),*/
-
-
               //            }
               <.div()(
                 <.div(^.className := "text-right")(
@@ -271,7 +263,6 @@ object ConnectionsForm {
           )
         )
       )
-
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .componentDidUpdate(scope => Callback {

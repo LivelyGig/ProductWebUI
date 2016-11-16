@@ -6,7 +6,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
 import synereo.client.css.NewMessageCSS
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -79,7 +78,8 @@ object NewMessageForm {
                    header: String,
                    proxy: ModelProxy[SearchesRootModel],
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
-                   replyPost: Boolean = false)
+                   replyPost: Boolean = false,
+                   forwardPost:Boolean=false)
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
@@ -130,18 +130,18 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-//    def updateImg: Unit = {
-//
-//    }
-
     def mounted(): Callback = {
       val props = t.props.runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       if (props.replyPost) {
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
-        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = s"Re : ${props.messagePost.postContent.subject}")))
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :")) props.messagePost.postContent.subject else s"Re : ${props.messagePost.postContent.subject}"   )))
 
-      } else {
+      }
+        else if(props.forwardPost){
+        t.modState(state => state.copy(postMessage = MessagePostContent(subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :")) props.messagePost.postContent.subject else s"Fw : ${props.messagePost.postContent.subject}"  , text=props.messagePost.postContent.text)))
+      }
+      else {
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject = props.messagePost.postContent.subject)))
       }
@@ -211,13 +211,14 @@ object NewMessageForm {
       e.preventDefault()
       var state = t.state.runNow()
       var props = t.props.runNow()
-        if (state.postMessage.imgSrc != "") {
-          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
-        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
-          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
-        }
-    //  println(props.messagePost.postContent.imgSrc)
-    //  println(s"${state.postMessage}")
+
+      //        if (state.postMessage.imgSrc != "") {
+      //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
+      //        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+      //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+      //        }
+      //  println(props.messagePost.postContent.imgSrc)
+      //  println(s"${state.postMessage}")
 
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
@@ -235,23 +236,23 @@ object NewMessageForm {
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-         // println(s"${state.postMessage}")
+          // println(s"${state.postMessage}")
           if (state.postMessage.imgSrc != "") {
             ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
           } else if ((props.messagePost.postContent.imgSrc != "")) {
-            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
           }
 
           //          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
           newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
         } else {
-        //  println(s"${state.postMessage}")
+          //  println(s"${state.postMessage}")
           if (state.postMessage.imgSrc != "") {
-            ContentUtils.postMessage( MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+            ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
           } else if ((props.messagePost.postContent.imgSrc != "")) {
-            ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+            ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
           }
-        //  ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          //  ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         t.modState(s => s.copy(postNewMessage = true))
       }
@@ -331,7 +332,7 @@ object NewMessageForm {
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value:="", ^.onChange ==> t.backend.updateImgSrc),
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value := "", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := "no-image-upload-err", ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),

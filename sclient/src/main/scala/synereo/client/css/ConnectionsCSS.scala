@@ -219,6 +219,7 @@ object ConnectionsCSS {
     )
     val connectionContentRow = style(float.left)
     val connectionContentMainContainer = style(padding(0.px))
+    val receipentsTextContainer = style(width(491.px),maxWidth(100.%%),minWidth(100.%%))
   }
 
 }
