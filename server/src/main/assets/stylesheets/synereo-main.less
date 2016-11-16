@@ -1002,7 +1002,11 @@ transform: translate(0,0); */
 .showRightPost:hover + #rightPost {
   display : initial;
 }
-@media (max-width: 767px)   {
+@media (max-width: 767px){
+ .showRightPost:hover + #rightPost {
+    display : none;}
+    }
+@media only screen and (max-device-width: 767px)   {
   #trans {
     display:none;
   }

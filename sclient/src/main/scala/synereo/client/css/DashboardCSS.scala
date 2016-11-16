@@ -198,7 +198,7 @@ object DashboardCSS {
       media.minWidth(768.px) - (
         fontSize(14.px)
         ),
-      media.maxWidth(767.px) - (
+      media.only.screen.maxDeviceWidth(767.px) - (
         fontSize(11.px)
         )
     )
@@ -211,15 +211,16 @@ object DashboardCSS {
       lineHeight(1.5.em),
       color(c"#fff"),
       opacity(0.65),
-      media.minWidth(768.px) - (
+      media.minWidth(768.px).maxDeviceWidth(991.px) - (
         fontSize(12.px),
         width(12.px),
-        paddingLeft(5%%)
+        paddingLeft(5%%),
+        paddingRight(5%%)
         ),
       media.maxWidth(767.px) - (
         fontSize(11.px),
-        position.relative,
-        left(57%%),
+        position.absolute,
+        left(75%%),
         width(12.px)
         )
     )
