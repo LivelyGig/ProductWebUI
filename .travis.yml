@@ -27,13 +27,12 @@ sudo: false
 
 scala:
   - 2.11.8
-  - 2.12.0
 
 jdk:
 - oraclejdk8
 
 script:
-- sbt ++$TRAVIS_SCALA_VERSION test:compile JS/test:fastOptJS JS/test:fullOptJS
+- sbt ++$TRAVIS_SCALA_VERSION test:compile test:fastOptJS test:fullOptJS
 - sbt ++$TRAVIS_SCALA_VERSION test
 - sbt ++$TRAVIS_SCALA_VERSION 'set scalaJSStage in Global := FullOptStage' JS/test
 
