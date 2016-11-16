@@ -19,11 +19,11 @@ import org.widok.moment.Moment
 import shared.dtos.LabelPost
 import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
 import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.components.Bootstrap._
 import synereo.client.facades.SynereoSelectizeFacade
 import diode.AnyAction._
-import diode.{ModelR, ModelRO}
+import diode.ModelRO
 
 import scala.scalajs.js
 
@@ -84,9 +84,10 @@ object NewMessageForm {
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
                    //keep this selectize id same as, a css class is used for@allContacts hide list feature
+                   //inside ConnectionSelectize.scala
                    connectionsSelectizeInputId: String = "connectionsSelectizeInputId",
-                   //keep this selectize id same as, a css class has been overiden for avoiding overflowing contents out of window using this id
-                   //see synereo-main.less for more details
+                   //keep this selectize id same as, a css class has been overiden for avoiding overflowing
+                   // contents out of window using this id see synereo-main.less for more details
                    labelsSelectizeInputId: String = "labelsSelectizeInputId",
                    tags: Seq[String] = Seq(),
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
@@ -104,16 +105,15 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(subject = value)))
     }
 
-    def updateLang(reader: ModelRO[js.Dynamic]) = {
-      t.modState(s => s.copy(lang = reader.value)).runNow()
-    }
-
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
       SYNEREOCircuit.dispatch(SetPreventNavigation())
-      //      val tagsCreatedInline = getTagsWithoutPunctuations(value.split(" ").filter(_.matches("\\S*#(?:\\[[^\\]]+\\]|\\S+)")).distinct)
       val tagsCreatedInline = getTagsWithoutPunctuations(filterLabelStrings(value.split(" ")))
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
+    }
+
+    def updateLang(reader: ModelRO[js.Dynamic]) = {
+      t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
     /**
@@ -129,6 +129,10 @@ object NewMessageForm {
     def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
     }
+
+//    def updateImg: Unit = {
+//
+//    }
 
     def mounted(): Callback = {
       val props = t.props.runNow()
@@ -205,22 +209,49 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val state = t.state.runNow()
+      var state = t.state.runNow()
+      var props = t.props.runNow()
+        if (state.postMessage.imgSrc != "") {
+          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
+        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+        }
+    //  println(props.messagePost.postContent.imgSrc)
+    //  println(s"${state.postMessage}")
+
+      val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
         $("#cnxn-error".asInstanceOf[js.Object]).removeClass("hidden")
         t.modState(s => s.copy(postNewMessage = false))
+      } else if (nothingToPost) {
+        $("#empty-post-error".asInstanceOf[js.Object]).removeClass("hidden")
+        $("#cnxn-error".asInstanceOf[js.Object]).addClass("hidden")
+        t.modState(s => s.copy(postNewMessage = false))
       } else {
         $("#cnxn-error".asInstanceOf[js.Object]).addClass("hidden")
+        $("#empty-post-error".asInstanceOf[js.Object]).addClass("hidden")
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-          ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+         // println(s"${state.postMessage}")
+          if (state.postMessage.imgSrc != "") {
+            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          } else if ((props.messagePost.postContent.imgSrc != "")) {
+            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+          }
+
           //          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
           newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
         } else {
-          ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        //  println(s"${state.postMessage}")
+          if (state.postMessage.imgSrc != "") {
+            ContentUtils.postMessage( MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          } else if ((props.messagePost.postContent.imgSrc != "")) {
+            ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+          }
+        //  ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         t.modState(s => s.copy(postNewMessage = true))
       }
@@ -244,8 +275,10 @@ object NewMessageForm {
           closed = () => t.backend.formClosed(state, props),
           id = "newMessage"
         ),
-        <.form(^.onSubmit ==> t.backend.submitForm)(
-          <.div(^.className := "container-fluid")(
+        <.div(^.className := "container-fluid")(
+          <.form(^.onSubmit ==> t.backend.submitForm)(
+            <.div(^.id := "empty-post-error", ^.className := "hidden text-danger",
+              state.lang.selectDynamic("YOU_CANNOT_POST_EMPTY_MESSAGE").toString),
             <.div(
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
             ),
@@ -261,10 +294,10 @@ object NewMessageForm {
               )),
             <.div(^.className := "row")(
               <.div()(
-                <.textarea(^.rows := 1, ^.placeholder := state.lang.selectDynamic("TITLE_YOUR_POST").toString, ^.value := state.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject, ^.required := true)
+                <.textarea(^.rows := 1, ^.placeholder := state.lang.selectDynamic("TITLE_YOUR_POST").toString, ^.value := state.postMessage.subject, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateSubject /*, ^.required := true*/)
               ),
               <.div()(
-                <.textarea(^.rows := 4, ^.placeholder := state.lang.selectDynamic("YOUR_THOUGHTS").toString, ^.value := state.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent, ^.required := true)
+                <.textarea(^.rows := 4, ^.placeholder := state.lang.selectDynamic("YOUR_THOUGHTS").toString, ^.value := state.postMessage.text, NewMessageCSS.Style.textAreaNewMessage, ^.onChange ==> t.backend.updateContent /*, ^.required := true*/)
               )
             ),
             <.div(^.className := "row")(
@@ -297,7 +330,7 @@ object NewMessageForm {
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
-                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.onChange ==> t.backend.updateImgSrc),
+                  <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value:="", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := "no-image-upload-err", ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),
