@@ -35,7 +35,6 @@ object ConnectionsSelectize {
       .map(_.name)
   }
 
-
   case class Props(parentIdentifier: String,
                    fromSelecize: () => Callback,
                    option: Option[Int] = None,
@@ -57,6 +56,8 @@ object ConnectionsSelectize {
       $(selectizeInput).selectize(SelectizeConfig
         .maxItems(30)
         .plugins("remove_button")
+        .closeAfterSelect(true)
+        .openOnFocus(true)
         .onItemAdd((item: String, value: js.Dynamic) => {
           val selectedCnxn = $(s"#connectionsSelectizeInputId > .selectize-control> .selectize-input > div".asInstanceOf[js.Object])
           if (selectedCnxn.filter(s"[data-value='${AppUtils.ALL_CONTACTS_ID}']").length == 1)
