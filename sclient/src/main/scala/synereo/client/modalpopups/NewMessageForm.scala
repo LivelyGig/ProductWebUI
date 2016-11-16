@@ -209,10 +209,15 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val state = t.state.runNow()
-      val props = t.props.runNow()
-      if(state.postMessage.imgSrc==null)
-        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+      var state = t.state.runNow()
+      var props = t.props.runNow()
+        if (state.postMessage.imgSrc != "") {
+          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
+        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+        }
+    //  println(props.messagePost.postContent.imgSrc)
+    //  println(s"${state.postMessage}")
 
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
@@ -230,11 +235,23 @@ object NewMessageForm {
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-          ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+         // println(s"${state.postMessage}")
+          if (state.postMessage.imgSrc != "") {
+            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          } else if ((props.messagePost.postContent.imgSrc != "")) {
+            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+          }
+
           //          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
           newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
         } else {
-          ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+        //  println(s"${state.postMessage}")
+          if (state.postMessage.imgSrc != "") {
+            ContentUtils.postMessage( MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
+          } else if ((props.messagePost.postContent.imgSrc != "")) {
+            ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc,text=state.postMessage.text,subject=state.postMessage.subject), cnxns, labelsToPostMsg))
+          }
+        //  ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         t.modState(s => s.copy(postNewMessage = true))
       }
