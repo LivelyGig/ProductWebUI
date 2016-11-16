@@ -1,22 +1,58 @@
+#language: scala
+#scala:
+#- 2.11.8
+#sudo: false
+#jdk:
+#- oraclejdk8
+#script:
+#- sbt ++$TRAVIS_SCALA_VERSION server/test client/test
+## Tricks to avoid unnecessary cache updates, from
+## http://www.scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html
+#- find $HOME/.sbt -name "*.lock" | xargs rm
+#- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+#cache:
+#  directories:
+#    - $HOME/.ivy2/cache
+#    - $HOME/.sbt/boot/
+#install:
+#  - . $HOME/.nvm/nvm.sh
+#  - nvm install stable
+#  - nvm use stable
+#  - npm install
+#  - npm install jsdom
+
+
 language: scala
-scala:
-- 2.11.8
 sudo: false
+
+scala:
+  - 2.11.8
+  - 2.12.0
+
 jdk:
 - oraclejdk8
+
 script:
-- sbt ++$TRAVIS_SCALA_VERSION server/test client/test
-# Tricks to avoid unnecessary cache updates, from
-# http://www.scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html
-- find $HOME/.sbt -name "*.lock" | xargs rm
-- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+- sbt ++$TRAVIS_SCALA_VERSION test:compile JS/test:fastOptJS JS/test:fullOptJS
+- sbt ++$TRAVIS_SCALA_VERSION test
+- sbt ++$TRAVIS_SCALA_VERSION 'set scalaJSStage in Global := FullOptStage' JS/test
+
+
+# Use PhantomJS 2
+# https://mediocre.com/forum/topics/phantomjs-2-and-travis-ci-we-beat-our-heads-against-a-wall-so-you-dont-have-to
+install:
+  - mkdir travis-phantomjs
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O "$PWD"/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xvf "$PWD"/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C "$PWD"/travis-phantomjs
+  - export PATH="$PWD/travis-phantomjs:$PATH"
+
+# Taken from https://github.com/typelevel/cats/blob/master/.travis.yml
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
-install:
-  - . $HOME/.nvm/nvm.sh
-  - nvm install stable
-  - nvm use stable
-  - npm install
-  - npm install jsdom
+  - $HOME/.sbt/0.13/dependency
+  - $HOME/.sbt/boot/scala*
+  - $HOME/.sbt/launchers
+  - $HOME/.ivy2/cache
+before_cache:
+  - find $HOME/.sbt -name "*.lock" -type f -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
