@@ -9,8 +9,7 @@ import synereo.client.components.GlobalStyles
 import synereo.client.components.Icon._
 import synereo.client.css._
 import diode.AnyAction._
-import diode.{ModelR, ModelRO}
-
+import diode.ModelRO
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -20,18 +19,20 @@ import japgolly.scalajs.react.{Callback, _}
 import org.querki.jquery._
 import shared.models.ConnectionsModel
 import synereo.client.components.{ConnectionsSelectize, _}
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.{ConnectionsUtils, ContentUtils}
 import synereo.client.components.Bootstrap._
 import synereo.client.handlers.SetPreventNavigation
-
 import scala.scalajs.js
 
 // scalastyle:off
 object NewConnection {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String = "Introduce Connections")
+  case class Props(buttonName: String,
+                   addStyles: Seq[StyleA] = Seq(),
+                   addIcons: Icon,
+                   title: String = "Introduce Connections")
 
   case class State(showConnectionsForm: Boolean = false)
 
@@ -64,7 +65,6 @@ object NewConnection {
         else
           Seq.empty[ReactElement]
       )
-
     })
     .configure(OnUnmount.install)
     .build
@@ -75,15 +75,20 @@ object NewConnection {
 object ConnectionsForm {
   @inline private def bss = GlobalStyles.bootstrapStyles
 
+
+  val agentFieldError = "agent-field-error"
+  val cnxnError = "cnxn-error"
+
   case class Props(submitHandler: () => Callback,
                    header: String)
 
-  case class State(postConnection: Boolean = false, selectizeInputId: String = "pstNewCnxnSelParent",
+  case class State(postConnection: Boolean = false,
+                   selectizeInputId: String = "pstNewCnxnSelParent",
                    introConnections: IntroConnections = IntroConnections(),
                    establishConnection: EstablishConnection = EstablishConnection(),
                    introTwoCnxns: Boolean = true,
                    agentUid: String = "",
-                   userName: String = "",
+                   //                   userName: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   val connectionSelectize = SYNEREOCircuit.connect(_.connections)
@@ -94,24 +99,24 @@ object ConnectionsForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
+    private val userName = SYNEREOCircuit.zoom(_.user).value.name
+
     def fromSelecize(): Callback = {
-      val cnxns = ConnectionsSelectize.getConnectionNames(t.state.runNow().selectizeInputId)
+      val state = t.state.runNow()
+      val cnxns = ConnectionsSelectize.getConnectionNames(state.selectizeInputId)
       val msg = if (cnxns.length > 1) {
-        s"Hi ${cnxns(0)} and ${cnxns(1)}, \n He" +
-          s"re's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
+        s"${state.introConnections.aMessage.replaceAll("<Recipient 1>", cnxns.head).replaceAll("<Recipient 2>", cnxns(1))}"
       } else {
-        s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${t.state.runNow().userName}"
+        s"${state.introConnections.aMessage}"
       }
       t.modState(s => s.copy(introConnections = s.introConnections.copy(aMessage = msg)))
     }
 
     def mounted(props: ConnectionsForm.Props): Callback = {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
-      val usr = SYNEREOCircuit.zoom(_.user).value.name
-      val msg = s"Hi <Recipient 1> and <Recipient 2>, \n Here's an introduction for the two of you to connect. \n \n Best regards, \n ${usr}"
+      val msg = s"Hi <Recipient 1> and <Recipient 2>,\nHere's an introduction for the two of you to connect.\n \nBest regards,\n$userName"
       val onlyAdminConnected = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.size == 1
-      t.modState(s => s.copy(userName = usr, introConnections = s.introConnections.copy(aMessage = msg), introTwoCnxns = !onlyAdminConnected))
-
+      t.modState(s => s.copy(introConnections = s.introConnections.copy(aMessage = msg), introTwoCnxns = !onlyAdminConnected))
     }
 
     def hideModal(): Unit = {
@@ -133,17 +138,15 @@ object ConnectionsForm {
     }
 
     def getCnxn(uri: String): Option[ConnectionsModel] = {
-      //      val test = SYNEREOCircuit.zoom(_.connections.get.connectionsResponse)
-      //      println(test)
       val connectionsModel = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value
-      if (!connectionsModel.isEmpty)
+      if (connectionsModel.nonEmpty)
         connectionsModel.find(e => e.connection.target.contains(uri))
       else
         None
     }
 
     def introduceTwoUsers() = {
-      $("#cnxnError".asInstanceOf[js.Object]).addClass("hidden")
+      hideComponent(cnxnError)
       val state = t.state.runNow()
       val msg = state.introConnections.aMessage.replaceAll("/", "//")
       val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
@@ -154,17 +157,21 @@ object ConnectionsForm {
         ContentUtils.postNewConnection(content)
         t.modState(s => s.copy(postConnection = true))
       } else {
-        $("#cnxnError".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponent(cnxnError)
         t.modState(s => s.copy(postConnection = false))
       }
     }
 
+    def hideComponent(errorId: String) = $(s"#$errorId".asInstanceOf[js.Object]).addClass("hidden")
+
+    def unHideComponent(errorId: String) = $(s"#$errorId".asInstanceOf[js.Object]).removeClass("hidden")
+
     def establishConnection(): react.Callback = {
       val state = t.state.runNow()
-      $("#agentFieldError".asInstanceOf[js.Object]).addClass("hidden")
+      hideComponent(agentFieldError)
       getCnxn(state.agentUid) match {
         case Some(cnxn) =>
-          $("#agentFieldError".asInstanceOf[js.Object]).removeClass("hidden")
+          unHideComponent(agentFieldError)
           t.modState(s => s.copy(postConnection = false))
         case None =>
           val uri = SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value
@@ -179,12 +186,11 @@ object ConnectionsForm {
     def submitForm(e: ReactEventI): react.Callback = {
       e.preventDefault()
       val state = t.state.runNow()
-      if (state.introTwoCnxns) {
+      if (state.introTwoCnxns)
         introduceTwoUsers()
-      }
-      else {
+      else
         establishConnection()
-      }
+
     }
 
     def formClosed(state: ConnectionsForm.State, props: ConnectionsForm.Props): Callback = {
@@ -225,12 +231,12 @@ object ConnectionsForm {
               <.div()(
                 <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(true)),
                   state.lang.selectDynamic("INTRODUCE_YOUR_EXISTING_CONNECTIONS_TO_EACH_OTHER").toString), <.br(),
-                <.div(^.marginLeft := "15px", (state.introTwoCnxns == false) ?= ConnectionsCSS.Style.hidden)(
+                <.div(^.marginLeft := "15px", (!state.introTwoCnxns) ?= ConnectionsCSS.Style.hidden)(
                   <.div(<.h5("Connections:")),
                   <.div(^.id := s"${state.selectizeInputId}")(
                     ConnectionsSelectize(ConnectionsSelectize.Props(s"${state.selectizeInputId}", t.backend.fromSelecize, Option(2)))
                   ),
-                  <.div(^.id := "cnxnError", ^.className := "hidden text-danger")
+                  <.div(^.id := cnxnError, ^.className := "hidden text-danger")
                   (state.lang.selectDynamic("PLEASE_PROVIDE_ONLY_TWO_CONNECTIONS").toString),
                   <.div(/*(!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,*/
                     <.div(<.h5("Introduction:")),
@@ -245,16 +251,16 @@ object ConnectionsForm {
                 <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := !state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(false)),
                   state.lang.selectDynamic("INTRODUCE_YOURSELF_TO_EXISTING_USER").toString), <.br()
               ),
-              <.div(^.marginLeft := "15px", (state.introTwoCnxns == true) ?= ConnectionsCSS.Style.hidden)(
+              <.div(^.marginLeft := "15px", state.introTwoCnxns ?= ConnectionsCSS.Style.hidden)(
                 <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder := "User ID, e.g. 2a6d5dcb40634e8dafa4ec0f562b8fda, 05d1ba8d0d7945359b717873b7e7f6bf",
                   ^.value := state.agentUid, ^.onChange ==> t.backend.updateAgentUid),
-                <.div(^.id := "agentFieldError", ^.className := "hidden")
+                <.div(^.id := agentFieldError, ^.className := "hidden")
                 (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
               ),
               //            }
               <.div()(
                 <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, /* ^.onClick --> hide*/ "Send"),
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, "Send"),
                   <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel")
                 )
               )

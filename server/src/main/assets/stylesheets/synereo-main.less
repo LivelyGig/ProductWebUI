@@ -1005,24 +1005,51 @@ border-bottom: 1px solid white;
 .showRightPost:hover + #rightPost {
   display : initial;
 }
-
+@media (max-width: 767px){
+ .showRightPost:hover + #rightPost {
+    display : none;}
+    }
+@media only screen and (max-device-width: 767px)   {
+  #trans {
+    display:none;
+  }
+  #rightPost {
+    display : initial;
+    width:0%;
+  }
+  .showRightPost:hover + #rightPost {
+    display : initial;
+    width:80%;
+  }
+  .showRightPost:hover + #rightPost #trans {
+    display : initial;
+  }
+  #rightPost:hover #trans {
+    display : initial;
+  }
+  #rightPost:hover {
+    display : initial;
+    width:80%;
+  }
+}
 #rightPost:hover {
   display : initial;
 }
 
-.ConnectionPostsOuter{
+
+.ConnectionPostShadow {
  box-shadow: 15px 0px 20px 0 #216b9a;
-margin-right : 0px
 }
 
 .privacyOptionDropdown:hover  .privacyOptionDropdownMenu {
 display : block
 }
 .popularTags {
-visibility : hidden
+visibility : hidden ;
 }
-.posts {
-overflow : hidden
+.Posts {
+margin : 1vw;
+padding : 0px ;
 }
 .Posts:hover  .popularTags {
     visibility: visible

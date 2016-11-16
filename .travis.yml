@@ -1,57 +1,61 @@
-  sudo: false
-  language: scala
-  scala:
-     - 2.11.8
-  jdk:
-    - oraclejdk8
-#  - openjdk8
-#https://docs.travis-ci.com/user/languages/scala/
-# use Docker-based container (instead of OpenVZ)
+#language: scala
+#scala:
+#- 2.11.8
+#sudo: false
+#jdk:
+#- oraclejdk8
+#script:
+#- sbt ++$TRAVIS_SCALA_VERSION server/test client/test
+## Tricks to avoid unnecessary cache updates, from
+## http://www.scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html
+#- find $HOME/.sbt -name "*.lock" | xargs rm
+#- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+#cache:
+#  directories:
+#    - $HOME/.ivy2/cache
+#    - $HOME/.sbt/boot/
+#install:
+#  - . $HOME/.nvm/nvm.sh
+#  - nvm install stable
+#  - nvm use stable
+#  - npm install
+#  - npm install jsdom
 
-  cache:
-    directories:
-      - $HOME/.m2/repository
-      - $HOME/.sbt
-      - $HOME/.ivy2
-  install:
-    - . $HOME/.nvm/nvm.sh
-    - nvm install stable
-    - nvm use stable
-    - npm install
-    - npm install jsdom
 
-# blocklist
-  branches:
-    except:
+language: scala
+sudo: false
 
-# safelist
-  branches:
-    only:
-      - synereo
-      - master
-      
-# default command sbt ++$TRAVIS_SCALA_VERSION test   
-  script:
-     - sbt ++$TRAVIS_SCALA_VERSION compile fullOptJS assets
+scala:
+  - 2.11.8
 
-#  deploy:
-#    provider: releases
-#    api_key:
-#      secure: gyM1f3RjQYAcPMFbE5t04Ar0OrTFAb+QnSZxgMdw6J6zH1uREwe8JJ+L0nPqtlOgMbb1+yAPQ23E8SdcrCgzbF+pH+Uk+NozzEyEgK85scsNo5DdKLVFiZSM4+7wZA/lhiYTGxjhRDKBbW2qJmeCS8xYErdYMVO1MILZke5IUM/w5DS21fZsV68IfoVieO9O1FHFCO4fmTwVsIKHjTGSDt+Elj5TcItiOmlTA2A7QlV1wPAgYnWkoMKsYm+RzEYtiU3+we8RlAaaHnK1Odv1IS6KHnnAPOk2ThsksHask0UElQtdQAIc3jrnEuupVy+CIzCvH772FwziNtElcoCRKwFy8QkJxcTPKPjVfBPD5oznR66ZyExF+JmLDZhQVRnrWQd4OK7+9vlgxcJI5yb4xU0Y9IuEMLpc2dNchGXbYzryGxvdl5Bzc/RorGkqZ81/rtEpetMm6aeYpzsy0orzHefSMmuY3Kqx7zUJID1/dWUXZsVzXGPbo37OpSrJamnSRbdp7IjIlKxBP7BfkIqbEbPNhRbJpqbStgzBfR/3iwzgALrtzAIrAmMSp3LO1QCGkjggtV6otA60LN6vaUB/JPxddGfZ7yp1aRXx8Z++XH+03b0Y0USbgzMZ9QRDrViFH9LxG+i3gj0ZoDAjtcI9d6pssW08DOrJeWd+jWTzifU=
-#    file:
-#      - "server/target/universal/stage/lib/server.server-1.0.1-assets.jar"
-#      - "server/target/universal/stage/lib/server.server-1.0.1-sans-externalized.jar"
-#      - "server/target/universal/stage/lib/sharedjvm.sharedjvm-0.1-SNAPSHOT.jar"
-#    skip_cleanup: true
-#    on:
-#      repo: LivelyGig/ProductWebUI
-#      branch: synereo
-#    tags: true
-    
-notifications:
-  email:
-    - ns68751+tci@gmail.com
-    - ed@livelygig.com
-    - shubham.kamthania@afourtech.com
-    - mandar.kawtakwar@afourtech.com
-    - bhagyashree.birajdar@afourtech.com
+jdk:
+- oraclejdk8
+
+script:
+- sbt ++$TRAVIS_SCALA_VERSION test:compile test:fastOptJS test:fullOptJS
+- sbt ++$TRAVIS_SCALA_VERSION test
+
+
+# Use PhantomJS 2
+# https://mediocre.com/forum/topics/phantomjs-2-and-travis-ci-we-beat-our-heads-against-a-wall-so-you-dont-have-to
+install:
+  - mkdir travis-phantomjs
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O "$PWD"/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xvf "$PWD"/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C "$PWD"/travis-phantomjs
+  - export PATH="$PWD/travis-phantomjs:$PATH"
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
+  - npm install jsdom
+
+# Taken from https://github.com/typelevel/cats/blob/master/.travis.yml
+cache:
+  directories:
+  - $HOME/.sbt/0.13/dependency
+  - $HOME/.sbt/boot/scala*
+  - $HOME/.sbt/launchers
+  - $HOME/.ivy2/cache
+before_cache:
+  - find $HOME/.sbt -name "*.lock" -type f -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete

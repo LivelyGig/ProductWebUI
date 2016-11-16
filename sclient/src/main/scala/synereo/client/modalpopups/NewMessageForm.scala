@@ -27,54 +27,18 @@ import diode.ModelRO
 import scala.scalajs.js
 
 //scalastyle:off
-//object NewMessage {
-//  @inline private def bss = GlobalStyles.bootstrapStyles
-//
-//  case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), addIcons: Icon, title: String, className: String = "", childrenElement: ReactTag = <.span())
-//
-//  case class State(showNewMessageForm: Boolean = false)
-//
-//  val searchesProxy = SYNEREOCircuit.connect(_.searches)
-//
-//  abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
-//  }
-//
-//  class Backend(t: BackendScope[Props, State]) extends RxObserver(t) {
-//    def mounted(props: Props): Callback = {
-//      t.modState(s => s.copy(showNewMessageForm = true))
-//    }
-//
-//    def addNewMessageForm(): Callback = {
-//      t.modState(s => s.copy(showNewMessageForm = true))
-//    }
-//
-//    def addMessage(): Callback = {
-//      t.modState(s => s.copy(showNewMessageForm = false))
-//    }
-//  }
-//
-//  val component = ReactComponentB[Props]("NewMessage")
-//    .initialState(State())
-//    .backend(new Backend(_))
-//    .renderPS(($, P, S) => {
-//      val B = $.backend
-//      <.div(
-//        Button(Button.Props(B.addNewMessageForm(), CommonStyle.default, P.addStyles, P.addIcons, P.title, className = P.className), P.buttonName, P.childrenElement),
-//        if (S.showNewMessageForm) searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(B.addMessage, "New Message", searchesProxy)))
-//        else
-//          Seq.empty[ReactElement]
-//      )
-//    })
-//    .configure(OnUnmount.install)
-//    .build
-//
-//  def apply(props: Props) = component(props)
-//}
-
 object NewMessageForm {
+
+  //js objects to show errors
+  val fileTypeNotSupportedErr = "file-type-not-supported-err"
+  val emptyPostErr = "empty-post-error"
+  val noImgUploadErr = "no-image-upload-err"
+  val imgSizeUploadErr = "image-size-upload-err"
+  val cnxnError = "cnxn-error"
+
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: ( /*PostMessage*/ ) => Callback,
+  case class Props(submitHandler: () => Callback,
                    header: String,
                    proxy: ModelProxy[SearchesRootModel],
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
@@ -117,7 +81,6 @@ object NewMessageForm {
     }
 
     /**
-      *
       * @param hashTagsCreated :List of hashtags  which we fetched from text area depending on matched regular expr
       * @return List of Tags with removed the punctuation marks
       */
@@ -135,11 +98,15 @@ object NewMessageForm {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       if (props.replyPost) {
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
-        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :")) props.messagePost.postContent.subject else s"Re : ${props.messagePost.postContent.subject}"   )))
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject =if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
+          s"${props.messagePost.postContent.subject}"  else
+            s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}" )))
 
       }
         else if(props.forwardPost){
-        t.modState(state => state.copy(postMessage = MessagePostContent(subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :")) props.messagePost.postContent.subject else s"Fw : ${props.messagePost.postContent.subject}"  , text=props.messagePost.postContent.text)))
+        t.modState(state => state.copy(postMessage = MessagePostContent(text=props.messagePost.postContent.text,subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
+            s"${props.messagePost.postContent.subject}"
+           else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
       }
       else {
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
@@ -148,7 +115,6 @@ object NewMessageForm {
     }
 
     /**
-      *
       * @param value
       * @return unique filtered labels without the hash symbol
       */
@@ -174,23 +140,28 @@ object NewMessageForm {
     def deleteInlineLabel(e: ReactEventI) = {
       val value = e.target.parentElement.getAttribute("data-count")
       val state = t.state.runNow()
-      val ListWithTagsDeleted = for {
+      val listWithTagsDeleted = for {
         (x, i) <- state.tags.zipWithIndex
         if i != value.toInt
       } yield x
-      t.modState(state => state.copy(tags = ListWithTagsDeleted))
+      t.modState(state => state.copy(tags = listWithTagsDeleted))
     }
 
     def clearImage(e: ReactEventI) = {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = "")))
     }
 
+    def hideComponent(name: String) = $(s"#$name".asInstanceOf[js.Object]).addClass("hidden")
+
+    def unHideComponent(name: String) = $(s"#$name".asInstanceOf[js.Object]).removeClass("hidden")
+
+
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
       if (value.`type` == "image/jpeg" || value.`type` == "image/png")
-        $("#file-type-not-supported-err".asInstanceOf[js.Object]).addClass("hidden")
+        hideComponent(fileTypeNotSupportedErr)
       else
-        $("#file-type-not-supported-err".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponent(fileTypeNotSupportedErr)
       if (value.size <= 4000000) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
@@ -198,10 +169,10 @@ object NewMessageForm {
           t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
         }
         reader.readAsDataURL(value)
-        $("#no-image-upload-err".asInstanceOf[js.Object]).addClass("hidden")
-        $("#image-size-upload-err".asInstanceOf[js.Object]).addClass("hidden")
+        hideComponent(noImgUploadErr)
+        hideComponent(imgSizeUploadErr)
       } else {
-        $("#image-size-upload-err".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponent(imgSizeUploadErr)
       }
     }
 
@@ -211,6 +182,13 @@ object NewMessageForm {
       e.preventDefault()
       var state = t.state.runNow()
       var props = t.props.runNow()
+      if (state.postMessage.imgSrc != "") {
+        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
+      } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
+      }
+      //  println(props.messagePost.postContent.imgSrc)
+      //  println(s"${state.postMessage}")
 
       //        if (state.postMessage.imgSrc != "") {
       //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
@@ -223,46 +201,40 @@ object NewMessageForm {
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
-        $("#cnxn-error".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponent(cnxnError)
         t.modState(s => s.copy(postNewMessage = false))
       } else if (nothingToPost) {
-        $("#empty-post-error".asInstanceOf[js.Object]).removeClass("hidden")
-        $("#cnxn-error".asInstanceOf[js.Object]).addClass("hidden")
+        unHideComponent(emptyPostErr)
+        hideComponent(cnxnError)
         t.modState(s => s.copy(postNewMessage = false))
       } else {
-        $("#cnxn-error".asInstanceOf[js.Object]).addClass("hidden")
-        $("#empty-post-error".asInstanceOf[js.Object]).addClass("hidden")
+        hideComponent(cnxnError)
+        hideComponent(emptyPostErr)
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         if (newLabels.nonEmpty) {
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-          // println(s"${state.postMessage}")
           if (state.postMessage.imgSrc != "") {
             ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
           } else if ((props.messagePost.postContent.imgSrc != "")) {
             ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
           }
-
-          //          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", UUID.randomUUID().toString.replaceAll("-", "")))
           newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
         } else {
-          //  println(s"${state.postMessage}")
           if (state.postMessage.imgSrc != "") {
             ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
           } else if ((props.messagePost.postContent.imgSrc != "")) {
             ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
           }
-          //  ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         t.modState(s => s.copy(postNewMessage = true))
       }
     }
 
     def formClosed(state: NewMessageForm.State, props: NewMessageForm.Props): Callback = {
-      props.submitHandler(/*state.submitForm*/)
+      props.submitHandler()
     }
   }
-
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new MessagePostContent()))
@@ -279,7 +251,7 @@ object NewMessageForm {
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
-            <.div(^.id := "empty-post-error", ^.className := "hidden text-danger",
+            <.div(^.id := emptyPostErr, ^.className := "hidden text-danger",
               state.lang.selectDynamic("YOU_CANNOT_POST_EMPTY_MESSAGE").toString),
             <.div(
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
@@ -289,7 +261,7 @@ object NewMessageForm {
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
                   enableAllContacts = SYNEREOCircuit.zoom(_.connections.connectionsResponse).value.nonEmpty)) //,
               ),
-              <.div(^.id := "cnxn-error", ^.className := "hidden text-danger",
+              <.div(^.id := cnxnError, ^.className := "hidden text-danger",
                 state.lang.selectDynamic("PROVIDE_ATLEAST_ONE_CONNECTION").toString),
               <.div(NewMessageCSS.Style.textAreaNewMessage, ^.id := state.labelsSelectizeInputId, ^.width := "100%")(
                 LabelsSelectize(LabelsSelectize.Props(state.labelsSelectizeInputId))
@@ -306,7 +278,7 @@ object NewMessageForm {
               <.div()(
                 if (state.postMessage.imgSrc != "") {
                   <.img(^.src := state.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
-                } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
+                } else if ((props.messagePost.postContent.imgSrc != "") && !props.replyPost) {
                   <.img(^.src := props.messagePost.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px")
                 } else {
                   <.span()
@@ -317,10 +289,9 @@ object NewMessageForm {
                   for (tag <- state.tags.zipWithIndex) yield
                     <.li(^.className := "btn btn-primary", NewMessageCSS.Style.createPostTagBtn,
                       <.ul(^.className := "list-inline",
-                        <.li(^.textTransform := "uppercase", tag._1),
-                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel), <.span(
-                          "data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel
-                        )
+                        <.li(/*^.textTransform := "uppercase", */ tag._1),
+                        <.li(<.span(^.className := "hidden", tag._2, ^.onClick ==> t.backend.deleteInlineLabel),
+                          <.span("data-count".reactAttr := tag._2, Icon.close, ^.onClick ==> t.backend.deleteInlineLabel)
                         )
                       )
                     ))
@@ -333,13 +304,13 @@ object NewMessageForm {
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
                   <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value := "", ^.onChange ==> t.backend.updateImgSrc),
-                  <.div(^.id := "no-image-upload-err", ^.className := "hidden text-danger")(
+                  <.div(^.id := noImgUploadErr, ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
                   ),
-                  <.div(^.id := "image-size-upload-err", ^.className := "hidden text-danger")(
+                  <.div(^.id := imgSizeUploadErr, ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_LESS_THAN_FIVE_MB_UPLOAD").toString
                   ),
-                  <.div(^.id := "file-type-not-supported-err", ^.className := "hidden text-danger")(
+                  <.div(^.id := fileTypeNotSupportedErr, ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),

@@ -476,26 +476,47 @@ object SynereoCommanStylesCSS {
       fontSize(14.px),
       wordWrap :=! "break-word",
       textOverflow.:=("ellipsis"),
+      height(50.px),
       media.maxWidth(350.px) -
         width(100.%%),
       media.minWidth(321.px).maxWidth(376.px) -
         fontSize(13.px),
       media.minWidth(462.px).maxWidth(766.px) -
         width(100 %%)
+
+      //      width(130.px),
+      //      media.minWidth(776.px) -
+      //        width(150.px)
+
+      // ,
+      //   media.maxWidth(766.px) -
+      // maxWidth.inherit
     )
 
     val paddingLeft15p = style(
       paddingLeft(17.%%).important
     )
 
-    val lftHeightPost = style(
+    val feedViewLftHeightPost = style(
       //      height(50.vh),
       //      display.flex,
-      alignItems.center
+      alignItems.center,
+      transition := "1s",
+      media.only.screen.maxDeviceWidth(767.px)(
+        position.absolute,
+        top(0.px),
+        width(50 %%),
+        height(98.7 %%),
+        right(-11 %%),
+        backgroundColor(c"#00446A")
+      )
     )
 
     val marginTop20px = style(
-      marginTop(20.px)
+      marginTop(20.px),
+      media.maxWidth(767.px)(
+        marginTop(10.px)
+      )
     )
 
     val lovePost = style(
@@ -507,7 +528,7 @@ object SynereoCommanStylesCSS {
     )
 
     val naviCollapse = style(
-      media.maxWidth(767.px) - (
+      media.maxWidth(767.px) -(
         backgroundColor(rgb(46, 110, 142)),
         position.absolute,
         top(57.px),
@@ -516,25 +537,60 @@ object SynereoCommanStylesCSS {
         zIndex(9))
     )
 
-    val rightPost = style(
+    val feedViewRightPostDivSubIcon = style(
       borderRadius(50.%%),
       transition := "all 1.5s ease",
       backgroundColor(c"#bfbfbf"),
       height(30.px),
       width(30.px),
       visibility.hidden,
-      media.minWidth(768.px).maxWidth(1200.px)(
-        height(18.px),
-        width(18.px)
+      media.minWidth(768.px).maxWidth(991.px)(
+        height(20.px),
+        width(20.px)
       ),
-      media.maxWidth(768.px)(
-        display.none
+      media.only.screen.maxDeviceWidth(767.px)(
+        height(20.px),
+        width(20.px)
       )
     )
-    val rightAnimDiv = style(
-      media.minWidth(768.px).maxWidth(1200.px)(
-        paddingLeft(2.2 %%)
+    val feedViewRightAnimDivSubIconCol = style(
+      media.minWidth(768.px).maxWidth(991.px)(
+        paddingLeft(3%%)
+      ),
+      media.only.screen.maxDeviceWidth(767.px)(
+        paddingLeft(4 %%),
+        right(8%%)
+
       )
+    )
+    val feedViewRow = style(
+    /*display.flex*/
+    )
+    val feedViewPostLeftDiv = style(
+      transition := "1s",
+      media.only.screen.maxDeviceWidth(767.px)(
+        width(0 %%),
+        position.absolute,
+        left(0.px),
+        height(97 %%),
+        zIndex(2),
+        &.hover(
+          backgroundColor(c"#f48536"),
+          width(80 %%)
+
+        )
+      )
+    )
+    val feedViewRightAnimDivStatusIconRow = style(
+      media.only.screen.maxDeviceWidth(767.px)(
+        marginTop(10 %%)
+      ))
+    val feedViewRightAnimDivMainStatusIcon = style(
+      media.only.screen.maxDeviceWidth(767.px)(
+        position.relative,
+        left(80 %%)
+      )
+
     )
     /*Animation */
     /*Message List Status Animation*/
@@ -546,25 +602,42 @@ object SynereoCommanStylesCSS {
       animationName(messageListStatusAnim),
       animationDuration :=! "0.40s",
       animationDelay :=! "0.4s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDirection.reverse,
+        animationDelay :=! "0.2s"
+      )
+
     )
     val animComment = style(
       animationName(messageListStatusAnim),
       animationDuration :=! "0.40s",
       animationDelay :=! "0.3s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDirection.reverse,
+        animationDelay :=! "0.3s"
+      )
     )
     val animAmp_Circle = style(
       animationName(messageListStatusAnim),
       animationDuration :=! "0.40s",
       animationDelay :=! "0.2s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDirection.reverse,
+        animationDelay :=! "0.4s"
+      )
     )
     val animShare = style(
       animationName(messageListStatusAnim),
       animationDuration :=! "0.40s",
       animationDelay :=! "0.1s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDirection.reverse,
+        animationDelay :=! "0.5s"
+      )
     )
     /*Message Sub Icon Animation*/
     val messageListSubStatusAnim = keyframes(
@@ -575,25 +648,39 @@ object SynereoCommanStylesCSS {
       animationName(messageListSubStatusAnim),
       animationDuration :=! "0.60s",
       animationDelay :=! "0.1s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDelay :=! "0.4s"
+      )
     )
     val animSubIconSecond = style(
       animationName(messageListSubStatusAnim),
       animationDuration :=! "0.60s",
       animationDelay :=! "0.2s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDelay :=! "0.3s"
+
+      )
     )
     val animSubIconThird = style(
       animationName(messageListSubStatusAnim),
       animationDuration :=! "0.60s",
       animationDelay :=! "0.3s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDelay :=! "0.2s"
+      )
     )
     val animSubIconFourth = style(
       animationName(messageListSubStatusAnim),
       animationDuration :=! "0.60s",
       animationDelay :=! "0.4s",
-      animationFillMode.forwards
+      animationFillMode.forwards,
+      media.only.screen.maxDeviceWidth(767.px)(
+        animationDelay :=! "0.1s"
+
+      )
     )
     val userNameNavBarBubbleImage = style(
       maxWidth(250.px),
@@ -601,7 +688,7 @@ object SynereoCommanStylesCSS {
       position.absolute,
       media.maxWidth(766.px) -
         display.none,
-      media.minWidth(777.px).maxWidth(850.px) -
+      media.minWidth(767.px).maxWidth(850.px) -
         marginTop(-9.px)
       ,
       media.minWidth(850.px) -
