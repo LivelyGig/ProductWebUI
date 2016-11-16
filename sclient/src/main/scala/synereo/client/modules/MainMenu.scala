@@ -179,13 +179,13 @@ object MainMenu {
                     //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
                     //                  }
                     <.div(^.className := "text-center")(
-                      <.span(model.networkMode.toUpperCase),
+                    //  <.span(model.networkMode.toUpperCase),
                       <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
                         /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                         //                        <.span(Icon.cogs),
-                        <.span(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
+                        <.span(DashboardCSS.Style.ampbalancetext)(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
                       ),
                        <.span( introductionConnectProxy(introProxy =>
                         if (introProxy.value.introResponse.length != 0) {
