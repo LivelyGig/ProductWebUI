@@ -99,16 +99,11 @@ object NewMessageForm {
       if (props.replyPost) {
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject =if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
-          s"${props.messagePost.postContent.subject}"  else
-            s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}" )))
-
-      }
-        else if(props.forwardPost){
+          s"${props.messagePost.postContent.subject}"  else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}" )))
+      } else if(props.forwardPost){
         t.modState(state => state.copy(postMessage = MessagePostContent(text=props.messagePost.postContent.text,subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
-            s"${props.messagePost.postContent.subject}"
-           else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
-      }
-      else {
+            s"${props.messagePost.postContent.subject}" else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
+      } else {
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject = props.messagePost.postContent.subject)))
       }
@@ -187,16 +182,13 @@ object NewMessageForm {
       } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
         t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
       }
-      //  println(props.messagePost.postContent.imgSrc)
-      //  println(s"${state.postMessage}")
+
 
       //        if (state.postMessage.imgSrc != "") {
       //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
       //        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
       //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
       //        }
-      //  println(props.messagePost.postContent.imgSrc)
-      //  println(s"${state.postMessage}")
 
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
