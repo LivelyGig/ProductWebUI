@@ -467,6 +467,7 @@ object SynereoCommanStylesCSS {
       fontSize(14.px),
       wordWrap :=! "break-word",
       textOverflow.:=("ellipsis"),
+      height(50.px),
       media.maxWidth(350.px) -
         width(100.%%),
       media.minWidth(321.px).maxWidth(376.px) -

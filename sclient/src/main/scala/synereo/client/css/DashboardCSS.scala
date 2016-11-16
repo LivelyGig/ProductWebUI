@@ -326,5 +326,14 @@ object DashboardCSS {
       margin.auto,
       width(100.%%)
     )
+
+    val ampbalancetext = style(
+      whiteSpace.normal,
+    width(120.px),
+    float.right,
+    marginRight(-20.px),
+    textAlign.left,
+    marginLeft(10.px)
+    )
   }
 }
