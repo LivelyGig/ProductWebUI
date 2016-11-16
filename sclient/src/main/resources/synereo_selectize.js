@@ -23,7 +23,9 @@ var SynereoSelectizeFacade = (function(){
         plugins: ['remove_button','inputMaxlength'],
         create: allowCreate,
         maxItems:maximumItems,
-        inputMaxlength: maxCharLimit
+        inputMaxlength: maxCharLimit,
+        closeAfterSelect: true,
+        openOnFocus: true
     })
  }
  return {
