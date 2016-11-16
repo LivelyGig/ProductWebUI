@@ -17,6 +17,10 @@ The build process requires several pieces of software to be installed on the hos
 * [SBT](http://www.scala-sbt.org/download.html) 0.13.9 - This will download rest of the required softwares i.e. scala etc.
 * Git client
 
+Before running the application you need to have node.js installed
+
+Then do npm install at the project root to install jsdom
+
 To run the application, open a command line interface (CLI) follow the step below (run individual each command): 
 
     git clone https://github.com/LivelyGig/ProductWebUI.git
