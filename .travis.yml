@@ -1,42 +1,22 @@
-  sudo: false
-  language: scala
-  scala:
-     - 2.11.8
-  jdk:
-    - oraclejdk8
-#  - openjdk8
-#https://docs.travis-ci.com/user/languages/scala/
-# use Docker-based container (instead of OpenVZ)
-
-  cache:
-    directories:
-      - $HOME/.m2/repository
-      - $HOME/.sbt
-      - $HOME/.ivy2
-  install:
-    - . $HOME/.nvm/nvm.sh
-    - nvm install stable
-    - nvm use stable
-    - npm install
-
-# blocklist
-  branches:
-    except:
-
-# safelist
-  branches:
-    only:
-      - synereo
-      - master
-      
-# default command sbt ++$TRAVIS_SCALA_VERSION test   
-  script:
-     - sbt ++$TRAVIS_SCALA_VERSION test compile fullOptJS assets
-    
-  notifications:
-    email:
-      - ns68751+tci@gmail.com
-      - ed@livelygig.com
-      - shubham.kamthania@afourtech.com
-      - mandar.kawtakwar@afourtech.com
-      - bhagyashree.birajdar@afourtech.com
+language: scala
+scala:
+- 2.11.8
+sudo: false
+jdk:
+- oraclejdk8
+script:
+- sbt ++$TRAVIS_SCALA_VERSION test
+# Tricks to avoid unnecessary cache updates, from
+# http://www.scala-sbt.org/0.13/docs/Travis-CI-with-sbt.html
+- find $HOME/.sbt -name "*.lock" | xargs rm
+- find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm install
+  - npm install jsdom
