@@ -96,7 +96,7 @@ object AppModule {
       val introProxy =LGCircuit.connect(_.introduction)
 
       <.div(^.id := "mainContainer", DashBoardCSS.Style.mainContainerDiv)(
-         ^.background := "url(./assets/images/LG_Background3E.svg)", ^.backgroundsize := "101% 101%"  )(
+         /*^.background := "url(./assets/images/LG_Background3E.svg)", ^.backgroundSize := "101% 101%"*/)(
         <.div()(
           Presets(Presets.Props(p.view))
         ),

@@ -167,7 +167,7 @@ object Searches {
                   <.li()(<.a(^.href := "#talent")("Customize..."))
                 )
               ),
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
             ),
@@ -282,7 +282,7 @@ object Searches {
                   <.li()(<.a(^.href := "#offerings")("Customize..."))
                 )
               ),
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -367,7 +367,7 @@ object Searches {
                   <.li()(<.a(^.href := "#projects")("Customize..."))
                 )
               ),
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
             ),
@@ -554,7 +554,7 @@ object Searches {
                   <.li()(<.a(^.href := "#contract")("Customize..."))
                 )
               ),
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar)
             ),
             <.div(^.id := "slctScrollContainer", LftcontainerCSS.Style.slctContainer)(
               <.div(LftcontainerCSS.Style.slctsearchpanelabelposition, ^.height := "calc(100vh - 215px)")(
@@ -693,7 +693,7 @@ object Searches {
                   <.li()(<.a(^.href := "#messages")("Customize..."))
                 )
               ),
-              <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> Callback {
+              <.button(^.tpe := "button", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> Callback {
                 searchClick(p)
               })
             ),
@@ -785,7 +785,7 @@ object Searches {
         case AppModule.CONNECTIONS_VIEW => {
           <.div()(
             <.div(^.className := "HeaderCSS_Style-searchActionsContainer")(
-              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", DashBoardCSS.Style.btnDefault, ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar),
+              <.button(^.id := "sidebarbtn", ^.className := "btn HeaderCSS_Style-searchContainerBtn", ^.title := "Search", Icon.search, ^.onClick --> toggleSidebar),
               <.div(^.className := "btn-group")(
                 <.button(HeaderCSS.Style.presetPickBtn, ^.className := "btn dropdown-toggle", "data-toggle".reactAttr := "dropdown")("Favorited ")(
                   <.span(^.className := "caret")

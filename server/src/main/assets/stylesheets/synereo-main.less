@@ -653,7 +653,7 @@ transform: translate(0,0); */
 .selectize-input input {
   color: #303030;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 18px;
   -webkit-font-smoothing: inherit;
 }
@@ -664,8 +664,7 @@ transform: translate(0,0); */
   display: inline-block;
 }
 .selectize-input {
-  border: 1px solid #d0d0d0;
-  padding: 8px 8px;
+   padding: 8px 8px;
   display: inline-block;
   width: 100%;
   overflow: hidden;
@@ -674,11 +673,15 @@ transform: translate(0,0); */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+/*  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  border: 1px solid #d0d0d0;  */
+ background-color: transparent;
+border-radius: 0;
+border-bottom: 1px solid white;
 }
 .selectize-control.multi .selectize-input.has-items {
   padding: 6px 8px 3px;
@@ -913,14 +916,14 @@ transform: translate(0,0); */
 }
 @media (min-width: 1441px) and (max-width: 1600px) {
   .label-selectize-container-main{
-   left: 30%;
-   right: 30%;
+   left: 25%;
+   right: 25%;
  }
 }
 @media (min-width: 1601px) {
   .label-selectize-container-main{
-    left: 31%;
-    right: 31%;
+    left: 25%;
+    right: 25%;
   }
 }
 
@@ -1002,7 +1005,33 @@ transform: translate(0,0); */
 .showRightPost:hover + #rightPost {
   display : initial;
 }
-
+@media (max-width: 767px){
+ .showRightPost:hover + #rightPost {
+    display : none;}
+    }
+@media only screen and (max-device-width: 767px)   {
+  #trans {
+    display:none;
+  }
+  #rightPost {
+    display : initial;
+    width:0%;
+  }
+  .showRightPost:hover + #rightPost {
+    display : initial;
+    width:80%;
+  }
+  .showRightPost:hover + #rightPost #trans {
+    display : initial;
+  }
+  #rightPost:hover #trans {
+    display : initial;
+  }
+  #rightPost:hover {
+    display : initial;
+    width:80%;
+  }
+}
 #rightPost:hover {
   display : initial;
 }
