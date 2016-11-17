@@ -32,7 +32,10 @@ object ContractResults {
                 )
               ),
               <.div(PresetsCSS.Style.modalBtn)(
-                WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create New Contract"))
+                WorkContractModal(WorkContractModal.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.edit, "Create Contract")),
+                <.div(PresetsCSS.Style.overlay, ^.top:="0.1em")(
+                  Icon.plus
+                )
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

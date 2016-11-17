@@ -266,7 +266,13 @@ object DashBoardCSS {
     )
     val marginLeftCloseBtn = style(
       marginLeft(20.px),
-      backgroundColor(orange)
+      backgroundColor(c"#FF9E00"),
+      /*&.active(
+      backgroundColor(blue)
+    ),*/
+    &.hover(
+      backgroundColor(c"#FF7600")
+    )
       // addClassName("btnBackground")
 
     )
@@ -502,7 +508,7 @@ object DashBoardCSS {
 
     val btnDefault = style(
       addClassName("btn-default"),
-      backgroundColor.transparent
+      backgroundColor(c"#FF9E00")
     )
 
     val profileDescription = style(

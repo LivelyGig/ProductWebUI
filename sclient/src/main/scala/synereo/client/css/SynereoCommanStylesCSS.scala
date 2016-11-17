@@ -23,7 +23,7 @@ object SynereoCommanStylesCSS {
     val naviContainer = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
-      marginBottom(0.px),
+      marginBottom(1.px),
       position.initial,
       zIndex(0),
       //      backgroundColor(rgba(48, 134, 161, 0.6)),

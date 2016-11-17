@@ -209,7 +209,7 @@ object NewMessageForm {
           <.div()(
             <.div(DashBoardCSS.Style.modalHeaderPadding, ^.className := "text-right")(
               //              <.div(^.className:="form-group")(
-              <.button(^.tpe := "submit", ^.id := "messageID", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, /*^.onClick --> hide, */ "Send"),
+              <.button(^.tpe := "submit", ^.id := "messageID", ^.className := "btn", DashBoardCSS.Style.marginLeftCloseBtn, /*DashBoardCSS.Style.btnDefault,*/ /*^.onClick --> hide, */ "Send"),
               <.button(^.tpe := "button", ^.className := "btn", DashBoardCSS.Style.btnDefault, DashBoardCSS.Style.marginLeftCloseBtn, ^.onClick --> hide, "Cancel")
             )
           ),
