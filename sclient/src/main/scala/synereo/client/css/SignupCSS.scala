@@ -132,6 +132,13 @@ object SignupCSS {
       media.maxWidth(580.px)(
         fontSize(10.px),
         height.auto.important
+      ),
+      media.width(1024.px)(
+        fontSize(16.px),
+        height(48.px)
+      ),
+      media.width(1152.px)(
+        height(40.px)
       )
     )
     val SignupformFooter = style(

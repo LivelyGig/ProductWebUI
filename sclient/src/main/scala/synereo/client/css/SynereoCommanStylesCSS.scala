@@ -343,6 +343,14 @@ object SynereoCommanStylesCSS {
       media.maxWidth(920.px)(
         paddingLeft(20.px),
         paddingRight(20.px)
+      ),
+      media.width(1024.px)(
+        paddingLeft(30.px),
+        paddingRight(30.px)
+      ),
+      media.width(1152.px)(
+        paddingLeft(30.px),
+        paddingRight(30.px)
       )
     )
 

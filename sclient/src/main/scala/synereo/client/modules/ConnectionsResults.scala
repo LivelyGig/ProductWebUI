@@ -81,7 +81,7 @@ object ConnectionsList {
     .backend(new Backend(_))
     .renderPS((b, p, s) => {
       def renderConnections(connection: ConnectionsModel) = {
-        <.li(^.className := " col-md-5 col-sm-5 col-xs-12 col-lg-5 Posts",
+        <.li(^.className := " col-md-5 col-sm-5 col-xs-12 col-lg-5 post-container",
           <.div(^.className := "", <.div(^.className := "row ", ConnectionsCSS.Style.fullUserDescription)(
             <.div(^.className := "col-md-3 col-sm-3 col-xs-3 col-lg-3", ConnectionsCSS.Style.connectionAvatarContainer, ^.id :={""+connection.connection.target.substring(8).split("/")(0)} , ^.onClick --> b.backend.introduceUsers(""+connection.connection.target.substring(8).split("/")(0))
             )(
@@ -93,7 +93,7 @@ object ConnectionsList {
                   + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
               }
             ),
-            <.div(^.className :="col-md-9 col-sm-9 col-xs-9 col-lg-9 row ConnectionPostShadow",ConnectionsCSS.Style.connectionNameContainer)   (
+            <.div(^.className :="col-md-9 col-sm-9 col-xs-9 col-lg-9 row connection-post-shadow",ConnectionsCSS.Style.connectionNameContainer)   (
               <.div(^.className := "col-md-10 col-sm-10 col-xs-10 col-lg-10", ConnectionsCSS.Style.connectionNameHolder)(<.h4(  ConnectionsCSS.Style.connectionName)(
                 if (connection.name.nonEmpty) {
                   <.div(ConnectionsCSS.Style.connectionName,
@@ -111,8 +111,8 @@ object ConnectionsList {
               ),
               <.div(^.className := "col-md-2 col-sm-2 col-xs-2 col-lg-2", ConnectionsCSS.Style.userActionsMenu)(
                 <.span(<.span(^.className := "fa fa-comment btn   ", ConnectionsCSS.Style.userActionIcons),
-                  <.span(^.className := "privacyOptionDropdown")(<.button(^.className := "fa fa-star btn  dropdown  ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", ConnectionsCSS.Style.userActionIcons),
-                    <.ul(^.className := "dropdown-menu privacyOptionDropdownMenu", ConnectionsCSS.Style.userActionDropdownMenu)(
+                  <.span(^.className := "privacy-option-dropdown")(<.button(^.className := "fa fa-star btn  dropdown  ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", ConnectionsCSS.Style.userActionIcons),
+                    <.ul(^.className := "dropdown-menu privacy-option-dropdown-menu", ConnectionsCSS.Style.userActionDropdownMenu)(
                       <.li(<.a("Work - Keep me Private")),
                       <.li(<.a("Only Direct Interactions")),
                       <.li(<.a("I am an Open Book")),
@@ -126,7 +126,7 @@ object ConnectionsList {
 
               ))
           ),
-            <.div(^.className := "row popularTags", ConnectionsCSS.Style.userPopularTags)(
+            <.div(^.className := "row popular-tags", ConnectionsCSS.Style.userPopularTags)(
               <.button(^.className := " col-md-3 col-sm-3 col-xs-3 col-lg-3", ^.`type` := "button", "User Experts", ConnectionsCSS.Style.userPopularTag),
               <.button(^.className := "col-md-3 col-sm-3 col-xs-3 col-lg-3", ^.`type` := "button", "User Experts", ConnectionsCSS.Style.userPopularTag),
               <.button(^.className := " col-md-3 col-sm-3 col-xs-3 col-lg-3", ^.`type` := "button", "User Experts", ConnectionsCSS.Style.userPopularTag)

@@ -171,7 +171,7 @@ object ConnectionsCSS {
       &.hover(
         color.white
       ),
-      &.active(color.white),
+      &.active(color.white,boxShadow:="none"),
       &.focus(color.white)
     )
 
