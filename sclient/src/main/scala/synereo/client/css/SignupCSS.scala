@@ -100,7 +100,7 @@ object SignupCSS {
       opacity(0.65),
       textAlign.center,
       marginBottom(30.px),
-      marginTop(20.px),
+//      marginTop(20.px),
       media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
@@ -159,6 +159,10 @@ object SignupCSS {
         backgroundColor.transparent,
         color(c"#35b0e2")
       )
+    )
+
+    val formControlMargin = style(
+      marginTop(5.px)
     )
   }
 

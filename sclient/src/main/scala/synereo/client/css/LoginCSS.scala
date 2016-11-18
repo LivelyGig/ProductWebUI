@@ -82,6 +82,12 @@ object LoginCSS {
         marginTop(-35.%%)
       )
     )
+    val signUpImg = style(
+    height(120.px),
+    width(117.px),
+    marginTop(-23.%%),
+    marginLeft(38.4.%%)
+    )
 
     val loginScreenBgImage = style(
       margin.auto.important,

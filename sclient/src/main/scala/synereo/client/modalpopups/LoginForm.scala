@@ -194,16 +194,18 @@ object LoginForm {
                     })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
                   )
                 ),
-                <.div(LoginCSS.Style.loginFormInputText)(
+                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.placeholder := state.lang.selectDynamic("EMAIL").toString,
                     "data-error".reactAttr := "Email is required", ^.value := state.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
+                  <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
                   <.div(^.className := "help-block with-errors")
                 ),
-                <.div(LoginCSS.Style.loginFormInputText)(
+                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
                   // <.label(LoginCSS.Style.loginFormLabel)("Password"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := state.userModel.password, ^.onChange ==> t.backend.updatePassword, ^.required := true),
+                  <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
                   <.div(^.className := "help-block with-errors")
                 ),
                 //                <.div(^.className := "row")(

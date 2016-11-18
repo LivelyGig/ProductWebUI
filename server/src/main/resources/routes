@@ -6,11 +6,16 @@
 GET     /                                 controllers.Application.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/fonts/*file               controllers.Assets.at(path="/public/lib/font-awesome/fonts", file)
-GET     /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/fonts/glyphicons-halflings-regular.ttf             controllers.Assets.at(path="/public",file="/lib/bootstrap/fonts/glyphicons-halflings-regular.ttf")
+GET     /assets/fonts/glyphicons-halflings-regular.woff            controllers.Assets.at(path="/public",file="/lib/bootstrap/fonts/glyphicons-halflings-regular.woff")
+GET     /assets/fonts/glyphicons-halflings-regular.woff2           controllers.Assets.at(path="/public",file="/lib/bootstrap/fonts/glyphicons-halflings-regular.woff2")
+GET     /assets/fonts/fontawesome-webfont.ttf                      controllers.Assets.at(path="/public", file= "/lib/font-awesome/fonts/fontawesome-webfont.ttf")
+GET     /assets/fonts/fontawesome-webfont.woff                     controllers.Assets.at(path="/public", file= "/lib/font-awesome/fonts/fontawesome-webfont.woff")
+GET     /assets/fonts/fontawesome-webfont.woff2                    controllers.Assets.at(path="/public", file= "/lib/font-awesome/fonts/fontawesome-webfont.woff2")
+GET     /assets/*file                                              controllers.Assets.versioned(path="/public", file: Asset)
 
 # Autowire calls
-POST    /api/*path                        controllers.Application.autowireApi(path: String)
+POST    /api/*path                                                 controllers.Application.autowireApi(path: String)
 
 # Logging
-POST /logging                             controllers.Application.logging
+POST /logging                                                      controllers.Application.logging
