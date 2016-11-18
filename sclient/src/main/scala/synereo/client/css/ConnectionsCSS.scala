@@ -171,7 +171,7 @@ object ConnectionsCSS {
       &.hover(
         color.white
       ),
-      &.active(color.white),
+      &.active(color.white,boxShadow:="none"),
       &.focus(color.white)
     )
 
@@ -229,5 +229,6 @@ object ConnectionsCSS {
       position.inherit,
       backgroundColor(c"#216b9a")
     )
+    val receipentsTextContainer = style(width(491.px),maxWidth(100.%%),minWidth(100.%%))
   }
 }

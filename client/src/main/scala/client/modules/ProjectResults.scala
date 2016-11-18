@@ -67,7 +67,10 @@ object ProjectResults {
                 )
               ),
               <.div(PresetsCSS.Style.modalBtn)(
-                NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job"))
+                NewProject(NewProject.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.clipboard, "Create New Job")),
+                <.div(PresetsCSS.Style.overlay)(
+                  Icon.plus
+                )
               ),
               <.div(DashBoardCSS.Style.displayInlineText, DashBoardCSS.Style.rsltCountHolderDiv, DashBoardCSS.Style.marginResults)("2,352 Results")
             )

@@ -14,15 +14,16 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
   override def read[R: Pickler](p: ByteBuffer) = Unpickle[R].fromBytes(p)
+
   override def write[R: Pickler](r: R) = Pickle.intoBytes(r)
 }
 
-class Application @Inject() (implicit val config: Configuration, env: Environment) extends Controller {
-    val apiService = new ApiService()
+class Application @Inject()(implicit val config: Configuration, env: Environment) extends Controller {
+  val apiService = new ApiService()
 
   def index = Action {
 
-    //                    Ok(views.html.index("LivelyGig"))
+    //    Ok(views.html.index("LivelyGig"))
     Ok(views.html.index("Welcome to Synereo - the decentralized and distributed social network"))
   }
 
