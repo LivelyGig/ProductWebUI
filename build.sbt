@@ -18,8 +18,8 @@ lazy val sharedJS = shared.js.settings(name := "sharedJS")
 lazy val elideOptions = settingKey[Seq[String]]("Set limit for elidable functions")
 
 // instantiate the JS project for SBT with some additional settings
-lazy val clientJSDeps = List("prolog_parser.js", "validator.js", "synereo_app.js", "synereo_selectize.js")
-lazy val client: Project = (project in file("sclient"))
+lazy val clientJSDeps = List("prolog_parser.js", "validator.js")
+lazy val client: Project = (project in file("client"))
   .settings(
     name := "client",
     version := Versions.appVersion,
@@ -61,7 +61,7 @@ lazy val server = (project in file("server"))
     scalaJSProjects := clients,
     pipelineStages in Assets := Seq(scalaJSPipeline),
     pipelineStages := Seq(digest, gzip),
-      includeFilter in(Assets, LessKeys.less) := "synereo-main.less",
+      includeFilter in(Assets, LessKeys.less) := "main.less",
     // compress CSS
     LessKeys.compress in Assets := true
 
