@@ -996,43 +996,6 @@ transform: translate(0,0); */
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#rightPost {
-  display : none;
-}
-.showRightPost:hover + #rightPost {
-  display : initial;
-}
-@media (max-width: 767px){
- .showRightPost:hover + #rightPost {
-    display : none;}
-    }
-@media only screen and (max-device-width: 767px)   {
-  #trans {
-    display:none;
-  }
-  #rightPost {
-    display : initial;
-    width:0%;
-  }
-  .showRightPost:hover + #rightPost {
-    display : initial;
-    width:80%;
-  }
-  .showRightPost:hover + #rightPost #trans {
-    display : initial;
-  }
-  #rightPost:hover #trans {
-    display : initial;
-  }
-  #rightPost:hover {
-    display : initial;
-    width:80%;
-  }
-}
-#rightPost:hover {
-  display : initial;
-}
-
 
 .ConnectionPostShadow {
  box-shadow: 15px 0px 20px 0 #216b9a;
