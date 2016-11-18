@@ -214,13 +214,13 @@ object DashboardCSS {
       media.minWidth(768.px).maxDeviceWidth(991.px) - (
         fontSize(12.px),
         width(12.px),
-        paddingLeft(5%%),
-        paddingRight(5%%)
+        paddingLeft(5.%%),
+        paddingRight(5.%%)
         ),
       media.maxWidth(767.px) - (
         fontSize(11.px),
         position.absolute,
-        left(75%%),
+        left(76.%%),
         width(12.px)
         )
     )

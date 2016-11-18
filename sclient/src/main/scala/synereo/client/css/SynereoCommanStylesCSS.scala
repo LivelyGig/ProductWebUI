@@ -428,7 +428,8 @@ object SynereoCommanStylesCSS {
       )
     )
 
-    val emailVerifiedContainer = style(//      marginTop(-10.%%),
+    val emailVerifiedContainer = style(
+      //      marginTop(-10.%%),
       //      backgroundColor(c"#9554B0"),
       //      marginLeft(-46.px),
       //      marginRight(-46.px),
@@ -451,7 +452,7 @@ object SynereoCommanStylesCSS {
     val displayInline = style(
       display.inlineBlock
     )
-    //
+
     //    val verticalAlignmentHelper = style(
     //      display.table,
     //      height(100.%%),
@@ -490,7 +491,7 @@ object SynereoCommanStylesCSS {
       media.minWidth(321.px).maxWidth(376.px) -
         fontSize(13.px),
       media.minWidth(462.px).maxWidth(766.px) -
-        width(100 %%)
+        width(100.%%)
 
       //      width(130.px),
       //      media.minWidth(776.px) -
@@ -505,6 +506,15 @@ object SynereoCommanStylesCSS {
       paddingLeft(17.%%).important
     )
 
+    val feedViewLftAnimDivDisplayInitial = style(
+      display.initial,
+      media.only.screen.maxDeviceWidth(767.px)(
+        width(0.%%)
+      )
+    )
+    val feedViewLftAnimDivDisplayNone = style(
+      display.none
+    )
     val feedViewLftHeightPost = style(
       //      height(50.vh),
       //      display.flex,
@@ -513,9 +523,9 @@ object SynereoCommanStylesCSS {
       media.only.screen.maxDeviceWidth(767.px)(
         position.absolute,
         top(0.px),
-        width(50 %%),
-        height(98.7 %%),
-        right(-11 %%),
+        width(80.%%),
+        height(98.7.%%),
+        right(-11.%%),
         backgroundColor(c"#00446A")
       )
     )
@@ -563,40 +573,37 @@ object SynereoCommanStylesCSS {
     )
     val feedViewRightAnimDivSubIconCol = style(
       media.minWidth(768.px).maxWidth(991.px)(
-        paddingLeft(3%%)
+        paddingLeft(4.%%)
       ),
       media.only.screen.maxDeviceWidth(767.px)(
-        paddingLeft(4 %%),
-        right(8%%)
-
+        paddingLeft(4.%%),
+        right(8.%%)
       )
     )
-    val feedViewRow = style(
-    /*display.flex*/
-    )
+
     val feedViewPostLeftDiv = style(
       transition := "1s",
       media.only.screen.maxDeviceWidth(767.px)(
-        width(0 %%),
+        width(0.%%),
         position.absolute,
         left(0.px),
-        height(97 %%),
+        height(97.%%),
         zIndex(2),
         &.hover(
           backgroundColor(c"#f48536"),
-          width(80 %%)
+          width(80.%%)
 
         )
       )
     )
     val feedViewRightAnimDivStatusIconRow = style(
       media.only.screen.maxDeviceWidth(767.px)(
-        marginTop(10 %%)
+        marginTop(10.%%)
       ))
     val feedViewRightAnimDivMainStatusIcon = style(
       media.only.screen.maxDeviceWidth(767.px)(
         position.relative,
-        left(80 %%)
+        left(80.%%)
       )
 
     )

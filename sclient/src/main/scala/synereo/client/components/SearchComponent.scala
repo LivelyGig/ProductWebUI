@@ -22,7 +22,7 @@ object SearchComponent {
 
   case class Props()
 
-  case class State(labelSelectizeInputId: String = "SearchComponentLblSltz", connectionsSelectizeInputId: String = "SearchComponentCnxnSltz" /*, labels: Seq[Label]*/)
+  case class State(connectionsSelectizeInputId: String = "SearchComponentCnxnSltz" /*, labels: Seq[Label]*/)
 
   val searchesProxy = SYNEREOCircuit.connect(_.searches)
 
