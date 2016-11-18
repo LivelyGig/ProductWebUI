@@ -104,7 +104,7 @@ object HomeFeedList {
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
     def feedViewRightStatusAnimDiv(id: String, clasName: String) = Callback {
       val animDivId: js.Object = s"#$id"
-      logger.log.warn(clasName)
+      //      logger.log.warn(clasName)
       if ($(animDivId).hasClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")) {
         $(s".$clasName".asInstanceOf[js.Object]).addClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
         $(animDivId).removeClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
@@ -120,7 +120,7 @@ object HomeFeedList {
     }
 
     def postAmplified(amount: String, to: String, isAmplified: Boolean): Callback = {
-      logger.log.debug("postAmplified called ")
+      logger.log.debug("postAmplified called")
       if (isAmplified) {
         logger.log.debug(s"Sending $amount AMPs to $to")
         CoreApi.sendAmps(amount, to).onComplete {
@@ -181,7 +181,7 @@ object HomeFeedList {
       def renderMessages(message: MessagePost) = {
         <.li(^.id := s"home-feed-card-${message.uid}", ^.className := "media", DashboardCSS.Style.CardHolderLiElement)(
           <.div(^.className := "row")(
-            <.div(^.className := "col-md-3 col-sm-2",SynereoCommanStylesCSS.Style.feedViewPostLeftDiv)(
+            <.div(^.className := "col-md-3 col-sm-2", SynereoCommanStylesCSS.Style.feedViewPostLeftDiv)(
               FeedViewLeftAnimC(FeedViewLeftAnimC.Props())
             ),
             <.div(^.className := "col-md-6 col-sm-8 showRightPost", ^.onClick --> t.backend.feedViewRightStatusAnimDiv(message.uid, "feedViewPost"))(
@@ -271,7 +271,7 @@ object HomeFeedList {
                 )
               )
             ),
-            <.div(^.id := message.uid,^.className := "col-md-3 col-sm-2 feedViewPost",SynereoCommanStylesCSS.Style.feedViewLftHeightPost,SynereoCommanStylesCSS.Style.feedViewLftAnimDivDisplayNone)(
+            <.div(^.id := message.uid, ^.className := "col-md-3 col-sm-2 feedViewPost", SynereoCommanStylesCSS.Style.feedViewLftHeightPost, SynereoCommanStylesCSS.Style.feedViewLftAnimDivDisplayNone)(
               FeedViewRightAnimC(FeedViewRightAnimC.Props(message.uid, t.backend.feedViewRightStatusAnimDiv))
             )
           )
