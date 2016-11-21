@@ -289,9 +289,9 @@ object NewMessageForm {
                       )
                     ))
               ),
-              <.div(^.className := "text-left text-muted")(
+              /*<.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),
+              ),*/
               <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
