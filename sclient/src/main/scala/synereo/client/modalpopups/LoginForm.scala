@@ -141,40 +141,6 @@ object LoginForm {
                 } else
                   <.img(^.src := "./assets/synereo-images/synereologo.png", LoginCSS.Style.loginImg),
                 <.div(LoginCSS.Style.loginHeading)(headerText),
-                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                //                  <.div(^.className := "row")(
-                //                    <.div(/*^.className := "col-md-4"*/)(
-                //                      <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-                //                    ),
-                //                    <.div(/*^.className := "col-md-8"*/)(
-                //                      <.input(^.`type` := "text", ^.placeholder := "Host-ip", SignupCSS.Style.inputStyleSignUpForm,
-                //                        ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-                //                    )
-                //                  )
-                //                ),
-                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                //                  <.div(^.className := "row")(
-                //                    <.div(/*^.className := "col-md-4"*/)(
-                //                      <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-                //                    ),
-                //                    <.div(/*^.className := "col-md-8"*/)(
-                //                      <.input(^.tpe := "text", ^.placeholder := "Port Number", SignupCSS.Style.inputStyleSignUpForm,
-                //                        ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-                //                    )
-                //                  )
-                //                ),
-                //                <.div(^.className := "form-group")(
-                //                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
-                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                //                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
-                //                  <.div(^.className := "help-block with-errors")
-                //                ),
-                //                <.div(^.className := "form-group")(
-                //                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
-                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                //                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
-                //                  <.div(^.className := "help-block with-errors")
-                //                ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   <.div(LoginCSS.Style.apiDetailsContainer)(
                     <.div(^.id := "addLabel", ^.className := "collapse")(
@@ -208,15 +174,6 @@ object LoginForm {
                   <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
                   <.div(^.className := "help-block with-errors")
                 ),
-                //                <.div(^.className := "row")(
-                //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-                //                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-                //                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
-                //                  ),
-                //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
-                //                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
-                //                  )
-                //                ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", state.lang.selectDynamic("LOGIN").toString)
                 )
@@ -227,8 +184,6 @@ object LoginForm {
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
           Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), state.lang.selectDynamic("DONT_HAVE_AN_ACCOUNT?").toString),
           Button(Button.Props(t.backend.showVerifyEmailModal(), CommonStyle.default, Seq(LoginCSS.Style.verifyUserBtnLoginModal), "", ""), state.lang.selectDynamic("VERIFY YOUR TOKEN").toString)
-          //Button(Button.Props(t.backend.addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
-          //RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
 
