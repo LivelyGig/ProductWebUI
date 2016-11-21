@@ -1,11 +1,10 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
+import diode.{ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.models.UserModel
 import synereo.client.css.{LoginCSS, SignupCSS}
-
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -33,8 +32,7 @@ object LoginForm {
                    showConfirmAccountCreation: Boolean = false,
                    showNewUserForm: Boolean = false,
                    showNewInviteForm: Boolean = false,
-                   hostName: String = dom.window.location.host,
-                   portNumber: String = "9876",
+                   portNumber: String =  if(dom.window.location.port == "443"){""} else {s":${dom.window.location.port}"} ,//"9876",
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
                   )
@@ -45,10 +43,7 @@ object LoginForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-
       window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
-      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       val LoginBtn: js.Object = "#LoginBtn"
       if ($(LoginBtn).hasClass("disabled"))
         t.modState(s => s.copy(login = false))
@@ -87,7 +82,7 @@ object LoginForm {
 
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
-      //      println(s"value:$value")
+            println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
 
@@ -96,7 +91,7 @@ object LoginForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}"))
     }
     def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
@@ -104,16 +99,21 @@ object LoginForm {
 
     def mounted(): Callback = Callback {
       $(Name).focus()
-      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null) {
+       // println(s"in if ${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}")
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL))).runNow()
-      else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}")).runNow()
+      }
+      else {
+      //  println(s"in else ${if(dom.window.location.port==443) "" else dom.window.location.port }")
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}")).runNow()
+      }
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
     def formClosed(state: LoginForm.State, props: LoginForm.Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(s"state.showNewAgentForm: ${state.showNewUserForm}")
+     // println(s"in else ${if(dom.window.location.port==443) "" else dom.window.location.port }")
       props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewUserForm, state.showNewInviteForm)
     }
   }

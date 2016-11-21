@@ -32,7 +32,7 @@ object VerifyTokenModal {
   case class Props(submitHandler: (EmailValidationModel, Boolean, Boolean) => Callback)
 
   case class State(emailValidationModel: EmailValidationModel, accountValidationFailed: Boolean = false, showLoginForm: Boolean = false,
-                   portNumber: String = "9876",
+                   portNumber: String =  if(dom.window.location.port == "443"){""} else {s":${dom.window.location.port}"} ,//"9876",
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
@@ -72,14 +72,14 @@ object VerifyTokenModal {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}"))
     }
 
     def mounted(): Callback = Callback {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL))).runNow()
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}")).runNow()
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}")).runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
