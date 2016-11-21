@@ -153,11 +153,12 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
+      val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("img_attachment").toString.toInt
       if (value.`type` == "image/jpeg" || value.`type` == "image/png")
         hideComponent(fileTypeNotSupportedErr)
       else
         unHideComponent(fileTypeNotSupportedErr)
-      if (value.size <= 4000000) {
+      if (value.size <= img_size) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
@@ -288,9 +289,9 @@ object NewMessageForm {
                       )
                     ))
               ),
-              <.div(^.className := "text-left text-muted")(
+              /*<.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),
+              ),*/
               <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
