@@ -9,16 +9,19 @@ import org.querki.jquery._
 import shared.models.{MessagePost, MessagePostContent}
 import synereo.client.rootmodels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{FullPostViewModal, NewMessageForm, ServerErrorModal, AmplifyPostForm}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.modalpopups.{AmplifyPostForm, FullPostViewModal, NewMessageForm, ServerErrorModal}
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
-import synereo.client.components.{Icon, FeedViewRightAnimC}
+import synereo.client.components.{FeedViewRightAnimC, Icon}
+
 import scala.language.reflectiveCalls
 import org.widok.moment.Moment
 import shared.dtos.{ApiResponse, ErrorResponse, SendAmpsResponse}
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -270,6 +273,12 @@ object HomeFeedList {
           } else {
             Seq.empty[ReactElement]
           }
+        ),
+        <.div(
+          if (props.messages.isEmpty)
+            <.div(^.className := "row text-center",DashboardCSS.Style.noMsg)("No results returned. Waiting for new results.")
+          else
+            <.div()
         ),
         //homeFeedMediaList id is important see synereo_app.js
         <.ul(^.id := "homeFeedMediaList", ^.className := "media-list ", DashboardCSS.Style.homeFeedContainer)(

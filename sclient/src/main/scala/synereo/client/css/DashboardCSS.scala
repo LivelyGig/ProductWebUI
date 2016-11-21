@@ -353,6 +353,11 @@ object DashboardCSS {
       textAlign.left,
       marginLeft(10.px)
     )
+    val noMsg = style(
+    color.white,
+    textAlign.center,
+    fontSize(2.em)
+    )
   }
 
 }
