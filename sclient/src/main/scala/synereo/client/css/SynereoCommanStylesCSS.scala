@@ -597,8 +597,12 @@ object SynereoCommanStylesCSS {
       )
     )
     val feedViewRightAnimDivStatusIconRow = style(
+      media.maxWidth(767.px)(
+        display.none
+      ),
       media.only.screen.maxDeviceWidth(767.px)(
-        marginTop(10.%%)
+        marginTop(10.%%),
+        display.initial
       ))
     val feedViewRightAnimDivMainStatusIcon = style(
       media.only.screen.maxDeviceWidth(767.px)(
