@@ -29,8 +29,7 @@ object Dashboard {
 
   case class State(ShowFullPostView: Boolean = false,
                    preventFullPostView: Boolean = true,
-                   showErrorModal: Boolean = false
-                  )
+                   showErrorModal: Boolean = false)
 
   class DashboardBackend(t: BackendScope[Dashboard.Props, Dashboard.State]) {
 
@@ -104,7 +103,7 @@ object HomeFeedList {
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
     def feedViewRightStatusAnimDiv(id: String, clasName: String) = Callback {
       val animDivId: js.Object = s"#$id"
-      //      logger.log.warn(clasName)
+
       if ($(animDivId).hasClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")) {
         $(s".$clasName".asInstanceOf[js.Object]).addClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
         $(animDivId).removeClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
@@ -207,26 +206,7 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                    if (message.sender.name.equals("me")) {
-                      <.span()
-                    } else {
-                      <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                        "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick --> t.backend.amplifyPost(message.sender.connection.target.split("/")(2)))(
-                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                      )
-                    },
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
-                      ^.onClick --> t.backend.forwardPost(message))(
-                      <.span(Icon.mailForward)
-                    ),
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Reply Post", "data-placement".reactAttr := "right",
-                      ^.onClick --> t.backend.replyPost(message))(
-                      <.span(Icon.mailReply)
-                    )
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
                   )
                 ),
 
@@ -272,7 +252,7 @@ object HomeFeedList {
               )
             ),
             <.div(^.id := message.uid, ^.className := "col-md-3 col-sm-2 feedViewPost", SynereoCommanStylesCSS.Style.feedViewLftHeightPost, SynereoCommanStylesCSS.Style.feedViewLftAnimDivDisplayNone)(
-              FeedViewRightAnimC(FeedViewRightAnimC.Props(message.uid, t.backend.feedViewRightStatusAnimDiv))
+              FeedViewRightAnimC(FeedViewRightAnimC.Props(message, t.backend.feedViewRightStatusAnimDiv, t.backend.replyPost, t.backend.forwardPost, t.backend.amplifyPost))
             )
           )
         )

@@ -90,7 +90,7 @@ object DashboardCSS {
     )
     val cardImage = style(
       //      paddingRight(65.px)s
-//      width(100.%%)
+      //      width(100.%%)
       maxHeight(500.px),
       margin.auto
     )
@@ -104,25 +104,25 @@ object DashboardCSS {
     )
     val cardDescriptionContainerDiv = style(
       cursor.pointer,
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)(
         paddingLeft(65.px),
         paddingRight(65.px)
-        ),
-      media.maxWidth(767.px) - (
+      ),
+      media.maxWidth(767.px)(
         paddingLeft(20.px),
         paddingRight(20.px)
-        )
+      )
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
 
       overflowY.hidden.important,
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)(
         padding(15.px)
-        ),
-      media.maxWidth(767.px) - (
+      ),
+      media.maxWidth(767.px)(
         padding(0.px, 18.px, 10.px, 18.px)
-        )
+      )
     )
     val glanceViewName = style(
       display.inlineBlock
@@ -195,12 +195,12 @@ object DashboardCSS {
       lineHeight(1.5.em),
       color(c"#000"),
       opacity(0.65),
-      media.minWidth(768.px) - (
+      media.minWidth(768.px)(
         fontSize(14.px)
-        ),
-      media.only.screen.maxDeviceWidth(767.px) - (
+      ),
+      media.only.screen.maxDeviceWidth(767.px)(
         fontSize(11.px)
-        )
+      )
     )
 
     val postDescription = style(
@@ -211,18 +211,18 @@ object DashboardCSS {
       lineHeight(1.5.em),
       color(c"#fff"),
       opacity(0.65),
-      media.minWidth(768.px).maxDeviceWidth(991.px) - (
+      media.minWidth(768.px).maxDeviceWidth(991.px)(
         fontSize(12.px),
         width(12.px),
         paddingLeft(5.%%),
         paddingRight(5.%%)
-        ),
-      media.maxWidth(767.px) - (
+      ),
+      media.maxWidth(767.px)(
         fontSize(11.px),
         position.absolute,
         left(76.%%),
         width(12.px)
-        )
+      )
     )
     val postActions = style(
       marginLeft(-10.px)
@@ -274,12 +274,12 @@ object DashboardCSS {
       whiteSpace.preWrap,
       opacity(0.95),
       lineHeight(1.5.em),
-      media.minWidth(768.px)  (
+      media.minWidth(768.px)(
         fontSize(21.px)
-        ),
-      media.maxWidth(767.px)  (
+      ),
+      media.maxWidth(767.px)(
         fontSize(17.px)
-        )
+      )
     )
 
     val imgBorder = style(
@@ -306,6 +306,20 @@ object DashboardCSS {
     val ampTokenImg = style(
       maxWidth(20.px)
     )
+    val ampTokenAnimImg = style(
+      maxWidth(25.px),
+      position.relative
+    )
+    val animGlyphIcon = style(
+      position.relative,
+      top(6.px),
+      left(7.px),
+      media.maxWidth(991.px)(
+        top(1.px),
+        left(4.px),
+        fontSize(12.px)
+      )
+    )
 
     val verticalAlignInherit = style {
       verticalAlign.inherit
@@ -316,7 +330,7 @@ object DashboardCSS {
     )
 
     val paddingLRZero = style(
-      media.maxWidth(767.px) - (
+      media.maxWidth(767.px)(
         paddingLeft(0.px),
         paddingRight(0.px))
     )
@@ -333,11 +347,12 @@ object DashboardCSS {
 
     val ampbalancetext = style(
       whiteSpace.normal,
-    width(120.px),
-    float.right,
-    marginRight(-20.px),
-    textAlign.left,
-    marginLeft(10.px)
+      width(120.px),
+      float.right,
+      marginRight(-20.px),
+      textAlign.left,
+      marginLeft(10.px)
     )
   }
+
 }
