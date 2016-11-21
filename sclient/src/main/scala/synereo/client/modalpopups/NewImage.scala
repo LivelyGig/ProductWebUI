@@ -107,7 +107,8 @@ object ProfileImageUploaderForm {
         $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
       else
         $("#file-type-not-supported-error".asInstanceOf[js.Object]).removeClass("hidden")
-      if (value.size <= 1000000) {
+      val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("user_profile_img").toString.toInt
+      if (value.size <= img_size) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
