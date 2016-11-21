@@ -223,6 +223,7 @@ object NewMessageForm {
     }
   }
 
+
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new MessagePostContent()))
     .backend(new NewMessageBackend(_))
