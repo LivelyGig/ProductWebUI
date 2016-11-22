@@ -1,7 +1,7 @@
 package synereo.client.css
 
-import scalacss.Defaults._
 import scala.language.postfixOps
+import scalacss.Defaults._
 
 /**
   * Created by mandar.k on 3/23/2016.
@@ -90,12 +90,6 @@ object SynereoCommanStylesCSS {
       left.`0`
       //      zIndex(100)
     )
-
-    val userNameTopMenubar = style(
-      opacity(0.6),
-      fontSize(12.px),
-      display.inlineBlock
-    )
     val createPostButton = style(
       //      backgroundColor(c"#2283AE"),
       backgroundColor(transparent),
@@ -136,10 +130,6 @@ object SynereoCommanStylesCSS {
     val createPostImg = style(
       maxWidth(24.px),
       borderRadius(31.%%)
-    )
-    val ampsCount = style(
-      fontWeight._600,
-      display.inlineBlock
     )
     val mainMenuNavbar = style(
       right.`0`,
@@ -390,13 +380,6 @@ object SynereoCommanStylesCSS {
       borderRadius(50.%%),
       display.inlineBlock
     )
-    val userAvatarTopBar = style(
-      width(30.px),
-      height(30.px),
-      borderRadius(50.%%),
-      display.inlineBlock,
-      float.left
-    )
     val userAvatarAnchor = style(
       backgroundColor.transparent.important,
       paddingLeft.`0`.important,
@@ -597,8 +580,12 @@ object SynereoCommanStylesCSS {
       )
     )
     val feedViewRightAnimDivStatusIconRow = style(
+      media.maxWidth(767.px)(
+        display.none
+      ),
       media.only.screen.maxDeviceWidth(767.px)(
-        marginTop(10.%%)
+        marginTop(10.%%),
+        display.initial
       ))
     val feedViewRightAnimDivMainStatusIcon = style(
       media.only.screen.maxDeviceWidth(767.px)(

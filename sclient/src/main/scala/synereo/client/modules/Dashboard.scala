@@ -9,16 +9,19 @@ import org.querki.jquery._
 import shared.models.{MessagePost, MessagePostContent}
 import synereo.client.rootmodels.MessagesRootModel
 import synereo.client.components._
-import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
-import synereo.client.modalpopups.{FullPostViewModal, NewMessageForm, ServerErrorModal, AmplifyPostForm}
+import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
+import synereo.client.modalpopups.{AmplifyPostForm, FullPostViewModal, NewMessageForm, ServerErrorModal}
+
 import scalacss.ScalaCssReact._
 import scala.scalajs.js
-import synereo.client.components.{Icon, FeedViewRightAnimC}
+import synereo.client.components.{FeedViewRightAnimC, Icon}
+
 import scala.language.reflectiveCalls
 import org.widok.moment.Moment
 import shared.dtos.{ApiResponse, ErrorResponse, SendAmpsResponse}
 import synereo.client.logger
 import synereo.client.services.{CoreApi, SYNEREOCircuit}
+
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -29,8 +32,7 @@ object Dashboard {
 
   case class State(ShowFullPostView: Boolean = false,
                    preventFullPostView: Boolean = true,
-                   showErrorModal: Boolean = false
-                  )
+                   showErrorModal: Boolean = false)
 
   class DashboardBackend(t: BackendScope[Dashboard.Props, Dashboard.State]) {
 
@@ -104,7 +106,7 @@ object HomeFeedList {
   class HomeFeedListBackend(t: BackendScope[HomeFeedList.Props, HomeFeedList.State]) {
     def feedViewRightStatusAnimDiv(id: String, clasName: String) = Callback {
       val animDivId: js.Object = s"#$id"
-      //      logger.log.warn(clasName)
+
       if ($(animDivId).hasClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")) {
         $(s".$clasName".asInstanceOf[js.Object]).addClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
         $(animDivId).removeClass("SynereoCommanStylesCSS_Style-feedViewLftAnimDivDisplayNone")
@@ -207,26 +209,7 @@ object HomeFeedList {
                     <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert),
-                    if (message.sender.name.equals("me")) {
-                      <.span()
-                    } else {
-                      <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                        "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
-                        ^.onClick --> t.backend.amplifyPost(message.sender.connection.target.split("/")(2)))(
-                        <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg)
-                      )
-                    },
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
-                      ^.onClick --> t.backend.forwardPost(message))(
-                      <.span(Icon.mailForward)
-                    ),
-                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.ampTokenBtn,
-                      "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Reply Post", "data-placement".reactAttr := "right",
-                      ^.onClick --> t.backend.replyPost(message))(
-                      <.span(Icon.mailReply)
-                    )
+                    <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)
                   )
                 ),
 
@@ -272,7 +255,7 @@ object HomeFeedList {
               )
             ),
             <.div(^.id := message.uid, ^.className := "col-md-3 col-sm-2 feedViewPost", SynereoCommanStylesCSS.Style.feedViewLftHeightPost, SynereoCommanStylesCSS.Style.feedViewLftAnimDivDisplayNone)(
-              FeedViewRightAnimC(FeedViewRightAnimC.Props(message.uid, t.backend.feedViewRightStatusAnimDiv))
+              FeedViewRightAnimC(FeedViewRightAnimC.Props(message, t.backend.feedViewRightStatusAnimDiv, t.backend.replyPost, t.backend.forwardPost, t.backend.amplifyPost))
             )
           )
         )
@@ -290,6 +273,12 @@ object HomeFeedList {
           } else {
             Seq.empty[ReactElement]
           }
+        ),
+        <.div(
+          if (props.messages.isEmpty)
+            <.div(^.className := "row text-center",DashboardCSS.Style.noMsg)("No results returned. Waiting for new results.")
+          else
+            <.div()
         ),
         //homeFeedMediaList id is important see synereo_app.js
         <.ul(^.id := "homeFeedMediaList", ^.className := "media-list ", DashboardCSS.Style.homeFeedContainer)(

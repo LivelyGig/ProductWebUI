@@ -1,7 +1,7 @@
 package synereo.client.css
 
-import scalacss.Defaults._
 import scala.language.postfixOps
+import scalacss.Defaults._
 
 /**
   * Created by a4tech on 6/3/2016.
@@ -132,7 +132,7 @@ object NewMessageCSS {
     )
     //spinner css//
     val spinner = style(
-      width(500.px)
+      width(100.%%)
     )
     val spinnerinput = style(
       textAlign.right
