@@ -5,7 +5,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -125,6 +124,7 @@ object SignUpForm {
     def formClosed(state: SignUpForm.State, props: SignUpForm.Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(state.addNewUser)
+      if(state.showTermsOfServicesForm)
       signUpModelUpdate = state.signUpModel
       props.submitHandler(state.signUpModel, state.addNewUser, state.showLoginForm, state.showTermsOfServicesForm)
     }
@@ -144,7 +144,7 @@ object SignUpForm {
         signUpModelUpdate.isFreelancer,
         signUpModelUpdate.canReceiveEmailUpdates))
     else
-      State(new SignUpModel("", "", "", "", "", false, false, false, false, false, false, "")))
+      State(new SignUpModel()))
     .backend(new NewUserFormBackend(_))
     .renderPS((t, props, state) => {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
@@ -153,11 +153,15 @@ object SignUpForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
+
+          /*
           header = hide => <.span()(
             <.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
    //         <.img(^.src := "./assets/synereo-images/synereologo.png", LoginCSS.Style.signUpImg),
             <.div(SignupCSS.Style.signUpHeading)(headerText)
-          ),
+          ),*/
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
+            <.div(SignupCSS.Style.signUpHeading)(headerText)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle)
