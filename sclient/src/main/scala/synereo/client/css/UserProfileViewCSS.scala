@@ -11,6 +11,10 @@ object UserProfileViewCSS {
 
     import dsl._
 
+    val comingSoonImgPreview = style(
+      minHeight(60.px),
+      margin(4.px)
+    )
     val userProfileHeadingContainerDiv = style(
       minHeight(500.px),
       display.block,
@@ -24,8 +28,9 @@ object UserProfileViewCSS {
       fontSize(3.em)
     )
     val userImage = style(
-      minWidth(200.px),
-      maxWidth(200.px)
+      minWidth(150.px),
+      maxWidth(150.px),
+      maxHeight(150.px)
     )
     val newImageBtn = style(
       backgroundColor.transparent.important,
@@ -100,7 +105,47 @@ object UserProfileViewCSS {
       width(100.%%),
       marginBottom(5.px)
     )
+    val modalImgUploadTab = style(
+      width(50.%%)
+    )
+    val modalImgUploadTabUl = style(
+      marginBottom(10.px),
+      width(118.%%),
+      marginLeft(-9.%%),
+      media.minWidth(582.px).maxWidth(922.px)(
+        width(106.%%),
+        marginLeft(-3.%%)
+      ),
+      media.maxWidth(581.px)(
+        width(102.%%),
+        marginLeft(-1.%%)
+      )
+    )
+    val modalImgUploadTabAnchorTag = style(
+      marginLeft(20.%%).important,
+      width(106.px),
+      border.none.important,
+      paddingLeft(0.px).important,
 
+      color(c"#7a7a7a"),
+      &.hover(
+        backgroundColor.initial.important,
+        color.initial,
+        fontWeight.initial
+      )
+    )
+    val modalImgUploadHeader = style(
+      marginLeft(9.%%),
+      color(c"#5c5c5c"),
+      fontWeight._500,
+      media.maxWidth(921.px)(
+        marginLeft(4.%%)
+      )
+    )
+    val modalImgUploadImgDiv = style(
+      height(212.px)
+
+    )
   }
 
 }

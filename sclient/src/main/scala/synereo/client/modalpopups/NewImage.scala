@@ -25,6 +25,8 @@ import synereo.client.logger
 import synereo.client.services.{RootModel, SYNEREOCircuit}
 import synereo.client.utils.ContentUtils
 
+import scalacss.internal.Dsl
+
 //scalastyle:off
 //object NewImage {
 //
@@ -87,7 +89,6 @@ object ProfileImageUploaderForm {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
-
     def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -150,54 +151,78 @@ object ProfileImageUploaderForm {
     .initialState_P(p => State(new UpdateUserRequest()))
     .backend(new NewImgBackend(_))
     .renderPS((t, props, state) => {
+      val colors = Seq("red", "blue", "green", "orange", "yellow")
       Modal(
         Modal.Props(
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.h4(^.className := "pull-left")(props.header)),
+          header = hide => <.span(<.button(^.tpe := "button", ^.className := "hidden", bss.close, ^.onClick --> hide, Icon.close),
+            <.h3(^.className := "pull-left", UserProfileViewCSS.Style.modalImgUploadHeader)(props.header)),
           closed = () => t.backend.formClosed(state, props),
           id = "newImage"
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.div(^.className := "row")(
-              <.div(^.className := "col-md-12")(
-                <.div(^.className := "row",
-                  <.div(^.className := "col-md-12")(
-                    if (state.updateUserRequest.jsonBlob.imgSrc.length < 2) {
-                      <.img(^.src := props.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
-                    } else {
-                      <.img(^.src := state.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
-                    }
-                  )
+              <.ul(^.id := "imgUploadTab", ^.className := "nav nav-tabs", ^.role := "tablist", UserProfileViewCSS.Style.modalImgUploadTabUl,
+                <.li(^.role := "presentation", ^.className := "active", UserProfileViewCSS.Style.modalImgUploadTab,
+                  <.a(^.href := "#uploadPhoto", "aria-controls".reactAttr := "uploadPhoto", ^.role := "tab", "data-toggle".reactAttr := "tab", UserProfileViewCSS.Style.modalImgUploadTabAnchorTag, "Upload Photo")
                 ),
-                <.div(^.className := "row",
-                  <.div(^.className := "col-md-12")(
-                    <.input(^.`type` := "file", ^.id := "image-type-input", ^.accept := "image/*",
-                      ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
-                    <.div(^.id := "no-image-to-upload-error", ^.className := "hidden text-danger")(
-                      state.lang.selectDynamic("PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD").toString
-                    ),
-                    <.div(^.id := "image-size-upload-error", ^.className := "hidden text-danger")(
-                      state.lang.selectDynamic("PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD").toString
-                    ),
-                    <.div(^.id := "file-type-not-supported-error", ^.className := "hidden text-danger")(
-                      state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
+                <.li(^.role := "presentation", UserProfileViewCSS.Style.modalImgUploadTab,
+                  <.a(^.href := "#uploadedPhoto", "aria-controls".reactAttr := "uploadedPhoto", ^.role := "tab", "data-toggle".reactAttr := "tab", UserProfileViewCSS.Style.modalImgUploadTabAnchorTag, "Your Photos")
+                )
+              ),
+              <.div(^.className := "tab-content",
+                <.div(^.id := "uploadPhoto", ^.role := "tabpanel", UserProfileViewCSS.Style.modalImgUploadImgDiv, ^.className := "col-md-12 tab-pane active")(
+                  <.div(^.className := "row",
+                    <.div(^.className := "col-md-12")(
+                      if (state.updateUserRequest.jsonBlob.imgSrc.length < 2) {
+                        <.img(^.src := props.proxy.value.imgSrc, UserProfileViewCSS.Style.userImage)
+                      } else {
+                        <.img(^.src := state.updateUserRequest.jsonBlob.imgSrc, UserProfileViewCSS.Style.userImage)
+                      }
+                    )
+                  ),
+                  <.div(^.className := "row",
+                    <.div(^.className := "col-md-12")(
+                      <.input(^.`type` := "file", ^.id := "image-type-input", ^.accept := "image/*",
+                        ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
+                      <.div(^.id := "no-image-to-upload-error", ^.className := "hidden text-danger")(
+                        state.lang.selectDynamic("PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD").toString
+                      ),
+                      <.div(^.id := "image-size-upload-error", ^.className := "hidden text-danger")(
+                        state.lang.selectDynamic("PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD").toString
+                      ),
+                      <.div(^.id := "file-type-not-supported-error", ^.className := "hidden text-danger")(
+                        state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
+                      )
                     )
                   )
                 ),
-                <.div(^.className := "row",
-                  <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
-                    <.button(^.tpe := "button", ^.className := "btn btn-default",
-                      NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
-                    <.button(^.tpe := "submit", ^.className := "btn btn-default",
-                      NewMessageCSS.Style.createPostBtn, state.lang.selectDynamic("SET_PICTURE").toString)
+                <.div(^.id := "uploadedPhoto", ^.role := "tabpanel", UserProfileViewCSS.Style.modalImgUploadImgDiv, ^.className := "col-md-12  tab-pane", "Coming Soon...")(
+                  <.div(^.className := "row",
+                    for (color <- colors) yield {
+                      <.div(^.className := "col-lg-2 col-md-2 col-sm-2 col-xs-2", UserProfileViewCSS.Style.comingSoonImgPreview, ^.backgroundColor := color)
+                    }
+                  ),
+                  <.div(^.className := "row",
+                    for (color <- colors.reverse) yield {
+                      <.div(^.className := "col-lg-2 col-md-2 col-sm-2 col-xs-2", UserProfileViewCSS.Style.comingSoonImgPreview, ^.backgroundColor := color)
+                    }
                   )
+                )
+              ),
+              <.div(^.className := "row",
+                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
+                  <.button(^.tpe := "button", ^.className := "btn btn-default",
+                    NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
+                  <.button(^.tpe := "submit", ^.className := "btn btn-default",
+                    NewMessageCSS.Style.createPostBtn, state.lang.selectDynamic("SET_PICTURE").toString)
                 )
               )
             )
           )
         )
       )
+
     })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewImage) {
