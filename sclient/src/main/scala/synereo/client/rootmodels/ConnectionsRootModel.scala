@@ -1,6 +1,5 @@
 package synereo.client.rootmodels
 
-import shared.dtos.Connection
 import shared.models.ConnectionsModel
 
 // scalastyle:off

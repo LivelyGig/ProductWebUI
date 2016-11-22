@@ -1,11 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
+import diode.ModelRO
 import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.scalajs.js
-import synereo.client.components.{GlobalStyles, _}
+import synereo.client.components.GlobalStyles
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 
 import scala.language.reflectiveCalls
@@ -22,7 +22,7 @@ import shared.dtos.JsonBlob
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.ContentUtils
 
 //scalastyle:off
