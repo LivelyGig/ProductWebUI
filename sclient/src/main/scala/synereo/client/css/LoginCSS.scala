@@ -52,6 +52,11 @@ object LoginCSS {
         marginLeft(35.px),
         borderBottomLeftRadius(12.px),
         borderBottomRightRadius(20.px)
+      ),
+      media.width(1400.px)(
+        height(560.px),
+        borderBottomLeftRadius(15.px),
+        borderBottomRightRadius(27.px)
       )
 
     )
@@ -142,6 +147,11 @@ object LoginCSS {
         fontSize(40.px),
         marginBottom(22.px),
         marginTop(-22.px)
+      ),
+      media.width(1400.px)(
+        fontSize(42.px),
+        marginBottom(24.px),
+        marginTop(-10.px)
       )
     )
     val iconStylePasswordInputBox = style(
@@ -303,6 +313,9 @@ object LoginCSS {
       media.width(1024.px)(
         fontSize(16.px),
         marginTop(20.px)
+      ),
+      media.width(1400.px)(
+        marginTop(10.px)
       )
     )
     val verifyUserBtnLoginModal = style(
@@ -336,6 +349,9 @@ object LoginCSS {
       media.width(1024.px)(
         fontSize(16.px),
         marginTop(20.px)
+      ),
+      media.width(1400.px)(
+        marginTop(10.px)
       )
     )
 
