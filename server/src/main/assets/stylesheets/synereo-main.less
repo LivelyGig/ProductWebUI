@@ -1036,21 +1036,33 @@ border-bottom: 1px solid white;
   display : initial;
 }
 
-
-.connection-post-shadow {
- box-shadow: 15px 0px 20px 0 #216b9a;
+@media(min-width : 768px){
+ .connection-post-shadow {
+   box-shadow: 15px 0px 20px 0 #216b9a;
+ }
 }
 
 .privacy-option-dropdown:hover  .privacy-option-dropdown-menu {
-display : block
+ display : block
 }
+
 .popular-tags {
-visibility : hidden ;
+ visibility : hidden ;
 }
+
+@media(max-width : 768px) {
+ .popular-tags {
+   display : none;
+ }
+}
+
 .post-container {
-margin : 1vw;
-padding : 0px ;
+  margin : 10px;
+  padding : 0px ;
 }
-.Posts:hover  .popular-tags {
+
+@media (min-width: 768px) {
+ .post-container:hover  .popular-tags {
     visibility: visible
+  }
 }
