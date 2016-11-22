@@ -43,7 +43,7 @@ object NewMessageForm {
                    proxy: ModelProxy[SearchesRootModel],
                    messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
                    replyPost: Boolean = false,
-                   forwardPost:Boolean=false)
+                   forwardPost: Boolean = false)
 
   case class State(postMessage: MessagePostContent,
                    postNewMessage: Boolean = false,
@@ -72,7 +72,9 @@ object NewMessageForm {
     def updateContent(e: ReactEventI) = {
       val value = e.target.value
       SYNEREOCircuit.dispatch(SetPreventNavigation())
-      val tagsCreatedInline = getTagsWithoutPunctuations(filterLabelStrings(value.split(" ")))
+      //      val delim = " \n\r\t,.;()/"
+      //      println(value.split(Array('\n', '\r', '\t', ',', '.', ';', '(', ')', ' ', '/')))
+      val tagsCreatedInline = getTagsWithoutPunctuations(filterLabelStrings(value.split(Array('\n', ' ', '\t'))))
       t.modState(s => s.copy(postMessage = s.postMessage.copy(text = value), tags = tagsCreatedInline))
     }
 
@@ -88,7 +90,6 @@ object NewMessageForm {
       "[a-zA-Z]+".r findAllIn tag map (_.toLowerCase)
     }
 
-
     def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -98,11 +99,13 @@ object NewMessageForm {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       if (props.replyPost) {
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
-        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject =if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
-          s"${props.messagePost.postContent.subject}"  else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}" )))
-      } else if(props.forwardPost){
-        t.modState(state => state.copy(postMessage = MessagePostContent(text=props.messagePost.postContent.text,subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
-            s"${props.messagePost.postContent.subject}" else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
+          s"${props.messagePost.postContent.subject}"
+        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}")))
+      } else if (props.forwardPost) {
+        t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
+          s"${props.messagePost.postContent.subject}"
+        else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
       } else {
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject = props.messagePost.postContent.subject)))
@@ -153,11 +156,12 @@ object NewMessageForm {
 
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
+      val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("img_attachment").toString.toInt
       if (value.`type` == "image/jpeg" || value.`type` == "image/png")
         hideComponent(fileTypeNotSupportedErr)
       else
         unHideComponent(fileTypeNotSupportedErr)
-      if (value.size <= 4000000) {
+      if (value.size <= img_size) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]
@@ -175,21 +179,12 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      var state = t.state.runNow()
-      var props = t.props.runNow()
+      val (state, props) = (t.state.runNow(), t.props.runNow())
       if (state.postMessage.imgSrc != "") {
         t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
       } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
         t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
       }
-
-
-      //        if (state.postMessage.imgSrc != "") {
-      //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
-      //        } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
-      //          t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
-      //        }
-
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       if (connections.length < 1) {
@@ -227,6 +222,7 @@ object NewMessageForm {
       props.submitHandler()
     }
   }
+
 
   private val component = ReactComponentB[Props]("PostNewMessage")
     .initialState_P(p => State(new MessagePostContent()))
@@ -288,9 +284,9 @@ object NewMessageForm {
                       )
                     ))
               ),
-              <.div(^.className := "text-left text-muted")(
+              /*<.div(^.className := "text-left text-muted")(
                 <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),
+              ),*/
               <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
