@@ -1,23 +1,21 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
-import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom
-import synereo.client.components.Bootstrap.{Modal, _}
-import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
-
-import scala.language.reflectiveCalls
-import scalacss.ScalaCssReact._
+import diode.ModelRO
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import org.querki.jquery._
+import org.scalajs.dom
 import org.scalajs.dom._
 import shared.models.SignUpModel
+import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components._
-import synereo.client.components.Bootstrap._
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.sessionitems.SessionItems
 
+import scala.language.reflectiveCalls
 import scala.scalajs.js
+import scalacss.ScalaCssReact._
 
 //scalastyle:off
 object SignUpForm {
@@ -34,6 +32,7 @@ object SignUpForm {
                    addNewUser: Boolean = false,
                    showTermsOfServicesForm: Boolean = false,
                    showLoginForm: Boolean = false,
+                   portNumber: String =  if(dom.window.location.port == "443"){""} else {s":${dom.window.location.port}"} ,//"9876",
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
                   )
@@ -67,16 +66,17 @@ object SignUpForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.host}${t.state.runNow().portNumber}"))
     }
 
     def mounted(): Callback = Callback {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL))).runNow()
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}")).runNow()
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}")).runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
+
 
     def updateName(e: ReactEventI) = {
       val value = e.target.value

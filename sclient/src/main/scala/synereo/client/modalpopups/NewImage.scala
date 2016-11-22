@@ -1,11 +1,11 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
+import diode.ModelRO
 import diode.react.ModelProxy
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.scalajs.js
-import synereo.client.components.{GlobalStyles, _}
+import synereo.client.components.GlobalStyles
 import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 
 import scala.language.reflectiveCalls
@@ -22,7 +22,7 @@ import shared.dtos.JsonBlob
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.logger
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.ContentUtils
 
 import scalacss.internal.Dsl
@@ -108,7 +108,8 @@ object ProfileImageUploaderForm {
         $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
       else
         $("#file-type-not-supported-error".asInstanceOf[js.Object]).removeClass("hidden")
-      if (value.size <= 1000000) {
+      val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("user_profile_img").toString.toInt
+      if (value.size <= img_size) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
           val contents = reader.result.asInstanceOf[String]

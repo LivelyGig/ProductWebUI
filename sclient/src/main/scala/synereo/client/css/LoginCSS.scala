@@ -1,7 +1,7 @@
 package synereo.client.css
 
-import scalacss.Defaults._
 import scala.language.postfixOps
+import scalacss.Defaults._
 
 /**
   * Created by mandar.k  on 3/11/2016.
@@ -417,7 +417,7 @@ object LoginCSS {
       height(45.px),
       width(142.px),
       fontSize(30.px),
-      padding(0.px, 0.px, 7.px, 0.px),
+      padding(0.px, 0.px, 3.px, 0.px),
       border.none,
       lineHeight(40.px),
       color(c"#fff"),

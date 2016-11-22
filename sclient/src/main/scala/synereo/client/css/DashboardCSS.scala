@@ -1,7 +1,5 @@
 package synereo.client.css
 
-import synereo.client.css.LoginCSS.Style._
-
 import scalacss.Defaults._
 
 /**
@@ -95,11 +93,6 @@ object DashboardCSS {
     )
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
-    )
-    val ampsEarnedHeading = style(
-      color(c"#FFFFFF"),
-      paddingLeft(15.px),
-      paddingTop(10.px)
     )
     val cardDescriptionContainerDiv = style(
       cursor.pointer,
@@ -254,10 +247,6 @@ object DashboardCSS {
     val sidebarNavStyle = style(
       fontSize(17.px)
     )
-    val topBarStyle = style(
-      fontSize(15.px)
-      //      fontWeight.bold
-    )
     val postActionButton = style(
       border.none.important,
       marginTop(-30.px)
@@ -342,6 +331,11 @@ object DashboardCSS {
       marginRight(-20.px),
       textAlign.left,
       marginLeft(10.px)
+    )
+    val noMsg = style(
+    color.white,
+    textAlign.center,
+    fontSize(2.em)
     )
   }
 }
