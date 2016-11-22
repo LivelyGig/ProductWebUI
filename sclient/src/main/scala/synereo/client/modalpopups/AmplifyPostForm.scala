@@ -7,7 +7,6 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
 import synereo.client.css.{DashboardCSS, NewMessageCSS}
-
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -29,7 +28,6 @@ object AmplifyPostModal {
   case class Props(buttonName: String, addStyles: Seq[StyleA] = Seq(), /*reactChildElement: ReactTag = <.span(),*/ title: String, modalId: String = "")
 
   case class State(showAmplifyPostForm: Boolean = false)
-
 
 
   abstract class RxObserver[BS <: BackendScope[_, _]](scope: BS) extends OnUnmount {
@@ -75,7 +73,7 @@ object AmplifyPostForm {
 
   case class Props(submitHandler: (String, String, Boolean) => Callback, senderAddress: String = "", modalId: String = "")
 
-  case class State(isAmplified: Boolean = false, amount: String = "",lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
+  case class State(isAmplified: Boolean = false, amount: String = "", lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value, AMPCount: Int = 1)
 
   class AmplifyPostBackend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -112,6 +110,19 @@ object AmplifyPostForm {
       val amount = e.target.value
       t.modState(state => state.copy(amount = amount))
     }
+
+    def increaseAMPCount(): Callback = {
+      val state = t.state.runNow()
+      t.modState(state => state.copy(AMPCount = state.AMPCount + 1))
+    }
+
+    def decreaseAMPCount(): Callback = {
+      val state = t.state.runNow()
+      if (state.AMPCount != 0)
+        t.modState(state => state.copy(AMPCount = state.AMPCount - 1))
+      else
+        t.modState(state => state.copy(AMPCount = 0))
+    }
   }
 
   private val component = ReactComponentB[Props]("AmplifyPostForm")
@@ -130,17 +141,23 @@ object AmplifyPostForm {
         <.div(^.className := "row")(
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
-              <.div()(
-                <.div(^.marginLeft := "15px")(
-                  <.input(^.`type` := "text", ^.className := "form-control", ^.placeholder :=s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}"
-                    , ^.onChange ==> t.backend.updateAmount)
-                ),
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal,
-                    s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal,
-                    s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
+              <.div(^.className := "input-group spinner", NewMessageCSS.Style.spinner,
+                <.input(^.`type` := "text", ^.className := "form-control", ^.value := state.AMPCount,^.placeholder :=s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}"
+                  , ^.onChange ==> t.backend.updateAmount),
+                <.div(^.className := "input-group-btn-vertical", NewMessageCSS.Style.inputgroupbtnVertical,
+                  <.button(^.className := "btn btn-default", NewMessageCSS.Style.spinnerBtn1, ^.`type` := "button",
+                    <.i(^.className := "fa fa-caret-up", NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.increaseAMPCount())
+                  ),
+                  <.button(^.className := "btn btn-default", NewMessageCSS.Style.spinnerBtn2, ^.`type` := "button",
+                    <.i(^.className := "fa fa-caret-down", NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.decreaseAMPCount())
+                  )
                 )
+              ),
+              <.div(^.className := "text-right")(
+                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal,
+                  s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
+                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal,
+                  s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
               )
             )
           )

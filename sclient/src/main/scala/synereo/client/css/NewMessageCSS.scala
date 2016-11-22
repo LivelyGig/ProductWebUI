@@ -8,7 +8,6 @@ import scala.language.postfixOps
   */
 object NewMessageCSS {
 
-
   object Style extends StyleSheet.Inline {
 
     import dsl._
@@ -131,6 +130,53 @@ object NewMessageCSS {
         backgroundColor.transparent.important
       )
     )
+    //spinner css//
+    val spinner = style(
+      width(500.px)
+    )
+    val spinnerinput = style(
+      textAlign.right
+    )
+    val inputgroupbtnVertical = style(
+      position.relative,
+      whiteSpace.nowrap,
+      width(1 %%),
+      verticalAlign.middle,
+      display.tableCell
+    )
+    val spinnerBtn1 = style(
+      display.block,
+      float.none,
+      width(100 %%),
+      maxWidth(100 %%),
+      padding(8.px),
+      marginLeft(-1.px),
+      position.relative,
+      borderTopRightRadius(4.px),
+      borderBottomRightRadius(4.px),
+      borderBottomLeftRadius(0.px),
+      borderTopLeftRadius(0.px)
+    )
+    val spinnerBtn2 = style(
+      display.block,
+      float.none,
+      width(100 %%),
+      maxWidth(100 %%),
+      padding(8.px),
+      marginLeft(-1.px),
+      position.relative,
+      borderBottomRightRadius(4.px),
+      borderTopRightRadius(0.px),
+      borderBottomLeftRadius(0.px),
+      borderTopLeftRadius(0.px),
+      marginTop(-2.px)
+    )
+    val spinnerCaretIcon = style(
+      position.absolute,
+      top(0.px),
+      left(4.px)
+    )
+
 
   }
 

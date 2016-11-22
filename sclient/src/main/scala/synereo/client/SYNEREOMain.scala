@@ -108,6 +108,12 @@ object SYNEREOMain extends js.JSApp {
       <.nav(^.id := "naviContainer", SynereoCommanStylesCSS.Style.naviContainer, ^.className := "navbar navbar-fixed-top")(
         //        <.div(^.className := "col-lg-1 col-md-1 col-sm-1")(
         //          //Adding toggle button for sidebar
+
+
+
+
+
+
         //          if (r.page == SynereoLoc) {
         //            <.span()
         //          } else {

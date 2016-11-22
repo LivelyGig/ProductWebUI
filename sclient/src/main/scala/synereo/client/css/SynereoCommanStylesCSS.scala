@@ -721,7 +721,6 @@ object SynereoCommanStylesCSS {
       textAlign.right
     )
 
-
   }
 
 }

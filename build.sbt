@@ -43,6 +43,7 @@ lazy val client: Project = (project in file("sclient"))
   .enablePlugins(ScalaJSPlugin, ScalaJSWeb)
   .dependsOn(sharedJS)
 
+
 // Client projects (just one in this case)
 lazy val clients = Seq(client)
 
