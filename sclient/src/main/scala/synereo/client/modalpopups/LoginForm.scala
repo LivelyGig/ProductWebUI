@@ -1,11 +1,10 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
+import diode.{ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom
 import shared.models.UserModel
 import synereo.client.css.{LoginCSS, SignupCSS}
-
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -33,8 +32,7 @@ object LoginForm {
                    showConfirmAccountCreation: Boolean = false,
                    showNewUserForm: Boolean = false,
                    showNewInviteForm: Boolean = false,
-                   hostName: String = dom.window.location.host,
-                   portNumber: String = "9876",
+                   portNumber: String =  if(dom.window.location.port == "443"){""} else {s":${dom.window.location.port}"} ,//"9876",
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
                   )
@@ -45,10 +43,7 @@ object LoginForm {
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
       val state = t.state.runNow()
-
       window.sessionStorage.setItem(SessionItems.ApiDetails.API_URL, state.apiURL)
-      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_HOST, state.hostName)
-      //window.sessionStorage.setItem(SessionItems.ApiDetails.API_PORT, state.portNumber)
       val LoginBtn: js.Object = "#LoginBtn"
       if ($(LoginBtn).hasClass("disabled"))
         t.modState(s => s.copy(login = false))
@@ -87,7 +82,7 @@ object LoginForm {
 
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
-      //      println(s"value:$value")
+            println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
 
@@ -96,7 +91,7 @@ object LoginForm {
       if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)))
       else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}"))
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}"))
     }
     def updateLang(reader: ModelRO[js.Dynamic]) = {
       t.modState(s => s.copy(lang = reader.value)).runNow()
@@ -104,16 +99,21 @@ object LoginForm {
 
     def mounted(): Callback = Callback {
       $(Name).focus()
-      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null)
+      if (window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL) != null) {
+       // println(s"in if ${window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)}")
         t.modState(s => s.copy(apiURL = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL))).runNow()
-      else
-        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}")).runNow()
+      }
+      else {
+      //  println(s"in else ${if(dom.window.location.port==443) "" else dom.window.location.port }")
+        t.modState(s => s.copy(apiURL = s"https://${dom.window.location.hostname}${t.state.runNow().portNumber}")).runNow()
+      }
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
     }
 
     def formClosed(state: LoginForm.State, props: LoginForm.Props): Callback = {
       // call parent handler with the new item and whether form was OK or cancelled
       //      println(s"state.showNewAgentForm: ${state.showNewUserForm}")
+     // println(s"in else ${if(dom.window.location.port==443) "" else dom.window.location.port }")
       props.submitHandler(state.userModel, state.login, state.showConfirmAccountCreation, state.showNewUserForm, state.showNewInviteForm)
     }
   }
@@ -141,40 +141,6 @@ object LoginForm {
                 } else
                   <.img(^.src := "./assets/synereo-images/synereologo.png", LoginCSS.Style.loginImg),
                 <.div(LoginCSS.Style.loginHeading)(headerText),
-                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                //                  <.div(^.className := "row")(
-                //                    <.div(/*^.className := "col-md-4"*/)(
-                //                      <.label(LoginCSS.Style.loginFormLabel)("Host-ip")
-                //                    ),
-                //                    <.div(/*^.className := "col-md-8"*/)(
-                //                      <.input(^.`type` := "text", ^.placeholder := "Host-ip", SignupCSS.Style.inputStyleSignUpForm,
-                //                        ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true)
-                //                    )
-                //                  )
-                //                ),
-                //                <.div(^.className := "form-group", LoginCSS.Style.inputFormLoginForm)(
-                //                  <.div(^.className := "row")(
-                //                    <.div(/*^.className := "col-md-4"*/)(
-                //                      <.label(LoginCSS.Style.loginFormLabel)("Port Number")
-                //                    ),
-                //                    <.div(/*^.className := "col-md-8"*/)(
-                //                      <.input(^.tpe := "text", ^.placeholder := "Port Number", SignupCSS.Style.inputStyleSignUpForm,
-                //                        ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true)
-                //                    )
-                //                  )
-                //                ),
-                //                <.div(^.className := "form-group")(
-                //                  <.label(LoginCSS.Style.loginFormLabel)("Host-ip"),
-                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                //                    ^.placeholder := "Host-ip", "data-error".reactAttr := "IP is required", "ref".reactAttr := "", ^.value := s.hostName, ^.onChange ==> updateIp, ^.required := true),
-                //                  <.div(^.className := "help-block with-errors")
-                //                ),
-                //                <.div(^.className := "form-group")(
-                //                  <.label(LoginCSS.Style.loginFormLabel)("Port Number"),
-                //                  <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.className := "form-control",
-                //                    ^.placeholder := "Port number", "data-error".reactAttr := "PortNo is required", "ref".reactAttr := "", ^.value := s.portNumber, ^.onChange ==> updatePort, ^.required := true),
-                //                  <.div(^.className := "help-block with-errors")
-                //                ),
                 <.div(LoginCSS.Style.loginFormInputText)(
                   <.div(LoginCSS.Style.apiDetailsContainer)(
                     <.div(^.id := "addLabel", ^.className := "collapse")(
@@ -194,27 +160,20 @@ object LoginForm {
                     })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
                   )
                 ),
-                <.div(LoginCSS.Style.loginFormInputText)(
+                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.placeholder := state.lang.selectDynamic("EMAIL").toString,
                     "data-error".reactAttr := "Email is required", ^.value := state.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
+                  <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
                   <.div(^.className := "help-block with-errors")
                 ),
-                <.div(LoginCSS.Style.loginFormInputText)(
+                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
                   // <.label(LoginCSS.Style.loginFormLabel)("Password"),
                   <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "password", bss.formControl, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := state.userModel.password, ^.onChange ==> t.backend.updatePassword, ^.required := true),
+                  <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
                   <.div(^.className := "help-block with-errors")
                 ),
-                //                <.div(^.className := "row")(
-                //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-left", LoginCSS.Style.loginModalTextActionContainer)(
-                //                    // <.img(^.src := "./assets/synereo-images/CheckBox_Off.svg", LoginCSS.Style.checkBoxLoginModal /*, ^.onClick ==> changeCheckBox*/),
-                //                    <.input(^.`type` := "checkbox", ^.id := "KeepMeLoggedIn"), <.label(^.`for` := "KeepMeLoggedIn", LoginCSS.Style.loginModalTextStyle)("Keep me logged in")
-                //                  ),
-                //                  <.div(^.className := "col-md-6 col-sm-6 col-xs-6 text-right", LoginCSS.Style.loginModalTextActionContainer)(
-                //                    <.a(^.href := "", LoginCSS.Style.loginModalTextStyle)("Forgot Password?")
-                //                  )
-                //                ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", state.lang.selectDynamic("LOGIN").toString)
                 )
@@ -225,8 +184,6 @@ object LoginForm {
         <.div(bss.modal.footer, LoginCSS.Style.loginModalFooter)(
           Button(Button.Props(t.backend.addNewUserForm(), CommonStyle.default, Seq(LoginCSS.Style.dontHaveAccountBtnLoginModal), "", ""), state.lang.selectDynamic("DONT_HAVE_AN_ACCOUNT?").toString),
           Button(Button.Props(t.backend.showVerifyEmailModal(), CommonStyle.default, Seq(LoginCSS.Style.verifyUserBtnLoginModal), "", ""), state.lang.selectDynamic("VERIFY YOUR TOKEN").toString)
-          //Button(Button.Props(t.backend.addNewInviteForm(), CommonStyle.default, Seq(LoginCSS.Style.requestInviteBtnLoginModal), "", "", className = ""), "Request invite")
-          //RequestInvite(RequestInvite.Props(Seq(LoginCSS.Style.requestInviteBtnLoginModal), Icon.mailForward, "Request invite"))
         )
       )
 

@@ -1,7 +1,7 @@
 package synereo.client.css
 
-import scalacss.Defaults._
 import scala.language.postfixOps
+import scalacss.Defaults._
 
 /**
   * Created by mandar.k  on 3/11/2016.
@@ -38,6 +38,25 @@ object LoginCSS {
         backgroundRepeat := "no-repeat",
         marginLeft.auto.important,
         marginRight.auto.important
+      ),
+      media.width(1024.px)(
+        height(460.px),
+        width(470.px),
+        marginLeft(50.px),
+        borderBottomLeftRadius(15.px),
+        borderBottomRightRadius(26.px)
+      ),
+      media.width(1152.px)(
+        height(520.px),
+        width(540.px),
+        marginLeft(35.px),
+        borderBottomLeftRadius(12.px),
+        borderBottomRightRadius(20.px)
+      ),
+      media.width(1400.px)(
+        height(560.px),
+        borderBottomLeftRadius(15.px),
+        borderBottomRightRadius(27.px)
       )
 
     )
@@ -55,7 +74,24 @@ object LoginCSS {
       media.width(768.px)(
         marginTop(-27.5.%%),
         marginLeft(38.1.%%)
+      ),
+      media.width(1024.px)(
+        height(92.px),
+        width(97.px),
+        marginTop(-47.%%),
+        marginLeft(37.%%)
+      ),
+      media.width(1152.px)(
+        height(111.px),
+        width(109.px),
+        marginTop(-35.%%)
       )
+    )
+    val signUpImg = style(
+    height(120.px),
+    width(117.px),
+    marginTop(-23.%%),
+    marginLeft(38.4.%%)
     )
 
     val loginScreenBgImage = style(
@@ -101,6 +137,21 @@ object LoginCSS {
       media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
+      ),
+      media.width(1024.px)(
+        fontSize(36.px),
+        marginBottom(16.px),
+        marginTop(-51.px)
+      ),
+      media.width(1152.px)(
+        fontSize(40.px),
+        marginBottom(22.px),
+        marginTop(-22.px)
+      ),
+      media.width(1400.px)(
+        fontSize(42.px),
+        marginBottom(24.px),
+        marginTop(-10.px)
       )
     )
     val iconStylePasswordInputBox = style(
@@ -258,6 +309,13 @@ object LoginCSS {
         marginTop(8.px),
         fontSize(16.px),
         float.none
+      ),
+      media.width(1024.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
+      media.width(1400.px)(
+        marginTop(10.px)
       )
     )
     val verifyUserBtnLoginModal = style(
@@ -287,6 +345,13 @@ object LoginCSS {
         marginTop(8.px),
         fontSize(16.px),
         float.none
+      ),
+      media.width(1024.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
+      media.width(1400.px)(
+        marginTop(10.px)
       )
     )
 
@@ -368,7 +433,7 @@ object LoginCSS {
       height(45.px),
       width(142.px),
       fontSize(30.px),
-      padding(0.px, 0.px, 7.px, 0.px),
+      padding(0.px, 0.px, 3.px, 0.px),
       border.none,
       lineHeight(40.px),
       color(c"#fff"),
@@ -388,7 +453,19 @@ object LoginCSS {
         color(c"#fff"),
         fontFamily :=! "karla",
         float.right,
-        marginTop(5.px)
+        marginTop(5.px),
+        media.width(1024.px)(
+          height(40.px),
+          width(120.px),
+          fontSize(25.px),
+          marginTop(20.px)
+        ),
+        media.width(1152.px)(
+          height(41.px),
+          width(142.px),
+          fontSize(30.px),
+          marginTop(25.px)
+        )
       )
     )
     val modalTryAgainBtn = style(
@@ -419,6 +496,9 @@ object LoginCSS {
       marginBottom(22.px),
       media.maxWidth(580.px)(
         marginBottom(5.px)
+      ),
+      media.width(1024.px)(
+        marginBottom(14.px)
       )
 
     )
@@ -427,6 +507,12 @@ object LoginCSS {
       height(50.px),
       media.maxWidth(580.px)(
         height(30.px)
+      ),
+      media.width(1024.px)(
+        height(42.px)
+      ),
+      media.width(1152.px)(
+        height(48.px)
       )
     )
     val editApiDetailBtn = style(

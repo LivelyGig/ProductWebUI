@@ -1,7 +1,7 @@
 package synereo.client.css
 
-import scalacss.Defaults._
 import scala.language.postfixOps
+import scalacss.Defaults._
 
 /**
   * Created by mandar.k on 3/23/2016.
@@ -19,7 +19,6 @@ object SynereoCommanStylesCSS {
       paddingBottom(60.px),
       overflowX.hidden
     )
-
     val naviContainer = style(
       paddingLeft(0.%%),
       paddingRight(0.%%),
@@ -90,12 +89,6 @@ object SynereoCommanStylesCSS {
       left.`0`
       //      zIndex(100)
     )
-
-    val userNameTopMenubar = style(
-      opacity(0.6),
-      fontSize(12.px),
-      display.inlineBlock
-    )
     val createPostButton = style(
       //      backgroundColor(c"#2283AE"),
       backgroundColor(transparent),
@@ -136,10 +129,6 @@ object SynereoCommanStylesCSS {
     val createPostImg = style(
       maxWidth(24.px),
       borderRadius(31.%%)
-    )
-    val ampsCount = style(
-      fontWeight._600,
-      display.inlineBlock
     )
     val mainMenuNavbar = style(
       right.`0`,
@@ -184,7 +173,6 @@ object SynereoCommanStylesCSS {
       &.focus(
         color(c"#FFFFFF")
       )
-
     )
     val userActionButton = style(
       fontSize(1.5.em),
@@ -255,7 +243,6 @@ object SynereoCommanStylesCSS {
       //      minHeight.auto.important,
       right.`0`.important,
       left(-100.px)
-
     )
     val imgLogo = style(
       marginTop(5.px),
@@ -265,7 +252,6 @@ object SynereoCommanStylesCSS {
         display.none,
       media.minWidth(421.px) -
         display.initial
-
     )
     val imgLogoOtherLoc = style(
       marginTop(4.px),
@@ -319,7 +305,6 @@ object SynereoCommanStylesCSS {
       marginLeft(15.px),
       marginRight(15.px)
     )
-
     val verticalAlignmentHelper = style(
       display.table,
       height(100.%%),
@@ -352,9 +337,16 @@ object SynereoCommanStylesCSS {
       media.maxWidth(920.px)(
         paddingLeft(20.px),
         paddingRight(20.px)
+      ),
+      media.width(1024.px)(
+        paddingLeft(30.px),
+        paddingRight(30.px)
+      ),
+      media.width(1152.px)(
+        paddingLeft(30.px),
+        paddingRight(30.px)
       )
     )
-
     val loading = style(
       width(50.px),
       height(57.px),
@@ -381,13 +373,6 @@ object SynereoCommanStylesCSS {
       height(45.px),
       borderRadius(50.%%),
       display.inlineBlock
-    )
-    val userAvatarTopBar = style(
-      width(30.px),
-      height(30.px),
-      borderRadius(50.%%),
-      display.inlineBlock,
-      float.left
     )
     val userAvatarAnchor = style(
       backgroundColor.transparent.important,
@@ -419,8 +404,8 @@ object SynereoCommanStylesCSS {
         color(c"#FFFFFF").important
       )
     )
-
-    val emailVerifiedContainer = style(//      marginTop(-10.%%),
+    val emailVerifiedContainer = style(
+      //      marginTop(-10.%%),
       //      backgroundColor(c"#9554B0"),
       //      marginLeft(-46.px),
       //      marginRight(-46.px),
@@ -433,7 +418,6 @@ object SynereoCommanStylesCSS {
       //      //boxShadow(inset, 0.px , -7.px, -7.px, rgba(0,0,0,0.3))
       //     boxShadow.:=(inset,0.px,-7.px,-7.px,black)
     )
-
     val marginRight15px = style(
       marginRight(15.px)
     )
@@ -443,7 +427,6 @@ object SynereoCommanStylesCSS {
     val displayInline = style(
       display.inlineBlock
     )
-    //
     //    val verticalAlignmentHelper = style(
     //      display.table,
     //      height(100.%%),
@@ -463,11 +446,9 @@ object SynereoCommanStylesCSS {
         paddingRight(10.%%)
       )
     )
-
     val featureHide = style(
       display.none.important
     )
-
     val userNameOverflow = style(
       //whiteSpace.nowrap,
       overflow.hidden,
@@ -482,8 +463,7 @@ object SynereoCommanStylesCSS {
       media.minWidth(321.px).maxWidth(376.px) -
         fontSize(13.px),
       media.minWidth(462.px).maxWidth(766.px) -
-        width(100 %%)
-
+        width(100.%%)
       //      width(130.px),
       //      media.minWidth(776.px) -
       //        width(150.px)
@@ -492,11 +472,18 @@ object SynereoCommanStylesCSS {
       //   media.maxWidth(766.px) -
       // maxWidth.inherit
     )
-
     val paddingLeft15p = style(
       paddingLeft(17.%%).important
     )
-
+    val feedViewLftAnimDivDisplayInitial = style(
+      display.initial,
+      media.only.screen.maxDeviceWidth(767.px)(
+        width(0.%%)
+      )
+    )
+    val feedViewLftAnimDivDisplayNone = style(
+      display.none
+    )
     val feedViewLftHeightPost = style(
       //      height(50.vh),
       //      display.flex,
@@ -505,20 +492,18 @@ object SynereoCommanStylesCSS {
       media.only.screen.maxDeviceWidth(767.px)(
         position.absolute,
         top(0.px),
-        width(50 %%),
-        height(98.7 %%),
-        right(-11 %%),
+        width(80.%%),
+        height(98.7.%%),
+        right(-11.%%),
         backgroundColor(c"#00446A")
       )
     )
-
     val marginTop20px = style(
       marginTop(20.px),
       media.maxWidth(767.px)(
         marginTop(10.px)
       )
     )
-
     val lovePost = style(
       height(100.px),
       marginTop(-70.px),
@@ -526,7 +511,6 @@ object SynereoCommanStylesCSS {
       opacity(0.3),
       background := rgba(0, 0, 0, 0.5)
     )
-
     val naviCollapse = style(
       media.maxWidth(767.px) -(
         backgroundColor(rgb(46, 110, 142)),
@@ -536,13 +520,13 @@ object SynereoCommanStylesCSS {
         width(100.%%),
         zIndex(9))
     )
-
     val feedViewRightPostDivSubIcon = style(
       borderRadius(50.%%),
       transition := "all 1.5s ease",
       backgroundColor(c"#bfbfbf"),
       height(30.px),
       width(30.px),
+      cursor.pointer,
       visibility.hidden,
       media.minWidth(768.px).maxWidth(991.px)(
         height(20.px),
@@ -555,42 +539,40 @@ object SynereoCommanStylesCSS {
     )
     val feedViewRightAnimDivSubIconCol = style(
       media.minWidth(768.px).maxWidth(991.px)(
-        paddingLeft(3%%)
+        paddingLeft(4.%%)
       ),
       media.only.screen.maxDeviceWidth(767.px)(
-        paddingLeft(4 %%),
-        right(8%%)
-
+        paddingLeft(4.%%),
+        right(8.%%)
       )
-    )
-    val feedViewRow = style(
-    /*display.flex*/
     )
     val feedViewPostLeftDiv = style(
       transition := "1s",
       media.only.screen.maxDeviceWidth(767.px)(
-        width(0 %%),
+        width(0.%%),
         position.absolute,
         left(0.px),
-        height(97 %%),
+        height(97.%%),
         zIndex(2),
         &.hover(
           backgroundColor(c"#f48536"),
-          width(80 %%)
-
+          width(80.%%)
         )
       )
     )
     val feedViewRightAnimDivStatusIconRow = style(
+      media.maxWidth(767.px)(
+        display.none
+      ),
       media.only.screen.maxDeviceWidth(767.px)(
-        marginTop(10 %%)
+        marginTop(10.%%),
+        display.initial
       ))
     val feedViewRightAnimDivMainStatusIcon = style(
       media.only.screen.maxDeviceWidth(767.px)(
         position.relative,
-        left(80 %%)
+        left(80.%%)
       )
-
     )
     /*Animation */
     /*Message List Status Animation*/
@@ -607,7 +589,6 @@ object SynereoCommanStylesCSS {
         animationDirection.reverse,
         animationDelay :=! "0.2s"
       )
-
     )
     val animComment = style(
       animationName(messageListStatusAnim),
@@ -660,7 +641,6 @@ object SynereoCommanStylesCSS {
       animationFillMode.forwards,
       media.only.screen.maxDeviceWidth(767.px)(
         animationDelay :=! "0.3s"
-
       )
     )
     val animSubIconThird = style(
@@ -679,7 +659,6 @@ object SynereoCommanStylesCSS {
       animationFillMode.forwards,
       media.only.screen.maxDeviceWidth(767.px)(
         animationDelay :=! "0.1s"
-
       )
     )
     val userNameNavBarBubbleImage = style(
@@ -689,14 +668,12 @@ object SynereoCommanStylesCSS {
       media.maxWidth(766.px) -
         display.none,
       media.minWidth(767.px).maxWidth(850.px) -
-        marginTop(-9.px)
-      ,
+        marginTop(-9.px),
       media.minWidth(850.px) -
         marginTop(-5.px),
       media.minWidth(766.px).maxWidth(776.px) -
         right(-126.px),
       marginTop(-9.px)
-
     )
     val userNameNavBarText = style(
       position.relative
@@ -705,8 +682,6 @@ object SynereoCommanStylesCSS {
       float.right.important,
       textAlign.right
     )
-
-
   }
 
 }

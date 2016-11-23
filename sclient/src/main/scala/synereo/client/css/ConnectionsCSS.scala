@@ -11,11 +11,22 @@ object ConnectionsCSS {
 
     import dsl._
 
+    val postContainer=style(
+      margin(10.px),
+      media.maxWidth(359.px)(
+        marginLeft(30.px)
+      ),
+      media.width(360.px)(
+        marginLeft(15.px)
+      )
+    )
+
     val connectionsContainerMain = style(
       overflowY.scroll.important,
       paddingBottom(60.px),
       overflowX.hidden
     )
+
     val inviteConnectionsBtn = style(
       fontSize(24.px),
       backgroundColor(c"#FFFFFF"),
@@ -31,40 +42,97 @@ object ConnectionsCSS {
     val connectionAvatarContainer = style(
       padding(0.px),
       height(100.%%),
+      marginTop(-5.px),
+      marginRight(0.px),
+      media.maxWidth(767.px)(
+        float.left
+      )
+    )
+    val connectionAvatarContainerOnLeftSwap=style(
+      media.maxWidth(768.px)(
+        margin(10.px)
+      )
+    )
+
+    val connectionAvatarSelected = style(
+      height(80.px),
+      width(80.px),
       borderStyle.solid,
-      borderWidth(0.3.vw),
-      borderColor.transparent,
+      borderWidth(5.px),
+      borderColor.pink,
       borderRadius(50.%%),
+      marginBottom(-5.px),
+      marginLeft(-5.px),
+      media.minWidth(769.px).maxWidth(1056.px)(
+        height(70.px),
+        width(70.px)
+      ),
       &.hover(
-        borderColor.pink,
         cursor.pointer
       )
     )
 
-    val onconnectionAvatarDivClick = style(
-      padding(0.px),
-      height(100.%%),
+    val connectionAvatar = style(
+      height(80.px),
+      width(80.px),
       borderStyle.solid,
-      borderWidth(0.3.vw),
+      borderWidth(5.px),
+      borderColor.transparent,
       borderRadius(50.%%),
-      borderColor.pink
+      marginBottom(-5.px),
+      marginLeft(-5.px),
+      media.minWidth(768.px)(
+        &.hover(
+          borderColor.pink,
+          cursor.pointer
+        )
+      ),
+      media.minWidth(769.px).maxWidth(1056.px)(
+        height(70.px),
+        width(70.px)
+      )
     )
 
-
-    val connectionAvatar = style(
-      borderColor.transparent,
-      height(5.vw),
-      width(6.vw)
+    val connectionAvatarOnLeftSwap=style(
+      media.maxWidth(768.px)(
+        height(70.px),
+        width(70.px),
+        marginTop(-10.px)
+      )
     )
 
     val fullUserDescription = style(
       padding(0.px),
       borderBottomLeftRadius(40.px),
       borderTopLeftRadius(40.px),
+      backgroundColor(c"#216b9a"),
       boxShadow := " 10.px 0.px 10.px rgba(33,107,154)",
       marginRight(0.px).important,
       marginLeft(0.px).important,
-      height(100.%%)
+      height(100.%%),
+      listStyle.:=("none"),
+      width(80.%%),
+      media.maxWidth(768.px)(
+        width(100.%%),
+        height(70.px),
+        marginTop(15.px),
+        marginBottom(15.px)
+      )
+    )
+
+    val fullUserDescriptionOnLeftSwap=style(
+      backgroundColor(c"#004469"),
+      media.maxWidth(420.px)(
+        marginLeft(-2.%%)
+      ),
+      media.minWidth(421.px).maxWidth(768.px)(
+        height(90.px),
+        marginLeft(-5.%%)
+      ),
+      media.width(375.px)(
+        marginLeft(-10.px),
+        marginRight(-5.px)
+      )
     )
 
     val fullDescContainer = style(
@@ -93,52 +161,97 @@ object ConnectionsCSS {
 
     val connectionName = style(
       color.white,
-      fontSize(1.vw),
-      height(2.4.vw),
-      marginTop(0.3.vw),
+      fontSize(1.5.rem),
+      maxHeight(3.5.rem),
+      minHeight(2.5.rem),
       marginRight(0.px),
       marginBottom(0.px),
       marginLeft(0.px),
       overflow.hidden,
       wordBreak.breakAll,
+      lineHeight(125.%%),
       &.hover(
         unsafeChild(".infoTooltip")(
           visibility.visible
         )
+      ),
+      media.minWidth(768.px).maxWidth(1260.px)(
+        fontSize(1.2.rem),
+        maxHeight(3.rem)
       )
     )
 
     val connectionNumbers = style(
       color(c"#afa798"),
       position.relative,
-      fontSize(0.8.vw),
+      fontSize(1.2.rem),
       marginRight(0.px),
       marginBottom(0.px),
-      marginLeft(0.px)
+      marginLeft(0.px),
+      marginTop(4.px),
+      media.minWidth(881.px).maxWidth(1015.px)(
+        fontSize(1.rem)
+      ),
+      media.minWidth(769.px).maxWidth(880.px)(
+        fontSize(0.8.rem)
+      )
     )
 
     val userActionIcons = style(
       backgroundColor.transparent.important,
       border.`0`.important,
       color(c"#ada3a3"),
-      fontSize(1.vw),
+      fontSize(16.px),
       &.hover(
         color.white
       ),
       &.active(
         color.white
       ),
-      &.focus(color.white)
+      &.focus(color.white),
+      media.maxWidth(767.px)(
+        display.none
+      )
+    )
+
+    val mediaUserActionIcons=style(
+      backgroundColor.transparent.important,
+      border.`0`.important,
+      color.white,
+      fontSize(1.5.em),
+      &.hover(
+        color.white
+      ),
+      &.active(
+        color.white
+      ),
+      &.focus(color.white),
+      media.minWidth(768.px)(
+        display.none
+      )
     )
 
     val userActionDropdownMenu = style(
       borderRadius(7.px),
-      width.auto,
-      fontSize(1.vw)
+      width.auto
+    )
+
+    val mediauserActionDropdownMenu=style(
+      marginLeft(-8.%%),
+      borderRadius(0.px),
+      display.block,
+      width(104.%%)
     )
 
     val connectionNameHolder = style(
-      paddingRight(0.px)
+      paddingRight(0.px),
+      paddingLeft(0.px).important,
+      width(80.%%),
+      media.maxWidth(767.px)(
+        width(40.%%),
+        marginTop(-20.px),
+        float.left
+      )
     )
 
     val connectfriendsBtn = style(
@@ -149,35 +262,63 @@ object ConnectionsCSS {
       border(0.px),
       right(0.px),
       marginRight(17.px),
-      media.maxWidth(766.px) -
+      media.maxWidth(767.px) (
         top(62.px) ,
-      media.minWidth(766.px) -
-        top(70.vh)
+        borderRadius(0.px ),
+        marginRight(0.px)
+      ),
+      media.minWidth(769.px) -
+        top(70.%%)
     )
 
     val connectfriendsIcon = style(
-      padding(1.vw),
+      padding(15.px),
       borderRightWidth(2.px),
       borderRightColor.white,
       borderRightStyle.solid,
       color.white,
-      fontSize(1.vw)
+      fontSize(2.rem),
+      media.maxWidth(767.px)(
+        display.none
+      )
     )
 
     val connectfriendsIconText = style(
       color.white,
-      fontSize(1.vw),
+      fontSize(2.rem),
       backgroundColor.transparent,
       &.hover(
         color.white
       ),
-      &.active(color.white),
-      &.focus(color.white)
+      &.active(color.white,boxShadow:="none"),
+      &.focus(color.white),
+      media.minWidth(768.px)(
+        marginTop(-10.px)
+      )
     )
 
     val userPopularTags = style(
       margin(0.px).important,
-      fontSize(0.9.vw)
+      fontSize(12.px),
+      paddingTop(12.px)
+    )
+
+    val userPopularTagsOnLeftSwap=style(
+      media.maxWidth(768.px)(
+        position.absolute,
+        top(0.px),
+        left(90.px),
+        paddingLeft(25.px),
+        paddingRight(15.px),
+        paddingTop(15.px)
+      ),
+      media.width(375.px )(
+        left(100.px)
+      ),
+      media.width(360.px)(
+        paddingLeft(10.px),
+        paddingRight(44.px)
+      )
     )
 
     val userPopularTag = style(
@@ -187,32 +328,48 @@ object ConnectionsCSS {
       borderStyle.solid,
       borderColor.white,
       color.white,
-      borderRadius(1.vw),
+      borderRadius(15.px),
       textAlign.left,
-      height(1.5.vw),
       wordBreak.breakAll,
-      margin(0.5.vw),
-      paddingTop(0.1.vw),
-      paddingBottom(0.1.vw),
-      paddingRight(0.3.vw),
-      paddingLeft(0.3.vw),
+      margin(5.px),
+      paddingTop(4.px),
+      paddingBottom(4.px),
       whiteSpace.nowrap,
       textOverflow:="ellipsis",
+      width(25.%%),
       &.hover(
         borderColor(c"#f3816f"),
         color(c"#f3816f")
+      ),
+      media.minWidth(331.px).maxWidth(767.px)(
+        width(45.%%)
+      ),
+      media.maxWidth(330.px)(
+        width(40.%%)
+      ),
+      media.width(360.px)(
+        width(40.%%)
       )
     )
 
     val userActionsMenu = style(
       padding(0.px),
       float.right,
-      media.maxWidth(766.px) -
-        display.none
+      media.minWidth(360.px).maxWidth(767.px)(
+        paddingRight(50.px)
+      ),
+      media.maxWidth(359.px)(
+        paddingRight(25.px)
+      )
+    )
+
+    val mediaUserActionsMenu=style(
+      padding(0.px),
+      float.right
     )
 
     val connectionContainer = style(
-      media.maxWidth(766.px) -
+      media.maxWidth(767.px) -
         marginTop(50.px)
     )
 
@@ -221,14 +378,43 @@ object ConnectionsCSS {
     )
 
     val connectionNameContainer = style(
-      height(4.5.vw),
-      marginTop(0.5.vw),
-      marginRight(0.px).important,
-      marginBottom(0.px),
-      marginLeft(-25.px).important,
-      position.inherit,
-      backgroundColor(c"#216b9a")
+      height(70.px),
+      marginLeft(-20.px),
+      width(70.%%),
+      media.maxWidth(767.px)(
+        width(100.%%)
+      ),
+      media.minWidth(768.px).maxWidth(1056.px)(
+        height(54.px)
+      )
     )
-    val receipentsTextContainer = style(width(491.px),maxWidth(100.%%),minWidth(100.%%))
+
+    val connectionNameContainerOnSwap=style(
+      display.none
+    )
+
+    val swapRightIconVisible=style(
+      media.maxWidth(768.px)(
+        display.block,
+        backgroundColor.transparent,
+        color.white,
+        fontSize(1.5.em),
+        float.left,
+        marginTop(26.px)
+      )
+    )
+    val swapRightIcon=style(
+      display.none
+    )
+    val receipentsTextContainer = style(
+      width(491.px),
+      maxWidth(100.%%),
+      minWidth(100.%%)
+    )
+
+    val hideDiv=style{
+      display.none
+    }
+
   }
 }
