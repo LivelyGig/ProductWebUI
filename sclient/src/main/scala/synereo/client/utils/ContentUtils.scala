@@ -1,15 +1,13 @@
 package synereo.client.utils
 
 import diode.AnyAction._
-import org.widok.moment.Moment
 import shared.dtos._
-import shared.models.{ConnectionsModel, MessagePost, Post}
+import shared.models.Post
 import synereo.client.handlers._
 import synereo.client.logger
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.reflect.ClassTag
 import scala.util.{Failure, Success, Try}
 
 

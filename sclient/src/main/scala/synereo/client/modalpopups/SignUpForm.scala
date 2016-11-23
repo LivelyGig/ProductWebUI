@@ -1,7 +1,9 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
+import diode.ModelRO
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import org.querki.jquery._
 import org.scalajs.dom
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
@@ -11,12 +13,15 @@ import japgolly.scalajs.react._
 import org.querki.jquery._
 import org.scalajs.dom._
 import shared.models.SignUpModel
+import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components._
-import synereo.client.components.Bootstrap._
-import synereo.client.services.{RootModel, SYNEREOCircuit}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
+import synereo.client.services.SYNEREOCircuit
 import synereo.client.sessionitems.SessionItems
 
+import scala.language.reflectiveCalls
 import scala.scalajs.js
+import scalacss.ScalaCssReact._
 
 //scalastyle:off
 object SignUpForm {

@@ -4,8 +4,7 @@ package synereo.client.utils
   * Created by mandar.k on 6/7/2016.
   */
 
-import shared.dtos._
-import shared.dtos.Connection
+import shared.dtos.{Connection, _}
 import shared.models._
 import synereo.client.services.SYNEREOCircuit
 

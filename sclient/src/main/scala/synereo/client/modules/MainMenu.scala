@@ -1,33 +1,28 @@
 package synereo.client.modules
 
-import synereo.client.components._
+import diode.AnyAction._
+import diode.ModelRO
 import diode.react.ModelProxy
+import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.SYNEREOMain
-import SYNEREOMain._
-import synereo.client.handlers._
-import shared.models.UserModel
-import synereo.client.services.{CoreApi, SYNEREOCircuit}
-
-import scalacss.ScalaCssReact._
-import diode.AnyAction._
-import japgolly.scalajs.react
-import japgolly.scalajs.react._
-import org.querki.jquery._
 import shared.dtos.CloseSessionRequest
+import shared.models.UserModel
+import synereo.client.SYNEREOMain._
+import synereo.client.components.Bootstrap.CommonStyle
+import synereo.client.components._
+import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
+import synereo.client.handlers._
 import synereo.client.logger
+import synereo.client.services.{CoreApi, SYNEREOCircuit}
 import synereo.client.utils.{ContentUtils, I18N}
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import diode.ModelRO
-import synereo.client.components.Bootstrap.CommonStyle
-import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
-
 import scala.scalajs.js
 import scala.scalajs.js.JSON
 import scala.util.{Failure, Success}
+import scalacss.ScalaCssReact._
 
 //scalastyle:off
 object MainMenu {
@@ -45,11 +40,6 @@ object MainMenu {
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class MainMenuBackend(t: BackendScope[Props, State]) {
-
-    def toggleTopbar = Callback {
-      val topBtn: js.Object = "#TopbarContainer"
-      $(topBtn).toggleClass("topbar-left topbar-lg-show")
-    }
 
     def mounted() = Callback {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
@@ -105,7 +95,6 @@ object MainMenu {
                     <.button(^.className := "btn", ^.onClick --> scope.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostButton,
                       <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg)
                     )
-                    //                      NewMessage (NewMessage.Props("", Seq(SynereoCommanStylesCSS.Style.createPostButton), <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg), "", ""))
                   ),
                   <.div(
                     SearchComponent(SearchComponent.Props())
@@ -115,27 +104,22 @@ object MainMenu {
                 <.span()
               }
             ),
-            <.div(^.className := "nav navbar-nav  navbar-right", /* props.proxy().isLoggedIn ?= (^.backgroundColor := "#277490"),*/ SynereoCommanStylesCSS.Style.mainMenuNavbar)(
+            <.div(^.className := "nav navbar-nav  navbar-right", SynereoCommanStylesCSS.Style.mainMenuNavbar)(
               <.ul(^.className := "nav nav-pills")(
 
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
                   <.span(<.img(^.className := "hidden-xss img-responsive", ^.src := "./assets/synereo-images/bubble.png", SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
-                  //                  if (model.name.length() < 10) {
                   <.span(SynereoCommanStylesCSS.Style.userNameNavBarText, <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
-                    //                  }
-                    //                  else {
-                    //                    <.span(^.title := model.name, model.name.substring(0, 8) + "...")
-                    //                  }
                     <.div(^.className := "text-center")(
-                    //  <.span(model.networkMode.toUpperCase),
-                      <.button(^.id := "topbarBtn", ^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn /*, ^.onClick --> toggleTopbar*/)(
+                      //  <.span(model.networkMode.toUpperCase),
+                      <.button(^.`type` := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.ampsDropdownToggleBtn)(
                         /*<.img(^.src := "./assets/synereo-images/ampsIcon.PNG")*/
                         "data-toggle".reactAttr := "tooltip", "title".reactAttr := "AMP Balance", "data-placement".reactAttr := "right",
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                         //                        <.span(Icon.cogs),
                         <.span(DashboardCSS.Style.ampbalancetext)(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
                       ),
-                       <.span( introductionConnectProxy(introProxy =>
+                      <.span(introductionConnectProxy(introProxy =>
                         if (introProxy.value.introResponse.length != 0) {
                           //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
                           <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
@@ -144,12 +128,12 @@ object MainMenu {
                         } else {
                           <.span()
                         }
-                        )
-                    )
+                      )
+                      )
                     )
                   )
                 ),
-                <.li(/*SynereoCommanStylesCSS.Style.marginRight15px*/ SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
+                <.li(SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownLi)(
                   <.div()(
                     <.button(^.className := "btn ", ^.`type` := "button", "data-toggle".reactAttr := "dropdown", SynereoCommanStylesCSS.Style.mainMenuUserActionDropdownBtn)(
                       <.img(^.src := model.imgSrc, SynereoCommanStylesCSS.Style.userAvatar)

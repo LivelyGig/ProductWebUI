@@ -1,7 +1,5 @@
 package synereo.client.css
 
-import synereo.client.css.LoginCSS.Style._
-
 import scalacss.Defaults._
 
 /**
@@ -33,7 +31,6 @@ object DashboardCSS {
       float.right,
       width(25.px),
       height(25.px)
-
     )
     val cardPostTagBtn = style(
       margin(5.px),
@@ -97,11 +94,6 @@ object DashboardCSS {
     val userInputSubmitButton = style(
       backgroundColor.transparent.important
     )
-    val ampsEarnedHeading = style(
-      color(c"#FFFFFF"),
-      paddingLeft(15.px),
-      paddingTop(10.px)
-    )
     val cardDescriptionContainerDiv = style(
       cursor.pointer,
       media.minWidth(768.px)(
@@ -115,7 +107,6 @@ object DashboardCSS {
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
-
       overflowY.hidden.important,
       media.minWidth(768.px)(
         padding(15.px)
@@ -177,7 +168,6 @@ object DashboardCSS {
       paddingLeft(6.px),
       &.focus(
         outline.none.important
-
       )
     )
     val newMessageFormBtn = style(
@@ -202,7 +192,6 @@ object DashboardCSS {
         fontSize(11.px)
       )
     )
-
     val postDescription = style(
       display.inlineBlock,
       paddingTop(2.px),
@@ -258,10 +247,6 @@ object DashboardCSS {
     val sidebarNavStyle = style(
       fontSize(17.px)
     )
-    val topBarStyle = style(
-      fontSize(15.px)
-      //      fontWeight.bold
-    )
     val postActionButton = style(
       border.none.important,
       marginTop(-30.px)
@@ -281,7 +266,6 @@ object DashboardCSS {
         fontSize(17.px)
       )
     )
-
     val imgBorder = style(
       border(1.px, solid, gray),
       borderRadius(6.px),
@@ -320,21 +304,17 @@ object DashboardCSS {
         fontSize(12.px)
       )
     )
-
-    val verticalAlignInherit = style {
+    val verticalAlignInherit = style (
       verticalAlign.inherit
-    }
-
+    )
     val cardPaddingBottom = style(
       paddingBottom(15.px)
     )
-
     val paddingLRZero = style(
       media.maxWidth(767.px)(
         paddingLeft(0.px),
         paddingRight(0.px))
     )
-
     val cardPostImage = style(
       height(500.px),
       display.flex,
@@ -344,7 +324,6 @@ object DashboardCSS {
       margin.auto,
       width(100.%%)
     )
-
     val ampbalancetext = style(
       whiteSpace.normal,
       width(120.px),
@@ -359,5 +338,4 @@ object DashboardCSS {
     fontSize(2.em)
     )
   }
-
 }

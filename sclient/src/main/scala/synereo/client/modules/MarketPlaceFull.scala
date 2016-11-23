@@ -1,26 +1,17 @@
 package synereo.client.modules
 
 
-import japgolly.scalajs.react.extra.router.RouterCtl
-import synereo.client.SYNEREOMain
-import SYNEREOMain.Loc
-import synereo.client.css.{MarketPlaceFullCSS}
-import scala.scalajs.js
-import org.querki.jquery._
-import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB}
-import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.components.{Icon, MIcon}
-import scala.scalajs.js
+import japgolly.scalajs.react.{BackendScope, ReactComponentB, _}
+import synereo.client.components.MIcon
+import synereo.client.css.{MarketPlaceFullCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 
 /**
-  * Created by Mandar on 4/1/2016.
+  * Created by mandar.k on 4/1/2016.
   */
 object MarketPlaceFull {
-
-  val searchContainer: js.Object = "#searchContainer"
 
   case class Props()
 
@@ -30,7 +21,6 @@ object MarketPlaceFull {
 
     def render() = {
       <.div()(
-
         <.div(^.className := "container")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12", MarketPlaceFullCSS.Style.headingImageContainerDiv)(
