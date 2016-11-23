@@ -170,6 +170,7 @@ object ConnectionsCSS {
       overflow.hidden,
       wordBreak.breakAll,
       lineHeight(125.%%),
+      textOverflow:="ellipsis",
       &.hover(
         unsafeChild(".infoTooltip")(
           visibility.visible

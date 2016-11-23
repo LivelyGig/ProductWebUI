@@ -77,6 +77,7 @@ object UserProfileViewCSS {
     val nodeSettingSection = style(
       fontSize(20.px),
       color.black,
+      wordWrap.breakWord,
       media.maxWidth(580.px)(
         fontSize(12.px)
       )
@@ -146,6 +147,16 @@ object UserProfileViewCSS {
       height(212.px)
 
     )
+    val aboutInfoSectionHeader= style(
+      textAlign.center,
+      fontSize(24.px),
+      fontWeight.bolder
+    )
+    val aboutInfoSectionTitle=style(
+      fontWeight.bold,
+      fontSize(22.px)
+    )
+
   }
 
 }

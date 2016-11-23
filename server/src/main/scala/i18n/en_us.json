@@ -30,7 +30,7 @@
   "ERROR": "Error",
   "API_HOST_UNREACHABLE": "The Api host you provided is unreachable, Please provide a new one!",
   "TRY_AGAIN": "Try again",
-  "AGENT_UID": "Agent UID",
+  "AGENT_UID": "Agent UID: ",
   "WALLET_ADDRESS": "Wallet Address: ",
   "BUILD_INFORMATION": "Build Information",
   "GLOSEVAL_VERSION": "- Gloseval Version: ",

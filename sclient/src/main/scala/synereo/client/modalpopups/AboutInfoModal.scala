@@ -70,41 +70,53 @@ object AboutInfoModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(UserProfileViewCSS.Style.aboutInfoSectionHeader,headerText)),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.span(^.fontWeight.bold)(s"Current User:"),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.fontWeight.bold)(s"Username: "),
-                s" n/a"
+                <.span(^.className:="col-md-12 col-sm-12 col-xs-12",UserProfileViewCSS.Style.aboutInfoSectionTitle)(s"Current User:")
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.fontWeight.bold)(s"${state.lang.selectDynamic("AGENT_UID").toString}"),
-                s" ${agentUID.head}"
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"Username: "),
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6") (s" n/a")
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.fontWeight.bold)(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}"),
-                s"$ampAddress"
-              ),
-              //              ),
-              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.fontWeight.bold)("Node Operator:"),
-                <.div(^.className := "row", ^.marginLeft := "30px")(
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"n/a")
-                )
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("AGENT_UID").toString}"),
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s" ${agentUID.head}")
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.fontWeight.bold)(s"${state.lang.selectDynamic("BUILD_INFORMATION").toString}"),
-                <.div(^.className := "row", ^.marginLeft := "30px")(
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"Web User Interface version: n/a"),
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("GLOSEVAL_VERSION").toString} ${versionInfo.glosevalVersion}"),
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("SCALA_VERSION").toString} ${versionInfo.scalaVersion}"),
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("MONGODB_VERSION").toString} ${versionInfo.mongoDBVersion}"),
-                  <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString} ${versionInfo.rabbitMQVersion} ")
-                )
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}"),
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"$ampAddress")
+              ),
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.aboutInfoSectionTitle)("Node Operator:"),
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"n/a")
+              ),
+
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                <.span(^.className:="col-md-12 col-sm-12 col-xs-12",UserProfileViewCSS.Style.aboutInfoSectionTitle)(s"${state.lang.selectDynamic("BUILD_INFORMATION").toString}")
+              ),
+
+
+              <.div( UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+                  <.div(^.className:="row",
+                    <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"Web User Interface version:"),
+                       <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"n/a")),
+                <.div(^.className:="row",
+                  <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("GLOSEVAL_VERSION").toString}"),
+                  <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"${versionInfo.glosevalVersion}")),
+                <.div(^.className:="row",
+                  <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("SCALA_VERSION").toString}"),
+                  <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"${versionInfo.scalaVersion}")),
+                <.div(^.className:="row",
+                  <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("MONGODB_VERSION").toString}"),
+                  <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.mongoDBVersion}")),
+                <.div(^.className:="row",
+                  <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString}"),
+                  <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.rabbitMQVersion}"))
               ),
               <.div(^.className := "row pull-right")(
                 <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "OK")

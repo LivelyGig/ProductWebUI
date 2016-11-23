@@ -106,7 +106,7 @@ object VerifyTokenModal {
             <.div(SignupCSS.Style.signUpHeading)(headerText)
           ),
           closed = () => t.backend.formClosed(state, props),
-          addStyles = Seq(SignupCSS.Style.signUpModalStyle)
+          addStyles = Seq(SignupCSS.Style.signUpModalStyle), keyboard = false, id = "verifyTokenContainer"
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm, "data-toggle".reactAttr := "validator", ^.role := "form")(

@@ -100,7 +100,7 @@ object SignupCSS {
       opacity(0.65),
       textAlign.center,
       marginBottom(30.px),
-//      marginTop(20.px),
+    marginTop(20.px),
       media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
@@ -141,6 +141,10 @@ object SignupCSS {
         height(40.px)
       )
     )
+    val inputStyleSignUpFormWidth=style(
+      inputStyleSignUpForm,
+      width(95.%%).important
+    )
     val SignupformFooter = style(
       color(c"#35b0e2"),
       //      textAlign.center,
@@ -162,7 +166,36 @@ object SignupCSS {
     )
 
     val formControlMargin = style(
-      marginTop(5.px)
+      marginTop(5.px),
+      fontSize(2.5.rem),
+      media.minWidth(921.px)-(
+      right(-6.%%).important,
+        textAlign.left
+        ),
+      media.minWidth(768.px).maxWidth(920.px)(
+        right(-3.%%).important,
+        textAlign.left
+      ),
+        media.minWidth(581.px).maxWidth(767.px)(
+      right(-18.px).important,
+      textAlign.left
+    ),
+      media.maxWidth(580.px)(
+        marginTop(0.px),
+        right(-11.px).important,
+        fontSize(1.5.rem)
+      )
+    )
+
+
+
+    val signUpFormColor=style(
+      backgroundColor(c"#28a8e2"),
+      border:="1px solid rgba(0,0,0,0.2)",
+      borderRadius(6.px),
+      backgroundClip:="padding-box",
+      outline(0.px),
+      position.relative
     )
   }
 

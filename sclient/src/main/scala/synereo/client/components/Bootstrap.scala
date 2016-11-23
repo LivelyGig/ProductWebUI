@@ -4,10 +4,11 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.ext.KeyCode
 import synereo.client.components.Icon._
-import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.handlers.UnsetPreventNavigation
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
+
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -110,7 +111,8 @@ object Bootstrap {
           ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
             <.div(if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(), modalStyle.dialog)(
-              <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else modalStyle.content, ^.onKeyDown ==> (
+              <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else if (P.id == "signUpContainer" || P.id == "verifyTokenContainer") SignupCSS.Style.signUpFormColor else modalStyle.content
+              , ^.onKeyDown ==> (
                 if (P.id == "loginContainer")
                   modalOnEscape
                 else modalClose), ^.ref := OuterRef,

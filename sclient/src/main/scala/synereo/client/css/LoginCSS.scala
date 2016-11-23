@@ -505,6 +505,7 @@ object LoginCSS {
 
     val apiDetailsContainer = style(
       height(50.px),
+      width(95.%%),
       media.maxWidth(580.px)(
         height(30.px)
       ),

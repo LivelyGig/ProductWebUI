@@ -128,7 +128,7 @@ object ConnectionsList {
               (
                 <.div(^.className := "col-md-10 col-sm-10 col-lg-10", ConnectionsCSS.Style.connectionNameHolder)(
                   if (connection.name.nonEmpty) {
-                    <.h4(ConnectionsCSS.Style.connectionName,
+                    <.h4(^.className:="connection-name-overflow",ConnectionsCSS.Style.connectionName,
                       connection.name,
                       <.div(ConnectionsCSS.Style.connectionInfoTooltip, ^.className := "infoTooltip",
                         <.span()(s"UID: "),
