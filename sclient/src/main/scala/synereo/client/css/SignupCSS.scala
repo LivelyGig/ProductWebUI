@@ -100,8 +100,7 @@ object SignupCSS {
       opacity(0.65),
       textAlign.center,
       marginBottom(30.px),
-    marginTop(20.px),
-      media.maxWidth(580.px)(
+     marginTop(20.px),      media.maxWidth(580.px)(
         fontSize(20.px),
         marginBottom(10.px)
       )

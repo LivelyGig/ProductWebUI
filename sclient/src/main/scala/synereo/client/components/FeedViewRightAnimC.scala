@@ -129,17 +129,17 @@ object FeedViewRightAnimC {
               <.div(^.className := " col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol,
                 "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Amplify Post", "data-placement".reactAttr := "right",
                 ^.onClick --> props.amplifyPostCB(props.message.sender.connection.target.split("/")(2)))(
-                <.img(^.src := "./assets/synereo-images/Amp_circle.gif", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon, SynereoCommanStylesCSS.Style.animSubIconFirst)
+                <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon, SynereoCommanStylesCSS.Style.animSubIconFirst)
               )
             },
             <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(
-              <.img(^.src := "./assets/synereo-images/Amp_circle.gif", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
+              <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
                 SynereoCommanStylesCSS.Style.animSubIconSecond)),
             <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(
-              <.img(^.src := "./assets/synereo-images/Amp_circle.gif", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
+              <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
                 SynereoCommanStylesCSS.Style.animSubIconThird)),
             <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(
-              <.img(^.src := "./assets/synereo-images/Amp_circle.gif", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
+              <.img(^.src := "./assets/synereo-images/amptoken.png", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
                 SynereoCommanStylesCSS.Style.animSubIconFourth))
           )
         ),
@@ -161,13 +161,13 @@ object FeedViewRightAnimC {
               "data-toggle".reactAttr := "tooltip", "title".reactAttr := "Forward Post", "data-placement".reactAttr := "right",
               ^.onClick --> props.forwardPostCB(props.message))(
               <.div(<.span(Icon.mailForward, DashboardCSS.Style.animGlyphIcon), SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
-                SynereoCommanStylesCSS.Style.animSubIconSecond)),
+                SynereoCommanStylesCSS.Style.animSubIconSecond))/*,
             <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(
               <.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
                 SynereoCommanStylesCSS.Style.animSubIconThird)),
             <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivSubIconCol)(
               <.img(^.src := "./assets/synereo-images/AMP_FullColor+circle.svg", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
-                SynereoCommanStylesCSS.Style.animSubIconFourth))
+                SynereoCommanStylesCSS.Style.animSubIconFourth))*/
           )
         )
       )
