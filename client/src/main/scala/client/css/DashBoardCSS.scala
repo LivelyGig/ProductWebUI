@@ -1,7 +1,7 @@
 package client.css
 
 import scalacss.Defaults._
-import scalacss.LengthUnit.px
+import scalacss.internal.LengthUnit.px
 
 object DashBoardCSS {
 
@@ -64,7 +64,7 @@ object DashBoardCSS {
       width(13.px),
       verticalAlign.middle,
       marginTop(-3.px).important,
-      media.maxWidth(1365.px) -(
+      media.maxWidth(1365.px) - (
         height(18.px),
         width(18.px)
         )
@@ -85,7 +85,7 @@ object DashBoardCSS {
       borderLeft(6.px, solid, transparent),
       marginTop(3.px),
 
-      media.maxWidth(1367.px) -(
+      media.maxWidth(1367.px) - (
         width(9.px),
         height(9.px),
         borderTop(5.px, dashed)
@@ -149,7 +149,7 @@ object DashBoardCSS {
     val slctInputWidthLabel = style(
       width(170.px),
       paddingLeft(5.%%),
-      media.maxWidth(1130.px) -(
+      media.maxWidth(1130.px) - (
         fontSize(1.em),
         width(135.px),
         paddingLeft(9.%%)
@@ -159,17 +159,17 @@ object DashBoardCSS {
     val scltInputModalLeftContainerMargin = style(
       marginLeft(180.px),
       marginRight(60.px),
-      media.maxWidth(1130.px) -(
+      media.maxWidth(1130.px) - (
         marginLeft(135.px),
         marginRight(38.px)
         )
     )
     val scltInputModalContainerMargin = style(
-      media.maxWidth(768.px) -(
+      media.maxWidth(768.px) - (
         marginLeft(0.px),
         marginRight(0.px)
         ),
-      media.minWidth(769.px) -(
+      media.minWidth(769.px) - (
         marginLeft(150.px),
         marginRight(150.px)
         )
@@ -238,7 +238,7 @@ object DashBoardCSS {
       /* To center vertically */
       display.tableCell,
       verticalAlign.middle,
-      media.minWidth(927.px) -(
+      media.minWidth(927.px) - (
         paddingRight(17.%%),
         paddingLeft(17.%%))
 
@@ -270,9 +270,9 @@ object DashBoardCSS {
       /*&.active(
       backgroundColor(blue)
     ),*/
-    &.hover(
-      backgroundColor(c"#FF7600")
-    )
+      &.hover(
+        backgroundColor(c"#FF7600")
+      )
       // addClassName("btnBackground")
 
     )

@@ -1,20 +1,25 @@
 package client.components
 
 import client.components.Bootstrap.CommonStyle._
-
 import scalacss.Defaults._
-import scalacss.mutable
+import scalacss.internal.mutable
+import japgolly.univeq.UnivEq
+import client.components.Bootstrap.CommonStyle
+
 
 class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(r) {
 
   import dsl._
 
+  implicit val styleUnivEq: UnivEq[CommonStyle.Value] = new UnivEq[CommonStyle.Value] {}
+
   val csDomain = Domain.ofValues(default, primary, success, info, warning, danger)
 
   val contextDomain = Domain.ofValues(success, info, warning, danger)
 
-  def commonStyle[A](domain: Domain[A], base: String) = styleF(domain)(opt =>
-    styleS(addClassNames(base, s"$base-$opt")))
+  def commonStyle[A: UnivEq](domain: Domain[A], base: String) = styleF(domain)(opt =>
+    styleS(addClassNames(base, s"$base-$opt"))
+  )
 
   def styleWrap(classNames: String*) = style(addClassNames(classNames: _*))
 
@@ -40,7 +45,8 @@ class BootstrapStyles(implicit r: mutable.Register) extends StyleSheet.Inline()(
   val modal = new Object {
     val modal = styleWrap("modal")
     val fade = styleWrap("fade")
-    val dialog = styleWrap("modal-dialog modal-lg")
+    val dialog = styleWrap("modal-dialog")
+    val dialogLg = styleWrap("modal-dialog modal-lg")
     val content = styleWrap("modal-content")
     val header = styleWrap("modal-header")
     val body = styleWrap("modal-body")

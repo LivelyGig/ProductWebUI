@@ -1,7 +1,6 @@
 package client.modules
 
-import client.handler.RefreshProfiles
-import client.components.{Icon, LabelsList, LabelsSelectize}
+import client.components.{Icon, LabelsList}
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -9,18 +8,13 @@ import client.handler._
 import client.rootmodel.SearchesRootModel
 import client.css._
 import shared.models.{Label, UserModel}
-import client.services.{CoreApi, LGCircuit}
-import org.scalajs.dom._
-import client.components.Bootstrap._
+import client.services.LGCircuit
 import client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
-
 import scalacss.ScalaCssReact._
 import org.querki.facades.bootstrap.datepicker._
-
 import scala.scalajs.js
 import org.querki.jquery._
 import org.denigma.selectize._
-import org.scalajs.dom
 import diode.AnyAction._
 import shared.dtos.{Expression, ExpressionContent, SubscribeRequest}
 
@@ -45,10 +39,10 @@ object Searches {
       $(sidebtn).toggleClass("sidebar-left sidebar-animate sidebar-md-show")
       if (!$(sidebtn).hasClass("sidebar-left sidebar-animate sidebar-md-show")) {
         $(overlayContainer).addClass("overlaySidebar")
-//        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
+        //        $(sidebtn).next().addClass("LftcontainerCSS_Style-sidebarRightContainer")
       } else {
         $(overlayContainer).removeClass("overlaySidebar")
-//        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
+        //        $(sidebtn).next().removeClass("LftcontainerCSS_Style-sidebarRightContainer")
       }
 
       val searchLabels = LabelsUtils.buildProlog(
@@ -98,10 +92,10 @@ object Searches {
         orientation(Orientation.Bottom)
       // Iff this Date is Optional, show the Clear button:
       val opts =
-        if (true)
-          baseOpts.clearBtn(true)
-        else
-          baseOpts
+      if (true)
+        baseOpts.clearBtn(true)
+      else
+        baseOpts
       val availableToDate: js.Object = "#availableToDate"
       val availableFromDate: js.Object = "#availableFromDate"
       val projectStartDate: js.Object = "#projectsStartDate"
@@ -117,10 +111,10 @@ object Searches {
       $(messagesFromDate).datepicker(baseOpts)
     }
 
-    def mounted(): Callback = Callback{
+    def mounted(): Callback = Callback {
       initializeDatepicker
       initializeTagsInput
-//      toggleSidebar
+      //      toggleSidebar
 
     }
 
@@ -131,7 +125,7 @@ object Searches {
         if (!children.isEmpty) {
           <.li(LftcontainerCSS.Style.checkboxlabel)(
             <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatchCB(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
             "  " + label.text,
             <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
             <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
@@ -139,7 +133,7 @@ object Searches {
         } else {
 
           <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+            <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatchCB(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
               + label.text
           )
         }
@@ -663,7 +657,7 @@ object Searches {
             if (!children.isEmpty) {
               <.li(LftcontainerCSS.Style.checkboxlabel)(
                 <.label(^.`for` := "folder1", ^.margin := "0px", DashBoardCSS.Style.padding0px),
-                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatchCB(UpdateLabel(label.copy(isChecked = !label.isChecked)))),
                 "  " + label.text,
                 <.input(^.`type` := "checkbox", ^.className := "treeview", ^.id := "folder1"),
                 <.ol(LftcontainerCSS.Style.checkboxlabel)(children map renderLabel)
@@ -671,7 +665,7 @@ object Searches {
             } else {
 
               <.li(LftcontainerCSS.Style.checkboxlabel, ^.className := "checkboxlabel")(
-                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatch(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
+                <.input(^.`type` := "checkbox", ^.marginLeft := "20px", ^.checked := label.isChecked, ^.onChange --> p.proxy.dispatchCB(UpdateLabel(label.copy(isChecked = !label.isChecked)))), "  "
                   + label.text
               )
             }

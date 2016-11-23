@@ -18,9 +18,9 @@ object ConnectionsResults {
   case class State(selectedItem: Option[ConnectionsModel] = None)
 
   class Backend($: BackendScope[Props, State]) {
-    def mounted(props: Props) =Callback{
-//      log.debug("connection view mounted")
-//      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
+    def mounted(props: Props) = Callback {
+      //      log.debug("connection view mounted")
+      //      Callback.when(props.proxy().isEmpty)(props.proxy.dispatch(RefreshConnections()))
     }
   }
 
@@ -47,7 +47,7 @@ object ConnectionsResults {
               ),
               <.div(PresetsCSS.Style.modalBtn)(
                 NewConnection(NewConnection.Props("", Seq(HeaderCSS.Style.rsltContainerIconBtn), Icon.connectdevelop, "Create New Connection")),
-                <.div(PresetsCSS.Style.overlay, ^.top:="0.1em")(
+                <.div(PresetsCSS.Style.overlay, ^.top := "0.1em")(
                   Icon.plus
                 )
               ),
@@ -75,14 +75,14 @@ object ConnectionsResults {
               )
             ),
             <.div(^.className := "pull-right")(
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(^.className := "icon-List1")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(^.className := "icon-List2")),
-              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(^.className := "icon-List3"))
-            )
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Summary")(<.span(Icon.minus)),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Brief")(<.span(Icon.minus)),
+              <.button(DashBoardCSS.Style.btn, "data-toggle".reactAttr := "tooltip", "title".reactAttr := "View Full Posts")(<.span(Icon.minus))
           )
-        ), //col-12
-        <.div(^.id := "resultsContainer")(
-          ConnectionList(P.proxy().connectionsResponse))
+        )
+      ), //col-12
+      <.div(^.id := "resultsContainer")(
+        ConnectionList(P.proxy().connectionsResponse))
       ) //mainContainer
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))
@@ -99,8 +99,8 @@ object ConnectionList {
   val ConnectionList = ReactComponentB[ConnectionListProps]("ConnectionList")
     .render_P(p => {
       def renderConnections(connection: ConnectionsModel) = {
-       // <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
-        <.li(^.className := "media", DashBoardCSS.Style.profileDescription,DashBoardCSS.Style.rsltpaddingTop10p)(
+        // <.li(^.className := "media  profile-description", DashBoardCSS.Style.rsltpaddingTop10p)(
+        <.li(^.className := "media", DashBoardCSS.Style.profileDescription, DashBoardCSS.Style.rsltpaddingTop10p)(
           <.input(^.`type` := "checkbox", DashBoardCSS.Style.rsltCheckboxStyle),
           <.span(^.className := "checkbox-lbl"),
           if (!connection.name.isEmpty) {
@@ -116,26 +116,26 @@ object ConnectionList {
                 <.img(DashBoardCSS.Style.profileImg, ^.src := connection.imgSrc, ^.borderRadius := "25px", ^.title := "Connection Source: " + connection.connection.source + " Target: " + connection.connection.target + " Label: " + connection.connection.label)
               }
             )
-              /*
-            <.div()(
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Software Developer"),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
-                "Profiles: ",
-                <.a()("title".reactAttr := "Videographer")("Videographer"),
-                " | ",
-                <.a()("title".reactAttr := "Web Developer")("Web Developer"),
-                " | ",
-                <.a()("title".reactAttr := "Janal, LLC")("Janal, LLC")
-              ),
-              <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
-                "In My Groups: ",
-                <.a()("title".reactAttr := "Film Industry")("Film Industry"),
-                ", ",
-                <.a()("title".reactAttr := "Full Stack Developers")("Full Stack Developers")
-              )
-            )*/
+            /*
+          <.div()(
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Software Developer"),
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Pune, India"),
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)("Connected since 2014-01-02"),
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
+              "Profiles: ",
+              <.a()("title".reactAttr := "Videographer")("Videographer"),
+              " | ",
+              <.a()("title".reactAttr := "Web Developer")("Web Developer"),
+              " | ",
+              <.a()("title".reactAttr := "Janal, LLC")("Janal, LLC")
+            ),
+            <.div(DashBoardCSS.Style.rsltProfileDetailsHolder)(
+              "In My Groups: ",
+              <.a()("title".reactAttr := "Film Industry")("Film Industry"),
+              ", ",
+              <.a()("title".reactAttr := "Full Stack Developers")("Full Stack Developers")
+            )
+          )*/
           ),
           <.br(),
           <.div(^.className := "media-body")(

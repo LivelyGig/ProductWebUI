@@ -1,6 +1,6 @@
 package client.css
 
-import scalacss.mutable.GlobalRegistry
+import scalacss.internal.mutable.GlobalRegistry
 
 object AppCSS {
   def load() {
@@ -15,6 +15,5 @@ object AppCSS {
       WorkContractCSS.Style,
       PresetsCSS.Style
     )
-    //    GlobalRegistry.onRegistration(_.addToDocument()(s))
   }
 }
