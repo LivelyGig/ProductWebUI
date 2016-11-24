@@ -8,11 +8,9 @@ import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import synereo.client.handlers.UnsetPreventNavigation
 import synereo.client.services.SYNEREOCircuit
 import diode.AnyAction._
-
 import scala.language.reflectiveCalls
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scalacss.StyleA
 
@@ -112,10 +110,10 @@ object Bootstrap {
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
             <.div(if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(), modalStyle.dialog)(
               <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else if (P.id == "signUpContainer" || P.id == "verifyTokenContainer") SignupCSS.Style.signUpFormColor else modalStyle.content
-              , ^.onKeyDown ==> (
-                if (P.id == "loginContainer")
-                  modalOnEscape
-                else modalClose), ^.ref := OuterRef,
+                , ^.onKeyDown ==> (
+                  if (P.id == "loginContainer")
+                    modalOnEscape
+                  else modalClose), ^.ref := OuterRef,
                 <.div(^.className := "modal-header", modalStyle.header, SynereoCommanStylesCSS.Style.modalHeaderPadding, SynereoCommanStylesCSS.Style.modalHeaderBorder, P.header(hide)),
                 <.div(modalStyle.body, SynereoCommanStylesCSS.Style.modalBodyPadding, C)
                 //              <.div(modalStyle.footer, P.footer(hide))
@@ -132,7 +130,7 @@ object Bootstrap {
       .componentDidMount(scope => Callback {
         val P = scope.props
         // instruct Bootstrap to show the modal data-backdrop="static" data-keyboard="false"
-        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" ->  P.backdrop, "keyboard" ->
+        jQuery(scope.getDOMNode()).modal(js.Dynamic.literal("backdrop" -> (if (P.id == "loginContainer") false else P.backdrop), "keyboard" ->
           (if (P.id == "loginContainer") false else P.keyboard)
           , "show" -> true))
         // register event listener to be notified when the modal is closed
