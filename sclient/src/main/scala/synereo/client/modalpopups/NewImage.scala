@@ -2,30 +2,22 @@ package synereo.client.modalpopups
 
 import diode.ModelRO
 import diode.react.ModelProxy
-import japgolly.scalajs.react.vdom.prefix_<^._
-
-import scala.scalajs.js
-import synereo.client.components.GlobalStyles
-import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
-
-import scala.language.reflectiveCalls
-import scalacss.ScalaCssReact._
-import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap.Modal
-import shared.dtos.UpdateUserRequest
-import shared.models.UserModel
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
-import org.querki.jquery._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
-import shared.dtos.JsonBlob
-import synereo.client.components._
-import synereo.client.components.Bootstrap._
+import shared.dtos.{JsonBlob, UpdateUserRequest}
+import shared.models.UserModel
+import synereo.client.components.Bootstrap.{Modal, _}
+import synereo.client.components.{GlobalStyles, _}
+import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.ContentUtils
 
-import scalacss.internal.Dsl
+import scala.language.reflectiveCalls
+import scala.scalajs.js
+import scalacss.ScalaCssReact._
 
 //scalastyle:off
 //object NewImage {
@@ -75,6 +67,12 @@ import scalacss.internal.Dsl
 
 object ProfileImageUploaderForm {
   // shorthand for styles
+
+  //js objects to show errors
+  private val fileTypeNotSupported = "file-type-not-supported-error"
+  private val noImgUploadErr = "no-image-to-upload-error"
+  private val imgSizeUploadErr = "image-size-upload-error"
+
   @inline private def bss = GlobalStyles.bootstrapStyles
 
   case class Props(submitHandler: () => Callback,
@@ -89,6 +87,7 @@ object ProfileImageUploaderForm {
     def hide = Callback {
       jQuery(t.getDOMNode()).modal("hide")
     }
+
     def hideModal = {
       jQuery(t.getDOMNode()).modal("hide")
     }
@@ -105,9 +104,9 @@ object ProfileImageUploaderForm {
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
       if (value.`type` == "image/jpeg" || value.`type` == "image/png")
-        $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
+        hideComponents(fileTypeNotSupported)
       else
-        $("#file-type-not-supported-error".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponents(fileTypeNotSupported)
       val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("user_profile_img").toString.toInt
       if (value.size <= img_size) {
         val reader = new FileReader()
@@ -118,26 +117,22 @@ object ProfileImageUploaderForm {
           t.modState(s => s.copy(updateUserRequest = s.updateUserRequest.copy(sessionURI = uri, jsonBlob = JsonBlob(imgSrc = contents, name = props.proxy().name)))).runNow()
         }
         reader.readAsDataURL(value)
-        $("#no-image-to-upload-error".asInstanceOf[js.Object]).addClass("hidden")
-        $("#image-size-upload-error".asInstanceOf[js.Object]).addClass("hidden")
+        hideComponents(noImgUploadErr, imgSizeUploadErr)
       } else {
-        $("#image-size-upload-error".asInstanceOf[js.Object]).removeClass("hidden")
+        unHideComponents(imgSizeUploadErr)
       }
     }
 
     def submitForm(e: ReactEventI): Callback = {
       e.preventDefault()
-      if (!$("#no-image-to-upload-error".asInstanceOf[js.Object]).hasClass("hidden")
-        || !$("#file-type-not-supported-error".asInstanceOf[js.Object]).hasClass("hidden")
-        || !$("#image-size-upload-error".asInstanceOf[js.Object]).hasClass("hidden")
-      ) t.modState(s => s.copy(postNewImage = false))
-      if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.length < 2) {
-        $("#file-type-not-supported-error".asInstanceOf[js.Object]).addClass("hidden")
-        $("#image-size-upload-error".asInstanceOf[js.Object]).addClass("hidden")
-        $("#no-image-to-upload-error".asInstanceOf[js.Object]).removeClass("hidden")
+      val isOkToPost = isHidden(noImgUploadErr) && isHidden(fileTypeNotSupported) && isHidden(imgSizeUploadErr)
+      if (!isOkToPost) {
         t.modState(s => s.copy(postNewImage = false))
-      }
-      else {
+      } else if (t.state.runNow().updateUserRequest.jsonBlob.imgSrc.isEmpty) {
+        hideComponents(fileTypeNotSupported, imgSizeUploadErr)
+        unHideComponents(noImgUploadErr)
+        t.modState(s => s.copy(postNewImage = false))
+      } else {
         ContentUtils.postUserUpdate(t.state.runNow().updateUserRequest)
         t.modState(s => s.copy(postNewImage = true))
       }
@@ -186,13 +181,13 @@ object ProfileImageUploaderForm {
                     <.div(^.className := "col-md-12")(
                       <.input(^.`type` := "file", ^.id := "image-type-input", ^.accept := "image/*",
                         ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
-                      <.div(^.id := "no-image-to-upload-error", ^.className := "hidden text-danger")(
+                      <.div(^.id := noImgUploadErr, ^.className := "hidden text-danger")(
                         state.lang.selectDynamic("PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD").toString
                       ),
-                      <.div(^.id := "image-size-upload-error", ^.className := "hidden text-danger")(
+                      <.div(^.id := imgSizeUploadErr, ^.className := "hidden text-danger")(
                         state.lang.selectDynamic("PROVIDE_PICTURE_SIZE_LESS_THAN_ONE_MB_TO_UPLOAD").toString
                       ),
-                      <.div(^.id := "file-type-not-supported-error", ^.className := "hidden text-danger")(
+                      <.div(^.id := fileTypeNotSupported, ^.className := "hidden text-danger")(
                         state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                       )
                     )
@@ -223,7 +218,6 @@ object ProfileImageUploaderForm {
           )
         )
       )
-
     })
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewImage) {

@@ -1,30 +1,26 @@
 package synereo.client.modalpopups
 
+import diode.AnyAction._
+import diode.ModelRO
 import diode.react.ModelProxy
-import shared.models.{Label, MessagePost, MessagePostContent}
-import japgolly.scalajs.react.vdom.prefix_<^._
-import synereo.client.rootmodels.SearchesRootModel
-import synereo.client.components.GlobalStyles
-import synereo.client.css.NewMessageCSS
-import scalacss.ScalaCssReact._
-import scala.language.reflectiveCalls
-import synereo.client.components.Bootstrap.Modal
-import synereo.client.utils.{ConnectionsUtils, ContentUtils, LabelsUtils, MessagesUtils}
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
-import org.querki.jquery._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.raw.{FileReader, UIEvent}
 import org.widok.moment.Moment
 import shared.dtos.LabelPost
-import synereo.client.components.{ConnectionsSelectize, LabelsSelectize, _}
+import shared.models.{Label, MessagePost, MessagePostContent}
+import synereo.client.components.Bootstrap.{Modal, _}
+import synereo.client.components.{ConnectionsSelectize, GlobalStyles, LabelsSelectize, _}
+import synereo.client.css.NewMessageCSS
 import synereo.client.handlers.{SearchesModelHandler, SetPreventNavigation}
+import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.services.SYNEREOCircuit
-import synereo.client.components.Bootstrap._
-import synereo.client.facades.SynereoSelectizeFacade
-import diode.AnyAction._
-import diode.ModelRO
+import synereo.client.utils.{ConnectionsUtils, ContentUtils, LabelsUtils, MessagesUtils}
 
+import scala.language.reflectiveCalls
 import scala.scalajs.js
+import scalacss.ScalaCssReact._
 
 //scalastyle:off
 object NewMessageForm {
@@ -96,15 +92,15 @@ object NewMessageForm {
     def willMount(): Callback = {
       val props = t.props.runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
-     // println(s"replyPost: ${props.replyPost}, forwardPost: ${props.forwardPost}")
+      // println(s"replyPost: ${props.replyPost}, forwardPost: ${props.forwardPost}")
       if (props.replyPost) {
         // if replying just replace the header with updated content
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
           s"${props.messagePost.postContent.subject}"
-        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}", imgSrc = ""/*props.messagePost.postContent.imgSrc*/)))
+        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}", imgSrc = "" /*props.messagePost.postContent.imgSrc*/)))
       } else if (props.forwardPost) {
-          // minor modifications for forwarding the message
+        // minor modifications for forwarding the message
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject =
             if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
@@ -153,18 +149,13 @@ object NewMessageForm {
       t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = "")))
     }
 
-    def hideComponent(name: String) = $(s"#$name".asInstanceOf[js.Object]).addClass("hidden")
-
-    def unHideComponent(name: String) = $(s"#$name".asInstanceOf[js.Object]).removeClass("hidden")
-
-
     def updateImgSrc(e: ReactEventI): react.Callback = Callback {
       val value = e.target.files.item(0)
       val img_size = SYNEREOCircuit.zoom(_.configRootModel.config).value.selectDynamic("img_attachment").toString.toInt
       if (value.`type` == "image/jpeg" || value.`type` == "image/png")
-        hideComponent(fileTypeNotSupportedErr)
+        hideComponents(fileTypeNotSupportedErr)
       else
-        unHideComponent(fileTypeNotSupportedErr)
+        unHideComponents(fileTypeNotSupportedErr)
       if (value.size <= img_size) {
         val reader = new FileReader()
         reader.onload = (e: UIEvent) => {
@@ -172,30 +163,28 @@ object NewMessageForm {
           t.modState(s => s.copy(postMessage = s.postMessage.copy(imgSrc = contents))).runNow()
         }
         reader.readAsDataURL(value)
-        hideComponent(noImgUploadErr)
-        hideComponent(imgSizeUploadErr)
+        hideComponents(noImgUploadErr, imgSizeUploadErr)
       } else {
-        unHideComponent(imgSizeUploadErr)
+        unHideComponents(imgSizeUploadErr)
       }
     }
 
     def fromSelecize(): Callback = Callback {}
 
-    def validateMessageContent:Boolean = {
+    def validateMessageContent: Boolean = {
       val state = t.state.runNow()
       // first hide previous errors
-      hideComponent(cnxnError)
-      hideComponent(emptyPostErr)
+      hideComponents(cnxnError, emptyPostErr)
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
       // no connection selected
       if (connections.length < 1) {
-        unHideComponent(cnxnError)
+        unHideComponents(cnxnError)
         false
       } else if (nothingToPost) {
         // nothing to post
-        unHideComponent(emptyPostErr)
-        hideComponent(cnxnError)
+        unHideComponents(emptyPostErr)
+        hideComponents(cnxnError)
         false
       } else {
         true
@@ -204,10 +193,10 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val state= t.state.runNow()
+      val state = t.state.runNow()
       if (!validateMessageContent)
         t.modState(s => s.copy(postNewMessage = false))
-       else {
+      else {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         // new labels are present first them
