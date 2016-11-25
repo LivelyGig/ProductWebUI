@@ -131,12 +131,12 @@ object SYNEREOMain extends js.JSApp {
             <.button(^.className := "navbar-toggle", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#navi-collapse")(
               <.span(^.color := "white")(Icon.thList)
             ),
-            if (r.page == DashboardLoc || r.page == SynereoLoc) {
+            if (r.page == SynereoLoc) {
               <.a(^.href:="https://www.synereo.com/", "target".reactAttr :="_blank")(
                 <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
                 <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png"))
             } else {
-              <.a(^.href:="https://www.synereo.com/", "target".reactAttr :="_blank")(^.onClick --> c.refresh)(^.className := "navbar-header",
+              c.link(DashboardLoc)(^.onClick --> c.refresh)(^.className := "navbar-header",
                 <.img(if (r.page == SynereoLoc) SynereoCommanStylesCSS.Style.imgLogo else SynereoCommanStylesCSS.Style.imgLogoOtherLoc, ^.src := "./assets/synereo-images/Synereo_Logo_White.png"),
                 <.img(SynereoCommanStylesCSS.Style.imgSmallLogo, ^.src := "./assets/synereo-images/synereologo.png")
               )
