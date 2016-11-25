@@ -136,19 +136,10 @@ object SignUpForm {
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)
-        State(new SignUpModel(signUpModelUpdate.email,
-          "",
-          "",
-          signUpModelUpdate.name,
-          signUpModelUpdate.lastName,
-          signUpModelUpdate.createBTCWallet,
-          signUpModelUpdate.isModerator,
-          signUpModelUpdate.isClient,
-          signUpModelUpdate.isFreelancer,
-          signUpModelUpdate.canReceiveEmailUpdates))
+        State( signUpModelUpdate.copy(password = "", confirmPassword = ""))
       else
-        State(new SignUpModel()))
-    .backend(new NewUserFormBackend(_))
+        State(SignUpModel()))
+    .backend(NewUserFormBackend(_))
     .renderPS((t, props, state) => {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
       val nodeName = dom.window.location.host

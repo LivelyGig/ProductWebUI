@@ -265,7 +265,7 @@ object HomeFeedList {
           if (state.showAmplifyPostForm) {
             AmplifyPostForm(AmplifyPostForm.Props(t.backend.postAmplified, state.senderAddress))
           } else if (state.showForwardPostForm) {
-            searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy, state.messagePost)))
+            searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postForwarded, "New Message", searchesProxy, state.messagePost,false, true)))
           } else if (state.showReplyPostForm) {
             searchesProxy(searchesProxy => NewMessageForm(NewMessageForm.Props(t.backend.postReplyed, "Reply", searchesProxy, state.messagePost, state.showReplyPostForm)))
           } else if (state.showFullPostView) {

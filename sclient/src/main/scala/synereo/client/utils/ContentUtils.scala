@@ -3,6 +3,7 @@ package synereo.client.utils
 import diode.AnyAction._
 import shared.dtos._
 import shared.models.Post
+import synereo.client.facades.SynereoSelectizeFacade
 import synereo.client.handlers._
 import synereo.client.logger
 import synereo.client.services.{ApiTypes, CoreApi, SYNEREOCircuit}
@@ -251,12 +252,21 @@ object ContentUtils {
 
   //  def leaf(text: String /*, color: String = "#CC5C64"*/) = "leaf(text(\"" + s"${text}" + "\"),display(color(\"\"),image(\"\")))"
 
-  def postLabelsAndMsg(labelPost: LabelPost, subscribeReq: SubscribeRequest) = {
+  /**
+    * This method first post the labels then the message
+    * @param labelPost model containing all labels old+ new
+    * @param subscribeReq post subscription to post actual message
+    * @param newLabels new labels which will then be added to the selectize
+    */
+  def postLabelsAndMsg(labelPost: LabelPost, subscribeReq: SubscribeRequest, newLabels: Seq[String]) = {
     var count = 1
     post()
     def post(): Unit = CoreApi.postLabel(labelPost).onComplete {
       case Success(res) =>
         postMessage(subscribeReq)
+        // label post success add it to selectize input
+        newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
+        // update the root model
         SYNEREOCircuit.dispatch(CreateLabels(labelPost.labels))
 
       case Failure(res) =>
