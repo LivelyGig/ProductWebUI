@@ -11,21 +11,16 @@ object SignupCSS {
 
     import dsl._
 
-
-    val signUpFormBodyFontSize=style(
-      fontSize(1.4.rem)
-    )
-
-    val signUpFormContainerDiv = style(
-      backgroundColor(c"#012e3d"),
-      top(20.px)
-    )
-    val iAmCool = style(
-      fontSize(14.px),
-      media.maxWidth(580.px)(
-        fontSize(10.px)
-      )
-    )
+//    val signUpFormContainerDiv = style(
+//      backgroundColor(c"#012e3d"),
+//      top(20.px)
+//    )
+//    val iAmCool = style(
+//      fontSize(14.px),
+//      media.maxWidth(580.px)(
+//        fontSize(10.px)
+//      )
+//    )
     val termsAndServicesContainer = style(
       opacity(0.65)
     )
@@ -34,11 +29,11 @@ object SignupCSS {
       color(c"#000"),
       fontSize(1.2.rem)
     )
-    val verificationMessageText = style(
-      fontSize(12.px),
-      marginTop(-15.px),
-      marginBottom(25.px)
-    )
+//    val verificationMessageText = style(
+//      fontSize(12.px),
+//      marginTop(-15.px),
+//      marginBottom(25.px)
+//    )
     val accountValidationSuccessText = style(
       fontSize(2.4.em),
       media.maxWidth(580.px)(
@@ -112,11 +107,11 @@ object SignupCSS {
       )
 
     )
-    val checkBoxTermsAndCond = style(
-      width(20.px),
-      opacity(0.5),
-      margin(2.px)
-    )
+//    val checkBoxTermsAndCond = style(
+//      width(20.px),
+//      opacity(0.5),
+//      margin(2.px)
+//    )
     val passwordTextInfo = style(
       fontFamily :=! "karla",
       padding.`0`.important,
@@ -150,25 +145,25 @@ object SignupCSS {
       inputStyleSignUpForm,
       width(95.%%).important
     )
-    val SignupformFooter = style(
-      color(c"#35b0e2"),
-      //      textAlign.center,
-      fontSize(1.1.em),
-      marginLeft(45.px),
-      marginTop(10.px)
-    )
-    val termsAndServicesBtn = style(
-      backgroundColor.transparent,
-      border.none.important,
-      color(c"#35b0e2"),
-      paddingLeft.`0`,
-      fontSize(16.px),
-      textDecorationLine.underline,
-      &.hover(
-        backgroundColor.transparent,
-        color(c"#35b0e2")
-      )
-    )
+//    val SignupformFooter = style(
+//      color(c"#35b0e2"),
+//      //      textAlign.center,
+//      fontSize(1.1.em),
+//      marginLeft(45.px),
+//      marginTop(10.px)
+//    )
+//    val termsAndServicesBtn = style(
+//      backgroundColor.transparent,
+//      border.none.important,
+//      color(c"#35b0e2"),
+//      paddingLeft.`0`,
+//      fontSize(16.px),
+//      textDecorationLine.underline,
+//      &.hover(
+//        backgroundColor.transparent,
+//        color(c"#35b0e2")
+//      )
+//    )
 
     val formControlMargin = style(
       marginTop(5.px),
