@@ -6,7 +6,7 @@ import shared.models.EmailValidationModel
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.{LoginCSS, SignupCSS}
+import synereo.client.css.{LoginCSS, SignupCSS,SynereoCommanStylesCSS}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -103,18 +103,18 @@ object VerifyTokenModal {
           // header contains a cancel button (X)
           header = hide => <.span(
             <.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
-            <.div(SignupCSS.Style.signUpHeading)(headerText)
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenterWhite)(headerText)
           ),
           closed = () => t.backend.formClosed(state, props),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle), keyboard = false, id = "verifyTokenContainer"
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm, "data-toggle".reactAttr := "validator", ^.role := "form")(
-            <.div(^.className := "row")(
+            <.div(^.className := "row",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
               <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
                 <.div()(
                   <.div(SignupCSS.Style.verificationMessageContainer)(
-                    <.h4(state.lang.selectDynamic("CHECK_EMAIL_REGISTERED").toString) /*,
+                    <.div(state.lang.selectDynamic("CHECK_EMAIL_REGISTERED").toString) /*,
                   <.h4("We have sent a verification code to your email address, please check your email and enter the code below.")*/
                   ),
                   <.div(SignupCSS.Style.verificationMessageContainer)(
@@ -135,16 +135,15 @@ object VerifyTokenModal {
                         $(editApiDetailBtn).hide()
                       })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
                     ),
-                    <.input(SignupCSS.Style.inputStyleSignUpForm, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.required := true,
+                    <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.required := true,
                       ^.placeholder := state.lang.selectDynamic("VERIFICATION_CODE").toString, ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken)
                   ), "data-error".reactAttr := "Code can not be empty", ^.value := state.emailValidationModel.token, ^.onChange ==> t.backend.updateToken),
                 <.div(^.className := "help-block with-errors")
-              ),
-              <.div(^.className := "pull-right")(
-                <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit", SignupCSS.Style.verifyBtn, ^.className := "btn", state.lang.selectDynamic("VERIFY").toString)
               )
             ),
-            <.div(bss.modal.footer)()
+            <.div(bss.modal.footer)(
+              <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit",SynereoCommanStylesCSS.Style.modalFooterBtnWhite, ^.className := "btn", state.lang.selectDynamic("VERIFY").toString)
+            )
           )
         )
       )

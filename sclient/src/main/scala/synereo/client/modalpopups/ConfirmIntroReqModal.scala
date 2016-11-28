@@ -9,7 +9,7 @@ import shared.dtos.Introduction
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
-import synereo.client.css.{DashboardCSS, NewMessageCSS, NotificationViewCSS}
+import synereo.client.css.{DashboardCSS, NewMessageCSS, NotificationViewCSS, SynereoCommanStylesCSS}
 
 import scala.scalajs.js.JSON
 import japgolly.scalajs.react
@@ -123,8 +123,8 @@ object ConfirmIntroReqForm {
       //      val headerText = props.header
       Modal(
         Modal.Props(
-          header = hide => <.div(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.div(s"${state.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(^.className:="model-title ",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(s"${state.lang.selectDynamic("INTRODUCTION_REQUEST").toString}")),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
@@ -136,13 +136,13 @@ object ConfirmIntroReqForm {
                   s"From : ${JSON.parse(props.introduction.introProfile).name.asInstanceOf[String]}", <.br,
                   "Date : Mon July 27 2016 ", <.br
                 )
-              ),
-              <.div(^.className := "row text-right")(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn,
-                  s"${state.lang.selectDynamic("ACCEPT").toString}"),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
-                  ^.onClick --> t.backend.hide, s"${state.lang.selectDynamic("REJECT").toString}")
               )
+            ),
+            <.div(bss.modal.footer)(
+              <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn,
+                s"${state.lang.selectDynamic("ACCEPT").toString}"),
+              <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
+                ^.onClick --> t.backend.hide, s"${state.lang.selectDynamic("REJECT").toString}")
             )
           )
         )

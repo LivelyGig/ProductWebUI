@@ -160,7 +160,8 @@ object NodeSettingModal {
       val headerText = "NodeSettings"
       Modal(
         Modal.Props(
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitle)(headerText)),
           closed = () => t.backend.modalClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
@@ -304,9 +305,9 @@ object NodeSettingModal {
                     )
                   }
                 ),
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn /*,  ^.onClick --> t.backend.submitForm*/ , "Submit"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> Callback {
+                <.div(bss.modal.footer)(
+                  <.button(^.tpe := "submit", ^.className := "btn ",  SynereoCommanStylesCSS.Style.modalFooterBtn/*,  ^.onClick --> t.backend.submitForm*/ , "Submit"),
+                  <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> Callback {
                     t.backend.closeForm
                   }, "Cancel")
                 )

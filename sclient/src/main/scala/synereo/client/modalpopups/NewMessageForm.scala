@@ -5,7 +5,8 @@ import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -28,7 +29,6 @@ import scala.scalajs.js
 
 //scalastyle:off
 object NewMessageForm {
-
   //js objects to show errors
   val fileTypeNotSupportedErr = "file-type-not-supported-err"
   val emptyPostErr = "empty-post-error"
@@ -41,11 +41,11 @@ object NewMessageForm {
   case class Props(submitHandler: () => Callback,
                    header: String,
                    proxy: ModelProxy[SearchesRootModel],
-                   messagePost: MessagePost = new MessagePost(postContent = new MessagePostContent()),
+                   messagePost: MessagePost = MessagePost(postContent = MessagePostContent()),
                    replyPost: Boolean = false,
                    forwardPost: Boolean = false)
 
-  case class State(postMessage: MessagePostContent,
+  case class State(postMessage: MessagePostContent = MessagePostContent(),
                    postNewMessage: Boolean = false,
                    //keep this selectize id same as, a css class is used for@allContacts hide list feature
                    //inside ConnectionSelectize.scala
@@ -94,21 +94,26 @@ object NewMessageForm {
       jQuery(t.getDOMNode()).modal("hide")
     }
 
-    def mounted(): Callback = {
+    def willMount(): Callback = {
       val props = t.props.runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
+      // println(s"replyPost: ${props.replyPost}, forwardPost: ${props.forwardPost}")
       if (props.replyPost) {
+        // if replying just replace the header with updated content
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
           s"${props.messagePost.postContent.subject}"
-        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}")))
+        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}", imgSrc = "" /*props.messagePost.postContent.imgSrc*/)))
       } else if (props.forwardPost) {
-        t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
-          s"${props.messagePost.postContent.subject}"
-        else s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}")))
-      } else {
+        // minor modifications for forwarding the message
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
-          subject = props.messagePost.postContent.subject)))
+          subject =
+            if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
+              s"${props.messagePost.postContent.subject}"
+            else
+              s"Fw : ${props.messagePost.postContent.subject.replace("Re : ", " ")}", imgSrc = props.messagePost.postContent.imgSrc)))
+      } else {
+        Callback.empty
       }
     }
 
@@ -177,42 +182,43 @@ object NewMessageForm {
 
     def fromSelecize(): Callback = Callback {}
 
-    def submitForm(e: ReactEventI) = {
-      e.preventDefault()
-      val (state, props) = (t.state.runNow(), t.props.runNow())
-      if (state.postMessage.imgSrc != "") {
-        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = state.postMessage.imgSrc)))
-      } else if ((props.messagePost.postContent.imgSrc != "") && (props.replyPost == false)) {
-        t.modState(state => state.copy(postMessage = MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc)))
-      }
+    def validateMessageContent: Boolean = {
+      val state = t.state.runNow()
+      // first hide previous errors
+      hideComponent(cnxnError)
+      hideComponent(emptyPostErr)
       val nothingToPost = state.postMessage.imgSrc.isEmpty && state.postMessage.subject.isEmpty && state.postMessage.text.isEmpty
       val connections = ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId)
+      // no connection selected
       if (connections.length < 1) {
         unHideComponent(cnxnError)
-        t.modState(s => s.copy(postNewMessage = false))
+        false
       } else if (nothingToPost) {
+        // nothing to post
         unHideComponent(emptyPostErr)
         hideComponent(cnxnError)
-        t.modState(s => s.copy(postNewMessage = false))
+        false
       } else {
-        hideComponent(cnxnError)
-        hideComponent(emptyPostErr)
+        true
+      }
+    }
+
+    def submitForm(e: ReactEventI) = {
+      e.preventDefault()
+      val state = t.state.runNow()
+      if (!validateMessageContent)
+        t.modState(s => s.copy(postNewMessage = false))
+      else {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
+        // new labels are present first them
         if (newLabels.nonEmpty) {
+          // remember the server expects that you need to re post all labels i.e. old + new
           val labelPost = LabelPost(SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value, getAllLabelsText.map(SearchesModelHandler.leaf), "alias")
-          if (state.postMessage.imgSrc != "") {
-            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
-          } else if ((props.messagePost.postContent.imgSrc != "")) {
-            ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
-          }
-          newLabels.foreach(label => SynereoSelectizeFacade.addOption("SearchComponentCnxnSltz-selectize", s"#$label", label))
+          ContentUtils.postLabelsAndMsg(labelPost, MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg), newLabels)
         } else {
-          if (state.postMessage.imgSrc != "") {
-            ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
-          } else if ((props.messagePost.postContent.imgSrc != "")) {
-            ContentUtils.postMessage(MessagesUtils.getPostData(MessagePostContent(imgSrc = props.messagePost.postContent.imgSrc, text = state.postMessage.text, subject = state.postMessage.subject), cnxns, labelsToPostMsg))
-          }
+          // no new labels post just the messages
+          ContentUtils.postMessage(MessagesUtils.getPostData(state.postMessage, cnxns, labelsToPostMsg))
         }
         t.modState(s => s.copy(postNewMessage = true))
       }
@@ -225,14 +231,18 @@ object NewMessageForm {
 
 
   private val component = ReactComponentB[Props]("PostNewMessage")
-    .initialState_P(p => State(new MessagePostContent()))
-    .backend(new NewMessageBackend(_))
+    .initialState_P(p => State())
+    .backend(NewMessageBackend(_))
     .renderPS((t, props, state) => {
       val headerText = props.header
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close),
+            <.div(
+              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
+            )
+          ),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props),
           id = "newMessage"
@@ -241,9 +251,7 @@ object NewMessageForm {
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.div(^.id := emptyPostErr, ^.className := "hidden text-danger",
               state.lang.selectDynamic("YOU_CANNOT_POST_EMPTY_MESSAGE").toString),
-            <.div(
-              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
-            ),
+
             <.div(^.className := "row")(
               <.div(^.id := state.connectionsSelectizeInputId, ^.width := "100%")(
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
@@ -264,13 +272,7 @@ object NewMessageForm {
             ),
             <.div(^.className := "row")(
               <.div()(
-                if (state.postMessage.imgSrc != "") {
-                  <.img(^.src := state.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
-                } else if ((props.messagePost.postContent.imgSrc != "") && !props.replyPost) {
-                  <.img(^.src := props.messagePost.postContent.imgSrc, ^.height := "100.px", ^.width := "100.px")
-                } else {
-                  <.span()
-                }
+                <.img(^.src := state.postMessage.imgSrc, ^.height := "100.px", ^.width := "100.px")
               ),
               <.div(
                 <.ul(^.className := "list-inline")(
@@ -284,10 +286,7 @@ object NewMessageForm {
                       )
                     ))
               ),
-              /*<.div(^.className := "text-left text-muted")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),*/
-              <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+              <.div(bss.modal.footer)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
@@ -302,9 +301,9 @@ object NewMessageForm {
                     state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
                   ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn,
+                <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
                   state.lang.selectDynamic("CREATE_POST").toString)
               )
             )
@@ -312,7 +311,7 @@ object NewMessageForm {
         )
       )
     })
-    .componentWillMount(scope => scope.backend.mounted())
+    .componentWillMount(scope => scope.backend.willMount())
     .componentDidUpdate(scope => Callback {
       if (scope.currentState.postNewMessage) {
         scope.$.backend.hideModal

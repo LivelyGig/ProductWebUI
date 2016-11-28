@@ -18,7 +18,7 @@ object NewMessageCSS {
       marginBottom(10.px),
       border.none.important,
       resize.none.important,
-      fontSize(18.px)
+      fontSize(1.7.rem)
     )
     val newMessageActionsContainerDiv = style(
       //      marginTop(30.px),
@@ -45,7 +45,7 @@ object NewMessageCSS {
     )
     val changePersonaBtn = style(
       backgroundColor.transparent.important,
-      fontSize(20.px),
+      fontSize(1.7.rem),
       fontWeight.bold,
       paddingLeft.`0`.important,
       &.hover(
@@ -105,7 +105,7 @@ object NewMessageCSS {
       )
     )
     val userNameOnDilogue = style(
-      fontSize(16 px),
+      fontSize(1.7.rem),
       media.maxWidth(1024.px)(
         fontSize(10.px)
       )

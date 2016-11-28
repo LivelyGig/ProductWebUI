@@ -30,6 +30,7 @@ object UserProfileViewCSS {
     val userImage = style(
       minWidth(150.px),
       maxWidth(150.px),
+      maxHeight(150.px),
       maxHeight(150.px)
     )
 //    val newImageBtn = style(
@@ -75,12 +76,9 @@ object UserProfileViewCSS {
 //      position.relative
 //    )
     val nodeSettingSection = style(
-      fontSize(20.px),
+      fontSize(1.7.rem),
       color.black,
-      wordWrap.breakWord,
-      media.maxWidth(580.px)(
-        fontSize(12.px)
-      )
+      wordWrap.breakWord
     )
     val aboutInfoSectionContainer = style(
       marginBottom(15.px)
@@ -124,7 +122,7 @@ object UserProfileViewCSS {
     )
     val modalImgUploadTabAnchorTag = style(
       marginLeft(20.%%).important,
-      width(106.px),
+      width(123.px),
       border.none.important,
       paddingLeft(0.px).important,
 
@@ -144,7 +142,7 @@ object UserProfileViewCSS {
       )
     )
     val modalImgUploadImgDiv = style(
-      height(212.px)
+      minHeight(212.px)
 
     )
     val aboutInfoSectionHeader= style(
@@ -153,8 +151,8 @@ object UserProfileViewCSS {
       fontWeight.bolder
     )
     val aboutInfoSectionTitle=style(
-      fontWeight.bold,
-      fontSize(22.px)
+      fontWeight.normal,
+      fontSize(1.7.rem)
     )
 
   }

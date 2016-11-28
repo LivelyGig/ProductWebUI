@@ -95,15 +95,16 @@ object DashboardCSS {
 //      backgroundColor.transparent.important
 //    )
     val cardDescriptionContainerDiv = style(
-      cursor.pointer,
-      media.minWidth(768.px)(
-        paddingLeft(65.px),
-        paddingRight(65.px)
+      cursor.pointer, paddingLeft(10.px),
+      paddingRight(10.px)
+     /* media.minWidth(768.px)(
+        paddingLeft(10.px),
+        paddingRight(10.px)
       ),
       media.maxWidth(767.px)(
-        paddingLeft(20.px),
-        paddingRight(20.px)
-      )
+        paddingLeft(10.px),
+        paddingRight(10.px)
+      )*/
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
@@ -185,6 +186,12 @@ object DashboardCSS {
       lineHeight(1.5.em),
       color(c"#000"),
       opacity(0.65),
+      media.minWidth(991.px)(
+        padding(0.px),
+        position.absolute,
+        width(183.px),
+        top(10.px)
+      ),
       media.minWidth(768.px)(
         fontSize(14.px)
       ),

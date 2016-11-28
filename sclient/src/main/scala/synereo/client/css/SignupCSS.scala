@@ -25,9 +25,9 @@ object SignupCSS {
       opacity(0.65)
     )
     val howItWorks = style(
-      margin(57.px, 0.px),
+      margin(30.px, 0.px),
       color(c"#000"),
-      fontSize(12.px)
+      fontSize(1.2.rem)
     )
 //    val verificationMessageText = style(
 //      fontSize(12.px),
@@ -55,7 +55,7 @@ object SignupCSS {
       border.none.important,
       paddingLeft(4.px),
       textDecoration := "underline",
-      fontSize(14.px),
+      fontSize(1.4.rem),
       marginLeft(10.px),
       marginTop(-1.px),
       &.hover(
@@ -125,7 +125,7 @@ object SignupCSS {
         marginTop(1.px)
     )
     val inputStyleSignUpForm = style(
-      fontSize(20.px),
+      fontSize(1.7.rem),
       fontFamily :=! "karla",
       height(50.px),
       color(c"#000"),
@@ -173,7 +173,7 @@ object SignupCSS {
         textAlign.left
         ),
       media.minWidth(768.px).maxWidth(920.px)(
-        right(-3.%%).important,
+        right(-1.%%).important,
         textAlign.left
       ),
       media.minWidth(581.px).maxWidth(767.px)(
@@ -196,6 +196,13 @@ object SignupCSS {
       outline(0.px),
       position.relative
     )
+
+    val signUpHelpBlock=style(
+      marginTop(0.px).important,
+      marginBottom(0.px).important,
+      height(15.px)
+    )
+
   }
 
 }

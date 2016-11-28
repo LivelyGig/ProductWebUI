@@ -36,7 +36,7 @@
   "SCALA_VERSION": "- Scala Version: ",
   "MONGODB_VERSION": "- MongoDB Version: ",
   "RABBITMQ_VERSION": "- RabbitMQ Version: ",
-  "ACCOUNT_VALIDATION_SUCCESS": "Account valiation success",
+  "ACCOUNT_VALIDATION_SUCCESS": "Account validation success",
   "AMPLIFY": "Amplify",
   "AMPS_TO_DONATE": "Amps to donate",
   "AMPLIFY_BTN": "Amplify",

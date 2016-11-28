@@ -6,7 +6,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.scalajs.js
 import synereo.client.components.GlobalStyles
-import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 
 import scala.language.reflectiveCalls
 import scalacss.ScalaCssReact._
@@ -156,13 +156,13 @@ object ProfileImageUploaderForm {
       Modal(
         Modal.Props(
           header = hide => <.span(<.button(^.tpe := "button", ^.className := "hidden", bss.close, ^.onClick --> hide, Icon.close),
-            <.h3(^.className := "pull-left", UserProfileViewCSS.Style.modalImgUploadHeader)(props.header)),
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitle)(props.header)),
           closed = () => t.backend.formClosed(state, props),
           id = "newImage"
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
-            <.div(^.className := "row")(
+            <.div(^.className := "row",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
               <.ul(^.id := "imgUploadTab", ^.className := "nav nav-tabs", ^.role := "tablist", UserProfileViewCSS.Style.modalImgUploadTabUl,
                 <.li(^.role := "presentation", ^.className := "active", UserProfileViewCSS.Style.modalImgUploadTab,
                   <.a(^.href := "#uploadPhoto", "aria-controls".reactAttr := "uploadPhoto", ^.role := "tab", "data-toggle".reactAttr := "tab", UserProfileViewCSS.Style.modalImgUploadTabAnchorTag, "Upload Photo")
@@ -185,7 +185,7 @@ object ProfileImageUploaderForm {
                   <.div(^.className := "row",
                     <.div(^.className := "col-md-12")(
                       <.input(^.`type` := "file", ^.id := "image-type-input", ^.accept := "image/*",
-                        ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "40.px"),
+                        ^.name := "image-type-input", ^.onChange ==> t.backend.updateImgSrc, ^.marginTop := "25.px"),
                       <.div(^.id := "no-image-to-upload-error", ^.className := "hidden text-danger")(
                         state.lang.selectDynamic("PLEASE_PROVIDE_A_PICTURE_TO_UPLOAD").toString
                       ),
@@ -211,13 +211,11 @@ object ProfileImageUploaderForm {
                   )
                 )
               ),
-              <.div(^.className := "row",
-                <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
-                  <.button(^.tpe := "button", ^.className := "btn btn-default",
-                    NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default",
-                    NewMessageCSS.Style.createPostBtn, state.lang.selectDynamic("SET_PICTURE").toString)
-                )
+              <.div(bss.modal.footer)(
+                <.button(^.tpe := "submit", ^.className := "btn ",
+                  SynereoCommanStylesCSS.Style.modalFooterBtn, state.lang.selectDynamic("SET_PICTURE").toString),
+                <.button(^.tpe := "button", ^.className := "btn ",
+                  SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString)
               )
             )
           )

@@ -136,26 +136,16 @@ object SignUpForm {
   private val component = ReactComponentB[Props]("NewUserForm")
     .initialState_P(p =>
       if (addNewUserState)
-        State(new SignUpModel(signUpModelUpdate.email,
-          "",
-          "",
-          signUpModelUpdate.name,
-          signUpModelUpdate.lastName,
-          signUpModelUpdate.createBTCWallet,
-          signUpModelUpdate.isModerator,
-          signUpModelUpdate.isClient,
-          signUpModelUpdate.isFreelancer,
-          signUpModelUpdate.canReceiveEmailUpdates))
+        State( signUpModelUpdate.copy(password = "", confirmPassword = ""))
       else
-        State(new SignUpModel()))
-    .backend(new NewUserFormBackend(_))
+        State(SignUpModel()))
+    .backend(NewUserFormBackend(_))
     .renderPS((t, props, state) => {
       //val nodeName = window.sessionStorage.getItem(SessionItems.ApiDetails.API_URL)
       val nodeName = dom.window.location.host
       val headerText = state.lang.selectDynamic("SIGN_UP").toString
       Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
+        Modal.Props( // header contains a cancel button (X)
 
           /*
           header = hide => <.span()(
@@ -229,7 +219,7 @@ object SignUpForm {
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "signUpBtnId", SignupCSS.Style.signUpBtn, ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
+                <.button(^.tpe := "submit", ^.id := "signUpBtnId", /*SignupCSS.Style.signUpBtn*/SynereoCommanStylesCSS.Style.modalFooterBtnWhite , ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
               )
             )
           ),

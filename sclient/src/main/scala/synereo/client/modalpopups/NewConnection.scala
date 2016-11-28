@@ -221,25 +221,26 @@ object ConnectionsForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4("Connect Friend" /*props.header*/)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(^.className:="model-title ",SynereoCommanStylesCSS.Style.modalHeaderTitle)("Connect Friend" /*props.header*/)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props)
         ),
         <.form(^.onSubmit ==> t.backend.submitForm)(
           <.div(^.className := "container-fluid")(
-            <.div(^.className := "row")(
+            <.div(^.className := "row",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
               <.div()(
                 <.div()(<.input(^.`type` := "radio", ^.name := "userConnection", ^.checked := state.introTwoCnxns, ^.onChange --> t.backend.toggleIntroTwoCnxns(true)),
                   state.lang.selectDynamic("INTRODUCE_YOUR_EXISTING_CONNECTIONS_TO_EACH_OTHER").toString), <.br(),
                 <.div(^.marginLeft := "15px", (!state.introTwoCnxns) ?= ConnectionsCSS.Style.hidden)(
-                  <.div(<.h5("Connections:")),
+                  <.div(<.span("Connections:")),
                   <.div(^.id := s"${state.selectizeInputId}")(
                     ConnectionsSelectize(ConnectionsSelectize.Props(s"${state.selectizeInputId}", t.backend.fromSelecize, Option(2)))
                   ),
                   <.div(^.id := cnxnError, ^.className := "hidden text-danger")
                   (state.lang.selectDynamic("PLEASE_PROVIDE_ONLY_TWO_CONNECTIONS").toString),
                   <.div(/*(!state.introduceUsers) ?= ConnectionsCSS.Style.hidden,*/
-                    <.div(<.h5("Introduction:")),
+                    <.div(<.span("Introduction:")),
                     <.div()(
                       <.textarea(^.rows := 6, ConnectionsCSS.Style.receipentsTextContainer,
                         ^.value := state.introConnections.aMessage, ^.onChange ==> t.backend.updateContent, ^.className := "form-control")
@@ -258,14 +259,11 @@ object ConnectionsForm {
                 (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
               ),
               //            }
-              <.div()(
-                <.div(^.className := "text-right")(
-                  <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, "Send"),
-                  <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hide, "Cancel")
-                )
+              <.div(bss.modal.footer)(
+                  <.button(^.tpe := "submit", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, "Send"),
+                  <.button(^.tpe := "button", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide, "Cancel")
               )
-            ),
-            <.div(bss.modal.footer)
+            )
           )
         )
       )
