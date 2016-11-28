@@ -145,8 +145,7 @@ object SignUpForm {
       val nodeName = dom.window.location.host
       val headerText = state.lang.selectDynamic("SIGN_UP").toString
       Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
+        Modal.Props( // header contains a cancel button (X)
 
           /*
           header = hide => <.span()(
@@ -220,7 +219,7 @@ object SignUpForm {
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "signUpBtnId", SignupCSS.Style.signUpBtn, ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
+                <.button(^.tpe := "submit", ^.id := "signUpBtnId", /*SignupCSS.Style.signUpBtn*/SynereoCommanStylesCSS.Style.modalFooterBtnWhite , ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
               )
             )
           ),

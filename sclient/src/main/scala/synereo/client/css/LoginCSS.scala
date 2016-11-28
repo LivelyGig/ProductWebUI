@@ -27,17 +27,29 @@ object LoginCSS {
       paddingTop(135.px),
       backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
       backgroundSize := 100.%%,
-      media.maxWidth(767.px)(
+
+      media.minWidth(581.px).maxWidth(767.px)(
         marginLeft(6.%%),
-        backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")"
+        backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")",
+        marginRight(6.%%),
+        width.auto,
+        backgroundRepeat:="no-repeat",
+        backgroundSize:="cover",
+        borderBottomRightRadius(5.px),
+        borderBottomLeftRadius(5.px)
+      ),
+      media.minWidth(768.px).maxWidth(1399.px)(
+        height(600.px)
       ),
       media.maxWidth(580.px)(
         paddingTop.`0`.important,
         maxWidth(280 px),
         marginTop(70.px),
+        backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")",
         backgroundRepeat := "no-repeat",
         marginLeft.auto.important,
-        marginRight.auto.important
+        marginRight.auto.important,
+        backgroundSize:= 110.%%
       ),
       media.width(1024.px)(
         height(460.px),
@@ -71,6 +83,11 @@ object LoginCSS {
         marginLeft(39.8.%%),
         marginTop.`0`.important
       ),
+    media.minWidth(768.px).maxWidth(920.px)(
+      marginTop(-28.%%),
+      marginLeft(37.9.%%),
+      width(120.px)
+    ),
       media.width(768.px)(
         marginTop(-27.5.%%),
         marginLeft(38.1.%%)
@@ -88,10 +105,10 @@ object LoginCSS {
       )
     )
     val signUpImg = style(
-    height(120.px),
-    width(117.px),
-    marginTop(-23.%%),
-    marginLeft(38.4.%%)
+      height(120.px),
+      width(117.px),
+      marginTop(-23.%%),
+      marginLeft(38.4.%%)
     )
 
     val loginScreenBgImage = style(
@@ -306,7 +323,7 @@ object LoginCSS {
       fontFamily :=! "karla",
       media.maxWidth(580.px)(
         textAlign.center,
-        marginTop(8.px),
+        marginTop(15.px),
         fontSize(16.px),
         float.none
       ),
@@ -314,8 +331,8 @@ object LoginCSS {
         fontSize(16.px),
         marginTop(20.px)
       ),
-      media.width(1400.px)(
-        marginTop(10.px)
+      media.minWidth(768.px).maxWidth(1400.px)(
+        marginTop(12.px)
       )
     )
     val verifyUserBtnLoginModal = style(
@@ -350,8 +367,8 @@ object LoginCSS {
         fontSize(16.px),
         marginTop(20.px)
       ),
-      media.width(1400.px)(
-        marginTop(10.px)
+      media.minWidth(768.px).maxWidth(1400.px)(
+        marginTop(12.px)
       )
     )
 
@@ -395,7 +412,7 @@ object LoginCSS {
       )
     )
     val message = style(
-      fontSize(24.px),
+      fontSize(1.7.rem),
       fontWeight.normal
     )
     val requestInviteModalText = style(
@@ -453,20 +470,23 @@ object LoginCSS {
         color(c"#fff"),
         fontFamily :=! "karla",
         float.right,
-        marginTop(5.px),
+        marginTop(5.px)
+      ),
+      media.minWidth(768.px).maxWidth(920.px)(
+     marginRight(15.px)
+      ),
         media.width(1024.px)(
-          height(40.px),
-          width(120.px),
-          fontSize(25.px),
-          marginTop(20.px)
-        ),
-        media.width(1152.px)(
-          height(41.px),
-          width(142.px),
-          fontSize(30.px),
-          marginTop(25.px)
-        )
-      )
+      height(40.px),
+      width(120.px),
+      fontSize(25.px),
+      marginTop(20.px)
+    ),
+    media.width(1152.px)(
+      height(41.px),
+      width(142.px),
+      fontSize(30.px),
+      marginTop(25.px)
+    )
     )
     val modalTryAgainBtn = style(
       textAlign.center,
@@ -521,6 +541,10 @@ object LoginCSS {
         fontSize(10.px)
       )
     )
+    val HelpBlockWithErrorsContainer=style(
+      height(7.px)
+    )
+
   }
 
 }

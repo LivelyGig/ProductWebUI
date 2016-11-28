@@ -5,7 +5,8 @@ import shared.models.{Label, MessagePost, MessagePostContent}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.rootmodels.SearchesRootModel
 import synereo.client.components.GlobalStyles
-import synereo.client.css.NewMessageCSS
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import synereo.client.components.Bootstrap.Modal
@@ -96,15 +97,15 @@ object NewMessageForm {
     def willMount(): Callback = {
       val props = t.props.runNow()
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
-     // println(s"replyPost: ${props.replyPost}, forwardPost: ${props.forwardPost}")
+      // println(s"replyPost: ${props.replyPost}, forwardPost: ${props.forwardPost}")
       if (props.replyPost) {
         // if replying just replace the header with updated content
         val contentHeader = s"Date : ${Moment(props.messagePost.created).format("LLL").toLocaleString} \nFrom : ${props.messagePost.sender.name} \nTo : ${props.messagePost.receivers.map(_.name).mkString(", ")} \n-------------------------------------------------------------------"
         t.modState(state => state.copy(postMessage = MessagePostContent(text = contentHeader, subject = if (s"${props.messagePost.postContent.subject}".startsWith("Re :"))
           s"${props.messagePost.postContent.subject}"
-        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}", imgSrc = ""/*props.messagePost.postContent.imgSrc*/)))
+        else s"Re : ${props.messagePost.postContent.subject.replace("Fw : ", " ")}", imgSrc = "" /*props.messagePost.postContent.imgSrc*/)))
       } else if (props.forwardPost) {
-          // minor modifications for forwarding the message
+        // minor modifications for forwarding the message
         t.modState(state => state.copy(postMessage = MessagePostContent(text = props.messagePost.postContent.text,
           subject =
             if (s"${props.messagePost.postContent.subject}".startsWith("Fw :"))
@@ -181,7 +182,7 @@ object NewMessageForm {
 
     def fromSelecize(): Callback = Callback {}
 
-    def validateMessageContent:Boolean = {
+    def validateMessageContent: Boolean = {
       val state = t.state.runNow()
       // first hide previous errors
       hideComponent(cnxnError)
@@ -204,10 +205,10 @@ object NewMessageForm {
 
     def submitForm(e: ReactEventI) = {
       e.preventDefault()
-      val state= t.state.runNow()
+      val state = t.state.runNow()
       if (!validateMessageContent)
         t.modState(s => s.copy(postNewMessage = false))
-       else {
+      else {
         val cnxns = ConnectionsUtils.getCnxnForReq(ConnectionsSelectize.getConnectionsFromSelectizeInput(state.connectionsSelectizeInputId))
         val newLabels = LabelsUtils.getNewLabelsText(getAllLabelsText)
         // new labels are present first them
@@ -237,7 +238,11 @@ object NewMessageForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close),
+            <.div(
+              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
+            )
+          ),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props),
           id = "newMessage"
@@ -246,9 +251,7 @@ object NewMessageForm {
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.div(^.id := emptyPostErr, ^.className := "hidden text-danger",
               state.lang.selectDynamic("YOU_CANNOT_POST_EMPTY_MESSAGE").toString),
-            <.div(
-              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
-            ),
+
             <.div(^.className := "row")(
               <.div(^.id := state.connectionsSelectizeInputId, ^.width := "100%")(
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
@@ -283,10 +286,7 @@ object NewMessageForm {
                       )
                     ))
               ),
-              /*<.div(^.className := "text-left text-muted")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),*/
-              <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+              <.div(bss.modal.footer)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
@@ -301,9 +301,9 @@ object NewMessageForm {
                     state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
                   ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn,
+                <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
                   state.lang.selectDynamic("CREATE_POST").toString)
               )
             )

@@ -155,7 +155,7 @@ object SynereoCommanStylesCSS {
       padding(40.px, 20.px)
     )
     val loginErrorHeading = style(
-      marginTop.`0`.important
+      margin(10.px  ).important
     )
     val dropdownLiMenuSeperator = style(
       backgroundColor(c"#F2F2F2"),
@@ -682,6 +682,62 @@ object SynereoCommanStylesCSS {
       float.right.important,
       textAlign.right
     )
+    val marginLeft69px= style(
+      marginLeft(69.px),
+      media.minWidth(991.px)(
+          marginLeft(30.px)
+      )
+
+    )
+
+    val modalHeaderTitle=style(
+      fontSize(3.rem),
+      marginLeft(31.px),
+      marginTop(15.px),
+      marginBottom(15.px)
+    )
+
+
+    val modalHeaderTitleCenter=style(
+      fontSize(3.rem),
+      textAlign.center,
+      marginTop(15.px),
+      marginBottom(15.px)
+    )
+
+    val modalHeaderTitleCenterWhite=style(
+      color.white,
+      fontSize(4.rem),
+      textAlign.center,
+      marginTop(15.px),
+      marginBottom(15.px)
+    )
+
+    val modalFooterBtn=style(
+      backgroundColor(c"#FF806C"),
+      height(48.px),
+//      width(120.px),
+      fontSize(2.4.rem),
+      fontFamily :=! "karla",
+      marginTop(5.px),
+      &.active(
+      boxShadow:="none"
+      )
+    )
+
+    val modalFooterBtnWhite=style(
+      modalFooterBtn,
+      color.white,
+      &.hover(
+        color(c"#cc3300")
+      )
+    )
+
+    val modalBodyFontSize=style(
+      fontSize(1.7.rem)
+    )
+
+
   }
 
 }

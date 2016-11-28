@@ -4,7 +4,7 @@ import diode.react.ReactPot._
 import diode.react._
 import diode.data.Pot
 import japgolly.scalajs.react.{ReactElement, _}
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.prefix_<^.{<, _}
 import org.querki.jquery._
 import shared.models.{MessagePost, MessagePostContent}
 import synereo.client.rootmodels.MessagesRootModel
@@ -189,15 +189,13 @@ object HomeFeedList {
             <.div(^.className := "col-md-6 col-sm-8 showRightPost", ^.onClick --> t.backend.feedViewRightStatusAnimDiv(message.uid, "feedViewPost"))(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
-                  <.div(^.className := "col-md-1 pull-left")(
+                  <.div(^.className := "col-md-6")(
                     if (message.sender.connection.target.split("/")(2) == SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)) {
                       <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                     } else {
                       <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    }
-                  ),
-                  <.div(^.className := "col-md-11", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                    <.div(DashboardCSS.Style.userNameDescription, ^.className := "pull-left")(
+                    },
+                    <.div(DashboardCSS.Style.userNameDescription)(
                       <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr :=
                         (if (message.sender.name == "me")
                           message.sender.connection.source.split("/")(2)
@@ -205,8 +203,10 @@ object HomeFeedList {
                           message.sender.connection.target.split("/")(2)),
                         "data-placement".reactAttr := "right")(s"From  : ${message.sender.name}"),
                       <.div("data-toggle".reactAttr := "tooltip", "title".reactAttr := message.created, "data-placement".reactAttr := "right")(Moment(message.created).format("LLL").toLocaleString)
-                    ),
-                    <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.paddingLeft15p)(
+                    )
+                  ),
+                  <.div(^.className := "col-md-6", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+                    <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.marginLeft69px)(
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)

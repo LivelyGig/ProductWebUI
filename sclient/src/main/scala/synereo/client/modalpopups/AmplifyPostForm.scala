@@ -6,7 +6,8 @@ import synereo.client.components.Bootstrap.Modal
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.{GlobalStyles, _}
-import synereo.client.css.{DashboardCSS, NewMessageCSS}
+import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS}
+
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
@@ -134,7 +135,7 @@ object AmplifyPostForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.h4(^.className := "text-left", headerText),
+          header = hide =>  <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitle)(headerText),
           closed = () => t.backend.modalClosed(state, props),
           id = props.modalId
         ),
@@ -153,10 +154,10 @@ object AmplifyPostForm {
                   )
                 )
               ),
-              <.div(^.className := "text-right")(
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", DashboardCSS.Style.createConnectionBtn, ^.onClick --> t.backend.hideModal,
+              <.div(bss.modal.footer)(
+                <.button(^.tpe := "submit", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, ^.onClick --> t.backend.hideModal,
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
               )
             )
