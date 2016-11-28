@@ -1,5 +1,7 @@
 package synereo.client.css
 
+import synereo.client.css.SynereoCommanStylesCSS.Style.style
+
 import scalacss.Defaults._
 
 /**
@@ -97,14 +99,14 @@ object DashboardCSS {
     val cardDescriptionContainerDiv = style(
       cursor.pointer, paddingLeft(10.px),
       paddingRight(10.px)
-     /* media.minWidth(768.px)(
-        paddingLeft(10.px),
-        paddingRight(10.px)
-      ),
-      media.maxWidth(767.px)(
-        paddingLeft(10.px),
-        paddingRight(10.px)
-      )*/
+      /* media.minWidth(768.px)(
+         paddingLeft(10.px),
+         paddingRight(10.px)
+       ),
+       media.maxWidth(767.px)(
+         paddingLeft(10.px),
+         paddingRight(10.px)
+       )*/
     )
     val CardHolderLiElement = style(
       //      margin(15.px, -30.px),
@@ -154,15 +156,23 @@ object DashboardCSS {
       display.inlineBlock
     )
     val homeFeedUserAvatar = style(
-      width(45.px),
+      width(5.rem),
+      height(5.rem),
       borderRadius(50.%%),
       padding(5.px),
-      margin(5.px),
-      display.inlineBlock.important
+      margin(5.px),position.relative,
+      display.inlineBlock.important,
+      media.minWidth(991.px).maxWidth(1421.px)(
+        top(-16.px)
+      ),
+      media.minWidth(1421.px)(
+        top(-5.px)
+      )
+
     )
     val UserInput = style(
       border.none.important,
-      fontWeight._700,
+      fontWeight.lighter,
       width(89.%%),
       height(40.px),
       display.inlineBlock,
@@ -178,22 +188,20 @@ object DashboardCSS {
       borderRadius(0.px)
     )
     val userNameDescription = style(
-      //      width(86.%%),
+      width(68.%%),
       display.inlineBlock,
-      padding(0.px, 15.px),
+      /* padding(0.px, 15.px),*/
       fontFamily :=! "karla",
-      fontWeight.bold,
+      fontWeight.normal,
       lineHeight(1.5.em),
       color(c"#000"),
       opacity(0.65),
-      media.minWidth(991.px)(
-        padding(0.px),
-        position.absolute,
-        width(183.px),
-        top(10.px)
-      ),
+      padding(0.px),
+      position.relative,
+      top(10.px),
+      marginBottom(10.px),
       media.minWidth(768.px)(
-        fontSize(14.px)
+        fontSize(1.7.rem)
       ),
       media.only.screen.maxDeviceWidth(767.px)(
         fontSize(11.px)
@@ -203,10 +211,11 @@ object DashboardCSS {
       display.inlineBlock,
       paddingTop(2.px),
       fontFamily :=! "karla",
-      fontWeight.bold,
+      fontWeight.normal,
       lineHeight(1.5.em),
       color(c"#fff"),
       opacity(0.65),
+      paddingLeft(8.%%),
       media.minWidth(768.px).maxDeviceWidth(991.px)(
         fontSize(12.px),
         width(12.px),
@@ -216,7 +225,7 @@ object DashboardCSS {
       media.maxWidth(767.px)(
         fontSize(11.px),
         position.absolute,
-        left(76.%%),
+        left(70.%%),
         width(12.px)
       )
     )
@@ -227,7 +236,15 @@ object DashboardCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       fontSize(24.px),
-      paddingLeft.`0`
+      paddingLeft.`0`,
+      position.relative,
+      top(15.px),
+      media.maxWidth(377.px)(
+        top(-8.rem)
+      ),
+      media.minWidth(377.px).maxWidth(992.px)(
+        top(-5.5.rem)
+      )
     )
     val sidebarBtn = style(
       float.left,
@@ -240,26 +257,26 @@ object DashboardCSS {
       )
     )
     val cardHeading = style(
-      fontWeight.bold,
+      fontWeight.normal,
       color(c"#000"),
       lineHeight(1.25.em),
       letterSpacing(0.5.px),
       media.minWidth(768.px)(
-        fontSize(24.px)
+        fontSize(3.rem)
       ),
       media.maxWidth(767.px)(
         fontSize(21.px)
       )
     )
     val sidebarNavStyle = style(
-      fontSize(17.px)
+      fontSize(1.7.rem)
     )
     val postActionButton = style(
       border.none.important,
       marginTop(-30.px)
     )
     val cardText = style(
-      fontFamily :=! "lora",
+      fontFamily :=! "karla",
       fontWeight.normal,
       whiteSpace.preWrap,
       wordWrap.breakWord,
@@ -267,7 +284,7 @@ object DashboardCSS {
       opacity(0.95),
       lineHeight(1.5.em),
       media.minWidth(768.px)(
-        fontSize(21.px)
+        fontSize(1.7.rem)
       ),
       media.maxWidth(767.px)(
         fontSize(17.px)
@@ -337,12 +354,20 @@ object DashboardCSS {
       float.right,
       marginRight(-20.px),
       textAlign.left,
-      marginLeft(10.px)
+      marginLeft(10.px),
+      fontFamily :=! "karla",
+      fontSize(1.7.rem)
     )
     val noMsg = style(
-    color.white,
-    textAlign.center,
-    fontSize(2.em)
+      color.white,
+      textAlign.center,
+      fontSize(2.em)
+    )
+    val marginLeftPostView= style(
+      marginLeft(69.px),
+      media.minWidth(991.px)(
+        marginLeft(30.px)
+      )
     )
   }
 }

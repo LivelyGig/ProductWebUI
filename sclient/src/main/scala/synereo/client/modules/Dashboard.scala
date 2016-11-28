@@ -206,7 +206,7 @@ object HomeFeedList {
                     )
                   ),
                   <.div(^.className := "col-md-6", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                    <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.marginLeft69px)(
+                    <.div(DashboardCSS.Style.userNameDescription, DashboardCSS.Style.marginLeftPostView)(
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)

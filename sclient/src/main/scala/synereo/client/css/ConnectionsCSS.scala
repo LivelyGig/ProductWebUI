@@ -161,7 +161,8 @@ object ConnectionsCSS {
 
     val connectionName = style(
       color.white,
-      fontSize(1.5.rem),
+      fontSize(1.7.rem),
+      fontFamily :=! "karla",
       maxHeight(3.5.rem),
       minHeight(2.5.rem),
       marginRight(0.px),
@@ -185,6 +186,7 @@ object ConnectionsCSS {
     val connectionNumbers = style(
       color(c"#afa798"),
       position.relative,
+      fontFamily :=! "karla",
       fontSize(1.2.rem),
       marginRight(0.px),
       marginBottom(0.px),
@@ -202,7 +204,7 @@ object ConnectionsCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       color(c"#ada3a3"),
-      fontSize(16.px),
+      fontSize(1.7.rem),
       &.hover(
         color.white
       ),
@@ -219,6 +221,7 @@ object ConnectionsCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       color.white,
+      fontFamily :=! "karla",
       fontSize(1.5.em),
       &.hover(
         color.white
@@ -286,7 +289,8 @@ object ConnectionsCSS {
 
     val connectfriendsIconText = style(
       color.white,
-      fontSize(2.rem),
+      fontSize(3.rem),
+      fontFamily :=! "karla",
       backgroundColor.transparent,
       &.hover(
         color.white
@@ -300,7 +304,8 @@ object ConnectionsCSS {
 
     val userPopularTags = style(
       margin(0.px).important,
-      fontSize(12.px),
+      fontSize(1.2.rem),
+      fontFamily :=! "karla",
       paddingTop(12.px)
     )
 
@@ -400,6 +405,7 @@ object ConnectionsCSS {
         backgroundColor.transparent,
         color.white,
         fontSize(1.5.em),
+        fontFamily :=! "karla",
         float.left,
         marginTop(26.px)
       )

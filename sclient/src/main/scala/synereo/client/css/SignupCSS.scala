@@ -195,7 +195,7 @@ object SignupCSS {
 
     val signUpFormColor = style(
       backgroundColor(c"#28a8e2"),
-      border := "1px solid rgba(0,0,0,0.2)",
+      border :=! "1px solid rgba(0,0,0,0.2)",
       borderRadius(6.px),
       backgroundClip := "padding-box",
       outline(0.px),

@@ -61,7 +61,7 @@ object ConnectionsLabelsSelectize {
 
     def render(props: Props, state: State) = {
       <.select(^.className := "select-state", ^.id := s"${props.parentIdentifier}-selectize",
-        ^.className := "demo-default", ^.placeholder := "Search e.g. @Synereo or #fun")(
+        ^.className := "demo-default", ^.placeholder := "Search e.g. @Synereo or #fun",^.fontSize:=1.7.rem,^.fontFamily:="karla")(
         <.option(^.value := "")("Select"),
         for (connection <- SYNEREOCircuit.zoom(_.connections).value.connectionsResponse) yield <.option(^.value := upickle.default.write(connection.connection),
           ^.key := connection.connection.target)(s"@${connection.name}"),

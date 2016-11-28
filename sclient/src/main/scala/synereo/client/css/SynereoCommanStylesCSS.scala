@@ -105,6 +105,10 @@ object SynereoCommanStylesCSS {
       color(white),
       overflow.hidden,
       display.block,
+      position.fixed,
+      bottom(10.%%),
+      right(12.%%),
+      zIndex(3),
       &.hover(
         backgroundColor(transparent),
         color(white)
@@ -113,8 +117,9 @@ object SynereoCommanStylesCSS {
         backgroundColor(transparent),
         color(white)
       ),
-      media.maxHeight(776.px) -
-        paddingLeft(0.px)
+      media.maxWidth(767.px)(
+        paddingLeft(0.px),
+          position.relative
       //      &.hover(
       //        width(135.px),
       //        backgroundColor(c"#2283AE"),
@@ -125,10 +130,18 @@ object SynereoCommanStylesCSS {
       //        backgroundColor(c"#2283AE"),
       //        color(c"#FFFFFF").important
       //      )
-    )
+    ),
+      media.minWidth(767.px).maxWidth(991.px)(
+        right(6.%%)
+      ))
     val createPostImg = style(
-      maxWidth(24.px),
-      borderRadius(31.%%)
+      maxWidth(71.px),
+      borderRadius(50.%%),
+      boxShadow := "0px 5px 8px 1px rgba(0, 0, 0, 0.6) !important",
+      media.maxWidth(767.px)(
+        maxWidth(30.px),
+        boxShadow := "none !important"
+      )
     )
     val mainMenuNavbar = style(
       right.`0`,
@@ -185,12 +198,12 @@ object SynereoCommanStylesCSS {
         color(c"#FFFFFF"),
         outline.none.important,
         backgroundColor.transparent.important
-        ),
+      ),
       & hover(
         outline.none.important,
         backgroundColor.transparent.important,
         color(c"#FFFFFF")
-        )
+      )
     )
     val dropDownLIHeading = style(
       fontSize(1.7.em),
@@ -454,7 +467,8 @@ object SynereoCommanStylesCSS {
       overflow.hidden,
       width(130.px),
       padding(4.px),
-      fontSize(14.px),
+      fontSize(1.7.rem),
+      fontFamily :=! "karla",
       wordWrap :=! "break-word",
       textOverflow.:=("ellipsis"),
       height(50.px),
@@ -682,29 +696,18 @@ object SynereoCommanStylesCSS {
       float.right.important,
       textAlign.right
     )
-    val marginLeft69px= style(
-      marginLeft(69.px),
-      media.minWidth(991.px)(
-          marginLeft(30.px)
-      )
-
-    )
-
     val modalHeaderTitle=style(
       fontSize(3.rem),
       marginLeft(31.px),
       marginTop(15.px),
       marginBottom(15.px)
     )
-
-
     val modalHeaderTitleCenter=style(
       fontSize(3.rem),
       textAlign.center,
       marginTop(15.px),
       marginBottom(15.px)
     )
-
     val modalHeaderTitleCenterWhite=style(
       color.white,
       fontSize(4.rem),
@@ -712,19 +715,17 @@ object SynereoCommanStylesCSS {
       marginTop(15.px),
       marginBottom(15.px)
     )
-
     val modalFooterBtn=style(
       backgroundColor(c"#FF806C"),
       height(48.px),
-//      width(120.px),
+      //      width(120.px),
       fontSize(2.4.rem),
       fontFamily :=! "karla",
       marginTop(5.px),
       &.active(
-      boxShadow:="none"
+        boxShadow:="none"
       )
     )
-
     val modalFooterBtnWhite=style(
       modalFooterBtn,
       color.white,
@@ -732,12 +733,8 @@ object SynereoCommanStylesCSS {
         color(c"#cc3300")
       )
     )
-
     val modalBodyFontSize=style(
       fontSize(1.7.rem)
     )
-
-
   }
-
 }
