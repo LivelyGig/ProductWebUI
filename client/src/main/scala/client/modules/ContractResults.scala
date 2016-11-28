@@ -6,10 +6,8 @@ import client.components.Icon
 import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
 import client.modals.{NewMessage, WorkContractModal}
 import org.querki.jquery._
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
-
 object ContractResults {
 
   // create the React component for Dashboard

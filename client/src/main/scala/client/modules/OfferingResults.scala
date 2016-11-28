@@ -6,7 +6,6 @@ import client.components.Icon
 import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
 import client.modals.{NewMessage, NewRecommendation, Offering}
 import org.querki.jquery._
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 

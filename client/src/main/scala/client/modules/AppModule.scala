@@ -7,10 +7,7 @@ import client.css.{DashBoardCSS, LftcontainerCSS}
 import client.handler.ShowServerError
 import client.modals.ServerErrorModal
 import org.querki.jquery._
-
-//import client.handlers.{LogoutUser, ShowServerError}
 import org.querki.jquery._
-
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
 import diode.AnyAction._

@@ -1,18 +1,13 @@
 package synereo.client.components
 
-import synereo.client.handlers._
+
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.css.SynereoCommanStylesCSS
 import synereo.client.services.SYNEREOCircuit
-import diode.AnyAction._
 import shared.dtos._
 import shared.models.Label
-import synereo.client.sessionitems.SessionItems
-import org.scalajs.dom
-
 import scalacss.ScalaCssReact._
-import synereo.client.utils
 import synereo.client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
 
 import scala.language.reflectiveCalls

@@ -5,14 +5,12 @@ import synereo.client.components.GlobalStyles
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
-
 import scala.scalajs.js
 
 /**

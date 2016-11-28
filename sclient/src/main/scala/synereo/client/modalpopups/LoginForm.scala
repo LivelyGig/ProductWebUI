@@ -36,8 +36,6 @@ object LoginForm {
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
                   )
-
-
   class LoginFormBackend(t: BackendScope[Props, State]) {
 
     def submitForm(e: ReactEventI) = {
@@ -50,21 +48,17 @@ object LoginForm {
       else
         t.modState(s => s.copy(login = true))
     }
-
     def addNewUserForm(): Callback = {
       t.modState(s => s.copy(login = false, showNewUserForm = true))
       //      t.modState(s => s.copy(showNewUserForm = true))
     }
-
     def addNewInviteForm(): Callback = {
       t.modState(s => s.copy(login = false, showNewInviteForm = true))
       //      t.modState(s => s.copy(showNewUserForm = true))
     }
-
     def hide = {
       jQuery(t.getDOMNode()).modal("hide")
     }
-
     def updateEmail(e: ReactEventI) = {
       //      println(e.target.value)
       val value = e.target.value
@@ -74,12 +68,10 @@ object LoginForm {
     def showVerifyEmailModal(): Callback = {
       t.modState(s => s.copy(showConfirmAccountCreation = true))
     }
-
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
-
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
             println(s"value:$value")
