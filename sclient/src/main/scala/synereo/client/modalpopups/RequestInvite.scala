@@ -6,7 +6,7 @@ import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, Icon}
 import synereo.client.css.{DashboardCSS, LoginCSS, SynereoCommanStylesCSS}
 import synereo.client.components.jQuery
-
+import scala.language.reflectiveCalls
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._

@@ -74,7 +74,7 @@ object LoginForm {
     }
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
-            println(s"value:$value")
+//            println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
 
