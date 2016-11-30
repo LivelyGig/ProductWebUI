@@ -189,12 +189,13 @@ object HomeFeedList {
             <.div(^.className := "col-md-6 col-sm-8 showRightPost", ^.onClick --> t.backend.feedViewRightStatusAnimDiv(message.uid, "feedViewPost"))(
               <.div(^.className := "card-shadow", DashboardCSS.Style.userPost)(
                 <.div(^.className := "row")(
-                  <.div(^.className := "col-md-6")(
+                  <.div(^.className := "col-md-6",DashboardCSS.Style.dispalyFlex)(
+                    <.div()(
                     if (message.sender.connection.target.split("/")(2) == SYNEREOCircuit.zoom(_.sessionRootModel.sessionUri).value.split("/")(2)) {
                       <.img(^.className := "media-object", ^.src := SYNEREOCircuit.zoom(_.user).value.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
                     } else {
                       <.img(^.className := "media-object", ^.src := message.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.homeFeedUserAvatar)
-                    },
+                    }),
                     <.div(DashboardCSS.Style.userNameDescription)(
                       <.span(^.className := "fromSenderTooltip", "data-toggle".reactAttr := "tooltip", "title".reactAttr :=
                         (if (message.sender.name == "me")
@@ -206,7 +207,7 @@ object HomeFeedList {
                     )
                   ),
                   <.div(^.className := "col-md-6", SynereoCommanStylesCSS.Style.paddingLeftZero)(
-                    <.div(DashboardCSS.Style.userNameDescription, SynereoCommanStylesCSS.Style.marginLeft69px)(
+                    <.div(DashboardCSS.Style.userNameDescription, DashboardCSS.Style.marginLeftPostView)(
                       <.span(s"To  : ${message.receivers.map(_.name).mkString(", ")}")
                     ),
                     <.button(^.className := "btn btn-default pull-right", DashboardCSS.Style.homeFeedCardBtn)(MIcon.moreVert)

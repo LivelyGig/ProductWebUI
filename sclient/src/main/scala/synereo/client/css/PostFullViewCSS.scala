@@ -114,28 +114,28 @@ object PostFullViewCSS {
     val smallLiContainerUserActions = style(
       float.right.important
     )
-    val tagsButtons = style(
-      marginLeft(5.px),
-      marginRight(5.px),
-      borderRadius(20.px).important,
-      borderColor(c"#2EAEE3"),
-      fontSize(18.px),
-      &.hover(
-        backgroundColor.transparent.important
-      ),
-      &.focus(
-        backgroundColor.transparent.important
-      )
-    )
-    val tagsCount = style(
-      color(c"#2EAEE3"),
-      marginLeft(2.px),
-      marginRight(2.px)
-    )
-    val tagsButtonsEdit = style(
-      border.`0`.important,
-      &.hover(backgroundColor.transparent.important)
-    )
+//    val tagsButtons = style(
+//      marginLeft(5.px),
+//      marginRight(5.px),
+//      borderRadius(20.px).important,
+//      borderColor(c"#2EAEE3"),
+//      fontSize(18.px),
+//      &.hover(
+//        backgroundColor.transparent.important
+//      ),
+//      &.focus(
+//        backgroundColor.transparent.important
+//      )
+//    )
+//    val tagsCount = style(
+//      color(c"#2EAEE3"),
+//      marginLeft(2.px),
+//      marginRight(2.px)
+//    )
+//    val tagsButtonsEdit = style(
+//      border.`0`.important,
+//      &.hover(backgroundColor.transparent.important)
+//    )
     val postHeadlineContainerDiv = style(
       marginTop(60.px),
       marginBottom(30.px)
@@ -164,9 +164,9 @@ object PostFullViewCSS {
       )
     )
 
-    val marginLeft15PX = style(
-      marginLeft(-15.px)
-    )
+//    val marginLeft15PX = style(
+//      marginLeft(-15.px)
+//    )
 
     val closeSIcon = style(
       media.maxWidth(767.px) -

@@ -1,23 +1,20 @@
 package synereo.client.modalpopups
 
-import diode.{ModelR, ModelRO}
-import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
-import synereo.client.components.Bootstrap.Modal
+import diode.ModelRO
 import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.{BackendScope, Callback, ReactComponentB, _}
+import org.querki.jquery._
+import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components.{GlobalStyles, _}
-import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+import synereo.client.logger
+import synereo.client.services.SYNEREOCircuit
 
 import scala.language.reflectiveCalls
 import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-import japgolly.scalajs.react._
-import org.querki.jquery._
-import synereo.client.components._
-import synereo.client.components.Bootstrap._
-import synereo.client.logger
-import synereo.client.services.{RootModel, SYNEREOCircuit}
 
 /**
   * Created by mandar.k on 8/17/2016.
@@ -72,9 +69,13 @@ object AmplifyPostForm {
 
   @inline private def bss = GlobalStyles.bootstrapStyles
 
-  case class Props(submitHandler: (String, String, Boolean) => Callback, senderAddress: String = "", modalId: String = "")
+  case class Props(submitHandler: (String, String, Boolean) => Callback,
+                   senderAddress: String = "",
+                   modalId: String = "")
 
-  case class State(isAmplified: Boolean = false, amount: String = "", lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value, AMPCount: Int = 1)
+  case class State(isAmplified: Boolean = false,
+                   amount: String = 0.toString,
+                   lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value)
 
   class AmplifyPostBackend(t: BackendScope[Props, State]) {
     def hideModal = Callback {
@@ -114,15 +115,16 @@ object AmplifyPostForm {
 
     def increaseAMPCount(): Callback = {
       val state = t.state.runNow()
-      t.modState(state => state.copy(AMPCount = state.AMPCount + 1))
+      t.modState(state => state.copy(amount = (state.amount.toInt + 1).toString))
     }
 
     def decreaseAMPCount(): Callback = {
       val state = t.state.runNow()
-      if (state.AMPCount != 0)
-        t.modState(state => state.copy(AMPCount = state.AMPCount - 1))
+      if (state.amount.toInt != 0) {
+        t.modState(state => state.copy(amount = (state.amount.toInt - 1).toString))
+      }
       else
-        t.modState(state => state.copy(AMPCount = 0))
+        t.modState(state => state.copy(amount = 0.toString))
     }
   }
 
@@ -130,12 +132,11 @@ object AmplifyPostForm {
     .initialState_P(p => State())
     .backend(new AmplifyPostBackend(_))
     .renderPS((t, props, state) => {
-
       val headerText = s"${state.lang.selectDynamic("AMPLIFY").toString}"
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide =>  <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitle)(headerText),
+          header = hide => <.div(^.className := "model-title", SynereoCommanStylesCSS.Style.modalHeaderTitle)(headerText),
           closed = () => t.backend.modalClosed(state, props),
           id = props.modalId
         ),
@@ -143,8 +144,8 @@ object AmplifyPostForm {
           <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
             <.form(^.id := "AmpForm", ^.role := "form", ^.onSubmit ==> t.backend.submitForm)(
               <.div(^.className := "input-group spinner", NewMessageCSS.Style.spinner,
-                <.input(^.`type` := "text", ^.className := "form-control", ^.value := state.AMPCount,^.placeholder :=s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}"
-                  , ^.onChange ==> t.backend.updateAmount),
+                <.input(^.`type` := "number", ^.min := "0", ^.className := "form-control", ^.value := state.amount,
+                  ^.placeholder := s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}", ^.onChange ==> t.backend.updateAmount),
                 <.div(^.className := "input-group-btn-vertical", NewMessageCSS.Style.inputgroupbtnVertical,
                   <.button(^.className := "btn btn-default", NewMessageCSS.Style.spinnerBtn1, ^.`type` := "button",
                     <.i(^.className := "fa fa-caret-up", NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.increaseAMPCount())
@@ -155,7 +156,7 @@ object AmplifyPostForm {
                 )
               ),
               <.div(bss.modal.footer)(
-                <.button(^.tpe := "submit", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
+                <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
                 <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
@@ -165,7 +166,6 @@ object AmplifyPostForm {
         )
       )
     })
-    //    .componentWillMount(scope => scope.backend.mounted(scope.props))
     .componentDidMount(scope => scope.backend.mounted(scope.props))
     .shouldComponentUpdate(scope => scope.$.backend.check)
     .componentDidUpdate(scope => Callback {

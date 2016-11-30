@@ -21,23 +21,23 @@ object ConnectionsCSS {
       )
     )
 
-    val connectionsContainerMain = style(
-      overflowY.scroll.important,
-      paddingBottom(60.px),
-      overflowX.hidden
-    )
+    //   val connectionsContainerMain = style(
+    //      overflowY.scroll.important,
+    //      paddingBottom(60.px),
+    //      overflowX.hidden
+    //    )
 
-    val inviteConnectionsBtn = style(
-      fontSize(24.px),
-      backgroundColor(c"#FFFFFF"),
-      color(c"#000"),
-      width(250.px),
-      height(60.px),
-      marginBottom(30.px),
-      marginLeft.auto,
-      marginRight.auto,
-      display.block
-    )
+    //    val inviteConnectionsBtn = style(
+    //      fontSize(24.px),
+    //      backgroundColor(c"#FFFFFF"),
+    //      color(c"#000"),
+    //      width(250.px),
+    //      height(60.px),
+    //      marginBottom(30.px),
+    //      marginLeft.auto,
+    //      marginRight.auto,
+    //      display.block
+    //    )
 
     val connectionAvatarContainer = style(
       padding(0.px),
@@ -144,9 +144,9 @@ object ConnectionsCSS {
       display.none
     )
 
-    val connectionBody = style(
-      verticalAlign.bottom
-    )
+    //    val connectionBody = style(
+    //      verticalAlign.bottom
+    //    )
 
     val connectionInfoTooltip = style(
       visibility.hidden,
@@ -161,7 +161,8 @@ object ConnectionsCSS {
 
     val connectionName = style(
       color.white,
-      fontSize(1.5.rem),
+      fontSize(1.7.rem),
+      fontFamily :=! "karla",
       maxHeight(3.5.rem),
       minHeight(2.5.rem),
       marginRight(0.px),
@@ -185,6 +186,7 @@ object ConnectionsCSS {
     val connectionNumbers = style(
       color(c"#afa798"),
       position.relative,
+      fontFamily :=! "karla",
       fontSize(1.2.rem),
       marginRight(0.px),
       marginBottom(0.px),
@@ -202,7 +204,7 @@ object ConnectionsCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       color(c"#ada3a3"),
-      fontSize(16.px),
+      fontSize(1.7.rem),
       &.hover(
         color.white
       ),
@@ -219,6 +221,7 @@ object ConnectionsCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       color.white,
+      fontFamily :=! "karla",
       fontSize(1.5.em),
       &.hover(
         color.white
@@ -237,12 +240,12 @@ object ConnectionsCSS {
       width.auto
     )
 
-    val mediauserActionDropdownMenu=style(
-      marginLeft(-8.%%),
-      borderRadius(0.px),
-      display.block,
-      width(104.%%)
-    )
+      // val mediauserActionDropdownMenu=style(
+    //      marginLeft(-8.%%),
+    //      borderRadius(0.px),
+    //      display.block,
+    //      width(104.%%)
+    //    )
 
     val connectionNameHolder = style(
       paddingRight(0.px),
@@ -286,7 +289,8 @@ object ConnectionsCSS {
 
     val connectfriendsIconText = style(
       color.white,
-      fontSize(2.rem),
+      fontSize(3.rem),
+      fontFamily :=! "karla",
       backgroundColor.transparent,
       &.hover(
         color.white
@@ -300,7 +304,8 @@ object ConnectionsCSS {
 
     val userPopularTags = style(
       margin(0.px).important,
-      fontSize(12.px),
+      fontSize(1.2.rem),
+      fontFamily :=! "karla",
       paddingTop(12.px)
     )
 
@@ -364,10 +369,10 @@ object ConnectionsCSS {
       )
     )
 
-    val mediaUserActionsMenu=style(
-      padding(0.px),
-      float.right
-    )
+    //    val mediaUserActionsMenu=style(
+    //      padding(0.px),
+    //      float.right
+    //    )
 
     val connectionContainer = style(
       media.maxWidth(767.px) -
@@ -390,9 +395,9 @@ object ConnectionsCSS {
       )
     )
 
-    val connectionNameContainerOnSwap=style(
-      display.none
-    )
+    //    val connectionNameContainerOnSwap=style(
+    //      display.none
+    //    )
 
     val swapRightIconVisible=style(
       media.maxWidth(768.px)(
@@ -400,13 +405,14 @@ object ConnectionsCSS {
         backgroundColor.transparent,
         color.white,
         fontSize(1.5.em),
+        fontFamily :=! "karla",
         float.left,
         marginTop(26.px)
       )
     )
-    val swapRightIcon=style(
-      display.none
-    )
+    //    val swapRightIcon=style(
+    //      display.none
+    //    )
     val receipentsTextContainer = style(
       //width(491.px),
       maxWidth(100.%%),

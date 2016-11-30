@@ -197,6 +197,13 @@ input[type="checkbox"] {
 	margin-top: 1px \9;
 	line-height: normal;
 }
+// input type number is used in amplify modal text box
+#AmpForm input::-webkit-outer-spin-button,
+#AmpForm input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
 
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
@@ -655,6 +662,23 @@ label:hover:before {
  	-moz-border-radius: 0 0 3px 3px;
  	border-radius: 0 0 3px 3px;
  }
+  #SearchComponentCnxnSltz  .selectize-input > input {
+   color:white !important;
+   font-family:"karla" !important;
+   font-size:1.7rem !important;
+  }
+ #SearchComponentCnxnSltz  .selectize-dropdown {
+ background: rgba(0,0,0,0.5);
+ color:white !important;
+ border:none !important;
+ font-size:1.7rem !important;
+ font-family:"karla" !important;
+ }
+ #SearchComponentCnxnSltz .selectize-dropdown .selectize-dropdown-content  .option:hover,
+ #SearchComponentCnxnSltz .selectize-dropdown .selectize-dropdown-content  .option.active {
+ background: #30ade3 !important;
+ color:white !important;
+ }
  .selectize-dropdown [data-selectable] {
  	cursor: pointer;
  	overflow: hidden;
@@ -922,3 +946,6 @@ label:hover:before {
 .has-success .form-control-feedback {
     color: #06eff1;
 }
+
+
+

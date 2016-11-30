@@ -4,7 +4,6 @@ import japgolly.scalajs.react.{ReactElement, _}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import shared.models.MessagePost
 import synereo.client.css.{DashboardCSS, SynereoCommanStylesCSS}
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 
