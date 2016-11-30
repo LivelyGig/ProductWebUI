@@ -239,12 +239,12 @@ object ConnectionsCSS {
       width.auto
     )
 
-    // val mediauserActionDropdownMenu=style(
-    //      marginLeft(-8.%%),
-    //      borderRadius(0.px),
-    //      display.block,
-    //      width(104.%%)
-    //    )
+     val mediauserActionDropdownMenu=style(
+          marginLeft(-8.%%),
+          borderRadius(0.px),
+          display.block,
+          width(104.%%)
+        )
 
     val connectionNameHolder = style(
       paddingRight(0.px),
@@ -412,7 +412,7 @@ object ConnectionsCSS {
     //      display.none
     //    )
     val receipentsTextContainer = style(
-      width(491.px),
+      //width(491.px),
       maxWidth(100.%%),
       minWidth(100.%%)
     )

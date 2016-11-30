@@ -66,16 +66,25 @@ object NewMessageCSS {
       &.hover(
         backgroundColor.transparent.important
       ),
+      &.active(
+        boxShadow:="none"
+      ),
       &.focus(
         backgroundColor.transparent.important
       ),
       media.maxWidth(1024.px)(
         fontSize(1.5.rem)
       )
+//      ,
+//      media.maxWidth(1024.px)(
+//        fontSize(15.px)
+//      )
     )
     val PersonaContainerDiv = style(
-      marginTop.`0`,
+      marginTop(20.px),
       marginBottom(20.px),
+      marginLeft(35.px).important,
+      marginRight(0.px).important,
       media.maxWidth(580.px)(
         marginTop(-30.px)
       )

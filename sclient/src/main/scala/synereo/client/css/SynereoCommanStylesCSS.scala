@@ -684,20 +684,29 @@ object SynereoCommanStylesCSS {
       fontSize(3.rem),
       marginLeft(31.px),
       marginTop(15.px),
-      marginBottom(15.px)
+      marginBottom(15.px),
+      media.maxWidth(768.px)(
+        fontSize(2.5.rem)
+      )
     )
     val modalHeaderTitleCenter=style(
       fontSize(3.rem),
       textAlign.center,
       marginTop(15.px),
-      marginBottom(15.px)
+      marginBottom(15.px),
+      media.maxWidth(768.px)(
+        fontSize(2.5.rem)
+      )
     )
     val modalHeaderTitleCenterWhite=style(
       color.white,
       fontSize(4.rem),
       textAlign.center,
       marginTop(15.px),
-      marginBottom(15.px)
+      marginBottom(15.px),
+      media.maxWidth(768.px)(
+        fontSize(2.5.rem)
+      )
     )
     val modalFooterBtn=style(
       backgroundColor(c"#FF806C"),
@@ -708,6 +717,9 @@ object SynereoCommanStylesCSS {
       marginTop(5.px),
       &.active(
         boxShadow:="none"
+      ),
+      media.maxWidth(768.px)(
+        fontSize(1.8.rem)
       )
     )
     val modalFooterBtnWhite=style(
@@ -718,7 +730,10 @@ object SynereoCommanStylesCSS {
       )
     )
     val modalBodyFontSize=style(
-      fontSize(1.7.rem)
+      fontSize(1.7.rem).important,
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem).important
+      )
     )
   }
 }
