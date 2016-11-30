@@ -458,7 +458,7 @@ object SynereoCommanStylesCSS {
       fontFamily :=! "karla",
       wordWrap :=! "break-word",
       textOverflow.:=("ellipsis"),
-      height(50.px),
+      minHeight(30.px),
       media.maxWidth(350.px) -
         width(100.%%),
       media.minWidth(321.px).maxWidth(376.px) -
@@ -499,11 +499,8 @@ object SynereoCommanStylesCSS {
         backgroundColor(c"#00446A")
       )
     )
-    val marginTop20px = style(
-      marginTop(20.px),
-      media.maxWidth(767.px)(
-        marginTop(10.px)
-      )
+    val marginTop12px = style(
+      marginTop(12.px)
     )
     //    val lovePost = style(
     //      height(100.px),

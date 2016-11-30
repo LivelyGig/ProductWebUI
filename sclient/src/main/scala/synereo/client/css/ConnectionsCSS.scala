@@ -163,7 +163,7 @@ object ConnectionsCSS {
       color.white,
       fontSize(1.7.rem),
       fontFamily :=! "karla",
-      maxHeight(3.5.rem),
+      /* maxHeight(3.5.rem),*/
       minHeight(2.5.rem),
       marginRight(0.px),
       marginBottom(0.px),
@@ -221,7 +221,6 @@ object ConnectionsCSS {
       backgroundColor.transparent.important,
       border.`0`.important,
       color.white,
-      fontFamily :=! "karla",
       fontSize(1.5.em),
       &.hover(
         color.white
@@ -240,7 +239,7 @@ object ConnectionsCSS {
       width.auto
     )
 
-      // val mediauserActionDropdownMenu=style(
+    // val mediauserActionDropdownMenu=style(
     //      marginLeft(-8.%%),
     //      borderRadius(0.px),
     //      display.block,
@@ -289,7 +288,7 @@ object ConnectionsCSS {
 
     val connectfriendsIconText = style(
       color.white,
-      fontSize(3.rem),
+      fontSize(2.rem),
       fontFamily :=! "karla",
       backgroundColor.transparent,
       &.hover(
@@ -405,7 +404,6 @@ object ConnectionsCSS {
         backgroundColor.transparent,
         color.white,
         fontSize(1.5.em),
-        fontFamily :=! "karla",
         float.left,
         marginTop(26.px)
       )

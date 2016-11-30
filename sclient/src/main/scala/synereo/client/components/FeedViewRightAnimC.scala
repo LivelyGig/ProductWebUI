@@ -68,7 +68,7 @@ object FeedViewRightAnimC {
     .renderPS((t, props, state) => {
       <.div(^.className := "row ",
         SynereoCommanStylesCSS.Style.feedViewRightAnimDivStatusIconRow,
-        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop12px)(
           <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon,
             <.img(^.src := "./assets/synereo-images/Love.svg", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
               SynereoCommanStylesCSS.Style.animLove, ^.onClick --> props.feedViewRightStatusAnimDiv(s"LoveIcon${props.message.uid}", s"subIcon${props.message.uid}"))
@@ -90,7 +90,7 @@ object FeedViewRightAnimC {
                 SynereoCommanStylesCSS.Style.animSubIconFourth))
           )
         ),
-        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop12px)(
           <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)
           (<.img(^.src := "./assets/synereo-images/Comment.svg", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
             SynereoCommanStylesCSS.Style.animComment,
@@ -113,7 +113,7 @@ object FeedViewRightAnimC {
                 SynereoCommanStylesCSS.Style.animSubIconFourth))
           )
         ),
-        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop12px)(
           <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)
           (<.img(^.src := "./assets/synereo-images/Amp_circle.gif", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
             SynereoCommanStylesCSS.Style.animAmp_Circle,
@@ -142,7 +142,7 @@ object FeedViewRightAnimC {
                 SynereoCommanStylesCSS.Style.animSubIconFourth))
           )
         ),
-        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop20px)(
+        <.div(^.className := "row", SynereoCommanStylesCSS.Style.marginTop12px)(
           <.div(^.className := "col-lg-1 col-md-1 col-sm-1 col-xs-1", SynereoCommanStylesCSS.Style.feedViewRightAnimDivMainStatusIcon)
           (<.img(^.src := "./assets/synereo-images/Share.svg", SynereoCommanStylesCSS.Style.feedViewRightPostDivSubIcon,
             SynereoCommanStylesCSS.Style.animShare,
