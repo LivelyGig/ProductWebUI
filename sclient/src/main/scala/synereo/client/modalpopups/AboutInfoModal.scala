@@ -88,7 +88,7 @@ object AboutInfoModal {
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("AGENT_UID").toString}"),
-                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s" ${agentUID.head}")
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.nodeSettingSectionAgentUID)(s" ${agentUID.head}")
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}"),

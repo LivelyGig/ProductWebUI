@@ -57,7 +57,11 @@ object UserProfileViewCSS {
       marginTop(1.px)
     )
     val sectionButtons = style(
-      marginRight(10.px)
+      marginRight(10.px),
+      fontSize(1.7.rem),
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      )
     )
     val buttonsContainerDiv = style(
       position.absolute,
@@ -78,7 +82,10 @@ object UserProfileViewCSS {
     val nodeSettingSection = style(
       fontSize(1.7.rem),
       color.black,
-      wordWrap.breakWord
+      wordWrap.breakWord,
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      )
     )
     val aboutInfoSectionContainer = style(
       marginBottom(15.px)
@@ -152,7 +159,15 @@ object UserProfileViewCSS {
     )
     val aboutInfoSectionTitle=style(
       fontWeight.normal,
-      fontSize(1.7.rem)
+      fontSize(1.7.rem),
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      )
+    )
+    val nodeSettingSectionAgentUID=style(
+      media.maxWidth(420.px)(
+        maxWidth(140.px)
+      )
     )
 
   }

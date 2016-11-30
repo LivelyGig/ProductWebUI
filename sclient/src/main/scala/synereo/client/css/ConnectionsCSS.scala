@@ -408,7 +408,7 @@ object ConnectionsCSS {
       display.none
     )
     val receipentsTextContainer = style(
-      width(491.px),
+      //width(491.px),
       maxWidth(100.%%),
       minWidth(100.%%)
     )

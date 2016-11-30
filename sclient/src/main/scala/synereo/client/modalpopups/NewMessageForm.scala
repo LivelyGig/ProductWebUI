@@ -301,10 +301,10 @@ object NewMessageForm {
                     state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),
-                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
-                  ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
                 <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
-                  state.lang.selectDynamic("CREATE_POST").toString)
+                  state.lang.selectDynamic("CREATE_POST").toString),
+                  <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
+                ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString)
               )
             )
           )

@@ -25,8 +25,9 @@ object NewMessageCSS {
       marginBottom(30.px)
     )
     val userImage = style(
-      maxWidth(50.px),
-      maxHeight(50.px)
+      width(50.px),
+      height(50.px),
+      marginTop(10.px)
     )
     val createPostBtn = style(
       backgroundColor(c"#ff806c"),
@@ -45,22 +46,28 @@ object NewMessageCSS {
     )
     val changePersonaBtn = style(
       backgroundColor.transparent.important,
-      fontSize(1.7.rem),
-      fontWeight.bold,
+      fontSize(3.rem),
+      float.left  ,
       paddingLeft.`0`.important,
       &.hover(
         backgroundColor.transparent.important
       ),
+      &.active(
+        boxShadow:="none"
+      ),
       &.focus(
         backgroundColor.transparent.important
-      ),
-      media.maxWidth(1024.px)(
-        fontSize(15.px)
       )
+//      ,
+//      media.maxWidth(1024.px)(
+//        fontSize(15.px)
+//      )
     )
     val PersonaContainerDiv = style(
-      marginTop.`0`,
+      marginTop(20.px),
       marginBottom(20.px),
+      marginLeft(35.px).important,
+      marginRight(0.px).important,
       media.maxWidth(580.px)(
         marginTop(-30.px)
       )
