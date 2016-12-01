@@ -220,6 +220,9 @@ object NewMessageCSS {
       top(0.px),
       left(4.px)
     )
+    val modalFooterBtnMargin=style(
+      marginRight(-3.%%)
+    )
 
 
   }

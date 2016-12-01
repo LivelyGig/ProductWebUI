@@ -219,8 +219,8 @@ object SignUpForm {
                 <.div(^.className := "text-left")(state.lang.selectDynamic("CREATING_ACCOUNT_ON_NODE").toString, <.span(s"   ${nodeName}")),
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
-              <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "signUpBtnId", /*SignupCSS.Style.signUpBtn*/SynereoCommanStylesCSS.Style.modalFooterBtnWhite , ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
+              <.div(^.className := "pull-right", ^.className := "form-group",SignupCSS.Style.signUpBtn)(
+                <.button(^.tpe := "submit", ^.id := "signUpBtnId",SynereoCommanStylesCSS.Style.modalFooterBtn , ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
               )
             )
           ),

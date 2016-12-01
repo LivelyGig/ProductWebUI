@@ -62,6 +62,13 @@ object LoginCSS {
         borderBottomLeftRadius(15.px),
         borderBottomRightRadius(26.px)
       ),
+      media.width(1366.px)(
+        height(460.px),
+        width(470.px),
+        marginLeft(50.px),
+        borderBottomLeftRadius(15.px),
+        borderBottomRightRadius(26.px)
+      ),
       media.width(1152.px)(
         height(520.px),
         width(540.px),
@@ -203,6 +210,12 @@ object LoginCSS {
         marginTop(-47.%%),
         marginLeft(36.7.%%)
       ),
+      media.width(1366.px)(
+        height(92.px),
+        width(97.px),
+        marginTop(-51.2.%%),
+        marginLeft(35.5.%%)
+      ),
       media.width(1152.px)(
         height(111.px),
         width(109.px),
@@ -319,6 +332,11 @@ object LoginCSS {
         marginBottom(10.px)
       ),
       media.width(1024.px)(
+        fontSize(36.px),
+        marginBottom(16.px),
+        marginTop(-51.px)
+      ),
+      media.width(1366.px)(
         fontSize(36.px),
         marginBottom(16.px),
         marginTop(-51.px)
@@ -537,6 +555,10 @@ object LoginCSS {
         fontSize(16.px),
         marginTop(20.px)
       ),
+      media.width(1366.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
       media.width(320.px).height(480.px)(
         marginTop(0.px),
         fontSize(16.px)
@@ -639,6 +661,10 @@ object LoginCSS {
         fontSize(1.7.rem)
       ),
       media.width(1024.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
+      media.width(1366.px)(
         fontSize(16.px),
         marginTop(20.px)
       ),
@@ -802,6 +828,7 @@ object LoginCSS {
       fontFamily :=! "karla",
       float.right,
       marginTop(25.px),
+      marginRight(5.%%),
 //      media.minWidth(240.px).maxWidth(580.px)(
 //        textAlign.center,
 //        marginTop(8.px),
@@ -822,10 +849,15 @@ object LoginCSS {
 //        fontFamily :=! "karla",
 //        float.right
 //      ),
-      media.minWidth(768.px).maxWidth(920.px)(
-        marginRight(15.px)
-      ),
+//      media.minWidth(768.px).maxWidth(920.px)(
+//        marginRight(15.px)
+//      ),
       media.width(1024.px)(
+        width(120.px),
+        fontSize(25.px),
+        marginTop(3.px)
+      ),
+      media.width(1366.px)(
         width(120.px),
         fontSize(25.px),
         marginTop(3.px)
@@ -1003,6 +1035,9 @@ object LoginCSS {
       media.width(1024.px)(
         marginBottom(14.px)
       ),
+      media.width(1366.px)(
+        marginBottom(14.px)
+      ),
       media.width(800.px).height(600.px)(
         marginBottom(8.px)
       ),
@@ -1038,6 +1073,9 @@ object LoginCSS {
         height(30.px)
       ),
       media.width(1024.px)(
+        height(42.px)
+      ),
+      media.width(1366.px)(
         height(42.px)
       ),
       media.width(1152.px)(

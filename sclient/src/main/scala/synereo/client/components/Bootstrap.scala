@@ -108,7 +108,7 @@ object Bootstrap {
         <.div(modalStyle.modal, ^.id := P.id, ^.className := P.CSSClass, P.addStyles, modalStyle.fade, ^.role := "dialog", ^.aria.hidden := true,
           ^.tabIndex := -1,
           <.div(SynereoCommanStylesCSS.Style.verticalAlignmentHelper)(
-            <.div(if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(), modalStyle.dialog)(
+            <.div(/*if (P.id == "newMessage") SynereoCommanStylesCSS.Style.verticalAlignCenter else <.div(),*/ modalStyle.dialog)(
               <.div(if (P.id == "loginContainer") LoginCSS.Style.loginContainer else if (P.id == "signUpContainer" || P.id == "verifyTokenContainer") SignupCSS.Style.signUpFormColor else modalStyle.content
                 , ^.onKeyDown ==> (
                   if (P.id == "loginContainer")

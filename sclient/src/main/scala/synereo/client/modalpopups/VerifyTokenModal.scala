@@ -141,8 +141,8 @@ object VerifyTokenModal {
                 <.div(^.className := "help-block with-errors")
               )
             ),
-            <.div(bss.modal.footer)(
-              <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit",SynereoCommanStylesCSS.Style.modalFooterBtnWhite, ^.className := "btn", state.lang.selectDynamic("VERIFY").toString)
+            <.div(bss.modal.footer,SignupCSS.Style.verifyBtn)(
+              <.button(^.id := "verify-code-submit-btn", ^.tpe := "submit",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.className := "btn", state.lang.selectDynamic("VERIFY").toString)
             )
           )
         )

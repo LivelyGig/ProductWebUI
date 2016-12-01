@@ -305,7 +305,7 @@ object NodeSettingModal {
                     )
                   }
                 ),
-                <.div(bss.modal.footer)(
+                <.div(bss.modal.footer,UserProfileViewCSS.Style.nodeSettingFooterMargin)(
                   <.button(^.tpe := "submit", ^.className := "btn ",  SynereoCommanStylesCSS.Style.modalFooterBtn/*,  ^.onClick --> t.backend.submitForm*/ , "Submit"),
                   <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> Callback {
                     t.backend.closeForm

@@ -169,7 +169,12 @@ object UserProfileViewCSS {
         maxWidth(140.px)
       )
     )
-
+    val nodeSettingFooterMargin=style(
+      marginRight(-6.%%)
+    )
+  val aboutInfoFooterMargin=style(
+    marginRight(-4.%%)
+  )
   }
 
 }

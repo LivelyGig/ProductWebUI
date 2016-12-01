@@ -259,7 +259,7 @@ object ConnectionsForm {
                 (state.lang.selectDynamic("PLEASE_PROVIDE_ATLEAST_ONE_CONNECTION").toString)
               ),
               //            }
-              <.div(bss.modal.footer)(
+              <.div(bss.modal.footer,ConnectionsCSS.Style.connectFriendFooterMargin)(
                   <.button(^.tpe := "submit", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, "Send"),
                   <.button(^.tpe := "button", ^.className := "btn ",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide, "Cancel")
               )
