@@ -145,8 +145,7 @@ object SignUpForm {
       val nodeName = dom.window.location.host
       val headerText = state.lang.selectDynamic("SIGN_UP").toString
       Modal(
-        Modal.Props(
-          // header contains a cancel button (X)
+        Modal.Props( // header contains a cancel button (X)
 
           /*
           header = hide => <.span()(
@@ -155,7 +154,7 @@ object SignUpForm {
             <.div(SignupCSS.Style.signUpHeading)(headerText)
           ),*/
           header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> t.backend.hideModal, Icon.close),
-            <.div(SignupCSS.Style.signUpHeading)(headerText)),
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenterWhite)(headerText)),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props),
           addStyles = Seq(SignupCSS.Style.signUpModalStyle), keyboard = false, id = "signUpContainer"
@@ -178,33 +177,34 @@ object SignUpForm {
               ),
               <.button(^.id := "editApiDetailBtn", ^.`type` := "button", LoginCSS.Style.editApiDetailBtn, ^.className := "btn btn-default", "data-toggle".reactAttr := "collapse", "data-target".reactAttr := "#addLabel", ^.onClick --> Callback {
                 $(editApiDetailBtn).hide()
-              })("Edit API details")
+              }
+              )("Edit API details")
             )
           ),
           <.div(^.className := "form-group has-feedback")(
             <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "text", bss.formControl, ^.id := "First name", ^.value := state.signUpModel.name, ^.className := "form-control", "data-error".reactAttr := "Username is required",
               ^.onChange ==> t.backend.updateName, ^.required := true, ^.placeholder := state.lang.selectDynamic("USERNAME").toString),
             <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-            <.div(^.className := "help-block with-errors")
+            <.div(^.className := "help-block with-errors",SignupCSS.Style.signUpHelpBlock)
           ),
           <.div(^.className := "form-group has-feedback")(
             <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "email", bss.formControl, ^.id := "Email", ^.value := state.signUpModel.email, ^.className := "form-control", "data-error".reactAttr := "Email is invalid",
               ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.placeholder := state.lang.selectDynamic("EMAIL_ADDRESS").toString),
             <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-            <.div(^.className := "help-block with-errors")
+            <.div(^.className := "help-block with-errors",SignupCSS.Style.signUpHelpBlock)
           ),
           <.div(^.className := "form-group has-feedback")(
             <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "password", bss.formControl, ^.id := "Password", ^.value := state.signUpModel.password, ^.className := "form-control", /*"data-error".reactAttr:="Must be 6 characters long and include one or more number or symbol",*/
               ^.onChange ==> t.backend.updatePassword, ^.required := true, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, "data-minlength".reactAttr := "6", "pattern".reactAttr := "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&.])[A-Za-z\\d$@$!%*#?&.]{6,}$"),
             <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-            <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ SignupCSS.Style.passwordTextInfo, ^.className := "help-block")(state.lang.selectDynamic("PASSWORD_CONDITION").toString)
+            <.div(/*SignupCSS.Style.passwordTextInfo, ^.className := "col-md-12 text-center",*/ SignupCSS.Style.passwordTextInfo, ^.className := "help-block",SignupCSS.Style.signUpHelpBlock)(state.lang.selectDynamic("PASSWORD_CONDITION").toString)
           ),
           <.div(^.className := "form-group  has-feedback")(
             <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "password", bss.formControl, ^.id := "Confirm Password", "data-match".reactAttr := "#Password",
               ^.value := state.signUpModel.confirmPassword, ^.className := "form-control", "data-match-error".reactAttr := "Passwords do not match",
               ^.onChange ==> t.backend.updateConfirmPassword, ^.required := true, ^.placeholder := state.lang.selectDynamic("CONFIRM_PASSWORD").toString),
             <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-            <.div(^.className := "help-block with-errors")
+            <.div(^.className := "help-block with-errors",SignupCSS.Style.signUpHelpBlock)
           ),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
@@ -220,7 +220,7 @@ object SignUpForm {
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),
               <.div(^.className := "pull-right", ^.className := "form-group")(
-                <.button(^.tpe := "submit", ^.id := "signUpBtnId", SignupCSS.Style.signUpBtn, ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
+                <.button(^.tpe := "submit", ^.id := "signUpBtnId", /*SignupCSS.Style.signUpBtn*/SynereoCommanStylesCSS.Style.modalFooterBtnWhite , ^.className := "btn", state.lang.selectDynamic("SIGN_UP").toString)
               )
             )
           ),

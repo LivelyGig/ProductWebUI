@@ -4,7 +4,7 @@ import diode.{ModelR, ModelRO}
 import synereo.client.components.{GlobalStyles, Icon}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.{SignupCSS, UserProfileViewCSS}
+import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 
 import scala.scalajs.js
 import scalacss.ScalaCssReact._
@@ -70,7 +70,10 @@ object AboutInfoModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), <.h4(UserProfileViewCSS.Style.aboutInfoSectionHeader,headerText)),
+          header = hide => <.span(
+            <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText)
+          ),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
@@ -85,7 +88,7 @@ object AboutInfoModal {
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("AGENT_UID").toString}"),
-                <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s" ${agentUID.head}")
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.nodeSettingSectionAgentUID)(s" ${agentUID.head}")
               ),
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}"),
@@ -118,10 +121,9 @@ object AboutInfoModal {
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.rabbitMQVersion}"))
               ),
-              <.div(^.className := "row pull-right")(
-                <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.width := "110.px", ^.className := "btn", ^.onClick --> t.backend.hide, "OK")
-              ),
-              <.div(bss.modal.footer)()
+              <.div(bss.modal.footer)(
+                <.button(^.tpe := "button",  SynereoCommanStylesCSS.Style.modalFooterBtn,^.className := "btn", ^.onClick --> t.backend.hide, "OK")
+              )
             )
           )
         )

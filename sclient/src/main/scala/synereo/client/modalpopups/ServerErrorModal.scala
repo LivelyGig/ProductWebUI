@@ -42,25 +42,21 @@ object ServerErrorModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.div()(headerText)),
+          header = hide => <.div(^.className:="model-title ",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText),
 
           closed = () => t.backend.modalClosed(S, P)
         ),
         <.div(^.className := "container-fluid")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
+              <.div(^.className := "row ",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
                 <.div()(
-                  <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(
+                  <.div(SynereoCommanStylesCSS.Style.loginErrorHeading)(
                     "Encountering problems in serving request: ERR_CONNECTION_REFUSED. Check the server availability."
                   )
                 ),
-                <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
-                  <.div(^.className := "row")(
-                    <.div(^.className := "col-md-12 text-center")(
-                      <.div()(<.button(^.tpe := "button", ^.className := "btn btn-default", ^.onClick --> t.backend.closeForm)("Close"))
-                    )
-                  )
+                <.div(bss.modal.footer)(
+                  <.button(^.tpe := "button", ^.className := "btn btn-default",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.closeForm)("Close")
                 )
               )
             )

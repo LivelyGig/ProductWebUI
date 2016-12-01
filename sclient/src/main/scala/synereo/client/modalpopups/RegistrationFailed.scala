@@ -5,14 +5,12 @@ import synereo.client.components.GlobalStyles
 import synereo.client.css.{LoginCSS, SignupCSS, SynereoCommanStylesCSS}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
-
 import scala.scalajs.js
 
 /**
@@ -59,7 +57,7 @@ object RegistrationFailed {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.h4(headerText),
+          header = hide => <.div(^.className:="model-title ",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText),
           closed = () => t.backend.modalClosed(state, props), "static", true, addStyles = (Seq(SignupCSS.Style.signUpModalStyle))
         ),
         <.div(^.className := "container-fluid")(
@@ -67,16 +65,15 @@ object RegistrationFailed {
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div(^.className := "row")(
                 <.div()(
-                  <.div(LoginCSS.Style.message)(props.registrationErrorMsg),
-                  <.div(^.className := "pull-right")(<.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.signUpBtn, ^.onClick --> t.backend.hide)("Try again")),
-                  <.div(^.className := "pull-right", SynereoCommanStylesCSS.Style.marginRight15px,
-                    <.button(^.tpe := "button", ^.className := "btn", SignupCSS.Style.signUpBtn, ^.onClick --> t.backend.login)("Login")
-                  )
+                  <.div(LoginCSS.Style.message)(props.registrationErrorMsg)
                 )
               )
             )
           ),
-          <.div(bss.modal.footer)()
+          <.div(bss.modal.footer)(
+            <.button(^.tpe := "button", ^.className := "btn",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide)("Try again"),
+            <.button(^.tpe := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.login)("Login")
+          )
         )
       )
     })

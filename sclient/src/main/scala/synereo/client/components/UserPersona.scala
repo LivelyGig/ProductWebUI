@@ -2,9 +2,10 @@ package synereo.client.components
 
 import diode.react.ModelProxy
 import japgolly.scalajs.react.{ReactComponentB, _}
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.prefix_<^.{<, _}
 import shared.models.UserModel
-import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+import synereo.client.css.{DashboardCSS, NewMessageCSS, SynereoCommanStylesCSS}
+
 import scala.language.existentials
 import scalacss.ScalaCssReact._
 
@@ -29,19 +30,18 @@ object UserPersona {
 
     def render(props: Props) = {
       val model = props.proxy.value
-      <.div(^.className := "row", NewMessageCSS.Style.PersonaContainerDiv)(
-        <.div(^.className := "col-md-2 col-sm-2 col-xs-2", SynereoCommanStylesCSS.Style.paddingLeftZero)(
+      <.div(^.className := "row",DashboardCSS.Style.dispalyFlex/*, NewMessageCSS.Style.PersonaContainerDiv*/)(
+        <.div(^.className := "col-lg-2 col-md-2 col-sm-2 col-xs-2"/*, SynereoCommanStylesCSS.Style.paddingLeftZero*/,NewMessageCSS.Style.userImgDiv)(
           <.img(^.alt := "userImage", ^.src := model.imgSrc, ^.className := "img-responsive", NewMessageCSS.Style.userImage)
         ),
-        <.div(^.className := "col-md-10", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero)(
-          <.div(
-            <.button(^.className := "btn", ^.`type` := "button", NewMessageCSS.Style.changePersonaBtn)("Change posting persona", <.span(^.className := "caret", ^.color.blue)),
-            <.div(^.className := "pull-right hidden-xs")(MIcon.apply("more_vert", "24"))
-          )
+        <.div(^.className := "col-lg-8 col-md-8 col-sm-8 col-xs-8"/*, SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero*/)(
+          <.div(^.className := "btn", ^.`type` := "button", NewMessageCSS.Style.changePersonaBtn)("Change posting persona", <.span(^.className := "caret", ^.color.blue)),
+            <.div(NewMessageCSS.Style.userNameOnDilogue)(
+          <.div(s"${model.name} ", <.span(Icon.chevronRight), " public ", <.span(Icon.share))
         ),
-        <.div(NewMessageCSS.Style.userNameOnDilogue)(
-          <.div(model.name, <.span(Icon.chevronRight), "public", <.span(Icon.share))
-        )
+        <.div(^.className := "pull-right hidden-xs",SynereoCommanStylesCSS.Style.featureHide)(MIcon.apply("more_vert", "24"))
+      )
+
       )
     }
   }

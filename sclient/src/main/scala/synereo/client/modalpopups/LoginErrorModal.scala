@@ -56,31 +56,33 @@ object LoginErrorModal {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.h4(headerText)),
+          header = hide => <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText),
 
           closed = () => t.backend.modalClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
+              <.div(^.className := "row" ,SynereoCommanStylesCSS.Style.modalBodyFontSize)(
                 <.div()(
-                  <.h3(SynereoCommanStylesCSS.Style.loginErrorHeading)(props.loginError)
+                  <.div(SynereoCommanStylesCSS.Style.loginErrorHeading)(props.loginError)
                 ),
-                <.div(bss.modal.footer, SynereoCommanStylesCSS.Style.errorModalFooter)(
-                  <.div(^.className := "row")(
+                <.div(SynereoCommanStylesCSS.Style.errorModalFooter)(
+                  <.div(^.className := "row" ,SynereoCommanStylesCSS.Style.modalBodyFontSize)(
                     <.div(^.className := "col-md-12 text-center")(
                       <.div()(
-                        <.h5(state.lang.selectDynamic("API_HOST_UNREACHABLE").toString),
-                        <.button(^.tpe := "button", ^.className := "btn btn-default",
-                          ^.onClick --> t.backend.closeForm)(state.lang.selectDynamic("CLOSE").toString)
+                        <.div(state.lang.selectDynamic("API_HOST_UNREACHABLE").toString)
                       )
                     )
                   )
                 )
               )
             )
-          )
+          ),
+            <.div(bss.modal.footer)(
+          <.button(^.tpe := "button", ^.className := "btn",SynereoCommanStylesCSS.Style.modalFooterBtn,
+            ^.onClick --> t.backend.closeForm)(state.lang.selectDynamic("CLOSE").toString)
+        )
         )
       )
     })

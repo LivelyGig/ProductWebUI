@@ -30,74 +30,79 @@ object UserProfileViewCSS {
     val userImage = style(
       minWidth(150.px),
       maxWidth(150.px),
+      maxHeight(150.px),
       maxHeight(150.px)
     )
-    val newImageBtn = style(
-      backgroundColor.transparent.important,
-      paddingLeft.`0`.important,
-      &.hover(
-        backgroundColor.transparent.important
-      ),
-      &.focus(
-        backgroundColor.transparent.important
-      ),
-      border.`0`,
-      borderRadius.`0`,
-      maxWidth(45.px),
-      maxHeight(45.px),
-      marginRight(45.px)
-    )
+//    val newImageBtn = style(
+//      backgroundColor.transparent.important,
+//      paddingLeft.`0`.important,
+//      &.hover(
+//        backgroundColor.transparent.important
+//      ),
+//      &.focus(
+//        backgroundColor.transparent.important
+//      ),
+//      border.`0`,
+//      borderRadius.`0`,
+//      maxWidth(45.px),
+//      maxHeight(45.px),
+//      marginRight(45.px)
+//    )
     val newImageSubmitBtnContainer = style(
       marginTop(30.px),
       marginBottom(30.px)
     )
-    val editSaveButton = style(
-      ToStyleAV(marginLeft(1.%%)),
-      marginTop(1.px)
-    )
+//    val editSaveButton = style(
+//      ToStyleAV(marginLeft(1.%%)),
+//      marginTop(1.px)
+//    )
     val sectionButtons = style(
-      marginRight(10.px)
+      marginRight(10.px),
+      fontSize(1.7.rem),
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      )
     )
-    val buttonsContainerDiv = style(
-      position.absolute,
-      top(0.px),
-      left(300.px),
-      width(100.%%)
-    )
+//    val buttonsContainerDiv = style(
+//      position.absolute,
+//      top(0.px),
+//      left(300.px),
+//      width(100.%%)
+//    )
     val label = style(
       width(350.px)
     )
-    val agentUID = style(
-      marginLeft(15.%%),
-      padding(10.px),
-      fontSize(20.px),
-      color.white,
-      position.relative
-    )
+//    val agentUID = style(
+//      marginLeft(15.%%),
+//      padding(10.px),
+//      fontSize(20.px),
+//      color.white,
+//      position.relative
+//    )
     val nodeSettingSection = style(
-      fontSize(20.px),
+      fontSize(1.7.rem),
       color.black,
       wordWrap.breakWord,
-      media.maxWidth(580.px)(
-        fontSize(12.px)
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
       )
     )
     val aboutInfoSectionContainer = style(
       marginBottom(15.px)
     )
-    val inputText = style(
-      width(200.px),
-      color.black,
-      marginBottom(1.%%)
-    )
+//    val inputText = style(
+//      width(200.px),
+//      color.black,
+//      marginBottom(1.%%)
+//    )
     val nodeSettingsFormControlContainer = style(
       marginBottom(10.px)
     )
-    val deleteButton = style(
-      position.relative,
-      top(-47.px),
-      left(270.px)
-    )
+//    val deleteButton = style(
+//      position.relative,
+//      top(-47.px),
+//      left(270.px)
+//    )
     val nodeSettingsSelectButtons = style(
       marginTop(5.px),
       marginRight(10.px)
@@ -124,7 +129,7 @@ object UserProfileViewCSS {
     )
     val modalImgUploadTabAnchorTag = style(
       marginLeft(20.%%).important,
-      width(106.px),
+      width(123.px),
       border.none.important,
       paddingLeft(0.px).important,
 
@@ -144,7 +149,7 @@ object UserProfileViewCSS {
       )
     )
     val modalImgUploadImgDiv = style(
-      height(212.px)
+      minHeight(212.px)
 
     )
     val aboutInfoSectionHeader= style(
@@ -153,8 +158,16 @@ object UserProfileViewCSS {
       fontWeight.bolder
     )
     val aboutInfoSectionTitle=style(
-      fontWeight.bold,
-      fontSize(22.px)
+      fontWeight.normal,
+      fontSize(1.7.rem),
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      )
+    )
+    val nodeSettingSectionAgentUID=style(
+      media.maxWidth(420.px)(
+        maxWidth(140.px)
+      )
     )
 
   }

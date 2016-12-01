@@ -4,7 +4,7 @@ import japgolly.scalajs.react.extra.OnUnmount
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Icon.Icon
 import synereo.client.components.{GlobalStyles, _}
-import synereo.client.css.{LoginCSS, UserProfileViewCSS}
+import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS, UserProfileViewCSS}
 
 import scala.language.reflectiveCalls
 import scalacss.Defaults._
@@ -100,21 +100,15 @@ object TermsOfServicesForm {
         Modal.Props(
           header = hide => <.span(
             <.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close),
-            <.h4(^.className := "pull-left")(P.header)),
+            <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitle)(P.header)
+          ),
           closed = () => t.backend.formClosed(S, P)
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.iframe(^.width := "100%", ^.src := "assets/terms_of_service.html"),
-            <.div(^.className := "row")(
-              <.div(^.className := "col-md-12")(
-                <.div(^.className := "row",
-                  <.div(^.className := "col-md-12 text-right", UserProfileViewCSS.Style.newImageSubmitBtnContainer,
-                    <.div()(<.button(^.tpe := "button", ^.className := "btn", ^.onClick --> t.backend.hide,
-                      LoginCSS.Style.modalLoginBtn, ^.marginBottom := "20.px")("Back"))
-                  )
-                )
-              )
+            <.div(bss.modal.footer)(
+              <.button(^.tpe := "button", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.className := "btn", ^.onClick --> t.backend.hide,"Back")
             )
           )
         )

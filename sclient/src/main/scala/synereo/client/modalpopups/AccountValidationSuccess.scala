@@ -6,7 +6,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
 import synereo.client.components._
-import synereo.client.css.SignupCSS
+import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
@@ -57,24 +57,15 @@ object AccountValidationSuccess {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.div(SignupCSS.Style.accountValidationSuccessText)(headerText),
+          header = hide => <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText),
           closed = () => t.backend.formClosed(state, props)
         ),
-        <.div(^.className := "container-fluid")(
-          <.div(^.className := "row")(
-            <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
-                <.div()(
-                  <.div(^.className := "pull-right")(
-                    <.button(^.tpe := "button", SignupCSS.Style.signUpBtn,
-                      ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("LOGIN").toString)
-                  )
-                )
-              )
-            )
-          ),
-          <.div(bss.modal.footer)()
-        )
+       <.div(^.className := "container-fluid")(
+          <.div(bss.modal.footer)(
+            <.button(^.tpe := "button", SynereoCommanStylesCSS.Style.modalFooterBtn,
+              ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("LOGIN").toString)
+          )
+       )
       )
     })
     .componentDidMount(scope => scope.backend.mounted(scope.props))

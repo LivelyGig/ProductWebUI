@@ -36,8 +36,6 @@ object LoginForm {
                    apiURL: String = "",
                    lang: js.Dynamic = SYNEREOCircuit.zoom(_.i18n.language).value
                   )
-
-
   class LoginFormBackend(t: BackendScope[Props, State]) {
 
     def submitForm(e: ReactEventI) = {
@@ -50,21 +48,17 @@ object LoginForm {
       else
         t.modState(s => s.copy(login = true))
     }
-
     def addNewUserForm(): Callback = {
       t.modState(s => s.copy(login = false, showNewUserForm = true))
       //      t.modState(s => s.copy(showNewUserForm = true))
     }
-
     def addNewInviteForm(): Callback = {
       t.modState(s => s.copy(login = false, showNewInviteForm = true))
       //      t.modState(s => s.copy(showNewUserForm = true))
     }
-
     def hide = {
       jQuery(t.getDOMNode()).modal("hide")
     }
-
     def updateEmail(e: ReactEventI) = {
       //      println(e.target.value)
       val value = e.target.value
@@ -74,15 +68,13 @@ object LoginForm {
     def showVerifyEmailModal(): Callback = {
       t.modState(s => s.copy(showConfirmAccountCreation = true))
     }
-
     def updatePassword(e: ReactEventI) = {
       val value = e.target.value
       t.modState(s => s.copy(userModel = s.userModel.copy(password = value)))
     }
-
     def updateAPIURL(e: ReactEventI) = {
       val value = e.target.value
-            println(s"value:$value")
+//            println(s"value:$value")
       t.modState(s => s.copy(apiURL = value))
     }
 
@@ -160,19 +152,19 @@ object LoginForm {
                     })(state.lang.selectDynamic("EDIT_API_DETAILS").toString)
                   )
                 ),
-                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
+                <.div( ^.className := "form-group has-feedback")(
                   //  <.label(LoginCSS.Style.loginFormLabel)("User Name"),
                   <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "text", bss.formControl, ^.id := "Name", ^.placeholder := state.lang.selectDynamic("EMAIL").toString,
                     "data-error".reactAttr := "Email is required", ^.value := state.userModel.email, ^.onChange ==> t.backend.updateEmail, ^.required := true, ^.ref := "nameInput"),
                   <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(^.className := "help-block with-errors",LoginCSS.Style.HelpBlockWithErrorsContainer)
                 ),
-                <.div(LoginCSS.Style.loginFormInputText, ^.className := "form-group has-feedback")(
+                <.div(^.className := "form-group has-feedback")(
                   // <.label(LoginCSS.Style.loginFormLabel)("Password"),
                   <.input(SignupCSS.Style.inputStyleSignUpFormWidth, ^.tpe := "password", bss.formControl, ^.placeholder := state.lang.selectDynamic("PASSWORD").toString, ^.className := "form-control", ^.id := "inputPassword", "data-error".reactAttr := "Password is required",
                     ^.value := state.userModel.password, ^.onChange ==> t.backend.updatePassword, ^.required := true),
                   <.span(^.className := "glyphicon form-control-feedback", SignupCSS.Style.formControlMargin, "aria-hidden".reactAttr := "true"),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(^.className := "help-block with-errors",LoginCSS.Style.HelpBlockWithErrorsContainer)
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginBtn", LoginCSS.Style.modalLoginBtn, ^.className := "btn", state.lang.selectDynamic("LOGIN").toString)

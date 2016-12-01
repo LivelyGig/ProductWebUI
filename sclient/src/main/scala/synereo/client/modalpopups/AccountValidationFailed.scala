@@ -3,16 +3,13 @@ package synereo.client.modalpopups
 import diode.{ModelR, ModelRO}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.SignupCSS
-
-import scalajs.js
+import synereo.client.css.{SignupCSS, SynereoCommanStylesCSS}
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
 import synereo.client.components._
 import synereo.client.components.Bootstrap._
 import synereo.client.services.{RootModel, SYNEREOCircuit}
-
 import scala.scalajs.js
 
 /**
@@ -54,19 +51,18 @@ object AccountValidationFailed {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(/*<.button(^.tpe := "button", bss.close, ^.onClick --> hide, Icon.close), */ <.div(SignupCSS.Style.signUpHeading)(headerText)),
+          header = hide => <.span( <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText) ),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
-          <.div(^.className := "row")(
+          <.div(^.className := "row",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
               <.div()(
-                <.div()(^.fontSize := "18.px", state.lang.selectDynamic("VALIDATION_CODE_IS_INCORRECT").toString),
-                <.div(^.className := "pull-right")(
-                  <.button(^.tpe := "button", SignupCSS.Style.signUpBtn, ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("TRY_AGAIN").toString)
-                )
+                <.div()( state.lang.selectDynamic("VALIDATION_CODE_IS_INCORRECT").toString)
               ),
-              <.div(bss.modal.footer)()
+              <.div(bss.modal.footer)(
+                <.button(^.tpe := "button", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.className := "btn", ^.onClick --> t.backend.hide, state.lang.selectDynamic("TRY_AGAIN").toString)
+              )
             )
           )
         )

@@ -18,15 +18,30 @@ object NewMessageCSS {
       marginBottom(10.px),
       border.none.important,
       resize.none.important,
-      fontSize(18.px)
+      fontSize(1.7.rem)
     )
     val newMessageActionsContainerDiv = style(
       //      marginTop(30.px),
       marginBottom(30.px)
     )
     val userImage = style(
-      maxWidth(50.px),
-      maxHeight(50.px)
+      width(100.%%),
+      marginTop(10.px)
+    )
+    val userImgDiv= style(
+
+      media.minWidth(921.px)(
+        marginLeft(37.px),
+        width(80.px)
+      ),
+      media.minWidth(581.px).maxWidth(921.px)(
+        marginLeft(10.px),
+        width(70.px)
+      ),
+        media.maxWidth(581.px)(
+          width(70.px),
+          marginLeft(2.px)
+        )
     )
     val createPostBtn = style(
       backgroundColor(c"#ff806c"),
@@ -45,22 +60,31 @@ object NewMessageCSS {
     )
     val changePersonaBtn = style(
       backgroundColor.transparent.important,
-      fontSize(20.px),
-      fontWeight.bold,
+      fontSize(2.rem),
+      fontWeight.normal,
       paddingLeft.`0`.important,
       &.hover(
         backgroundColor.transparent.important
+      ),
+      &.active(
+        boxShadow:="none"
       ),
       &.focus(
         backgroundColor.transparent.important
       ),
       media.maxWidth(1024.px)(
-        fontSize(15.px)
+        fontSize(1.5.rem)
       )
+//      ,
+//      media.maxWidth(1024.px)(
+//        fontSize(15.px)
+//      )
     )
     val PersonaContainerDiv = style(
-      marginTop.`0`,
+      marginTop(20.px),
       marginBottom(20.px),
+      marginLeft(35.px).important,
+      marginRight(0.px).important,
       media.maxWidth(580.px)(
         marginTop(-30.px)
       )
@@ -70,10 +94,30 @@ object NewMessageCSS {
       color(c"#242D40"),
       border.none.important,
       fontSize(22.px),
-      fontWeight._700,
+      fontWeight.normal,
       fontFamily :=! "karla",
       marginRight(10.px),
-      marginLeft(10.px),
+      marginLeft(-27.px),
+      &.hover(
+        backgroundColor.transparent.important,
+        color(c"#242D40"),
+        border.none.important
+      ),
+      &.focus(
+        backgroundColor.transparent.important,
+        color(c"#242D40"),
+        border.none.important
+      )
+    )
+    val newMessageAttachBtn = style(
+      backgroundColor.transparent.important,
+      color(c"#242D40"),
+      border.none.important,
+      fontSize(22.px),
+      fontWeight.normal,
+      fontFamily :=! "karla",
+      marginRight(10.px),
+      marginLeft(0.px),
       &.hover(
         backgroundColor.transparent.important,
         color(c"#242D40"),
@@ -105,9 +149,9 @@ object NewMessageCSS {
       )
     )
     val userNameOnDilogue = style(
-      fontSize(16 px),
+      fontSize(1.7.rem),
       media.maxWidth(1024.px)(
-        fontSize(10.px)
+        fontSize(1.2.rem)
       )
     )
     val createPostTagBtn = style(

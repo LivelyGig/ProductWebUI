@@ -8,7 +8,8 @@ import diode.{ModelR, ModelRO}
 import synereo.client.components.GlobalStyles
 import japgolly.scalajs.react.vdom.prefix_<^._
 import synereo.client.components.Bootstrap.Modal
-import synereo.client.css.LoginCSS
+import synereo.client.css.{LoginCSS, SynereoCommanStylesCSS}
+
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import japgolly.scalajs.react._
@@ -54,24 +55,22 @@ object LoginFailed {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.h4()(headerText),
+          header = hide => <.div(^.className:="model-title",SynereoCommanStylesCSS.Style.modalHeaderTitleCenter)(headerText),
           closed = () => t.backend.formClosed(state, props)
         ),
         <.div(^.className := "container-fluid")(
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 col-sm-12 col-xs-12")(
-              <.div(^.className := "row")(
+              <.div(^.className := "row",SynereoCommanStylesCSS.Style.modalBodyFontSize)(
                 <.div()(
-                  <.h3()(
-                    props.loginErrorMessage,
-                    <.div(<.button(^.tpe := "button", ^.className := "btn",
-                      ^.onClick --> t.backend.hide, LoginCSS.Style.modalTryAgainBtn)(state.lang.selectDynamic("TRY_AGAIN").toString))
-                  )
+                  props.loginErrorMessage
                 )
               )
             )
           ),
-          <.div(bss.modal.footer)()
+          <.div(bss.modal.footer)(
+            <.button(^.tpe := "button", ^.className := "btn",
+              ^.onClick --> t.backend.hide,SynereoCommanStylesCSS.Style.modalFooterBtn)(state.lang.selectDynamic("TRY_AGAIN").toString))
         )
       )
     })

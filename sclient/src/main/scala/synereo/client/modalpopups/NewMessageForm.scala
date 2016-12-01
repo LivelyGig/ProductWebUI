@@ -3,6 +3,16 @@ package synereo.client.modalpopups
 import diode.AnyAction._
 import diode.ModelRO
 import diode.react.ModelProxy
+import shared.models.{Label, MessagePost, MessagePostContent}
+import japgolly.scalajs.react.vdom.prefix_<^._
+import synereo.client.rootmodels.SearchesRootModel
+import synereo.client.components.GlobalStyles
+import synereo.client.css.{NewMessageCSS, SynereoCommanStylesCSS}
+
+import scalacss.ScalaCssReact._
+import scala.language.reflectiveCalls
+import synereo.client.components.Bootstrap.Modal
+import synereo.client.utils.{ConnectionsUtils, ContentUtils, LabelsUtils, MessagesUtils}
 import japgolly.scalajs.react
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -226,7 +236,11 @@ object NewMessageForm {
       Modal(
         Modal.Props(
           // header contains a cancel button (X)
-          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close), <.div(^.className := "hide")(headerText)),
+          header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close),
+            <.div(
+              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
+            )
+          ),
           // this is called after the modal has been hidden (animation is completed)
           closed = () => t.backend.formClosed(state, props),
           id = "newMessage"
@@ -235,9 +249,7 @@ object NewMessageForm {
           <.form(^.onSubmit ==> t.backend.submitForm)(
             <.div(^.id := emptyPostErr, ^.className := "hidden text-danger",
               state.lang.selectDynamic("YOU_CANNOT_POST_EMPTY_MESSAGE").toString),
-            <.div(
-              userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
-            ),
+
             <.div(^.className := "row")(
               <.div(^.id := state.connectionsSelectizeInputId, ^.width := "100%")(
                 ConnectionsSelectize(ConnectionsSelectize.Props(state.connectionsSelectizeInputId, t.backend.fromSelecize, Option(0), props.messagePost.receivers, props.messagePost.sender, props.replyPost,
@@ -272,13 +284,10 @@ object NewMessageForm {
                       )
                     ))
               ),
-              /*<.div(^.className := "text-left text-muted")(
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.postingShortHandBtn, <.span(^.marginRight := "4.px")(Icon.infoCircle), "posting shorthand")
-              ),*/
-              <.div(^.className := "text-right", NewMessageCSS.Style.newMessageActionsContainerDiv)(
+              <.div(bss.modal.footer)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
-                  <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, Icon.paperclip)),
+                  <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageAttachBtn, Icon.paperclip)),
                   <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value := "", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := noImgUploadErr, ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString
@@ -290,10 +299,11 @@ object NewMessageForm {
                     state.lang.selectDynamic("ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED").toString
                   )
                 ),
-                <.button(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn,
-                  ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString),
-                <.button(^.tpe := "submit", ^.className := "btn btn-default", NewMessageCSS.Style.createPostBtn,
-                  state.lang.selectDynamic("CREATE_POST").toString)
+                <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
+                  state.lang.selectDynamic("CREATE_POST").toString),
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
+                  ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString)
+
               )
             )
           )
