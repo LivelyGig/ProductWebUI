@@ -111,7 +111,7 @@ object DashboardCSS {
       /*transition:= "0.4s",*/
       overflowY.hidden.important,
       media.minWidth(768.px)(
-        padding(15.px)
+        padding(10.px)
       ),
       media.maxWidth(767.px)(
         padding(0.px, 18.px, 10.px, 18.px)

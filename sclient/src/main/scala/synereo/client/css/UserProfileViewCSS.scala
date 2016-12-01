@@ -11,6 +11,11 @@ object UserProfileViewCSS {
 
     import dsl._
 
+    val AbtModalFooterOKBtn = style(
+      width(80.px),
+      marginRight(-21.px)
+    )
+
     val comingSoonImgPreview = style(
       minHeight(60.px),
       margin(4.px)
@@ -33,29 +38,29 @@ object UserProfileViewCSS {
       maxHeight(150.px),
       maxHeight(150.px)
     )
-//    val newImageBtn = style(
-//      backgroundColor.transparent.important,
-//      paddingLeft.`0`.important,
-//      &.hover(
-//        backgroundColor.transparent.important
-//      ),
-//      &.focus(
-//        backgroundColor.transparent.important
-//      ),
-//      border.`0`,
-//      borderRadius.`0`,
-//      maxWidth(45.px),
-//      maxHeight(45.px),
-//      marginRight(45.px)
-//    )
+    //    val newImageBtn = style(
+    //      backgroundColor.transparent.important,
+    //      paddingLeft.`0`.important,
+    //      &.hover(
+    //        backgroundColor.transparent.important
+    //      ),
+    //      &.focus(
+    //        backgroundColor.transparent.important
+    //      ),
+    //      border.`0`,
+    //      borderRadius.`0`,
+    //      maxWidth(45.px),
+    //      maxHeight(45.px),
+    //      marginRight(45.px)
+    //    )
     val newImageSubmitBtnContainer = style(
       marginTop(30.px),
       marginBottom(30.px)
     )
-//    val editSaveButton = style(
-//      ToStyleAV(marginLeft(1.%%)),
-//      marginTop(1.px)
-//    )
+    //    val editSaveButton = style(
+    //      ToStyleAV(marginLeft(1.%%)),
+    //      marginTop(1.px)
+    //    )
     val sectionButtons = style(
       marginRight(10.px),
       fontSize(1.7.rem),
@@ -63,22 +68,22 @@ object UserProfileViewCSS {
         fontSize(1.2.rem)
       )
     )
-//    val buttonsContainerDiv = style(
-//      position.absolute,
-//      top(0.px),
-//      left(300.px),
-//      width(100.%%)
-//    )
+    //    val buttonsContainerDiv = style(
+    //      position.absolute,
+    //      top(0.px),
+    //      left(300.px),
+    //      width(100.%%)
+    //    )
     val label = style(
       width(350.px)
     )
-//    val agentUID = style(
-//      marginLeft(15.%%),
-//      padding(10.px),
-//      fontSize(20.px),
-//      color.white,
-//      position.relative
-//    )
+    //    val agentUID = style(
+    //      marginLeft(15.%%),
+    //      padding(10.px),
+    //      fontSize(20.px),
+    //      color.white,
+    //      position.relative
+    //    )
     val nodeSettingSection = style(
       fontSize(1.7.rem),
       color.black,
@@ -90,19 +95,19 @@ object UserProfileViewCSS {
     val aboutInfoSectionContainer = style(
       marginBottom(15.px)
     )
-//    val inputText = style(
-//      width(200.px),
-//      color.black,
-//      marginBottom(1.%%)
-//    )
+    //    val inputText = style(
+    //      width(200.px),
+    //      color.black,
+    //      marginBottom(1.%%)
+    //    )
     val nodeSettingsFormControlContainer = style(
       marginBottom(10.px)
     )
-//    val deleteButton = style(
-//      position.relative,
-//      top(-47.px),
-//      left(270.px)
-//    )
+    //    val deleteButton = style(
+    //      position.relative,
+    //      top(-47.px),
+    //      left(270.px)
+    //    )
     val nodeSettingsSelectButtons = style(
       marginTop(5.px),
       marginRight(10.px)
@@ -152,19 +157,20 @@ object UserProfileViewCSS {
       minHeight(212.px)
 
     )
-    val aboutInfoSectionHeader= style(
+    val aboutInfoSectionHeader = style(
       textAlign.center,
       fontSize(24.px),
       fontWeight.bolder
     )
-    val aboutInfoSectionTitle=style(
+    val aboutInfoSectionTitle = style(
       fontWeight.normal,
       fontSize(1.7.rem),
+      marginLeft(-17.px),
       media.maxWidth(768.px)(
         fontSize(1.2.rem)
       )
     )
-    val nodeSettingSectionAgentUID=style(
+    val nodeSettingSectionAgentUID = style(
       media.maxWidth(420.px)(
         maxWidth(140.px)
       )
@@ -175,6 +181,9 @@ object UserProfileViewCSS {
   val aboutInfoFooterMargin=style(
     marginRight(-4.%%)
   )
+    val innerSettingSection = style(
+      paddingLeft(10.px)
+    )
   }
 
 }

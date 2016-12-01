@@ -148,17 +148,17 @@ object AmplifyPostForm {
                   ^.placeholder := s"${state.lang.selectDynamic("AMPS_TO_DONATE").toString}", ^.onChange ==> t.backend.updateAmount),
                 <.div(^.className := "input-group-btn-vertical", NewMessageCSS.Style.inputgroupbtnVertical,
                   <.button(^.className := "btn btn-default", NewMessageCSS.Style.spinnerBtn1, ^.`type` := "button",
-                    <.i(^.className := "fa fa-caret-up", NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.increaseAMPCount())
+                    <.span(Icon.caretUp, NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.increaseAMPCount())
                   ),
                   <.button(^.className := "btn btn-default", NewMessageCSS.Style.spinnerBtn2, ^.`type` := "button",
-                    <.i(^.className := "fa fa-caret-down", NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.decreaseAMPCount())
+                    <.span(Icon.caretDown, NewMessageCSS.Style.spinnerCaretIcon, ^.onClick --> t.backend.decreaseAMPCount())
                   )
                 )
               ),
               <.div(bss.modal.footer)(
                 <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("AMPLIFY_BTN").toString}"),
-                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hideModal,
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,SynereoCommanStylesCSS.Style.modalFooterBtnRight, ^.onClick --> t.backend.hideModal,
                   s"${state.lang.selectDynamic("CANCEL_BTN").toString}")
               )
             )

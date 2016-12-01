@@ -31,8 +31,8 @@
   "AGENT_UID": "Agent UID",
   "WALLET_ADDRESS": "Wallet Adresse:",
   "BUILD_INFORMATION": "Construire l'information",
-  "GLOSEVAL_VERSION": "- Gloseval Version:",
-  "SCALA_VERSION": "- Scala Version:",
-  "MONGODB_VERSION": "- MongoDB Version:",
-  "RABBITMQ_VERSION": "- RabbitMQ Version: "
+  "GLOSEVAL_VERSION": "Gloseval Version:",
+  "SCALA_VERSION": "Scala Version:",
+  "MONGODB_VERSION": "MongoDB Version:",
+  "RABBITMQ_VERSION": "RabbitMQ Version: "
 }
