@@ -7,7 +7,6 @@ import scalacss.Defaults._
   * Created by mandar.k  on 3/11/2016.
   */
 object LoginCSS {
-  val zero: Int = 0
 
   object Style extends StyleSheet.Inline {
 
@@ -26,7 +25,7 @@ object LoginCSS {
       width(600.px),
       paddingTop(135.px),
       backgroundImage := "url(\"./assets/synereo-images/LogInBox.png\")",
-      backgroundSize :=100.%%,
+      backgroundSize := 100.%%,
       media.width(800.px).height(400.px)(
         width(60.%%),
         marginLeft(20.%%),
@@ -40,8 +39,8 @@ object LoginCSS {
         backgroundImage := "url(\"./assets/synereo-images/LogInBox_Mobile.png\")",
         marginRight(6.%%),
         width.auto,
-        backgroundRepeat:="no-repeat",
-        backgroundSize:="cover",
+        backgroundRepeat := "no-repeat",
+        backgroundSize := "cover",
         borderBottomRightRadius(5.px),
         borderBottomLeftRadius(5.px)
       ),
@@ -53,9 +52,16 @@ object LoginCSS {
         backgroundRepeat := "no-repeat",
         marginLeft.auto.important,
         marginRight.auto.important,
-        backgroundSize:= 115.%%
+        backgroundSize := 115.%%
       ),
       media.width(1024.px)(
+        height(460.px),
+        width(470.px),
+        marginLeft(50.px),
+        borderBottomLeftRadius(15.px),
+        borderBottomRightRadius(26.px)
+      ),
+      media.width(1366.px)(
         height(460.px),
         width(470.px),
         marginLeft(50.px),
@@ -99,7 +105,7 @@ object LoginCSS {
         marginLeft(15.%%),
         height(395.px),
         marginTop(-3.%%)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         width(70.%%),
         marginLeft(15.%%),
@@ -180,13 +186,13 @@ object LoginCSS {
         height.auto,
         marginTop(-70.%%),
         marginLeft(37.%%)
-      )  ,
+      ),
       media.width(800.px).height(600.px)(
         height(104.px),
         width(104.px),
         marginTop(-39.%%),
         marginLeft(36.9.%%)
-      ) ,
+      ),
       media.width(1280.px).height(600.px)(
         height(104.px),
         width(104.px),
@@ -202,6 +208,12 @@ object LoginCSS {
         width(97.px),
         marginTop(-47.%%),
         marginLeft(36.7.%%)
+      ),
+      media.width(1366.px)(
+        height(92.px),
+        width(97.px),
+        marginTop(-51.2.%%),
+        marginLeft(35.5.%%)
       ),
       media.width(1152.px)(
         height(111.px),
@@ -219,7 +231,7 @@ object LoginCSS {
         height.auto,
         marginTop(-54.%%),
         marginLeft(37.%%)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         width(26.%%),
         height.auto,
@@ -323,6 +335,11 @@ object LoginCSS {
         marginBottom(16.px),
         marginTop(-51.px)
       ),
+      media.width(1366.px)(
+        fontSize(36.px),
+        marginBottom(16.px),
+        marginTop(-51.px)
+      ),
       media.width(1152.px)(
         fontSize(40.px),
         marginBottom(22.px),
@@ -346,22 +363,22 @@ object LoginCSS {
       media.width(640.px).height(480.px)(
         fontSize(3.rem),
         marginTop(-20.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       ),
       media.width(800.px).height(480.px)(
         fontSize(3.rem),
         marginTop(-18.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       ),
       media.width(800.px).height(400.px)(
         fontSize(3.rem),
         marginTop(-27.%%),
-        marginBottom(3%%)
-      ),/*for 960x540 and 960x640*/
+        marginBottom(3 %%)
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         fontSize(3.rem),
         marginTop(-18.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       ),
       media.width(1136.px).height(640.px)(
         fontSize(40.px),
@@ -371,17 +388,17 @@ object LoginCSS {
       media.width(480.px).height(320.px)(
         fontSize(3.rem),
         marginTop(0.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       ),
       media.width(480.px).height(360.px)(
         fontSize(2.5.rem).important,
         marginTop(0.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       ),
       media.width(240.px).height(320.px)(
         fontSize(3.rem),
         marginTop(0.%%),
-        marginBottom(3%%)
+        marginBottom(3 %%)
       )
     )
     val iconStylePasswordInputBox = style(
@@ -537,6 +554,10 @@ object LoginCSS {
         fontSize(16.px),
         marginTop(20.px)
       ),
+      media.width(1366.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
       media.width(320.px).height(480.px)(
         marginTop(0.px),
         fontSize(16.px)
@@ -560,7 +581,7 @@ object LoginCSS {
         fontSize(1.5.rem),
         marginTop(-5.px),
         marginLeft(-37.px)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         fontSize(1.5.rem),
         marginTop(10.px),
@@ -569,7 +590,7 @@ object LoginCSS {
       media.width(480.px).height(320.px)(
         fontSize(1.2.rem),
         marginTop(-18.px)
-      ),media.width(768.px).height(1024.px)(
+      ), media.width(768.px).height(1024.px)(
         marginTop(30.px)
       ),
       media.width(480.px).height(360.px)(
@@ -592,16 +613,16 @@ object LoginCSS {
       )
       ,
       media.width(412.px).height(732.px)(
-        marginTop(0.px),fontSize(1.7.rem)
+        marginTop(0.px), fontSize(1.7.rem)
       ),
       media.width(320.px).height(568.px)(
-        marginTop(0.px),fontSize(2.rem)
+        marginTop(0.px), fontSize(2.rem)
       ),
       media.width(375.px).height(667.px)(
-        marginTop(0.px),fontSize(2.rem)
+        marginTop(0.px), fontSize(2.rem)
       ),
       media.width(414.px).height(736.px)(
-        marginTop(0.px),fontSize(2.rem)
+        marginTop(0.px), fontSize(2.rem)
       ),
       media.width(480.px).height(800.px)(
         marginTop(2.px),
@@ -642,6 +663,10 @@ object LoginCSS {
         fontSize(16.px),
         marginTop(20.px)
       ),
+      media.width(1366.px)(
+        fontSize(16.px),
+        marginTop(20.px)
+      ),
       media.width(320.px).height(480.px)(
         marginTop(0.px),
         fontSize(16.px)
@@ -664,7 +689,7 @@ object LoginCSS {
       media.width(800.px).height(400.px)(
         fontSize(1.5.rem),
         marginTop(-5.px)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         fontSize(1.5.rem),
         marginTop(10.px)
@@ -676,7 +701,7 @@ object LoginCSS {
       media.width(480.px).height(360.px)(
         fontSize(1.5.rem).important,
         marginTop(-15.px)
-      ),media.width(768.px).height(1024.px)(
+      ), media.width(768.px).height(1024.px)(
         marginTop(30.px)
       ),
       media.width(240.px).height(320.px)(
@@ -699,20 +724,20 @@ object LoginCSS {
         marginTop(10.px)
       ),
       media.width(360.px).height(640.px)(
-        marginTop(0.px),fontSize(1.5.rem)
+        marginTop(0.px), fontSize(1.5.rem)
       )
       ,
       media.width(412.px).height(732.px)(
-        marginTop(0.px),fontSize(1.7.rem)
+        marginTop(0.px), fontSize(1.7.rem)
       ),
       media.width(320.px).height(568.px)(
-        marginTop(0.px),fontSize(1.7.rem)
+        marginTop(0.px), fontSize(1.7.rem)
       ),
       media.width(375.px).height(667.px)(
-        marginTop(0.px),fontSize(1.7.rem)
+        marginTop(0.px), fontSize(1.7.rem)
       ),
       media.width(414.px).height(736.px)(
-        marginTop(0.px),fontSize(1.7.rem)
+        marginTop(0.px), fontSize(1.7.rem)
       ),
       media.width(480.px).height(800.px)(
         fontSize(1.7.rem)
@@ -802,26 +827,26 @@ object LoginCSS {
       fontFamily :=! "karla",
       float.right,
       marginTop(25.px),
-//      media.minWidth(240.px).maxWidth(580.px)(
-//        textAlign.center,
-//        marginTop(8.px),
-//        &.hover(
-//          color(c"#cc3300")
-//        ),
-//        backgroundColor(c"#ff806c"),
-//        color(c"#fff"),
-//        fontFamily :=! "karla",
-//        float.right
-//      ),  media.maxWidth(240.px)(
-//        textAlign.center,
-//        &.hover(
-//          color(c"#cc3300")
-//        ),
-//        backgroundColor(c"#ff806c"),
-//        color(c"#fff"),
-//        fontFamily :=! "karla",
-//        float.right
-//      ),
+      //      media.minWidth(240.px).maxWidth(580.px)(
+      //        textAlign.center,
+      //        marginTop(8.px),
+      //        &.hover(
+      //          color(c"#cc3300")
+      //        ),
+      //        backgroundColor(c"#ff806c"),
+      //        color(c"#fff"),
+      //        fontFamily :=! "karla",
+      //        float.right
+      //      ),  media.maxWidth(240.px)(
+      //        textAlign.center,
+      //        &.hover(
+      //          color(c"#cc3300")
+      //        ),
+      //        backgroundColor(c"#ff806c"),
+      //        color(c"#fff"),
+      //        fontFamily :=! "karla",
+      //        float.right
+      //      ),
       media.minWidth(768.px).maxWidth(920.px)(
         marginRight(15.px)
       ),
@@ -830,10 +855,15 @@ object LoginCSS {
         fontSize(25.px),
         marginTop(3.px)
       ),
+      media.width(1366.px)(
+        width(120.px),
+        fontSize(25.px),
+        marginTop(3.px)
+      ),
       media.width(1152.px).height(648.px)(
-    //    height(41.px),
-      //  width(142.px),
-      //  fontSize(30.px),
+        //    height(41.px),
+        //  width(142.px),
+        //  fontSize(30.px),
         marginTop(6.px)
       ),
       media.width(800.px).height(600.px)(
@@ -864,7 +894,7 @@ object LoginCSS {
         paddingRight(10.px),
         marginTop(-12.px),
         height(40.px)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         fontSize(2.rem),
         width.auto,
@@ -1003,6 +1033,9 @@ object LoginCSS {
       media.width(1024.px)(
         marginBottom(14.px)
       ),
+      media.width(1366.px)(
+        marginBottom(14.px)
+      ),
       media.width(800.px).height(600.px)(
         marginBottom(8.px)
       ),
@@ -1014,7 +1047,7 @@ object LoginCSS {
       ),
       media.width(800.px).height(400.px)(
         marginBottom(8.px)
-      ),/*for 960x540 and 960x640*/
+      ), /*for 960x540 and 960x640*/
       media.width(960.px)(
         marginBottom(8.px)
       ),
@@ -1033,11 +1066,14 @@ object LoginCSS {
     )
     val apiDetailsContainer = style(
       height(50.px),
-      width(95.%%),marginBottom(15.px),
+      width(95.%%), marginBottom(15.px),
       media.maxWidth(580.px)(
         height(30.px)
       ),
       media.width(1024.px)(
+        height(42.px)
+      ),
+      media.width(1366.px)(
         height(42.px)
       ),
       media.width(1152.px)(
@@ -1061,7 +1097,7 @@ object LoginCSS {
         fontSize(10.px)
       )
     )
-    val HelpBlockWithErrorsContainer=style(
+    val HelpBlockWithErrorsContainer = style(
       height(10.px),
       fontSize(1.5.rem),
       media.maxWidth(580.px)(
@@ -1097,4 +1133,5 @@ object LoginCSS {
       )
     )
   }
+
 }

@@ -10,7 +10,7 @@ import shared.dtos.{JsonBlob, UpdateUserRequest}
 import shared.models.UserModel
 import synereo.client.components.Bootstrap.{Modal, _}
 import synereo.client.components.{GlobalStyles, _}
-import synereo.client.css.{NewMessageCSS, UserProfileViewCSS}
+import synereo.client.css.{SynereoCommanStylesCSS, UserProfileViewCSS}
 import synereo.client.logger
 import synereo.client.services.SYNEREOCircuit
 import synereo.client.utils.ContentUtils

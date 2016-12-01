@@ -1,9 +1,7 @@
 package synereo.client
 
-import scala.scalajs.js
-
-package object components extends js.GlobalScope {
-  val jQuery: JQueryStatic = js.native
-
+package object components {
+  // expose jQuery under a more familiar name
+  val jQuery = JQueryStatic
 }
 
