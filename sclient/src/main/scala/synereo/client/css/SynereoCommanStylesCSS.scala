@@ -711,7 +711,6 @@ object SynereoCommanStylesCSS {
     val modalFooterBtn=style(
       backgroundColor(c"#FF806C"),
       height(48.px),
-      //      width(120.px),
       fontSize(2.4.rem),
       fontFamily :=! "karla",
       marginTop(5.px),
@@ -720,15 +719,16 @@ object SynereoCommanStylesCSS {
       ),
       media.maxWidth(768.px)(
         fontSize(1.8.rem)
-      )
-    )
-    val modalFooterBtnWhite=style(
-      modalFooterBtn,
+      ),
       color.white,
       &.hover(
         color(c"#cc3300")
       )
     )
+//    val  modalFooterSubmitBtn=style(
+//      modalFooterBtn
+//    )
+
     val modalBodyFontSize=style(
       fontSize(1.7.rem).important,
       media.maxWidth(768.px)(

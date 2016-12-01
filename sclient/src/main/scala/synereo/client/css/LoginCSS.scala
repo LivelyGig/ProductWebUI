@@ -7,6 +7,7 @@ import scalacss.Defaults._
   * Created by mandar.k  on 3/11/2016.
   */
 object LoginCSS {
+  val zero: Int = 0
 
   object Style extends StyleSheet.Inline {
 
@@ -827,29 +828,30 @@ object LoginCSS {
       fontFamily :=! "karla",
       float.right,
       marginTop(25.px),
-      //      media.minWidth(240.px).maxWidth(580.px)(
-      //        textAlign.center,
-      //        marginTop(8.px),
-      //        &.hover(
-      //          color(c"#cc3300")
-      //        ),
-      //        backgroundColor(c"#ff806c"),
-      //        color(c"#fff"),
-      //        fontFamily :=! "karla",
-      //        float.right
-      //      ),  media.maxWidth(240.px)(
-      //        textAlign.center,
-      //        &.hover(
-      //          color(c"#cc3300")
-      //        ),
-      //        backgroundColor(c"#ff806c"),
-      //        color(c"#fff"),
-      //        fontFamily :=! "karla",
-      //        float.right
-      //      ),
-      media.minWidth(768.px).maxWidth(920.px)(
-        marginRight(15.px)
-      ),
+      marginRight(5.%%),
+//      media.minWidth(240.px).maxWidth(580.px)(
+//        textAlign.center,
+//        marginTop(8.px),
+//        &.hover(
+//          color(c"#cc3300")
+//        ),
+//        backgroundColor(c"#ff806c"),
+//        color(c"#fff"),
+//        fontFamily :=! "karla",
+//        float.right
+//      ),  media.maxWidth(240.px)(
+//        textAlign.center,
+//        &.hover(
+//          color(c"#cc3300")
+//        ),
+//        backgroundColor(c"#ff806c"),
+//        color(c"#fff"),
+//        fontFamily :=! "karla",
+//        float.right
+//      ),
+//      media.minWidth(768.px).maxWidth(920.px)(
+//        marginRight(15.px)
+//      ),
       media.width(1024.px)(
         width(120.px),
         fontSize(25.px),
@@ -894,7 +896,7 @@ object LoginCSS {
         paddingRight(10.px),
         marginTop(-12.px),
         height(40.px)
-      ), /*for 960x540 and 960x640*/
+      ),/*for 960x540 and 960x640*/
       media.width(960.px)(
         fontSize(2.rem),
         width.auto,

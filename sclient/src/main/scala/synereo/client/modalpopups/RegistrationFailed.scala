@@ -71,8 +71,9 @@ object RegistrationFailed {
             )
           ),
           <.div(bss.modal.footer)(
-            <.button(^.tpe := "button", ^.className := "btn",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide)("Try again"),
-            <.button(^.tpe := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.login)("Login")
+            <.button(^.tpe := "button", ^.className := "btn", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.login)("Login"),
+            <.button(^.tpe := "button", ^.className := "btn",SynereoCommanStylesCSS.Style.modalFooterBtn, ^.onClick --> t.backend.hide)("Try again")
+
           )
         )
       )

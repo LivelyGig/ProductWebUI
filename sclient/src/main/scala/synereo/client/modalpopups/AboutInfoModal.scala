@@ -121,7 +121,7 @@ object AboutInfoModal {
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.rabbitMQVersion}"))
               ),
-              <.div(bss.modal.footer)(
+              <.div(bss.modal.footer,UserProfileViewCSS.Style.aboutInfoFooterMargin)(
                 <.button(^.tpe := "button",  SynereoCommanStylesCSS.Style.modalFooterBtn,^.className := "btn", ^.onClick --> t.backend.hide, "OK")
               )
             )

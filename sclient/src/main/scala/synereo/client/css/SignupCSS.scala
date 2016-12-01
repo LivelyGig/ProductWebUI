@@ -70,32 +70,10 @@ object SignupCSS {
       )
     )
     val signUpBtn = style(
-      backgroundColor(c"#FF806C"),
-      height(58.px),
-      fontSize(22.px),
-      fontFamily :=! "karla",
-      media.maxWidth(580.px)(
-        textAlign.center,
-        &.hover(
-          color(c"#cc3300")
-        ),
-        backgroundColor(c"#ff806c"),
-        height.auto.important,
-        width.auto.important,
-        fontSize(16.px),
-        padding(5.px, 10.px),
-        color(c"#fff"),
-        fontFamily :=! "karla",
-        float.right,
-        marginTop(5.px)
-      )
+         marginRight(5.%%)
     )
     val verifyBtn = style(
-      backgroundColor(c"#FF806C"),
-      height(48.px),
-      width(110.px),
-      fontSize(22.px),
-      fontFamily :=! "karla"
+      marginRight(2.%%)
     )
     val signUpHeading = style(
       color(c"#000"),

@@ -284,7 +284,7 @@ object NewMessageForm {
                       )
                     ))
               ),
-              <.div(bss.modal.footer)(
+              <.div(bss.modal.footer, NewMessageCSS.Style.modalFooterBtnMargin)(
                 <.div(^.className := "pull-left")(
                   <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
                   <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageAttachBtn, Icon.paperclip)),
