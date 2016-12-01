@@ -38,6 +38,7 @@ object AboutInfoModal {
       t.modState(s => s.copy(lang = reader.value)).runNow()
     }
 
+
     def mounted(props: AboutInfoModal.Props) = Callback {
       SYNEREOCircuit.subscribe(SYNEREOCircuit.zoom(_.i18n.language))(e => updateLang(e))
       logger.log.debug(s"AboutInfoModal mounted")
@@ -64,7 +65,7 @@ object AboutInfoModal {
     .backend(new AboutInfoModalBackend(_))
     .renderPS((t, props, state) => {
       val agentUID = ConnectionsUtils.getSelfConnnection().source.substring(8).split("\"")
-      val headerText = "About Synereo Social -- Alpha release"
+      val headerText = "About synereo social - Alpha release"
       val versionInfo = state.versionInfo
       val ampAddress = SYNEREOCircuit.zoom(_.user.address).value
       Modal(
@@ -82,20 +83,20 @@ object AboutInfoModal {
               <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
                 <.span(^.className:="col-md-12 col-sm-12 col-xs-12",UserProfileViewCSS.Style.aboutInfoSectionTitle)(s"Current User:")
               ),
-              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,UserProfileViewCSS.Style.innerSettingSection)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"Username: "),
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6") (s" n/a")
               ),
-              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,UserProfileViewCSS.Style.innerSettingSection)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("AGENT_UID").toString}"),
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.nodeSettingSectionAgentUID)(s" ${agentUID.head}")
               ),
-              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,UserProfileViewCSS.Style.innerSettingSection)(
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"${state.lang.selectDynamic("WALLET_ADDRESS").toString}"),
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"$ampAddress")
               ),
-              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.aboutInfoSectionTitle)("Node Operator:"),
+              <.div(^.className := "row", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,UserProfileViewCSS.Style.innerSettingSection)(
+                <.span(^.className:="col-md-6 col-sm-6 col-xs-6",UserProfileViewCSS.Style.nodeSettingSection)("Node Operator:"),
                 <.span(^.className:="col-md-6 col-sm-6 col-xs-6")(s"n/a")
               ),
 
@@ -105,24 +106,24 @@ object AboutInfoModal {
 
 
               <.div( UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer)(
-                  <.div(^.className:="row",
-                    <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"Web User Interface version:"),
+                  <.div(^.className:="row",UserProfileViewCSS.Style.innerSettingSection,
+                    <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"User Interface version:"),
                        <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"n/a")),
-                <.div(^.className:="row",
+                <.div(^.className:="row",UserProfileViewCSS.Style.innerSettingSection,
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("GLOSEVAL_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"${versionInfo.glosevalVersion}")),
-                <.div(^.className:="row",
+                <.div(^.className:="row",UserProfileViewCSS.Style.innerSettingSection,
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("SCALA_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6", s"${versionInfo.scalaVersion}")),
-                <.div(^.className:="row",
+                <.div(^.className:="row",UserProfileViewCSS.Style.innerSettingSection,
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("MONGODB_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.mongoDBVersion}")),
-                <.div(^.className:="row",
+                <.div(^.className:="row",UserProfileViewCSS.Style.innerSettingSection,
                   <.span(^.className := "col-md-6 col-sm-6 col-xs-6", UserProfileViewCSS.Style.nodeSettingSection, UserProfileViewCSS.Style.aboutInfoSectionContainer,s"${state.lang.selectDynamic("RABBITMQ_VERSION").toString}"),
                   <.span(^.className:="col-md-6 col-sm-6 col-xs-6",s"${versionInfo.rabbitMQVersion}"))
               ),
               <.div(bss.modal.footer)(
-                <.button(^.tpe := "button",  SynereoCommanStylesCSS.Style.modalFooterBtn,^.className := "btn", ^.onClick --> t.backend.hide, "OK")
+                <.button(^.tpe := "button",  SynereoCommanStylesCSS.Style.modalFooterBtn,UserProfileViewCSS.Style.AbtModalFooterOKBtn,^.className := "btn", ^.onClick --> t.backend.hide, "OK")
               )
             )
           )

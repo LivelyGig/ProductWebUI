@@ -301,7 +301,7 @@ object NewMessageForm {
                 ),
                 <.button(^.tpe := "submit", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
                   state.lang.selectDynamic("CREATE_POST").toString),
-                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,
+                <.button(^.tpe := "button", ^.className := "btn ", SynereoCommanStylesCSS.Style.modalFooterBtn,SynereoCommanStylesCSS.Style.modalFooterBtnRight,
                   ^.onClick --> t.backend.hide, state.lang.selectDynamic("CANCEL_BTN").toString)
 
               )

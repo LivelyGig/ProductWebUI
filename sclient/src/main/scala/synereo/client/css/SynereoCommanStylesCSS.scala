@@ -155,7 +155,7 @@ object SynereoCommanStylesCSS {
     //      padding(40.px, 20.px)
     //    )
     val loginErrorHeading = style(
-      margin(10.px  ).important
+      margin(10.px).important
     )
     //    val dropdownLiMenuSeperator = style(
     //      backgroundColor(c"#F2F2F2"),
@@ -236,7 +236,8 @@ object SynereoCommanStylesCSS {
       width.auto.important,
       minHeight.auto.important,
       right.`0`.important,
-      backgroundColor.white.important
+      backgroundColor.white.important,
+      fontSize(1.7.rem)
     )
     val langSelectMenu = style(
       //      width.auto.important,
@@ -510,7 +511,7 @@ object SynereoCommanStylesCSS {
     //      background := rgba(0, 0, 0, 0.5)
     //    )
     val naviCollapse = style(
-      media.maxWidth(767.px) -(
+      media.maxWidth(767.px) - (
         backgroundColor(rgb(46, 110, 142)),
         position.absolute,
         top(57.px),
@@ -680,7 +681,7 @@ object SynereoCommanStylesCSS {
       float.right.important,
       textAlign.right
     )
-    val modalHeaderTitle=style(
+    val modalHeaderTitle = style(
       fontSize(3.rem),
       marginLeft(31.px),
       marginTop(15.px),
@@ -689,7 +690,7 @@ object SynereoCommanStylesCSS {
         fontSize(2.5.rem)
       )
     )
-    val modalHeaderTitleCenter=style(
+    val modalHeaderTitleCenter = style(
       fontSize(3.rem),
       textAlign.center,
       marginTop(15.px),
@@ -698,7 +699,7 @@ object SynereoCommanStylesCSS {
         fontSize(2.5.rem)
       )
     )
-    val modalHeaderTitleCenterWhite=style(
+    val modalHeaderTitleCenterWhite = style(
       color.white,
       fontSize(4.rem),
       textAlign.center,
@@ -708,7 +709,7 @@ object SynereoCommanStylesCSS {
         fontSize(2.5.rem)
       )
     )
-    val modalFooterBtn=style(
+    val modalFooterBtn = style(
       backgroundColor(c"#FF806C"),
       height(48.px),
       //      width(120.px),
@@ -716,24 +717,29 @@ object SynereoCommanStylesCSS {
       fontFamily :=! "karla",
       marginTop(5.px),
       &.active(
-        boxShadow:="none"
+        boxShadow := "none"
       ),
       media.maxWidth(768.px)(
         fontSize(1.8.rem)
       )
     )
-    val modalFooterBtnWhite=style(
+
+    val modalFooterBtnWhite = style(
       modalFooterBtn,
       color.white,
       &.hover(
         color(c"#cc3300")
       )
     )
-    val modalBodyFontSize=style(
+    val modalBodyFontSize = style(
       fontSize(1.7.rem).important,
       media.maxWidth(768.px)(
         fontSize(1.2.rem).important
       )
     )
+    val modalFooterBtnRight = style(
+      marginRight(-18.px)
+    )
   }
+
 }
