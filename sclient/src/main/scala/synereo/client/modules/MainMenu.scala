@@ -143,7 +143,8 @@ object MainMenu {
                       <.li(<.a(^.onClick --> scope.backend.showAboutInfoModal())(state.lang.selectDynamic("ABOUT").toString)),
                       <.li(<.a(^.onClick --> scope.backend.showImageUploadModal())(state.lang.selectDynamic("CHANGE_PROFILE_PICTURE").toString)),
                       <.li(<.a(^.onClick --> scope.backend.showNodeSettingModal())(state.lang.selectDynamic("NODE_SETTINGS").toString)),
-                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(state.lang.selectDynamic("SIGN_OUT").toString))
+                      <.li()(<.a(^.href := "http://social.synereo.com/jiraissue.html", ^.target := "_blank")(<.span(), "  Report an Issue")),
+                      <.li(<.a(^.onClick --> Callback(ContentUtils.closeSessionReq(CloseSessionRequest(uri))))(state.lang.selectDynamic("Log_OUT").toString))
 
                     )
                     //                  if (state.showProfileImageUploadModal)
