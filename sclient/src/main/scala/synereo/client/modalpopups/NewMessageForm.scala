@@ -237,7 +237,7 @@ object NewMessageForm {
         Modal.Props(
           // header contains a cancel button (X)
           header = hide => <.span(<.button(^.tpe := "button", bss.close, /*^.className := "hidden", */ ^.onClick --> hide, Icon.close),
-            <.div(
+            <.div(^.className:="modal-title",SynereoCommanStylesCSS.Style.modalHeaderTitle,
               userProxy(proxy => UserPersona(UserPersona.Props(proxy)))
             )
           ),
@@ -286,8 +286,16 @@ object NewMessageForm {
               ),
               <.div(bss.modal.footer, NewMessageCSS.Style.modalFooterBtnMargin)(
                 <.div(^.className := "pull-left")(
-                  <.button(^.onClick ==> t.backend.clearImage, ^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close)),
-                  <.label(^.`for` := "files")(<.span(^.tpe := "button", ^.className := "btn btn-default", NewMessageCSS.Style.newMessageAttachBtn, Icon.paperclip)),
+                  <.button(
+                    ^.onClick ==> t.backend.clearImage, ^.tpe := "button",^.className:="btn btn-default" , NewMessageCSS.Style.newMessageCancelBtn, <.span(Icon.close),
+
+                 <.div(     NewMessageCSS.Style.newMessageTooltip, ^.className := "infoTooltip ",<.span()(s"Clear Image"))
+
+                  ),
+
+                  <.label(^.`for` := "files")(<.span(^.tpe := "button ",^.className:="btn btn-default" ,NewMessageCSS.Style.newMessageAttachBtn, Icon.paperclip,
+                    <.div(NewMessageCSS.Style.newMessageTooltip, ^.className := "infoTooltip ",<.span()(s"Attach Image"))
+                  )),
                   <.input(^.`type` := "file", ^.visibility := "hidden", ^.accept := "image/*", ^.position := "absolute", ^.id := "files", ^.name := "files", ^.value := "", ^.onChange ==> t.backend.updateImgSrc),
                   <.div(^.id := noImgUploadErr, ^.className := "hidden text-danger")(
                     state.lang.selectDynamic("PROVIDE_A_PICTURE_FILE_TO_UPLOAD").toString

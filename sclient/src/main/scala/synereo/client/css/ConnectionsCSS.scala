@@ -256,7 +256,7 @@ object ConnectionsCSS {
         marginRight(0.px)
       ),
       media.minWidth(769.px) -
-        top(70.%%)
+        top(80.%%)
     )
 
     val connectfriendsIcon = style(

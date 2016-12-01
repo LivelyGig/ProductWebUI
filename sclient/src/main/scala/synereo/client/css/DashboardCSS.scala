@@ -263,10 +263,10 @@ object DashboardCSS {
       lineHeight(1.25.em),
       letterSpacing(0.5.px),
       media.minWidth(768.px)(
-        fontSize(3.rem)
+        fontSize(2.5.rem)
       ),
       media.maxWidth(767.px)(
-        fontSize(2.1.rem)
+        fontSize(2.rem)
       )
     )
     val sidebarNavStyle = style(
@@ -331,7 +331,9 @@ object DashboardCSS {
       )
     )
     val verticalAlignInherit = style (
-      verticalAlign.inherit
+      verticalAlign.inherit,
+      marginLeft(5.%%),
+      marginRight(5.%%)
     )
     val cardPaddingBottom = style(
       paddingBottom(15.px)

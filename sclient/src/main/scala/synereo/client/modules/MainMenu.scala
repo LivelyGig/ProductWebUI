@@ -92,10 +92,13 @@ object MainMenu {
               if (props.currentLoc == DashboardLoc) {
                 <.div(
                   <.div(^.className := "pull-left")(
-                    <.button(^.className := "btn", ^.onClick --> scope.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostButton,
-                      <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg)
-                    )
-                  ),
+                    <.button(^.className := "btn", ^.onClick --> scope.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostBtn,
+                        <.span(^.className := "fa fa-plus", SynereoCommanStylesCSS.Style.createPostIcon),
+                        <.span(SynereoCommanStylesCSS.Style.createPostIconText,"Create Post")
+                      ),
+                      <.button(^.className := "btn", ^.onClick --> scope.backend.showNewMessageModal(), SynereoCommanStylesCSS.Style.createPostButton,
+                     <.img(^.src := "./assets/synereo-images/CreatePost.gif", SynereoCommanStylesCSS.Style.createPostImg)
+                  )),
                   <.div(
                     SearchComponent(SearchComponent.Props())
                   )

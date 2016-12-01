@@ -26,22 +26,22 @@ object NewMessageCSS {
     )
     val userImage = style(
       width(100.%%),
-      marginTop(10.px)
+      marginTop(17.px)
     )
     val userImgDiv= style(
 
       media.minWidth(921.px)(
-        marginLeft(37.px),
+        marginLeft(6.px),
         width(80.px)
       ),
       media.minWidth(581.px).maxWidth(921.px)(
-        marginLeft(10.px),
+        marginLeft(-16.px),
         width(70.px)
       ),
-        media.maxWidth(581.px)(
-          width(70.px),
-          marginLeft(2.px)
-        )
+      media.maxWidth(581.px)(
+        width(70.px),
+        marginLeft(-28.px)
+      )
     )
     val createPostBtn = style(
       backgroundColor(c"#ff806c"),
@@ -75,10 +75,10 @@ object NewMessageCSS {
       media.maxWidth(1024.px)(
         fontSize(1.5.rem)
       )
-//      ,
-//      media.maxWidth(1024.px)(
-//        fontSize(15.px)
-//      )
+      //      ,
+      //      media.maxWidth(1024.px)(
+      //        fontSize(15.px)
+      //      )
     )
     val PersonaContainerDiv = style(
       marginTop(20.px),
@@ -101,7 +101,10 @@ object NewMessageCSS {
       &.hover(
         backgroundColor.transparent.important,
         color(c"#242D40"),
-        border.none.important
+        border.none.important,
+        unsafeChild(".infoTooltip")(
+          visibility.visible
+        )
       ),
       &.focus(
         backgroundColor.transparent.important,
@@ -121,7 +124,10 @@ object NewMessageCSS {
       &.hover(
         backgroundColor.transparent.important,
         color(c"#242D40"),
-        border.none.important
+        border.none.important,
+        unsafeChild(".infoTooltip")(
+          visibility.visible
+        )
       ),
       &.focus(
         backgroundColor.transparent.important,
@@ -140,7 +146,10 @@ object NewMessageCSS {
       &.hover(
         backgroundColor.transparent.important,
         color(c"#242D40"),
-        border.none.important
+        border.none.important,
+        unsafeChild(".infoTooltip")(
+          visibility.visible
+        )
       ),
       &.focus(
         backgroundColor.transparent.important,
@@ -223,8 +232,21 @@ object NewMessageCSS {
     val modalFooterBtnMargin=style(
       marginRight(-3.%%)
     )
-
-
+    val newMessageTooltip=style(
+      visibility.hidden,
+      backgroundColor(rgba(0, 0, 0, 0.5)),
+      color(c"#fff"),
+      textAlign.left,
+      paddingRight(2.px),
+      paddingLeft(2.px),
+      paddingTop(5.px),
+      paddingBottom(5.px),
+      position.absolute,
+      zIndex(1),
+      fontSize(1.7.rem),
+      media.maxWidth(920.px)(
+        fontSize(1.4.rem)
+      )
+    )
   }
-
 }

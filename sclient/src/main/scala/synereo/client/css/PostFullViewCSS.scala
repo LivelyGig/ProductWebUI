@@ -35,7 +35,10 @@ object PostFullViewCSS {
     val postedActionbtn = style(
       backgroundColor.transparent,
       marginLeft(5.px),
-      fontSize(1.1.em)
+      fontSize(1.1.em),
+      &.active(
+        boxShadow:="none"
+      )
     )
     val postedImageContainerDiv = style()
     val modalCloseButton = style(
@@ -137,8 +140,10 @@ object PostFullViewCSS {
 //      &.hover(backgroundColor.transparent.important)
 //    )
     val postHeadlineContainerDiv = style(
-      marginTop(60.px),
-      marginBottom(30.px)
+//      marginTop(60.px),
+//      marginBottom(30.px)
+  whiteSpace.preWrap,
+  fontSize(2.5.rem)
     )
     val collapsePostsButton = style(
       backgroundColor.transparent,

@@ -146,14 +146,14 @@ object FullPostViewModal {
                     )
                   )
                 ),
-                <.div(^.className := "row")(
-                  <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
-                    <.div(^.className := "col-md-offset-1 col-md-9 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11")(
-                      <.div(^.className := "row", PostFullViewCSS.Style.postHeadlineContainerDiv)(
-                        <.h1(s"${props.messages.postContent.subject}") /*,
+                <.div()(
+                  <.div(^.className := "row", PostFullViewCSS.Style.postedUserInfoContainerDiv)(
+                  //  <.div(^.className := " row ")( /* col-md-12 col-sm-offset-1 col-sm-8 col-xs-offset-1 col-xs-11 col-md-offset-1*/
+                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postHeadlineContainerDiv)(
+                        <.span(s"${props.messages.postContent.subject}") /*,
                           <.h4(<.span(Icon.mapMarker)("xyz abc Island"))*/
                       ),
-                      <.div(^.className := "row", PostFullViewCSS.Style.postDescription)(
+                      <.div(^.className := "col-md-12 col-sm-12 col-xs-12", PostFullViewCSS.Style.postDescription)(
 //                        if (props.messages.postContent.imgSrc != "" && props.messages.postContent.imgSrc.size < 80659) {
 //                          <.div(
 //                            <.div(^.className := "col-md-8 col-sm-8 col-xs-8")(
@@ -301,7 +301,7 @@ object FullPostViewModal {
                       //                          )
                       //                        )
                    )
-                  )
+                //  )
                 )
               ),
               <.div(^.className := "col-md-1 col-sm-1 col-xs-2", PostFullViewCSS.Style.fullPostViewLeftRightContainer, ^.onClick --> t.backend.hide)(

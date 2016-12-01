@@ -104,22 +104,13 @@ object SynereoCommanStylesCSS {
         color(white)
       ),
       media.maxWidth(767.px)(
+        display.block,
         top(9.px),
         paddingLeft(0.px),
         position.relative
-        //      &.hover(
-        //        width(135.px),
-        //        backgroundColor(c"#2283AE"),
-        //        color(c"#FFFFFF").important
-        //      ),
-        //      &.focus(
-        //        width(135.px),
-        //        backgroundColor(c"#2283AE"),
-        //        color(c"#FFFFFF").important
-        //      )
       ),
-      media.minWidth(767.px).maxWidth(991.px)(
-        right(6.%%)
+      media.minWidth(768.px)(
+       display.none
       ))
     val createPostImg = style(
       maxWidth(71.px),
@@ -735,5 +726,51 @@ object SynereoCommanStylesCSS {
         fontSize(1.2.rem).important
       )
     )
+
+    val createPostBtn = style(
+      position.fixed,
+      bottom(10.%%),
+      right(0.9.%%),
+      zIndex(3),
+      backgroundColor(c"#30ade3"),
+      borderTopLeftRadius(30.px),
+      borderBottomLeftRadius(30.px),
+      border(0.px)
+        ,media.maxWidth(767.px)(
+      display.none
+    ),
+      media.minWidth(768.px)(
+        display.block
+      )
+    )
+
+    val createPostIcon = style(
+      padding(10.px),
+      borderRightWidth(2.px),
+      borderRightColor.white,
+      borderRightStyle.solid,
+      color.white,
+      fontSize(2.rem),
+      media.maxWidth(767.px)(
+        display.none
+      )
+    )
+    val createPostIconText = style(
+      color.white,
+      fontSize(2.rem),
+      fontFamily :=! "karla",
+      backgroundColor.transparent,
+      &.hover(
+        color.white
+      ),
+      &.active(color.white,boxShadow:="none"),
+      &.focus(color.white),
+      media.minWidth(768.px)(
+        marginLeft(20.px),
+        marginRight(20.px)
+      )
+    )
+
+
   }
 }
