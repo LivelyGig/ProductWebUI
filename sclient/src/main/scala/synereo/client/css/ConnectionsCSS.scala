@@ -354,6 +354,7 @@ object ConnectionsCSS {
     )
 
     val connectionContainer = style(
+      paddingTop(25.px),
       media.maxWidth(767.px) -
         marginTop(50.px)
     )

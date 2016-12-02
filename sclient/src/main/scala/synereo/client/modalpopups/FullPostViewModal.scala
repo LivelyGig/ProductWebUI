@@ -112,14 +112,25 @@ object FullPostViewModal {
                 ),
                 <.ul(^.id := "fullViewModalNavBar", ^.className := "nav nav-tabs", PostFullViewCSS.Style.postedUserInfoNavModal)(
                   <.li(PostFullViewCSS.Style.postedUserAvatarDiv)(
-                    <.img(^.src := props.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm, DashboardCSS.Style.verticalAlignInherit),
-                    <.div(DashboardCSS.Style.userNameDescription)(
-                      <.span(s"From : ${props.fromSender}"),
-                      <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${props.toReceiver}"), <.br(),
-                      //                        <.span(MIcon.chevronRight),
-                      //                        <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
-                      <.span("data-toggle".reactAttr := "tooltip", "title".reactAttr := props.messages.created, "data-placement".reactAttr := "right")(Moment(props.messages.created).format("LLL").toLocaleString)
-                    )
+                   <.ul(DashboardCSS.Style.fullPostViewUserNameDescriptionUl,
+                     <.li(DashboardCSS.Style.fullPostViewUserNameDescriptionLi,
+                       <.img(^.src := props.messages.sender.imgSrc, ^.alt := "user avatar", DashboardCSS.Style.userAvatarDashboardForm, DashboardCSS.Style.verticalAlignInherit)
+                   ),
+                     <.li(DashboardCSS.Style.fullPostViewUserNameDescription,
+                       <.ul(DashboardCSS.Style.fullPostViewUserNameDescriptionUl,
+                       <.li(s"From : ${props.fromSender}"),
+                       <.li(/*SynereoCommanStylesCSS.Style.marginLeftTwentyFive*/)(s"To : ${props.toReceiver}"),
+                       <.li("data-toggle".reactAttr := "tooltip", "title".reactAttr := props.messages.created, "data-placement".reactAttr := "right")(Moment(props.messages.created).format("LLL").toLocaleString)
+                     )))
+
+                   // <.div()(
+
+//                      <.span(s"From : ${props.fromSender}"),
+//                      <.span(SynereoCommanStylesCSS.Style.marginLeftTwentyFive)(s"To : ${props.toReceiver}"), <.br(),
+//                      //                        <.span(MIcon.chevronRight),
+//                      //                        <.span(SynereoCommanStylesCSS.Style.synereoBlueText)("Epic Landscape Photography,Landscape love...(2)"), <.br(),
+//                      <.span("data-toggle".reactAttr := "tooltip", "title".reactAttr := props.messages.created, "data-placement".reactAttr := "right")(Moment(props.messages.created).format("LLL").toLocaleString)
+                  //  )
                   ),
                   <.li(PostFullViewCSS.Style.smallLiContainerUserActions)(
                     <.div(^.className := "pull-right")(

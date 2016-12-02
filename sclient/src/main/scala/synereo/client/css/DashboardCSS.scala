@@ -30,7 +30,18 @@ object DashboardCSS {
       display.block,
       float.right,
       width(25.px),
-      height(25.px)
+      height(25.px),
+      position.absolute,
+      media.minWidth(768.px).maxWidth(920.px)(
+        marginLeft(-50.%%),
+        top(25.%%)
+      ),media.minWidth(920.px)(
+        marginLeft(-60.%%),
+        top(25.%%)
+      ),
+      media.maxWidth(767.px)(
+        right(0.px)
+      )
     )
     //    val cardPostTagBtn = style(
     //      margin(5.px),
@@ -152,7 +163,11 @@ object DashboardCSS {
       width(30.px),
       height(30.px),
       borderRadius(50.%%),
-      display.inlineBlock
+      display.inlineBlock,
+      media.minWidth(768.px)(
+        width(50.px),
+        height(50.px)
+      )
     )
     val homeFeedUserAvatar = style(
       width(5.rem),
@@ -203,6 +218,45 @@ object DashboardCSS {
         fontSize(1.1.rem)
       )
     )
+    val fullPostViewUserNameDescription=style(
+      display.inlineBlock,
+      /* padding(0.px, 15.px),*/
+      fontFamily :=! "karla",
+      fontSize(1.7.rem),
+      fontWeight.normal,
+      lineHeight(1.5.em),
+      color(c"#000"),
+      opacity(0.65),
+      padding(0.px),
+      position.relative,
+      top(10.px),
+      marginBottom(10.px),
+      media.maxWidth(360.px)(
+        fontSize(1.rem)
+      ),
+      media.maxWidth(768.px)(
+        fontSize(1.2.rem)
+      ),
+      media.only.screen.maxDeviceWidth(767.px)(
+        fontSize(1.1.rem)
+      )
+    )
+     val fullPostViewUserNameDescriptionUl=style(
+       listStyle:="none",
+       paddingLeft(0.px)
+     )
+    val fullPostViewUserNameDescriptionLi=style(
+      display.inlineBlock,
+      paddingLeft(15.px),
+      paddingRight(15.px),
+      paddingTop(15.px),
+      paddingBottom(15.px),
+      media.maxWidth(580.px)(
+        paddingLeft(5.px),
+        paddingRight(5.px)
+      )
+    )
+
     val postDescription = style(
       display.inlineBlock,
       paddingTop(2.px),
@@ -213,13 +267,13 @@ object DashboardCSS {
       opacity(0.65),
       paddingLeft(8.%%),
       media.minWidth(768.px).maxDeviceWidth(991.px)(
-        fontSize(1.2.rem),
+        fontSize(1.7.rem),
         width(12.px),
         paddingLeft(5.%%),
         paddingRight(5.%%)
       ),
       media.maxWidth(767.px)(
-        fontSize(1.1.rem),
+        fontSize(2.rem),
         position.absolute,
         left(70.%%),
         width(12.px)

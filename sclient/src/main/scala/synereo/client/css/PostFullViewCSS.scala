@@ -35,7 +35,7 @@ object PostFullViewCSS {
     val postedActionbtn = style(
       backgroundColor.transparent,
       marginLeft(5.px),
-      fontSize(1.1.em),
+      fontSize(2.rem),
       &.active(
         boxShadow:="none"
       )

@@ -112,6 +112,20 @@ object MainMenu {
 
                 <.li(SynereoCommanStylesCSS.Style.userNameNavBar)(
                   <.span(<.img(^.className := "hidden-xss img-responsive", ^.src := "./assets/synereo-images/bubble.png", SynereoCommanStylesCSS.Style.userNameNavBarBubbleImage)),
+                  <.span(introductionConnectProxy(introProxy =>
+                    if (introProxy.value.introResponse.length != 0) {
+                      //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
+                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+                        <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
+                      )
+                    } else {
+//                      <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
+//                        <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, "0"))
+//                      )
+                      <.span()
+                    }
+                  )
+                  ),
                   <.span(SynereoCommanStylesCSS.Style.userNameNavBarText, <.div(SynereoCommanStylesCSS.Style.userNameOverflow)(model.name),
                     <.div(^.className := "text-center")(
                       //  <.span(model.networkMode.toUpperCase),
@@ -121,17 +135,6 @@ object MainMenu {
                         <.img(^.src := "./assets/synereo-images/amptoken.png", DashboardCSS.Style.ampTokenImg),
                         //                        <.span(Icon.cogs),
                         <.span(DashboardCSS.Style.ampbalancetext)(model.networkMode + " " + model.balanceAmp + " / " + model.balanceBtc)
-                      ),
-                      <.span(introductionConnectProxy(introProxy =>
-                        if (introProxy.value.introResponse.length != 0) {
-                          //                      ConfirmIntroReqModal(ConfirmIntroReqModal.Props("", Seq(DashboardCSS.Style.confirmIntroReqBtn), MIcon.sms, ""))
-                          <.a(^.href := "/#notifications", DashboardCSS.Style.confirmIntroReqBtn,
-                            <.span(<.button(bss.labelOpt(CommonStyle.danger), bss.labelAsBadge, DashboardCSS.Style.inputBtnRadius, introProxy.value.introResponse.length))
-                          )
-                        } else {
-                          <.span()
-                        }
-                      )
                       )
                     )
                   )

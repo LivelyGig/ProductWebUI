@@ -106,8 +106,8 @@ object TermsOfServicesForm {
         ),
         <.div(^.className := "container-fluid")(
           <.form(^.onSubmit ==> t.backend.submitForm)(
-            <.iframe(^.width := "100%", ^.src := "assets/terms_of_service.html"),
-            <.div(bss.modal.footer)(
+            <.iframe(^.src := "assets/terms_of_service.html",SynereoCommanStylesCSS.Style.termsOfServicesIframe),
+            <.div(bss.modal.footer,SynereoCommanStylesCSS.Style.termsOfServicesFooterMargin)(
               <.button(^.tpe := "button", SynereoCommanStylesCSS.Style.modalFooterBtn, ^.className := "btn", ^.onClick --> t.backend.hide,"Back")
             )
           )

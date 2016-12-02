@@ -230,7 +230,7 @@ object NewMessageCSS {
       left(4.px)
     )
     val modalFooterBtnMargin=style(
-      marginRight(-3.%%)
+      marginRight(0.%%)
     )
     val newMessageTooltip=style(
       visibility.hidden,

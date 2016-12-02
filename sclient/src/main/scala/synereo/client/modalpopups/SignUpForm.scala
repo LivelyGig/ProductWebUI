@@ -208,14 +208,16 @@ object SignUpForm {
           ),
           <.div(^.className := "row")(
             <.div(^.className := "col-md-12 text-left", SignupCSS.Style.termsAndServicesContainer)(
-              <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true),
+              <.input(^.`type` := "checkbox", ^.id := "termsOfServices", ^.required := true,SignupCSS.Style.termAndCondCheckBox),
+              <.span("I'm cool with the",SignupCSS.Style.termAndCondText)
+              ,
               Button(Button.Props(t.backend.showTermsOfServices(), CommonStyle.default, Seq(SignupCSS.Style.termsAndCondBtn), "", "")
                 , state.lang.selectDynamic("IM_COOL_WITH_THE_TERMS_OF_SERVICE").toString)
             )
           ),
           <.div()(
             <.div(^.className := "col-md-12", SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero, SignupCSS.Style.howItWorks)(
-              <.div(^.className := "pull-left", SignupCSS.Style.signUpuserNameContainer)(
+              <.div(^.className := "pull-left hidden", SignupCSS.Style.signUpuserNameContainer)(
                 <.div(^.className := "text-left")(state.lang.selectDynamic("CREATING_ACCOUNT_ON_NODE").toString, <.span(s"   ${nodeName}")),
                 <.span(SignupCSS.Style.howAccountsWorkLink)(state.lang.selectDynamic("HOW_ACCOUNTS_WORKS").toString)
               ),

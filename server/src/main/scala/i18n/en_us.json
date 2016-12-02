@@ -16,7 +16,8 @@
   "SIGN_UP": "Sign up",
   "EMAIL_ADDRESS": "Email address",
   "CONFIRM_PASSWORD": "Confirm password",
-  "IM_COOL_WITH_THE_TERMS_OF_SERVICE": "I'm cool with the Terms of service",
+
+  "IM_COOL_WITH_THE_TERMS_OF_SERVICE": "Terms of Service",
   "PASSWORD_CONDITION": "Must be 6 characters long and include at least one number or symbol",
   "CREATING_ACCOUNT_ON_NODE": "Creating account on node",
   "HOW_ACCOUNTS_WORKS": "How do accounts work across nodes?",
@@ -58,7 +59,7 @@
   "TITLE_YOUR_POST": "Title your post",
   "YOUR_THOUGHTS": "Your thoughts...",
   "CREATE_POST": "Create",
-  "USERNAME": "Username",
+  "USERNAME": "Name",
   "ONLY_JPEG_OR_PNG_FILES_CAN_BE_UPLOADED": "only jpeg or png files can be uploaded... !!!",
   "YOU_CANNOT_POST_EMPTY_MESSAGE": "An empty message can not be posted"
 }

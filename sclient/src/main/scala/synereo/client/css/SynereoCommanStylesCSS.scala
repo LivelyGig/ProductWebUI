@@ -657,11 +657,11 @@ object SynereoCommanStylesCSS {
       position.absolute,
       media.maxWidth(766.px) -
         display.none,
-      media.minWidth(767.px).maxWidth(850.px) -
+      media.minWidth(777.px).maxWidth(850.px) -
         marginTop(-9.px),
       media.minWidth(850.px) -
         marginTop(-5.px),
-      media.minWidth(766.px).maxWidth(776.px) -
+      media.minWidth(767.px).maxWidth(776.px) -
         right(-126.px),
       marginTop(-9.px)
     )
@@ -730,7 +730,7 @@ object SynereoCommanStylesCSS {
 
     val createPostBtn = style(
       position.fixed,
-      bottom(10.%%),
+      bottom(15.%%),
       right(0.9.%%),
       zIndex(3),
       backgroundColor(c"#30ade3"),
@@ -771,10 +771,14 @@ object SynereoCommanStylesCSS {
         marginRight(20.px)
       )
     )
-
-
     val modalFooterBtnRight = style(
       marginRight(-18.px)
+    )
+    val termsOfServicesIframe=style(
+      width(100.%%)
+    )
+    val termsOfServicesFooterMargin=style(
+      marginRight(-3.%%)
     )
   }
 

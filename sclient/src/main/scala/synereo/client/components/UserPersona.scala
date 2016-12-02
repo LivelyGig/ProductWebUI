@@ -32,7 +32,7 @@ object UserPersona {
       val model = props.proxy.value
       <.div(^.className := "row",DashboardCSS.Style.dispalyFlex/*, NewMessageCSS.Style.PersonaContainerDiv*/)(
         <.div(^.className := "col-lg-2 col-md-2 col-sm-2 col-xs-2"/*, SynereoCommanStylesCSS.Style.paddingLeftZero*/,NewMessageCSS.Style.userImgDiv)(
-          <.img(^.alt := "userImage", ^.src := model.imgSrc, ^.className := "img-responsive", NewMessageCSS.Style.userImage)
+          <.img( ^.src := model.imgSrc, ^.className := "img-responsive", NewMessageCSS.Style.userImage)
         ),
         <.div(^.className := "col-lg-8 col-md-8 col-sm-8 col-xs-8"/*, SynereoCommanStylesCSS.Style.paddingLeftZero, SynereoCommanStylesCSS.Style.paddingRightZero*/)(
           <.div(^.className := "btn", ^.`type` := "button", NewMessageCSS.Style.changePersonaBtn)("Change posting persona", <.span(^.className := "caret", ^.color.blue)),

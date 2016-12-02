@@ -59,16 +59,43 @@ object SignupCSS {
       border.none.important,
       paddingLeft(4.px),
       textDecoration := "underline",
-      fontSize(1.4.rem),
-      marginLeft(10.px),
-      marginTop(-1.px),
+      fontSize(1.7.rem),
+      marginTop(-4.px),
+      paddingBottom(7.px),
       &.hover(
         textDecoration := "underline"
       ),
       media.maxWidth(580.px)(
-        fontSize(10.px)
+        fontSize(1.2.rem),
+        marginTop(0.px)
+      ),
+      &.active(
+        boxShadow:="none"
       )
     )
+
+    val termAndCondCheckBox=style(
+    width(1.7.rem),
+    height(1.7.rem),
+      marginTop(7.px),
+    cursor.pointer,
+      media.maxWidth(580.px)(
+        width(1.2.rem),
+        height(1.2.rem),
+        marginTop(8.px)
+    )
+    )
+
+    val termAndCondText=style(
+      paddingLeft(30.px),
+      paddingRight(2.px),
+      fontSize(1.7.rem),
+      media.maxWidth(580.px)(
+        fontSize(1.2.rem),
+        paddingLeft(15.px)
+      )
+    )
+
     val signUpBtn = style(
          marginRight(5.%%)
     )
