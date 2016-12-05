@@ -6,7 +6,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap.Button
 import client.components.Bootstrap.CommonStyle
 import client.components.Bootstrap.Modal
-import client.components.Bootstrap._
 import client.components.GlobalStyles
 import client.components.Icon
 import client.components.Icon._
@@ -16,25 +15,16 @@ import client.services.{ApiTypes, CoreApi, LGCircuit, RootModel}
 import japgolly.scalajs.react
 import client.components.Bootstrap._
 import client.utils.ConnectionsUtils
-import com.oracle.webservices.internal.api.message.ContentType
-import diode.ModelR
-import diode.data.Pot
-
 import scala.util.{Failure, Success}
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import org.scalajs.dom
 import org.scalajs.dom._
-import client.rootmodel.ConnectionsRootModel
 import shared.dtos.{EstablishConnection, IntroConnections}
 import shared.models.ConnectionsModel
-import client.sessionitems.SessionItems
-
-
 import scala.scalajs.js
-import diode.AnyAction._
+
 // scalastyle:off
 object NewConnection {
   @inline private def bss = GlobalStyles.bootstrapStyles

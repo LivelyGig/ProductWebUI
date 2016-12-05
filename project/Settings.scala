@@ -67,6 +67,7 @@ object Settings {
     "org.webjars" % "bootstrap" % Versions.bootstrap / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js",
     //    "org.webjars" % "chartjs" % Versions.chartjs / "Chart.js" minified "Chart.min.js",
     "org.webjars" % "log4javascript" % Versions.log4js / "js/log4javascript_uncompressed.js" minified "js/log4javascript.js" dependsOn "jquery.js",
-    "org.webjars" % "selectize.js" % Versions.selectizejs / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js"
+    "org.webjars" % "selectize.js" % Versions.selectizejs / "js/standalone/selectize.js" minified "js/standalone/selectize.min.js" dependsOn "jquery.js",
+    "org.webjars" % "bootstrap-datepicker" % "1.6.1" / "bootstrap-datepicker.js" minified "bootstrap-datepicker.min.js" dependsOn "bootstrap.js"
   ))
 }

@@ -8,7 +8,6 @@ import client.components.Icon
 import client.css.{DashBoardCSS, HeaderCSS, PresetsCSS}
 import client.modals.{NewConnection, NewMessage, NewRecommendation}
 import shared.models.ConnectionsModel
-
 import scalacss.ScalaCssReact._
 
 object ConnectionsResults {

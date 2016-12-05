@@ -8,18 +8,14 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import client.components.Bootstrap._
 import client.components.Icon.Icon
 import client.components._
-import client.css.{CreateAgentCSS, DashBoardCSS, ProjectCSS}
 import client.css.{DashBoardCSS, ProjectCSS}
 import client.modules.AppModule
 import japgolly.scalajs.react
-
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 import scala.language.reflectiveCalls
 import org.querki.jquery._
-import client.sessionitems.SessionItems
 import client.utils.{AppUtils, ConnectionsUtils, ContentUtils, LabelsUtils}
-
 import scala.scalajs.js
 import org.scalajs.dom.FileReader
 import org.scalajs.dom.raw.UIEvent

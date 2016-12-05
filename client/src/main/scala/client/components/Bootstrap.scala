@@ -27,10 +27,8 @@ object Bootstrap {
   trait BootstrapJQuery extends JQuery {
     def modal(action: String): BootstrapJQuery = js.native
     def modal(options: js.Any): BootstrapJQuery = js.native
-//    def popover():Any = js.native
     def popover(options: PopoverOptions):Any = js.native
     def tooltip(options:TooltipOptions):Any = js.native
-
   }
 
   @js.native

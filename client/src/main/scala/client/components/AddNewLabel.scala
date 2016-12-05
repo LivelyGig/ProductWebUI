@@ -40,7 +40,6 @@ object LabelsList {
   case class Backend(t: BackendScope[Props, State]) {
     // scalastyle:off
     def mounted(props: Props) = {
-
     }
 
     def updateLabel(e: ReactEventI): react.Callback = {
