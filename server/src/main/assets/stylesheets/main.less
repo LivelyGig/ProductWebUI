@@ -352,16 +352,23 @@ ol.tree
 .ModalName {
     display : none;
 }
-
+/*
 @media(max-width:375px){
 #navbar.dropdown-menu{
    left: -665%;
 }
 }
-
 @media(min-width:376px) and (max-width:768px){
 #navbar.dropdown-menu{
      left: -210%;
+}
+}
+*/
+}
+@media (max-width:1200px){
+#navbar.dropdown-menu{
+left:initial;
+right:0;
 }
 }
 #navbar.dropdown-menu{
@@ -383,10 +390,6 @@ ol.tree
             box-shadow: 0 6px 12px rgba(0,0,0,0.175);
             background-clip: padding-box;
         }
-
-}
-
-
 /* sidebar settings */
 .sidebar {
   position: absolute;
@@ -848,5 +851,7 @@ ol.tree
     pointer-events: all;
 }
 }
-
+body {
+overflow-y:hidden;
+}
 .overlaySidebar{}
