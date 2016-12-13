@@ -14,7 +14,7 @@ import scala.scalajs.js.Any
 
 object Validator {
 
-@JSName("Validator")
+/*@JSName("Validator")*/
 @js.native
 trait ValidatorJQuery extends js.Object {
   def validator(options: ValidatorOptions):Any = js.native

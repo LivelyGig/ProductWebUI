@@ -203,7 +203,7 @@ object NewAgentForm {
                 <.div(DashBoardCSS.Style.scltInputModalLeftContainerMargin, ^.className := "form-group")(
                   <.input(^.tpe := "password", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Confirm Password", ^.value := s.signUpModel.confirmPassword, ^.className := "form-control", "data-error".reactAttr := "Confirm Password is required",
                     ^.onChange ==> updateConfirmPassword, ^.required := true),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(^.className := "help-block with-errors",DashBoardCSS.Style.loginHelpBlock)
                 )
               )
             ), //col-md-8

@@ -110,12 +110,12 @@ object LoginForm {
                 <.div(^.className := "form-group")(
                   <.input(^.tpe := "text", bss.formControl, DashBoardCSS.Style.inputModalMargin, ^.id := "Name", ^.className := "form-control", "data-error".reactAttr := "Username is required",
                     ^.placeholder := "username", ^.value := s.userModel.email, ^.onChange ==> updateEmail, ^.required := true),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(^.className := "help-block with-errors",DashBoardCSS.Style.loginHelpBlock)
                 ),
                 <.div(^.className := "form-group")(
                   <.input(^.tpe := "password", DashBoardCSS.Style.inputModalMargin, bss.formControl, ^.placeholder := "password", ^.className := "form-control", "data-error".reactAttr := "Password is required",
                     ^.value := s.userModel.password, ^.onChange ==> updatePassword, ^.required := true),
-                  <.div(^.className := "help-block with-errors")
+                  <.div(^.className := "help-block with-errors",DashBoardCSS.Style.loginHelpBlock)
                 ),
                 <.div(^.className := "text-center", ^.className := "form-group")(
                   <.button(^.tpe := "submit", ^.id := "LoginID", ^.className := "btn", DashBoardCSS.Style.btnBackground, "Login")

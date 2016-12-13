@@ -279,6 +279,7 @@ object HeaderCSS {
       ),
       &.active(
         backgroundColor.transparent,
+        color.white,
         paddingLeft(0.px),
         paddingRight(0.px)
       )

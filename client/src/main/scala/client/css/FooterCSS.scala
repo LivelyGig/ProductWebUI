@@ -6,7 +6,7 @@ object FooterCSS {
     import dsl._
     val footerContainer = style(
       // borderTop(2.px, solid, c"#67EAF2"),
-      backgroundColor(transparent),
+      backgroundColor.transparent,
       minHeight(52.px),
       media.maxWidth(375.px)-
       display.none
@@ -21,30 +21,30 @@ object FooterCSS {
       marginTop(3.px),
       &.hover(
         height(42.px),
-        backgroundColor(transparent),
-        color(transparent),
-        outline(none)
+        backgroundColor.transparent.important,
+        /*color.transparent,*/
+        outline.none
       ),
       &.focus(
         height(42.px),
-        backgroundColor(transparent),
-        color(transparent),
+        backgroundColor.transparent.important,
+        /*color(transparent),*/
         outline(none)
       )
     )
     val footerNavLi = style(
-      backgroundColor(transparent),
+      backgroundColor.transparent,
       height(42.px),
       &.hover(
-        height(42.px),
-        backgroundColor(transparent),
+       /* height(42.px),
+        backgroundColor.transparent.important,*/
         //color(c"#67EAF2"),
         outline(none)
       ),
       &.focus(
-        height(42.px),
-        backgroundColor(transparent),
-        // color(c"#67EAF2"),
+        /*height(42.px),
+        backgroundColor.transparent.important,
+        // color(c"#67EAF2"),*/
         outline(none)
       )
     )
@@ -52,9 +52,9 @@ object FooterCSS {
       float.right
     )
     val navbar = style(
-      backgroundColor(transparent),
+      backgroundColor.transparent,
       &.hover(
-        backgroundColor(transparent)
+        backgroundColor.transparent
       )
     )
     val displayInline = style(

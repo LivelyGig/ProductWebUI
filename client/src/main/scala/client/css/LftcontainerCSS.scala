@@ -87,6 +87,7 @@ object LftcontainerCSS {
       userSelect:="none",   //main.less
       display.block,     //main.less
       paddingLeft(0.px),
+      cursor.pointer,
       fontSize(1.em),
       fontWeight.normal,
       //  marginLeft(18.px),

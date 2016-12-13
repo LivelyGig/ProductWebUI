@@ -67,7 +67,7 @@ object DashBoardCSS {
       media.maxWidth(1365.px) - (
         height(18.px),
         width(18.px)
-        )
+      )
     )
     val rsltContentBackground = style(
       backgroundColor(c"#D3E7E7"),
@@ -89,10 +89,10 @@ object DashBoardCSS {
         width(9.px),
         height(9.px),
         borderTop(5.px, dashed)
-        )
+      )
     )
     val gigMatchButton = style(
-      backgroundColor(transparent),
+      backgroundColor.transparent,
       // fontWeight.normal,
       media.maxWidth(1130.px) -
         fontSize(11.px),
@@ -153,7 +153,7 @@ object DashBoardCSS {
         fontSize(1.em),
         width(135.px),
         paddingLeft(9.%%)
-        )
+      )
     )
 
     val scltInputModalLeftContainerMargin = style(
@@ -162,17 +162,17 @@ object DashBoardCSS {
       media.maxWidth(1130.px) - (
         marginLeft(135.px),
         marginRight(38.px)
-        )
+      )
     )
     val scltInputModalContainerMargin = style(
       media.maxWidth(768.px) - (
         marginLeft(0.px),
         marginRight(0.px)
-        ),
+      ),
       media.minWidth(769.px) - (
         marginLeft(150.px),
         marginRight(150.px)
-        )
+      )
     )
     val slctHeaders = style(
       paddingTop(15.px),
@@ -219,7 +219,7 @@ object DashBoardCSS {
       verticalAlign.middle
     )
     val inputModalMargin = style(
-      marginBottom(2.%%)
+      marginBottom(4.%%)
     )
     val marginLeftchk = style(
       marginLeft(2.%%)
@@ -327,22 +327,22 @@ object DashBoardCSS {
 
     val footLegalStyle = style(
       color(c"#FFF"),
-      backgroundColor(transparent),
+      backgroundColor.transparent,
       paddingTop(12.px),
       fontSize(15.px),
-      borderColor(transparent),
+      borderColor.transparent,
       &.active(
         color(c"#FFF"),
-        backgroundColor(transparent),
+        backgroundColor.transparent,
         paddingTop(17.px),
         fontSize(15.px),
-        borderColor(transparent)
+        borderColor.transparent
       ),
       &.hover(
         color(c"#fff"),
-        backgroundColor(transparent),
+        backgroundColor.transparent,
         fontSize(15.px),
-        borderColor(transparent)
+        borderColor.transparent
       ),
       media.maxWidth(1299.px) -
         paddingTop(12.px)
@@ -695,6 +695,11 @@ object DashBoardCSS {
       marginTop(50.px),
       color(white),
       fontSize(26.px)
+    )
+    val loginHelpBlock = style(
+      marginTop(-3.%%),
+      marginBottom(-1.%%),
+      height(18.px)
     )
   }
 
